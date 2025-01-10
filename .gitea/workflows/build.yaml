@@ -3,7 +3,7 @@ run-name: ${{ gitea.actor }} is testing out Gitea Actions
 on: 
   push:
     branches: 
-      - content3-dev
+      - main
 jobs:
   Explore-Gitea-Actions:
     runs-on: debian
