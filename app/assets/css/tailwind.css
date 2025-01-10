@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.mdc-prose {
+  @apply prose prose-zinc prose-pre:bg-gray-100 dark:prose-pre:bg-zinc-400 dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-zinc-200 dark:prose-code:bg-zinc-200 prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300
+}
+
+/* 针对page的prose颜色配置 */
+.mdc-page-prose {
+  @apply prose prose-zinc prose-pre:bg-gray-100 dark:prose-pre:bg-zinc-400 dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-zinc-200 dark:prose-code:bg-zinc-200 prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300
+}
+
+/* 针对memo的prose颜色配置 */
+.mdc-memo-prose {
+  @apply prose prose-zinc prose-pre:bg-gray-100 prose-p:leading-5 prose-p:mb-2 dark:prose-pre:bg-zinc-400 dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-red-100 dark:prose-code:bg-red-200 prose-code:text-zinc-800 dark:prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300
+}
+
+.hover-shadow-cyan {
+  @apply hover:shadow-md transition-shadow duration-300 hover:shadow-cyan-600
+}
+
+.hover-shadow-zinc {
+  @apply hover:shadow-md transition-shadow duration-300 hover:shadow-zinc-600
+}
+
+.card-box {
+  @apply p-4 rounded-md transition-all duration-300
+}
+
+@keyframes flow {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}

@@ -1,0 +1,12 @@
+node_modules
+# node_modules
+*.log*
+.nuxt
+.nitro
+.cache
+.output
+.data
+.env
+.env.prod
+
+# .husky
