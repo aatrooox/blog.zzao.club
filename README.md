@@ -1,6 +1,6 @@
-# Content v2 Minimal Starter
+# 博客站
 
-Look at the [Content documentation](https://content.nuxt.com/) to learn more.
+2025年01月10日16:18:15 迁移到新仓库, 历史 commit 丢弃
 
 ## Setup
 
