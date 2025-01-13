@@ -42,7 +42,10 @@ useHead({
 })
 const { setBook } = useBook();
 const appConfig = useAppConfig();
-const bookConfig = await queryCollection('bookConfig').all()
+const { data: bookConfig } = useAsyncData('bookConfig', () => {
+  return queryCollection('bookConfig').all()
+})
+// const bookConfig = await queryCollection('bookConfig').all()
 const getBooksWithArticleCount = (books: any[]) => {
   const bookList = books.map(book => {
     let articleCount = 0;
@@ -69,8 +72,8 @@ const getBooksWithArticleCount = (books: any[]) => {
 
     return {
       title: book.title,
-      cover: bookConfig.find(item => item.name === book.title)?.cover,
-      status: bookConfig.find(item => item.name === book.title)?.status,
+      cover: bookConfig.value?.find(item => item.name === book.title)?.cover,
+      status: bookConfig.value?.find(item => item.name === book.title)?.status,
       articleCount: articleCount
     };
   });

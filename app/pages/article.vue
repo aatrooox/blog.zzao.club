@@ -81,10 +81,13 @@ const filter_tags = computed(() => {
   }
 })
 const pageSize = 10
-const count = ref(0)
+// const count = ref(0)
+const { data: count } = await useAsyncData(hash('artile-count'), async () => {
+  return queryCollection('content').count()
+})
 
 const prevDisabled = computed(() => page.value <= 1)
-const nextDisabled = computed(() => page.value >= Math.ceil(count.value / pageSize))
+const nextDisabled = computed(() => page.value >= Math.ceil((count.value || 0) / pageSize))
 
 
 const changeTags = async (tags: string[]) => {
@@ -120,8 +123,6 @@ const queryArticles = async (skip: number, filter_tags: string[] = []) => {
   count.value = await query.count()
   return query.order('date', 'DESC').skip(skip).limit(pageSize).select('id', 'path', 'title', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta').all()
 }
-
-count.value = await queryCollection('content').count()
 
 const { data, status, refresh } = await useAsyncData(hash('artile-page'), async () => {
   const skip = (page.value - 1) * pageSize
