@@ -2,7 +2,7 @@
   <NuxtLayout>
     <div class="error-page flex flex-col gap-4">
       <div class="text-5xl">{{ props.error?.statusCode }}</div>
-      <div class="text-xl font-bold">{{ errMsg }}</div>
+      <div class="text-xl font-bold">{{ props.error.message || errMsg }}</div>
       <div class="btns flex gap-4">
         <Button @click="handleError" severity="success">返回到刚才的页面</Button>
         <Button @click="concatAuthor" :severity="copyed ? 'primary' : 'danger'">{{ copyed ? '已复制' : '加微信痛骂' }}</Button>

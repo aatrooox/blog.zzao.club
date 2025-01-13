@@ -1,16 +1,15 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import useNanoId from './server/utils/useNanoId'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const packageJson = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf-8')
 )
 const appVersion = packageJson.version
-const uuid = useNanoId(8)
+// const uuid = useNanoId(8)
 const isDev = process.env.NODE_ENV === 'development'
 console.log(` 当前环境为：${isDev ? '开发' : '生产'}`, )
-console.log(`nuxt-secret-key已更新: `, uuid)
+// console.log(`nuxt-secret-key已更新: `, uuid)
 export default defineNuxtConfig({
   // extends: '@nuxt-themes/typography',
   debug: true,
@@ -22,13 +21,6 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
-  // site: { 
-  //   url: 'https://blog.zzao.club', 
-  //   name: 'zzao club blog',
-  // }, 
-  // sitemap: {
-  //   strictNuxtContentPaths: true
-  // },
   app: {
     pageTransition: false,
     layoutTransition: false,
@@ -77,28 +69,12 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     // '@nuxtjs/seo'
   ],
-  // imports: {
-  //   presets: [
-  //     {
-  //       from: 'animejs/lib/anime.es.js',
-  //       imports: ['anime']
-  //     }
-  //   ]
-  // },
   colorMode: {
     preference: 'system', // default value of $colorMode.preference
     fallback: 'light', // fallback value if not system preference found
-    // hid: 'nuxt-color-mode-script',
-    // globalName: '__NUXT_COLOR_MODE__',
-    // componentName: 'ColorScheme',
-    // classPrefix: '',
-    // classSuffix: '-mode',
-    // storage: 'localStorage', // or 'sessionStorage' or 'cookie'
-    // storageKey: 'nuxt-color-mode'
   },
   primevue: {
     importTheme: { from: '@@/primevue/theme.ts' },
-    // usePrimeVue: false
   },
   tailwindcss: {
     cssPath: ['@/assets/css/tailwind.css', { injectPosition: "first" }],
@@ -110,29 +86,28 @@ export default defineNuxtConfig({
     viewer: true,
   },
   routeRules: {
-    '/': { ssr: true },
-    '/article': { ssr: true },
-    '/post/**': { cache: { maxAge: 60 * 60 } } 
+    '/': { prerender: true },
+    '/article': { prerender: true },
+    '/books': { prerender: true },
+    '/post/**': { prerender: true, cache: { maxAge: 60 * 60 } } 
   },
   css: ['@/assets/css/main.css', 'primeicons/primeicons.css'],
   runtimeConfig: {
-    cosSecretId: 'your_cos_secret_id',
-    cosSecretKey: 'your_cos_secret_key',
-    cosBucket: 'your_cos_bucket',
-    cosRegion: 'your_cos_region',
+    // cosSecretId: 'your_cos_secret_id',
+    // cosSecretKey: 'your_cos_secret_key',
+    // cosBucket: 'your_cos_bucket',
+    // cosRegion: 'your_cos_region',
     imgHost: 'https://img.zzao.club',
-    jwtSecret: 'your_jwt_secret',
-    nuxtSecretKey: `blog-zzao-club-${uuid}`,
-    cookie: {
-      domain: isDev ? 'localhost' : 'zzao.club'
-    },
+    // jwtSecret: 'your_jwt_secret',
+    // nuxtSecretKey: `blog-zzao-club-${uuid}`,
+    // cookie: {
+    //   domain: isDev ? 'localhost' : 'zzao.club'
+    // },
     public: {
-      branchName: 'content@v3',
+      ContentVersion: '3.0.0-alpha.8',
       Z_BLOG_VERSION: appVersion,
-      nuxtSecretKey:`blog-zzao-club-${uuid}`,
+      // nuxtSecretKey:`blog-zzao-club-${uuid}`,
       imgHost: 'https://img.zzao.club',
-      canRegist: false, // 是否允许注册 针对游客
-      hiddenLoginEntry: false, // 是否隐藏登录入口 针对游客
       mdc: {
         headings: {
           anchorLinks: {
@@ -151,6 +126,7 @@ export default defineNuxtConfig({
       pathMeta: {
         slugifyOptions: {
           // Keep everything except invalid chars, this will preserve Chinese characters 
+          // 保留中文字符
           remove: /[$*+~()'"!\-=#?:@]/g,
         }
       }
@@ -164,7 +140,7 @@ export default defineNuxtConfig({
     },
     prerender: {
       crawlLinks: true,
-      failOnError: false, // 
+      failOnError: true, // 
     },
     imports: {
       presets: [

@@ -111,7 +111,10 @@ interface Page {
   versions?: string[];
 }
 // console.log(`count`, count, maxPage)
-const articles = await queryCollection('content').order('date', 'DESC').limit(5).select('path', 'title', 'date', 'tags', 'versions', 'lastmod').all()
+const { data: articles } = await useAsyncData('articles', () => {
+  return queryCollection('content').order('date', 'DESC').limit(5).select('path', 'title', 'date', 'tags', 'versions', 'lastmod').all()
+})
+
 
 const toggle = (event, socail: any) => {
   console.log(`socail`, socail)

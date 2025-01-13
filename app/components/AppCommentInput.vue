@@ -7,18 +7,18 @@
 
   <div class="btns flex justify-between items-center">
     <div class="left flex items-center gap-2">
-      <Button rounded text @click="toggle">
+      <!-- <Button rounded text @click="toggle">
         <Icon name="icon-park-outline:face-with-smiling-open-eyes"></Icon>
-      </Button>
+      </Button> -->
       <span class="text-xs text-zinc-400">最多256字符</span>
 
       <span class="text-xs text-zinc-400">
         所有人可以回复
       </span>
-      <Popover ref="emojiPopover">
+      <!-- <Popover ref="emojiPopover">
         <EmojiPicker :native="true" :display-recent="true" :hide-search="true" :hide-group-icons="true"
           :theme="emojiTheme" @select="onSelectEmoji" ref="EmojiPickerRef"></EmojiPicker>
-      </Popover>
+      </Popover> -->
 
     </div>
     <div class="right">
@@ -32,8 +32,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import EmojiPicker from 'vue3-emoji-picker'
-import 'vue3-emoji-picker/css'
 
 const emit = defineEmits(['value-change', 'send', 'cancel'])
 const { user } = useUser()

@@ -18,24 +18,15 @@
     "@nuxtjs/mdc": "^0.9.5",
     "@nuxtjs/tailwindcss": "^6.12.2",
     "@primevue/themes": "^4.1.1",
-    "@prisma/client": "^5.22.0",
     "animejs": "^3.2.2",
-    "cos-js-sdk-v5": "^1.8.6",
     "dayjs": "^1.11.13",
     "fuse.js": "^7.0.0",
     "h3-zod": "^0.5.3",
-    "jose": "^5.9.6",
-    "md5": "^2.3.0",
-    "nano": "^10.1.4",
-    "nanoid": "^5.0.8",
     "nuxt": "^3.15.0",
     "ohash": "^1.1.4",
     "primeicons": "^7.0.0",
     "primevue": "^4.1.1",
-    "qcloud-cos-sts": "^3.1.1",
-    "quill": "^2.0.2",
     "sitemap": "^8.0.0",
-    "vue3-emoji-picker": "^1.1.8",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -44,9 +35,7 @@
     "@nuxt-themes/typography": "^1.0.1",
     "@primevue/nuxt-module": "^4.1.1",
     "@tailwindcss/typography": "^0.5.15",
-    "@types/md5": "^2.3.5",
     "better-sqlite3": "^11.5.0",
-    "husky": "^8.0.0",
-    "prisma": "^5.22.0"
+    "husky": "^8.0.0"
   }
 }
