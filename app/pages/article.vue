@@ -48,13 +48,8 @@ useHead({
 import { hash } from 'ohash';
 
 const selectedTags = ref();
-const tags = ref([
-  { name: '博客', value: 1 },
-  { name: 'Nuxt', value: 2 },
-  { name: '吐槽', value: 3 },
-  { name: 'Hono', value: 4 },
-  // { name: 'Markdown', value: 5 }
-]);
+const appConfig = useAppConfig();
+const tags = computed( () => appConfig.tags.map((tag, index) => ({ name: tag, value: index})) )
 const route = useRoute();
 const filter_tags = computed(() => {
   let tag_str = route.query.tag || '';

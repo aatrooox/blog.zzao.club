@@ -29,12 +29,10 @@ export default defineAppConfig({
       popover: 'https://img.zzao.club/article/202412301618241.jpg'
     }
   ],
-  book: {
-    list: [
-      {
-        name: 'Nuxt问题合集',
-        url: 'https://img.zzao.club/article/202412261015007.png'
-      }
-    ]
-  }
+  // 小册配置请前往/content/bookConfig/*.json 一个json对应一本小册, 名称随意
+  // book
+  // 标签
+  // 配置后会以此处配置的标签作为 /article 页面筛选栏
+  // 比如: tags: ['哈哈'], 则会搜索 文章中 tags 字段中包含(模糊搜索) '哈哈' 的文章
+  tags: ['Nuxt', 'Hono', 'Vue3', '博客', '吐槽']
 })
