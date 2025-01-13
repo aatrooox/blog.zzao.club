@@ -117,17 +117,16 @@ const queryArticles = async (skip: number, filter_tags: string[] = []) => {
       query = query.where('tags', 'LIKE', `%${tag}%`)
     })
   }
-  count.value = await query.count()
+  count.value = await query.count();
+  console.log(`count.value`, count.value)
   return query.order('date', 'DESC').skip(skip).limit(pageSize).select('id', 'path', 'title', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta').all()
 }
-
-count.value = await queryCollection('content').count()
 
 const { data, status, refresh } = await useAsyncData(hash('artile-page'), async () => {
   const skip = (page.value - 1) * pageSize
   console.log(` 请求：`, skip, filter_tags.value)
   return queryArticles(skip, filter_tags.value)
-}, { lazy: true })
+})
 
 watch([status], () => {
   console.log(`status`, status.value)
