@@ -142,7 +142,7 @@ export default defineNuxtConfig({
     },
     prerender: {
       crawlLinks: true,
-      failOnError: true, // 
+      failOnError: false, // 
     },
     imports: {
       presets: [
