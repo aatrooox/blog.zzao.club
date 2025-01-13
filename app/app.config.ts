@@ -16,6 +16,7 @@ export default defineAppConfig({
       icon: 'icon-park-outline:github',
       // 这是一个 hover 弹出框，目前用来放一个图片
       popover: '',
+      url: 'https://github.com/aatrooox/blog.zzao.club'
     },
     {
       name: '微信公众号',

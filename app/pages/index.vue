@@ -36,6 +36,23 @@
         </Popover>
       </div>
     </div>
+    <div class="page-panel-title text-2xl font-bold">
+      <span class="border-b-4 border-zinc-800 dark:border-zinc-400">我的小册</span>
+    </div>
+    <div class="book-list flex flex-wrap gap-4">
+      <template v-for="page of books">
+        <div class="book-item flex justify-between gap-4 box-border p-4 border-2 border-zinc-900 border-b-4 border-r-4 hover:shadow-md">
+          <div class="page-title flex items-center gap-2">
+            <Icon name="icon-park-outline:book" class="transition-all duration-150"></Icon>
+            <NuxtLink :to="`/book/${page.title}`"
+              class="prose prose-a transition-all duration-150 dark:text-zinc-200 hover:underline hover:underline-offset-2 ">
+              {{ page.title }}
+            </NuxtLink>
+          </div>
+        </div>
+      </template>
+    </div>
+    
 
     <div class="page-panel-title text-2xl font-bold">
       <span class="border-b-4 border-zinc-800 dark:border-zinc-400">最近文章</span>
@@ -115,11 +132,22 @@ const { data: articles } = await useAsyncData('articles', () => {
   return queryCollection('content').order('date', 'DESC').limit(5).select('path', 'title', 'date', 'tags', 'versions', 'lastmod').all()
 })
 
+const { data: books } = await useAsyncData('navigation', () => {
+  return queryCollectionNavigation('book', ['date', 'path', 'id'])
+})
+
+console.log(`books`, books.value)
 
 const toggle = (event, socail: any) => {
   console.log(`socail`, socail)
   curSocial.value = socail;
-  socialOp.value.toggle(event);
+  if (!socail.popover) {
+    if (socail.url) {
+      navigateTo(socail.url, { external: true, open: { target: '_blank' }})
+    }
+  } else {
+    socialOp.value.toggle(event);
+  }
 }
 
 const turnToPages = () => {

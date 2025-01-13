@@ -64,10 +64,11 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     // '@nuxtjs/robots',
     '@nuxtjs/mdc',
+    // 以下三个模块还没有支持最新的 nuxt content 版本
     // '@nuxtjs/sitemap',
     // '@nuxtjs/robots'
-    '@nuxtjs/color-mode',
     // '@nuxtjs/seo'
+    '@nuxtjs/color-mode',
   ],
   colorMode: {
     preference: 'system', // default value of $colorMode.preference
@@ -89,7 +90,8 @@ export default defineNuxtConfig({
     '/': { prerender: true },
     '/article': { prerender: true },
     '/books': { prerender: true },
-    '/post/**': { prerender: true, cache: { maxAge: 60 * 60 } } 
+    '/book/**': { prerender: true },
+    '/post/**': { prerender: true } 
   },
   css: ['@/assets/css/main.css', 'primeicons/primeicons.css'],
   runtimeConfig: {
