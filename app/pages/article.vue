@@ -7,11 +7,17 @@
         @update:modelValue="changeTags" size="small" />
       <div class="hidden md:block">
         <div class="btns flex gap-4 items-center">
-          <Button rounded :disabled="prevDisabled" :loading="status === 'pending'" @click="changePage(-1)">
+          <Button v-if="!prevDisabled" as="a" rounded :disabled="prevDisabled" :loading="status === 'pending'" :href="`/article?tag=${route.query.tag || ''}&page=${page-1}`">
+            <Icon name="icon-park-outline:arrow-up"></Icon>
+          </Button>
+          <Button v-else rounded :disabled="prevDisabled" :loading="status === 'pending'">
             <Icon name="icon-park-outline:arrow-up"></Icon>
           </Button>
           <span class="text-xl font-bold">{{ page }}</span>
-          <Button rounded :disabled="nextDisabled" :loading="status === 'pending'" @click="changePage(1)">
+          <Button v-if="!nextDisabled" as="a" rounded :disabled="nextDisabled" :loading="status === 'pending'" :href="`/article?tag=${route.query.tag || ''}&page=${page+1}`">
+            <Icon name="icon-park-outline:arrow-down"></Icon>
+          </Button>
+          <Button v-else rounded :disabled="nextDisabled" :loading="status === 'pending'" >
             <Icon name="icon-park-outline:arrow-down"></Icon>
           </Button>
           <Tag class="ml-2" :value="`${count} 篇`"></Tag>
@@ -124,26 +130,10 @@ const queryArticles = async (skip: number, filter_tags: string[] = []) => {
   return query.order('date', 'DESC').skip(skip).limit(pageSize).select('id', 'path', 'title', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta').all()
 }
 
-const { data, status, refresh } = await useAsyncData(hash('artile-page'), async () => {
+const { data, status } = await useAsyncData(hash('artile-page'), async () => {
   const skip = (page.value - 1) * pageSize
-  console.log(` 请求：`, skip, filter_tags.value)
   return queryArticles(skip, filter_tags.value)
-}, { lazy: true })
+}, { watch: [filter_tags, page]})
 
-watch([status], () => {
-  console.log(`status`, status.value)
-})
-
-watch([page, filter_tags], () => {
-  refresh()
-}, { immediate: true })
-
-const leaveTransition = (el, done) => {
-  console.log(`动画结束`, el)
-  setTimeout(() => {
-    done()
-  }, 800)
-}
 
 </script>
-<style lang="less" scoped></style>

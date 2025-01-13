@@ -9,12 +9,12 @@
       <div class="text-sm text-zinc-600 mb-2">{{ page.description }}</div>
     </template>
     <template #footer>
-      <div class="flex gap-4 mt-1 mb-2 text-xs text-zinc-500">
+      <!-- <div class="flex gap-4 mt-1 mb-2 text-xs text-zinc-500">
         {{ checkDate(page.date) ? formatDate(page.date) : '' }}
         <Divider layout="vertical" v-if="checkUpdate(page.lastmod, page.date)" />
         {{ checkUpdate(page.lastmod || page?.meta?.lastmod, page.date) ? updateDateFromNow(page.lastmod ||
           page?.meta?.lastmod) + '更新' : '' }}
-      </div>
+      </div> -->
       <div class="btns flex gap-1">
         <!-- 过滤前两个 -->
         <template v-if="page.versions">
@@ -28,7 +28,7 @@
   </Card>
 </template>
 <script lang="ts" setup>
-const { checkDate, updateDateFromNow, checkUpdate, formatDate } = useDayjs();
+// const { checkDate, updateDateFromNow, checkUpdate, formatDate } = useDayjs();
 interface Page {
   id: string;
   title?: string | undefined;

@@ -89,7 +89,7 @@ export default defineNuxtConfig({
     '/': { prerender: true },
     '/article': { prerender: true },
     '/books': { prerender: true },
-    '/post/**': { prerender: true, cache: { maxAge: 60 * 60 } } 
+    '/post/**': { prerender: true } 
   },
   css: ['@/assets/css/main.css', 'primeicons/primeicons.css'],
   runtimeConfig: {
@@ -140,7 +140,7 @@ export default defineNuxtConfig({
     },
     prerender: {
       crawlLinks: true,
-      failOnError: true, // 
+      failOnError: false, // 
     },
     imports: {
       presets: [
