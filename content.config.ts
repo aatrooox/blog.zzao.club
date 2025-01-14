@@ -16,6 +16,7 @@ export const collections = {
       lastmod: z.date(),
       tags: z.array(z.string()),
       versions: z.array(z.string()),
+      rawbody: z.string()
     })
   }),
   book: defineCollection({

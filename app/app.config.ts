@@ -27,6 +27,11 @@ export default defineAppConfig({
       name: '个人微信',
       icon: 'icon-park-outline:wechat',
       popover: 'https://img.zzao.club/article/202412301618241.jpg'
+    },
+    {
+      name: '订阅我的博客',
+      icon: 'material-symbols:rss-feed-rounded',
+      url: 'https://blog.zzao.club/feed.xml'
     }
   ],
   // 小册配置请前往/content/bookConfig/*.json 一个json对应一本小册, 名称随意

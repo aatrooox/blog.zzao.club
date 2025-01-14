@@ -143,6 +143,7 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       failOnError: false, // 
+      routes: ['/feed.xml']
     },
     imports: {
       presets: [
