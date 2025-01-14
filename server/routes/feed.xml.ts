@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
       description: post.description,
       custom_elements: [
         {
-          'content:encoded': extractContent(post.body.value)
+          'content:encoded': post.rawbody
         }
       ]
     })
