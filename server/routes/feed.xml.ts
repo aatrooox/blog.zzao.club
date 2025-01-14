@@ -17,11 +17,11 @@ export default defineEventHandler(async (event) => {
       url: `https://blog.zzao.club/${post.path}`,
       date: post.date,
       description: post.description,
-      // custom_elements: [
-      //   {
-      //     'content:encoded': extractContent(post.body.value)
-      //   }
-      // ]
+      custom_elements: [
+        {
+          'content:encoded': extractContent(post.body.value)
+        }
+      ]
     })
   }
 
