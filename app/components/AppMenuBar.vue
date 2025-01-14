@@ -53,16 +53,11 @@
 </template>
 
 <script setup>
-const { isLogin, user, setUser } = useUser();
-const loginForm = ref(null)
-const registerForm = ref(null)
-const userSetting = ref(null)
 const searchDialog = ref(null)
 const toast = useToast()
 const config = useRuntimeConfig()
 const colorMode = useColorMode()
 const route = useRoute();
-const { disposeError } = useErrorDispose()
 const curLabel = ref('首页')
 const modes = ['system', 'light', 'dark']
 const index = ref(modes.indexOf(colorMode.preference))
@@ -127,52 +122,4 @@ const toggleDarkMode = () => {
   colorMode.preference = modes[(++index.value) % modes.length]
 }
 
-const loginBlog = async (body) => {
-  const { data, error } = await $http.post('/api/v1/user/login', body)
-  if (error?.value) {
-    disposeError(error)
-    return;
-  }
-  console.log(`data`, data)
-  setUser(data.value.data?.user)
-
-  toast.add({
-    severity: 'success',
-    summary: '恭喜！登录成功!',
-    detail: '',
-    life: 3000
-  })
-
-}
-
-const userRegist = async (body) => {
-  const { data, error } = await $http.post('/api/v1/user/regist', body)
-  if (error?.value) {
-    disposeError(error)
-    return;
-  }
-
-  toast.add({
-    severity: 'success',
-    summary: '恭喜！注册成功!',
-    detail: '',
-    life: 3000
-  })
-
-  await loginBlog(body)
-
-}
-
-
-const showRegisterDialog = () => {
-  registerForm.value?.show()
-}
-
-const showLoginForm = () => {
-  loginForm.value?.show()
-}
-
-const showSetting = () => {
-  userSetting.value?.show()
-}
 </script>

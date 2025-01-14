@@ -74,7 +74,6 @@ const changeTags = async (tags: string[]) => {
     path: '/article',
     query: {
       ...route.query || {},
-      page: 1,
       tag: tags_str || '',
     }
   })

@@ -9,8 +9,4 @@
 </template>
 
 <script lang="ts" setup>
-// const handlePageScroll = (e) => {
-//   console.log(`e.target`, e.target.scrollTop)
-// }
-
 </script>

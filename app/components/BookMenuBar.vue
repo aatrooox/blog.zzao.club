@@ -18,7 +18,6 @@ const { name = '名称' } = defineProps<Props>();
 
 const colorMode = useColorMode()
 const route = useRoute();
-const { disposeError } = useErrorDispose()
 const curLabel = ref('首页')
 const modes = ['system', 'light', 'dark']
 const index = ref(modes.indexOf(colorMode.preference))
