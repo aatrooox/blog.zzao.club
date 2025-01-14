@@ -1,4 +1,5 @@
 import RSS from 'rss';
+import { parseMarkdown } from '@nuxtjs/mdc/runtime'
 
 export default defineEventHandler(async (event) => {
 
@@ -17,11 +18,11 @@ export default defineEventHandler(async (event) => {
       url: `https://blog.zzao.club/${post.path}`,
       date: post.date,
       description: post.description,
-      custom_elements: [
-        {
-          'content:encoded': post.rawbody
-        }
-      ]
+      // custom_elements: [
+      //   {
+      //     'content:encoded': post.rawbody
+      //   }
+      // ]
     })
   }
 
@@ -29,8 +30,8 @@ export default defineEventHandler(async (event) => {
   const feedString = feed.xml();
 
   setResponseHeader(event, 'Content-Type', 'text/xml')
-  // return posts[0]
   return feedString
+  // return parseMarkdown(posts[0].rawbody)
   // const { data } = await useAsyncData('feed-content', async () => {
   //   return queryCollection('content').order('date', 'DESC').select('id', 'path', 'title', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta').all()
   // })
