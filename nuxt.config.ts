@@ -99,6 +99,7 @@ export default defineNuxtConfig({
     // cosSecretKey: 'your_cos_secret_key',
     // cosBucket: 'your_cos_bucket',
     // cosRegion: 'your_cos_region',
+    baseURL: 'https://blog.zzao.club',
     imgHost: 'https://img.zzao.club',
     // jwtSecret: 'your_jwt_secret',
     // nuxtSecretKey: `blog-zzao-club-${uuid}`,
