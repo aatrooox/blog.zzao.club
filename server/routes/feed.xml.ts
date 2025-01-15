@@ -74,5 +74,5 @@ function renderPageContent(content: string) {
  * @returns 清理后的md raw content
  */
 function cleanInvalidChars(content:string) {
-  return content.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\n]/g, '').replace(/\\n/g, '\n').trim();
+  return content.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '').replace(/\\n/g, '\n').trim();
 }
