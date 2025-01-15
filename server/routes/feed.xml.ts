@@ -1,26 +1,34 @@
 import RSS from 'rss';
-import { parseMarkdown } from '@nuxtjs/mdc/runtime'
+import rehypeStringify from 'rehype-stringify'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
+import {unified} from 'unified'
+import remarkGfm from 'remark-gfm'
+import remarkBreaks from 'remark-breaks'
+import remarkFrontmatter from 'remark-frontmatter'
+import rehypeSanitize from 'rehype-sanitize'
+import remarkDirective from 'remark-directive'
+import remarkDirectiveRehype from 'remark-directive-rehype'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import { toHtml } from 'hast-util-to-html';
 
 export default defineEventHandler(async (event) => {
 
   const config = useRuntimeConfig()
   // @ts-ignore
-  const posts: any = await queryCollection(event, 'content').all();
-  console.log(`posts`, posts[1])
+  const posts: any = await queryCollection(event, 'content').order('date', "DESC").all();
   const feed = new RSS({
     title: '早早集市',
     site_url: config.baseURL,
     feed_url: config.baseURL + '/feed.xml',
   })
 
-  const demo = [];
-
   for ( const post of posts) {
     const content = post.rawbody
     if (content) {
       const markdownContent = cleanInvalidChars(content);
-      const mdData = await parseMarkdown(markdownContent)
-      demo.push(extractContent(mdData.body))
+      // const mdData = await parseMarkdown(markdownContent)
+      // demo.push(wrapParagraphs(convertToHtml(mdData.body)))
       feed.item({
         title: post.title,
         url: `${config.baseURL}/${post.path}`,
@@ -28,90 +36,43 @@ export default defineEventHandler(async (event) => {
         description: post.description,
         custom_elements: [
           {
-            'content:encoded': extractContent(mdData.body)
+            'content:encoded': renderPageContent(markdownContent)
           }
         ]
       })
     }
   }
-  // const content = posts[0].rawbody
-  // const markdownContent = content.replace(/^---[\s\S]*?---/, '').trim();
 
-
-  // const mdData = await parseMarkdown(markdownContent)
-
-  // const feedString = extractContent(mdData.body)
   const feedString = feed.xml();
 
   setResponseHeader(event, 'Content-Type', 'text/xml')
 
-  // return demo
-  // console.log(`feedString`, feedString)
   return feedString
 
-  // const { data } = await useAsyncData('feed-content', async () => {
-  //   return queryCollection('content').order('date', 'DESC').select('id', 'path', 'title', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta').all()
-  // })
-  // const data = $fetch('/api/content/content/query', {
-  //   context: event ? { cloudflare: event.context.cloudflare } : {},
-  //   headers: { 'content-type': 'application/json' },
-  //   method: 'POST',
-  //   body: {
-  //     sql: 'SELECT * FROM contents ORDER BY date DESC'
-  //   }
-  // }) 
-
-  // console.log(`data`, data)
-  // return posts
 })
 
-function cleanInvalidChars(content:string) {
-  // 移除 ASCII 控制字符（0-31，除了换行符和制表符）
-  return content.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '').replace(/^---[\s\S]*?---/, '').trim();
+function renderPageContent(content: string) {
+  const pipeline = unified()
+  .use(remarkParse)
+  .use(remarkBreaks)
+  .use(remarkFrontmatter, ["yaml"])
+  .use(remarkGfm, {  singleTilde: false })
+  .use(remarkDirective)
+  .use(remarkDirectiveRehype)
+  .use(remarkRehype)
+  .use(rehypeSanitize)
+  .use(rehypeAutolinkHeadings)
+  .use(rehypeStringify)
+
+  const mdastTree = pipeline.parse(content)
+  const hastTree = pipeline.runSync(mdastTree, content)
+  return toHtml(hastTree)
 }
-
-export function extractContent(
-  node: any | null
-): string {
-  if (!node)
-    return ''
-  if (typeof node === 'string') {
-    return node
-  }
-  if (Array.isArray(node)) {
-    return node.map(extractContent).join('')
-  }
-  if (typeof node === 'object' && node !== null) {
-    if (node.type === 'text' && typeof node.value === 'string') {
-      return node.value
-    }
-    if ('tag' in node && typeof node.tag === 'string') {
-      // 忽略 style 标签
-      if (node.tag === 'style') {
-        return ''
-      }
-
-      let attributes = ''
-      if (node.props && node.tag !== 'pre' && node.tag !== 'code') {
-        attributes = Object.entries(node.props)
-          .filter(([key]) => !['style'].includes(key))
-          .map(([key, value]) => `${key}="${value}"`)
-          .join(' ')
-
-        if (attributes) {
-          attributes = ` ${attributes}`
-        }
-      }
-
-      const content = Array.isArray(node.children)
-        ? extractContent(node.children)
-        : ''
-
-      return `<${node.tag}${attributes}>${content}</${node.tag}>`
-    }
-    if (Array.isArray(node.children)) {
-      return extractContent(node.children)
-    }
-  }
-  return ''
+/**
+ * 替换掉无效内容. 原因是: 不同于直接读md文件, \n 已经被转义成 \\n 所以需要转回来
+ * @param content nuxt content 保存的md原内容
+ * @returns 清理后的md raw content
+ */
+function cleanInvalidChars(content:string) {
+  return content.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\n]/g, '').replace(/\\n/g, '\n').trim();
 }
