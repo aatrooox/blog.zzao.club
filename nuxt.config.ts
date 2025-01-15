@@ -69,6 +69,7 @@ export default defineNuxtConfig({
     // '@nuxtjs/robots'
     // '@nuxtjs/seo'
     '@nuxtjs/color-mode',
+    '@nuxtjs/robots'
   ],
   colorMode: {
     preference: 'system', // default value of $colorMode.preference
