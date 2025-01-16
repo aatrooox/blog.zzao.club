@@ -39,8 +39,8 @@
     <div class="page-panel-title text-2xl font-bold">
       <span class="border-b-4 border-zinc-800 dark:border-zinc-400">我的小册</span>
     </div>
-    <div class="book-list flex flex-wrap gap-4">
-      <template v-for="page of books">
+    <div class="book-list flex flex-wrap gap-4" v-if="books">
+      <template v-for="page of books[0].children">
         <div class="book-item flex justify-between gap-4 box-border p-4 border-2 border-zinc-900 border-b-4 border-r-4 hover:shadow-md">
           <div class="page-title flex items-center gap-2">
             <Icon name="icon-park-outline:book" class="transition-all duration-150"></Icon>
@@ -136,7 +136,7 @@ const { data: books } = await useAsyncData('navigation', () => {
   return queryCollectionNavigation('book', ['date', 'path', 'id'])
 })
 
-console.log(`books`, books.value)
+// console.log(`books`, books.value[0].children)
 
 const toggle = (event, socail: any) => {
   console.log(`socail`, socail)

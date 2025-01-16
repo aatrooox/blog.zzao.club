@@ -7,12 +7,6 @@
         @update:modelValue="changeTags" size="small" />
         <Tag class="ml-2" :value="`${count} 篇`"></Tag>
     </div>
-    <!-- <TransitionGroup name="page" @leave="leaveTransition"> -->
-    <!-- <Transition name="page">
-      <div class="flex flex-col gap-4" v-if="status === 'pending'" key="skeleton">
-        <SkeletonPage v-for="_ in 10"></SkeletonPage>
-      </div>
-    </Transition> -->
 
     <template v-for="page of (data as unknown)" :key="page.path">
       <PagePanel :page="page"></PagePanel>

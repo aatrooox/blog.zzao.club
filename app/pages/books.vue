@@ -7,7 +7,7 @@
         </template>
         <template #title>
           <div class="flex justify-between">
-            <NuxtLink :to="`/book/${book.title}`">{{ book.title }}</NuxtLink>
+            <NuxtLink :to="book.firstPath">{{ book.title }}</NuxtLink>
             <Tag :value="book.status"></Tag>
           </div>
         </template>
@@ -49,7 +49,7 @@ const { data: bookConfig } = await useAsyncData('bookConfig', () => {
 const getBooksWithArticleCount = (books: any[]) => {
   const bookList = books.map(book => {
     let articleCount = 0;
-
+    let bookHeadPath = ''
     // 递归函数：统计文章数量
     function countArticles(children) {
       children.forEach(child => {
@@ -59,6 +59,7 @@ const getBooksWithArticleCount = (books: any[]) => {
             countArticles(child.children);
           }
         } else if (child.id) {
+          if (!bookHeadPath) bookHeadPath = child.path
           // 如果是文章，增加计数
           if (child.title !== 'index') articleCount++;
         }
@@ -72,6 +73,8 @@ const getBooksWithArticleCount = (books: any[]) => {
 
     return {
       title: book.title,
+      path: book.path,
+      firstPath: bookHeadPath + '?key=0-0',
       cover: bookConfig.value?.find(item => item.name === book.title)?.cover,
       status: bookConfig.value?.find(item => item.name === book.title)?.status,
       articleCount: articleCount
@@ -88,7 +91,8 @@ const { data: books } = await useAsyncData('navigation', () => {
 
 const bookList = computed(() => {
   console.log(`books.value`, books.value)
-  const result = getBooksWithArticleCount(books?.value?.concat() || [])
+  const bookList = (books.value ?? [])[0].children || []
+  const result = getBooksWithArticleCount(bookList)
   console.log(`result`, result)
   setBook(Array.from(result));
   return result

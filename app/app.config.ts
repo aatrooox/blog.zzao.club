@@ -6,7 +6,7 @@ export default defineAppConfig({
   // 组织地址
   organizationUrl: 'https://zzao.club',
   // 描述
-  desciption: '基于 Obsidian 的 Github 仓库生成博客站，文章和小册在 OB 里维护。',
+  desciption: '基于 Obsidian 生成的博客站, 支持一键复制文章样式到公众号, 保持排版一致',
   // 头像
   avatar: 'https://img.zzao.club/article/202412301500611.png',
   // 社交媒体 icon 从 https://icones.js.org/ 里找

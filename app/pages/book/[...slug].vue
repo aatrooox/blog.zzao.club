@@ -1,6 +1,6 @@
 <template>
-  <div class="book-page w-full flex flex-col">
-    <BookMenuBar :name="slug[0]"></BookMenuBar>
+  <div class="book-page w-full flex flex-col box-border px-4">
+    <BookMenuBar :name="bookName"></BookMenuBar>
     <div class="mobile-menu md:hidden">
       <Menubar :model="bookMenu">
         <template #item="{ item, props, hasSubmenu }">
@@ -16,19 +16,19 @@
         </template>
       </Menubar>
     </div>
-    <div class="book-content flex w-full">
+    <div class="book-content flex w-full box-border">
       <div class="book-menu h-full sticky top-14 hidden md:block">
         <Tree v-model:selectionKeys="selectedKey" v-model:expandedKeys="expandedKeys" :value="bookMenu"
           selectionMode="single" @nodeSelect="onNodeSelect" @node-unselect="onNodeSelect"
           class="w-[100px] md:w-[250px] text-sm">
         </Tree>
       </div>
-      <div class="page-content !w-full md:!w-[calc(100%-100px)] flex justify-center">
+      <div class="page-content !w-full md:!w-[calc(100%-130px)] flex justify-center box-border">
         <article ref="curMdContentRef" v-if="page" class="mdc-prose prose !w-full !max-w-full">
           <div class="version-info" v-if="page?.versions">
             <Tag v-for="v of page?.versions" :key="v" :value="v" class="mr-2"></Tag>
           </div>
-          <ContentRenderer :value="page?.body" class="!w-full"></ContentRenderer>
+          <ContentRenderer :value="page?.body" class="!w-full md:!w-[calc(100%-130px)]"></ContentRenderer>
         </article>
         <!-- <ContentRenderer :value="page?.body"></ContentRenderer> -->
       </div>
@@ -45,26 +45,32 @@ const route = useRoute();
 const toast = useToast();
 // 0 表示书名
 const slug = computed(() => route.params.slug || [])
-const content = ref()
+const bookName = computed( () => {
+  return (book.value ?? [])[0].children[0].title ?? '我的小册'
+});
+const content = ref('')
 const selectedKey = ref();
 const expandedKeys = ref({});
-const { data: menu } = await useAsyncData(hash(route.path + 'menu'), () => {
+const { data: book } = await useAsyncData(hash(route.path + 'menu'), () => {
   console.log(`slug`, slug)
   return queryCollectionNavigation('book').where('path', 'LIKE', `%${slug.value[0]}%`)
 })
 
 const { data: page, error, refresh } = await useAsyncData(hash(route.path + 'page'), () => {
   // 删掉前缀
-  return queryCollection('book').where('id', 'LIKE', `%${decodeURI(route.path.substring(1))}%`).first()
+  return queryCollection('book').path(route.path).first()
 }, { watch: [route.query]})
 
 console.log('page', page.value, error.value)
-console.log(`menu`, menu.value)
+console.log(`menu`, book.value)
 
 const bookMenu = computed(() => {
   // 存在此小册
-  if (menu.value && menu.value[0]) {
-    return transformTree(menu.value[0].children)
+  if (book.value && book.value[0]) {
+    if (book.value[0].children) {
+      console.log(`bookMenu 00 0 00 0`, book.value[0].children[0])
+      return transformTree(book.value[0].children[0].children)
+    }
   }
 
   return []
@@ -135,7 +141,7 @@ const onNodeSelect = (node) => {
   // toast.add({ severity: 'success', summary: `Node Selected：【${node.isPage}】`, detail: node.label, life: 3000 });
   if (node.isPage) {
     content.value = node.title;
-    navigateTo('/book/' + node.title + `?key=${node.key}`, { replace: true })
+    navigateTo(node.path + `?key=${node.key}`, { replace: true })
   } else {
     expandNode(node)
   }
