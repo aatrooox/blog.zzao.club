@@ -78,6 +78,9 @@ export default defineNuxtConfig({
   primevue: {
     importTheme: { from: '@@/primevue/theme.ts' },
   },
+  robots: {
+    sitemap: 'https://blog.zzao.club/sitemap.xml'
+  },
   tailwindcss: {
     cssPath: ['@/assets/css/tailwind.css', { injectPosition: "first" }],
     configPath: 'tailwind.config',
