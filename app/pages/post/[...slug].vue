@@ -66,7 +66,7 @@
 
   const { data: page } = await useAsyncData(route.path, () => {
     return queryCollection('content').path(decodeURI(route.path)).first()
-  })
+  }, {lazy: true})
 
   useSeoMeta({
     title: page.value?.seo.title,

@@ -57,7 +57,7 @@ const selectedKey = ref();
 const expandedKeys = ref({});
 const { data: book } = await useAsyncData(hash(route.path + 'menu'), () => {
   return queryCollectionNavigation('book').where('path', 'LIKE', `%${slug.value[0]}%`)
-})
+}, { lazy: true})
 
 const { data: page, error, refresh } = await useAsyncData(hash(route.path + 'page'), () => {
   // 删掉前缀

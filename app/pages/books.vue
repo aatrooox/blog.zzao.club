@@ -44,7 +44,7 @@ const { setBook } = useBook();
 const appConfig = useAppConfig();
 const { data: bookConfig } = await useAsyncData('bookConfig', () => {
   return queryCollection('bookConfig').all()
-})
+}, { lazy: true })
 // const bookConfig = await queryCollection('bookConfig').all()
 const getBooksWithArticleCount = (books: any[]) => {
   const bookList = books.map(book => {
@@ -86,7 +86,7 @@ const getBooksWithArticleCount = (books: any[]) => {
 // 根据目录结构获取到文章列表，排序按文件名进行排序
 const { data: books } = await useAsyncData('navigation', () => {
   return queryCollectionNavigation('book', ['date', 'path', 'id'])
-})
+}, { lazy: true})
 
 
 const bookList = computed(() => {
