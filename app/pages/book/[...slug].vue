@@ -1,6 +1,6 @@
 <template>
   <div class="book-page w-full flex flex-col box-border px-4">
-    <BookMenuBar :name="bookName"></BookMenuBar>
+    <BookMenuBar :name="activeTitle ? `${activeTitle}` : bookName"></BookMenuBar>
     <div class="mobile-menu md:hidden">
       <Menubar :model="bookMenu">
         <template #item="{ item, props, hasSubmenu }">
@@ -16,19 +16,19 @@
         </template>
       </Menubar>
     </div>
-    <div class="book-content flex w-full box-border">
-      <div class="book-menu h-full sticky top-14 hidden md:block">
+    <div class="book-content flex w-full max-w-full box-border overflow-x-hidden">
+      <div class="book-menu h-full fixed top-14 hidden md:block">
         <Tree v-model:selectionKeys="selectedKey" v-model:expandedKeys="expandedKeys" :value="bookMenu"
           selectionMode="single" @nodeSelect="onNodeSelect" @node-unselect="onNodeSelect"
           class="w-[100px] md:w-[250px] text-sm">
         </Tree>
       </div>
-      <div class="page-content !w-full md:!w-[calc(100%-130px)] flex justify-center box-border">
+      <div class="page-content md:pl-[250px] flex justify-center box-border !w-full !max-w-full">
         <article ref="curMdContentRef" v-if="page" class="mdc-prose prose !w-full !max-w-full">
           <div class="version-info" v-if="page?.versions">
             <Tag v-for="v of page?.versions" :key="v" :value="v" class="mr-2"></Tag>
           </div>
-          <ContentRenderer :value="page?.body" class="!w-full md:!w-[calc(100%-130px)]"></ContentRenderer>
+          <ContentRenderer :value="page?.body" class=""></ContentRenderer>
         </article>
         <!-- <ContentRenderer :value="page?.body"></ContentRenderer> -->
       </div>
@@ -48,6 +48,10 @@ const slug = computed(() => route.params.slug || [])
 const bookName = computed( () => {
   return (book.value ?? [])[0].children[0].title ?? '我的小册'
 });
+const activeTitle = computed( () => {
+  // 取 slug 索引大于 0 的内容， 组成标题
+  return slug.value.length > 1 ? (slug.value as string[]).slice(1).join('/') : ''
+})
 const content = ref('')
 const selectedKey = ref();
 const expandedKeys = ref({});
