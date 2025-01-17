@@ -52,7 +52,7 @@
 </template>
 
 <script setup>
-  import { EffectCssAttrs, camelCaseToHyphen, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs } from '@/config/richText';
+  import { EffectCssAttrs, camelCaseToHyphen, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs, customTagCssAttrs } from '@/config/richText';
   const toast = useToast()
   const route = useRoute();
   // console.log(`path`, route.params.slug, `/${route.params.slug.join('/')}`)
@@ -102,7 +102,7 @@
     // 获取内容区域的父级div
     const contentDom = getContentDom();
     const contentChildrens = contentDom.childNodes
-    let articleOutHTML = `<section style="padding-left:12px; padding-right:12px;">`
+    let articleOutHTML = `<section style="padding-left:12px; padding-right:12px;background-image: linear-gradient(90deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%), linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%);background-size: 20px 20px;">`
     contentChildrens.forEach( childDom => {
       const childInnerHTMLWithInlineStyle = getOneDomCssStyle(childDom)
       articleOutHTML += childInnerHTMLWithInlineStyle
@@ -173,6 +173,22 @@
             curCssStyles[cssAttr] = value
           }
         })
+        // 如果当前元素有些属性需要添加进去
+        // if (classList.some( item => !!customTagCssAttrs[item])) {
+        //   console.log(`当前 classList ${classList} 存在自定义属性值`, )
+        //   classList.forEach( item => {
+        //     if (customTagCssAttrs[item]) {
+        //       customTagCssAttrs[item].forEach( cssAttr => {
+        //         const value = computedCssStyles[cssAttr]
+        //         if (value) {
+        //           curCssStyles[cssAttr] = value
+        //           console.log(`自定义后的属性值为 => `, curCssStyles)
+        //         }
+        //       })
+        //     }
+        //   })
+        // }
+
         // 设置缓存, 如果存在相同html, 则直接使用缓存
         _htmlCache[childOutHTML] = curCssStyles
         // 组装style字符串

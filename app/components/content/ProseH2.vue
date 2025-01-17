@@ -1,9 +1,10 @@
 <template>
   <div :id="props.id" class="my-4 cursor-pointer">
     <span
-      class="relative text-black pl-2 py-2 text-lg font-bold before:content-[' '] before:w-1 before:h-4 before:bg-black before:p-0 before:absolute before:left-0 before:top-3 dark:text-zinc-100 dark:before:bg-zinc-100">
+      class="text-black py-1 text-lg font-bold border-b-2 border-black dark:text-zinc-200 dark:border-zinc-200 ">
+      <!-- <span class="h2-box w-1 h-4 bg-black !inline-block dark:bg-zinc-100 mr-2"></span> -->
       <a v-if="props.id && generate" :href="`#${props.id}`" class="dark:text-zinc-200">
-        <slot />
+        #<slot />
       </a>
       <slot v-else />
     </span>

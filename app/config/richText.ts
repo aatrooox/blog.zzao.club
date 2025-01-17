@@ -41,6 +41,12 @@ export const PreCodeCssAttrs = [
   'color'
 ]
 
+// 某些元素需要特殊的属性值
+// 比如 h2 自定义了一个黑色小方块作为样式
+export const customTagCssAttrs = {
+  'h2-box': ['display', 'width','height']
+}
+
 export const IMG_WRAP_CLASS = 'blog-zzao-club-img-component'
 
 // 需要排除掉的元素的class

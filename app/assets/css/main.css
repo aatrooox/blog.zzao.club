@@ -14,7 +14,7 @@ html, body {
   font-family: 'LXGWS', sans-serif;
 }
 body {
-  background-image: radial-gradient(circle , #5a5a5a .5px, transparent .5px);
+  background-image: linear-gradient(90deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%), linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%);
   background-size: 20px 20px;
 }
 
