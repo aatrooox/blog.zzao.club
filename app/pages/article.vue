@@ -1,28 +1,14 @@
 <template>
   <div class="flex flex-col gap-4">
     <div class="paginator flex gap-4 justify-between items-center">
-      <!-- <Select v-model="selectedTags" showClear :options="tags" optionLabel="name" placeholder="筛选标签"
-        class="w-full md:w-56" @update:modelValue="changeTags" /> -->
       <SelectButton v-model="selectedTags" :options="tags" optionLabel="name" multiple aria-labelledby="multiple"
         @update:modelValue="changeTags" size="small" />
         <Tag class="ml-2" :value="`${count} 篇`"></Tag>
     </div>
-
     <template v-for="page of (data as unknown)" :key="page.path">
       <PagePanel :page="page"></PagePanel>
     </template>
-    <!-- </TransitionGroup> -->
-
-    <!-- <div class="paginator flex gap-4 justify-center items-center">
-      <Button rounded :disabled="prevDisabled" @click="changePage(-1)">
-        <Icon name="icon-park-outline:arrow-up"></Icon>
-      </Button>
-      <span class="text-xl font-bold">{{ page }}</span>
-      <Button rounded :disabled="nextDisabled" @click="changePage(1)">
-        <Icon name="icon-park-outline:arrow-down"></Icon>
-      </Button>
-      <Tag class="ml-2" :value="`总计 ${count} 篇`"></Tag>
-    </div> -->
+   
   </div>
 </template>
 <script lang="ts" setup>

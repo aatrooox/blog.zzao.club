@@ -56,23 +56,19 @@ const content = ref('')
 const selectedKey = ref();
 const expandedKeys = ref({});
 const { data: book } = await useAsyncData(hash(route.path + 'menu'), () => {
-  console.log(`slug`, slug)
   return queryCollectionNavigation('book').where('path', 'LIKE', `%${slug.value[0]}%`)
 })
 
 const { data: page, error, refresh } = await useAsyncData(hash(route.path + 'page'), () => {
   // 删掉前缀
   return queryCollection('book').path(route.path).first()
-}, { watch: [route.query]})
+}, { watch: [route.query], lazy: true})
 
-console.log('page', page.value, error.value)
-console.log(`menu`, book.value)
 
 const bookMenu = computed(() => {
   // 存在此小册
   if (book.value && book.value[0]) {
     if (book.value[0].children) {
-      console.log(`bookMenu 00 0 00 0`, book.value[0].children[0])
       return transformTree(book.value[0].children[0].children)
     }
   }
