@@ -4,10 +4,10 @@
 
 ## 功能
 
-- [x] 简约
-- [x] 基于 `app.config.ts` 配置基本信息
-- [x] 文章与本项目解耦, 不需要复制进项目里, 通过Github仓库拉取markdown文件
-- [x] 配置忽略(文章)规则 
+- [x] 风格简约
+- [x] 基于 `app.config.ts` 配置博客站基本信息
+- [x] 基于 Github 仓库生成文章
+- [x] 忽略(某些文章)规则 
 - [x] 全文检索
 - [x] 按目录生成小册
 - [x] tailwindcss
@@ -16,7 +16,7 @@
 - [x] robots.txt
 - [ ] 友链
 - [ ] 非开发者友好的配置页面
-- [ ] 静态化
+- [ ] ~~静态化 (不再支持)~~
 
 ## 安装依赖
 
@@ -28,7 +28,14 @@
 
 ```bash
 npm i 
+
+pnpm i 
+
 ```
+
+视报错信息而定:
+
+涉及从 npm 切换到 pnpm 时，可能需要重新 `pnpm add better-sqlite3` 和 `pnpm rebuild better-sqlite3`
 
 
 ## 运行前配置
@@ -84,3 +91,11 @@ npm run dev
 ```bash
 npm run build
 ```
+## 扩展层（Layer）(开发中)
+
+- license layer： 用于权限校验，登录和放行其他 layer
+- admin layer: 可视化操作配置文件。【必须先继承 license layer】
+
+## 注意
+
+- 继承了 License Layer 后，不再支持 `nuxi generate`

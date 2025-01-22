@@ -5,6 +5,16 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const packageJson = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf-8')
 )
+// // 检查相对路径下是否存在 auth layer
+// const hasLayer = ((layerName: string) => {
+//   try {
+//     const authPath = path.resolve(__dirname, `../${layerName}`)
+//     return fs.existsSync(authPath)
+//   } catch (e) {
+//     return false
+//   }
+// })
+
 const appVersion = packageJson.version
 // const uuid = useNanoId(8)
 const isDev = process.env.NODE_ENV === 'development'
@@ -12,8 +22,12 @@ console.log(` 当前环境为：${isDev ? '开发' : '生产'}`, )
 // console.log(`nuxt-secret-key已更新: `, uuid)
 export default defineNuxtConfig({
   // extends: '@nuxt-themes/typography',
-  debug: true,
+  debug: false,
   devtools: { enabled: true },
+  // 拓展博客功能， 待开源
+  extends: [
+    '../zc-license'
+  ],
   sourcemap: {
     server: true,
     client: true
@@ -162,6 +176,13 @@ export default defineNuxtConfig({
         }
       ]
     },
+    watchOptions: {
+      ignored: [
+        '**/node_modules/**',
+        '**/dist/**',
+        '**/.git/**'
+      ]
+    }
   },
   compatibilityDate: '2024-10-29'
 })

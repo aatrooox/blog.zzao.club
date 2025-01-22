@@ -14,7 +14,8 @@
           <div class="text-sm text-zinc-500">{{ config.desciption }}</div>
         </div>
       </div>
-
+      <!-- 如果存在auth layer 则会使用此组件显示状态 -->
+      <AuthView v-if="!!useNuxtApp().$authEnabled"></AuthView>
       <div class="social-panel flex gap-4">
         <div v-for="item in config.social">
           <Button type="button" severity="secondary" size="large" label="Share" @click="(event) => toggle(event, item)"

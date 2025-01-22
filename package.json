@@ -1,7 +1,7 @@
 {
   "private": true,
   "type": "module",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev -p 4775 -o",
@@ -54,7 +54,7 @@
     "@primevue/nuxt-module": "^4.1.1",
     "@tailwindcss/typography": "^0.5.15",
     "@types/rss": "^0.0.32",
-    "better-sqlite3": "^11.5.0",
+    "better-sqlite3": "^11.8.1",
     "husky": "^8.0.0"
   }
 }
