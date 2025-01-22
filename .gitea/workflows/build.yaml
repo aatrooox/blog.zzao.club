@@ -15,7 +15,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Install dependencies
-        run: npm ci
+        run: npm install
       - name: Build Project
         env: 
           CONTENT_REPO_TOKEN: ${{ vars.CONTENT_REPO_TOKEN }}
