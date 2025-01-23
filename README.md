@@ -93,9 +93,9 @@ npm run build
 ```
 ## 扩展层（Layer）(开发中)
 
-- license layer： 用于权限校验，登录和放行其他 layer
+- auth layer： 用于权限校验，登录和放行其他 layer
 - admin layer: 可视化操作配置文件。【必须先继承 license layer】
 
 ## 注意
 
-- 继承了 License Layer 后，不再支持 `nuxi generate`
+- 继承了 auth Layer 后，不再支持 `nuxi generate`

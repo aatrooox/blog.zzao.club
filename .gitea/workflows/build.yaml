@@ -25,10 +25,18 @@ jobs:
           NUXT_COS_REGION: ${{ vars.NUXT_COS_REGION }}
           NUXT_JWT_SECRET: ${{ vars.NUXT_JWT_SECRET }}
           DATABASE_URL: ${{ vars.DATABASE_URL }}
+          NUXT_GITHUB_CLIENT_SECRET: ${{ vars.NUXT_GITHUB_CLIENT_SECRET }}
+          NUXT_GITHUB_CLIENT_ID: ${{ vars.NUXT_GITHUB_CLIENT_ID }}
+          NUXT_AUTH_SECTRET: ${{ vars.NUXT_AUTH_SECTRET }}
+          NUXT_AUTH_ORIGIN: ${{ vars.NUXT_AUTH_ORIGIN }}
         run: npm run build
       - name: Copy and Build
         env: 
           DATABASE_URL: ${{ vars.DATABASE_URL }}
+          NUXT_GITHUB_CLIENT_SECRET: ${{ vars.NUXT_GITHUB_CLIENT_SECRET }}
+          NUXT_GITHUB_CLIENT_ID: ${{ vars.NUXT_GITHUB_CLIENT_ID }}
+          NUXT_AUTH_SECTRET: ${{ vars.NUXT_AUTH_SECTRET }}
+          NUXT_AUTH_ORIGIN: ${{ vars.NUXT_AUTH_ORIGIN }}
         run: |
           rm -rf /root/web/blog3/*
           mkdir -p /root/web/blog3/prisma
