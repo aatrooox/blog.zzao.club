@@ -1,7 +1,7 @@
 {
   "private": true,
   "type": "module",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev -p 4775 -o",
@@ -11,7 +11,7 @@
     "release:dev": "node ./.husky/scripts/updateVersion.js"
   },
   "dependencies": {
-    "@nuxt/content": "^3.0.0-alpha.8",
+    "@nuxt/content": "^3.0.0",
     "@nuxt/icon": "^1.6.1",
     "@nuxt/image": "^1.8.1",
     "@nuxtjs/color-mode": "^3.5.2",

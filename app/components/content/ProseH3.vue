@@ -1,8 +1,8 @@
 <template>
   <div :id="props.id" class="my-4 cursor-pointer">
     <span
-      class="relative text-black pl-2 py-2 text-lg font-bold before:content-[' '] before:w-1 before:h-4 before:bg-black before:p-0 before:absolute before:left-0 before:top-3 dark:text-zinc-100 dark:before:bg-zinc-100">
-      <a v-if="props.id && generate" :href="`#${props.id}`">
+      class=" px-2 text-lg font-bold bg-zinc-800 text-white dark:bg-zinc-200 ">
+      <a v-if="props.id && generate" :href="`#${props.id}`" class="!text-zinc-200 dark:!text-zinc-800">
         <slot />
       </a>
       <slot v-else />
