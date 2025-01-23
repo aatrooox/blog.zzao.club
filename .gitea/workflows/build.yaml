@@ -15,7 +15,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm i -g pnpm
+          pnpm install
       - name: Build Project
         env: 
           CONTENT_REPO_TOKEN: ${{ vars.CONTENT_REPO_TOKEN }}
@@ -29,7 +31,7 @@ jobs:
           NUXT_GITHUB_CLIENT_ID: ${{ vars.NUXT_GITHUB_CLIENT_ID }}
           NUXT_AUTH_SECTRET: ${{ vars.NUXT_AUTH_SECTRET }}
           NUXT_AUTH_ORIGIN: ${{ vars.NUXT_AUTH_ORIGIN }}
-        run: npm run build
+        run: pnpm build
       - name: Copy and Build
         env: 
           DATABASE_URL: ${{ vars.DATABASE_URL }}
