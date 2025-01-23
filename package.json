@@ -1,14 +1,12 @@
 {
   "private": true,
   "type": "module",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev -p 4775 -o",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "prepare": "husky install",
-    "release:dev": "node ./.husky/scripts/updateVersion.js"
+    "preview": "nuxt preview"
   },
   "dependencies": {
     "@nuxt/content": "^3.0.0",
@@ -54,7 +52,6 @@
     "@primevue/nuxt-module": "^4.1.1",
     "@tailwindcss/typography": "^0.5.15",
     "@types/rss": "^0.0.32",
-    "better-sqlite3": "^11.8.1",
-    "husky": "^8.0.0"
+    "better-sqlite3": "^11.8.1"
   }
 }

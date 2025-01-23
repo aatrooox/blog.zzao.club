@@ -5,15 +5,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const packageJson = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf-8')
 )
-// // 检查相对路径下是否存在 auth layer
-// const hasLayer = ((layerName: string) => {
-//   try {
-//     const authPath = path.resolve(__dirname, `../${layerName}`)
-//     return fs.existsSync(authPath)
-//   } catch (e) {
-//     return false
-//   }
-// })
 
 const appVersion = packageJson.version
 // const uuid = useNanoId(8)
@@ -24,9 +15,9 @@ export default defineNuxtConfig({
   // extends: '@nuxt-themes/typography',
   debug: false,
   devtools: { enabled: true },
-  // 拓展博客功能， 待开源
   extends: [
-    '../zc-license'
+    // README https://github.com/aatrooox/zc-auth-layer
+    ['github:aatrooox/zc-auth-layer', { install: true }]
   ],
   sourcemap: {
     server: true,
@@ -71,6 +62,7 @@ export default defineNuxtConfig({
     }
   },
   modules: [
+    '@nuxtjs/robots',
     '@nuxt/content',
     '@nuxtjs/tailwindcss',
     '@primevue/nuxt-module',
@@ -83,7 +75,6 @@ export default defineNuxtConfig({
     // '@nuxtjs/robots'
     // '@nuxtjs/seo'
     '@nuxtjs/color-mode',
-    '@nuxtjs/robots'
   ],
   colorMode: {
     preference: 'system', // default value of $colorMode.preference
