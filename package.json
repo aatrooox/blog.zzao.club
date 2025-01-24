@@ -42,7 +42,8 @@
     "rss": "^1.2.2",
     "sitemap": "^8.0.0",
     "unified": "^11.0.5",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zc-auth-layer": "0.0.2"
   },
   "devDependencies": {
     "@iconify-json/icon-park-outline": "^1.2.1",

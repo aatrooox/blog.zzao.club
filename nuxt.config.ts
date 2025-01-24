@@ -18,6 +18,7 @@ export default defineNuxtConfig({
   extends: [
     // README https://github.com/aatrooox/zc-auth-layer
     ['github:aatrooox/zc-auth-layer', { install: true }]
+    // 'zc-auth-layer'
   ],
   sourcemap: {
     server: true,
@@ -116,7 +117,7 @@ export default defineNuxtConfig({
     //   domain: isDev ? 'localhost' : 'zzao.club'
     // },
     public: {
-      ContentVersion: '3.0.0-alpha.8',
+      ContentVersion: '3.0.0',
       Z_BLOG_VERSION: appVersion,
       // nuxtSecretKey:`blog-zzao-club-${uuid}`,
       imgHost: 'https://img.zzao.club',

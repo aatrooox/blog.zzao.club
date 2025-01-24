@@ -14,16 +14,8 @@
           <Button rounded severity="secondary" size="small" @click="showSearchDialog">
             <Icon name="icon-park-outline:search"></Icon>
           </Button>
-          
-
-          <!-- <UserAvatar v-if="isLogin" :user-info="user" class="hover-shadow-zinc" @click="showSetting">
-          </UserAvatar>
-          <Button v-else severity="secondary" label="登录" size="small" @click="showLoginForm"></Button> -->
           <Tag :value="`v${config.public.Z_BLOG_VERSION}`"
             v-tooltip.bottom="`博客版本: v${config.public.Z_BLOG_VERSION} \n @nuxt/content@${config.public.ContentVersion}`"></Tag>
-          <!-- <Tag v-if="config.public.branchName" :value="`${config.public.branchName}`"
-            v-tooltip.bottom="`@nuxt/content@${config.public.branchName}`">
-          </Tag> -->
           <Button rounded severity="secondary" @click="toggleDarkMode()" size="small">
             <Icon :name="modeIcon"></Icon>
           </Button>
