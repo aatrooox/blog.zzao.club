@@ -10,62 +10,68 @@
         "types": [
           {
             "type": "feat",
-            "section": "✨ Features | 新功能"
+            "section": "🔥 Features"
           },
           {
             "type": "fix",
-            "section": "🐛 Bug Fixes | Bug 修复"
+            "section": "🩹 Fixess"
           },
           {
             "type": "chore",
-            "section": "🎫 Chores | 其他更新"
+            "section": "🎫 Chores"
           },
           {
             "type": "docs",
-            "section": "📝 Documentation | 文档"
+            "section": "📖 Documentation"
           },
           {
             "type": "style",
-            "section": "💄 Styles | 风格"
+            "section": "✅ Styles"
           },
           {
             "type": "refactor",
-            "section": "♻ Code Refactoring | 代码重构"
+            "section": "✅ Code Refactoring"
           },
           {
             "type": "perf",
-            "section": "⚡ Performance Improvements | 性能优化"
+            "section": "✅ Performance Improvements"
           },
           {
             "type": "test",
-            "section": "✅ Tests | 测试"
+            "section": "✅ Tests"
           },
           {
             "type": "revert",
-            "section": "⏪ Reverts | 回退"
+            "section": "⏪ Reverts"
           },
           {
             "type": "build",
-            "section": "👷‍ Build System | 构建"
+            "section": "👷‍ Build"
           },
           {
             "type": "ci",
-            "section": "🔧 Continuous Integration | CI 配置"
+            "section": "🔧 CI"
           },
           {
             "type": "config",
-            "section": "🔨 CONFIG | 配置"
+            "section": "🔨 CONFIG"
           }
         ]
       },
       "infile": "CHANGELOG.md",
       "ignoreRecommendedBump": true,
-      "strictSemVer": true
+      "strictSemVer": true,
+      "commitUrlFormat": "https://github.com/aatrooox/blog.zzao.club/commit/{{hash}}",
+      "issueUrlFormat": "https://github.com/aatrooox/blog.zzao.club/issues/{{id}}",
+      "compareUrlFormat": "https://github.com/aatrooox/blog.zzao.club/compare/{{previousTag}}...{{currentTag}}"
     }
   },
   "git": {
     "commitMessage": "chore: release v${version}",
-    "tagName": "v${version}"
+    "tagName": "v${version}",
+    "changelog": {
+      "repo": ""
+    }
   },
   "github": {
     "release": true,
