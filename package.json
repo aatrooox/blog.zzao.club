@@ -1,13 +1,13 @@
 {
   "private": true,
   "type": "module",
-  "version": "0.4.16",
+  "version": "0.4.17",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev -p 4775 -o",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "release": "release-it"
+    "release": "release-it --no-git.requireUpstream"
   },
   "dependencies": {
     "@nuxt/content": "^3.0.0",
