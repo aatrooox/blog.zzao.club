@@ -4,7 +4,11 @@
     "@release-it/conventional-changelog": {
       "preset": "angular",
       "infile": "CHANGELOG.md",
-      "header": "# Changelog"
+      "header": "# Changelog",
+      "writerOpts": {
+        "commitPartial": "* {{header}} ([{{hash}}](https://github.com/aatrooox/blog.zzao.club/commit/{{hash}}))\n",
+        "mainTemplate": "{{> header}}\n\n{{#each commitGroups}}\n\n{{#if title}}\n### {{title}}\n\n{{/if}}\n{{#each commits}}\n{{> commit root=@root}}\n{{/each}}\n{{/each}}\n\n{{> footer}}"
+      }
     }
   },
   "github": {
