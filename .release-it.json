@@ -68,13 +68,10 @@
   },
   "git": {
     "commitMessage": "chore: release v${version}",
-    "tagName": "v${version}",
-    "changelog": {
-      "repo": ""
-    }
+    "tagName": "v${version}"
   },
   "github": {
-    "release": true,
+    "release": false,
     "draft": false
   }
 }
