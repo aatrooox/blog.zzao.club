@@ -7,6 +7,9 @@
       "header": "# Changelog"
     }
   },
+  "github": {
+    "release": false
+  },
   "git": {
     "requireCleanWorkingDir": true,
     "requireBranch": false,
