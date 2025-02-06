@@ -23,8 +23,7 @@
     "changelog": true
   },
   "hooks": {
-    "after:git:bump": "git push gitea && git push github",
-    "after:git:tag": "git push gitea --tags && git push github --tags"
+    "after:release": "git push gitea --follow-tags && git push github --follow-tags"
   },
   "npm": false
 }
