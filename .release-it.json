@@ -1,64 +1,10 @@
 {
   "plugins": {
-    "release-it-pnpm": {
-      "inFile": "CHANGELOG.md"
-    },
+    "release-it-pnpm": {},
     "@release-it/conventional-changelog": {
-      "preset": {
-        "name": "conventionalcommits",
-        "types": [
-          {
-            "type": "feat",
-            "section": "🔥 Features"
-          },
-          {
-            "type": "fix",
-            "section": "🩹 Fixess"
-          },
-          {
-            "type": "chore",
-            "section": "🎫 Chores"
-          },
-          {
-            "type": "docs",
-            "section": "📖 Documentation"
-          },
-          {
-            "type": "style",
-            "section": "✅ Styles"
-          },
-          {
-            "type": "refactor",
-            "section": "✅ Code Refactoring"
-          },
-          {
-            "type": "perf",
-            "section": "✅ Performance Improvements"
-          },
-          {
-            "type": "test",
-            "section": "✅ Tests"
-          },
-          {
-            "type": "revert",
-            "section": "⏪ Reverts"
-          },
-          {
-            "type": "build",
-            "section": "👷‍ Build"
-          },
-          {
-            "type": "ci",
-            "section": "🔧 CI"
-          },
-          {
-            "type": "config",
-            "section": "🔨 CONFIG"
-          }
-        ]
-      },
+      "preset": "angular",
       "infile": "CHANGELOG.md",
-      "ignoreRecommendedBump": true
+      "header": "# Changelog"
     }
   },
   "git": {
