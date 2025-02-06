@@ -78,7 +78,7 @@
       "infile": "CHANGELOG.md",
       "header": "# Changelog",
       "writerOpts": {
-        "commitPartial": "* {{header}} ([{{hash}}](https://github.com/aatrooox/blog.zzao.club/commit/{{hash}}))\n",
+        "commitPartial": "* {{header}} ([{{shortHash}}](https://github.com/aatrooox/blog.zzao.club/commit/{{hash}}))\n",
         "mainTemplate": "{{> header}}\n\n{{#each commitGroups}}\n\n{{#if title}}\n### {{title}}\n\n{{/if}}\n{{#each commits}}\n{{> commit root=@root}}\n{{/each}}\n{{/each}}\n\n{{> footer}}"
       }
     }
