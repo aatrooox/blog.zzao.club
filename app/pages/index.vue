@@ -37,7 +37,7 @@
         </Popover>
       </div>
     </div>
-    <div class="page-panel-title text-2xl font-bold">
+    <!-- <div class="page-panel-title text-2xl font-bold">
       <span class="border-b-4 border-zinc-800 dark:border-zinc-400">我的小册</span>
     </div>
     <div class="book-list flex flex-wrap gap-4" v-if="books">
@@ -52,7 +52,7 @@
           </div>
         </div>
       </template>
-    </div>
+    </div> -->
     
 
     <div class="page-panel-title text-2xl font-bold">

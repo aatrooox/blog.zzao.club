@@ -77,11 +77,11 @@ const items = ref([
       icon: 'icon-park-outline:read-book',
       route: '/article',
   },
-  {
-      label: '小册',
-      icon: 'icon-park-outline:book-one',
-      route: '/books'
-  },
+  // {
+  //     label: '小册',
+  //     icon: 'icon-park-outline:book-one',
+  //     route: '/books'
+  // },
   // {
   //     label: '设置',
   //     icon: 'icon-park-outline:setting-two',

@@ -6,7 +6,8 @@
     "build": "nuxt build",
     "dev": "nuxt dev -p 4775 -o",
     "generate": "nuxt generate",
-    "preview": "nuxt preview"
+    "preview": "nuxt preview",
+    "release": "release-it"
   },
   "dependencies": {
     "@nuxt/content": "^3.0.0",
@@ -42,8 +43,8 @@
     "rss": "^1.2.2",
     "sitemap": "^8.0.0",
     "unified": "^11.0.5",
-    "zod": "^3.23.8",
-    "zc-auth-layer": "0.0.2"
+    "zc-auth-layer": "0.0.2",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@iconify-json/icon-park-outline": "^1.2.1",
@@ -51,8 +52,11 @@
     "@iconify-json/ph": "^1.2.1",
     "@nuxt-themes/typography": "^1.0.1",
     "@primevue/nuxt-module": "^4.1.1",
+    "@release-it/conventional-changelog": "^10.0.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/rss": "^0.0.32",
-    "better-sqlite3": "^11.8.1"
+    "better-sqlite3": "^11.8.1",
+    "release-it": "^18.1.2",
+    "release-it-pnpm": "^4.6.4"
   }
 }

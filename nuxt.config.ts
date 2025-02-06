@@ -54,14 +54,6 @@ export default defineNuxtConfig({
       include: ["debug"],
     },
   },
-  // 把 icon 和客户端捆绑在一起， 减少请求服务端
-  icon: {
-    clientBundle: {
-      scan: true,
-      includeCustomCollections: true, 
-      sizeLimitKb: 256,
-    }
-  },
   modules: [
     '@nuxtjs/robots',
     '@nuxt/content',
@@ -77,6 +69,14 @@ export default defineNuxtConfig({
     // '@nuxtjs/seo'
     '@nuxtjs/color-mode',
   ],
+  // 把 icon 和客户端捆绑在一起， 减少请求服务端
+  icon: {
+    clientBundle: {
+      scan: true,
+      includeCustomCollections: true, 
+      sizeLimitKb: 256,
+    }
+  },
   colorMode: {
     preference: 'system', // default value of $colorMode.preference
     fallback: 'light', // fallback value if not system preference found
