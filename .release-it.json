@@ -78,8 +78,5 @@
     "push": true,
     "changelog": true
   },
-  "github": {
-    "release": false,
-    "draft": false
-  }
+  "npm": false
 }
