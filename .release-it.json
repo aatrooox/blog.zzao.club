@@ -19,8 +19,12 @@
     "commit": true,
     "commitMessage": "chore: release v${version}",
     "tag": true,
-    "push": true,
+    "push": false,
     "changelog": true
+  },
+  "hooks": {
+    "after:git:bump": "git push gitea && git push github",
+    "after:git:tag": "git push gitea --tags && git push github --tags"
   },
   "npm": false
 }
