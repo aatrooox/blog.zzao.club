@@ -67,8 +67,16 @@
     }
   },
   "git": {
+    "requireCleanWorkingDir": true,
+    "requireBranch": false,
+    "requireUpstream": true,
+    "requireCommits": true,
+    "addUntrackedFiles": false,
+    "commit": true,
     "commitMessage": "chore: release v${version}",
-    "tagName": "v${version}"
+    "tag": true,
+    "push": true,
+    "changelog": true
   },
   "github": {
     "release": false,
