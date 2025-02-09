@@ -102,7 +102,7 @@
     "changelog": true
   },
   "hooks": {
-    "after:release": "git push gitea --follow-tags && git push github --follow-tags"
+    "after:release": "git push origin --follow-tags"
   },
   "npm": false
 }
