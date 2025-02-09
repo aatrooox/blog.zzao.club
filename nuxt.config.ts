@@ -151,8 +151,9 @@ export default defineNuxtConfig({
             // Theme used if `html.dark`
             dark: 'one-dark-pro',
             // Theme used if `html.sepia`
-            sepia: 'one-dark-pro'
-          }
+            // sepia: 'text'
+          },
+          langs: ['ts', 'js', 'vue', 'json', 'yml', 'yaml', 'typescript', 'javascript', 'sql']
         }
       },
       pathMeta: {
