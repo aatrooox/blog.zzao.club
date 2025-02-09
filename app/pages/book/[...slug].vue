@@ -45,10 +45,10 @@ const route = useRoute();
 const toast = useToast();
 // 0 表示书名
 const slug = computed(() => route.params.slug || [])
-const bookName = computed( () => {
-  return (book.value ?? [])[0].children[0].title ?? '我的小册'
+const bookName = computed(() => {
+  return (book.value ?? [])[0]?.children[0].title ?? '我的小册'
 });
-const activeTitle = computed( () => {
+const activeTitle = computed(() => {
   // 取 slug 索引大于 0 的内容， 组成标题
   return slug.value.length > 1 ? (slug.value as string[]).slice(1).join('/') : ''
 })
@@ -57,12 +57,13 @@ const selectedKey = ref();
 const expandedKeys = ref({});
 const { data: book } = await useAsyncData(hash(route.path + 'menu'), () => {
   return queryCollectionNavigation('book').where('path', 'LIKE', `%${slug.value[0]}%`)
-}, { lazy: true})
+}, { lazy: true })
 
+console.log(`boook`, book.value)
 const { data: page, error, refresh } = await useAsyncData(hash(route.path + 'page'), () => {
   // 删掉前缀
   return queryCollection('book').path(route.path).first()
-}, { watch: [route.query], lazy: true})
+}, { watch: [route.query], lazy: true })
 
 
 const bookMenu = computed(() => {
@@ -120,17 +121,17 @@ const expandNode = (node) => {
 };
 
 const expandAll = (nodes) => {
-  console.log(`expand all`, )
-    for (let node of nodes) {
-        expandNode(node);
-    }
-    expandedKeys.value = { ...expandedKeys.value };
+  console.log(`expand all`,)
+  for (let node of nodes) {
+    expandNode(node);
+  }
+  expandedKeys.value = { ...expandedKeys.value };
 };
 
-onMounted( () => {
+onMounted(() => {
   expandedKeys.value = {};
   expandAll(bookMenu.value);
-  if (route.query.key) selectedKey.value = { [route.query.key as string]: true}
+  if (route.query.key) selectedKey.value = { [route.query.key as string]: true }
 })
 
 const closeNode = (node) => {

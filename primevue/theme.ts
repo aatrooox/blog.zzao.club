@@ -60,7 +60,7 @@ const Noir = definePreset(Aura, {
 export default {
     preset: Noir,
     options: {
-        darkModeSelector:'.dark-mode'
+        darkModeSelector:'.dark'
     }
 };
 

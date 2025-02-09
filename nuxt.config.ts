@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   extends: [
     // README https://github.com/aatrooox/zc-auth-layer
-    ['github:aatrooox/zc-auth-layer', { install: true }]
+    // ['github:aatrooox/zc-auth-layer', { install: true }]
     // 'zc-auth-layer'
   ],
   sourcemap: {
@@ -80,6 +80,11 @@ export default defineNuxtConfig({
   colorMode: {
     preference: 'system', // default value of $colorMode.preference
     fallback: 'light', // fallback value if not system preference found
+    dataValue: 'theme',
+    classPrefix: '',
+    classSuffix: '',
+    storage: 'localStorage', // or 'sessionStorage' or 'cookie'
+    storageKey: 'nuxt-color-mode'
   },
   primevue: {
     importTheme: { from: '@@/primevue/theme.ts' },
@@ -135,7 +140,21 @@ export default defineNuxtConfig({
   // 3.0.0-alpha.8
   content: {
     build: {
-      markdown: {},
+      markdown: {
+        highlight: {
+          // Theme used in all color schemes.
+          // theme: 'one-dark-pro',
+          // OR
+          theme: {
+            // Default theme (same as single string)
+            default: 'one-dark-pro',
+            // Theme used if `html.dark`
+            dark: 'one-dark-pro',
+            // Theme used if `html.sepia`
+            sepia: 'one-dark-pro'
+          }
+        }
+      },
       pathMeta: {
         slugifyOptions: {
           // Keep everything except invalid chars, this will preserve Chinese characters 

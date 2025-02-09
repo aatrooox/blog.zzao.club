@@ -6,7 +6,7 @@
       </Button>
     </div>
     <div
-      class="page-fixed-footer fixed left-0 right-0 bottom-0 bg-white dark:bg-zinc-200 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[999]"
+      class="page-fixed-footer fixed left-0 right-0 bottom-0 bg-white dark:bg-zinc-800 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[999]"
       v-if="showFixedHeader">
       <div class="left flex gap-2">
         <Button severity="secondary" text size="small">
@@ -38,7 +38,7 @@
         <Icon slot="icon" size="1.5em" name="icon-park-outline:wechat"></Icon>
       </Button>
     </div>
-    <article class="!w-full !max-w-full mdc-prose prose " v-if="page">
+    <article class="!w-full !max-w-full mdc-prose" v-if="page">
       <!-- <ContentDoc ref="curMdContentRef" v-slot="{ doc }"> -->
       <article ref="curMdContentRef">
         <div class="version-info" v-if="page?.versions">

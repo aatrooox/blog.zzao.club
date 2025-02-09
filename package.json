@@ -10,7 +10,7 @@
     "release": "release-it --no-git.requireUpstream"
   },
   "dependencies": {
-    "@nuxt/content": "^3.0.0",
+    "@nuxt/content": "^3.1.0",
     "@nuxt/icon": "^1.6.1",
     "@nuxt/image": "^1.8.1",
     "@nuxtjs/color-mode": "^3.5.2",

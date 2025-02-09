@@ -42,7 +42,8 @@
     </div>
     <div class="book-list flex flex-wrap gap-4" v-if="books">
       <template v-for="page of books[0].children">
-        <div class="book-item flex justify-between gap-4 box-border p-4 border-2 border-zinc-900 border-b-4 border-r-4 hover:shadow-md">
+        <div
+          class="book-item flex justify-between gap-4 box-border p-4 border-2 border-zinc-900 border-b-4 border-r-4 hover:shadow-md">
           <div class="page-title flex items-center gap-2">
             <Icon name="icon-park-outline:book" class="transition-all duration-150"></Icon>
             <NuxtLink :to="`/book/${page.title}`"
@@ -52,8 +53,8 @@
           </div>
         </div>
       </template>
-    </div> -->
-    
+</div> -->
+
 
     <div class="page-panel-title text-2xl font-bold">
       <span class="border-b-4 border-zinc-800 dark:border-zinc-400">最近文章</span>
@@ -68,7 +69,8 @@
               class="hidden transition-all duration-150 group-hover:inline-block"></Icon>
             <NuxtLink :to="page.path"
               class="prose prose-a transition-all duration-150 dark:text-zinc-200 group-hover:underline group-hover:underline-offset-2 group-hover:font-bold">
-              <span class="text-sm md:text-md text-zinc-400 mr-4">{{ formatDate(page.date, '/')}}</span>{{ page.title }}
+              <span class="text-sm md:text-md text-zinc-400 mr-4">{{ formatDate(page.date, '/') }}</span>{{ page.title
+              }}
             </NuxtLink>
           </div>
           <div class="hidden group-hover:md:block">
@@ -138,14 +140,14 @@ const { data: books } = await useAsyncData('navigation', () => {
   return queryCollectionNavigation('book', ['date', 'path', 'id'])
 })
 
-// console.log(`books`, books.value[0].children)
+console.log(`books`, books.value)
 
 const toggle = (event, socail: any) => {
   console.log(`socail`, socail)
   curSocial.value = socail;
   if (!socail.popover) {
     if (socail.url) {
-      navigateTo(socail.url, { external: true, open: { target: '_blank' }})
+      navigateTo(socail.url, { external: true, open: { target: '_blank' } })
     }
   } else {
     socialOp.value.toggle(event);

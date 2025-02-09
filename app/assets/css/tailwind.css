@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 .mdc-prose {
-  @apply prose prose-zinc prose-pre:bg-gray-100 dark:prose-pre:bg-zinc-400 dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-zinc-200 dark:prose-code:bg-zinc-200 prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300
+  @apply prose prose-zinc dark:prose-invert prose-pre:bg-zinc-200 dark:prose-pre:bg-zinc-800 dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-zinc-200 dark:prose-code:bg-zinc-200 prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300
 }
 
 /* 针对page的prose颜色配置 */
 .mdc-page-prose {
-  @apply prose prose-zinc prose-pre:bg-gray-100 dark:prose-pre:bg-zinc-400 dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-zinc-200 dark:prose-code:bg-zinc-200 prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300
+  @apply prose prose-zinc dark:prose-invert dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-zinc-200 dark:prose-code:bg-zinc-200 prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300
 }
 
 /* 针对memo的prose颜色配置 */
 .mdc-memo-prose {
-  @apply prose prose-zinc prose-pre:bg-gray-100 prose-p:leading-5 prose-p:mb-2 dark:prose-pre:bg-zinc-400 dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-red-100 dark:prose-code:bg-red-200 prose-code:text-zinc-800 dark:prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300
+  @apply prose prose-zinc prose-p:leading-5 prose-p:mb-2 dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-red-100 dark:prose-code:bg-red-200 prose-code:text-zinc-800 dark:prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300
 }
 
 .hover-shadow-cyan {

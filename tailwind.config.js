@@ -46,10 +46,11 @@ export default {
             pre: {
               // paddingBottom: 0,
               // paddingTop: 0,
-              '& > code': {
-                color: theme('colors.gray.900'),
-                backgroundColor: 'transparent'
-              }
+              // '& > code': {
+              //   color: theme('colors.gray.900'),
+              //   backgroundColor: 'transparent'
+              // }
+              // backgroundColor: theme('colors.zinc.100'),
             },
             a: {
               textDecoration: 'none'
@@ -59,7 +60,18 @@ export default {
               marginBottom: 0,
             }
           }
-        }
+        },
+        // darkMode: {
+        //   pre: {
+        //     // paddingBottom: 0,
+        //     // paddingTop: 0,
+        //     // '& > code': {
+        //     //   color: theme('colors.gray.900'),
+        //     //   backgroundColor: 'transparent'
+        //     // }
+        //     backgroundColor: theme('colors.zinc.800'),
+        //   },
+        // }
       })
     },
   },
