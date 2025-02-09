@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.32](https://43.156.136.151/zzaoclub/blogz/compare/v0.4.31...v0.4.32) (2025-02-09)
+
+
+### 🐛 Bug 修复
+
+* fix: 样式问题 ([0fcaaa3](https://github.com/aatrooox/blog.zzao.club/commit/0fcaaa327099ec5b67d066ffe8b782ede883895a))
+
 ## [0.4.31](https://43.156.136.151/zzaoclub/blogz/compare/v0.4.30...v0.4.31) (2025-02-09)
 
 
