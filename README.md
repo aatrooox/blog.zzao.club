@@ -11,6 +11,7 @@
 - [x] 全文检索
 - [x] ~~按目录生成小册~~ 准备丰富一下文章模块，小册删除掉
 - [x] tailwindcss
+- [x] toc
 - [x] rss
 - [x] sitemap
 - [x] robots.txt

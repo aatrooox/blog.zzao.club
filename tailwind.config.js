@@ -42,7 +42,8 @@ export default {
               }
             },
             p: {
-              lineHeight: '2'
+              lineHeight: '2',
+              // color: ''
             },
             pre: {
               // paddingBottom: 0,

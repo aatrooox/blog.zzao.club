@@ -15,7 +15,8 @@
             <Icon name="icon-park-outline:search"></Icon>
           </Button>
           <Tag :value="`v${config.public.Z_BLOG_VERSION}`"
-            v-tooltip.bottom="`博客版本: v${config.public.Z_BLOG_VERSION} \n @nuxt/content@${config.public.ContentVersion}`"></Tag>
+            v-tooltip.bottom="`博客版本: v${config.public.Z_BLOG_VERSION} \n @nuxt/content@${config.public.ContentVersion}`">
+          </Tag>
           <Button rounded severity="secondary" @click="toggleDarkMode()" size="small">
             <Icon :name="modeIcon"></Icon>
           </Button>
@@ -34,9 +35,10 @@
               }}</span>
           </div>
         </NuxtLink>
-        <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
-          <span :class="item.icon" />
-          <span class="ml-2">{{ item.label }}</span>
+        <a v-else v-ripple :href="item.url" :target="item.target || '_blank'" v-bind="props.action"
+          class="flex items-center box-border">
+          <Icon :name="item.icon" size="1.5em" />
+          <span>{{ item.label }}</span>
         </a>
 
       </template>
@@ -77,11 +79,11 @@ const items = ref([
       icon: 'icon-park-outline:read-book',
       route: '/article',
   },
-  // {
-  //     label: '小册',
-  //     icon: 'icon-park-outline:book-one',
-  //     route: '/books'
-  // },
+  {
+      label: '动态',
+      icon: 'icon-park-outline:one-third-rotation',
+      url: 'https://memo.zzao.club'
+  },
   // {
   //     label: '设置',
   //     icon: 'icon-park-outline:setting-two',

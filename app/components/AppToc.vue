@@ -5,6 +5,7 @@ const props = defineProps<{
 
 const activeId = ref('')
 const observer = ref()
+
 onMounted(async () => {
   await nextTick();
   setTimeout(() => {
@@ -31,12 +32,12 @@ onUnmounted(() => observer.value?.disconnect())
 </script>
 <template>
   <div
-    class="toc fixed h-[50%] right-0 lg:right-0 pc:right-10 xl:right-20 top-[30%] w-[220px] hidden lg:block box-border">
+    class="toc fixed h-[50%] right-0 lg:right-0 pc:right-10 xl:right-20 top-[30%] w-[220px] hidden lg:block box-border dark:text-zinc-500">
     <ul>
       <li v-for="link in tocData"
-        :class="[`text-sm truncate py-1 pl-4 transition-all duration-300 delay-100`, { 'font-bold active': link.id === activeId }]">
+        :class="[`text-sm truncate py-1 pl-4 transition-all duration-300 delay-100`, { 'font-bold active dark:text-zinc-300': link.id === activeId }]">
         <span
-          :class="[`absolute left-0 text-zinc-300 transition-opacity duration-300 opacity-0`, { 'opacity-100': link.id === activeId }]">#</span>
+          :class="[`absolute left-0 text-zinc-300 dark:text-zinc-500 transition-opacity duration-300 opacity-0`, { 'opacity-100': link.id === activeId }]">#</span>
         <NuxtLink :href="`#${link.id}`"> {{ link.text }} </NuxtLink>
       </li>
     </ul>

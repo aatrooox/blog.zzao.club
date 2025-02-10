@@ -2,12 +2,6 @@
   <div class="pb-10 m-auto mb-4 sm:rounded-lg">
     <main class="max-w-full relative flex justify-center gap-4">
       <div class="relativ max-w-3xl mx-auto" @scroll="handlePageScroll">
-        <!-- 顶部操作栏 -->
-        <!-- <div class="page-header">
-          <Button label="返回" @click="$router.back()">
-            <Icon name="icon-park-outline:back" slot="icon"></Icon>
-          </Button>
-        </div> -->
         <!-- 底部固定的操作栏 -->
         <div
           class="page-fixed-footer fixed left-0 right-0 bottom-0 bg-white/10 dark:bg-zinc-800/10 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[999] !backdrop-blur-md !backdrop-opacity-90"
@@ -52,7 +46,6 @@
             </div>
             <ContentRenderer :value="page?.body" class="!max-w-full"></ContentRenderer>
           </article>
-          <!-- </ContentDoc> -->
         </article>
       </div>
       <ClientOnly>
