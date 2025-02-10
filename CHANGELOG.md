@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://gitea.zzao.club/zzaoclub/blogz/compare/v0.5.0...v0.5.1) (2025-02-10)
+
+
+### 💄 样式
+
+* style: toc 大屏时展示位置 ([515db37](https://github.com/aatrooox/blog.zzao.club/commit/515db371748e9ab9959c14998a5555ff66a18ae4))
+
 ## [0.5.0](https://gitea.zzao.club/zzaoclub/blogz/compare/v0.4.32...v0.5.0) (2025-02-10)
 
 
