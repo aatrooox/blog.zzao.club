@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .mdc-prose {
-  @apply prose prose-zinc dark:prose-invert prose-pre:bg-zinc-100 dark:prose-pre:bg-zinc-800 dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-zinc-200 dark:prose-code:bg-zinc-200 prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300
+  @apply prose prose-zinc dark:prose-invert prose-pre:bg-zinc-100 dark:prose-pre:bg-zinc-800 dark:text-zinc-200 dark:prose-strong:text-zinc-200 dark:prose-blockquote:text-zinc-300 prose-code:font-bold prose-code:text-cyan-600
 }
 
 /* 针对page的prose颜色配置 */

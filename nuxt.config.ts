@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+// @ts-ignore
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const packageJson = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf-8')
@@ -73,7 +74,7 @@ export default defineNuxtConfig({
   icon: {
     clientBundle: {
       scan: true,
-      includeCustomCollections: true, 
+      includeCustomCollections: true,
       sizeLimitKb: 256,
     }
   },
@@ -106,7 +107,7 @@ export default defineNuxtConfig({
     '/article': { prerender: true },
     '/books': { prerender: true },
     '/book/**': { prerender: true },
-    '/post/**': { prerender: true } 
+    '/post/**': { prerender: true }
   },
   css: ['@/assets/css/main.css', 'primeicons/primeicons.css'],
   runtimeConfig: {
@@ -158,7 +159,7 @@ export default defineNuxtConfig({
       },
       pathMeta: {
         slugifyOptions: {
-          // Keep everything except invalid chars, this will preserve Chinese characters 
+          // Keep everything except invalid chars, this will preserve Chinese characters
           // 保留中文字符
           remove: /[$*+~()'"!\-=#?:@]/g,
         }
@@ -173,7 +174,7 @@ export default defineNuxtConfig({
     },
     prerender: {
       crawlLinks: true,
-      failOnError: false, // 
+      failOnError: false, //
       routes: ['/feed.xml']
     },
     imports: {

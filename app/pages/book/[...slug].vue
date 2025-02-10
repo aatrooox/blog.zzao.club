@@ -24,7 +24,7 @@
         </Tree>
       </div>
       <div class="page-content md:pl-[250px] flex justify-center box-border !w-full !max-w-full">
-        <article ref="curMdContentRef" v-if="page" class="mdc-prose prose !w-full !max-w-full">
+        <article ref="curMdContentRef" v-if="page" class="mdc-prose !w-full !max-w-full">
           <div class="version-info" v-if="page?.versions">
             <Tag v-for="v of page?.versions" :key="v" :value="v" class="mr-2"></Tag>
           </div>
