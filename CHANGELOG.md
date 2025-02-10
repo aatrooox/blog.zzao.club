@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.0](https://gitea.zzao.club/zzaoclub/blogz/compare/v0.4.32...v0.5.0) (2025-02-10)
+
+
+### ✨ 新功能
+
+* feat: 增加 toc 组件 ([7fc1d7f](https://github.com/aatrooox/blog.zzao.club/commit/7fc1d7f35a3f8165b73ecfc7df9a3216bc391293))
+
+### 💄 样式
+
+* style: 改变 prose-code 变现。现在看起来更干净一些 ([fbc8218](https://github.com/aatrooox/blog.zzao.club/commit/fbc8218349f57df2025704a4b1f1b3b72280035a))
+* style: 优化h2/toc样式 ([d155e5d](https://github.com/aatrooox/blog.zzao.club/commit/d155e5dab75d0a5ed65fa7ef34e997931df9f8ba))
+
 ## [0.4.32](https://43.156.136.151/zzaoclub/blogz/compare/v0.4.31...v0.4.32) (2025-02-09)
 
 
