@@ -28,6 +28,7 @@
   @apply p-4 rounded-md transition-all duration-300
 }
 
+
 @keyframes flow {
   0% {
     background-position: 0 0;

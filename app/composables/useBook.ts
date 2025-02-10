@@ -12,7 +12,7 @@ export default function useBook() {
   }
 
   const setBook = (book: any) => {
-    console.log(`set book`, book)
+    // console.log(`set book`, book)
     book.value = book;
   }
   

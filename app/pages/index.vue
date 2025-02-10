@@ -117,7 +117,7 @@ useHead({
   ]
 })
 const config = useAppConfig();
-console.log(`config`, config.authLayer)
+// console.log(`config`, config.authLayer)
 const socialOp = ref();
 const curSocial = ref();
 const { formatDate } = useDayjs();

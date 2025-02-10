@@ -1,7 +1,6 @@
 <template>
-  <div :id="props.id" class="my-4 cursor-pointer">
-    <span
-      class=" px-2 text-lg font-bold bg-zinc-800 text-white dark:bg-zinc-200 ">
+  <div :id="props.id" class="heading my-4 cursor-pointer scroll-mt-14">
+    <span class=" px-2 text-lg font-bold bg-zinc-800 text-white dark:bg-zinc-200 ">
       <a v-if="props.id && generate" :href="`#${props.id}`" class="!text-zinc-200 dark:!text-zinc-800">
         <slot />
       </a>

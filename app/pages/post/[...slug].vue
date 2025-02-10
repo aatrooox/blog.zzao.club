@@ -1,53 +1,64 @@
 <template>
-  <div class="relative max-w-3xl mx-auto" @scroll="handlePageScroll">
-    <div class="page-header">
-      <Button label="返回" @click="$router.back()">
-        <Icon name="icon-park-outline:back" slot="icon"></Icon>
-      </Button>
-    </div>
-    <div
-      class="page-fixed-footer fixed left-0 right-0 bottom-0 bg-white dark:bg-zinc-800 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[999]"
-      v-if="showFixedHeader">
-      <div class="left flex gap-2">
-        <Button severity="secondary" text size="small">
-          <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg" ref="likeIcon" />
-          <span slot="badge">{{ 0 }}</span>
-        </Button>
-        <Button severity="secondary" text size="small" v-tooltip.top="'回复'">
-          <Icon name="icon-park-outline:comments">
-          </Icon>
-          <span slot="badge">{{ 0 }}</span>
-        </Button>
-        <Button severity="secondary" text size="small" v-tooltip.top="'转发图片'">
-          <Icon name="icon-park-outline:collect-picture"></Icon>
-        </Button>
-        <Button severity="secondary" text size="small" v-tooltip.top="'转发链接'">
-          <Icon name="icon-park-outline:share-two"></Icon>
-        </Button>
-      </div>
-      <div class="right pr-6 md:pr-0">
-        <Button label="返回" @click="$router.back()">
-          <Icon name="icon-park-outline:back" slot="icon"></Icon>
-        </Button>
-      </div>
-    </div>
-    <h1 class="text-2xl font-bold mb-4 text-center relative"> {{ page?.title }}</h1>
-    <div class="pannel-box flex justify-end transition-all">
-      <Button v-tooltip.top="'复制到公众号[Alpha]'" @click="getInnerHTML" severity="primary" rounded size="small"
-        variant="text">
-        <Icon slot="icon" size="1.5em" name="icon-park-outline:wechat"></Icon>
-      </Button>
-    </div>
-    <article class="!w-full !max-w-full mdc-prose" v-if="page">
-      <!-- <ContentDoc ref="curMdContentRef" v-slot="{ doc }"> -->
-      <article ref="curMdContentRef">
-        <div class="version-info" v-if="page?.versions">
-          <Tag v-for="v of page?.versions" :key="v" :value="v" class="mr-2"></Tag>
+  <div class="pb-10 m-auto mb-4 sm:rounded-lg">
+    <main class="max-w-full relative flex justify-center gap-4">
+      <div class="relativ max-w-3xl mx-auto" @scroll="handlePageScroll">
+        <!-- 顶部操作栏 -->
+        <!-- <div class="page-header">
+          <Button label="返回" @click="$router.back()">
+            <Icon name="icon-park-outline:back" slot="icon"></Icon>
+          </Button>
+        </div> -->
+        <!-- 底部固定的操作栏 -->
+        <div
+          class="page-fixed-footer fixed left-0 right-0 bottom-0 bg-white/10 dark:bg-zinc-800/10 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[999] !backdrop-blur-md !backdrop-opacity-90"
+          v-if="showFixedHeader">
+          <div class="left flex gap-2">
+            <Button severity="secondary" text size="small">
+              <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg" ref="likeIcon" />
+              <span slot="badge">{{ 0 }}</span>
+            </Button>
+            <Button severity="secondary" text size="small" v-tooltip.top="'回复'">
+              <Icon name="icon-park-outline:comments">
+              </Icon>
+              <span slot="badge">{{ 0 }}</span>
+            </Button>
+            <Button severity="secondary" text size="small" v-tooltip.top="'转发图片'">
+              <Icon name="icon-park-outline:collect-picture"></Icon>
+            </Button>
+            <Button severity="secondary" text size="small" v-tooltip.top="'转发链接'">
+              <Icon name="icon-park-outline:share-two"></Icon>
+            </Button>
+          </div>
+          <div class="right pr-6 md:pr-0">
+            <Button label="返回" @click="navigateTo('/article')">
+              <Icon name="icon-park-outline:back" slot="icon"></Icon>
+            </Button>
+          </div>
         </div>
-        <ContentRenderer :value="page?.body"></ContentRenderer>
-      </article>
-      <!-- </ContentDoc> -->
-    </article>
+        <!-- 文章标题 -->
+        <h1 class="text-2xl font-bold mb-4 text-center relative"> {{ page?.title }}</h1>
+        <!-- 标题下操作区域 -->
+        <div class="pannel-box w-full justify-end max-w-2xl flex transition-all">
+          <Button v-tooltip.top="'复制到公众号[Alpha]'" @click="getInnerHTML" severity="primary" rounded size="small"
+            variant="text">
+            <Icon slot="icon" size="1.5em" name="icon-park-outline:wechat"></Icon>
+          </Button>
+        </div>
+        <article class="mdc-prose" v-if="page">
+          <!-- <ContentDoc ref="curMdContentRef" v-slot="{ doc }"> -->
+          <article ref="curMdContentRef">
+            <div class="version-info" v-if="page?.versions">
+              <Tag v-for="v of page?.versions" :key="v" :value="v" class="mr-2"></Tag>
+            </div>
+            <ContentRenderer :value="page?.body" class="!max-w-full"></ContentRenderer>
+          </article>
+          <!-- </ContentDoc> -->
+        </article>
+      </div>
+      <ClientOnly>
+        <AppToc v-if="tocData && tocData.length" :toc-data="tocData" :active-id="activeTocId"></AppToc>
+      </ClientOnly>
+    </main>
   </div>
 </template>
 
@@ -55,6 +66,8 @@
   import { EffectCssAttrs, camelCaseToHyphen, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs, customTagCssAttrs } from '@/config/richText';
   const toast = useToast()
   const route = useRoute();
+  const activeTocId = ref('')
+
   // console.log(`path`, route.params.slug, `/${route.params.slug.join('/')}`)
   // const path = computed( () => route.params.slug)
   const curMdContentRef = ref(null)
@@ -67,6 +80,12 @@
   const { data: page } = await useAsyncData(route.path, () => {
     return queryCollection('content').path(decodeURI(route.path)).first()
   }, {lazy: true})
+
+  // console.log(`page`, page.value)
+
+  const tocData = computed( () => {
+    return page.value?.body.toc.links
+  })
 
   useSeoMeta({
     title: page.value?.seo.title,

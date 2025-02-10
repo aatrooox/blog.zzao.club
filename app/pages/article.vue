@@ -3,12 +3,12 @@
     <div class="paginator flex gap-4 justify-between items-center">
       <SelectButton v-model="selectedTags" :options="tags" optionLabel="name" multiple aria-labelledby="multiple"
         @update:modelValue="changeTags" size="small" />
-        <Tag class="ml-2" :value="`${count} 篇`"></Tag>
+      <Tag class="ml-2" :value="`${count} 篇`"></Tag>
     </div>
     <template v-for="page of (data as unknown)" :key="page.path">
       <PagePanel :page="page"></PagePanel>
     </template>
-   
+
   </div>
 </template>
 <script lang="ts" setup>
@@ -29,7 +29,7 @@ import { hash } from 'ohash';
 const { formatDate } = useDayjs();
 const selectedTags = ref();
 const appConfig = useAppConfig();
-const tags = computed( () => appConfig.tags.map((tag, index) => ({ name: tag, value: index})) )
+const tags = computed(() => appConfig.tags.map((tag, index) => ({ name: tag, value: index })))
 const route = useRoute();
 const filter_tags = computed(() => {
   let tag_str = route.query.tag || '';
@@ -48,7 +48,7 @@ const count = ref(0)
 
 
 const changeTags = async (tags: string[]) => {
-  console.log(`selectedTags.value`, selectedTags.value)
+  // console.log(`selectedTags.value`, selectedTags.value)
   const tags_str = selectedTags.value.map(tag => tag.name).join('+')
   navigateTo({
     path: '/article',
@@ -80,9 +80,9 @@ const queryArticles = async (filter_tags: string[] = []) => {
   return query.order('date', 'DESC').select('id', 'path', 'title', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta').all()
 }
 
-const { data, status, refresh } = await useAsyncData(hash('artile-page' + filter_tags.value.toString() + formatDate(new Date()) ), async () => {
+const { data, status, refresh } = await useAsyncData(hash('artile-page' + filter_tags.value.toString() + formatDate(new Date())), async () => {
   return queryArticles(filter_tags.value)
-}, { watch: [filter_tags], lazy: true})
+}, { watch: [filter_tags], lazy: true })
 
 // const articles = computed(() => {
 
