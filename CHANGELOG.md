@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://gitea.zzao.club/zzaoclub/blogz/compare/v0.5.1...v0.6.0) (2025-02-11)
+
+
+### ✨ 新功能
+
+* feat: 文章筛选变单选 ([09fd23b](https://github.com/aatrooox/blog.zzao.club/commit/09fd23b655a62bb40f8a5820ccb74b6f9f1b43d8))
+
 ## [0.5.1](https://gitea.zzao.club/zzaoclub/blogz/compare/v0.5.0...v0.5.1) (2025-02-10)
 
 
