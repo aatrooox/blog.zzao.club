@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://gitea.zzao.club/zzaoclub/blogz/compare/v0.6.0...v0.6.1) (2025-02-12)
+
+
+### 🐛 Bug 修复
+
+* fix: canonical link ([286fd13](https://github.com/aatrooox/blog.zzao.club/commit/286fd13543e4558744e6e0f36a6cd9f3b09d2fdc))
+
 ## [0.6.0](https://gitea.zzao.club/zzaoclub/blogz/compare/v0.5.2...v0.6.0) (2025-02-12)
 
 
