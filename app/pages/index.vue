@@ -69,7 +69,8 @@
               class="hidden transition-all duration-150 group-hover:inline-block"></Icon>
             <NuxtLink :to="page.path"
               class="prose prose-a transition-all duration-150 dark:text-zinc-200 group-hover:underline group-hover:underline-offset-2 group-hover:font-bold">
-              <span class="text-sm md:text-md text-zinc-400 mr-4">{{ formatDate(page.date, '/') }}</span>{{ page.title
+              <span class="text-sm md:text-md text-zinc-400 mr-4">{{ formatDate(page.date, '/') }}</span>{{
+                page.title
               }}
             </NuxtLink>
           </div>
@@ -130,10 +131,11 @@ interface Page {
   lastmod: string;
   tags?: string[];
   versions?: string[];
+  showTitle: string;
 }
 // console.log(`count`, count, maxPage)
 const { data: articles } = await useAsyncData('articles', () => {
-  return queryCollection('content').order('date', 'DESC').limit(5).select('path', 'title', 'date', 'tags', 'versions', 'lastmod').all()
+  return queryCollection('content').order('date', 'DESC').limit(5).select('path', 'title', 'showTitle', 'date', 'tags', 'versions', 'lastmod').all()
 })
 
 const { data: books } = await useAsyncData('navigation', () => {

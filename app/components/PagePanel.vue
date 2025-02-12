@@ -19,10 +19,10 @@
         <template v-if="page.versions">
           <Tag v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v" :value="v"></Tag>
         </template>
-        <template v-else>
+<template v-else>
           <Tag v-for="tag of page.tags" :key="tag" :value="tag"></Tag>
         </template>
-      </div> -->
+</div> -->
     </template>
   </Card>
 </template>
@@ -39,6 +39,7 @@ interface Page {
     lastmod: string;
   }
   tags?: string[];
+  showTitle?: string;
   versions?: string[];
 }
 defineProps<{ page: Page }>()

@@ -30,25 +30,29 @@
           </div>
         </div>
         <!-- 文章标题 -->
-        <h1 class="text-2xl font-bold mb-4 text-center relative"> {{ page?.title }}</h1>
-        <!-- 标题下操作区域 -->
-        <div class="pannel-box w-full justify-end max-w-2xl flex transition-all">
-          <Button v-tooltip.top="'复制到公众号[Alpha]'" @click="getInnerHTML" severity="primary" rounded size="small"
-            variant="text">
-            <Icon slot="icon" size="1.5em" name="icon-park-outline:wechat"></Icon>
-          </Button>
-        </div>
+        <!-- <h1 class="text-2xl font-bold mb-4 text-center relative"> {{ page?.title }}</h1> -->
         <article class="mdc-prose" v-if="page">
           <!-- <ContentDoc ref="curMdContentRef" v-slot="{ doc }"> -->
           <article ref="curMdContentRef">
-            <div class="version-info" v-if="page?.versions">
-              <Tag v-for="v of page?.versions" :key="v" :value="v" class="mr-2"></Tag>
-            </div>
             <ContentRenderer :value="page?.body" class="!max-w-full"></ContentRenderer>
           </article>
         </article>
       </div>
       <ClientOnly>
+        <div
+          class="version-info fixed h-[80px] right-0 lg:right-0 pc:right-10 xl:right-20 2xl:right-[15%] top-[10%] w-[220px] hidden lg:flex box-border dark:text-zinc-500  lg:flex-col lg:gap-2"
+          v-if="page?.versions">
+          <div class="flex" v-for="v of page?.versions" :key="v">
+            <Tag :value="v" class=""></Tag>
+          </div>
+        </div>
+        <div
+          class="toc fixed h-[30px] right-0 lg:right-0 pc:right-10 xl:right-20 2xl:right-[15%] top-[20%] w-[220px] hidden lg:block box-border dark:text-zinc-500">
+          <Button v-tooltip.top="'复制到公众号[Alpha]'" @click="getInnerHTML" severity="primary" rounded size="small"
+            variant="text">
+            <Icon slot="icon" size="1.5em" name="icon-park-outline:wechat"></Icon>
+          </Button>
+        </div>
         <AppToc v-if="tocData && tocData.length" :toc-data="tocData" :active-id="activeTocId"></AppToc>
       </ClientOnly>
     </main>

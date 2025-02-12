@@ -75,7 +75,7 @@ const queryArticles = async (filter_tags: any) => {
     query = query.where('tags', 'LIKE', `%${filter_tags}%`)
   }
   count.value = await query.count();
-  return query.order('date', 'DESC').select('id', 'path', 'title', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta').all()
+  return query.order('date', 'DESC').select('id', 'path', 'title', 'showTitle', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta').all()
 }
 
 const { data, status, refresh } = await useAsyncData(hash('artile-page' + formatDate(new Date())), async () => {
