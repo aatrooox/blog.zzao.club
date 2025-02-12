@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://gitea.zzao.club/zzaoclub/blogz/compare/v0.5.2...v0.6.0) (2025-02-12)
+
+
+### ✨ 新功能
+
+* feat: 修改文章 url为英文(seo); ([9728794](https://github.com/aatrooox/blog.zzao.club/commit/972879410ee6be8dc7bbe44c5ceba23739f6620c))
+
 ## [0.6.0](https://gitea.zzao.club/zzaoclub/blogz/compare/v0.5.1...v0.6.0) (2025-02-11)
 
 
