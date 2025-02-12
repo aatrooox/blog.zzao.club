@@ -60,12 +60,13 @@
 </template>
 
 <script setup>
+
   import { EffectCssAttrs, camelCaseToHyphen, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs, customTagCssAttrs } from '@/config/richText';
   const toast = useToast()
   const route = useRoute();
   const activeTocId = ref('')
 
-  // console.log(`path`, route.params.slug, `/${route.params.slug.join('/')}`)
+  console.log(`path`, route.path, `/${route.params.slug.join('/')}`)
   // const path = computed( () => route.params.slug)
   const curMdContentRef = ref(null)
   const scorllTrigger = ref(120) // 大于此值时，显示一个 header
@@ -89,6 +90,14 @@
     description: page.value?.seo.description,
   })
 
+  useHead({
+    link: [
+      {
+        rel: 'canonical',
+        href: `https://blog.zzao.club${route.path}`
+      }
+    ]
+  })
 
   onMounted( () => {
     window.onscroll = (event) => {

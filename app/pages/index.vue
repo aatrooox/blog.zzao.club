@@ -103,7 +103,7 @@ useHead({
   meta: [
     {
       name: 'description',
-      content: '前端｜全栈｜前端架构｜Node｜Nuxt3｜Hono｜Bun| 副业 丨早早集市｜博客站｜',
+      content: '最新最全的 Nuxt4 全栈开发实战内容',
     },
     {
       name: 'keywords',
@@ -113,7 +113,7 @@ useHead({
   link: [
     {
       rel: 'canonical',
-      href: 'https://zzao.club/'
+      href: 'https://blog.zzao.club/'
     }
   ]
 })
