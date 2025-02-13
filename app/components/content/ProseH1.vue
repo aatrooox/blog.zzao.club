@@ -1,7 +1,6 @@
 <template>
   <div :id="props.id" class="heading text-center my-10 scroll-mt-14">
-    <span
-      class="text-black px-3 py-2 text-lg font-bold border-b-4 border-black dark:text-zinc-200 dark:border-zinc-200">
+    <span class="text-black px-3 py-2 text-lg font-bold  dark:text-zinc-200 ">
       <a v-if="generate" :href="`#${props.id}`" class="text-xl dark:text-zinc-200">
         <slot />
       </a>

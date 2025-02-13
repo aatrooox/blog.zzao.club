@@ -1,7 +1,7 @@
 <template>
   <Card unstyled class="card-box !py-2">
     <template #title>
-      <div class="text-xl cursor-pointer font-bold hover:underline hover:underline-offset-4 mb-2">
+      <div class="text-md cursor-pointer font-bold hover:underline hover:underline-offset-4 mb-2">
         <NuxtLink :to="page.path">{{ page.title }}</NuxtLink>
       </div>
     </template>
