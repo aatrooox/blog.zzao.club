@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.2](https://gitea.zzao.club/zzaoclub/blogz/compare/v0.6.1...0.6.2) (2025-02-13)
+
+
+### Bug Fixes
+
+* 修复移动端文章内容页适配问题 ([f02bf87](https://gitea.zzao.club/zzaoclub/blogz/commits/f02bf87c4f719d82cf89524b45ac20640cc85670))
+
 ## [0.6.1](https://gitea.zzao.club/zzaoclub/blogz/compare/v0.6.0...v0.6.1) (2025-02-12)
 
 
