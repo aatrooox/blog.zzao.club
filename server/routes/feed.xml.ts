@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
       // demo.push(wrapParagraphs(convertToHtml(mdData.body)))
       feed.item({
         title: post.title,
-        url: `${config.baseURL}/${post.path}`,
+        url: `${config.baseURL}${post.path}`,
         date: post.date,
         description: post.description,
         custom_elements: [
