@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.3](https://gitea.zzao.club/zzaoclub/blogz/compare/0.6.2...0.6.3) (2025-02-14)
+
+
+### Bug Fixes
+
+* rss url ([3b905e3](https://gitea.zzao.club/zzaoclub/blogz/commits/3b905e31aa8ad577a70fc5c073452d46e1caaa12))
+
 ## [0.6.2](https://gitea.zzao.club/zzaoclub/blogz/compare/v0.6.1...0.6.2) (2025-02-13)
 
 
