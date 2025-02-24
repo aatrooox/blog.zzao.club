@@ -5,9 +5,15 @@
         size="small" />
       <Tag class="ml-2" :value="`${count} 篇`"></Tag>
     </div>
-    <template v-for="page of (data as unknown)" :key="page.path">
-      <PagePanel :page="page"></PagePanel>
-    </template>
+    <div class="page-list flex flex-wrap md:justify-between gap-4">
+      <template v-for="page of (data as unknown)" :key="page.path">
+        <div
+          class="page-item w-[100%] md:w-[48%] transition-all duration-200 rounded-md bg-zinc-100 dark:bg-zinc-800 hover:shadow-lg">
+          <PagePanel :page="page"></PagePanel>
+        </div>
+      </template>
+    </div>
+
 
   </div>
 </template>
