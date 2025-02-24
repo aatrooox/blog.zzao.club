@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.6.11
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.6.10...v0.6.11)
+
+### 🩹 Fixes
+
+- 布局变更导致的复制格式失效 ([dbf053e](https://github.com/aatrooox/blog.zzao.club/commit/dbf053e))
+
+### ❤️ Contributors
+
+- Gnak <gnakzz@qq.com>
+
 ## v0.6.10
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.6.9...v0.6.10)
