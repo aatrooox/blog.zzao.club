@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.6.7
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.6.6...v0.6.7)
+
+### 🩹 Fixes
+
+- 飞书通知模版 ([3a9d0ef](https://github.com/aatrooox/blog.zzao.club/commit/3a9d0ef))
+
+### ❤️ Contributors
+
+- Gnak <gnakzz@qq.com>
+
 ## v0.6.6
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/0.6.4...v0.6.6)
