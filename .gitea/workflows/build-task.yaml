@@ -60,7 +60,7 @@ jobs:
             -d '{
               "msg_type": "text",
               "content": {
-                "text": "${{ gitea.repository }} - release [${{job.status}}] - <at user_id=${{vars.FEISHU_USER_ID}}>Aatrox</at>"
+                "text": "${{ gitea.repository }} - release [${{job.status}}]"
               }
             }' \
             "${{ vars.FEISHU_WEBHOOK }}"
