@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.6.9
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.6.8...v0.6.9)
+
+### 🚀 Enhancements
+
+- 增加定时任务,固定部署时间 ([a35e5ba](https://github.com/aatrooox/blog.zzao.club/commit/a35e5ba))
+
+### ❤️ Contributors
+
+- Gnak <gnakzz@qq.com>
+
 ## v0.6.8
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.6.7...v0.6.8)
