@@ -1,13 +1,16 @@
 {
   "private": true,
   "type": "module",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev -p 4775 -o",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "release": "release-it"
+    "release": "pnpm release:patch",
+    "release:patch": "npx changelogen@latest --patch --release --push",
+    "release:minor": "npx changelogen@latest --minor -r 0.5.0 --release",
+    "release:major": "npx changelogen@latest --major --release --push"
   },
   "dependencies": {
     "@nuxt/content": "^3.1.0",
