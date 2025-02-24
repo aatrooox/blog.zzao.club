@@ -8,7 +8,7 @@ jobs:
   Explore-Gitea-Actions:
     runs-on: debian
     # 发版时才会部署，正常提交不部署
-    if: "contains(github.event.head_commit.message, 'chore: release')"
+    if: "contains(gitea.event.head_commit.message, 'chore(release)')"
     steps:
       - run: echo "  The job was automatically triggered by a ${{ gitea.event_name }} event."
       - run: echo "  This job is now running on a ${{ runner.os }} server hosted by Gitea!"
@@ -54,3 +54,38 @@ jobs:
         run: |
           ls ${{ gitea.workspace }}          
       - run: echo "  This job's status is ${{ job.status }}."
+      # 添加 webhook 通知步骤
+      - name: Send Webhook Notification
+        if: always()
+        env:
+          COMMIT_MSG: ${{ gitea.event.head_commit.message }}
+        run: |
+          MESSAGE=$(echo "$COMMIT_MSG" | sed ':a;N;$!ba;s/\n/ /g')
+          echo " ${{ gitea.repository }} - ${MESSAGE} - ${{ job.status }}"
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -d '{
+              "msg_type": "post",
+              "content": {
+                "post": {
+                  "zh_cn": {
+                    "title": "${{ gitea.repository }} released",
+                    "content": [
+                      [
+                        {
+                          "tag": "text",
+                          "text": "status: ${{ job.status }}"
+                        }
+                      ],
+                      [
+                        {
+                          "tag": "at",
+                          "user_id": "${{ vars.FEISHU_USER_ID }}"
+                        }
+                      ]
+                    ]
+                  }
+                }
+              }
+            }' \
+            "${{ vars.FEISHU_WEBHOOK }}"
