@@ -120,7 +120,7 @@
   const getContentDom = () => {
     const articleDom = curMdContentRef.value
     // 默认内部会套一层div
-    const contentDom = articleDom.childNodes[1]
+    const contentDom = articleDom.childNodes[0]
     return contentDom
   }
   const getInnerHTML = async (e) => {
