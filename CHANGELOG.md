@@ -1,5 +1,12 @@
 # Changelog
 
+# [0.7.0](https://gitea.zzao.club/zzaoclub/blogz/compare/0.6.3...0.7.0) (2025-02-24)
+
+
+### Features
+
+* 文章列表改为两列 ([3e34928](https://gitea.zzao.club/zzaoclub/blogz/commits/3e34928cb5b6435283e6073ee5d191ed6e31452d))
+
 ## [0.6.3](https://gitea.zzao.club/zzaoclub/blogz/compare/0.6.2...0.6.3) (2025-02-14)
 
 
