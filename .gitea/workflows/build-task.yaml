@@ -29,7 +29,7 @@ jobs:
           NUXT_GITHUB_CLIENT_ID: ${{ vars.NUXT_GITHUB_CLIENT_ID }}
           NUXT_AUTH_SECTRET: ${{ vars.NUXT_AUTH_SECTRET }}
           NUXT_AUTH_ORIGIN: ${{ vars.NUXT_AUTH_ORIGIN }}
-        run: pnpm build
+        run: NODE_OPTIONS="--max-old-space-size=2560" pnpm build
       - name: Copy and Build
         env: 
           DATABASE_URL: ${{ vars.DATABASE_URL }}
