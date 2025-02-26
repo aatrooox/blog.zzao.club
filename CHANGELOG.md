@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.6.12
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.6.11...v0.6.12)
+
+### 🩹 Fixes
+
+- 服务器打包内存溢出问题 ([0c39370](https://github.com/aatrooox/blog.zzao.club/commit/0c39370))
+
+### ❤️ Contributors
+
+- Gnak <gnakzz@qq.com>
+
 ## v0.6.11
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.6.10...v0.6.11)
