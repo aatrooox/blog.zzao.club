@@ -69,6 +69,7 @@ export default defineNuxtConfig({
     // '@nuxtjs/robots'
     // '@nuxtjs/seo'
     '@nuxtjs/color-mode',
+    '@prisma/nuxt'
   ],
   // 把 icon 和客户端捆绑在一起， 减少请求服务端
   icon: {

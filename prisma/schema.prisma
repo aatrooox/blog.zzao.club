@@ -1,0 +1,95 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户表
+model User {
+  id           String           @id @default(uuid(7))
+  email        String?
+  phone        String?
+  username     String           @unique
+  nickname     String?          @unique
+  password     String
+  avatar_url   String?
+  role         String           @default("user")
+  comments     BlogComment[]
+  sub_comments BlogSubComment[]
+  likes        BlogLike[]
+  oauth        OAuth[]
+
+  @@map("blog_user")
+}
+
+// 第三方登录
+model OAuth {
+  id                   String   @id @default(uuid(7))
+  userId               String // 关联到主用户表
+  provider             String // 'github', 'google', 'wechat' 等
+  providerId           String // 第三方平台的用户ID
+  providerUnionId      String // 第三方生态中跨应用用户唯一id
+  providerToken        String? // 第三方平台的用户token
+  providerRefreshToken String? // 第三方平台的用户refresh token
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerId])
+  @@map("blog_oauth")
+}
+
+// 博客 一级评论表
+model BlogComment {
+  id           String           @id @default(uuid(7))
+  content      String
+  create_ts    DateTime         @default(now())
+  updated_ts   DateTime         @updatedAt
+  type         String           @default("article") // article / memo / blog
+  user_id      String
+  user_info    User             @relation(fields: [user_id], references: [id], onDelete: NoAction)
+  sub_comments BlogSubComment[] // 一对多的二级评论
+  likes        BlogLike[]
+
+  @@map("blog_comment")
+}
+
+// 博客 二级评论表
+model BlogSubComment {
+  id                   String      @id @default(uuid(7))
+  uid                  String      @unique
+  content              String
+  create_ts            DateTime    @default(now())
+  updated_ts           DateTime    @updatedAt
+  comment_id           String
+  // 如果一级评论删除了，则删除所有二级评论
+  comment_info         BlogComment @relation(fields: [comment_id], references: [id], onDelete: Cascade)
+  reply_sub_comment_id Int?
+  user_id              String
+  user_info            User        @relation(fields: [user_id], references: [id], onDelete: NoAction)
+  memo_id              Int?
+  likes                BlogLike[]
+
+  @@map("blog_sub_comment")
+}
+
+// 博客 点赞表
+model BlogLike {
+  id               Int             @id @default(autoincrement())
+  create_ts        DateTime        @default(now())
+  updated_ts       DateTime        @updatedAt
+  target           String          @default("article") // article / memo / comment / subcomment
+  sub_comment_id   String?
+  sub_comment_info BlogSubComment? @relation(fields: [sub_comment_id], references: [id])
+  comment_id       String?
+  comment_info     BlogComment?    @relation(fields: [comment_id], references: [id])
+  user_id          String
+  user_info        User            @relation(fields: [user_id], references: [id], onDelete: NoAction)
+
+  @@map("blog_like")
+}
