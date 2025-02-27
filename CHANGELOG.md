@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.7.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.6.12...v0.7.0)
+
+### 🚀 Enhancements
+
+- 增加 prisma + mysql 及其相关配置 ([58dfd85](https://github.com/aatrooox/blog.zzao.club/commit/58dfd85))
+
+### ❤️ Contributors
+
+- Gnak <gnakzz@qq.com>
+
 ## v0.6.12
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.6.11...v0.6.12)
