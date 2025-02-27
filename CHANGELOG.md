@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.7.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.1...v0.7.2)
+
+### 🚀 Enhancements
+
+- Toc增加 h3；增加评论组件；文章页增加全部筛选 ([d15621c](https://github.com/aatrooox/blog.zzao.club/commit/d15621c))
+
+### ❤️ Contributors
+
+- Gnak <gnakzz@qq.com>
+
 ## v0.7.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.0...v0.7.1)
