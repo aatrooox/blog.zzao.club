@@ -32,7 +32,7 @@ jobs:
         run: NODE_OPTIONS="--max-old-space-size=2560" pnpm build
       - name: Copy and Build
         env: 
-          DATABASE_URL: ${{ vars.DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NUXT_GITHUB_CLIENT_SECRET: ${{ vars.NUXT_GITHUB_CLIENT_SECRET }}
           NUXT_GITHUB_CLIENT_ID: ${{ vars.NUXT_GITHUB_CLIENT_ID }}
           NUXT_AUTH_SECTRET: ${{ vars.NUXT_AUTH_SECTRET }}
@@ -41,10 +41,11 @@ jobs:
           rm -rf /root/web/blog3/*
           mkdir -p /root/web/blog3/prisma
           cp -R .output/* /root/web/blog3/
+          cp -R prisma/* /root/web/blog3/prisma/
           cp -R ecosystem.config.cjs /root/web/blog3/ecosystem.config.cjs
           cd /root/web/blog3
-          pm2 stop ecosystem.config.cjs
-          pm2 start ecosystem.config.cjs --env production
+          prisma migrate deploy
+          pm2 restart ecosystem.config.cjs --env production
       - run: echo "  The ${{ gitea.repository }} repository has been cloned to the runner."
       - run: echo " ️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
