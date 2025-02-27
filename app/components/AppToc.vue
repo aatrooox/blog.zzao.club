@@ -8,6 +8,7 @@ const observer = ref()
 
 onMounted(async () => {
   await nextTick();
+  console.log(`props.tocData`, props.tocData)
   setTimeout(() => {
     // 获取所有标题元素
     const headings = document.querySelectorAll('.heading')
@@ -34,12 +35,25 @@ onUnmounted(() => observer.value?.disconnect())
   <div
     class="toc fixed h-[50%] right-0 lg:right-0 pc:right-10 xl:right-20 2xl:right-[15%] top-[30%] w-[220px] hidden lg:block box-border dark:text-zinc-500">
     <ul>
-      <li v-for="link in tocData"
-        :class="[`text-sm truncate py-1 pl-4 transition-all duration-300 delay-100`, { 'font-bold active dark:text-zinc-300': link.id === activeId }]">
-        <span
-          :class="[`absolute left-0 text-zinc-300 dark:text-zinc-500 transition-opacity duration-300 opacity-0`, { 'opacity-100': link.id === activeId }]">#</span>
-        <NuxtLink :href="`#${link.id}`"> {{ link.text }} </NuxtLink>
-      </li>
+      <template v-for="link in tocData">
+        <li
+          :class="[`text-sm truncate py-1 pl-4 transition-all duration-300 delay-100`, { 'font-bold active dark:text-zinc-300': link.id === activeId }]">
+          <span
+            :class="[`absolute left-0 text-zinc-300 dark:text-zinc-500 transition-opacity duration-300 opacity-0`, { 'opacity-100': link.id === activeId }]">#</span>
+          <NuxtLink :href="`#${link.id}`"> {{ link.text }} </NuxtLink>
+        </li>
+        <template v-if="link.children">
+          <template v-for="child in link.children">
+            <li
+              :class="[`text-sm truncate py-1 pl-8 transition-all duration-300 delay-100`, { 'font-bold active dark:text-zinc-300': child.id === activeId }]">
+              <span
+                :class="[`absolute left-0 text-zinc-300 dark:text-zinc-500 transition-opacity duration-300 opacity-0`, { 'opacity-100': child.id === activeId }]">#</span>
+              <NuxtLink :href="`#${child.id}`"> {{ child.text }} </NuxtLink>
+            </li>
+          </template>
+
+        </template>
+      </template>
     </ul>
   </div>
 </template>

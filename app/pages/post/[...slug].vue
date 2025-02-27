@@ -8,7 +8,7 @@
           v-if="showFixedHeader">
           <div class="left flex gap-2">
             <Button severity="secondary" text size="small">
-              <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg" ref="likeIcon" />
+              <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg" ref="likeIcon" @click="likePage" />
               <span slot="badge">{{ 0 }}</span>
             </Button>
             <Button severity="secondary" text size="small" v-tooltip.top="'回复'">
@@ -36,6 +36,15 @@
           <article ref="curMdContentRef">
             <ContentRenderer :value="page?.body" class="!max-w-full"></ContentRenderer>
           </article>
+
+          <!-- 评论区 -->
+          <ClientOnly>
+            <Divider align="center" type="solid">
+              <b>END</b>
+            </Divider>
+            <div class="text-xl mb-4">评论区</div>
+            <AppCommentInput @send="createComment"></AppCommentInput>
+          </ClientOnly>
         </article>
       </div>
       <ClientOnly>
@@ -55,6 +64,7 @@
         </div>
         <AppToc v-if="tocData && tocData.length" :toc-data="tocData" :active-id="activeTocId"></AppToc>
       </ClientOnly>
+
     </main>
   </div>
 </template>
@@ -273,5 +283,12 @@
     } 
 
     return imgDom
+  }
+
+  const createComment = () => {
+    toast.add({ severity: 'success', summary: '快做完了！🤪', life: 3000 });
+  }
+  const likePage = () => {
+    toast.add({ severity: 'success', summary: '谢谢❤️ 但还没做点赞功能', life: 3000 });
   }
 </script>

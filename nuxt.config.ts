@@ -106,8 +106,6 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true },
     '/article': { prerender: true },
-    '/books': { prerender: true },
-    '/book/**': { prerender: true },
     '/post/**': { prerender: true }
   },
   css: ['@/assets/css/main.css', 'primeicons/primeicons.css'],
@@ -128,20 +126,22 @@ export default defineNuxtConfig({
       Z_BLOG_VERSION: appVersion,
       // nuxtSecretKey:`blog-zzao-club-${uuid}`,
       imgHost: 'https://img.zzao.club',
-      mdc: {
-        headings: {
-          anchorLinks: {
-            h1: true,
-            h2: true,
-            h3: true
-          },
-        }
-      }
     }
   },
   // 3.0.0-alpha.8
+  mdc: {
+    headings: {
+      anchorLinks: {
+        h1: true,
+        h2: true,
+        h3: true
+      },
+    }
+  },
   content: {
+    
     build: {
+      
       markdown: {
         highlight: {
           // Theme used in all color schemes.

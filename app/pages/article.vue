@@ -54,7 +54,8 @@ const count = ref(0)
 
 
 const changeTags = async (tags: string[]) => {
-  const tags_str = selectedTags.value.name
+  let tags_str = selectedTags.value.name
+  if (tags_str === '全部') tags_str = ''
   navigateTo({
     path: '/article',
     query: {
