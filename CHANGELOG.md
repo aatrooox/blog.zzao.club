@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.7.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.0...v0.7.1)
+
+### 🩹 Fixes
+
+- 数据库配置 ([f00c9cb](https://github.com/aatrooox/blog.zzao.club/commit/f00c9cb))
+
+### ❤️ Contributors
+
+- Gnak <gnakzz@qq.com>
+
 ## v0.7.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.6.12...v0.7.0)
