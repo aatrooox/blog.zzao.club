@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.7.5
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.4...v0.7.5)
+
+### 🎨 Styles
+
+- 优化展示；删除多余代码 ([b90d4f4](https://github.com/aatrooox/blog.zzao.club/commit/b90d4f4))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.7.4
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.3...v0.7.4)
