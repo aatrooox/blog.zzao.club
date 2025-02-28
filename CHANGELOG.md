@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.8.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.8.0...v0.8.1)
+
+### 🩹 Fixes
+
+- 修复 useUser 问题 ([61c23c1](https://github.com/aatrooox/blog.zzao.club/commit/61c23c1))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.8.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.5...v0.8.0)
