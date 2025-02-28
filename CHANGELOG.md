@@ -18,18 +18,6 @@
 
 - Gnak <gnakzz@qq.com>
 
-## v0.7.4
-
-[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.3...v0.7.4)
-
-### 🩹 Fixes
-
-- Prisma 编译时报错问题 ([3f88cbe](https://github.com/aatrooox/blog.zzao.club/commit/3f88cbe))
-
-### ❤️ Contributors
-
-- Gnak <gnakzz@qq.com>
-
 ## v0.7.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.2...v0.7.3)
