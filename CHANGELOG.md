@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.7.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.2...v0.7.3)
+
+### 🚀 Enhancements
+
+- 增加用户/权限相关接口 ([156f335](https://github.com/aatrooox/blog.zzao.club/commit/156f335))
+
+### 📖 Documentation
+
+- 文档更新 ([f705a70](https://github.com/aatrooox/blog.zzao.club/commit/f705a70))
+
+### ❤️ Contributors
+
+- Gnak <gnakzz@qq.com>
+
 ## v0.7.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.1...v0.7.2)
