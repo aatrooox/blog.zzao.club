@@ -10,14 +10,22 @@ interface User {
 }
 
 export const useUserStore = defineStore('user', () => {
-  const username = useSessionStorage<User | null>('blog/user', null);
-
-  const setUserName = (data: User) => {
+  const username = useSessionStorage<string | null>('blog/user/name', null);
+  const userId = useSessionStorage<string | null>('blog/user/id', null);
+  const role = useSessionStorage<string | null>('blog/user/role', null);
+  const setUserName = (data: string) => {
     username.value = data;
+  }
+  const setUserId = (data: string) => {
+    userId.value = data;
+  }
+  const setUserRole = (data: string) => {
+    role.value = data;
   }
 
   const logout = () => {
     username.value = null;
+    userId.value = null;
   }
 
   const isLogin = computed(() => {
@@ -26,7 +34,11 @@ export const useUserStore = defineStore('user', () => {
 
   return {
     username: skipHydrate(username),
+    userId: skipHydrate(userId),
+    role: skipHydrate(role),
     setUserName,
+    setUserId,
+    setUserRole,
     isLogin,
     logout
   }

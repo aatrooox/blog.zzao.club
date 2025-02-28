@@ -27,7 +27,7 @@
 </template>
 <script lang="ts" setup>
 const emit = defineEmits(['value-change', 'send', 'cancel'])
-const { user } = useUser()
+const userStore = useUserStore()
 const emojiPopover = ref(null)
 const color = useColorMode()
 const EmojiPickerRef = ref()
@@ -49,7 +49,7 @@ const label = computed(() => {
   // 回复某条评论时，显示回复 xxx
   if (target) return subCommentLabel.value
 
-  const name = user.value?.username || '游客'
+  const name = userStore?.username || '游客'
   switch (type) {
     case 'memo':
       return `memo by ${name}`
@@ -122,7 +122,7 @@ const removeTagsFromTextarea = (content: string) => {
 // })
 
 const subCommentLabel = computed(() => {
-  return `回复@${target || user.value?.username}`
+  return `回复@${target || userStore?.username}`
 })
 
 const toggle = (event: any) => {
