@@ -113,12 +113,6 @@ const { data: articles } = await useAsyncData('articles', () => {
   return queryCollection('content').order('date', 'DESC').limit(5).select('path', 'title', 'showTitle', 'date', 'tags', 'versions', 'lastmod').all()
 })
 
-const { data: books } = await useAsyncData('navigation', () => {
-  return queryCollectionNavigation('book', ['date', 'path', 'id'])
-})
-
-console.log(`books`, books.value)
-
 const toggle = (event, socail: any) => {
   console.log(`socail`, socail)
   curSocial.value = socail;

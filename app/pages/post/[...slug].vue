@@ -19,8 +19,8 @@
             <Button severity="secondary" text size="small" v-tooltip.top="'转发图片'">
               <Icon name="icon-park-outline:collect-picture"></Icon>
             </Button>
-            <Button severity="secondary" text size="small" v-tooltip.top="'转发链接'">
-              <Icon name="icon-park-outline:share-two"></Icon>
+            <Button severity="secondary" text size="small" v-tooltip.top="'复制到公众号[Alpha]'" @click="getInnerHTML">
+              <Icon slot="icon" name="icon-park-outline:wechat"></Icon>
             </Button>
           </div>
           <div class="right pr-6 md:pr-0">

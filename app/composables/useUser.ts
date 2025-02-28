@@ -1,33 +1,33 @@
+import { skipHydrate } from 'pinia'
+
 interface User {
-  id: number
+  id: string
   username: string
   password: string
   email: string
   role: string
   avatar_url: string
 }
-const localStorage = window?.localStorage || null
-export default function useUser() {
-  const user: Ref<User | null> = useState('user', () => null)
 
-  const setUser = (value: any) => {
-    localStorage?.setItem('blog_user', JSON.stringify(value))
-    user.value = value
+export const useUserStore = defineStore('user', () => {
+  const username = useSessionStorage<User | null>('blog/user', null);
+
+  const setUserName = (data: User) => {
+    username.value = data;
   }
 
-  const clearUser = () => {
-    localStorage?.removeItem('blog_user')
-    user.value = null
+  const logout = () => {
+    username.value = null;
   }
 
   const isLogin = computed(() => {
-    return !!user.value
+    return !!username.value;
   })
 
   return {
+    username: skipHydrate(username),
+    setUserName,
     isLogin,
-    user,
-    setUser,
-    clearUser
+    logout
   }
-}
+})
