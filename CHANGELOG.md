@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.8.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.5...v0.8.0)
+
+### 🚀 Enhancements
+
+- 增加 pinia feat: 增加 vueuse feat: 增加 登录注册 接口及相关逻辑 ([e629f19](https://github.com/aatrooox/blog.zzao.club/commit/e629f19))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.7.5
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.4...v0.7.5)
