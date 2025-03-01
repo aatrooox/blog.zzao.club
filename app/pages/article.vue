@@ -3,7 +3,7 @@
     <div class="paginator flex gap-4 justify-between items-center">
       <SelectButton v-model="selectedTags" :options="tags" optionLabel="name" @update:modelValue="changeTags"
         size="small" />
-      <Tag class="ml-2" :value="`${count} 篇`"></Tag>
+      <Tag class="ml-2" :value="`${data?.length || 0} 篇`"></Tag>
     </div>
     <div class="page-list flex flex-wrap md:justify-between gap-4">
       <template v-for="page of (data as unknown)" :key="page.path">
@@ -54,7 +54,7 @@ const count = ref(0)
 
 
 const changeTags = async (tags: string[]) => {
-  let tags_str = selectedTags.value.name
+  let tags_str = selectedTags.value?.name
   if (tags_str === '全部') tags_str = ''
   navigateTo({
     path: '/article',
@@ -81,7 +81,7 @@ const queryArticles = async (filter_tags: any) => {
   if (filter_tags) {
     query = query.where('tags', 'LIKE', `%${filter_tags}%`)
   }
-  count.value = await query.count();
+  // count.value = await query.count();
   return query.order('date', 'DESC').select('id', 'path', 'title', 'showTitle', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta').all()
 }
 

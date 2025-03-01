@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
   if (!body.data.id) {
     throw createError({
       statusCode: 400,
-      message: 'id is required'
+      message: 'id or uid is required'
     })
   }
 

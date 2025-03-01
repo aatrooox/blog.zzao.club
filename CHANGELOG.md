@@ -1,6 +1,75 @@
 # Changelog
 
 
+## v0.8.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.8.0...v0.8.1)
+
+### 🩹 Fixes
+
+- 修复 useUser 问题 ([61c23c1](https://github.com/aatrooox/blog.zzao.club/commit/61c23c1))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
+## v0.8.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.5...v0.8.0)
+
+### 🚀 Enhancements
+
+- 增加 pinia feat: 增加 vueuse feat: 增加 登录注册 接口及相关逻辑 ([e629f19](https://github.com/aatrooox/blog.zzao.club/commit/e629f19))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
+## v0.7.5
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.4...v0.7.5)
+
+### 🎨 Styles
+
+- 优化展示；删除多余代码 ([b90d4f4](https://github.com/aatrooox/blog.zzao.club/commit/b90d4f4))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
+## v0.7.4
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.3...v0.7.4)
+
+### 🩹 Fixes
+
+- Prisma 编译时报错问题 ([3f88cbe](https://github.com/aatrooox/blog.zzao.club/commit/3f88cbe))
+- Version rollback ([beb8fc8](https://github.com/aatrooox/blog.zzao.club/commit/beb8fc8))
+
+### 🏡 Chore
+
+- **release:** V0.7.4 ([c252ad6](https://github.com/aatrooox/blog.zzao.club/commit/c252ad6))
+
+### ❤️ Contributors
+
+- Gnak <gnakzz@qq.com>
+
+## v0.7.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.2...v0.7.3)
+
+### 🚀 Enhancements
+
+- 增加用户/权限相关接口 ([156f335](https://github.com/aatrooox/blog.zzao.club/commit/156f335))
+
+### 📖 Documentation
+
+- 文档更新 ([f705a70](https://github.com/aatrooox/blog.zzao.club/commit/f705a70))
+
+### ❤️ Contributors
+
+- Gnak <gnakzz@qq.com>
+
 ## v0.7.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.7.1...v0.7.2)

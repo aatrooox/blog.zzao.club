@@ -34,7 +34,8 @@
             </Button>
             <!-- 管理员 或自己 可删除 -->
             <Button severity="secondary" text size="small" v-tooltip.top="'删除'"
-              v-if="comment.user_id === user?.id || user?.role === 'admin'" @click.stop="delComment(subComment)">
+              v-if="comment.user_id === userStore?.userId || userStore?.role === 'admin'"
+              @click.stop="delComment(subComment)">
               <Icon name="icon-park-outline:delete"></Icon>
             </Button>
           </div>
@@ -54,7 +55,7 @@
 <script lang="ts" setup>
 // import anime from 'animejs/lib/anime.es.js'
 const toast = useToast();
-const { user } = useUser()
+const userStore = useUserStore()
 const { disposeError } = useErrorDispose()
 const commentReplyMap = ref<{ [key: string]: boolean }>({})
 const { updateDateFromNow, formatFullDate } = useDayjs()
@@ -65,7 +66,7 @@ interface Props {
   comment: { // 一级评论的信息， 二级评论拿 id 再去获取
     id: number
     uid: string
-    user_id: number
+    user_id: string
     content: string
     create_ts: string
     user_info?: any
@@ -74,7 +75,7 @@ interface Props {
 }
 const props = defineProps<Props>()
 // 使用一级评论 id 获取二级评论
-const { data: subComments, error, status, refresh } = await $http.post<any[]>('/api/v1/comment/sub/list', { comment_id: props.comment.id }, { server: false, watch: [user] })
+const { data: subComments, error, status, refresh } = await $http.post<any[]>('/api/v1/comment/sub/list', { comment_id: props.comment.id }, { server: false, watch: [userStore] })
 
 if (error?.value) {
   disposeError(error)
@@ -93,7 +94,7 @@ const createSubComment = async (message: string, subComment: Props['comment']) =
     comment_id: props.comment.id, // 当前一级评论的 id
     content: message,
     reply_sub_comment_id: subComment?.id, // 回复的二级评论的 id
-    user_id: user.value?.id, // 当前用户
+    user_id: userStore?.userId, // 当前用户
   })
 
   if (error?.value) {

@@ -25,7 +25,7 @@
         </Button>
         <!-- 管理员 或自己 可删除 -->
         <Button severity="secondary" text size="small" v-tooltip.top="'删除'"
-          v-if="comment.user_id === user?.id || user?.role === 'admin'" @click.stop="delComment">
+          v-if="comment.user_id === userStore?.userId || userStore?.role === 'superAdmin'" @click.stop="delComment">
           <Icon name="icon-park-outline:delete"></Icon>
         </Button>
       </div>
@@ -44,7 +44,7 @@
 <script lang="ts" setup>
 // import anime from 'animejs/lib/anime.es.js'
 const toast = useToast();
-const { user } = useUser()
+const userStore = useUserStore()
 const { disposeError } = useErrorDispose()
 const commentReplyOpen = ref(false)
 const subCommentsRef = ref()
@@ -56,7 +56,7 @@ interface Props {
   comment: {
     id: number
     uid: string
-    user_id: number
+    user_id: string
     content: string
     create_ts: string
     user_info?: any
@@ -74,7 +74,7 @@ const props = defineProps<Props>()
 
 // 回复评论
 const commentReply = () => {
-  if (!user.value?.id) {
+  if (!userStore?.username) {
     toast.add({ severity: 'error', summary: '登录后就可以评论了', life: 3000 });
     return
   }
@@ -86,7 +86,7 @@ const createSubComment = async (message: string) => {
   const { data, error } = await $http.post('/api/v1/comment/sub/create', {
     comment_id: props.comment.id, // 当前评论的 id
     content: message,
-    user_id: user.value?.id,
+    user_id: userStore?.userId,
   })
 
   if (error?.value) {

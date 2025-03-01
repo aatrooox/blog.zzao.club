@@ -1,8 +1,8 @@
 <template>
   <div
     class="flex justify-around sticky mb-4 top-0 w-full z-[999] h-14 border-b-2 border-b-zinc-800 dark:border-b-zinc-400">
-    <!-- <AppLoginDialog :login="loginBlog" ref="loginForm" @showRegisterDialog="showRegisterDialog"></AppLoginDialog>
-    <AppRegisterDialog :regist="userRegist" ref="registerForm"></AppRegisterDialog> -->
+    <AppLoginDialog :login="loginBlog" ref="loginForm" @showRegisterDialog="showRegisterDialog"></AppLoginDialog>
+    <AppRegisterDialog :regist="userRegist" ref="registerForm"></AppRegisterDialog>
     <!-- <AppUserSetting ref="userSetting"></AppUserSetting> -->
     <AppSearchDialog ref="searchDialog"></AppSearchDialog>
 
@@ -14,6 +14,8 @@
           <Button rounded severity="secondary" size="small" @click="showSearchDialog">
             <Icon name="icon-park-outline:search"></Icon>
           </Button>
+          <Tag v-if="userStore.isLogin" :value="userStore.username"></Tag>
+          <Button v-else severity="secondary" label="登录" size="small" @click="showLoginForm"></Button>
           <Tag :value="`v${config.public.Z_BLOG_VERSION}`"
             v-tooltip.bottom="`博客版本: v${config.public.Z_BLOG_VERSION} \n @nuxt/content@${config.public.ContentVersion}`">
           </Tag>
@@ -49,7 +51,10 @@
 <script setup>
 const searchDialog = ref(null)
 const toast = useToast()
+const loginForm = ref(null)
+const registerForm = ref(null)
 const config = useRuntimeConfig()
+const userStore = useUserStore()
 const colorMode = useColorMode()
 const route = useRoute();
 const curLabel = ref('首页')
@@ -68,6 +73,7 @@ const modeIcon = computed(() => {
   }
 })
 
+
 const items = ref([
 {
       label: '首页',
@@ -79,11 +85,11 @@ const items = ref([
       icon: 'icon-park-outline:read-book',
       route: '/article',
   },
-  {
-      label: '动态',
-      icon: 'icon-park-outline:one-third-rotation',
-      url: 'https://memo.zzao.club'
-  },
+  // {
+  //     label: '动态',
+  //     icon: 'icon-park-outline:one-third-rotation',
+  //     url: 'https://memo.zzao.club'
+  // },
   // {
   //     label: '设置',
   //     icon: 'icon-park-outline:setting-two',
@@ -106,6 +112,69 @@ watch(() => route.path, (newVal, oldVal) => {
       break;
   }
 })
+
+const loginBlog = async (body) => {
+  const res = await $fetch('/api/v1/user/login', {
+    method: 'POST',
+    body
+  }).catch( (err) => {
+    const msg = err.data?.statusMessage || err.data?.message || err.message
+    toast.add({
+      severity: 'error',
+      summary: msg,
+      detail: '',
+      life: 3000
+    })
+  })
+ 
+  if (res) {
+    console.log(`userStore.setUser`, userStore)
+    userStore.setUserName(res.data.user.username)
+    toast.add({
+        severity: 'success',
+        summary: '恭喜！登录成功!',
+        detail: '',
+        life: 3000
+      })
+  }
+}
+
+const userRegist = async (body) => {
+  const res = await $fetch('/api/v1/user/regist', {
+    method: 'POST',
+    body
+  }).catch( err => {
+    const msg = err.data?.statusMessage || err.data?.message || err.message
+    toast.add({
+      severity: 'error',
+      summary: msg,
+      detail: '',
+      life: 3000
+    })
+  })
+ 
+
+  if (res) {
+    toast.add({
+    severity: 'success',
+    summary: '恭喜！注册成功!',
+    detail: '',
+    life: 3000
+  })
+    await loginBlog(body)
+  }
+
+  
+
+}
+
+const showRegisterDialog = () => {
+  registerForm.value?.show()
+}
+
+const showLoginForm = () => {
+  loginForm.value?.show()
+}
 
 const showSearchDialog = async () => {
   console.log(`searchDialog.value`, searchDialog.value)

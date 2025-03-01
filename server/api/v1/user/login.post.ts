@@ -15,18 +15,23 @@ export default defineEventHandler(async (event) => {
   })
 
   if (!user) {
-    throw createError('用户不存在')
+    throw createError({
+      statusCode: 400,
+      message: '用户不存在'
+    })
   }
 
   if (user.password !== password) {
-    throw createError('账号或密码错误')
+    throw createError({
+      status: 400,
+      statusText: '账号或密码错误'
+    })
   }
 
   const isProd = process.env.NODE_ENV === 'production'
   const payload = {
     userId: user.id,
     role: user.role,
-    nuxtKey: nuxtSecretKey,
   }
 
   // console.log(`login-payload`, payload)
@@ -34,10 +39,10 @@ export default defineEventHandler(async (event) => {
   
   setCookie(event, 'token', token, {
     httpOnly: true,
-    sameSite: 'strict',
+    sameSite: 'lax', // strict lax none
     maxAge: 2592000, // maxAge 优先级高， expires 受客户端时间的影响
     secure: true,
-    domain: cookie.domain,
+    domain: isProd ? '.zzao.club' : 'localhost',
   })
   
   return {

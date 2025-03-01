@@ -11,6 +11,13 @@ const appVersion = packageJson.version
 // const uuid = useNanoId(8)
 const isDev = process.env.NODE_ENV === 'development'
 console.log(` 当前环境为：${isDev ? '开发' : '生产'}`, )
+import { createRequire } from 'module'
+
+const { resolve } = createRequire(import.meta.url)
+
+const prismaClient = `prisma${path.sep}client`
+
+const prismaClientIndexBrowser = resolve('@prisma/client/index-browser').replace(`@${prismaClient}`, `.${prismaClient}`)
 // console.log(`nuxt-secret-key已更新: `, uuid)
 export default defineNuxtConfig({
   // extends: '@nuxt-themes/typography',
@@ -54,6 +61,11 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: ["debug"],
     },
+    resolve: {
+      alias: {
+        ".prisma/client/index-browser": path.relative(__dirname, prismaClientIndexBrowser)
+      }
+    }
   },
   modules: [
     '@nuxtjs/robots',
@@ -69,7 +81,9 @@ export default defineNuxtConfig({
     // '@nuxtjs/robots'
     // '@nuxtjs/seo'
     '@nuxtjs/color-mode',
-    '@prisma/nuxt'
+    '@prisma/nuxt',
+    '@pinia/nuxt',
+    '@vueuse/nuxt'
   ],
   // 把 icon 和客户端捆绑在一起， 减少请求服务端
   icon: {
@@ -116,7 +130,7 @@ export default defineNuxtConfig({
     // cosRegion: 'your_cos_region',
     baseURL: 'https://blog.zzao.club',
     imgHost: 'https://img.zzao.club',
-    // jwtSecret: 'your_jwt_secret',
+    jwtSecret: 'your_jwt_secret',
     // nuxtSecretKey: `blog-zzao-club-${uuid}`,
     // cookie: {
     //   domain: isDev ? 'localhost' : 'zzao.club'
@@ -168,15 +182,17 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    // preset: 'node-server',
+    // externals: {
+    //   inline: ['@prisma/client']
+    // },
     compressPublicAssets: {
       gzip: true,
       brotli: true
     },
     prerender: {
       crawlLinks: true,
-      failOnError: false, //
-      routes: ['/feed.xml']
+      failOnError: true, //
+      routes: ['/feed.xml', '/sitemap.xml']
     },
     imports: {
       presets: [

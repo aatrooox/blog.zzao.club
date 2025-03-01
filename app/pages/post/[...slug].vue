@@ -19,8 +19,8 @@
             <Button severity="secondary" text size="small" v-tooltip.top="'转发图片'">
               <Icon name="icon-park-outline:collect-picture"></Icon>
             </Button>
-            <Button severity="secondary" text size="small" v-tooltip.top="'转发链接'">
-              <Icon name="icon-park-outline:share-two"></Icon>
+            <Button severity="secondary" text size="small" v-tooltip.top="'复制到公众号[Alpha]'" @click="getInnerHTML">
+              <Icon slot="icon" name="icon-park-outline:wechat"></Icon>
             </Button>
           </div>
           <div class="right pr-6 md:pr-0">
@@ -39,11 +39,13 @@
 
           <!-- 评论区 -->
           <ClientOnly>
-            <Divider align="center" type="solid">
-              <b>END</b>
-            </Divider>
-            <div class="text-xl mb-4">评论区</div>
-            <AppCommentInput @send="createComment"></AppCommentInput>
+            <template v-if="page?.body">
+              <Divider align="center" type="solid">
+                <b>END</b>
+              </Divider>
+              <div class="text-xl mb-4">评论区</div>
+              <AppCommentInput @send="createComment"></AppCommentInput>
+            </template>
           </ClientOnly>
         </article>
       </div>
@@ -75,9 +77,6 @@
   const toast = useToast()
   const route = useRoute();
   const activeTocId = ref('')
-
-  console.log(`path`, route.path, `/${route.params.slug.join('/')}`)
-  // const path = computed( () => route.params.slug)
   const curMdContentRef = ref(null)
   const scorllTrigger = ref(120) // 大于此值时，显示一个 header
   const showFixedHeader = ref(false)
@@ -89,7 +88,6 @@
     return queryCollection('content').path(decodeURI(route.path)).first()
   }, {lazy: true})
 
-  // console.log(`page`, page.value)
 
   const tocData = computed( () => {
     return page.value?.body.toc.links
@@ -109,20 +107,6 @@
     ]
   })
 
-  onMounted( () => {
-    window.onscroll = (event) => {
-      // console.log(`event.滚动`, window.scrollY || document.documentElement.scrollTop)
-      const scrollY = window.scrollY || document.documentElement.scrollTop
-      if (scrollY > scorllTrigger.value) {
-        // console.log(`显示`, )
-        showFixedHeader.value = true
-      } else {
-        showFixedHeader.value = false
-        // console.log(`隐藏`, )
-      }
-      
-    }
-  })
   const handlePageScroll = (e) => {
     // console.log(`e.target`, e.target.scrollTop)
   }
@@ -291,4 +275,20 @@
   const likePage = () => {
     toast.add({ severity: 'success', summary: '谢谢❤️ 但还没做点赞功能', life: 3000 });
   }
+
+
+  onMounted( () => {
+    window.onscroll = (event) => {
+      // console.log(`event.滚动`, window.scrollY || document.documentElement.scrollTop)
+      const scrollY = window.scrollY || document.documentElement.scrollTop
+      if (scrollY > scorllTrigger.value) {
+        // console.log(`显示`, )
+        showFixedHeader.value = true
+      } else {
+        showFixedHeader.value = false
+        // console.log(`隐藏`, )
+      }
+      
+    }
+  })
 </script>

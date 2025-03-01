@@ -40,7 +40,7 @@ export default defineAppConfig({
   // 配置后会以此处配置的标签作为 /article 页面筛选栏
   // 比如: tags: ['哈哈'], 则会搜索 文章中 tags 字段中包含(模糊搜索) '哈哈' 的文章
   // 因为观察到其他博客，如果把所有的 tags 都自动罗列出来，会有很多 tag 只有一篇文章，可能是当时随手加的，所以不如自己维护几个高频的
-  tags: ['全部', 'Nuxt', 'Hono', 'Vue3', '博客', '吐槽'],
+  tags: ['全部', 'Nuxt', 'Hono', 'Vue', 'issue'],
   authLayer: {
     enabled: false
   }
