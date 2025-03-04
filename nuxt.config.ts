@@ -52,6 +52,11 @@ export default defineNuxtConfig({
             gtag('config', 'G-6WVZHT91DH');
           `,
           type: 'text/javascript'
+        },
+        {
+          src: 'https://umami.zzao.club/script.js',
+          defer: true,
+          "data-website-id": "ede2b0ce-e029-41f7-9d56-be35fc07ba6c"
         }
       ]
     }
