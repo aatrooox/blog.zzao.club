@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.8.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.8.2...v0.8.3)
+
+### 🚀 Enhancements
+
+- 新增 umami 访问数据统计 ([7b11ae4](https://github.com/aatrooox/blog.zzao.club/commit/7b11ae4))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.8.2
 
 [compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v0.8.1...v0.8.2)
