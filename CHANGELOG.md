@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.9.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.9.0...v0.9.1)
+
+### 🩹 Fixes
+
+- Tls 导致链接失败 ([07d1e10](https://github.com/aatrooox/blog.zzao.club/commit/07d1e10))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.9.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.8.3...v0.9.0)
