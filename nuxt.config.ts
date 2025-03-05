@@ -187,24 +187,12 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    
-    devStorage: {
-      redis: {
-        driver: 'redis',
-        host: '127.0.0.1',
-        tls: false, // 本地需要关闭 tls 
-        db: 0,
-        port: 6379,
-        // password: 'REDIS_PASSWORD'
-      }
-    },
-    // Production
     storage: {
       redis: {
         driver: 'redis',
         host: 'localhost',
         db: 0,
-        tls: true,
+        tls: false,
         port: 6379,
       }
     },
