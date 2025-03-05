@@ -118,7 +118,7 @@ const loginBlog = async (body) => {
     method: 'POST',
     body
   }).catch( (err) => {
-    const msg = err.data?.statusMessage || err.data?.message || err.message
+    const msg = err.data?.message || err.data?.statusMessage  || err.message
     toast.add({
       severity: 'error',
       summary: msg,

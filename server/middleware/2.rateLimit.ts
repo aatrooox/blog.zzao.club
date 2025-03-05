@@ -1,8 +1,8 @@
 // 定义限流规则类型
 interface RateLimitRule {
   path: string;
-  maxRequests: number;
-  windowMs: number;
+  limit: number;
+  duration: number;
 }
 
 // 定义请求记录类型
@@ -14,21 +14,19 @@ interface RequestRecord {
 export default defineEventHandler(async (event) => {
   // 获取请求路径
   const path = event.node.req.url || '';
-  console.log(`limie: path ${path}`, )
   // 定义不同路径的限流规则
   const rateLimitRules: RateLimitRule[] = [
     // 对于同一 id/userid 3 分钟内 最多请求 3 次
-    { path: '/api/v1/user/login', maxRequests: 3, windowMs: 3 * 60 * 1000 }, 
-    { path: '/api/v1/user/regist', maxRequests: 1, windowMs: 1 * 60 * 1000 }, 
-    { path: '/api/v1/comment/create', maxRequests: 3, windowMs: 1 * 60 * 1000 }, 
-    { path: '/api/v1/comment/sub/create', maxRequests: 10, windowMs: 5 * 60 * 1000 }
+    { path: '/api/v1/user/login', limit: 2, duration: 1 * 60 * 1000 }, 
+    { path: '/api/v1/user/regist', limit: 2, duration: 1 * 60 * 1000 }, 
+    { path: '/api/v1/comment/create', limit: 4, duration: 1 * 60 * 1000 }, 
+    { path: '/api/v1/comment/sub/create', limit: 10, duration: 5 * 60 * 1000 }
   ]
   
   // 查找匹配的规则
   const rule = rateLimitRules.find(rule => path.startsWith(rule.path));
   if (!rule) {
     // console.log(` 无匹配规则 `, )
-    // 没有匹配的规则，不限流，继续执行
     return;
   }
   
@@ -38,7 +36,6 @@ export default defineEventHandler(async (event) => {
   
   if (!identifier) {
     // console.log(` 无法识别来源 `, )
-    // 无法识别请求来源，继续执行
     return;
   }
   
@@ -46,35 +43,33 @@ export default defineEventHandler(async (event) => {
   const storage = useStorage('redis');
   const key = `ratelimit:${identifier}:${rule.path}`;
   
-  const currentData = await storage.getItem<RequestRecord>(key) || { count: 0, timestamp: Date.now() };
+  const currentData = await storage.getItem<RequestRecord>(key);
   const now = Date.now();
-  if (now - currentData.timestamp > rule.windowMs) {
-    // 重置计数
-    await storage.setItem(key, { count: 1, timestamp: now });
-    // 设置过期时间
-    await storage.setItemRaw(`${key}:ttl`, '', { ttl: Math.ceil(rule.windowMs / 1000) });
-    // 继续执行
+  if (!currentData) {
+    // 初始化计数
+    await storage.setItem(key, { count: 1, timestamp: now }, { ttl: Math.ceil(rule.duration / 1000) });
     return;
   }
   
-  currentData.count++;
-  
-  if (currentData.count > rule.maxRequests) {
-    const resetTime = currentData.timestamp + rule.windowMs;
+  // 如何超出限制次数，抛出错误
+  if (currentData.count > rule.limit) {
+    const resetTime = currentData.timestamp + rule.duration;
     const remainingTime = Math.ceil((resetTime - now) / 1000);
-    
+    console.log(`Error: out of limit => ${key} - [${remainingTime}s后解锁]`, )
     // 超出限制，抛出错误
     throw createError({
       statusCode: 429,
-      statusMessage: 'Too Many Requests',
-      data: {
-        message: `请求过于频繁，请在${remainingTime}秒后再试`,
-        remainingTime
-      }
+      message: `请求过于频繁，请在${remainingTime}秒后再试`,
     });
   }
-  
-  // 更新请求记录
-  await storage.setItem(key, currentData);
-  // 不返回任何内容，继续执行
+
+  // 正常范围内的请求，计数+1，更新过期时间
+  await storage.setItem(key, {
+    count: currentData.count + 1,
+    timestamp: currentData.timestamp  // 保持原有时间戳
+  }, {
+    ttl: Math.ceil((currentData.timestamp + rule.duration - now) / 1000)  // 更新剩余过期时间
+  });
+
+
 });
