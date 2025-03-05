@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.9.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.8.3...v0.9.0)
+
+### 🚀 Enhancements
+
+- 优化样式;增加接口限流中间件 ([13006ec](https://github.com/aatrooox/blog.zzao.club/commit/13006ec))
+
+### 🩹 Fixes
+
+- 修复 redis 本地链接问题 ([2bf4d06](https://github.com/aatrooox/blog.zzao.club/commit/2bf4d06))
+- 修复 rateLimit 处理逻辑 ([4dc6fec](https://github.com/aatrooox/blog.zzao.club/commit/4dc6fec))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.8.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.8.2...v0.8.3)
