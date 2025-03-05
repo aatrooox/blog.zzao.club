@@ -1,11 +1,10 @@
 <template>
   <div class="pb-10 m-auto mb-4 sm:rounded-lg">
     <main class="max-w-full relative flex justify-center gap-4">
-      <div class="relativ max-w-full lg:max-w-3xl mx-auto" @scroll="handlePageScroll">
+      <div class="relative max-w-full lg:max-w-3xl mx-auto md:left-[-80px] lg:left-[-40px]" @scroll="handlePageScroll">
         <!-- 底部固定的操作栏 -->
         <div
-          class="page-fixed-footer fixed left-0 right-0 bottom-0 bg-white/10 dark:bg-zinc-800/10 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[999] !backdrop-blur-md !backdrop-opacity-90"
-          v-if="showFixedHeader">
+          class="page-fixed-footer fixed left-0 right-0 bottom-0 bg-white/10 dark:bg-zinc-800/10 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[999] !backdrop-blur-md !backdrop-opacity-90 md:hidden">
           <div class="left flex gap-2">
             <Button severity="secondary" text size="small">
               <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg" ref="likeIcon" @click="likePage" />
@@ -16,8 +15,8 @@
               </Icon>
               <span slot="badge">{{ 0 }}</span>
             </Button>
-            <Button severity="secondary" text size="small" v-tooltip.top="'转发图片'">
-              <Icon name="icon-park-outline:collect-picture"></Icon>
+            <Button severity="secondary" text size="small" v-tooltip.top="'复制链接'">
+              <Icon name="material-symbols:share-reviews-outline-rounded"></Icon>
             </Button>
             <Button severity="secondary" text size="small" v-tooltip.top="'复制到公众号[Alpha]'" @click="getInnerHTML">
               <Icon slot="icon" name="icon-park-outline:wechat"></Icon>
@@ -31,34 +30,60 @@
         </div>
         <!-- 文章标题 -->
         <!-- <h1 class="text-2xl font-bold mb-4 text-center relative"> {{ page?.title }}</h1> -->
-        <article class="mdc-prose" v-if="page">
+        <article class="mdc-prose flex max-w-full pr-8" v-if="page">
           <!-- <ContentDoc ref="curMdContentRef" v-slot="{ doc }"> -->
-          <article ref="curMdContentRef">
-            <ContentRenderer :value="page?.body" class="!max-w-full"></ContentRenderer>
-          </article>
 
-          <!-- 评论区 -->
-          <ClientOnly>
-            <template v-if="page?.body">
-              <Divider align="center" type="solid">
-                <b>END</b>
-              </Divider>
-              <div class="text-xl mb-4">评论区</div>
-              <AppCommentInput @send="createComment"></AppCommentInput>
-            </template>
-          </ClientOnly>
+          <div class="flex-col gap-8 px-10 h-80 hidden md:flex sticky top-28">
+            <div class="flex flex-col items-center cursor-pointer" v-tooltip.right="'点赞'">
+              <Icon name="icon-park-outline:thumbs-up" size="1.5em" ref="likeIcon" @click="likePage" />
+              <span slot="badge">{{ 0 }}</span>
+            </div>
+            <div class="flex flex-col items-center cursor-pointer" v-tooltip.right="'回复'">
+              <Icon name="icon-park-outline:comments" size="1.5em">
+              </Icon>
+              <span slot="badge">{{ 0 }}</span>
+            </div>
+            <div class="flex flex-col items-center cursor-pointer" v-tooltip.right="'复制链接'">
+              <Icon name="material-symbols:share-reviews-outline-rounded" size="1.5em"></Icon>
+            </div>
+            <div class="flex flex-col items-center cursor-pointer" v-tooltip.right="'复制到公众号[Alpha]'"
+              @click="getInnerHTML">
+              <Icon slot="icon" name="icon-park-outline:wechat" size="1.5em"></Icon>
+            </div>
+          </div>
+          <div class="flex flex-col w-full lg:max-w-lg pc:max-w-lg">
+            <article ref="curMdContentRef">
+              <ContentRenderer :value="page?.body" class="!max-w-full"></ContentRenderer>
+            </article>
+            <!-- 评论区 -->
+            <ClientOnly>
+              <div>
+                <template v-if="page?.body">
+                  <Divider align="center" type="solid">
+                    <b>END</b>
+                  </Divider>
+                  <div class="text-xl mb-4">评论区</div>
+                  <AppCommentInput @send="createComment"></AppCommentInput>
+                </template>
+              </div>
+
+            </ClientOnly>
+          </div>
+
+
+
         </article>
       </div>
       <ClientOnly>
         <div
-          class="version-info fixed h-[80px] right-0 lg:right-0 pc:right-10 xl:right-20 2xl:right-[15%] top-[10%] w-[220px] hidden lg:flex box-border dark:text-zinc-500  lg:flex-col lg:gap-2"
+          class="version-info fixed h-[80px] right-0 lg:right-0 pc:right-10 xl:right-40 2xl:right-[15%] top-[10%] w-[220px] hidden lg:flex box-border dark:text-zinc-500  lg:flex-col lg:gap-2"
           v-if="page?.versions">
           <div class="flex" v-for="v of page?.versions" :key="v">
             <Tag :value="v" class=""></Tag>
           </div>
         </div>
         <div
-          class="toc fixed h-[30px] right-0 lg:right-0 pc:right-10 xl:right-20 2xl:right-[15%] top-[20%] w-[220px] hidden lg:block box-border dark:text-zinc-500">
+          class="toc fixed h-[30px] right-0 lg:right-0 pc:right-10 xl:right-40 2xl:right-[15%] top-[20%] w-[220px] hidden lg:block box-border dark:text-zinc-500">
           <Button v-tooltip.top="'复制到公众号[Alpha]'" @click="getInnerHTML" severity="primary" rounded size="small"
             variant="text">
             <Icon slot="icon" size="1.5em" name="icon-park-outline:wechat"></Icon>

@@ -8,11 +8,8 @@ const observer = ref()
 
 onMounted(async () => {
   await nextTick();
-  console.log(`props.tocData`, props.tocData)
   setTimeout(() => {
-    // 获取所有标题元素
     const headings = document.querySelectorAll('.heading')
-
     observer.value = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -20,7 +17,6 @@ onMounted(async () => {
         }
       })
     })
-    // 观察所有标题
     headings.forEach(heading => observer.value.observe(heading))
   }, 100)
 
@@ -33,7 +29,7 @@ onUnmounted(() => observer.value?.disconnect())
 </script>
 <template>
   <div
-    class="toc fixed h-[50%] right-0 lg:right-0 pc:right-10 xl:right-20 2xl:right-[15%] top-[30%] w-[220px] hidden lg:block box-border dark:text-zinc-500">
+    class="toc fixed h-[50%] right-0 lg:right-0 pc:right-10 xl:right-40 2xl:right-[15%] top-[30%] w-[220px] hidden lg:block box-border dark:text-zinc-500">
     <ul>
       <template v-for="link in tocData">
         <li

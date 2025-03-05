@@ -187,9 +187,27 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    // externals: {
-    //   inline: ['@prisma/client']
-    // },
+    // Production
+    storage: {
+      db: {
+        driver: 'redis',
+        base: "unstorage",
+        host: 'localhost',
+        tls: true as any,
+        port: 6379,
+      }
+    },
+    // Development
+    devStorage: {
+      db: {
+        driver: 'redis',
+        base: "unstorage",
+        host: 'localhost',
+        tls: true as any,
+        port: 6379,
+        // password: 'REDIS_PASSWORD'
+      }
+    },
     compressPublicAssets: {
       gzip: true,
       brotli: true

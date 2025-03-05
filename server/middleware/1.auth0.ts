@@ -44,6 +44,5 @@ export default defineEventHandler(async (event) => {
        console.log(`auth0 - token - success - ${getRequestURL(event).pathname}`)
       }
     }
-    
   } 
 )
