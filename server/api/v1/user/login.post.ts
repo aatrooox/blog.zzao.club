@@ -5,7 +5,6 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   // 将此key加入到payload中 请求时校验有无此key及user信息
   const { nuxtSecretKey, jwtSecret, cookie } = useRuntimeConfig(event)
-  console.log(`jwtSecret`, jwtSecret)
   const { username, password } = body
   const secret = new TextEncoder().encode(jwtSecret)
   const user = await prisma.user.findUnique({

@@ -40,7 +40,7 @@ const searchTagIndex = ref<number[]>([]);
 //
 const inputTag = ref<string>('')
 // type 在哪里评论， target 评论的对象
-const { type = 'memo', target = '' } = defineProps<{ type?: string, target?: string }>()
+const { type = 'comment', target = '' } = defineProps<{ type?: string, target?: string }>()
 const selectedCity = ref();
 const tags = ref();
 
@@ -60,7 +60,7 @@ const label = computed(() => {
     case 'reply':
       return `回复 by ${name}`
     default:
-      return `memo by ${name}`
+      return `评论 by ${name}`
   }
 })
 

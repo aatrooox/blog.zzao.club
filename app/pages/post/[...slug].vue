@@ -99,7 +99,7 @@
 <script setup>
 
   import { EffectCssAttrs, camelCaseToHyphen, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs, customTagCssAttrs } from '@/config/richText';
-  const toast = useToast()
+  const toast = useGlobalToast()
   const route = useRoute();
   const activeTocId = ref('')
   const curMdContentRef = ref(null)
@@ -160,12 +160,7 @@
     const item = new ClipboardItem({ 'text/html': data, 'text/plain': data2})
     await navigator.clipboard.write([item])
 
-    toast.add({ 
-      severity: 'contrast',
-      summary: '已复制到剪贴板',
-      detail: '去公众号后台粘贴吧！',
-      life: 2000
-    })
+    toast.contrast('已复制HTML到剪贴板!')
   }
 
   /**
@@ -294,7 +289,8 @@
     return imgDom
   }
 
-  const createComment = () => {
+  const createComment = (data) => {
+    console.log(`data`, data)
     toast.add({ severity: 'success', summary: '快做完了！🤪', life: 3000 });
   }
   const likePage = () => {

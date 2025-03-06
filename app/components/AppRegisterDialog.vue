@@ -24,7 +24,7 @@
 import md5 from 'md5'
 
 const emit = defineEmits(['registed'])
-const toast = useToast()
+const toast = useGlobalToast()
 const { validateEmail, validatePassword, validateUsername } = useRegisterValidator()
 const props = defineProps({
   regist: {

@@ -50,12 +50,13 @@
 
 <script setup>
 const searchDialog = ref(null)
-const toast = useToast()
+const toast = useGlobalToast()
 const loginForm = ref(null)
 const registerForm = ref(null)
 const config = useRuntimeConfig()
 const userStore = useUserStore()
 const colorMode = useColorMode()
+const { $api } = useNuxtApp();
 const route = useRoute();
 const curLabel = ref('首页')
 const modes = ['system', 'light', 'dark']
@@ -114,58 +115,18 @@ watch(() => route.path, (newVal, oldVal) => {
 })
 
 const loginBlog = async (body) => {
-  const res = await $fetch('/api/v1/user/login', {
-    method: 'POST',
-    body
-  }).catch( (err) => {
-    const msg = err.data?.message || err.data?.statusMessage  || err.message
-    toast.add({
-      severity: 'error',
-      summary: msg,
-      detail: '',
-      life: 3000
-    })
-  })
- 
+  const res = await $api.post('/api/v1/user/login', body)
   if (res) {
-    console.log(`userStore.setUser`, userStore)
     userStore.setUserName(res.data.user.username)
-    toast.add({
-        severity: 'success',
-        summary: '恭喜！登录成功!',
-        detail: '',
-        life: 3000
-      })
+    toast.success('恭喜！登录成功!')
   }
 }
 
 const userRegist = async (body) => {
-  const res = await $fetch('/api/v1/user/regist', {
-    method: 'POST',
-    body
-  }).catch( err => {
-    const msg = err.data?.statusMessage || err.data?.message || err.message
-    toast.add({
-      severity: 'error',
-      summary: msg,
-      detail: '',
-      life: 3000
-    })
-  })
- 
-
+  const res = await $api.post('/api/v1/user/regist', body)
   if (res) {
-    toast.add({
-    severity: 'success',
-    summary: '恭喜！注册成功!',
-    detail: '',
-    life: 3000
-  })
     await loginBlog(body)
   }
-
-  
-
 }
 
 const showRegisterDialog = () => {

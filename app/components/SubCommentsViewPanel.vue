@@ -54,7 +54,7 @@
 
 <script lang="ts" setup>
 // import anime from 'animejs/lib/anime.es.js'
-const toast = useToast();
+const toast = useGlobalToast();
 const userStore = useUserStore()
 const { disposeError } = useErrorDispose()
 const commentReplyMap = ref<{ [key: string]: boolean }>({})
