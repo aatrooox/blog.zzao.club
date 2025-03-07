@@ -12,10 +12,10 @@
       </p>
       <div class="footer flex items-center gap-4">
         <span class="text-gray-500 text-xs">{{ updateDateFromNow(comment.create_ts) }}</span>
-        <Button @click.stop="likeMemo" severity="secondary" text size="small">
+        <!-- <Button @click.stop="likeMemo" severity="secondary" text size="small">
           <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg" ref="likeIcon" />
           <span slot="badge">{{ likeCount }}</span>
-        </Button>
+        </Button> -->
         <Button severity="secondary" text size="small" v-tooltip.top="'回复'" @click.stop="commentReply">
           <Icon name="icon-park-outline:comments" :style="{ color: comment._count?.sub_comments ? 'black' : '' }">
           </Icon>

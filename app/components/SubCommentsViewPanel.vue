@@ -24,11 +24,11 @@
           </p>
           <div class="footer flex items-center gap-4">
             <span class="text-gray-500 text-xs">{{ updateDateFromNow(subComment.create_ts) }}</span>
-            <Button @click.stop="likeMemo(`like-icon-sub-${subComment.uid}`)" severity="secondary" text size="small">
+            <!-- <Button @click.stop="likeMemo(`like-icon-sub-${subComment.uid}`)" severity="secondary" text size="small">
               <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg"
                 :class="`like-icon-sub-${subComment.uid}`" />
               <span slot="badge">{{ likeCount }}</span>
-            </Button>
+            </Button> -->
             <Button severity="secondary" text size="small" v-tooltip.top="'回复'" @click.stop="commentReply(subComment)">
               <Icon name="icon-park-outline:comments"></Icon>
             </Button>

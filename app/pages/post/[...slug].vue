@@ -7,15 +7,15 @@
           class="page-fixed-footer fixed left-0 right-0 bottom-0 bg-white/10 dark:bg-zinc-800/10 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[999] !backdrop-blur-md !backdrop-opacity-90 md:hidden">
           <div class="left flex gap-2">
             <Button severity="secondary" text size="small">
-              <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg" ref="likeIcon" @click="likePage" />
-              <span slot="badge">{{ 0 }}</span>
+              <Icon slot="icon" name="icon-park-outline:thumbs-up" ref="likeIcon" @click="likePage" class="!text-red-500"/>
+              <span slot="badge">{{ likeCount }}</span>
             </Button>
-            <Button severity="secondary" text size="small" v-tooltip.top="'回复'">
+            <Button severity="secondary" text size="small" v-tooltip.top="'回复'" @click="navigateTo('#评论区')">
               <Icon name="icon-park-outline:comments">
               </Icon>
-              <span slot="badge">{{ 0 }}</span>
+              <span slot="badge">{{ comments.length }}</span>
             </Button>
-            <Button severity="secondary" text size="small" v-tooltip.top="'复制链接'">
+            <Button severity="secondary" text size="small" v-tooltip.top="'复制链接'" @click="copyLink">
               <Icon name="material-symbols:share-reviews-outline-rounded"></Icon>
             </Button>
             <Button severity="secondary" text size="small" v-tooltip.top="'复制到公众号[Alpha]'" @click="getInnerHTML">
@@ -36,7 +36,7 @@
           <div class="flex-col gap-8 px-10 h-80 hidden md:flex sticky top-28">
             <div class="flex flex-col items-center cursor-pointer" v-tooltip.right="'点赞'">
               <Icon name="icon-park-outline:thumbs-up" size="1.5em" ref="likeIcon" @click="likePage" />
-              <span slot="badge">{{ 0 }}</span>
+              <span slot="badge">{{ likeCount }}</span>
             </div>
             <div class=" cursor-pointer" v-tooltip.right="'回复'">
               <NuxtLink href="#评论区" class="flex flex-col items-center">
@@ -60,7 +60,7 @@
             <!-- 评论区 -->
             <ClientOnly>
               <div>
-                <template v-if="page?.body">
+                <template v-if="page?.body && !isDefer">
                   <Divider align="center" type="solid">
                     <b>END</b>
                   </Divider>
@@ -85,13 +85,13 @@
             <Tag :value="v" class=""></Tag>
           </div>
         </div>
-        <div
+        <!-- <div
           class="toc fixed h-[30px] right-0 lg:right-0 pc:right-10 xl:right-40 2xl:right-[15%] top-[20%] w-[220px] hidden lg:block box-border dark:text-zinc-500">
           <Button v-tooltip.top="'复制到公众号[Alpha]'" @click="getInnerHTML" severity="primary" rounded size="small"
             variant="text">
             <Icon slot="icon" size="1.5em" name="icon-park-outline:wechat"></Icon>
           </Button>
-        </div>
+        </div> -->
         <AppToc v-if="tocData && tocData.length" :toc-data="tocData" :active-id="activeTocId"></AppToc>
       </ClientOnly>
 
@@ -112,8 +112,10 @@
 
   type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{ 
       include: { user_info: true , _count: true } }>
-
+  const likeCount = ref(0)
+  const isLiked = ref(false)
   const comments = ref<BlogCommentWithUserInfo[]>([])
+  const isDefer = ref(true)
   
   let _htmlCache = {}
   let _styleValueCache = {}
@@ -314,20 +316,39 @@
       initComment();
     }
   }
-  const likePage = () => {
-    toast.add({ severity: 'success', summary: '谢谢❤️ 但还没做点赞功能', life: 3000 });
+  const likePage = async () => {
+    if (isLiked.value) return;
+    const res = await $api.post('/api/v1/like/create', { article_id: page.value?.id, user_id: userStore.user.id })
+
+    if (!res.error) {
+      toast.contrast('感谢支持！');
+      initLikeCount()
+    }
+
   }
 
   const initComment = async () => {
+    isDefer.value = false;
     const res = await $api.get('/api/v1/comment/list', { article_id: page.value?.id });
     if (!res.error) {
       comments.value = res.data
     }
   }
 
+  const initLikeCount = async () => {
+    const res = await $api.get('/api/v1/like/count', { article_id: page.value?.id, user_id: userStore.user.id });
+    if (!res.error) {
+      likeCount.value = res.data.count
+      isLiked.value = res.data.isLiked
+    }
+  }
+
   watchEffect( async () => {
     if (page.value?.id) {
-      initComment()
+      setTimeout(() => {
+        initComment();
+        initLikeCount();
+      }, 800)
     }
   })
 </script>

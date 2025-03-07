@@ -78,19 +78,19 @@ const modeIcon = computed(() => {
 const items = ref([
 {
       label: '首页',
-      icon: 'icon-park-outline:home',
+      icon: 'twemoji:wedding',
       route: '/'
   },
   {
       label: '文章',
-      icon: 'icon-park-outline:read-book',
+      icon: 'twemoji:page-facing-up',
       route: '/article',
   },
-  // {
-  //     label: '动态',
-  //     icon: 'icon-park-outline:one-third-rotation',
-  //     url: 'https://memo.zzao.club'
-  // },
+  {
+      label: '友链',
+      icon: 'twemoji:clinking-beer-mugs',
+      route: '/links'
+  },
   // {
   //     label: '设置',
   //     icon: 'icon-park-outline:setting-two',

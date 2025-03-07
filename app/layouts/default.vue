@@ -18,7 +18,7 @@
     <ScrollTop />
     <div class="m-auto flex gap-5 box-border">
       <!-- <AppMenu></AppMenu> -->
-      <div class="w-[100%] md:w-[100%] lg:w-[100%]">
+      <div class="w-[100%] md:w-[100%] lg:w-[100%] h-full">
         <AppMenuBar></AppMenuBar>
         <slot />
       </div>

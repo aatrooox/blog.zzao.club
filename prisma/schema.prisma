@@ -83,6 +83,7 @@ model BlogLike {
   create_ts        DateTime        @default(now())
   updated_ts       DateTime        @updatedAt
   target           String          @default("article") // article / memo / comment / subcomment
+  article_id       String?
   sub_comment_id   String?
   sub_comment_info BlogSubComment? @relation(fields: [sub_comment_id], references: [id])
   comment_id       String?

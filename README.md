@@ -1,20 +1,14 @@
 # 博客站
 
-2025年01月10日16:18:15 迁移到新仓库, 历史 commit 丢弃
+一个基于 Nuxt、NuxtContent、PrimeVue 的博客站
 
 ## 功能
 
-- [x] 风格简约
-- [x] 基于 `app.config.ts` 配置博客站基本信息
-- [x] 基于 Github 仓库生成文章
-- [x] 忽略(某些文章)规则 
-- [x] 全文检索
-- [x] tailwindcss
-- [x] toc
-- [x] rss
-- [x] sitemap
-- [x] robots.txt
-- [ ] 友链
+- 登录注册
+- 评论
+- mysql
+- umami数据统计
+
 
 ## 安装依赖
 
@@ -72,9 +66,14 @@ content: defineCollection({
 
 `env`
 
-复制 .env.example 文件为 .env，并填写你的 token。
+mysql 、redis 环境，具体操作可以参考[这篇文章](https://blog.zzao.club/post/nuxt/local-init-mysql-by-docker)
 
-其他环境变量**目前没用到**, 后续可能会用到, 会慢慢删除
+redis 没有配置，默认链接 localhost 6379端口，本地同生产 （单体数据库服务，不对外开放端口）
+
+```
+DATABASE_URL=mysql://root:root@127.0.0.1:3306/blog
+```
+先启动 mysql、redis
 
 ## 启动项目
 
