@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.10.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.10.0...v0.10.1)
+
+### 🚀 Enhancements
+
+- 增加点赞功能 ([9d5d222](https://github.com/aatrooox/blog.zzao.club/commit/9d5d222))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.10.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.9.1...v0.10.0)
