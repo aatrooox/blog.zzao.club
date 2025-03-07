@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.10.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.9.1...v0.10.0)
+
+### 🚀 Enhancements
+
+- 封装全局$api; 解决 primevue 全局 toast 调用问题 ([5d74266](https://github.com/aatrooox/blog.zzao.club/commit/5d74266))
+- 新增评论接口以及修复部分问题 ([a9ad31a](https://github.com/aatrooox/blog.zzao.club/commit/a9ad31a))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.9.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.9.0...v0.9.1)
