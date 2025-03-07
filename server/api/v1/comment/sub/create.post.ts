@@ -13,18 +13,29 @@ import prisma from "@@/lib/prisma"
 //   likes                Likes[]
 
 export default defineEventHandler(async (event) => {
-  const body = await useSafeValidatedBody(event, z.object({
-    content: z.string(), // 内容
-    comment_id: z.string(), // 评论的哪条评论
-    reply_sub_comment_id: z.string().optional(), // 评论的哪条回复
-    user_id: z.string() // 评论者
-  }))
-  if (!body.success) {
+
+  let  body
+  try {
+    body = await useSafeValidatedBody(event, z.object({
+      content: z.string(), // 内容
+      comment_id: z.string(), // 评论的哪条评论
+      reply_sub_comment_id: z.string().optional(), // 评论的哪条回复
+      user_id: z.string() // 评论者
+    }))
+    if (!body.success) {
+      throw createError({
+        statusCode: 400,
+        message: JSON.stringify(body.error)
+      })
+    }
+  } catch (err) {
     throw createError({
       statusCode: 400,
-      message: JSON.stringify(body.error)
+      message: '参数解析失败'
     })
+
   }
+   
   const commentData = {
       ...body.data
   }

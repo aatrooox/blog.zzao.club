@@ -1,44 +1,32 @@
 import { skipHydrate } from 'pinia'
-
-interface User {
-  id: string
-  username: string
-  password: string
-  email: string
-  role: string
-  avatar_url: string
-}
+import { useStorage } from '@vueuse/core'
+import type { User } from '@prisma/client'
+// interface User {
+//   id: string
+//   username: string
+//   password: string
+//   email: string
+//   role: string
+//   avatar_url: string
+// }
 
 export const useUserStore = defineStore('user', () => {
-  const username = useSessionStorage<string | null>('blog/user/name', null);
-  const userId = useSessionStorage<string | null>('blog/user/id', null);
-  const role = useSessionStorage<string | null>('blog/user/role', null);
-  const setUserName = (data: string) => {
-    username.value = data;
-  }
-  const setUserId = (data: string) => {
-    userId.value = data;
-  }
-  const setUserRole = (data: string) => {
-    role.value = data;
-  }
+  const user = useStorage<User | Record<any, any>>('blog/user', {});
 
+  const setUser = (userData: User) => {
+    user.value = userData;
+  }
   const logout = () => {
-    username.value = null;
-    userId.value = null;
+    user.value = {};
   }
 
   const isLogin = computed(() => {
-    return !!username.value;
+    return !!user.value.id;
   })
 
   return {
-    username: skipHydrate(username),
-    userId: skipHydrate(userId),
-    role: skipHydrate(role),
-    setUserName,
-    setUserId,
-    setUserRole,
+    user: skipHydrate(user),
+    setUser,
     isLogin,
     logout
   }

@@ -8,7 +8,7 @@
           <template #legend>
             <div class="flex items-center pl-2">
               <UserAvatar :user-info="subComment.user_info"></UserAvatar>
-              <span class="font-bold p-2">{{ subComment?.user_info?.username }}</span>
+              <span :class="`${subComment.user_info.role === 'superAdmin' ? 'text-cyan-700 font-bold p-2' : 'font-bold p-2'}`">{{ subComment?.user_info?.username }}</span>
               <template v-if="subComment.reply_sub_comment_id">
                 <span> 回复 </span>
                 <!-- 如果是回复其他评论 -->
@@ -34,7 +34,7 @@
             </Button>
             <!-- 管理员 或自己 可删除 -->
             <Button severity="secondary" text size="small" v-tooltip.top="'删除'"
-              v-if="comment.user_id === userStore?.userId || userStore?.role === 'admin'"
+              v-if="comment.user_id === userStore?.user.id || userStore?.user.id === 'admin'"
               @click.stop="delComment(subComment)">
               <Icon name="icon-park-outline:delete"></Icon>
             </Button>
@@ -54,23 +54,23 @@
 
 <script lang="ts" setup>
 // import anime from 'animejs/lib/anime.es.js'
+import { Prisma } from '@prisma/client'
 const toast = useGlobalToast();
 const userStore = useUserStore()
 const { disposeError } = useErrorDispose()
 const commentReplyMap = ref<{ [key: string]: boolean }>({})
 const { updateDateFromNow, formatFullDate } = useDayjs()
+const { $api } = useNuxtApp()
 const emit = defineEmits(['refresh'])
 const likeCount = ref('0')
 const likeIcon = ref(null)
+type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{ 
+  include: { user_info: true , _count: true } }>
+type BlogSubCommentWithUserInfo = Prisma.BlogSubCommentGetPayload<{ 
+  include: { user_info: true , _count: true } }>
+
 interface Props {
-  comment: { // 一级评论的信息， 二级评论拿 id 再去获取
-    id: number
-    uid: string
-    user_id: string
-    content: string
-    create_ts: string
-    user_info?: any
-  },
+  comment: BlogCommentWithUserInfo,
   hideBtns?: boolean,
 }
 const props = defineProps<Props>()
@@ -87,24 +87,21 @@ const commentReply = (subComment: Props['comment']) => {
 }
 
 // 发送一条评论
-const createSubComment = async (message: string, subComment: Props['comment']) => {
+const createSubComment = async (message: Record<any, any>, subComment: Props['comment']) => {
   console.log(`sub msg `, message)
   console.log('sub comment', subComment)
-  const { data, error } = await $http.post('/api/v1/comment/sub/create', {
+  const res = await $api.post('/api/v1/comment/sub/create', {
     comment_id: props.comment.id, // 当前一级评论的 id
-    content: message,
+    content: message.content,
     reply_sub_comment_id: subComment?.id, // 回复的二级评论的 id
-    user_id: userStore?.userId, // 当前用户
+    user_id: userStore?.user.id, // 当前用户
   })
 
-  if (error?.value) {
-    disposeError(error)
-    return;
+  if (!res.error) {
+    commentReplyMap.value[subComment.id] = false;
+    //  上级刷新
+    refreshList();
   }
-
-  commentReplyMap.value[subComment.id] = false;
-  //  上级刷新
-  refreshList();
 }
 
 // 渲染二级评论时，获取其他二级评论
@@ -117,12 +114,8 @@ const checkDetail = (comment: any) => {
 
 // 删除
 const delComment = async (subComment: Props['comment']) => {
-  const { data, error } = await $http.post('/api/v1/comment/sub/del', { id: subComment.id })
-  if (error?.value) {
-    disposeError(error)
-    return;
-  }
-
+  const res = await $api.post('/api/v1/comment/sub/del', { id: subComment.id })
+  if (res.error) return;
   toast.add({ severity: 'success', summary: '删除成功', detail: '评论已删除', life: 3000 });
   refreshList()
 }

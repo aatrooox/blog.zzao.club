@@ -38,16 +38,18 @@
               <Icon name="icon-park-outline:thumbs-up" size="1.5em" ref="likeIcon" @click="likePage" />
               <span slot="badge">{{ 0 }}</span>
             </div>
-            <div class="flex flex-col items-center cursor-pointer" v-tooltip.right="'回复'">
-              <Icon name="icon-park-outline:comments" size="1.5em">
-              </Icon>
-              <span slot="badge">{{ 0 }}</span>
+            <div class=" cursor-pointer" v-tooltip.right="'回复'">
+              <NuxtLink href="#评论区" class="flex flex-col items-center">
+                <Icon name="icon-park-outline:comments" size="1.5em">
+                </Icon>
+                <span slot="badge">{{ comments.length }}</span>
+              </NuxtLink>
             </div>
-            <div class="flex flex-col items-center cursor-pointer" v-tooltip.right="'复制链接'">
+            <div class="flex flex-col items-center cursor-pointer" v-tooltip.right="'复制链接'" @click="copyLink">
               <Icon name="material-symbols:share-reviews-outline-rounded" size="1.5em"></Icon>
             </div>
             <div class="flex flex-col items-center cursor-pointer" v-tooltip.right="'复制到公众号[Alpha]'"
-              @click="getInnerHTML">
+              @click="getInnerHTML" data-umami-event="wx-copy-btn">
               <Icon slot="icon" name="icon-park-outline:wechat" size="1.5em"></Icon>
             </div>
           </div>
@@ -62,16 +64,17 @@
                   <Divider align="center" type="solid">
                     <b>END</b>
                   </Divider>
-                  <div class="text-xl mb-4">评论区</div>
+                  <div class="text-xl mb-4" id="评论区">评论区</div>
                   <AppCommentInput @send="createComment"></AppCommentInput>
+                  <template v-for="comment in comments">
+                    <CommentViewPanel :comment="comment" @refresh="initComment"></CommentViewPanel>
+                  </template>
+                  
                 </template>
               </div>
 
             </ClientOnly>
           </div>
-
-
-
         </article>
       </div>
       <ClientOnly>
@@ -96,15 +99,22 @@
   </div>
 </template>
 
-<script setup>
-
+<script setup lang="ts">
+  
   import { EffectCssAttrs, camelCaseToHyphen, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs, customTagCssAttrs } from '@/config/richText';
   const toast = useGlobalToast()
+  const { $api } = useNuxtApp();
+  const userStore = useUserStore();
   const route = useRoute();
   const activeTocId = ref('')
   const curMdContentRef = ref(null)
-  const scorllTrigger = ref(120) // 大于此值时，显示一个 header
-  const showFixedHeader = ref(false)
+  import { Prisma } from '@prisma/client';
+
+  type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{ 
+      include: { user_info: true , _count: true } }>
+
+  const comments = ref<BlogCommentWithUserInfo[]>([])
+  
   let _htmlCache = {}
   let _styleValueCache = {}
   let copyHTML = ``
@@ -113,9 +123,8 @@
     return queryCollection('content').path(decodeURI(route.path)).first()
   }, {lazy: true})
 
-
   const tocData = computed( () => {
-    return page.value?.body.toc.links
+    return page.value?.body?.toc?.links
   })
 
   useSeoMeta({
@@ -137,9 +146,9 @@
   }
 
   const getContentDom = () => {
-    const articleDom = curMdContentRef.value
+    const articleDom: any = curMdContentRef.value
     // 默认内部会套一层div
-    const contentDom = articleDom.childNodes[0]
+    const contentDom = articleDom && articleDom.childNodes[0]
     return contentDom
   }
   const getInnerHTML = async (e) => {
@@ -168,7 +177,7 @@
    * @param childDom dom元素
    * @param pointCssAttrs 关键css 传入此值将忽略其他属性
    */
-  const getOneDomCssStyle = (childDom, pointCssAttrs = []) => {
+  const getOneDomCssStyle = (childDom, pointCssAttrs: string[] = []) => {
       // 如果不存在，或是注释部分，则返回空字符串
       // 忽略掉button
       if (!childDom || childDom.nodeType === Node.COMMENT_NODE || childDom.tageName === 'BUTTON' || childDom.tageName === 'STYLE') return '';
@@ -180,14 +189,14 @@
       console.log(`childDom.tageName `, childDom.tagName, childDom.nodeType)
       let classList = Array.from(childDom.classList)
       // 如果元素的class在excludeClassList中，则忽略掉此元素， 一般是一些辅助类的元素
-      if (classList.some( item => ExcludeClassList.includes(item))) { return '' }
+      if (classList.some( item => ExcludeClassList.includes(item as string))) { return '' }
 
       // 特殊处理一下img元素
       if (checkDomIsImg(childDom)) {
         return getImgDomHTML(childDom)
       }
     // 如果有子元素, 需要递归处理
-      let childNodes = Array.from(childDom.childNodes)
+      let childNodes: Array<HTMLElement> = Array.from(childDom.childNodes)
       let tagName = childDom.tagName.toLowerCase()
       let childOutHTML = childDom.outerHTML
       let childInnerHTML = childDom.innerHTML
@@ -244,7 +253,7 @@
       // 如果存在子元素, 还需要递归处理子元素
       if (childNodes && childNodes.length > 0) { 
         childNodes.forEach( child => {
-          const _pointCssAttrs = childNodes.tageName === 'pre' ? PreCodeCssAttrs : []
+          const _pointCssAttrs: string[] = child.tagName === 'pre' ? PreCodeCssAttrs : []
           const childOwnHTML = getOneDomCssStyle(child, _pointCssAttrs)
           curDomAllHTML += childOwnHTML;
         })
@@ -261,7 +270,7 @@
    * 检测当前dom是不是包裹img，一般都需要特殊处理
    * @param dom dom元素
    */
-  const checkDomIsImg = (dom) => {
+  const checkDomIsImg = (dom: HTMLElement) => {
     return Array.from(dom.classList)?.includes(IMG_WRAP_CLASS)
   }
   /**
@@ -276,9 +285,9 @@
     return imgDom?.outerHTML
   }
 
-  const findImgDom = (dom) => {
-    const childDoms = Array.from(dom.childNodes).filter(node => node.nodeType === Node.ELEMENT_NODE)
-    const imgDom = childDoms.find( node => node.tagName.toLowerCase() === 'img')
+  const findImgDom = (dom:HTMLElement | ChildNode): HTMLElement => {
+    const childDoms:ChildNode[] = Array.from(dom.childNodes).filter((node: any) => node.nodeType === Node.ELEMENT_NODE)
+    const imgDom = childDoms.find( (node: any) => node.tagName.toLowerCase() === 'img')
     
     if (!imgDom && childDoms && childDoms.length > 0) { 
       for (let childDom of childDoms) {
@@ -286,30 +295,39 @@
       }
     } 
 
-    return imgDom
+    return imgDom as HTMLElement
   }
 
-  const createComment = (data) => {
-    console.log(`data`, data)
-    toast.add({ severity: 'success', summary: '快做完了！🤪', life: 3000 });
+  const copyLink = async () => {
+    await navigator.clipboard.writeText('https://blog.zzao.club' + route.fullPath);
+    toast.contrast('已复制链接!')
+  }
+  const createComment = async (data) => {
+    const res = await $api.post('/api/v1/comment/create', {
+      article_id: page.value?.id,
+      content: data.content,
+      user_id: userStore.user.id
+    })
+    console.log(`res`, res)
+    if (!res.error) {
+      toast.success('评论成功')
+      initComment();
+    }
   }
   const likePage = () => {
     toast.add({ severity: 'success', summary: '谢谢❤️ 但还没做点赞功能', life: 3000 });
   }
 
+  const initComment = async () => {
+    const res = await $api.get('/api/v1/comment/list', { article_id: page.value?.id });
+    if (!res.error) {
+      comments.value = res.data
+    }
+  }
 
-  onMounted( () => {
-    window.onscroll = (event) => {
-      // console.log(`event.滚动`, window.scrollY || document.documentElement.scrollTop)
-      const scrollY = window.scrollY || document.documentElement.scrollTop
-      if (scrollY > scorllTrigger.value) {
-        // console.log(`显示`, )
-        showFixedHeader.value = true
-      } else {
-        showFixedHeader.value = false
-        // console.log(`隐藏`, )
-      }
-      
+  watchEffect( async () => {
+    if (page.value?.id) {
+      initComment()
     }
   })
 </script>

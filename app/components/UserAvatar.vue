@@ -1,20 +1,20 @@
 <template>
-  <Avatar shape="circle" v-if="previewUrl || userInfo?.avatar_url">
-    <AppImg :src="previewUrl || userInfo?.avatar_url"></AppImg>
+  <Avatar shape="circle" v-if="imgUrl">
+    <AppImg :src="imgUrl"></AppImg>
   </Avatar>
   <Avatar :label="userInfo?.username[0]?.toUpperCase() || 'B'" shape="circle" v-else>
   </Avatar>
 </template>
 <script lang="ts" setup>
-interface User {
-  id: number;
-  username: string;
-  avatar_url: string
-}
+import type { User } from '@prisma/client'
 
-defineProps<{
-  userInfo?: User | null,
-  previewUrl?: string | null
+const props = defineProps<{
+  userInfo?: User,
+  previewUrl?: string
 }>()
+
+const imgUrl = computed( () => {
+  return props.previewUrl || props.userInfo?.avatar_url
+})
 </script>
 <style lang="less" scoped></style>

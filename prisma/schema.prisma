@@ -51,7 +51,7 @@ model BlogComment {
   create_ts    DateTime         @default(now())
   updated_ts   DateTime         @updatedAt
   type         String           @default("article") // article / memo / blog
-  acticle_id   String?
+  article_id   String?
   user_id      String
   user_info    User             @relation(fields: [user_id], references: [id], onDelete: NoAction)
   sub_comments BlogSubComment[] // 一对多的二级评论

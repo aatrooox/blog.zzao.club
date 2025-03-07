@@ -16,8 +16,8 @@ import prisma from "@@/lib/prisma"
 export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     content: z.string(), // 内容
-    type: z.string(), // 对象 blog / memo / article
-    article_id: z.string().optional(),
+    type: z.string().optional().default('article'), // 对象 blog / memo / article
+    article_id: z.string(),
     user_id: z.string() // 评论者
   }))
   if (!body.success) {

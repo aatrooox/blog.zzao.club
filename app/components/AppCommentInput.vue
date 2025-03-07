@@ -4,7 +4,6 @@
       @value-change="emit('value-change', comment)" maxlength="256" ref="commentInputRef" />
     <label for="on_label">{{ label }}</label>
   </FloatLabel>
-  <!-- 标签选择器 -->
   <div class="btns flex justify-between items-center">
     <div class="left flex items-center gap-2">
 
@@ -49,7 +48,7 @@ const label = computed(() => {
   // 回复某条评论时，显示回复 xxx
   if (target) return subCommentLabel.value
 
-  const name = userStore?.username || '游客'
+  const name = userStore?.user.username || '游客'
   switch (type) {
     case 'memo':
       return `memo by ${name}`
@@ -122,7 +121,7 @@ const removeTagsFromTextarea = (content: string) => {
 // })
 
 const subCommentLabel = computed(() => {
-  return `回复@${target || userStore?.username}`
+  return `回复@${target || userStore?.user?.username}`
 })
 
 const toggle = (event: any) => {
@@ -141,7 +140,7 @@ const clear = () => {
 const sendComment = () => {
   const tags = extractTags(comment.value);
   // comment.value = removeTagsFromTextarea(comment.value);
-  emit('send', { content: comment.value, tags })
+  if ( comment.value ) emit('send', { content: comment.value, tags })
   clear()
 }
 

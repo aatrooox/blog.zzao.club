@@ -10,7 +10,7 @@ export default function useErrorDispose() {
         detail: error.value.data?.message || error.value.statusMessage,
         life: 3000
       })
-      userStore.logout()    
+      // userStore.logout()    
     }
   }
 

@@ -44,7 +44,7 @@ export default function useDayjs() {
    * @param updateTime 更新时间
    * @returns 
    */
-  const updateDateFromNow = (updateTime: string) => {
+  const updateDateFromNow = (updateTime: string | Date) => {
     return dayjs(updateTime).locale('zh-cn').fromNow();
   }
 

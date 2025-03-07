@@ -1,9 +1,10 @@
 import prisma from "@@/lib/prisma"
 export default defineEventHandler(async (event) => {
   const schema = z.object({
-    type: z.string(),
+    type: z.string().optional().default('article'),
     page: z.string().optional().default('1').transform(Number),
-    size: z.string().optional().default('10').transform(Number)
+    size: z.string().optional().default('10').transform(Number),
+    article_id: z.string(),
   })
   const query = await useSafeValidatedQuery(event, schema)
   
@@ -19,6 +20,7 @@ export default defineEventHandler(async (event) => {
   const comments = await prisma.blogComment.findMany({
     where: {
       type: query.data.type,
+      article_id: query.data.article_id
     },
     skip,
     take,

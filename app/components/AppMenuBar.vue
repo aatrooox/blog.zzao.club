@@ -14,7 +14,7 @@
           <Button rounded severity="secondary" size="small" @click="showSearchDialog">
             <Icon name="icon-park-outline:search"></Icon>
           </Button>
-          <Tag v-if="userStore.isLogin" :value="userStore.username"></Tag>
+          <Tag v-if="userStore.isLogin" :value="userStore.user.username"></Tag>
           <Button v-else severity="secondary" label="登录" size="small" @click="showLoginForm"></Button>
           <Tag :value="`v${config.public.Z_BLOG_VERSION}`"
             v-tooltip.bottom="`博客版本: v${config.public.Z_BLOG_VERSION} \n @nuxt/content@${config.public.ContentVersion}`">
@@ -117,7 +117,9 @@ watch(() => route.path, (newVal, oldVal) => {
 const loginBlog = async (body) => {
   const res = await $api.post('/api/v1/user/login', body)
   if (res) {
-    userStore.setUserName(res.data.user.username)
+    userStore.setUser(res.data.user)
+
+    console.log(`userStore.user`, userStore.user)
     toast.success('恭喜！登录成功!')
   }
 }
