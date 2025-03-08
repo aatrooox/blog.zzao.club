@@ -2,7 +2,7 @@ import prisma from "@@/lib/prisma"
 export default defineEventHandler(async (event) => {
   const schema = z.object({
     article_id: z.string(),
-    user_id: z.string()
+    user_id: z.string().optional()
   })
   const query = await useSafeValidatedQuery(event, schema)
   

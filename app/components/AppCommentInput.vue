@@ -139,6 +139,7 @@ const clear = () => {
 
 const sendComment = () => {
   const tags = extractTags(comment.value);
+
   // comment.value = removeTagsFromTextarea(comment.value);
   if ( comment.value ) emit('send', { content: comment.value, tags })
   clear()
