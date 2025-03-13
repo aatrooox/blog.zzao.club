@@ -305,6 +305,10 @@
     toast.contrast('已复制链接!')
   }
   const createComment = async (data) => {
+    umami.track('comment', { page: page.value?.id });
+    if (!userStore.user.id) {
+       return toast.warn('登录后就可以评论了')
+    }
     const res = await $api.post('/api/v1/comment/create', {
       article_id: page.value?.id,
       content: data.content,
@@ -317,7 +321,7 @@
     }
   }
   const likePage = async () => {
-    if (isLiked.value) return;
+    if (isLiked.value || !userStore.user.id) return;
     const res = await $api.post('/api/v1/like/create', { article_id: page.value?.id, user_id: userStore.user.id })
 
     if (!res.error) {

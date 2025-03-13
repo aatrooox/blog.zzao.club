@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.10.2
+
+[compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v0.10.1...v0.10.2)
+
+### 🩹 Fixes
+
+- 修复未登录时的报错；增加 umami 的 track (52225b9)
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.10.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.10.0...v0.10.1)
