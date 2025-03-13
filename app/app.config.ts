@@ -34,8 +34,6 @@ export default defineAppConfig({
       url: 'https://blog.zzao.club/feed.xml'
     }
   ],
-  // 小册配置请前往/content/bookConfig/*.json 一个json对应一本小册, 名称随意
-  // book
   // 标签
   // 配置后会以此处配置的标签作为 /article 页面筛选栏
   // 比如: tags: ['哈哈'], 则会搜索 文章中 tags 字段中包含(模糊搜索) '哈哈' 的文章
