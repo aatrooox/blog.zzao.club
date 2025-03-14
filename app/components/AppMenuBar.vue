@@ -11,17 +11,19 @@
       breakpoint="750px" :model="items">
       <template #end="{ item }">
         <div class="flex items-center gap-2">
-          <Button rounded severity="secondary" size="small" @click="showSearchDialog">
-            <Icon name="icon-park-outline:search"></Icon>
-          </Button>
-          <Tag v-if="userStore.isLogin" :value="userStore.user.username"></Tag>
-          <Button v-else severity="secondary" label="登录" size="small" @click="showLoginForm"></Button>
-          <Tag :value="`v${config.public.Z_BLOG_VERSION}`"
-            v-tooltip.bottom="`博客版本: v${config.public.Z_BLOG_VERSION} \n @nuxt/content@${config.public.ContentVersion}`">
-          </Tag>
-          <Button rounded severity="secondary" @click="toggleDarkMode()" size="small">
-            <Icon :name="modeIcon"></Icon>
-          </Button>
+          <ClientOnly>
+            <Button rounded severity="secondary" size="small" @click="showSearchDialog">
+              <Icon name="icon-park-outline:search"></Icon>
+            </Button>
+            <Tag v-if="userStore.isLogin" :value="userStore.user.username"></Tag>
+            <Button v-else severity="secondary" label="登录" size="small" @click="showLoginForm"></Button>
+            <Tag :value="`v${config.public.Z_BLOG_VERSION}`"
+              v-tooltip.bottom="`博客版本: v${config.public.Z_BLOG_VERSION} \n @nuxt/content@${config.public.ContentVersion}`">
+            </Tag>
+            <Button rounded severity="secondary" @click="toggleDarkMode()" size="small">
+              <Icon :name="modeIcon"></Icon>
+            </Button>
+          </ClientOnly>
         </div>
       </template>
       <template #item="{ item, props }">
@@ -62,6 +64,7 @@ const curLabel = ref('首页')
 const modes = ['system', 'light', 'dark']
 const index = ref(modes.indexOf(colorMode.preference))
 const modeIcon = computed(() => {
+  console.log(`colorMode.preference`, colorMode.preference)
   switch (colorMode.preference) {
     case 'system':
       return 'icon-park-outline:computer'
