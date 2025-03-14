@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.10.5
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.10.4...v0.10.5)
+
+### 🩹 Fixes
+
+- Ignore excalidraw fold ([223713a](https://github.com/aatrooox/blog.zzao.club/commit/223713a))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.10.4
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.10.3...v0.10.4)
