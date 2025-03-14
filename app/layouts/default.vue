@@ -9,7 +9,7 @@
             <Icon name="twemoji:grinning-face-with-sweat" v-if="message.severity === 'error'" size="1.5em"></Icon>
             <Icon name="twemoji:saluting-face" v-if="message.severity === 'info' || message.severity === 'contrast'" size="1.5em"></Icon>
             <Icon name="twemoji:angry-face" v-if="message.severity === 'warn'" size="1.5em"></Icon>
-            <span class="text-sm font-bold  dark:text-zinc-200" :class="message.severity === 'contrast' && 'text-zinc-200' || 'text-zinc-800'">{{ message.summary }}</span>
+            <span class="text-sm font-bold dark:text-zinc-200" :class="message.severity === 'contrast' && 'text-zinc-200 dark:text-zinc-800' || 'text-zinc-800'">{{ message.summary }}</span>
           </div>
         </section>
       </template>
