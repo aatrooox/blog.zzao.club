@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.10.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.10.2...v0.10.3)
+
+### 🩹 Fixes
+
+- Menubar 水合问题 ([5de8b1d](https://github.com/aatrooox/blog.zzao.club/commit/5de8b1d))
+
+### 📖 Documentation
+
+- 注释 ([67cfb6a](https://github.com/aatrooox/blog.zzao.club/commit/67cfb6a))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.10.2
 
 [compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v0.10.1...v0.10.2)
