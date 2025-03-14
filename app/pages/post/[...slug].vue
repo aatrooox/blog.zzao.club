@@ -321,7 +321,14 @@
     }
   }
   const likePage = async () => {
-    if (isLiked.value || !userStore.user.id) return;
+    if (!userStore.user.id) {
+      return toast.contrast('登录后才能点赞')
+    };
+
+    if (isLiked.value) {
+      return toast.contrast('已经点过赞了')
+    };
+
     const res = await $api.post('/api/v1/like/create', { article_id: page.value?.id, user_id: userStore.user.id })
 
     if (!res.error) {
