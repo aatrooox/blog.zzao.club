@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.10.6
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.10.5...v0.10.6)
+
+### 🩹 Fixes
+
+- Toast dark color ([e840627](https://github.com/aatrooox/blog.zzao.club/commit/e840627))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.10.5
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.10.4...v0.10.5)
