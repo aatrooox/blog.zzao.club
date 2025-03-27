@@ -1,7 +1,7 @@
 <template>
   <div class="pb-10 m-auto mb-4 sm:rounded-lg">
     <main class="max-w-full relative flex justify-center gap-4">
-      <div class="relative max-w-full lg:max-w-3xl mx-auto md:left-[-80px] lg:left-[-40px]" @scroll="handlePageScroll">
+      <div class="relative max-w-full lg:max-w-6xl mx-auto md:left-[-80px] lg:left-[-40px]" @scroll="handlePageScroll">
         <!-- 底部固定的操作栏 -->
         <div
           class="page-fixed-footer fixed left-0 right-0 bottom-0 bg-white/10 dark:bg-zinc-800/10 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[999] !backdrop-blur-md !backdrop-opacity-90 md:hidden">
@@ -30,7 +30,7 @@
         </div>
         <!-- 文章标题 -->
         <!-- <h1 class="text-2xl font-bold mb-4 text-center relative"> {{ page?.title }}</h1> -->
-        <article class="mdc-prose flex max-w-full pr-8" v-if="page">
+        <article class="mdc-prose flex max-w-full sm:pr-8" v-if="page">
           <!-- <ContentDoc ref="curMdContentRef" v-slot="{ doc }"> -->
 
           <div class="flex-col gap-8 px-10 h-80 hidden md:flex sticky top-28">
@@ -53,7 +53,7 @@
               <Icon slot="icon" name="icon-park-outline:wechat" size="1.5em"></Icon>
             </div>
           </div>
-          <div class="flex flex-col w-full lg:max-w-lg pc:max-w-lg">
+          <div class="flex flex-col w-full max-w-full lg:max-w-2xl pc:max-w-2xl">
             <article ref="curMdContentRef">
               <ContentRenderer :value="page?.body" class="!max-w-full"></ContentRenderer>
             </article>
@@ -79,7 +79,7 @@
       </div>
       <ClientOnly>
         <div
-          class="version-info fixed h-[80px] right-0 lg:right-0 pc:right-10 xl:right-40 2xl:right-[15%] top-[10%] w-[220px] hidden lg:flex box-border dark:text-zinc-500  lg:flex-col lg:gap-2"
+          class="version-info fixed h-[80px] right-0 lg:right-0 pc:right-10 xl:right-[5%] 2xl:right-[5%] top-[10%] w-[220px] hidden lg:flex box-border dark:text-zinc-500  lg:flex-col lg:gap-2"
           v-if="page?.versions">
           <div class="flex" v-for="v of page?.versions" :key="v">
             <Tag :value="v" class=""></Tag>

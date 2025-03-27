@@ -1,75 +1,103 @@
 <template>
-  <div class="flex flex-col gap-4 box-border relative">
-    <div class="author-panel py-8 flex flex-col gap-4">
-      <div class="flex gap-4">
-
-        <div class="w-16 h-16">
-          <UserAvatar :preview-url="config.avatar" size="xlarge" />
-        </div>
-        <div class="info-box flex flex-col gap-2">
-          <div class="text-3xl font-bold">{{ config.author }}
-            <Button v-if="config.organization" class="text-sm text-zinc-400 font-normal" as="a" target="_blank"
-              :label="`@${config.organization}`" :href="config.organizationUrl" variant="link" />
+  <div class="flex flex-col gap-4 max-w-7xl mx-auto px-4 py-4">
+    <!-- 个人介绍区域 -->
+    <div class="relative">
+      <div class="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-primary-700/10 dark:from-primary-900/20 dark:to-primary-700/20 rounded-xl"></div>
+      <div class="relative p-5 rounded-xl">
+        <div class="flex flex-col md:flex-row gap-5 items-center md:items-start">
+          <div class="relative">
+            <div class="w-28 h-28 rounded-full overflow-hidden ring-2 ring-white dark:ring-zinc-800 shadow-lg">
+              <img :src="config.avatar" alt="avatar" class="w-full h-full object-cover" />
+            </div>
+            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-zinc-800"></div>
           </div>
-          <div class="text-sm text-zinc-500">{{ config.desciption }}</div>
+          <div class="flex-1 text-center md:text-left">
+            <div class="flex flex-col md:flex-row items-center md:items-baseline gap-2">
+              <h1 class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ config.author }}</h1>
+              <Button v-if="config.organization" class="text-sm text-zinc-500 dark:text-zinc-400 font-normal" as="a" target="_blank"
+                :label="`@${config.organization}`" :href="config.organizationUrl" variant="link" />
+            </div>
+            <p class="mt-2 text-base text-zinc-600 dark:text-zinc-400">{{ config.desciption }}</p>
+            <div class="flex flex-wrap gap-2 mt-3">
+              <div v-for="item in config.social" :key="item.name" class="group">
+                <Button type="button" severity="secondary" size="large" @click="(event) => toggle(event, item)"
+                  v-tooltip.top="item.name" class="transition-all duration-200 hover:scale-105">
+                  <Icon :name="item.icon" class="text-base"></Icon>
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <!-- 如果存在auth layer 则会使用此组件显示状态 -->
-      <div class="social-panel flex gap-4">
-        <div v-for="item in config.social">
-          <Button type="button" severity="secondary" size="large" label="Share" @click="(event) => toggle(event, item)"
-            v-tooltip.top="item.name">
-            <Icon :name="item.icon"></Icon>
-          </Button>
+    </div>
+
+    <!-- 占位图区域 -->
+    <!-- <div class="bg-white dark:bg-zinc-800 rounded-lg p-4 border border-zinc-100 dark:border-zinc-700">
+      <div class="aspect-video rounded-lg bg-gradient-to-br from-primary-500/10 to-primary-700/10 dark:from-primary-900/20 dark:to-primary-700/20 flex items-center justify-center">
+        <div class="text-center">
+          <Icon name="icon-park-outline:chart-line" class="text-4xl text-primary-500 dark:text-primary-400 mb-2"></Icon>
+          <p class="text-sm text-zinc-500 dark:text-zinc-400">数据统计</p>
         </div>
-
-        <Popover ref="socialOp">
-          <div class="flex flex-col gap-4">
-            <div>
-              <span class="font-medium block mb-2">{{ curSocial?.name }}</span>
-            </div>
-            <div>
-              <AppImg :src="curSocial?.popover" :width="200" />
-            </div>
-
-          </div>
-        </Popover>
       </div>
-    </div>
-    <div class="page-panel-title text-2xl font-bold">
-      <span class="border-b-4 border-zinc-800 dark:border-zinc-400">最近文章</span>
-    </div>
+    </div> -->
 
-    <div class="page-panel gap-4 flex flex-col">
-      <template v-for="page of articles">
-        <div class="page-item flex justify-between group">
-          <div class="page-title flex items-center gap-2">
-            <Icon name="icon-park-outline:right" class="group-hover:hidden transition-all duration-150"></Icon>
-            <Icon name="icon-park-outline:hand-right"
-              class="hidden transition-all duration-150 group-hover:inline-block"></Icon>
-            <NuxtLink :to="page.path"
-              class="prose prose-a transition-all duration-150 dark:text-zinc-200 group-hover:underline group-hover:underline-offset-2 group-hover:font-bold">
-              <span class="text-sm md:text-md text-zinc-400 mr-4">{{ formatDate(page.date, '/') }}</span>{{
-                page.title
-              }}
-            </NuxtLink>
-          </div>
-          <div class="hidden group-hover:md:block">
-            <template v-if="page.versions">
-              <Tag v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v" :value="v"></Tag>
-            </template>
-            <template v-else>
-              <Tag v-for="tag of page.tags" :key="tag" :value="tag"></Tag>
-            </template>
-          </div>
-        </div>
-      </template>
-      <div class="more-articles">
-        <Button text @click="turnToPages" :icon-pos="'right'">
-          <Icon name="icon-park-outline:hand-right" slot="icon"></Icon>更多文章
+    <!-- 最近文章区域 -->
+    <div class="flex-1 space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+          <span class="relative">
+            最近文章
+            <span class="absolute -bottom-0.5 left-0 w-full h-0.5 bg-primary-500"></span>
+          </span>
+        </h2>
+        <Button text @click="turnToPages" class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
+          <span>更多文章</span>
+          <Icon name="icon-park-outline:right" class="ml-1"></Icon>
         </Button>
       </div>
+
+      <div class="grid gap-2">
+        <template v-for="page of articles" :key="page.path">
+          <div class="group">
+            <div class="p-3 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 hover:shadow-md hover:shadow-zinc-200 dark:hover:shadow-zinc-900 transition-all duration-200">
+              <div class="flex flex-col md:flex-row md:items-center gap-2">
+                <div class="flex items-center gap-2 flex-1">
+                  <Icon name="icon-park-outline:right" class="text-zinc-400 group-hover:text-primary-500 transition-colors"></Icon>
+                  <NuxtLink :to="page.path" class="flex-1 min-w-0">
+                    <div class="text-base font-medium text-zinc-900 dark:text-zinc-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors truncate">
+                      {{ page.title }}
+                    </div>
+                    <div class="text-sm text-zinc-500 dark:text-zinc-400">
+                      {{ formatDate(page.date, '/') }}
+                    </div>
+                  </NuxtLink>
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                  <template v-if="page.versions">
+                    <Tag v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v" :value="v" severity="secondary" size="small"></Tag>
+                  </template>
+                  <template v-else>
+                    <Tag v-for="tag of page.tags" :key="tag" :value="tag" severity="secondary" size="small"></Tag>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
     </div>
+
+    <!-- 社交分享弹窗 -->
+    <Popover ref="socialOp">
+      <div class="flex flex-col gap-2 p-2">
+        <div>
+          <span class="font-medium block mb-1 text-sm">{{ curSocial?.name }}</span>
+        </div>
+        <div>
+          <AppImg :src="curSocial?.popover" :width="200" />
+        </div>
+      </div>
+    </Popover>
   </div>
 </template>
 <script lang="ts" setup>

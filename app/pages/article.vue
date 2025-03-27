@@ -1,20 +1,30 @@
 <template>
-  <div class="flex flex-col gap-4">
-    <div class="paginator flex gap-4 justify-between items-center">
-      <SelectButton v-model="selectedTags" :options="tags" optionLabel="name" @update:modelValue="changeTags"
-        size="small" />
-      <Tag class="ml-2" :value="`${data?.length || 0} 篇`"></Tag>
+  <div class="flex flex-col gap-6 max-w-7xl mx-auto sm:px-4">
+    <div class="flex flex-wrap gap-2">
+      <Button 
+        v-for="tag in tags" 
+        :key="tag.value"
+        :class="[
+          'text-sm px-3 py-1.5 rounded-md transition-all duration-200',
+          selectedTags?.value === tag.value
+            ? 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300'
+            : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'
+        ]"
+        @click="selectTag(tag)"
+      >
+        {{ tag.name }}
+        <span v-if="selectedTags?.value === tag.value" class="ml-1 text-xs">({{ data?.length || 0 }})</span>
+      </Button>
     </div>
-    <div class="page-list flex flex-wrap md:justify-between gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <template v-for="page of (data as unknown)" :key="page.path">
-        <div
-          class="page-item w-[100%] md:w-[48%] transition-all duration-200 rounded-md bg-zinc-100 dark:bg-zinc-800 hover:shadow-lg">
-          <PagePanel :page="page"></PagePanel>
+        <div class="group">
+          <div class="h-full transition-all duration-200 rounded-lg bg-white dark:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-900 border border-zinc-100 dark:border-zinc-700">
+            <PagePanel :page="page"></PagePanel>
+          </div>
         </div>
       </template>
     </div>
-
-
   </div>
 </template>
 <script lang="ts" setup>
@@ -46,6 +56,9 @@ const filter_tags = computed(() => {
     }
     return query_tags
   } else {
+    if (!selectedTags.value) {
+      selectedTags.value = tags.value[0] // 默认选中"全部"标签
+    }
     return null
   }
 })
@@ -53,8 +66,8 @@ const count = ref(0)
 
 
 
-const changeTags = async (tags: string[]) => {
-  let tags_str = selectedTags.value?.name
+const changeTags = async (tag: string) => {
+  let tags_str = tag
   if (tags_str === '全部') tags_str = ''
   navigateTo({
     path: '/article',
@@ -88,6 +101,11 @@ const queryArticles = async (filter_tags: any) => {
 const { data, status, refresh } = await useAsyncData(hash('artile-page' + formatDate(new Date())), async () => {
   return queryArticles(filter_tags.value)
 }, { watch: [filter_tags], lazy: true })
+
+const selectTag = async (tag: { name: string, value: number }) => {
+  selectedTags.value = tag;
+  await changeTags(tag.name);
+}
 
 // const articles = computed(() => {
 

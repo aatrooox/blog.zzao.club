@@ -1,6 +1,6 @@
 export default defineAppConfig({
   // 网站基本信息
-  author: '最新最全 Nuxt4 全栈开发内容',
+  author: '最新最全 Nuxt4 全栈开发',
   // 组织
   organization: '早早集市',
   // 组织地址
