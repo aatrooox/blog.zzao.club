@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.10.7
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.10.6...v0.10.7)
+
+### 🎨 Styles
+
+- 重构 UI ([bb2917f](https://github.com/aatrooox/blog.zzao.club/commit/bb2917f))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.10.6
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.10.5...v0.10.6)
