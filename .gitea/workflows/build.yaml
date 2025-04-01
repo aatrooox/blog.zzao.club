@@ -21,25 +21,19 @@ jobs:
           pnpm install
       - name: Build Project
         env: 
-          CONTENT_REPO_TOKEN: ${{ vars.CONTENT_REPO_TOKEN }}
-          NUXT_COS_SECRET_ID: ${{ vars.NUXT_COS_SECRET_ID }}
-          NUXT_COS_SECRET_KEY: ${{ vars.NUXT_COS_SECRET_KEY }}
-          NUXT_COS_BUCKET: ${{ vars.NUXT_COS_BUCKET }}
-          NUXT_COS_REGION: ${{ vars.NUXT_COS_REGION }}
-          NUXT_JWT_SECRET: ${{ vars.NUXT_JWT_SECRET }}
-          DATABASE_URL: ${{ vars.DATABASE_URL }}
-          NUXT_GITHUB_CLIENT_SECRET: ${{ vars.NUXT_GITHUB_CLIENT_SECRET }}
-          NUXT_GITHUB_CLIENT_ID: ${{ vars.NUXT_GITHUB_CLIENT_ID }}
-          NUXT_AUTH_SECTRET: ${{ vars.NUXT_AUTH_SECTRET }}
-          NUXT_AUTH_ORIGIN: ${{ vars.NUXT_AUTH_ORIGIN }}
+          CONTENT_REPO_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NUXT_JWT_SECRET: ${{ secrets.NUXT_JWT_SECRET }}
+          NUXT_FEISHU_WEBHOOK: ${{ secrets.NUXT_FEISHU_WEBHOOK }}
+          NUXT_FEISHU_USER_ID: ${{ secrets.NUXT_FEISHU_USER_ID }}
         run: NODE_OPTIONS="--max-old-space-size=2560" pnpm build
       - name: Copy and Build
         env: 
+          CONTENT_REPO_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          NUXT_GITHUB_CLIENT_SECRET: ${{ vars.NUXT_GITHUB_CLIENT_SECRET }}
-          NUXT_GITHUB_CLIENT_ID: ${{ vars.NUXT_GITHUB_CLIENT_ID }}
-          NUXT_AUTH_SECTRET: ${{ vars.NUXT_AUTH_SECTRET }}
-          NUXT_AUTH_ORIGIN: ${{ vars.NUXT_AUTH_ORIGIN }}
+          NUXT_FEISHU_WEBHOOK: ${{ secrets.NUXT_FEISHU_WEBHOOK }}
+          NUXT_FEISHU_USER_ID: ${{ secrets.NUXT_FEISHU_USER_ID }}
+          NUXT_JWT_SECRET: ${{ secrets.NUXT_JWT_SECRET }}
         run: |
           rm -rf /root/web/blog3/*
           mkdir -p /root/web/blog3/prisma
@@ -67,4 +61,4 @@ jobs:
                 "text": "${{ gitea.repository }} - release [${{job.status}}]"
               }
             }' \
-            "${{ vars.FEISHU_WEBHOOK }}"
+            "${{ secrets.NUXT_FEISHU_WEBHOOK }}"

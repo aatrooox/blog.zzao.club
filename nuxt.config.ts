@@ -129,17 +129,11 @@ export default defineNuxtConfig({
   },
   css: ['@/assets/css/main.css', 'primeicons/primeicons.css'],
   runtimeConfig: {
-    // cosSecretId: 'your_cos_secret_id',
-    // cosSecretKey: 'your_cos_secret_key',
-    // cosBucket: 'your_cos_bucket',
-    // cosRegion: 'your_cos_region',
+    feishuWebhook: '',
+    feishuUserId: '',
     baseURL: 'https://blog.zzao.club',
     imgHost: 'https://img.zzao.club',
     jwtSecret: 'your_jwt_secret',
-    // nuxtSecretKey: `blog-zzao-club-${uuid}`,
-    // cookie: {
-    //   domain: isDev ? 'localhost' : 'zzao.club'
-    // },
     public: {
       ContentVersion: '3.0.0',
       Z_BLOG_VERSION: appVersion,

@@ -305,8 +305,8 @@
     toast.contrast('已复制链接!')
   }
   const createComment = async (data) => {
-    umami.track('comment', { page: page.value?.id });
     if (!userStore.user.id) {
+       umami.track('comment', { page: page.value?.id, isOk: false });
        return toast.warn('登录后就可以评论了')
     }
     const res = await $api.post('/api/v1/comment/create', {
@@ -317,11 +317,13 @@
     console.log(`res`, res)
     if (!res.error) {
       toast.success('评论成功')
+      umami.track('comment', { page: page.value?.id, isOk: true });
       initComment();
     }
   }
   const likePage = async () => {
     if (!userStore.user.id) {
+      umami.track('like', { page: page.value?.id, isOk: false });
       return toast.contrast('登录后才能点赞')
     };
 
@@ -333,6 +335,7 @@
 
     if (!res.error) {
       toast.contrast('感谢支持！');
+      umami.track('like', { page: page.value?.id, isOk: true });
       initLikeCount()
     }
 

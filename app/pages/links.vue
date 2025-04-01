@@ -32,21 +32,20 @@
       <div class="mt-8 p-6 rounded-lg bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800">
         <h2 class="text-lg font-bold text-zinc-900 dark:text-zinc-100 mb-4">申请友链</h2>
         <p class="text-zinc-600 dark:text-zinc-400 mb-4">
-          如果你也想与我交换友链，请按照以下格式在评论区留言：
+          如果你也想与我交换友链，请按照以下格式填写后提交：
         </p>
         <div class="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-md">
-          <pre class="text-sm text-zinc-600 dark:text-zinc-400 whitespace-pre-wrap">
-{
-  "name": "你的网站名称",
-  "url": "你的网站地址",
-  "desc": "你的网站描述"
-}</pre>
+          <Textarea v-model="newLink" class="w-full h-40 p-2 rounded-md border border-zinc-200 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 transition-all duration-200"></Textarea>
+          <Button variant="outlined" severity="contrast" raised @click="addLink" label="提交"/>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+const { $api } = useNuxtApp();
+const toast = useGlobalToast()
+
 useHead({
   title: '友链｜早早集市',
   meta: [
@@ -78,4 +77,41 @@ const links = [
   //   desc: 'Nuxt 版 Flomo',
   // }
 ]
+
+const newLink = ref(JSON.stringify({
+  name: '网站名称',
+  url: 'https://www.example.com',
+  desc: '网站描述'
+}, null, 2))
+
+const addLink = async () => {
+  console.log(newLink.value)
+  let propsObj
+  try {
+    // 先尝试直接解析
+    propsObj = JSON.parse(newLink.value)
+  } catch (e) {
+    try {
+      // 如果直接解析失败，尝试处理格式
+      const jsonStr = newLink.value
+        .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2":') // 只处理键名部分
+        .replace(/'/g, '"') // 将单引号替换为双引号
+      
+      propsObj = JSON.parse(jsonStr)
+    } catch (e) {
+      
+      console.error(`转换失败`, e)
+      return 
+    }
+  }
+
+  console.log(propsObj)
+  const res = await $api.post('/api/v1/link/add', propsObj)
+
+  if (res.error) {  
+    toast.error('提交失败，请检查格式')
+  } else {
+    toast.success('提交成功，请等待博主审核，或通过首页微信联系博主')
+  }
+}
 </script>
