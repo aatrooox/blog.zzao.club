@@ -18,7 +18,7 @@
                 :label="`@${config.organization}`" :href="config.organizationUrl" variant="link" />
             </div>
             <p class="mt-2 text-base text-zinc-600 dark:text-zinc-400">{{ config.desciption }}</p>
-            <div class="flex flex-wrap gap-2 mt-3">
+            <div class="flex flex-wrap gap-2 justify-center md:justify-start mt-3">
               <div v-for="item in config.social" :key="item.name" class="group">
                 <Button type="button" severity="secondary" size="large" @click="(event) => toggle(event, item)"
                   v-tooltip.top="item.name" class="transition-all duration-200 hover:scale-105">

@@ -60,23 +60,7 @@ useHead({
   ],
 })
 
-const links = [
-  {
-    name: '早早集市',
-    url: 'https://blog.zzao.club',
-    desc: '一个全栈开发者的博客站',
-  },
-  {
-    name: 'IMGX',
-    url: 'https://imgx.zzao.club',
-    desc: '便捷地生成精美卡片',
-  },
-  // {
-  //   name: 'MEMOZ',
-  //   url: 'https://memo.zzao.club',
-  //   desc: 'Nuxt 版 Flomo',
-  // }
-]
+const { links } = useAppConfig()
 
 const newLink = ref(JSON.stringify({
   name: '网站名称',

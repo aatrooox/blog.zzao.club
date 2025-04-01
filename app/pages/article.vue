@@ -4,11 +4,9 @@
       <Button 
         v-for="tag in tags" 
         :key="tag.value"
+        severity="secondary"
         :class="[
           'text-sm px-3 py-1.5 rounded-md transition-all duration-200',
-          selectedTags?.value === tag.value
-            ? 'bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-300'
-            : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'
         ]"
         @click="selectTag(tag)"
       >
