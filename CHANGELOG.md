@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.11.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.11.0...v0.11.1)
+
+### 🩹 Fixes
+
+- 友链申请接口白名单 ([96648ac](https://github.com/aatrooox/blog.zzao.club/commit/96648ac))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.11.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.10.7...v0.11.0)
