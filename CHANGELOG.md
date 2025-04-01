@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.11.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.10.7...v0.11.0)
+
+### 🚀 Enhancements
+
+- 友链申请相关 ([0955c69](https://github.com/aatrooox/blog.zzao.club/commit/0955c69))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.10.7
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.10.6...v0.10.7)
