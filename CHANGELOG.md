@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.11.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.11.1...v0.11.2)
+
+### 🏡 Chore
+
+- 优化UI ([befc017](https://github.com/aatrooox/blog.zzao.club/commit/befc017))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.11.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.11.0...v0.11.1)
