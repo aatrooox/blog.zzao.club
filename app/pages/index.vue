@@ -116,7 +116,7 @@ useHead({
   link: [
     {
       rel: 'canonical',
-      href: 'https://blog.zzao.club/'
+      href: 'https://zzao.club/'
     }
   ]
 })

@@ -66,7 +66,7 @@ content: defineCollection({
 
 `env`
 
-mysql 、redis 环境，具体操作可以参考[这篇文章](https://blog.zzao.club/post/nuxt/local-init-mysql-by-docker)
+mysql 、redis 环境，具体操作可以参考[这篇文章](https://zzao.club/post/nuxt/local-init-mysql-by-docker)
 
 redis 没有配置，默认链接 localhost 6379端口，本地同生产 （单体数据库服务，不对外开放端口）
 

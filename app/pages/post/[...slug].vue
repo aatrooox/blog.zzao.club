@@ -138,7 +138,7 @@
     link: [
       {
         rel: 'canonical',
-        href: `https://blog.zzao.club${route.path}`
+        href: `https://zzao.club${route.path}`
       }
     ]
   })
@@ -301,7 +301,7 @@
   }
 
   const copyLink = async () => {
-    await navigator.clipboard.writeText('https://blog.zzao.club' + route.fullPath);
+    await navigator.clipboard.writeText('https://zzao.club' + route.fullPath);
     toast.contrast('已复制链接!')
   }
   const createComment = async (data) => {

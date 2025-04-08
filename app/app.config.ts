@@ -31,7 +31,7 @@ export default defineAppConfig({
     {
       name: '订阅我的博客',
       icon: 'material-symbols:rss-feed-rounded',
-      url: 'https://blog.zzao.club/feed.xml'
+      url: 'https://zzao.club/feed.xml'
     }
   ],
   // 标签

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://blog.zzao.club/sitemap.xml
+Sitemap: https://zzao.club/sitemap.xml

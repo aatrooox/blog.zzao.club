@@ -111,7 +111,7 @@ export default defineNuxtConfig({
     importTheme: { from: '@@/primevue/theme.ts' },
   },
   robots: {
-    sitemap: 'https://blog.zzao.club/sitemap.xml'
+    sitemap: 'https://zzao.club/sitemap.xml'
   },
   tailwindcss: {
     cssPath: ['@/assets/css/tailwind.css', { injectPosition: "first" }],
@@ -131,7 +131,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     feishuWebhook: '',
     feishuUserId: '',
-    baseURL: 'https://blog.zzao.club',
+    baseURL: 'https://zzao.club',
     imgHost: 'https://img.zzao.club',
     jwtSecret: 'your_jwt_secret',
     public: {

@@ -2,7 +2,7 @@ import { SitemapStream, streamToPromise } from 'sitemap'
 import { Readable } from 'stream'
 export default defineEventHandler(async (event) => {
   try {
-    const smStream = new SitemapStream({ hostname: 'https://blog.zzao.club/' })
+    const smStream = new SitemapStream({ hostname: 'https://zzao.club/' })
     // @ts-ignore
     const posts: any[] = await queryCollection(event, 'content').order('date', "DESC").all();
     posts.forEach((post: any) => {
