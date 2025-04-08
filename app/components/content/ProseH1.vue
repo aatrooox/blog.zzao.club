@@ -1,12 +1,7 @@
 <template>
-  <div :id="props.id" class="heading text-center my-10 scroll-mt-14">
-    <span class="text-black px-3 py-2 text-lg font-bold  dark:text-zinc-200 ">
-      <a v-if="generate" :href="`#${props.id}`" class="text-xl dark:text-zinc-200">
-        <slot />
-      </a>
-      <slot v-else />
-    </span>
-  </div>
+  <h1 :id="props.id" class="heading text-center my-10 scroll-mt-14 text-black px-3 py-2 !text-lg font-bold  dark:text-zinc-200 ">
+    <slot />
+  </h1>
 </template>
 
 <script setup lang="ts">
