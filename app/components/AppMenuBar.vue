@@ -28,7 +28,7 @@
       </template>
       <template #item="{ item, props }">
         <NuxtLink v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
-          <div
+          <a
             :class="`w-full cursor-pointer rounded-md flex items-center box-border px-2 py-2 ${curLabel === item.label ? 'bg-secondary' : ''}`"
             v-ripple :href="href" @click="navigate">
             <Icon :name="item.icon" size="1.5em" />
@@ -37,7 +37,7 @@
             <span v-if="item.shortcut"
               class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">{{ item.shortcut
               }}</span>
-          </div>
+          </a>
         </NuxtLink>
         <a v-else v-ripple :href="item.url" :target="item.target || '_blank'" v-bind="props.action"
           class="flex items-center box-border">
