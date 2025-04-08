@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.12.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.2...v0.12.3)
+
+### 🏡 Chore
+
+- Menu bar => a ([f2ce9cb](https://github.com/aatrooox/blog.zzao.club/commit/f2ce9cb))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.12.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.1...v0.12.2)
