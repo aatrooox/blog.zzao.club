@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.12.5
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.4...v0.12.5)
+
+### 🏡 Chore
+
+- Bing web tool ([b24a62e](https://github.com/aatrooox/blog.zzao.club/commit/b24a62e))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.12.4
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.3...v0.12.4)
