@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.12.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.1...v0.12.2)
+
+### 🏡 Chore
+
+- Baidu seo ([0975686](https://github.com/aatrooox/blog.zzao.club/commit/0975686))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.12.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.0...v0.12.1)
