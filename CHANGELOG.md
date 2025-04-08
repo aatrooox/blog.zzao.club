@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.12.4
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.3...v0.12.4)
+
+### 🏡 Chore
+
+- Sitemap ([d3115cb](https://github.com/aatrooox/blog.zzao.club/commit/d3115cb))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.12.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.2...v0.12.3)
