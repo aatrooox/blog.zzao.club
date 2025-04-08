@@ -121,9 +121,30 @@
   let _styleValueCache = {}
   let copyHTML = ``
 
-  const { data: page } = await useAsyncData(route.path, () => {
+  const { data: page, error, status } = await useAsyncData(route.path, () => {
     return queryCollection('content').path(decodeURI(route.path)).first()
   }, {lazy: true})
+
+  watch(error, (err) => {
+    console.log(`error`, err)
+    throw createError({
+      statusCode: 404,
+      message: '页面不存在',
+      fatal: true
+    })
+  })
+
+  watch(page, (page) => {
+    if (status.value === 'success' || status.value === 'error') {
+      if (!!!page) {
+        throw createError({
+          statusCode: 404,
+          message: '页面不存在',
+          fatal: true
+        })
+      }
+    }
+  })
 
   const tocData = computed( () => {
     return page.value?.body?.toc?.links
