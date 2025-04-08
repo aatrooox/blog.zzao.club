@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.12.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.11.2...v0.12.0)
+
+### 🚀 Enhancements
+
+- 修改sitemap指向主域名 ([65c7def](https://github.com/aatrooox/blog.zzao.club/commit/65c7def))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.11.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.11.1...v0.11.2)
