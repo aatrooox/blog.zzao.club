@@ -50,7 +50,7 @@
             <span class="absolute -bottom-0.5 left-0 w-full h-0.5 bg-primary-500"></span>
           </span>
         </h2>
-        <Button text @click="turnToPages" class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
+        <Button as="a" text @click="turnToPages" class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
           <span>更多文章</span>
           <Icon name="icon-park-outline:right" class="ml-1"></Icon>
         </Button>

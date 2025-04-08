@@ -58,6 +58,12 @@ export default defineNuxtConfig({
           defer: true,
           "data-website-id": "ede2b0ce-e029-41f7-9d56-be35fc07ba6c"
         }
+      ],
+      meta: [
+        {
+          name: 'baidu-site-verification',
+          content: 'codeva-wbD6D2XuzG'
+        }
       ]
     }
   },
