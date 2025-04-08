@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.12.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.0...v0.12.1)
+
+### 🏡 Chore
+
+- Fix  catch all route ([4bd8185](https://github.com/aatrooox/blog.zzao.club/commit/4bd8185))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.12.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.11.2...v0.12.0)
