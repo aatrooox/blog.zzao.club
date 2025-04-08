@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     posts.forEach((post: any) => {
       smStream.write({
         url: post.path,
-        changefreq: 'weekly',
+        changefreq: 'daily',
         lastmod: post.lastmod
       })
     })
