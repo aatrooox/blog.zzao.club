@@ -27,7 +27,7 @@ function checkRef(obj: Record<string, any>) {
     return Object.keys(obj).some(key => isRef(obj[key]));
 }
 
-function fetch<T>(url: UrlType, opts: HttpOption<T>): AsyncData<ResOptions<T>, FetchError<ResOptions<T>>> {
+function fetch<T>(url: UrlType, opts: HttpOption<T>) {
     // Check the `key` option
     const { key, params, watch } = opts;
     if (!key && ((params && checkRef(params)) || (watch && checkRef(watch))))
@@ -39,24 +39,12 @@ function fetch<T>(url: UrlType, opts: HttpOption<T>): AsyncData<ResOptions<T>, F
     // const { baseUrl } = useRuntimeConfig().public;
 
     return useFetch<ResOptions<T>>(url, {
-        // Request interception
-        onRequest({ options }) {
-            // options.baseURL = baseUrl;
-            // Set the base URL
-        },
-        // Response interception
-        onResponse(_context) {
-            // Handle the response
-        },
-        // Error interception
-        onResponseError({ response, options: { method } }) {
-            handleError<T>(method, response);
-        },
         // Set the cache key
         key: key ?? hash(['api-fetch', url, JSON.stringify({ method: options.method, params: options.params })]),
         // Merge the options
         ...options,
-    }) as AsyncData<ResOptions<T>, FetchError<ResOptions<T>>>;
+        $fetch: useNuxtApp().$api as any,
+    });
 }
 
 export const $http = {
@@ -66,7 +54,15 @@ export const $http = {
 
     post: <T>(url: UrlType, body?: RequestInit['body'] | Record<string, any>, option?: HttpOption<T>) => {
         return fetch<T>(url, { method: 'post', body, ...option });
-    }
+    },
+
+    put: <T>(url: UrlType, body?: RequestInit['body'] | Record<string, any>, option?: HttpOption<T>) => {
+        return fetch<T>(url, { method: 'put', body, ...option });
+    },
+    
+    delete: <T>(url: UrlType, body?: RequestInit['body'] | Record<string, any>, option?: HttpOption<T>) => {
+        return fetch<T>(url, { method: 'delete', body, ...option });
+    },
 };
 
 export default function UseHttp() {

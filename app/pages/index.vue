@@ -59,7 +59,7 @@
       <div class="grid gap-2">
         <template v-for="page of articles" :key="page.path">
           <div class="group">
-            <div class="p-3 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 hover:shadow-md hover:shadow-zinc-200 dark:hover:shadow-zinc-900 transition-all duration-200">
+            <div class="p-3 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 hover:shadow-md hover:shadow-zinc-200 dark:hover:shadow-zinc-600 transition-all duration-200">
               <div class="flex flex-col md:flex-row md:items-center gap-2">
                 <div class="flex items-center gap-2 flex-1">
                   <Icon name="icon-park-outline:right" class="text-zinc-400 group-hover:text-primary-500 transition-colors"></Icon>

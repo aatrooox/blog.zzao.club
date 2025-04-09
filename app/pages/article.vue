@@ -17,7 +17,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <template v-for="page of (data as unknown)" :key="page.path">
         <div class="group">
-          <div class="h-full transition-all duration-200 rounded-lg bg-white dark:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-900 border border-zinc-100 dark:border-zinc-700">
+          <div class="h-full transition-all duration-200 rounded-lg bg-white dark:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-600 border border-zinc-100 dark:border-zinc-700">
             <PagePanel :page="page"></PagePanel>
           </div>
         </div>
