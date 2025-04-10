@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.12.7
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.6...v0.12.7)
+
+### 🎨 Styles
+
+- 优化 dark style ([cdc91e5](https://github.com/aatrooox/blog.zzao.club/commit/cdc91e5))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.12.6
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.5...v0.12.6)
