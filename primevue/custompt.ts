@@ -1,4 +1,3 @@
-
 const MyCustomPT = {
   button: {
       size: 'small'

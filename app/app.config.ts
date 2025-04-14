@@ -53,6 +53,12 @@ export default defineAppConfig({
       url: 'https://imgx.zzao.club',
       desc: '便捷地生成精美卡片',
     },
+    {
+      name: '洛丽糖',
+      url: 'http://luolt.cn/',
+      desc: '一个宅男的云上次元世界',
+      logo: 'https://q.qlogo.cn/g?b=qq&nk=1340326824&s=0'
+    }
     // {
     //   name: 'MEMOZ',
     //   url: 'https://memo.zzao.club',
