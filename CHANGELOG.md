@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.12.8
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.7...v0.12.8)
+
+### 🏡 Chore
+
+- Add link ([5541ef0](https://github.com/aatrooox/blog.zzao.club/commit/5541ef0))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.12.7
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.6...v0.12.7)
