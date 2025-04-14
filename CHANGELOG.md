@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.12.9
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.8...v0.12.9)
+
+### 🏡 Chore
+
+- Nuxt 降级 ([b4c1030](https://github.com/aatrooox/blog.zzao.club/commit/b4c1030))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.12.8
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.7...v0.12.8)
