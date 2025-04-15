@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.12.11
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.10...v0.12.11)
+
+### 🩹 Fixes
+
+- Miss jose module ([af63ff7](https://github.com/aatrooox/blog.zzao.club/commit/af63ff7))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.12.10
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.9...v0.12.10)
