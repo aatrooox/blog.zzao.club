@@ -10,15 +10,12 @@ jobs:
     # 发版时才会部署，正常提交不部署
     if: "contains(gitea.event.head_commit.message, 'chore(release)')"
     steps:
-      - run: echo "  The job was automatically triggered by a ${{ gitea.event_name }} event."
-      - run: echo "  This job is now running on a ${{ runner.os }} server hosted by Gitea!"
-      - run: echo "  The name of your branch is ${{ gitea.ref }} and your repository is ${{ gitea.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Install bun
+        uses: oven-sh/setup-bun@v2
       - name: Install dependencies
-        run: |
-          npm i -g pnpm
-          pnpm install
+        run: bun install
       - name: Build Project
         env: 
           CONTENT_REPO_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
@@ -26,7 +23,7 @@ jobs:
           NUXT_JWT_SECRET: ${{ secrets.NUXT_JWT_SECRET }}
           NUXT_FEISHU_WEBHOOK: ${{ secrets.NUXT_FEISHU_WEBHOOK }}
           NUXT_FEISHU_USER_ID: ${{ secrets.NUXT_FEISHU_USER_ID }}
-        run: NODE_OPTIONS="--max-old-space-size=2560" pnpm build
+        run: NODE_OPTIONS="--max-old-space-size=4080" bun run build
       - name: Copy and Build
         env: 
           CONTENT_REPO_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}

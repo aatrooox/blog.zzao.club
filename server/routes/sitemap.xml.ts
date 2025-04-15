@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
         changefreq: 'daily',
         lastmod: post.lastmod
       })
+      // console.log(`https://zzao.club` + post.path)
     })
     smStream.end()
     const xmlString = await streamToPromise(smStream).then(buffer => buffer.toString());

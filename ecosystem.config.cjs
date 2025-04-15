@@ -3,9 +3,11 @@ module.exports = {
     {
       name: 'Blog',
       port: '4571',
+      interpreter: 'bun',
       exec_mode: 'fork',
       // instances: 'max',
-      script: './server/index.mjs',
+      script: 'bun',
+      args: ['run', './server/index.mjs']
     }
   ]
 }
