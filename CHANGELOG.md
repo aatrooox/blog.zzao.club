@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.13.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.14...v0.13.0)
+
+### 🚀 Enhancements
+
+- ⚠️  重构UI => shadcn/vue ([2fadf42](https://github.com/aatrooox/blog.zzao.club/commit/2fadf42))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  重构UI => shadcn/vue ([2fadf42](https://github.com/aatrooox/blog.zzao.club/commit/2fadf42))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.12.14
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.13...v0.12.14)
