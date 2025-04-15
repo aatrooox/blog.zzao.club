@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.12.12
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.11...v0.12.12)
+
+### ✅ Tests
+
+- Bun ([53c3f25](https://github.com/aatrooox/blog.zzao.club/commit/53c3f25))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.12.11
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.10...v0.12.11)
