@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.12.13
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.12...v0.12.13)
+
+### 🏡 Chore
+
+- Bun => pnpm ([b35e2c0](https://github.com/aatrooox/blog.zzao.club/commit/b35e2c0))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.12.12
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.11...v0.12.12)
