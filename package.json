@@ -64,7 +64,9 @@
 		"tailwindcss": "^4.1.4",
 		"tw-animate-css": "^1.2.5",
 		"unified": "^11.0.5",
+		"v-viewer": "^3.0.11",
 		"vaul-vue": "^0.4.1",
+		"viewerjs": "^1.11.7",
 		"vue-sonner": "^1.3.2",
 		"zod": "^3.23.8"
 	},

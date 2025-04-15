@@ -1,7 +1,10 @@
 <template>
-  <div class="blog-zzao-club-img-component card inline">
-    <AppImg :src="refinedSrc" :width="Number(props.width)" :height="Number(props.height)"></AppImg>
-  </div>
+  <ClientOnly>
+    <div class="blog-zzao-club-img-component card inline" v-viewer>
+      <NuxtImg :src="refinedSrc" loading="lazy" alt="image" :width="width" :height="height"
+      placeholder />
+    </div>
+  </ClientOnly>
 </template>
 <script lang="ts" setup>
 import { withTrailingSlash, withLeadingSlash, joinURL } from 'ufo'
