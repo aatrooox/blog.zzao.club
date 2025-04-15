@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.13.1
+
+[compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v0.13.0...v0.13.1)
+
+### 🎨 Styles
+
+- 优化样式 (5fe2912)
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.13.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.14...v0.13.0)
