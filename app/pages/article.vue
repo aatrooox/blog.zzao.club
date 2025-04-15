@@ -11,7 +11,8 @@
         @click="selectTag(tag)"
       >
         {{ tag.name }}
-        <span v-if="selectedTags?.value === tag.value" class="ml-1 text-xs">({{ data?.length || 0 }})</span>
+        <span v-if="selectedTags?.value === tag.value && status !== 'pending'" class="ml-1 text-xs">({{ data?.length || 0 }})</span>
+        <Icon name="svg-spinners:pulse-rings-multiple" v-if="selectedTags?.value === tag.value && status === 'pending'"></Icon>
       </Button>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

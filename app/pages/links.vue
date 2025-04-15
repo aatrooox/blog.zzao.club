@@ -9,10 +9,10 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <template v-for="link of links" :key="link.url">
           <NuxtLink :href="link.url" target="_blank" class="group">
-            <div class="h-full p-4 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-900 transition-all duration-200">
+            <div class="h-full p-4 rounded-lg bg-white group dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-900 transition-all duration-200">
               <div class="flex items-start gap-4">
                 <div class="relative">
-                  <UserAvatar :previewUrl="link.logo ?? link.url + '/favicon.ico'" alt="LOGO" size="large" class="w-16 h-16 rounded-lg"></UserAvatar>
+                  <UserAvatar :previewUrl="link.logo ?? link.url + '/favicon.ico'" alt="LOGO" size="large" class="w-16 h-16 rounded-lg group-hover:scale-120 transition-all delay-200"></UserAvatar>
                   <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-zinc-800"></div>
                 </div>
                 <div class="flex-1 min-w-0">

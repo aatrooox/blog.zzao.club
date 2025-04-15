@@ -32,7 +32,7 @@
         </ClientOnly>
         
         <div class="mdc-prose flex !max-w-full" v-if="page">
-          <!-- <ContentDoc ref="curMdContentRef" v-slot="{ doc }"> -->
+          <!-- 左侧点赞评论操作栏 -->
           <div class="flex-col gap-8 px-10 h-80 hidden md:flex fixed top-28 left-[2%]">
             <div class="flex flex-col items-center cursor-pointer">
               <Icon name="icon-park-outline:thumbs-up" size="1.5em" ref="likeIcon" @click="likePage" />
@@ -54,9 +54,9 @@
             </div>
           </div>
 
-          <div class="article-warp flex flex-col max-w-full w-full box-border md:pl-20 lg:pl-40 lg:pr-80">
-            
-            <div class="fixed-title text-xl font-bold text-center w-full h-18 leading-18 sticky top-0 transition-all delay-200 bg-white/90" v-if="navBarStore.navBar?.isHidden"> {{ page?.title }}</div>
+          <div class="article-warp flex flex-col max-w-full w-full box-border md:pl-20 lg:pl-40 lg:pr-80 2xl:px-10">
+            <!-- 悬浮标题栏 -->
+            <div class="fixed-title text-lg font-bold text-center w-full overflow-hidden text-ellipsis h-12 leading-12 sticky top-0 transition-all delay-200 bg-white/90 md:text-xl" v-if="navBarStore.navBar?.isHidden"> {{ page?.title }}</div>
 
             <article ref="curMdContentRef" class="content-wrap w-full max-w-full md:flex-1 !md:max-w-2xl">
               <ContentRenderer :value="page?.body" class="!w-full !max-w-full "></ContentRenderer>
@@ -81,7 +81,7 @@
       </div>
       <ClientOnly>
         <div
-          class="version-info fixed h-[80px] right-0 lg:right-0 pc:right-10 xl:right-[5%] 2xl:right-[5%] top-[10%] w-[220px] hidden lg:flex box-border dark:text-zinc-500  lg:flex-col lg:gap-2"
+          class="version-info fixed h-[80px] right-0 lg:right-0 pc:right-10 xl:right-[1%] 2xl:right-[10%] top-[10%] w-[220px] hidden lg:flex box-border dark:text-zinc-500  lg:flex-col lg:gap-2"
           v-if="page?.versions">
           <div class="flex" v-for="v of page?.versions" :key="v">
             <Badge :value="v" class=""></Badge>

@@ -1,12 +1,12 @@
 export default defineAppConfig({
   // 网站基本信息
-  author: '人生游戏DLC',
+  author: '早早集市',
   // 组织
-  organization: '早早集市',
+  organization: '',
   // 组织地址
   organizationUrl: 'https://zzao.club',
   // 描述
-  desciption: '生活是一个需要不断学习和精心经营的游戏',
+  desciption: '人生游戏 DLC',
   // 头像
   avatar: 'https://img.zzao.club/article/202412301500611.png',
   // 社交媒体 icon 从 https://icones.js.org/ 里找

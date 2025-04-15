@@ -72,10 +72,8 @@
 		"@iconify-json/icon-park-outline": "^1.2.1",
 		"@iconify-json/material-symbols": "^1.2.12",
 		"@iconify-json/ph": "^1.2.1",
+		"@iconify-json/svg-spinners": "^1.2.2",
 		"@iconify-json/twemoji": "^1.2.2",
-		"@nuxt-themes/typography": "^1.0.1",
-		"@primevue/nuxt-module": "^4.1.1",
-		"@release-it/conventional-changelog": "^10.0.0",
 		"@tailwindcss/typography": "^0.5.15",
 		"@types/rss": "^0.0.32",
 		"better-sqlite3": "^11.8.1"

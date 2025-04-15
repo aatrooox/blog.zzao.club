@@ -29,7 +29,7 @@ onUnmounted(() => observer.value?.disconnect())
 </script>
 <template>
   <div
-    class="toc fixed h-[50%] right-0 lg:right-0 pc:right-10 xl:right-[5%] 2xl:right-[5%] top-[30%] w-[220px] hidden lg:block box-border dark:text-zinc-500">
+    class="toc fixed h-[50%] right-0 lg:right-0 pc:right-10 xl:right-[3%] 2xl:right-[2%] 3xl:right-[10%] top-[30%] w-[220px] hidden lg:block box-border dark:text-zinc-500">
     <ul>
       <template v-for="link in tocData">
         <li

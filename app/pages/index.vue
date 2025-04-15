@@ -15,7 +15,10 @@
             <div class="flex flex-col md:flex-row items-center md:items-baseline gap-2">
               <h1 class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{{ config.author }}</h1>
               <Button v-if="config.organization" class="text-sm text-zinc-500 dark:text-zinc-400 font-normal" as="a" target="_blank"
-                :label="`@${config.organization}`" :href="config.organizationUrl" variant="link" />
+                :href="config.organizationUrl" variant="link">
+                {{ `@${config.organization}` }}
+                </Button>
+              <span class="text-sm text-zinc-500 dark:text-zinc-400 font-normal">V{{ runtimeConfig.Z_BLOG_VERSION }}</span>
             </div>
             <p class="mt-2 text-base text-zinc-600 dark:text-zinc-400">{{ config.desciption }}</p>
               <div class="flex flex-wrap gap-2 justify-center md:justify-start mt-3">
@@ -129,11 +132,9 @@ useHead({
   ]
 })
 const config = useAppConfig();
-// console.log(`config`, config.authLayer)
-const socialOp = ref();
+const { public: runtimeConfig } = useRuntimeConfig()
 const curSocial = ref();
 const { formatDate } = useDayjs();
-// const contentQuery = queryContent('post')
 interface Page {
   title?: string | undefined;
   path: string;

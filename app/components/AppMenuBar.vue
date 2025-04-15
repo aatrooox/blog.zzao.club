@@ -11,7 +11,7 @@
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem v-for="menu in items">
-          <NuxtLink v-slot="{ isActive, href, navigate }" :to="menu.route" custom class="cursor-pointer">
+          <NuxtLink v-slot="{ isActive, href, navigate }" :to="menu.route" custom class="cursor-pointer text-lg">
             <NavigationMenuLink :active="isActive" :href :class="navigationMenuTriggerStyle()" @click="navigate">
               {{  menu.label }}
             </NavigationMenuLink>

@@ -1,6 +1,7 @@
 <template>
   <div class="h-full box-border max-w-7xl px-4 lg:w-6xl md:w-3xl m-auto bg-grid-dashed overflow-y-auto" ref="scrollWrap" v-scroll="[onScroll, { throttle: 200, behavior: 'smooth'}]">
     <Toaster position="top-right" richColors></Toaster>
+    <Icon name="twemoji:up-arrow" class="fixed right-2 bottom-2 z-[9999] md:right-10 md:bottom-6 cursor-pointer" size="2em" v-if="showScrollTopBtn" @click="scrollToTop"></Icon>
     <div class="m-auto flex gap-5 box-border">
       <div class="w-[100%] md:w-[100%] lg:w-[100%] h-full">
         <AppMenuBar></AppMenuBar>
@@ -23,6 +24,8 @@ import { vScroll } from '@vueuse/components'
 const navBarStore = useNavBarStore()
 const scrollWrap = useTemplateRef<HTMLElement>('scrollWrap')
 const scrollDirection = ref('')
+const showScrollTopBtn = ref(false)
+const { x, y } = useWindowScroll()
 
 const isPostPage = computed(() => {
   return route.path.startsWith('/post')
@@ -38,7 +41,6 @@ const isScrollTop = computed(() => {
 
 watch(() => globalToast.toastState.value.messages, (messages) => {
   if (messages.length > 0) {
-      console.log(`message-type`, messages)
       messages.forEach( (message) => {
         switch (message.type) {
           case 'success':
@@ -57,7 +59,6 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
             $toast.promise(message.options as any);
             break;
           default:
-            console.log('default + 1')
             $toast(message.message, message.options as any)
         }
     })
@@ -67,22 +68,27 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
 }, { deep: true })
 
 function onScroll(state: UseScrollReturn) {
-  console.log(`isPostPage`, isPostPage.value)
   // console.log(state) // {x, y, isScrolling, arrivedState, directions}
-  if (isPostPage.value) {
     if (state.isScrolling.value) {
       scrollDirection.value = state.directions.bottom ? 'bottom' : 'top'
     }
     // 往下滑并且距离顶部大于50
     if (isScrollBottom.value && state.y.value > 50) {
-      navBarStore.setNavStatus({ isHidden: true })
+      if (isPostPage.value) {
+        navBarStore.setNavStatus({ isHidden: true })
+      }
     } 
   
-    if (isScrollTop.value) {
+    if (isScrollTop.value && isPostPage.value) {
       navBarStore.setNavStatus({ isHidden: false })
     }
-  }
+
+    showScrollTopBtn.value = state.y.value > 100
   
+}
+
+function scrollToTop() {
+  scrollWrap.value?.scrollTo(0, 0)
 }
 
 
