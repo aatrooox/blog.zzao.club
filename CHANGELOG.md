@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.12.14
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.13...v0.12.14)
+
+### 🩹 Fixes
+
+- Nitro preset ([30f3b05](https://github.com/aatrooox/blog.zzao.club/commit/30f3b05))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.12.13
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.12...v0.12.13)
