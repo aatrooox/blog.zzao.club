@@ -365,11 +365,11 @@
   }
 
   const initComment = async () => {
-    isDefer.value = false;
     const res = await $api.get('/api/v1/comment/list', { article_id: page.value?.id });
     if (!res.error) {
       comments.value = res.data
     }
+    isDefer.value = false;
   }
 
   const initLikeCount = async () => {

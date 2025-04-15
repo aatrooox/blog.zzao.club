@@ -192,7 +192,7 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    preset: 'bun',
+    // preset: 'bun',
     storage: {
       redis: {
         driver: 'redis',
