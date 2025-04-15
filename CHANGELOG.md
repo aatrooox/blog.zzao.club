@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.13.2
+
+[compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v0.13.1...v0.13.2)
+
+### 🚀 Enhancements
+
+- 新增图片预览插件 (c4acd34)
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.13.1
 
 [compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v0.13.0...v0.13.1)
