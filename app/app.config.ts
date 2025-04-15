@@ -57,7 +57,7 @@ export default defineAppConfig({
     {
       name: '封闭脑袋',
       url:' https://www.joomaen.com/',
-      avatar: 'https://media.235421.xyz/favicon.png',
+      logo: 'https://media.235421.xyz/favicon.png',
       desc: '零落残魂何处断'
     }
     // {
