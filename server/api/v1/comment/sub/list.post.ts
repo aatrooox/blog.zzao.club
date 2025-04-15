@@ -1,4 +1,4 @@
-import prisma from "@@/lib/prisma"
+import prisma from "~~/server/utils/prisma"
 
 // 获取评论下的二级评论
 export default defineEventHandler(async (event) => {

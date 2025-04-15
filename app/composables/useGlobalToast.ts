@@ -1,6 +1,17 @@
 import { ref } from 'vue'
-import type { ToastMessageOptions } from 'primevue/toast'
-
+interface ToastMessageOptions {
+  type?: 'success' | 'info' | 'contrast' | 'warning' | 'error' | 'promise',
+  message: string,
+  options?: {
+    description?: string,
+    action?: Function,
+    class?: string,
+    style?: Record<string, string>,
+    loading?: string,
+    success?: Function,
+    error?: Function
+  }
+}
 interface ToastState {
   messages: ToastMessageOptions[]
 }
@@ -10,28 +21,8 @@ const toastState = ref<ToastState>({
 })
 
 export function useGlobalToast() {
-  const add = (message: ToastMessageOptions) => {
-    toastState.value.messages.push(message)
-  }
-
-  const success = (summary: string, detail?: string, life?: number) => {
-    add({ severity: 'success', summary, detail, life: life || 3000 })
-  }
-
-  const info = (summary: string, detail?: string, life?: number) => {
-    add({ severity: 'info', summary, detail, life: life || 3000 })
-  }
-
-  const contrast = (summary: string, detail?: string, life?: number) => {
-    add({ severity: 'contrast', summary, detail, life: life || 3000 })
-  }
-
-  const warn = (summary: string, detail?: string, life?: number) => {
-    add({ severity: 'warn', summary, detail, life: life || 3000 })
-  }
-
-  const error = (summary: string, detail?: string, life?: number) => {
-    add({ severity: 'error', summary, detail, life: life || 3000 })
+  const add = (option: ToastMessageOptions) => {
+    toastState.value.messages.push(option)
   }
 
   const clear = () => {
@@ -41,11 +32,6 @@ export function useGlobalToast() {
   return {
     toastState,
     add,
-    success,
-    info,
-    contrast,
-    warn,
-    error,
     clear
   }
 }

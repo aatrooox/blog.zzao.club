@@ -1,9 +1,10 @@
 <template>
   <Avatar shape="circle" v-if="imgUrl">
-    <AppImg :src="imgUrl"></AppImg>
+    <AvatarImage :src="imgUrl" alt="@unovue" />
+    <AvatarFallback>IMG</AvatarFallback>
   </Avatar>
-  <Avatar :label="userInfo?.username[0]?.toUpperCase() || 'B'" shape="circle" v-else>
-  </Avatar>
+  <!-- <Avatar :label="userInfo?.username[0]?.toUpperCase() || 'B'" shape="circle" v-else>
+  </Avatar> -->
 </template>
 <script lang="ts" setup>
 import type { User } from '@prisma/client'

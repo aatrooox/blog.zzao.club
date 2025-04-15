@@ -1,4 +1,4 @@
-import prisma from "@@/lib/prisma"
+import prisma from "~~/server/utils/prisma"
 export default defineEventHandler(async (event) => {
   const schema = z.object({
     article_id: z.string(),

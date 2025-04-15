@@ -1,4 +1,4 @@
-import prisma from "@@/lib/prisma"
+import prisma from "~~/server/utils/prisma"
 import { useSafeValidatedBody } from 'h3-zod'
 
 export default defineEventHandler(async (event) => {

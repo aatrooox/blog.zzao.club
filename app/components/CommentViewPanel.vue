@@ -12,11 +12,11 @@
       </p>
       <div class="footer flex items-center gap-4">
         <span class="text-gray-500 text-xs">{{ updateDateFromNow(comment.create_ts) }}</span>
-        <!-- <Button @click.stop="likeMemo" severity="secondary" text size="small">
+        <!-- <Button @click.stop="likeMemo" variant="secondary" text size="small">
           <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg" ref="likeIcon" />
           <span slot="badge">{{ likeCount }}</span>
         </Button> -->
-        <Button severity="secondary" text size="small" v-tooltip.top="'回复'" @click.stop="commentReply">
+        <Button variant="secondary" text size="sm" @click.stop="commentReply">
           <Icon name="icon-park-outline:comments" :style="{ color: comment._count?.sub_comments ? 'black' : '' }">
           </Icon>
           <span slot="badge" :class="`${comment._count?.sub_comments ? 'font-bold' : ''}`">{{
@@ -24,7 +24,7 @@
             0 }}</span>
         </Button>
         <!-- 管理员 或自己 可删除 -->
-        <Button severity="secondary" text size="small" v-tooltip.top="'删除'"
+        <Button variant="secondary" text size="sm"
           v-if="comment.user_id === userStore?.user.id || userStore?.user.role === 'superAdmin'" @click.stop="delComment">
           <Icon name="icon-park-outline:delete"></Icon>
         </Button>
@@ -47,7 +47,6 @@ import type { BlogComment } from '@prisma/client'
 import type { Prisma }from '@prisma/client'
 const toast = useGlobalToast();
 const userStore = useUserStore()
-const { disposeError } = useErrorDispose()
 const { $api } = useNuxtApp();
 const commentReplyOpen = ref(false)
 const subCommentsRef = ref()
@@ -67,7 +66,7 @@ const props = defineProps<Props>()
 // 回复评论
 const commentReply = () => {
   if (!userStore?.user.username) {
-    toast.error('请先登录')
+    toast.add({ message: '请先登录'})
     return
   }
   commentReplyOpen.value = !commentReplyOpen.value;
@@ -95,13 +94,13 @@ const createSubComment = async (message) => {
 const delComment = async () => {
   const res = await $api.post('/api/v1/comment/del', { id: props.comment.id })
   if (!res.error) {
-    toast.success('已删除');
+    toast.add({ message: '已删除'});
     emit('refresh')
   }
 }
 
 const likeMemo = async () => {
-  toast.add({ severity: 'success', summary: '谢谢❤️，但还没做点赞功能', life: 3000 });
+  toast.add({ type: 'success', message: '谢谢❤️，但还没做点赞功能' });
   let changes = 0
   // anime({
   //   targets: (likeIcon.value as any)?.$el,

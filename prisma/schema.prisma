@@ -22,8 +22,26 @@ model User {
   sub_comments BlogSubComment[]
   likes        BlogLike[]
   oauth        OAuth[]
+  tokens       AccessToken[]
 
   @@map("blog_user")
+}
+
+model AccessToken {
+  id        String   @id @default(uuid(7))
+  userId    String // 关联到主用户表
+  userInfo  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  roles     String   @default("user") // user,template,preset,all  预留字段
+  status    Int      @default(1) // 1: 正常，2: 禁用 3 4 5...预留字段
+  scope     String   @default("all") // 生效范围：如 pc? app？ imgx? blog ？预留字段
+  isRevoked Boolean  @default(false)
+  ip        String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("blog_access_token")
 }
 
 // 第三方登录

@@ -1,11 +1,19 @@
-import prisma from "@@/lib/prisma"
-
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event)
-  
+  const body = await useSafeValidatedBody(event, z.object({
+    username: z.string(),
+    password: z.string(),
+    email: z.string().optional(),
+  }))
+
+  if (!body.success) {
+    throw createError({
+      statusCode: 400,
+      message: JSON.stringify(body.error)
+    })
+  }  
   let role = 'user'
   // 前端校验合法性
-  const { email, password, username } = body
+  const { email, password, username } = body.data
 
   // 获取用户数
   const count = await prisma.user.count();

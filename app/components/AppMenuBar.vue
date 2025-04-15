@@ -1,62 +1,37 @@
 <template>
   <div
-    class="flex justify-around sticky mb-4 top-0 w-full z-[999] h-14 border-b-2 border-b-zinc-800 dark:border-b-zinc-400">
-    <AppLoginDialog :login="loginBlog" ref="loginForm" @showRegisterDialog="showRegisterDialog"></AppLoginDialog>
-    <AppRegisterDialog :regist="userRegist" ref="registerForm"></AppRegisterDialog>
+    class="flex justify-around sticky mb-4 h-12 top-0 w-full z-[999] bg-white/80 transition-all duration-300 transition-discrete" :style="{
+      top: navBarStore.navBar?.isHidden ? '-100px' : '0px'
+    }">
+    <!-- <AppLoginDialog :login="loginBlog" ref="loginForm" @showRegisterDialog="showRegisterDialog"></AppLoginDialog> -->
+    <!-- <AppRegisterDialog :regist="userRegist" ref="registerForm"></AppRegisterDialog> -->
     <!-- <AppUserSetting ref="userSetting"></AppUserSetting> -->
-    <AppSearchDialog ref="searchDialog"></AppSearchDialog>
+    <!-- <AppSearchDialog ref="searchDialog"></AppSearchDialog> -->
 
-    <Menubar
-      class="w-full shadow-none !border-none bg-white/10 dark:bg-zinc-900/10 !backdrop-blur-md !backdrop-opacity-90"
-      breakpoint="750px" :model="items">
-      <template #end="{ item }">
-        <div class="flex items-center gap-2">
-          <ClientOnly>
-            <Button rounded severity="secondary" size="small" @click="showSearchDialog">
-              <Icon name="icon-park-outline:search"></Icon>
-            </Button>
-            <Tag v-if="userStore.isLogin" :value="userStore.user.username"></Tag>
-            <Button v-else severity="secondary" label="登录" size="small" @click="showLoginForm"></Button>
-            <Tag :value="`v${config.public.Z_BLOG_VERSION}`"
-              v-tooltip.bottom="`博客版本: v${config.public.Z_BLOG_VERSION} \n @nuxt/content@${config.public.ContentVersion}`">
-            </Tag>
-            <Button rounded severity="secondary" @click="toggleDarkMode()" size="small">
-              <Icon :name="modeIcon"></Icon>
-            </Button>
-          </ClientOnly>
-        </div>
-      </template>
-      <template #item="{ item, props }">
-        <NuxtLink v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
-          <a
-            :class="`w-full cursor-pointer rounded-md flex items-center box-border px-2 py-2 ${curLabel === item.label ? 'bg-secondary' : ''}`"
-            v-ripple :href="href" @click="navigate">
-            <Icon :name="item.icon" size="1.5em" />
-            <span class="ml-2">{{ item.label }}</span>
-            <!-- <Badge v-if="item.badge" class="ml-auto" :value="item.badge" /> -->
-            <span v-if="item.shortcut"
-              class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">{{ item.shortcut
-              }}</span>
-          </a>
-        </NuxtLink>
-        <a v-else v-ripple :href="item.url" :target="item.target || '_blank'" v-bind="props.action"
-          class="flex items-center box-border">
-          <Icon :name="item.icon" size="1.5em" />
-          <span>{{ item.label }}</span>
-        </a>
-
-      </template>
-    </Menubar>
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem v-for="menu in items">
+          <NuxtLink v-slot="{ isActive, href, navigate }" :to="menu.route" custom class="cursor-pointer">
+            <NavigationMenuLink :active="isActive" :href :class="navigationMenuTriggerStyle()" @click="navigate">
+              {{  menu.label }}
+            </NavigationMenuLink>
+          </NuxtLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+  </NavigationMenu>
   </div>
 </template>
 
 <script setup>
+import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu'
+
 const searchDialog = ref(null)
 const toast = useGlobalToast()
 const loginForm = ref(null)
 const registerForm = ref(null)
 const config = useRuntimeConfig()
 const userStore = useUserStore()
+const navBarStore = useNavBarStore()
 const colorMode = useColorMode()
 const { $api } = useNuxtApp();
 const route = useRoute();
@@ -150,5 +125,6 @@ const showSearchDialog = async () => {
 const toggleDarkMode = () => {
   colorMode.preference = modes[(++index.value) % modes.length]
 }
+
 
 </script>

@@ -18,28 +18,36 @@
                 :label="`@${config.organization}`" :href="config.organizationUrl" variant="link" />
             </div>
             <p class="mt-2 text-base text-zinc-600 dark:text-zinc-400">{{ config.desciption }}</p>
-            <div class="flex flex-wrap gap-2 justify-center md:justify-start mt-3">
-              <div v-for="item in config.social" :key="item.name" class="group">
-                <Button type="button" severity="secondary" size="large" @click="(event) => toggle(event, item)"
-                  v-tooltip.top="item.name" class="transition-all duration-200 hover:scale-105">
-                  <Icon :name="item.icon" class="text-base"></Icon>
-                </Button>
+              <div class="flex flex-wrap gap-2 justify-center md:justify-start mt-3">
+                <div v-for="item in config.social" :key="item.name" class="group">
+                  <HoverCard v-if="item.popover">
+                    <HoverCardTrigger>
+                        <Button variant="secondary"
+                          class="transition-all duration-200 hover:scale-105">
+                          <Icon :name="item.icon" class="text-base"></Icon>
+                        </Button>
+                    </HoverCardTrigger>
+                    <HoverCardContent class="w-[260px]">
+                      <div class="flex flex-col gap-2 p-2">
+                        <div>
+                          <span class="font-medium block mb-1 text-sm">{{ item?.name }}</span>
+                        </div>
+                        <div>
+                          <AppImg :src="item?.popover"/>
+                        </div>
+                      </div>
+                    </HoverCardContent>
+                  </HoverCard>
+                  <Button v-else type="button" variant="secondary" @click="(event) => toggle(event, item)"
+                    class="transition-all duration-200 hover:scale-105">
+                    <Icon :name="item.icon" class="text-base"></Icon>
+                  </Button>
+                </div>
               </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- 占位图区域 -->
-    <!-- <div class="bg-white dark:bg-zinc-800 rounded-lg p-4 border border-zinc-100 dark:border-zinc-700">
-      <div class="aspect-video rounded-lg bg-gradient-to-br from-primary-500/10 to-primary-700/10 dark:from-primary-900/20 dark:to-primary-700/20 flex items-center justify-center">
-        <div class="text-center">
-          <Icon name="icon-park-outline:chart-line" class="text-4xl text-primary-500 dark:text-primary-400 mb-2"></Icon>
-          <p class="text-sm text-zinc-500 dark:text-zinc-400">数据统计</p>
-        </div>
-      </div>
-    </div> -->
 
     <!-- 最近文章区域 -->
     <div class="flex-1 space-y-3">
@@ -74,10 +82,10 @@
                 </div>
                 <div class="flex flex-wrap gap-1.5">
                   <template v-if="page.versions">
-                    <Tag v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v" :value="v" severity="secondary" size="small"></Tag>
+                    <Badge v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v">{{ v }}</Badge>
                   </template>
                   <template v-else>
-                    <Tag v-for="tag of page.tags" :key="tag" :value="tag" severity="secondary" size="small"></Tag>
+                    <Badge v-for="tag of page.tags" :key="tag">{{ tag }}</Badge>
                   </template>
                 </div>
               </div>
@@ -88,7 +96,7 @@
     </div>
 
     <!-- 社交分享弹窗 -->
-    <Popover ref="socialOp">
+    <!-- <Popover ref="socialOp">
       <div class="flex flex-col gap-2 p-2">
         <div>
           <span class="font-medium block mb-1 text-sm">{{ curSocial?.name }}</span>
@@ -97,7 +105,7 @@
           <AppImg :src="curSocial?.popover" :width="200" />
         </div>
       </div>
-    </Popover>
+    </Popover> -->
   </div>
 </template>
 <script lang="ts" setup>
@@ -142,15 +150,10 @@ const { data: articles } = await useAsyncData('articles', () => {
 })
 
 const toggle = (event, socail: any) => {
-  console.log(`socail`, socail)
   curSocial.value = socail;
-  if (!socail.popover) {
-    if (socail.url) {
+  if (socail.url) {
       navigateTo(socail.url, { external: true, open: { target: '_blank' } })
     }
-  } else {
-    socialOp.value.toggle(event);
-  }
 }
 
 const turnToPages = () => {

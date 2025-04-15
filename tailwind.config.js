@@ -3,10 +3,7 @@ import typography from '@tailwindcss/typography'
 export default {
   // important: true,
   content: [
-    './app/**/*.{vue,js,ts}',
-    './components/**/*.{vue,js,ts}',
-    './layouts/**/*.{vue,js,ts}',
-    './*.vue',
+    './app/**/*.{vue,js,ts}'
   ],
   plugins: [typography()],
   theme: {

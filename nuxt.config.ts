@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath } from 'node:url'
 // @ts-ignore
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -21,7 +22,7 @@ const prismaClientIndexBrowser = resolve('@prisma/client/index-browser').replace
 // console.log(`nuxt-secret-key已更新: `, uuid)
 export default defineNuxtConfig({
   // extends: '@nuxt-themes/typography',
-  debug: false,
+  debug: isDev,
   devtools: { enabled: true },
   extends: [
     // README https://github.com/aatrooox/zc-auth-layer
@@ -29,8 +30,8 @@ export default defineNuxtConfig({
     // 'zc-auth-layer'
   ],
   sourcemap: {
-    server: true,
-    client: true
+    server: isDev,
+    client: isDev
   },
   future: {
     compatibilityVersion: 4,
@@ -74,6 +75,9 @@ export default defineNuxtConfig({
   },
   // mdc 0.11 及以下版本可能需要
   vite: {
+    plugins: [
+      tailwindcss()
+    ],
     optimizeDeps: {
       include: ["debug"],
     },
@@ -86,8 +90,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/robots',
     '@nuxt/content',
-    '@nuxtjs/tailwindcss',
-    '@primevue/nuxt-module',
+    // '@primevue/nuxt-module',
     '@nuxt/image',
     '@nuxt/icon',
     // '@nuxtjs/robots',
@@ -99,7 +102,9 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@prisma/nuxt',
     '@pinia/nuxt',
-    '@vueuse/nuxt'
+    '@vueuse/nuxt',
+    'shadcn-nuxt',
+    'vue-sonner/nuxt'
   ],
   // 把 icon 和客户端捆绑在一起， 减少请求服务端
   icon: {
@@ -109,6 +114,7 @@ export default defineNuxtConfig({
       sizeLimitKb: 256,
     }
   },
+  // nuxt/color-mode
   colorMode: {
     preference: 'system', // default value of $colorMode.preference
     fallback: 'light', // fallback value if not system preference found
@@ -118,27 +124,30 @@ export default defineNuxtConfig({
     storage: 'localStorage', // or 'sessionStorage' or 'cookie'
     storageKey: 'nuxt-color-mode'
   },
-  primevue: {
-    importTheme: { from: '@@/primevue/theme.ts' },
+  // primevue 移除中
+  // primevue: {
+  //   importTheme: { from: '@@/primevue/theme.ts' },
+  // },
+  shadcn: {
+    /**
+     * Prefix for all the imported component
+     */
+    prefix: '',
+    /**
+     * Directory that the component lives in.
+     * @default "./components/ui"
+     */
+    componentDir: './app/components/ui'
   },
   robots: {
     sitemap: 'https://zzao.club/sitemap.xml'
-  },
-  tailwindcss: {
-    cssPath: ['@/assets/css/tailwind.css', { injectPosition: "first" }],
-    configPath: 'tailwind.config',
-    exposeConfig: {
-      level: 2
-    },
-    config: {},
-    viewer: true,
   },
   routeRules: {
     '/': { prerender: true },
     '/article': { prerender: true },
     '/post/**': { prerender: true }
   },
-  css: ['@/assets/css/main.css', 'primeicons/primeicons.css'],
+  css: ['@/assets/css/main.css'],
   runtimeConfig: {
     feishuWebhook: '',
     feishuUserId: '',
@@ -191,6 +200,14 @@ export default defineNuxtConfig({
       }
     }
   },
+  imports: {
+    presets: [
+      {
+        from: "vue-sonner",
+        imports: ['toast']
+      }
+    ]
+  },
   nitro: {
     // preset: 'bun',
     storage: {
@@ -222,6 +239,9 @@ export default defineNuxtConfig({
           from: 'h3-zod',
           imports: ['useSafeValidatedQuery', 'useSafeValidatedBody', 'useValidatedParams', 'zh']
         }
+      ],
+      dirs: [
+        './server/utils'
       ]
     },
     watchOptions: {

@@ -7,10 +7,10 @@
         </NuxtLink>
         <div class="flex flex-wrap gap-1.5">
           <template v-if="page.versions">
-            <Tag v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v" :value="v" severity="secondary" size="small" class="text-xs"></Tag>
+            <Badge v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v"  class="text-xs">{{  v }}</Badge>
           </template>
           <template v-else>
-            <Tag v-for="tag of page.tags" :key="tag" :value="tag" severity="secondary" size="small" class="text-xs"></Tag>
+            <Badge v-for="tag of page.tags" :key="tag" class="text-xs">{{ tag }}</Badge>
           </template>
         </div>
       </div>

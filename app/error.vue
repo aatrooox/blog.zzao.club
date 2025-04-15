@@ -4,7 +4,7 @@
       <div class="text-5xl">{{ props.error?.statusCode }}</div>
       <div class="text-xl font-bold">{{ props.error.message || errMsg }}</div>
       <div class="btns flex gap-4">
-        <Button @click="handleError" severity="contast">返回首页</Button>
+        <Button @click="handleError" variant="default">返回首页</Button>
       </div>
     </div>
 

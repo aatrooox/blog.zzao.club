@@ -6,7 +6,7 @@
     </div>
 
     <!-- 展开/收起按钮 -->
-    <Button v-if="isOverflowed" class="toggle-button" size="small" rounded @click="toggleExpanded">
+    <Button v-if="isOverflowed" class="toggle-button" size="sm" rounded @click="toggleExpanded">
       <Icon :name="`${expanded ? 'icon-park-outline:double-up' : 'icon-park-outline:double-down'}`"></Icon>
     </Button>
   </div>

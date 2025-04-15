@@ -1,12 +1,17 @@
-import * as jose from 'jose'
-import prisma from '@@/lib/prisma'
 // 登录接口, 获取jwt token
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event)
-  // 将此key加入到payload中 请求时校验有无此key及user信息
-  const { nuxtSecretKey, jwtSecret, cookie } = useRuntimeConfig(event)
-  const { username, password } = body
-  const secret = new TextEncoder().encode(jwtSecret)
+  const body = await useSafeValidatedBody(event, z.object({
+    username: z.string(),
+    password: z.string()
+  }))
+
+  if (!body.success) {
+    throw createError({
+      statusCode: 400,
+      message: JSON.stringify(body.error)
+    })
+  }
+  const { username, password } = body.data
   const user = await prisma.user.findUnique({
     where: {
       username
@@ -27,23 +32,25 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const isProd = process.env.NODE_ENV === 'production'
-  const payload = {
+  // 生成 token ，保存到 redis
+  const [token, expiresAt] = await generateAccessToken(user.id)
+  const data = {
+    token,
+    expiresAt,
     userId: user.id,
-    role: user.role,
+    isRevoked: false,
   }
-
-  // console.log(`login-payload`, payload)
-  const token = await new jose.SignJWT(payload).setProtectedHeader({ alg: 'HS256' }).setExpirationTime('30d').sign(secret)
-  
-  setCookie(event, 'token', token, {
-    httpOnly: true,
-    sameSite: 'lax', // strict lax none
-    maxAge: 2592000, // maxAge 优先级高， expires 受客户端时间的影响
-    secure: true,
-    domain: isProd ? '.zzao.club' : 'localhost',
+  const tokenInfo = await prisma.accessToken.upsert({
+    where: {
+      token
+    },
+    create: {
+      ...data
+    },
+    update: {}
   })
   
+
   return {
     data: {
       token,

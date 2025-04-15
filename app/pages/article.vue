@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-col gap-6 max-w-7xl mx-auto sm:px-4">
-    <div class="flex flex-wrap gap-2">
+    <div class="flex flex-wrap gap-2 sticky py-2 top-10 bg-white/90">
       <Button 
         v-for="tag in tags" 
         :key="tag.value"
-        severity="secondary"
+        :variant="selectedTags?.value === tag.value ? 'secondary': 'link'"
         :class="[
           'text-sm px-3 py-1.5 rounded-md transition-all duration-200',
         ]"

@@ -51,7 +51,7 @@ export default defineNuxtPlugin({
           
            // 使用全局 toast 显示错误信息
           const globalToast = useGlobalToast()
-          globalToast.error(errorMessage)
+          globalToast.add({ message: errorMessage, type: 'error'})
           
           // 返回错误信息
           return { data: null as any, error }

@@ -4,11 +4,11 @@
     <span class="text-surface-500 dark:text-surface-400 block mb-8"></span>
     <div class="flex items-center gap-4 mb-4">
       <label for="username" class="font-semibold w-24">用户名</label>
-      <InputText id="username" v-model="username" />
+      <Input id="username" v-model="username" />
     </div>
     <div class="flex items-center gap-4 mb-8">
       <label for="password" class="font-semibold w-24">密码</label>
-      <InputText id="password" autocomplete="off" type="password" v-model="password" toggleMask />
+      <Input id="password" autocomplete="off" type="password" v-model="password" toggleMask />
 
       <!-- <Password inputClass="!w-[300px]" inputId="password" v-model="password"> 
         <template #header>
@@ -17,7 +17,7 @@
 </Password> -->
     </div>
     <div class="flex justify-end gap-2">
-      <Button type="button" label="去注册" severity="secondary" @click="showRegisterDialog"></Button>
+      <Button type="button" label="去注册" variant="secondary" @click="showRegisterDialog"></Button>
       <Button type="button" label="登录" @click="submit"></Button>
     </div>
   </Drawer>

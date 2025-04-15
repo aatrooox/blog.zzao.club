@@ -36,7 +36,7 @@
         </p>
         <div class="bg-zinc-100 dark:bg-zinc-800 p-4 rounded-md">
           <Textarea v-model="newLink" class="w-full h-40 p-2 rounded-md border border-zinc-200 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 transition-all duration-200"></Textarea>
-          <Button variant="outlined" severity="contrast" raised @click="addLink" label="提交"/>
+          <Button variant="outline" @click="addLink">提交</Button>
         </div>
       </div>
     </div>
@@ -93,9 +93,9 @@ const addLink = async () => {
   const res = await $api.post('/api/v1/link/add', propsObj)
 
   if (res.error) {  
-    toast.error('提交失败，请检查格式')
+    // toast.add({ type: 'warning', message: res.error.message ?? '提交失败，请检查格式'})
   } else {
-    toast.success('提交成功，请等待博主审核，或通过首页微信联系博主')
+    toast.add({ type: 'success', message: '提交成功'})
   }
 }
 </script>

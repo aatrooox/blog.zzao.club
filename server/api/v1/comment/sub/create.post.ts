@@ -1,4 +1,4 @@
-import prisma from "@@/lib/prisma"
+import prisma from "~~/server/utils/prisma"
 
 // content              String
 //   create_ts            DateTime @default(now())

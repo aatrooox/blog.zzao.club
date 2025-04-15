@@ -24,16 +24,16 @@
           </p>
           <div class="footer flex items-center gap-4">
             <span class="text-gray-500 text-xs">{{ updateDateFromNow(subComment.create_ts) }}</span>
-            <!-- <Button @click.stop="likeMemo(`like-icon-sub-${subComment.uid}`)" severity="secondary" text size="small">
+            <!-- <Button @click.stop="likeMemo(`like-icon-sub-${subComment.uid}`)" variant="secondary" text size="small">
               <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg"
                 :class="`like-icon-sub-${subComment.uid}`" />
               <span slot="badge">{{ likeCount }}</span>
             </Button> -->
-            <Button severity="secondary" text size="small" v-tooltip.top="'回复'" @click.stop="commentReply(subComment)">
+            <Button variant="secondary" text size="sm"  @click.stop="commentReply(subComment)">
               <Icon name="icon-park-outline:comments"></Icon>
             </Button>
             <!-- 管理员 或自己 可删除 -->
-            <Button severity="secondary" text size="small" v-tooltip.top="'删除'"
+            <Button variant="secondary" text size="sm" 
               v-if="comment.user_id === userStore?.user.id || userStore?.user.id === 'admin'"
               @click.stop="delComment(subComment)">
               <Icon name="icon-park-outline:delete"></Icon>
@@ -57,7 +57,6 @@
 import { Prisma } from '@prisma/client'
 const toast = useGlobalToast();
 const userStore = useUserStore()
-const { disposeError } = useErrorDispose()
 const commentReplyMap = ref<{ [key: string]: boolean }>({})
 const { updateDateFromNow, formatFullDate } = useDayjs()
 const { $api } = useNuxtApp()
@@ -77,9 +76,6 @@ const props = defineProps<Props>()
 // 使用一级评论 id 获取二级评论
 const { data: subComments, error, status, refresh } = await $http.post<any[]>('/api/v1/comment/sub/list', { comment_id: props.comment.id }, { server: false, watch: [userStore] })
 
-if (error?.value) {
-  disposeError(error)
-}
 
 // 回复评论
 const commentReply = (subComment: Props['comment']) => {
@@ -116,7 +112,7 @@ const checkDetail = (comment: any) => {
 const delComment = async (subComment: Props['comment']) => {
   const res = await $api.post('/api/v1/comment/sub/del', { id: subComment.id })
   if (res.error) return;
-  toast.add({ severity: 'success', summary: '删除成功', detail: '评论已删除', life: 3000 });
+  toast.add({ type: 'success', message: '删除成功'});
   refreshList()
 }
 

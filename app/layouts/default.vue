@@ -1,23 +1,7 @@
 <template>
-  <!-- <AppBg></AppBg> -->
-  <div class="h-full box-border max-w-7xl px-4 lg:w-6xl md:w-3xl m-auto bg-grid-dashed">
-    <Toast position="top-center">
-      <template #container="{ message, closeCallback }">
-        <section class="flex flex-col p-4 gap-4 w-full bg-primary/70 rounded-xl">
-          <div class="flex items-center gap-2">
-            <Icon name="twemoji:grinning-face" v-if="message.severity === 'success'" size="1.5em"></Icon>
-            <Icon name="twemoji:grinning-face-with-sweat" v-if="message.severity === 'error'" size="1.5em"></Icon>
-            <Icon name="twemoji:saluting-face" v-if="message.severity === 'info' || message.severity === 'contrast'" size="1.5em"></Icon>
-            <Icon name="twemoji:angry-face" v-if="message.severity === 'warn'" size="1.5em"></Icon>
-            <span class="text-sm font-bold dark:text-zinc-200" :class="message.severity === 'contrast' && 'text-zinc-200 dark:text-zinc-800' || 'text-zinc-800'">{{ message.summary }}</span>
-          </div>
-        </section>
-      </template>
-    </Toast>
-    <Toast group="http" position="top-center" />
-    <ScrollTop />
+  <div class="h-full box-border max-w-7xl px-4 lg:w-6xl md:w-3xl m-auto bg-grid-dashed overflow-y-auto" ref="scrollWrap" v-scroll="[onScroll, { throttle: 200, behavior: 'smooth'}]">
+    <Toaster position="top-right" richColors></Toaster>
     <div class="m-auto flex gap-5 box-border">
-      <!-- <AppMenu></AppMenu> -->
       <div class="w-[100%] md:w-[100%] lg:w-[100%] h-full">
         <AppMenuBar></AppMenuBar>
         <slot />
@@ -32,15 +16,81 @@
 
 <script lang="ts" setup>
 const globalToast = useGlobalToast()
-const toast = useToast();
-import type { ToastMessageOptions } from 'primevue/toast'
+const { $toast } = useNuxtApp()
+const route = useRoute()
+import type { UseScrollReturn } from '@vueuse/core'
+import { vScroll } from '@vueuse/components'
+const navBarStore = useNavBarStore()
+const scrollWrap = useTemplateRef<HTMLElement>('scrollWrap')
+const scrollDirection = ref('')
+
+const isPostPage = computed(() => {
+  return route.path.startsWith('/post')
+})
+
+const isScrollBottom = computed(() => {
+  return scrollDirection.value === 'bottom'
+})
+
+const isScrollTop = computed(() => {
+  return scrollDirection.value === 'top'
+})
 
 watch(() => globalToast.toastState.value.messages, (messages) => {
   if (messages.length > 0) {
-    const message = messages[messages.length - 1]
-    toast.add(message as ToastMessageOptions)
+      console.log(`message-type`, messages)
+      messages.forEach( (message) => {
+        switch (message.type) {
+          case 'success':
+            $toast.success(message.message, message.options as any);
+            break;
+          case 'error':
+            $toast.error(message.message, message.options as any);
+            break;
+          case 'info':
+            $toast.info(message.message, message.options as any);
+            break;
+          case 'warning':
+            $toast.warning(message.message, message.options as any);
+            break;
+          case 'promise':
+            $toast.promise(message.options as any);
+            break;
+          default:
+            console.log('default + 1')
+            $toast(message.message, message.options as any)
+        }
+    })
+    
     globalToast.clear();
   }
 }, { deep: true })
 
+function onScroll(state: UseScrollReturn) {
+  console.log(`isPostPage`, isPostPage.value)
+  // console.log(state) // {x, y, isScrolling, arrivedState, directions}
+  if (isPostPage.value) {
+    if (state.isScrolling.value) {
+      scrollDirection.value = state.directions.bottom ? 'bottom' : 'top'
+    }
+    // 往下滑并且距离顶部大于50
+    if (isScrollBottom.value && state.y.value > 50) {
+      navBarStore.setNavStatus({ isHidden: true })
+    } 
+  
+    if (isScrollTop.value) {
+      navBarStore.setNavStatus({ isHidden: false })
+    }
+  }
+  
+}
+
+
+// watch(y, (newVal, oldVal) => {
+//   if (y.value > 100){
+//     navBarStore.setNavStatus({ isHidden: true })
+//   } else {
+//     navBarStore.setNavStatus({ isHidden: false })
+//   }
+// })
 </script>

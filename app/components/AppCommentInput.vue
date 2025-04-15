@@ -1,10 +1,7 @@
 <template>
-  <FloatLabel variant="on">
-    <Textarea class="w-full" id="over_label" autoResize v-model="comment" :rows="rows"
-      @value-change="emit('value-change', comment)" maxlength="256" ref="commentInputRef" />
-    <label for="on_label">{{ label }}</label>
-  </FloatLabel>
-  <div class="btns flex justify-between items-center">
+  <Textarea class="w-full" id="over_label" autoResize v-model="comment" :rows="rows"
+    @value-change="emit('value-change', comment)" maxlength="256" ref="commentInputRef" />
+  <div class="btns flex justify-between items-center pt-2">
     <div class="left flex items-center gap-2">
 
       <span class="text-xs text-zinc-400">最多256字符</span>
@@ -14,11 +11,11 @@
       </span>
 
     </div>
-    <div class="right">
-      <Button size="small" text @click="cancelSend">
+    <div class="right flex gap-2">
+      <Button size="sm" variant="outline" @click="cancelSend">
         <Icon name="icon-park-outline:close-one"></Icon><span>取消</span>
       </Button>
-      <Button size="small" text @click="sendComment">
+      <Button size="sm" variant="secondary" @click="sendComment">
         <Icon name="icon-park-outline:send"></Icon><span>发送</span>
       </Button>
     </div>
