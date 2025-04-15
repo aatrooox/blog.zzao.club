@@ -12,10 +12,10 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Install bun
-        uses: oven-sh/setup-bun@v2
       - name: Install dependencies
-        run: bun install
+        run: |
+          npm i -g pnpm
+          pnpm install
       - name: Build Project
         env: 
           CONTENT_REPO_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
@@ -23,7 +23,7 @@ jobs:
           NUXT_JWT_SECRET: ${{ secrets.NUXT_JWT_SECRET }}
           NUXT_FEISHU_WEBHOOK: ${{ secrets.NUXT_FEISHU_WEBHOOK }}
           NUXT_FEISHU_USER_ID: ${{ secrets.NUXT_FEISHU_USER_ID }}
-        run: NODE_OPTIONS="--max-old-space-size=4080" bun run build
+        run: NODE_OPTIONS="--max-old-space-size=4080" pnpm build
       - name: Copy and Build
         env: 
           CONTENT_REPO_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
