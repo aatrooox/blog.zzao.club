@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.12.10
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.9...v0.12.10)
+
+### 🏡 Chore
+
+- Nuxt upgrade ([660e026](https://github.com/aatrooox/blog.zzao.club/commit/660e026))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.12.9
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.12.8...v0.12.9)
