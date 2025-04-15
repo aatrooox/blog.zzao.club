@@ -44,11 +44,6 @@ export default defineAppConfig({
   },
   links: [
     {
-      name: '早早集市',
-      url: 'https://zzao.club',
-      desc: '人生游戏DLC',
-    },
-    {
       name: 'IMGX',
       url: 'https://imgx.zzao.club',
       desc: '便捷地生成精美卡片',
@@ -58,6 +53,12 @@ export default defineAppConfig({
       url: 'http://luolt.cn/',
       desc: '一个宅男的云上次元世界',
       logo: 'https://q.qlogo.cn/g?b=qq&nk=1340326824&s=0'
+    },
+    {
+      name: '封闭脑袋',
+      url:' https://www.joomaen.com/',
+      avatar: 'https://media.235421.xyz/favicon.png',
+      desc: '零落残魂何处断'
     }
     // {
     //   name: 'MEMOZ',

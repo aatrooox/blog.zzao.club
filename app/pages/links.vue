@@ -12,7 +12,7 @@
             <div class="h-full p-4 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-900 transition-all duration-200">
               <div class="flex items-start gap-4">
                 <div class="relative">
-                  <UserAvatar :previewUrl="link.logo ?? link.url + '/favicon.ico'" size="large" class="w-16 h-16 rounded-lg"></UserAvatar>
+                  <UserAvatar :previewUrl="link.logo ?? link.url + '/favicon.ico'" alt="LOGO" size="large" class="w-16 h-16 rounded-lg"></UserAvatar>
                   <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-zinc-800"></div>
                 </div>
                 <div class="flex-1 min-w-0">
@@ -70,9 +70,9 @@ const newLink = ref(JSON.stringify({
 
 const addLink = async () => {
   console.log(newLink.value)
-  let propsObj
+  let propsObj: any;
   try {
-    // 先尝试直接解析
+    // 先尝试直接解析\
     propsObj = JSON.parse(newLink.value)
   } catch (e) {
     try {
@@ -84,7 +84,7 @@ const addLink = async () => {
       propsObj = JSON.parse(jsonStr)
     } catch (e) {
       
-      console.error(`转换失败`, e)
+      console.error('转换失败', e)
       return 
     }
   }

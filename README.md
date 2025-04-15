@@ -1,12 +1,14 @@
 # 博客站
 
-一个基于 Nuxt、NuxtContent、PrimeVue 的博客站
+一个基于 Nuxt、NuxtContent、PrimeVue 的~~博客站~~个人空间
 
 ## 功能
 
-- 登录注册
+- 登录注册(用户名+密码)
+- 点赞
 - 评论
 - mysql
+- redis
 - umami数据统计
 
 

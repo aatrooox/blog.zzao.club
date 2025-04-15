@@ -65,7 +65,7 @@ const label = computed(() => {
 
 const initTagList = async (tag: string) => {
   const { data } = await $http.get<any[]>('/api/v1/tag/list', { tag }, { key: 'tags - ' + inputTag.value, server: false })
-  tags.value = data.value.data;
+  tags.value = data.value?.data;
 }
 
 const rows = ref<number>(3)

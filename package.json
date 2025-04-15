@@ -34,7 +34,7 @@
 		"hast-util-to-html": "^9.0.4",
 		"ioredis": "^5.5.0",
 		"md5": "^2.3.0",
-		"nuxt": "3.15.2",
+		"nuxt": "3.16.2",
 		"ohash": "^1.1.4",
 		"pinia": "^3.0.1",
 		"primeicons": "^7.0.0",
@@ -53,11 +53,9 @@
 		"rss": "^1.2.2",
 		"sitemap": "^8.0.0",
 		"unified": "^11.0.5",
-		"zc-auth-layer": "0.0.2",
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
 		"@iconify-json/icon-park-outline": "^1.2.1",
 		"@iconify-json/material-symbols": "^1.2.12",
 		"@iconify-json/ph": "^1.2.1",
@@ -67,9 +65,7 @@
 		"@release-it/conventional-changelog": "^10.0.0",
 		"@tailwindcss/typography": "^0.5.15",
 		"@types/rss": "^0.0.32",
-		"better-sqlite3": "^11.8.1",
-		"release-it": "^18.1.2",
-		"release-it-pnpm": "^4.6.4"
+		"better-sqlite3": "^11.8.1"
 	},
 	"packageManager": "pnpm@9.15.4"
 }

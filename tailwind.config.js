@@ -2,7 +2,12 @@ import typography from '@tailwindcss/typography'
 /** @type {import('tailwindcss').Config} */
 export default {
   // important: true,
-  content: [],
+  content: [
+    './app/**/*.{vue,js,ts}',
+    './components/**/*.{vue,js,ts}',
+    './layouts/**/*.{vue,js,ts}',
+    './*.vue',
+  ],
   plugins: [typography()],
   theme: {
     extend: {

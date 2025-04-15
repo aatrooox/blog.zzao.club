@@ -3,31 +3,33 @@
     <main class="max-w-full relative flex justify-center gap-4">
       <div class="relative max-w-full lg:max-w-6xl mx-auto md:left-[-80px] lg:left-[-40px]" @scroll="handlePageScroll">
         <!-- 底部固定的操作栏 -->
-        <div
-          class="page-fixed-footer fixed left-0 right-0 bottom-0 bg-white/10 dark:bg-zinc-800/10 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[999] !backdrop-blur-md !backdrop-opacity-90 md:hidden">
-          <div class="left flex gap-2">
-            <Button severity="secondary" text size="small">
-              <Icon slot="icon" name="icon-park-outline:thumbs-up" ref="likeIcon" @click="likePage" class="!text-red-500"/>
-              <span slot="badge">{{ likeCount }}</span>
-            </Button>
-            <Button severity="secondary" text size="small" v-tooltip.top="'回复'" @click="navigateTo('#评论区')">
-              <Icon name="icon-park-outline:comments">
-              </Icon>
-              <span slot="badge">{{ comments.length }}</span>
-            </Button>
-            <Button severity="secondary" text size="small" v-tooltip.top="'复制链接'" @click="copyLink">
-              <Icon name="material-symbols:share-reviews-outline-rounded"></Icon>
-            </Button>
-            <Button severity="secondary" text size="small" v-tooltip.top="'复制到公众号[Alpha]'" @click="getInnerHTML">
-              <Icon slot="icon" name="icon-park-outline:wechat"></Icon>
-            </Button>
+        <ClientOnly>
+          <div
+            class="md:hidden page-fixed-footer fixed left-0 right-0 bottom-0 bg-white/10 dark:bg-zinc-800/10 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[999] !backdrop-blur-md !backdrop-opacity-90 ">
+            <div class="left flex gap-2">
+              <Button severity="secondary" text size="small">
+                <Icon slot="icon" name="icon-park-outline:thumbs-up" ref="likeIcon" @click="likePage" class="!text-red-500"/>
+                <span slot="badge">{{ likeCount }}</span>
+              </Button>
+              <Button severity="secondary" text size="small" v-tooltip.top="'回复'" @click="navigateTo('#评论区')">
+                <Icon name="icon-park-outline:comments">
+                </Icon>
+                <span slot="badge">{{ comments.length }}</span>
+              </Button>
+              <Button severity="secondary" text size="small" v-tooltip.top="'复制链接'" @click="copyLink">
+                <Icon name="material-symbols:share-reviews-outline-rounded"></Icon>
+              </Button>
+              <Button severity="secondary" text size="small" v-tooltip.top="'复制到公众号[Alpha]'" @click="getInnerHTML">
+                <Icon slot="icon" name="icon-park-outline:wechat"></Icon>
+              </Button>
+            </div>
+            <div class="right pr-6 md:pr-0">
+              <Button label="返回" @click="navigateTo('/article')">
+                <Icon name="icon-park-outline:back" slot="icon"></Icon>
+              </Button>
+            </div>
           </div>
-          <div class="right pr-6 md:pr-0">
-            <Button label="返回" @click="navigateTo('/article')">
-              <Icon name="icon-park-outline:back" slot="icon"></Icon>
-            </Button>
-          </div>
-        </div>
+        </ClientOnly>
         <!-- 文章标题 -->
         <!-- <h1 class="text-2xl font-bold mb-4 text-center relative"> {{ page?.title }}</h1> -->
         <article class="mdc-prose flex max-w-full sm:pr-8" v-if="page">
