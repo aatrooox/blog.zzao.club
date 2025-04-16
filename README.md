@@ -10,6 +10,8 @@
 - mysql
 - redis
 - umami数据统计
+- 亮暗色切换
+- 一键复制HTML到公众号(保留所有样式)
 - 基于Github仓库的md文件生成文章
 - useFetch 最佳实践
 - Sitemap
