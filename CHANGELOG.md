@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v0.13.4
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.13.3...v0.13.4)
+
+### 📖 Documentation
+
+- 更新文档 ([91a3d74](https://github.com/aatrooox/blog.zzao.club/commit/91a3d74))
+- 更新文档 ([d9b32db](https://github.com/aatrooox/blog.zzao.club/commit/d9b32db))
+
+### 🎨 Styles
+
+- 优化样式 ([225bb8c](https://github.com/aatrooox/blog.zzao.club/commit/225bb8c))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.13.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.13.2...v0.13.3)
