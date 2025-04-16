@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.13.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.13.2...v0.13.3)
+
+### 🚀 Enhancements
+
+- 主题切换; 重构评论区样式 ([c183bf4](https://github.com/aatrooox/blog.zzao.club/commit/c183bf4))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.13.2
 
 [compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v0.13.1...v0.13.2)
