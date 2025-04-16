@@ -1,24 +1,26 @@
 <template>
-  <div class="p-4">
+  <div class="p-4 w-full box-border">
     <div class="flex flex-col gap-3">
       <div class="flex flex-col gap-2">
-        <NuxtLink :to="page.path" class="text-xl font-bold hover:text-primary-600 dark:hover:text-primary-400 transition-colors line-clamp-2 leading-tight">
+        <NuxtLink :to="page.path"
+          class="text-xl font-bold hover:text-primary-600 dark:hover:text-primary-400 transition-colors line-clamp-2 leading-tight">
           {{ page.title }}
         </NuxtLink>
         <div class="flex flex-wrap gap-1.5">
           <template v-if="page.versions">
-            <Badge v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v"  class="text-xs">{{  v }}</Badge>
+            <Badge v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v" class="text-xs">{{ v }}
+            </Badge>
           </template>
           <template v-else>
             <Badge v-for="tag of page.tags" :key="tag" class="text-xs">{{ tag }}</Badge>
           </template>
         </div>
       </div>
-      
+
       <div v-if="page.description" class="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2 leading-relaxed">
         {{ page.description }}
       </div>
-      
+
       <div class="flex items-center gap-4 text-xs text-zinc-500 dark:text-zinc-400">
         <div class="flex items-center gap-1">
           <i class="i-carbon-time"></i>

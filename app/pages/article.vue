@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-6 max-w-7xl mx-auto sm:px-4">
+  <div class="flex flex-col gap-6 max-w-7xl box-border mx-auto sm:px-4">
     <div class="flex flex-wrap gap-2 sticky py-2 px-2 top-10 rounded-md bg-white/90 dark:bg-zinc-800/80">
       <Button v-for="tag in tags" :key="tag.value" :variant="selectedTags?.value === tag.value ? 'secondary' : 'link'"
         :class="[
@@ -12,15 +12,29 @@
         </Icon>
       </Button>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <template v-for="page of (data as unknown)" :key="page.path">
-        <div class="group">
-          <div
-            class="h-full transition-all duration-200 rounded-lg bg-white dark:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-600 border border-zinc-100 dark:border-zinc-700">
-            <PagePanel :page="page"></PagePanel>
+    <div class="flex flex-wrap gap-6" v-if="data">
+      <div class="left-pages w-full md:flex-1 flex flex-col gap-6">
+        <template v-for="page of (data as any[]).filter((_, index) => index % 2 === 0)" :key="page.path">
+          <div class="group">
+            <div
+              class="box-border transition-all duration-200 rounded-lg bg-white dark:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-600 border border-zinc-100 dark:border-zinc-700">
+              <PagePanel :page="page"></PagePanel>
+            </div>
           </div>
-        </div>
-      </template>
+        </template>
+      </div>
+
+      <div class="right-pages w-full md:flex-1 flex flex-col gap-6">
+        <template v-for="page of (data as any[]).filter((_, index) => index % 2 === 1)" :key="page.path">
+          <div class="group">
+            <div
+              class="box-border transition-all duration-200 rounded-lg bg-white dark:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-600 border border-zinc-100 dark:border-zinc-700">
+              <PagePanel :page="page"></PagePanel>
+            </div>
+          </div>
+        </template>
+      </div>
+
     </div>
   </div>
 </template>
@@ -34,7 +48,7 @@ useHead({
     },
     {
       name: 'keywords',
-      content: '早早集市,博客站,前端,前端工程化,前端架构,Node,Nuxt,Hono,副业',
+      content: '早早集市,博客站,前端,前端工程化,前端架构,Node,Nuxt3,Nuxt4,Hono,副业',
     },
   ],
 })

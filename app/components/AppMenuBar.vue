@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-around sticky mb-4 h-12 top-0 w-full z-[999] bg-white/80 dark:bg-zinc-950/80 transition-all duration-150 transition-discrete"
+    class="flex sticky justify-between items-center mb-4 h-12 top-0 w-full z-[999] bg-white/80 dark:bg-zinc-950/80 transition-all duration-150 transition-discrete"
     :style="{
       top: navBarStore.navBar?.isHidden ? '-100px' : '0px'
     }">
@@ -12,7 +12,33 @@
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem v-for="menu in items">
-          <NuxtLink v-slot="{ isActive, href, navigate }" :to="menu.route" custom class="cursor-pointer text-lg">
+          <template v-if="menu.children">
+            <NavigationMenuTrigger class="text-md relative">
+              <NuxtLink v-if="menu.route" v-slot="{ isActive, href, navigate }" :to="menu.route || menu.href" custom
+                class="cursor-pointer text-md bg-transparent">
+                <NavigationMenuLink :active="isActive" :href :class="navigationMenuTriggerStyle()" @click="navigate">
+                  {{ menu.label }}
+                </NavigationMenuLink>
+              </NuxtLink>
+              <span v-else> {{ menu.label }}</span>
+            </NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul class="w-[340px] flex flex-wrap gap-4 py-6">
+                <li v-for="subMenu in menu.children" class="w-[30%] text-center">
+                  <NuxtLink v-slot="{ isActive, href, navigate }" :to="subMenu.route || subMenu.href"
+                    :external="!!subMenu.href" custom
+                    class="cursor-pointer text-md underline underline-offset-2 decoration-4 decoration-cyan-600">
+                    <NavigationMenuLink :active="isActive" :href :class="navigationMenuTriggerStyle()"
+                      @click="navigate">
+                      {{ subMenu.label }}
+                    </NavigationMenuLink>
+                  </NuxtLink>
+                </li>
+              </ul>
+            </NavigationMenuContent>
+          </template>
+
+          <NuxtLink v-else v-slot="{ isActive, href, navigate }" :to="menu.route" custom class="cursor-pointer text-md">
             <NavigationMenuLink :active="isActive" :href :class="navigationMenuTriggerStyle()" @click="navigate">
               {{ menu.label }}
             </NavigationMenuLink>
@@ -20,9 +46,11 @@
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-    <Button variant="outline" size="icon" class="absolute right-4 top-2" @click="toggleDarkMode">
-      <Icon :name="modeIcon"></Icon>
-    </Button>
+    <div class="icons pr-4">
+      <Button variant="outline" size="icon" @click="toggleDarkMode">
+        <Icon :name="modeIcon"></Icon>
+      </Button>
+    </div>
   </div>
 </template>
 
@@ -71,12 +99,21 @@ const items = ref([
       icon: 'twemoji:clinking-beer-mugs',
       route: '/links'
   },
-  // {
-  //     label: '设置',
-  //     icon: 'icon-park-outline:setting-two',
-  //     route: '/setting',
-  //     hidden: !user?.value
-  // },
+  {
+      label: '关于',
+      icon: 'icon-park-outline:setting-two',
+      // route: '/about',
+      children: [
+        {
+          label: '技术栈',
+          route: '/framework'
+        },
+        {
+          label: '百度',
+          href: 'https://www.baidu.com'
+        }
+      ]
+  },
 ]);
 
 watch(() => route.path, (newVal, oldVal) => {
