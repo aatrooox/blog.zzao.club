@@ -4,48 +4,80 @@
     <div class="absolute left-2 top-[10px] my-0 bottom-0 h-full w-[1px] bg-gray-300"></div>
     <div class="sub-commit-item relative transition-all duration-300 ease-in-out">
       <template v-for="subComment in subComments?.data" :key="subComment.id">
-        <Fieldset class="!pb-2">
-          <template #legend>
-            <div class="flex items-center pl-2">
-              <UserAvatar :user-info="subComment.user_info"></UserAvatar>
-              <span :class="`${subComment.user_info.role === 'superAdmin' ? 'text-cyan-700 font-bold p-2' : 'font-bold p-2'}`">{{ subComment?.user_info?.username }}</span>
+        <div class="comment-wrap w-full flex">
+          <div class="avatar-wrap w-12">
+            <UserAvatar :user-info="subComment.user_info" class="size-10"></UserAvatar>
+          </div>
+          <div class="comment-info flex-1 border rounded-md box-border bg-white/90">
+            <div class="header px-2 py-1 bg-zinc-100"><span
+                :class="`${subComment.user_info.role === 'superAdmin' ? 'text-cyan-700 font-bold' : 'font-bold'}`">{{
+                  subComment?.user_info?.username }}</span>
+            </div>
+            <div class="content py-4 px-2 ">
               <template v-if="subComment.reply_sub_comment_id">
                 <span> 回复 </span>
                 <!-- 如果是回复其他评论 -->
                 <span class="font-bold p-2">{{
                   getSubCommentById(subComment.reply_sub_comment_id)?.user_info?.username }}</span>
-                <!-- 回复一级评论 -->
-                <!-- <span class="font-bold p-2">{{ comment?.user_info?.username }}</span> -->
               </template>
+              {{ subComment.content }}
             </div>
-          </template>
-          <p class="m-0">
-            {{ subComment.content }}
-          </p>
-          <div class="footer flex items-center gap-4">
-            <span class="text-gray-500 text-xs">{{ updateDateFromNow(subComment.create_ts) }}</span>
-            <!-- <Button @click.stop="likeMemo(`like-icon-sub-${subComment.uid}`)" variant="secondary" text size="small">
-              <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg"
-                :class="`like-icon-sub-${subComment.uid}`" />
-              <span slot="badge">{{ likeCount }}</span>
-            </Button> -->
-            <Button variant="secondary" text size="sm"  @click.stop="commentReply(subComment)">
-              <Icon name="icon-park-outline:comments"></Icon>
-            </Button>
-            <!-- 管理员 或自己 可删除 -->
-            <Button variant="secondary" text size="sm" 
-              v-if="comment.user_id === userStore?.user.id || userStore?.user.id === 'admin'"
-              @click.stop="delComment(subComment)">
-              <Icon name="icon-park-outline:delete"></Icon>
-            </Button>
+            <div class="footer flex items-center gap-4 px-2">
+              <span class="text-gray-500 text-xs">{{ updateDateFromNow(subComment.create_ts) }}</span>
+              <!-- <Button @click.stop="likeMemo" variant="secondary" text size="small">
+          <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg" ref="likeIcon" />
+          <span slot="badge">{{ likeCount }}</span>
+        </Button> -->
+              <Button variant="ghost" size="sm" @click.stop="commentReply">
+                <Icon name="icon-park-outline:comments"
+                  :style="{ color: subComment._count?.sub_comments ? 'black' : '' }">
+                </Icon>
+                <span slot="badge" :class="`${subComment._count?.sub_comments ? 'font-bold' : ''}`">{{
+                  subComment._count?.sub_comments ||
+                  0 }}</span>
+              </Button>
+              <!-- 管理员 或自己 可删除 -->
+              <Button variant="secondary" text size="sm"
+                v-if="subComment.user_id === userStore?.user.id || userStore?.user.role === 'superAdmin'"
+                @click.stop="delComment(subComment)">
+                <Icon name="icon-park-outline:delete"></Icon>
+              </Button>
+            </div>
           </div>
-        </Fieldset>
-        <div class="reply-box w-full pl-4 mt-2" v-if="commentReplyMap[subComment.id]">
-          <AppCommentInput type="reply" :target="subComment.user_info.username"
-            @cancel="commentReplyMap[subComment.id] = false" @send="createSubComment($event, subComment)">
-          </AppCommentInput>
+          <div class="reply-box w-full pl-4 mt-2" v-if="commentReplyMap[subComment.id]">
+            <AppCommentInput type="reply" :target="subComment.user_info.username"
+              @cancel="commentReplyMap[subComment.id] = false" @send="createSubComment($event, subComment)">
+            </AppCommentInput>
+          </div>
         </div>
-        <!-- 回复某条评论 -->
+        <!-- <template>
+          <div class="flex items-center pl-2">
+            <UserAvatar :user-info="subComment.user_info"></UserAvatar>
+            <span
+              :class="`${subComment.user_info.role === 'superAdmin' ? 'text-cyan-700 font-bold p-2' : 'font-bold p-2'}`">{{
+                subComment?.user_info?.username }}</span>
+            <template v-if="subComment.reply_sub_comment_id">
+              <span> 回复 </span>
+              <span class="font-bold p-2">{{
+                getSubCommentById(subComment.reply_sub_comment_id)?.user_info?.username }}</span>
+            </template>
+          </div>
+        </template>
+        <p class="m-0">
+          {{ subComment.content }}
+        </p>
+        <div class="footer flex items-center gap-4">
+          <span class="text-gray-500 text-xs">{{ updateDateFromNow(subComment.create_ts) }}</span>
+          <Button variant="secondary" text size="sm" @click.stop="commentReply(subComment)">
+            <Icon name="icon-park-outline:comments"></Icon>
+          </Button>
+          <Button variant="secondary" text size="sm"
+            v-if="comment.user_id === userStore?.user.id || userStore?.user.id === 'admin'"
+            @click.stop="delComment(subComment)">
+            <Icon name="icon-park-outline:delete"></Icon>
+          </Button>
+        </div> -->
+
 
       </template>
     </div>
@@ -63,10 +95,12 @@ const { $api } = useNuxtApp()
 const emit = defineEmits(['refresh'])
 const likeCount = ref('0')
 const likeIcon = ref(null)
-type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{ 
-  include: { user_info: true , _count: true } }>
-type BlogSubCommentWithUserInfo = Prisma.BlogSubCommentGetPayload<{ 
-  include: { user_info: true , _count: true } }>
+type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{
+  include: { user_info: true, _count: true }
+}>
+type BlogSubCommentWithUserInfo = Prisma.BlogSubCommentGetPayload<{
+  include: { user_info: true, _count: true }
+}>
 
 interface Props {
   comment: BlogCommentWithUserInfo,
@@ -112,7 +146,7 @@ const checkDetail = (comment: any) => {
 const delComment = async (subComment: Props['comment']) => {
   const res = await $api.post('/api/v1/comment/sub/del', { id: subComment.id })
   if (res.error) return;
-  toast.add({ type: 'success', message: '删除成功'});
+  toast.add({ type: 'success', message: '删除成功' });
   refreshList()
 }
 

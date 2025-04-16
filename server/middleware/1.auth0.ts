@@ -40,6 +40,6 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-  console.log(`public - ${getRequestURL(event).pathname}`)
+  // console.log(`public - ${getRequestURL(event).pathname}`)
   } 
 )

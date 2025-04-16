@@ -1,24 +1,22 @@
 <template>
   <div class="flex flex-col gap-6 max-w-7xl mx-auto sm:px-4">
-    <div class="flex flex-wrap gap-2 sticky py-2 top-10 bg-white/90">
-      <Button 
-        v-for="tag in tags" 
-        :key="tag.value"
-        :variant="selectedTags?.value === tag.value ? 'secondary': 'link'"
+    <div class="flex flex-wrap gap-2 sticky py-2 px-2 top-10 rounded-md bg-white/90 dark:bg-zinc-800/80">
+      <Button v-for="tag in tags" :key="tag.value" :variant="selectedTags?.value === tag.value ? 'secondary' : 'link'"
         :class="[
           'text-sm px-3 py-1.5 rounded-md transition-all duration-200',
-        ]"
-        @click="selectTag(tag)"
-      >
+        ]" @click="selectTag(tag)">
         {{ tag.name }}
-        <span v-if="selectedTags?.value === tag.value && status !== 'pending'" class="ml-1 text-xs">({{ data?.length || 0 }})</span>
-        <Icon name="svg-spinners:pulse-rings-multiple" v-if="selectedTags?.value === tag.value && status === 'pending'"></Icon>
+        <span v-if="selectedTags?.value === tag.value && status !== 'pending'" class="ml-1 text-xs">({{ data?.length ||
+          0 }})</span>
+        <Icon name="svg-spinners:pulse-rings-multiple" v-if="selectedTags?.value === tag.value && status === 'pending'">
+        </Icon>
       </Button>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <template v-for="page of (data as unknown)" :key="page.path">
         <div class="group">
-          <div class="h-full transition-all duration-200 rounded-lg bg-white dark:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-600 border border-zinc-100 dark:border-zinc-700">
+          <div
+            class="h-full transition-all duration-200 rounded-lg bg-white dark:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-600 border border-zinc-100 dark:border-zinc-700">
             <PagePanel :page="page"></PagePanel>
           </div>
         </div>

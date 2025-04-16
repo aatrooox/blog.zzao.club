@@ -1,7 +1,7 @@
 <template>
-  <Avatar shape="circle" v-if="imgUrl">
-    <AvatarImage :src="imgUrl" alt="@unovue" />
-    <AvatarFallback>IMG</AvatarFallback>
+  <Avatar shape="circle">
+    <AvatarImage :src="imgUrl ?? ''" alt="@unovue" />
+    <AvatarFallback>Z</AvatarFallback>
   </Avatar>
   <!-- <Avatar :label="userInfo?.username[0]?.toUpperCase() || 'B'" shape="circle" v-else>
   </Avatar> -->
@@ -14,7 +14,7 @@ const props = defineProps<{
   previewUrl?: string
 }>()
 
-const imgUrl = computed( () => {
+const imgUrl = computed(() => {
   return props.previewUrl || props.userInfo?.avatar_url
 })
 </script>

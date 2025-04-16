@@ -1,7 +1,9 @@
 <template>
-  <div class="h-full box-border max-w-7xl px-4 lg:w-6xl md:w-3xl m-auto bg-grid-dashed overflow-y-auto" ref="scrollWrap" v-scroll="[onScroll, { throttle: 200, behavior: 'smooth'}]">
+  <div class="h-full box-border max-w-7xl px-4 lg:w-6xl md:w-3xl m-auto bg-grid-dashed overflow-y-auto" ref="scrollWrap"
+    v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]">
     <Toaster position="top-right" richColors></Toaster>
-    <Icon name="twemoji:up-arrow" class="fixed right-2 bottom-2 z-[9999] md:right-10 md:bottom-6 cursor-pointer" size="2em" v-if="showScrollTopBtn" @click="scrollToTop"></Icon>
+    <Icon name="twemoji:up-arrow" class="fixed right-2 bottom-2 z-[9999] md:right-10 md:bottom-6 cursor-pointer"
+      size="2em" v-if="showScrollTopBtn" @click="scrollToTop"></Icon>
     <div class="m-auto flex gap-5 box-border">
       <div class="w-[100%] md:w-[100%] lg:w-[100%] h-full">
         <AppMenuBar></AppMenuBar>
@@ -41,50 +43,50 @@ const isScrollTop = computed(() => {
 
 watch(() => globalToast.toastState.value.messages, (messages) => {
   if (messages.length > 0) {
-      messages.forEach( (message) => {
-        switch (message.type) {
-          case 'success':
-            $toast.success(message.message, message.options as any);
-            break;
-          case 'error':
-            $toast.error(message.message, message.options as any);
-            break;
-          case 'info':
-            $toast.info(message.message, message.options as any);
-            break;
-          case 'warning':
-            $toast.warning(message.message, message.options as any);
-            break;
-          case 'promise':
-            $toast.promise(message.options as any);
-            break;
-          default:
-            $toast(message.message, message.options as any)
-        }
+    messages.forEach((message) => {
+      switch (message.type) {
+        case 'success':
+          $toast.success(message.message, message.options as any);
+          break;
+        case 'error':
+          $toast.error(message.message, message.options as any);
+          break;
+        case 'info':
+          $toast.info(message.message, message.options as any);
+          break;
+        case 'warning':
+          $toast.warning(message.message, message.options as any);
+          break;
+        case 'promise':
+          $toast.promise(message.options as any);
+          break;
+        default:
+          $toast(message.message, message.options as any)
+      }
     })
-    
+
     globalToast.clear();
   }
 }, { deep: true })
 
 function onScroll(state: UseScrollReturn) {
   // console.log(state) // {x, y, isScrolling, arrivedState, directions}
-    if (state.isScrolling.value) {
-      scrollDirection.value = state.directions.bottom ? 'bottom' : 'top'
+  if (state.isScrolling.value) {
+    scrollDirection.value = state.directions.bottom ? 'bottom' : 'top'
+  }
+  // 往下滑并且距离顶部大于50
+  if (isScrollBottom.value && state.y.value > 50) {
+    if (isPostPage.value) {
+      navBarStore.setNavStatus({ isHidden: true })
     }
-    // 往下滑并且距离顶部大于50
-    if (isScrollBottom.value && state.y.value > 50) {
-      if (isPostPage.value) {
-        navBarStore.setNavStatus({ isHidden: true })
-      }
-    } 
-  
-    if (isScrollTop.value && isPostPage.value) {
-      navBarStore.setNavStatus({ isHidden: false })
-    }
+  }
 
-    showScrollTopBtn.value = state.y.value > 100
-  
+  if (isScrollTop.value && isPostPage.value) {
+    navBarStore.setNavStatus({ isHidden: false })
+  }
+
+  showScrollTopBtn.value = state.y.value > 100
+
 }
 
 function scrollToTop() {
@@ -92,11 +94,7 @@ function scrollToTop() {
 }
 
 
-// watch(y, (newVal, oldVal) => {
-//   if (y.value > 100){
-//     navBarStore.setNavStatus({ isHidden: true })
-//   } else {
-//     navBarStore.setNavStatus({ isHidden: false })
-//   }
-// })
+watch(() => route.path, (newVal, oldVal) => {
+  if (isPostPage.value) scrollToTop();
+})
 </script>

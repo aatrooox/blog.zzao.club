@@ -1,6 +1,7 @@
 <template>
   <div
-    class="flex justify-around sticky mb-4 h-12 top-0 w-full z-[999] bg-white/80 transition-all duration-300 transition-discrete" :style="{
+    class="flex justify-around sticky mb-4 h-12 top-0 w-full z-[999] bg-white/80 dark:bg-zinc-950/80 transition-all duration-150 transition-discrete"
+    :style="{
       top: navBarStore.navBar?.isHidden ? '-100px' : '0px'
     }">
     <!-- <AppLoginDialog :login="loginBlog" ref="loginForm" @showRegisterDialog="showRegisterDialog"></AppLoginDialog> -->
@@ -13,12 +14,15 @@
         <NavigationMenuItem v-for="menu in items">
           <NuxtLink v-slot="{ isActive, href, navigate }" :to="menu.route" custom class="cursor-pointer text-lg">
             <NavigationMenuLink :active="isActive" :href :class="navigationMenuTriggerStyle()" @click="navigate">
-              {{  menu.label }}
+              {{ menu.label }}
             </NavigationMenuLink>
           </NuxtLink>
         </NavigationMenuItem>
       </NavigationMenuList>
-  </NavigationMenu>
+    </NavigationMenu>
+    <Button variant="outline" size="icon" class="absolute right-4 top-2" @click="toggleDarkMode">
+      <Icon :name="modeIcon"></Icon>
+    </Button>
   </div>
 </template>
 
@@ -36,13 +40,11 @@ const colorMode = useColorMode()
 const { $api } = useNuxtApp();
 const route = useRoute();
 const curLabel = ref('首页')
-const modes = ['system', 'light', 'dark']
+const modes = ['light', 'dark']
 const index = ref(modes.indexOf(colorMode.preference))
 const modeIcon = computed(() => {
   console.log(`colorMode.preference`, colorMode.preference)
   switch (colorMode.preference) {
-    case 'system':
-      return 'icon-park-outline:computer'
     case 'light':
       return 'icon-park-outline:sun-one'
     case 'dark':
