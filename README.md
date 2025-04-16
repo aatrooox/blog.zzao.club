@@ -1,6 +1,6 @@
 # 博客站
 
-一个基于 Nuxt、NuxtContent、PrimeVue 的~~博客站~~个人空间
+一个基于 [Nuxt@3.16.2](https://nuxt.com/)、[NuxtContent@3.4.0](https://content.nuxt.com/)、[shadcn/vue](https://www.shadcn-vue.com/)、[inspira-ui](https://inspira-ui.com/components) 的全栈站点
 
 ## 功能
 
@@ -10,7 +10,13 @@
 - mysql
 - redis
 - umami数据统计
-
+- 基于Github仓库的md文件生成文章
+- useFetch 最佳实践
+- Sitemap
+- Rss
+- robots.txt
+- [ ] IMGX
+- [ ] Github登录
 
 ## 安装依赖
 
@@ -74,13 +80,15 @@ redis 没有配置，默认链接 localhost 6379端口，本地同生产 （单�
 
 ```
 DATABASE_URL=mysql://root:root@127.0.0.1:3306/blog
+NUXT_FEISHU_WEBHOOK=
+NUXT_FEISHU_USER_ID=
 ```
 先启动 mysql、redis
 
 ## 启动项目
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 ## 部署
@@ -88,13 +96,18 @@ npm run dev
 想起来再写
 
 ```bash
-npm run build
+pnpm build
 ```
-## 扩展层（Layer）(开发中)
 
-- auth layer： 用于权限校验，登录和放行其他 layer
-- admin layer: 可视化操作配置文件。【必须先继承 license layer】
+## 发布
 
-## 注意
+> 注意 0.x 版本会有不同
 
-- 继承了 auth Layer 后，不再支持 `nuxi generate`
+```bash
+# 1.0.0 => 1.0.1  0.1.0 => 0.1.1
+pnpm release:patch 
+# 1.0.0 => 1.1.0  0.1.0 => 0.1.1
+pnpm release:minor
+# 1.0.0 => 2.0.0  0.1.0 => 0.2.0
+pnpm release:major
+```

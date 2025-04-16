@@ -5,7 +5,6 @@
 	"scripts": {
 		"build": "nuxt build",
 		"dev": "nuxt dev -p 4775 -o",
-		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"release": "pnpm release:patch",
 		"release:patch": "npx changelogen@latest --patch --release --push",
