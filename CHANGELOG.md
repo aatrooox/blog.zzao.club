@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.13.5
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.13.4...v0.13.5)
+
+### 🏡 Chore
+
+- 更新友链；about page ([0522de6](https://github.com/aatrooox/blog.zzao.club/commit/0522de6))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.13.4
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.13.3...v0.13.4)
