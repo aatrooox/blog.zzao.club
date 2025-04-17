@@ -49,6 +49,12 @@ export default defineAppConfig({
       desc: '便捷地生成精美卡片',
     },
     {
+      name: '極客死亡計劃',
+      url: 'https://www.geedea.pro',
+      desc: '极客死亡计划',
+      logo: 'https://www.geedea.pro/favicon.png'
+    },
+    {
       name: '洛丽糖',
       url: 'http://luolt.cn/',
       desc: '一个宅男的云上次元世界',
@@ -65,5 +71,17 @@ export default defineAppConfig({
     //   url: 'https://memo.zzao.club',
     //   desc: 'Nuxt 版 Flomo',
     // }
+  ],
+  frameworks: [
+    {
+      name: 'Nuxt',
+      icon: 'logos:nuxt',
+      version: '3.16.2'
+    },
+    {
+      name: 'vite',
+      icon: 'logos:vitejs',
+      version: '6.2.5'
+    }
   ]
 })

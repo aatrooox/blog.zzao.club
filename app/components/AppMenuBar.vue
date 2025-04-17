@@ -102,17 +102,13 @@ const items = ref([
   {
       label: '关于',
       icon: 'icon-park-outline:setting-two',
-      // route: '/about',
-      children: [
-        {
-          label: '技术栈',
-          route: '/framework'
-        },
-        {
-          label: '百度',
-          href: 'https://www.baidu.com'
-        }
-      ]
+      route: '/about',
+      // children: [
+      //   {
+      //     label: '关于本站',
+      //     route: '/about'
+      //   }
+      // ]
   },
 ]);
 

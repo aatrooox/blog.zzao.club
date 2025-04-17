@@ -7,9 +7,6 @@ jobs:
   Explore-Gitea-Actions:
     runs-on: debian
     steps:
-      - run: echo "  The job was automatically triggered by a ${{ gitea.event_name }} event."
-      - run: echo "  This job is now running on a ${{ runner.os }} server hosted by Gitea!"
-      - run: echo "  The name of your branch is ${{ gitea.ref }} and your repository is ${{ gitea.repository }}."
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Install dependencies
@@ -20,10 +17,10 @@ jobs:
         env: 
           CONTENT_REPO_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NUXT_JWT_SECRET: ${{ secrets.NUXT_JWT_SECRET }}
           NUXT_FEISHU_WEBHOOK: ${{ secrets.NUXT_FEISHU_WEBHOOK }}
           NUXT_FEISHU_USER_ID: ${{ secrets.NUXT_FEISHU_USER_ID }}
-          NUXT_JWT_SECRET: ${{ secrets.NUXT_JWT_SECRET }}
-        run: pnpm build
+        run: NODE_OPTIONS="--max-old-space-size=4080" pnpm build
       - name: Copy and Build
         env: 
           CONTENT_REPO_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
