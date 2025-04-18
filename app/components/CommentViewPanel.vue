@@ -1,6 +1,6 @@
 <template>
-  <div class="card transition-all duration-300 box-border">
-    <div class="comment-wrap w-full flex">
+  <div class="card transition-all duration-300 box-border mb-4">
+    <div class="comment-wrap w-full flex mb-4">
       <div class="avatar-wrap w-12">
         <UserAvatar :user-info="comment.user_info" class="size-10"></UserAvatar>
       </div>
@@ -26,7 +26,7 @@
               0 }}</span>
           </Button>
           <!-- 管理员 或自己 可删除 -->
-          <Button variant="secondary" text size="sm"
+          <Button variant="ghost" text size="sm"
             v-if="comment.user_id === userStore?.user.id || userStore?.user.role === 'superAdmin'"
             @click.stop="delComment">
             <Icon name="icon-park-outline:delete"></Icon>
@@ -34,18 +34,16 @@
         </div>
       </div>
     </div>
-
-
-
-
     <!-- 回复某条评论 -->
-    <div class="reply-box w-full pl-4 mt-2" v-if="commentReplyOpen">
+    <div class="reply-box w-full pl-4 mt-2 mb-4" v-if="commentReplyOpen">
       <AppCommentInput type="reply" :target="comment.user_info.username" @cancel="commentReplyOpen = false"
         @send="createSubComment">
       </AppCommentInput>
     </div>
-    <SubCommentsViewPanel ref="subCommentsRef" :comment="comment" v-if="comment._count?.sub_comments">
-    </SubCommentsViewPanel>
+    <template v-for="subComment in comment.sub_comments">
+      <SubCommentsViewPanel ref="subCommentsRef" :comment="subComment" @refresh="refreshList">
+      </SubCommentsViewPanel>
+    </template>
   </div>
 </template>
 
@@ -64,7 +62,7 @@ const likeCount = ref('0')
 const likeIcon = ref(null)
 // const Prisma = usePrismaClient();
 type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{
-  include: { user_info: true, _count: true }
+  include: { user_info: true, _count: true, sub_comments: true }
 }>
 interface Props {
   comment: BlogCommentWithUserInfo
@@ -91,12 +89,7 @@ const createSubComment = async (message) => {
   if (!res.error) {
     commentReplyOpen.value = false
     // 如果没有二级评论，则无法自己刷新
-    if (subCommentsRef.value) {
-      subCommentsRef.value?.refreshList()
-    } else {
-      // 依赖上级再去取一下列表
-      emit('refresh')
-    }
+    emit('refresh')
   }
 }
 // 删除
@@ -108,6 +101,9 @@ const delComment = async () => {
   }
 }
 
+const refreshList = () => {
+  emit('refresh')
+}
 const likeMemo = async () => {
   toast.add({ type: 'success', message: '谢谢❤️，但还没做点赞功能' });
   let changes = 0

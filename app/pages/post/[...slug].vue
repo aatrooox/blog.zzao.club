@@ -5,7 +5,7 @@
         <!-- 底部固定的操作栏 -->
         <ClientOnly>
           <div
-            class="md:hidden page-fixed-footer fixed left-0 right-0 bottom-0 bg-white/10 dark:bg-zinc-800/10 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[999] !backdrop-blur-md !backdrop-opacity-90 ">
+            class="md:hidden page-fixed-footer fixed left-0 right-0 bottom-0 bg-white/10 dark:bg-zinc-800/10 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[49] !backdrop-blur-md !backdrop-opacity-90 ">
             <div class="left flex gap-2">
               <Button variant="ghost" text size="sm">
                 <Icon slot="icon" name="icon-park-outline:thumbs-up" ref="likeIcon" @click="likePage" />
@@ -116,7 +116,7 @@ const curMdContentRef = ref(null)
 import { Prisma } from '@prisma/client';
 
 type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{
-  include: { user_info: true, _count: true }
+  include: { user_info: true, _count: true, sub_comments: true }
 }>
 const likeCount = ref(0)
 const isLiked = ref(false)
@@ -351,17 +351,17 @@ const createComment = async (data) => {
 const likePage = async () => {
   if (!userStore.user.id) {
     umami.track('like', { page: page.value?.id, isOk: false });
-    return toast.add({ message: '登录后才能点赞' })
+    return toast.add({ type: 'warning', message: '登录后才能点赞' })
   };
 
   if (isLiked.value) {
-    return toast.add({ message: '已经点过赞了' })
+    return toast.warn('已经点过赞了')
   };
 
   const res = await $api.post('/api/v1/like/create', { article_id: page.value?.id, user_id: userStore.user.id })
 
   if (!res.error) {
-    toast.add({ message: '感谢支持！' });
+    toast.success('感谢支持！');
     umami.track('like', { page: page.value?.id, isOk: true });
     initLikeCount()
   }

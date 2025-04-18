@@ -31,7 +31,7 @@ export default defineNuxtConfig({
   ],
   sourcemap: {
     server: isDev,
-    client: isDev
+    client: isDev ?? 'inline',
   },
   future: {
     compatibilityVersion: 4,
@@ -104,7 +104,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@vueuse/nuxt',
     'shadcn-nuxt',
-    'vue-sonner/nuxt'
+    'vue-sonner/nuxt',
+    'nuxt-nodemailer'
   ],
   // 把 icon 和客户端捆绑在一起， 减少请求服务端
   icon: {
@@ -138,6 +139,14 @@ export default defineNuxtConfig({
      * @default "./components/ui"
      */
     componentDir: './app/components/ui'
+  },
+  nodemailer: {
+    from: 'gnakzz@qq.com',
+    host: 'smtp.qq.com',
+    auth: {
+      user: '',
+      pass: ''
+    }
   },
   robots: {
     sitemap: 'https://zzao.club/sitemap.xml'

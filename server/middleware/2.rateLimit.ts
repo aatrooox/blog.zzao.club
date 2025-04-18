@@ -27,6 +27,7 @@ export default defineEventHandler(async (event) => {
     { path: '/api/v1/comment/sub/create', strict: true, limit: 10, duration: 5 * 60 * 1000 },
     { path: '/api/v1/comment/sub/del', strict: true, limit: 5, duration: 1 * 60 * 1000 },
     { path: '/api/v1/link/add', strict: true, limit: 2, duration: 1 * 60 * 1000 },
+    { path: '/api/v1/fsf', strict: true, limit: 5, duration: 1 * 60 * 1000 }
   ]
   
   // 查找匹配的规则
@@ -48,7 +49,7 @@ export default defineEventHandler(async (event) => {
   
   // Redis限流逻辑
   const storage = useStorage('redis');
-  const key = `ratelimit:${identifier}:${rule.path}`;
+  const key = `ratelimit:${identifier}:${path}`;
   
   const initData = await storage.getItem<RequestRecord>(key);
   const now = Date.now();

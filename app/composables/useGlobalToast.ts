@@ -25,6 +25,46 @@ export function useGlobalToast() {
     toastState.value.messages.push(option)
   }
 
+  const warn = (message: string, options?: ToastMessageOptions) => {
+    toastState.value.messages.push({
+      type: 'warning',
+      message,
+      ...options
+    })
+  }
+
+  const success = (message: string, options?: ToastMessageOptions) => {
+    toastState.value.messages.push({
+      type: 'success',
+      message,
+      ...options
+    })
+  }
+
+  const error = (message: string, options?: ToastMessageOptions) => {
+    toastState.value.messages.push({
+      type: 'error',
+      message,
+      ...options
+    })
+  }
+
+  const contrast = (message: string, options?: ToastMessageOptions) => {
+    toastState.value.messages.push({
+      type: 'contrast',
+      message,
+      ...options
+    })
+  }
+
+   const info = (message: string, options?: ToastMessageOptions) => {
+    toastState.value.messages.push({
+      type: 'info',
+      message,
+      ...options
+    })
+  }
+
   const clear = () => {
     toastState.value.messages = []
   }
@@ -32,6 +72,11 @@ export function useGlobalToast() {
   return {
     toastState,
     add,
+    success,
+    error,
+    warn,
+    info,
+    contrast,
     clear
   }
 }

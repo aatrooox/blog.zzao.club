@@ -1,7 +1,7 @@
 <template>
   <Avatar shape="circle">
     <AvatarImage :src="imgUrl ?? ''" alt="@unovue" />
-    <AvatarFallback>Z</AvatarFallback>
+    <AvatarFallback> {{ userInfo?.username[0]?.toUpperCase() ?? 'Z' }} </AvatarFallback>
   </Avatar>
   <!-- <Avatar :label="userInfo?.username[0]?.toUpperCase() || 'B'" shape="circle" v-else>
   </Avatar> -->

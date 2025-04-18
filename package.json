@@ -4,7 +4,7 @@
 	"version": "0.13.5",
 	"scripts": {
 		"build": "nuxt build",
-		"dev": "nuxt dev -p 4775 -o",
+		"dev": "nuxt dev -p 4775",
 		"preview": "nuxt preview",
 		"release": "pnpm release:patch",
 		"release:patch": "npx changelogen@latest --patch --release --push",
@@ -80,6 +80,7 @@
 		"@types/rss": "^0.0.32",
 		"better-sqlite3": "^11.8.1",
 		"nodemailer": "^6.10.1",
+		"nuxi": "^3.24.1",
 		"nuxt-nodemailer": "^1.1.2"
 	},
 	"packageManager": "pnpm@9.15.4"

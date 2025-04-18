@@ -1,10 +1,10 @@
 <template>
   <div
-    class="flex sticky justify-between items-center mb-4 h-12 top-0 w-full z-[999] bg-white/80 dark:bg-zinc-950/80 transition-all duration-150 transition-discrete"
+    class="flex sticky justify-between items-center mb-4 h-12 top-0 w-full z-[49] bg-white/80 dark:bg-zinc-950/80 transition-all duration-150 transition-discrete"
     :style="{
       top: navBarStore.navBar?.isHidden ? '-100px' : '0px'
     }">
-    <!-- <AppLoginDialog :login="loginBlog" ref="loginForm" @showRegisterDialog="showRegisterDialog"></AppLoginDialog> -->
+
     <!-- <AppRegisterDialog :regist="userRegist" ref="registerForm"></AppRegisterDialog> -->
     <!-- <AppUserSetting ref="userSetting"></AppUserSetting> -->
     <!-- <AppSearchDialog ref="searchDialog"></AppSearchDialog> -->
@@ -46,7 +46,11 @@
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-    <div class="icons pr-4">
+    <div class="icons pr-4 flex gap-2">
+      <AppLoginDialog v-if="!userStore.isLogin" :login="loginBlog" ref="loginForm"
+        @showRegisterDialog="showRegisterDialog">
+      </AppLoginDialog>
+      <AppUserMenu v-else></AppUserMenu>
       <Button variant="outline" size="icon" @click="toggleDarkMode">
         <Icon :name="modeIcon"></Icon>
       </Button>
@@ -63,6 +67,7 @@ const loginForm = ref(null)
 const registerForm = ref(null)
 const config = useRuntimeConfig()
 const userStore = useUserStore()
+const tokenStore = useTokenStore()
 const navBarStore = useNavBarStore()
 const colorMode = useColorMode()
 const { $api } = useNuxtApp();
@@ -131,9 +136,8 @@ const loginBlog = async (body) => {
   const res = await $api.post('/api/v1/user/login', body)
   if (res) {
     userStore.setUser(res.data.user)
-
-    console.log(`userStore.user`, userStore.user)
-    toast.success('恭喜！登录成功!')
+    tokenStore.setToken(res.data.token)
+    toast.add({ type: 'success', message: '登录成功' })
   }
 }
 

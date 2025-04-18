@@ -36,6 +36,17 @@ export default defineEventHandler(async (event) => {
           avatar_url: true
         }
       },
+      sub_comments: {
+        include: {
+          user_info: {
+            select: {
+              username: true,
+              avatar_url: true
+            }
+          }
+
+        }
+      },
       // 关系计数
       _count: {
         select: {

@@ -11,7 +11,22 @@ type HttpMethod = "get" | "post" | "put" | "delete" | "patch" | "head" | "connec
 export default defineNuxtPlugin({
   name: 'custom-fetch',
   async setup() {
-      // 创建自定义 fetch 实例
+    // 创建自定义 fetch 实例
+    const $api = $fetch.create({
+      onRequest: ({ options }) => {
+        options.headers.set('Authorization', `Bearer ${useTokenStore()?.token ?? ''}`)
+      },
+      onResponseError({ response }) {
+        // 处理错误
+        let errorMessage = response?._data.message || '请求失败'
+          
+        
+         // 使用全局 toast 显示错误信息
+        const globalToast = useGlobalToast()
+        globalToast.add({ message: errorMessage, type: 'error'})
+      }
+    })
+
     const $$fetch = {
       // 通用请求方法
       async request<T = any>(
@@ -23,7 +38,7 @@ export default defineNuxtPlugin({
         // 合并默认选项和用户选项
         const defaultOptions: UseFetchOptions<T> = {
           method,
-          ...options
+          ...options ?? {}
         }
     
         // 根据请求方法设置数据
@@ -33,29 +48,12 @@ export default defineNuxtPlugin({
           defaultOptions.body = data
         }
     
-        try {
           // @ts-ignore
-          const response: any = await $fetch<T>(url, defaultOptions)
+          const response: any = await $api<T>(url, defaultOptions).catch( error => {
+            return { data: null as any, error: true }
+          })
           return { data: response?.data }
-        } catch (error: any) {
-          // 处理错误
-          let errorMessage = '请求失败'
-          
-          if (error.data?.message) {
-            errorMessage = error.data.message
-          } else if (error.message) {
-            errorMessage = error.message 
-          } else {
-            errorMessage = error.statusMessage
-          }
-          
-           // 使用全局 toast 显示错误信息
-          const globalToast = useGlobalToast()
-          globalToast.add({ message: errorMessage, type: 'error'})
-          
-          // 返回错误信息
-          return { data: null as any, error }
-        }
+       
       },
     
       // GET 请求
