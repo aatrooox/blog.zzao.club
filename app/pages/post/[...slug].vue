@@ -14,7 +14,7 @@
               <Button variant="ghost" text size="sm" @click="navigateTo('#评论区')">
                 <Icon name="icon-park-outline:comments">
                 </Icon>
-                <span slot="badge">{{ comments.length }}</span>
+                <span slot="badge">{{ formatCommentCount }}</span>
               </Button>
               <Button variant="ghost" text size="sm" @click="copyLink">
                 <Icon name="material-symbols:share-reviews-outline-rounded"></Icon>
@@ -42,7 +42,7 @@
               <NuxtLink href="#评论区" class="flex flex-col items-center">
                 <Icon name="icon-park-outline:comments" size="1.5em">
                 </Icon>
-                <span slot="badge">{{ comments.length }}</span>
+                <span slot="badge">{{ formatCommentCount }}</span>
               </NuxtLink>
             </div>
             <div class="flex flex-col items-center cursor-pointer" @click="copyLink">
@@ -116,7 +116,7 @@ const curMdContentRef = ref(null)
 import { Prisma } from '@prisma/client';
 
 type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{
-  include: { user_info: true, _count: true, sub_comments: true }
+  include: { user_info: true, _count: true, sub_comments: { include: { user_info: true } } }
 }>
 const likeCount = ref(0)
 const isLiked = ref(false)
@@ -130,6 +130,21 @@ let copyHTML = ``
 const { data: page, error, status } = await useAsyncData(route.path, () => {
   return queryCollection('content').path(decodeURI(route.path)).first()
 }, { lazy: true })
+
+useSeoMeta({
+  title: page.value?.seo.title,
+  description: page.value?.seo.description,
+})
+
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: `https://zzao.club${route.path}`
+    }
+  ]
+})
+
 
 watch(error, (err) => {
   console.log(`error`, err)
@@ -155,24 +170,6 @@ watch(page, (page) => {
 const tocData = computed(() => {
   return page.value?.body?.toc?.links
 })
-
-useSeoMeta({
-  title: page.value?.seo.title,
-  description: page.value?.seo.description,
-})
-
-useHead({
-  link: [
-    {
-      rel: 'canonical',
-      href: `https://zzao.club${route.path}`
-    }
-  ]
-})
-
-const handlePageScroll = (e) => {
-  // console.log(`e.target`, e.target.scrollTop)
-}
 
 const getContentDom = () => {
   const articleDom: any = curMdContentRef.value
@@ -341,7 +338,7 @@ const createComment = async (data) => {
     content: data.content,
     user_id: userStore.user.id
   })
-  console.log(`res`, res)
+
   if (!res.error) {
     toast.add({ type: 'success', message: '评论成功' })
     umami.track('comment', { page: page.value?.id, isOk: true });
@@ -384,6 +381,15 @@ const initLikeCount = async () => {
   }
 }
 
+
+const formatCommentCount = computed(() => {
+  let count = comments.value.length;
+  comments.value.forEach(item => {
+    count += (item._count?.sub_comments ?? 0)
+  })
+  if (count > 99) return '99+'
+  return count
+})
 watchEffect(async () => {
   if (page.value?.id) {
     setTimeout(() => {

@@ -4,15 +4,16 @@
       <div class="avatar-wrap w-12">
         <UserAvatar :user-info="comment.user_info" class="size-10"></UserAvatar>
       </div>
-      <div class="comment-info flex-1 border rounded-md box-border bg-white/90 dark:bg-zinc-900/80">
-        <div class="header px-2 py-1 bg-zinc-100 dark:bg-zinc-800"><span
+      <div
+        class="comment-info flex-1 rounded-md box-border transition-all py-2 duration-300 bg-white/90 dark:bg-zinc-900/80 hover:shadow-lg">
+        <div class="header px-4 py-1"><span
             :class="`${comment.user_info.role === 'superAdmin' ? 'text-cyan-700 font-bold' : 'font-bold'}`">{{
               comment?.user_info?.username }}</span>
         </div>
-        <div class="content py-4 px-2 ">
+        <div class="content py-4 px-4 ">
           {{ comment.content }}
         </div>
-        <div class="footer flex items-center gap-4 px-2">
+        <div class="footer flex items-center gap-4 px-4">
           <span class="text-gray-500 text-xs">{{ updateDateFromNow(comment.create_ts) }}</span>
           <!-- <Button @click.stop="likeMemo" variant="secondary" text size="small">
           <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg" ref="likeIcon" />
@@ -41,7 +42,8 @@
       </AppCommentInput>
     </div>
     <template v-for="subComment in comment.sub_comments">
-      <SubCommentsViewPanel ref="subCommentsRef" :comment="subComment" @refresh="refreshList">
+      <SubCommentsViewPanel ref="subCommentsRef" :comment="subComment" @refresh="refreshList"
+        :comment-user-map="commentUserMap">
       </SubCommentsViewPanel>
     </template>
   </div>
@@ -62,14 +64,20 @@ const likeCount = ref('0')
 const likeIcon = ref(null)
 // const Prisma = usePrismaClient();
 type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{
-  include: { user_info: true, _count: true, sub_comments: true }
+  include: { user_info: true, _count: true, sub_comments: { include: { user_info: true } } }
 }>
 interface Props {
   comment: BlogCommentWithUserInfo
   hideBtns?: boolean
 }
 const props = defineProps<Props>()
-
+const commentUserMap = computed(() => {
+  const map: Record<string, string> = {}
+  for (const subComment of props.comment.sub_comments) {
+    map[subComment.id] = subComment.user_info.username
+  }
+  return map
+})
 // 回复评论
 const commentReply = () => {
   if (!userStore?.user.username) {

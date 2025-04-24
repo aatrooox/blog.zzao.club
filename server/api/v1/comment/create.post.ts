@@ -23,7 +23,10 @@ export default defineEventHandler(async (event) => {
       to: z.string().email(),
       text: z.string(),
       name:  z.string()
-    }).optional()
+    }).optional(),
+    // 作为游客评论时，临时存储
+    visitorName: z.string().optional(),
+    visitorEmail: z.string().email().optional()
   }))
   if (!body.success) {
     throw createError({

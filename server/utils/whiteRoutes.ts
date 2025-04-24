@@ -1,4 +1,4 @@
-export default function getWhiteRoutes () {
+export function getWhiteRoutes () {
   return [
     '/api/v1/user/login',
     '/api/v1/user/logout',
@@ -6,3 +6,9 @@ export default function getWhiteRoutes () {
     '/api/v1/link/add'
   ]
 }
+
+// 游客在一定校验下可使用的接口
+export const visitorRoutes = [
+  '/api/v1/comment/create',
+  '/api/v1/comment/sub/create'
+]

@@ -1,7 +1,8 @@
 import type { UseFetchOptions } from 'nuxt/app'
 // 定义响应数据类型
 interface ApiResponse<T = any> {
-  data: T
+  data: T,
+  message?: string,
   error?: any
 }
 
@@ -17,9 +18,14 @@ export default defineNuxtPlugin({
         options.headers.set('Authorization', `Bearer ${useTokenStore()?.token ?? ''}`)
       },
       onResponseError({ response }) {
+        console.error('[useHttp] [error]', response.status);
+        // 过期/未登录 - 禁止访问 => 退出登录，清除信息
+        if (response?.status === 403) {
+          useUserStore().logout()
+        }
+        // 无权限，仅提示
         // 处理错误
         let errorMessage = response?._data.message || '请求失败'
-          
         
          // 使用全局 toast 显示错误信息
         const globalToast = useGlobalToast()
@@ -47,12 +53,14 @@ export default defineNuxtPlugin({
         } else {
           defaultOptions.body = data
         }
-    
-          // @ts-ignore
-          const response: any = await $api<T>(url, defaultOptions).catch( error => {
+          try {
+            // @ts-ignore
+            const response: any = await $api<T>(url, defaultOptions)
+            return { data: response?.data }
+          } catch (error) {
             return { data: null as any, error: true }
-          })
-          return { data: response?.data }
+          }
+         
        
       },
     

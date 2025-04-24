@@ -17,7 +17,8 @@ model User {
   nickname     String?          @unique
   password     String
   avatar_url   String?
-  role         String           @default("user")
+  website      String? // 个人网站
+  role         String           @default("user") // user / visitor / admin /superAdmin
   comments     BlogComment[]
   sub_comments BlogSubComment[]
   likes        BlogLike[]
@@ -68,10 +69,14 @@ model BlogComment {
   content      String
   create_ts    DateTime         @default(now())
   updated_ts   DateTime         @updatedAt
-  type         String           @default("article") // article / memo / blog
+  type         String           @default("article") // article / memo / blog / paragraph
+  startAnchor  String? // 选中文本的前15个字符
+  endAnchor    String? // 选中文本的后15个字符
+  fullText     String? // 完整的选中文本（用于校验）
   article_id   String?
-  user_id      String
-  user_info    User             @relation(fields: [user_id], references: [id], onDelete: NoAction)
+  user_id      String?
+  user_info    User?            @relation(fields: [user_id], references: [id], onDelete: NoAction)
+  visitorName  String?
   sub_comments BlogSubComment[] // 一对多的二级评论
   likes        BlogLike[]
 
@@ -88,8 +93,8 @@ model BlogSubComment {
   // 如果一级评论删除了，则删除所有二级评论
   comment_info         BlogComment @relation(fields: [comment_id], references: [id], onDelete: Cascade)
   reply_sub_comment_id String?
-  user_id              String
-  user_info            User        @relation(fields: [user_id], references: [id], onDelete: NoAction)
+  user_id              String?
+  user_info            User?       @relation(fields: [user_id], references: [id], onDelete: NoAction)
   likes                BlogLike[]
 
   @@map("blog_sub_comment")

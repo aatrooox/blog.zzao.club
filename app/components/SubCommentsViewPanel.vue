@@ -1,5 +1,5 @@
 <template>
-  <div class="sub-comments relative pl-8 mb-4">
+  <div class="sub-comments relative pl-8 mb-4 transition-all duration-300 ease-in-out">
     <!-- 二级评论的引导线 -->
     <!-- <div class="absolute left-2 top-[10px] my-0 bottom-0 h-full w-[1px] bg-gray-300"></div> -->
     <div class="sub-commit-item relative transition-all duration-300 ease-in-out">
@@ -7,21 +7,21 @@
         <div class="avatar-wrap w-12">
           <UserAvatar :user-info="comment.user_info" class="size-10"></UserAvatar>
         </div>
-        <div class="comment-info flex-1 border rounded-md box-border bg-white/90">
-          <div class="header px-2 py-1 bg-zinc-100"><span
+        <div
+          class="comment-info flex-1 rounded-md box-border bg-white/90 dark:bg-zinc-900/80 hover:shadow-lg transition-all duration-300 ease-in-out">
+          <div class="header px-4 py-1"><span
               :class="`${comment.user_info?.role === 'superAdmin' ? 'text-cyan-700 font-bold' : 'font-bold'}`">{{
                 comment?.user_info?.username }}</span>
           </div>
-          <div class="content py-4 px-2 ">
+          <div class="content py-4 px-4">
             <template v-if="comment.reply_sub_comment_id">
-              <span> 回复 </span>
               <!-- 如果是回复其他评论 -->
-              <span class="font-bold p-2">{{
-                getSubCommentById(comment.reply_sub_comment_id)?.user_info?.username }}</span>
+              <span>@</span><span class="font-bold pr-1">{{ getSubCommentUsernameById(comment.reply_sub_comment_id)
+              }}</span>
             </template>
             {{ comment.content }}
           </div>
-          <div class="footer flex items-center gap-4 px-2">
+          <div class="footer flex items-center gap-4 px-4">
             <span class="text-gray-500 text-xs">{{ updateDateFromNow(comment.create_ts) }}</span>
             <!-- <Button @click.stop="likeMemo" variant="secondary" text size="small">
           <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg" ref="likeIcon" />
@@ -105,7 +105,9 @@ const subComments = ref<any[]>([])
 interface Props {
   comment: any,
   hideBtns?: boolean,
+  commentUserMap: Record<string, string>
 }
+
 const props = defineProps<Props>()
 // 使用一级评论 id 获取二级评论
 
@@ -135,8 +137,8 @@ const createSubComment = async (message: Record<any, any>, subComment: Props['co
 }
 
 // 渲染二级评论时，获取其他二级评论
-const getSubCommentById = (id: string) => {
-  return subComments.value?.find((item) => item.id === id)
+const getSubCommentUsernameById = (subcomment_id: string) => {
+  return props.commentUserMap[subcomment_id]
 }
 const checkDetail = (comment: any) => {
   navigateTo(`/m/${comment.uid}`)
