@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v1.0.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.13.5...v1.0.0)
+
+### 🚀 Enhancements
+
+- 登录、注册、评论、点赞 ([4fd0a99](https://github.com/aatrooox/blog.zzao.club/commit/4fd0a99))
+- 增加 role visitor ([5a76c41](https://github.com/aatrooox/blog.zzao.club/commit/5a76c41))
+- 支持游客直接点赞和评论 ([8dc8f75](https://github.com/aatrooox/blog.zzao.club/commit/8dc8f75))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v0.13.5
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.13.4...v0.13.5)
