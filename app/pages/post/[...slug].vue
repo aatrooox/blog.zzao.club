@@ -33,26 +33,28 @@
 
         <div class="mdc-prose flex !max-w-full" v-if="page">
           <!-- 左侧点赞评论操作栏 -->
-          <div class="flex-col gap-8 px-10 h-80 hidden md:flex fixed top-28 left-[2%]">
-            <div class="flex flex-col items-center cursor-pointer">
-              <Icon name="icon-park-outline:thumbs-up" size="1.5em" ref="likeIcon" @click="likePage" />
-              <span slot="badge">{{ likeCount }}</span>
+          <ClientOnly>
+            <div class="flex-col gap-8 px-10 h-80 hidden md:flex fixed top-28 left-[2%]">
+              <div class="flex flex-col items-center cursor-pointer">
+                <Icon name="icon-park-outline:thumbs-up" size="1.5em" ref="likeIcon" @click="likePage" />
+                <span slot="badge">{{ likeCount }}</span>
+              </div>
+              <div class=" cursor-pointer">
+                <NuxtLink href="#评论区" class="flex flex-col items-center">
+                  <Icon name="icon-park-outline:comments" size="1.5em">
+                  </Icon>
+                  <span slot="badge">{{ formatCommentCount }}</span>
+                </NuxtLink>
+              </div>
+              <div class="flex flex-col items-center cursor-pointer" @click="copyLink">
+                <Icon name="material-symbols:share-reviews-outline-rounded" size="1.5em"></Icon>
+              </div>
+              <div class="flex flex-col items-center cursor-pointer" @click="getInnerHTML"
+                data-umami-event="wx-copy-btn">
+                <Icon slot="icon" name="icon-park-outline:wechat" size="1.5em"></Icon>
+              </div>
             </div>
-            <div class=" cursor-pointer">
-              <NuxtLink href="#评论区" class="flex flex-col items-center">
-                <Icon name="icon-park-outline:comments" size="1.5em">
-                </Icon>
-                <span slot="badge">{{ formatCommentCount }}</span>
-              </NuxtLink>
-            </div>
-            <div class="flex flex-col items-center cursor-pointer" @click="copyLink">
-              <Icon name="material-symbols:share-reviews-outline-rounded" size="1.5em"></Icon>
-            </div>
-            <div class="flex flex-col items-center cursor-pointer" @click="getInnerHTML" data-umami-event="wx-copy-btn">
-              <Icon slot="icon" name="icon-park-outline:wechat" size="1.5em"></Icon>
-            </div>
-          </div>
-
+          </ClientOnly>
           <div class="article-warp flex flex-col max-w-full w-full box-border md:px-20 lg:px-60 2xl:px-10">
             <!-- 悬浮标题栏 -->
             <div
@@ -109,11 +111,13 @@ import { EffectCssAttrs, camelCaseToHyphen, ExcludeClassList, IMG_WRAP_CLASS, Pr
 const toast = useGlobalToast()
 const { $api } = useNuxtApp();
 const userStore = useUserStore();
+const tokenStore = useTokenStore()
 const navBarStore = useNavBarStore()
+const clientjs = useClientjs()
 const route = useRoute();
 const activeTocId = ref('')
 const curMdContentRef = ref(null)
-import { Prisma } from '@prisma/client';
+import { Prisma, type User } from '@prisma/client';
 
 type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{
   include: { user_info: true, _count: true, sub_comments: { include: { user_info: true } } }
@@ -330,8 +334,9 @@ const copyLink = async () => {
 }
 const createComment = async (data) => {
   if (!userStore.user.id) {
-    umami.track('comment', { page: page.value?.id, isOk: false });
-    return toast.add({ type: 'warning', message: '登录后就可以评论了' })
+    const res = await $api.post<{ user: User, token: string }>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId(), visitorName: data.visitor.name, visitorEmail: data.visitor.email, visitorWebsite: data.visitor.website })
+    userStore.setUser(res.data.user)
+    tokenStore.setToken(res.data.token)
   }
   const res = await $api.post('/api/v1/comment/create', {
     article_id: page.value?.id,
@@ -346,9 +351,12 @@ const createComment = async (data) => {
   }
 }
 const likePage = async () => {
+  // 游客点赞 生成指纹 -> 注册为游客 (随机用户名 + 固定id)
   if (!userStore.user.id) {
-    umami.track('like', { page: page.value?.id, isOk: false });
-    return toast.add({ type: 'warning', message: '登录后才能点赞' })
+    const res = await $api.post<{ user: User, token: string }>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
+    userStore.setUser(res.data.user)
+    tokenStore.setToken(res.data.token)
+    // return toast.add({ type: 'warning', message: '登录后才能点赞' })
   };
 
   if (isLiked.value) {

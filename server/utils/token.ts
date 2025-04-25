@@ -191,3 +191,25 @@ export async function revokeAccessToken({ token, userId, scope = 'all' }: { user
     },
   })
 }
+
+
+export async function upsertAccessToken(userId: string) {
+  const [token, expiresAt] = await generateAccessToken(userId)
+  const data = {
+    token,
+    expiresAt,
+    userId,
+    isRevoked: false,
+  }
+  const tokenInfo = await prisma.accessToken.upsert({
+    where: {
+      token
+    },
+    create: {
+      ...data
+    },
+    update: {}
+  })
+
+  return tokenInfo
+}

@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
     // 对于同一 id/userid 3 分钟内 最多请求 3 次
     { path: '/api/v1/user/login', limit: 2, duration: 1 * 60 * 1000 }, 
     { path: '/api/v1/user/regist', limit: 2, duration: 1 * 60 * 1000 }, 
-    { path: '/api/v1/comment/create', strict: true, limit: 4, duration: 1 * 60 * 1000 }, 
+    { path: '/api/v1/comment/create', strict: true, limit: 3, duration: 1 * 60 * 1000 }, 
     { path: '/api/v1/comment/del', strict: true, limit: 5, duration: 1 * 60 * 1000 }, 
     { path: '/api/v1/comment/sub/create', strict: true, limit: 10, duration: 5 * 60 * 1000 },
     { path: '/api/v1/comment/sub/del', strict: true, limit: 5, duration: 1 * 60 * 1000 },

@@ -1,8 +1,8 @@
 export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
-    visitorId: z.string(),
-    visitorName: z.string(),
-    visitorEmail: z.string(),
+    visitorId: z.number().or(z.string()).transform(v => v.toString()),
+    visitorName: z.string().optional(),
+    visitorEmail: z.string().optional(),
     visitorWebsite: z.string().optional()
   }))
 
@@ -16,24 +16,35 @@ export default defineEventHandler(async (event) => {
   // 前端校验合法性
   const { visitorId, visitorName, visitorEmail, visitorWebsite } = body.data
 
-  const _user = await prisma.user.findUnique({
+  let _user = await prisma.user.findUnique({
     where: {
       id: visitorId
     }
   })
 
+  // 点赞时触发，则创建一个游客用户
+  // 评论时注册，则使用自定义用户名
+  const username = visitorName ?? `visitor${useNanoId(6)}`
+
+  
+
   if (_user) { 
-    throw createError({
-      statusCode: 400,
-      message: '已经注册过了'
-    })
-  }
+    const tokenInfo = await upsertAccessToken(_user.id)
+    return {
+      data: {
+        token: tokenInfo.token,
+        user: _user,
+      },
+      message: '注册成功',
+    }
+  } 
+  
   // 创建新用户 - 游客 游客不需要登录，依靠前端生成指纹来判断唯一性
   // 但相应的会无法参与某一部分互动
   const user = await prisma.user.create({
     data: {
       id: visitorId,
-      username: visitorName,
+      username,
       password: 'null',
       email: visitorEmail,
       website: visitorWebsite,
@@ -41,8 +52,12 @@ export default defineEventHandler(async (event) => {
     }
   })
 
+  const tokenInfo = await upsertAccessToken(user.id)
   return {
-    data: user,
+    data: {
+      token: tokenInfo.token,
+      user,
+    },
     message: '注册成功',
   }
 })

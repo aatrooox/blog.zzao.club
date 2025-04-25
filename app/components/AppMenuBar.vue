@@ -46,15 +46,19 @@
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-    <div class="icons pr-4 flex gap-2">
-      <AppLoginDialog v-if="!userStore.isLogin" :login="loginBlog" ref="loginForm"
-        @showRegisterDialog="showRegisterDialog">
-      </AppLoginDialog>
-      <AppUserMenu v-else></AppUserMenu>
-      <Button variant="outline" size="icon" @click="toggleDarkMode">
-        <Icon :name="modeIcon"></Icon>
-      </Button>
-    </div>
+    <ClientOnly>
+
+
+      <div class="icons pr-4 flex gap-2">
+        <AppLoginDialog v-if="!userStore.isLogin" :login="loginBlog" ref="loginForm"
+          @showRegisterDialog="showRegisterDialog">
+        </AppLoginDialog>
+        <AppUserMenu v-else></AppUserMenu>
+        <Button variant="outline" size="icon" @click="toggleDarkMode">
+          <Icon :name="modeIcon"></Icon>
+        </Button>
+      </div>
+    </ClientOnly>
   </div>
 </template>
 

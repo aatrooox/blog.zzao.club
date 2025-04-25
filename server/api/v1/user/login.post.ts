@@ -31,29 +31,12 @@ export default defineEventHandler(async (event) => {
       statusText: '账号或密码错误'
     })
   }
-
-  // 生成 token ，保存到 redis
-  const [token, expiresAt] = await generateAccessToken(user.id)
-  const data = {
-    token,
-    expiresAt,
-    userId: user.id,
-    isRevoked: false,
-  }
-  const tokenInfo = await prisma.accessToken.upsert({
-    where: {
-      token
-    },
-    create: {
-      ...data
-    },
-    update: {}
-  })
-  
+ 
+  const tokenInfo = await upsertAccessToken(user.id)
 
   return {
     data: {
-      token,
+      token: tokenInfo.token,
       user
     },
     msg: '登录成功'

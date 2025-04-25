@@ -75,7 +75,7 @@ model BlogComment {
   fullText     String? // 完整的选中文本（用于校验）
   article_id   String?
   user_id      String?
-  user_info    User?            @relation(fields: [user_id], references: [id], onDelete: NoAction)
+  user_info    User?            @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   visitorName  String?
   sub_comments BlogSubComment[] // 一对多的二级评论
   likes        BlogLike[]
@@ -94,7 +94,7 @@ model BlogSubComment {
   comment_info         BlogComment @relation(fields: [comment_id], references: [id], onDelete: Cascade)
   reply_sub_comment_id String?
   user_id              String?
-  user_info            User?       @relation(fields: [user_id], references: [id], onDelete: NoAction)
+  user_info            User?       @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   likes                BlogLike[]
 
   @@map("blog_sub_comment")
@@ -112,7 +112,7 @@ model BlogLike {
   comment_id       String?
   comment_info     BlogComment?    @relation(fields: [comment_id], references: [id])
   user_id          String
-  user_info        User            @relation(fields: [user_id], references: [id], onDelete: NoAction)
+  user_info        User            @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("blog_like")
 }
