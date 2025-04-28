@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.0.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.0.0...v1.0.1)
+
+### 🚀 Enhancements
+
+- ⚠️  Nuxt upgrage 3.17 ([d8a6f1e](https://github.com/aatrooox/blog.zzao.club/commit/d8a6f1e))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Nuxt upgrage 3.17 ([d8a6f1e](https://github.com/aatrooox/blog.zzao.club/commit/d8a6f1e))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.0.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v0.13.5...v1.0.0)
