@@ -109,9 +109,9 @@ const queryArticles = async (filter_tags: any) => {
   return query.order('date', 'DESC').select('id', 'path', 'title', 'showTitle', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta').all()
 }
 
-const { data, status, refresh } = await useAsyncData(computed(() => `filter_tags=>${filter_tags.value}`), async () => {
+const { data, status, refresh } = await useAsyncData(hash('artile-page' + formatDate(new Date())), async () => {
   return queryArticles(filter_tags.value)
-}, { lazy: true })
+}, { watch: [filter_tags], lazy: true })
 
 const selectTag = async (tag: { name: string, value: number }) => {
   selectedTags.value = tag;
