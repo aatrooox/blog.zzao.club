@@ -20,6 +20,10 @@ jobs:
           NUXT_JWT_SECRET: ${{ secrets.NUXT_JWT_SECRET }}
           NUXT_FEISHU_WEBHOOK: ${{ secrets.NUXT_FEISHU_WEBHOOK }}
           NUXT_FEISHU_USER_ID: ${{ secrets.NUXT_FEISHU_USER_ID }}
+          NUXT_NODEMAILER_HOST: ${{ secrets.NUXT_NODEMAILER_HOST }}
+          NUXT_NODEMAILER_PORT: ${{ secrets.NUXT_NODEMAILER_PORT }}
+          NUXT_NODEMAILER_AUTH_USER: ${{ secrets.NUXT_NODEMAILER_AUTH_USER }}
+          NUXT_NODEMAILER_AUTH_PASS: ${{ secrets.NUXT_NODEMAILER_AUTH_PASS }}
         run: NODE_OPTIONS="--max-old-space-size=4080" pnpm build
       - name: Copy and Build
         env: 
@@ -28,6 +32,10 @@ jobs:
           NUXT_FEISHU_WEBHOOK: ${{ secrets.NUXT_FEISHU_WEBHOOK }}
           NUXT_FEISHU_USER_ID: ${{ secrets.NUXT_FEISHU_USER_ID }}
           NUXT_JWT_SECRET: ${{ secrets.NUXT_JWT_SECRET }}
+          NUXT_NODEMAILER_HOST: ${{ secrets.NUXT_NODEMAILER_HOST }}
+          NUXT_NODEMAILER_PORT: ${{ secrets.NUXT_NODEMAILER_PORT }}
+          NUXT_NODEMAILER_AUTH_USER: ${{ secrets.NUXT_NODEMAILER_AUTH_USER }}
+          NUXT_NODEMAILER_AUTH_PASS: ${{ secrets.NUXT_NODEMAILER_AUTH_PASS }}
         run: |
           rm -rf /root/web/blog3/*
           mkdir -p /root/web/blog3/prisma
