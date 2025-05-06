@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.1.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.1.0...v1.1.1)
+
+### 🩹 Fixes
+
+- Article nav bar btn re-focus when refresh ([9e8f237](https://github.com/aatrooox/blog.zzao.club/commit/9e8f237))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.1.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.0.2...v1.1.0)
