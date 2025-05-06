@@ -57,29 +57,32 @@ useHead({
 
 const { $api } = useNuxtApp();
 const { formatDate } = useDayjs();
-const selectedTags = ref();
+
 const appConfig = useAppConfig();
 const tags = computed(() => appConfig.tags.map((tag, index) => ({ name: tag, value: index })))
 const route = useRoute();
 const articleLikeMap = ref<Record<string, number>>({})
 const articleCommentMap = ref<Record<string, number>>({})
-const filter_tags = computed(() => {
-  let tag_str = route.query.tag || '';
-  if (tag_str) {
-    const query_tags = tag_str as string
-    if (!selectedTags.value) {
-      selectedTags.value = tags.value.filter(tag => tag.name === query_tags)[0]
-    }
-    return query_tags
+const queryTag = computed(() => route.query.tag)
+
+const selectedTags = computed(() => {
+  if (queryTag.value) {
+    const query_tags = queryTag.value as string
+    return tags.value.filter(tag => tag.name === query_tags)[0]
   } else {
-    if (!selectedTags.value) {
-      selectedTags.value = tags.value[0] // 默认选中"全部"标签
-    }
-    return null
+    return tags.value[0]
   }
 })
 
+const filter_tags = computed(() => {
+  if (queryTag.value) {
+    const query_tags = queryTag.value as string
 
+    return query_tags
+  } else {
+    return null
+  }
+})
 
 const changeTags = async (tag: string) => {
   let tags_str = tag
@@ -108,9 +111,9 @@ const { data, status, refresh } = await useAsyncData(computed(() => `filter-tags
   return queryArticles(filter_tags.value)
 }, { lazy: true })
 
-const selectTag = async (tag: { name: string, value: number }) => {
-  selectedTags.value = tag;
-  await changeTags(tag.name);
+const selectTag = async (tag: { name: string, value: number } | undefined) => {
+  tag = tag ?? tags.value[0]
+  await changeTags(tag!.name);
 }
 
 const queryArticleInteractivity = async () => {
@@ -130,8 +133,10 @@ const queryArticleCommentStat = async () => {
 
 }
 onMounted(() => {
-  queryArticleInteractivity()
+  queryArticleInteractivity();
   queryArticleCommentStat();
+
+  selectTag(selectedTags.value)
 })
 
 </script>
