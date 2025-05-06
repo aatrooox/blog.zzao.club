@@ -90,7 +90,6 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/robots',
     '@nuxt/content',
-    // '@primevue/nuxt-module',
     '@nuxt/image',
     '@nuxt/icon',
     // '@nuxtjs/robots',
@@ -125,10 +124,6 @@ export default defineNuxtConfig({
     storage: 'localStorage', // or 'sessionStorage' or 'cookie'
     storageKey: 'nuxt-color-mode'
   },
-  // primevue 移除中
-  // primevue: {
-  //   importTheme: { from: '@@/primevue/theme.ts' },
-  // },
   shadcn: {
     /**
      * Prefix for all the imported component
@@ -141,8 +136,10 @@ export default defineNuxtConfig({
     componentDir: './app/components/ui'
   },
   nodemailer: {
-    from: 'gnakzz@qq.com',
+    from: '"Aatrox" <gnakzz@qq.com>',
     host: 'smtp.qq.com',
+    port: 465,
+    secure: true,
     auth: {
       user: '',
       pass: ''

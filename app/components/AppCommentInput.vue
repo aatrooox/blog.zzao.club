@@ -4,7 +4,7 @@
       <div class="comment-visitor-form flex gap-2 mb-2" v-if="!userStore.isLogin">
         <Input placeholder="名字" v-model="visitorName" :disabled="userStore.isVisitor"></Input>
         <Input placeholder="邮箱" v-model="visitorEmail" type="email"></Input>
-        <Input placeholder="网址" v-model="visitorWebsite"></Input>
+        <Input placeholder="你的主页" v-model="visitorWebsite"></Input>
       </div>
       <div class="text-sm pb-2" v-else>Hi，{{ userStore.user.username }}。欢迎评论👏</div>
       <div class="visitor-quick-btns flex gap-2 py-2" v-show="!userStore.isLogin && visitorEmail">
