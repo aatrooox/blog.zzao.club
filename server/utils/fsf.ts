@@ -15,8 +15,9 @@ export function sendMailNotice(name: string, { to, subject, text }: MailOptions)
   const _subject = subject || `来自早早集市(zzao.club)的回复`
   const _html = `
       <div>
-        <p>Hi， <span style="color: red">${name}</span>：</p>
+        <p style="fontWeight: 800;">Hi👋，<span>${name}</span>：</p>
         <p>${text!.replace(/\n/g, '<br>')}</p>
+        <p style="fontSize: 14px;">前往➡️ <a href="https://zzao.club">早早集市</a></p>
       </div>
     `
 

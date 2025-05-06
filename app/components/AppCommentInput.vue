@@ -9,7 +9,7 @@
       <div class="text-sm pb-2" v-else>Hi，{{ userStore.user.username }}。欢迎评论👏</div>
       <div class="visitor-quick-btns flex gap-2 py-2" v-show="!userStore.isLogin && visitorEmail">
         <div class="items-top flex space-x-2">
-          <Checkbox id="terms2" disabled />
+          <Checkbox id="terms2" v-model="allowEmailNotify" />
           <label for="terms2" class="text-sm leading-none peer-disabled:cursosr-not-allowed peer-disabled:opacity-70">
             收到回复时邮件通知我
           </label>
@@ -50,6 +50,7 @@ const comment = ref<string>('')
 const visitorName = ref('')
 const visitorEmail = ref('')
 const visitorWebsite = ref('')
+const allowEmailNotify = ref(false)
 // 是否显示标签列表
 // 当前输入的标签在输入内容的位置
 const searchTagIndex = ref<number[]>([]);
@@ -165,6 +166,7 @@ const sendComment = () => {
       name: visitorName.value,
       email: visitorEmail.value,
       website: visitorWebsite.value,
+      allowEmailNotify: allowEmailNotify.value
     }
   })
   clear()

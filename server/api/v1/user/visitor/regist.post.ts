@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
     visitorId: z.number().or(z.string()).transform(v => v.toString()),
     visitorName: z.string().optional(),
     visitorEmail: z.string().optional(),
-    visitorWebsite: z.string().optional()
+    visitorWebsite: z.string().optional(),
   }))
 
   if (!body.success) {

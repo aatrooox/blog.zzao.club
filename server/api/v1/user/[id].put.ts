@@ -3,6 +3,7 @@ export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     email: z.string().optional(),
     nickname: z.string().optional(),
+    username: z.string().optional(),
     avatar_url: z.string().optional(),
   }))
   if (!body.success || !id) {
@@ -26,6 +27,7 @@ export default defineEventHandler(async (event) => {
     data: {
       email: body.data.email,
       nickname: body.data.nickname,
+      username: body.data.username,
       avatar_url: body.data.avatar_url,
     }
   })
