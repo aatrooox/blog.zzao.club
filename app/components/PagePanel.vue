@@ -30,6 +30,14 @@
           <i class="i-carbon-update"></i>
           {{ updateDateFromNow(page.lastmod || page?.meta?.lastmod) + '更新' }}
         </div>
+        <Button variant="ghost" text size="sm" v-if="like">
+          <Icon slot="icon" name="icon-park-outline:thumbs-up" />
+          <span slot="badge" class="!text-zinc-500 !text-sm">{{ like || 0 }}</span>
+        </Button>
+        <Button variant="ghost" text size="sm" v-if="comment">
+          <Icon slot="icon" name="icon-park-outline:comments" />
+          <span slot="badge" class="!text-zinc-500 !text-sm">{{ comment || 0 }}</span>
+        </Button>
       </div>
     </div>
   </div>
@@ -50,6 +58,6 @@ interface Page {
   showTitle?: string;
   versions?: string[];
 }
-defineProps<{ page: Page }>()
+defineProps<{ page: Page, like: number, comment: number }>()
 </script>
 <style lang="less" scoped></style>

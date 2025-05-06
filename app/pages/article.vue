@@ -18,7 +18,8 @@
           <div class="group">
             <div
               class="box-border transition-all duration-200 rounded-lg bg-white dark:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-600 border border-zinc-100 dark:border-zinc-700">
-              <PagePanel :page="page"></PagePanel>
+              <PagePanel :page="page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0">
+              </PagePanel>
             </div>
           </div>
         </template>
@@ -29,7 +30,8 @@
           <div class="group">
             <div
               class="box-border transition-all duration-200 rounded-lg bg-white dark:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-600 border border-zinc-100 dark:border-zinc-700">
-              <PagePanel :page="page"></PagePanel>
+              <PagePanel :page="page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0">
+              </PagePanel>
             </div>
           </div>
         </template>
@@ -52,12 +54,15 @@ useHead({
     },
   ],
 })
-import { hash } from 'ohash';
+
+const { $api } = useNuxtApp();
 const { formatDate } = useDayjs();
 const selectedTags = ref();
 const appConfig = useAppConfig();
 const tags = computed(() => appConfig.tags.map((tag, index) => ({ name: tag, value: index })))
 const route = useRoute();
+const articleLikeMap = ref<Record<string, number>>({})
+const articleCommentMap = ref<Record<string, number>>({})
 const filter_tags = computed(() => {
   let tag_str = route.query.tag || '';
   if (tag_str) {
@@ -73,7 +78,6 @@ const filter_tags = computed(() => {
     return null
   }
 })
-const count = ref(0)
 
 
 
@@ -88,16 +92,7 @@ const changeTags = async (tag: string) => {
     }
   })
 }
-// const changePage = async (offset: number) => {
-//   const _page = page.value + offset
-//   navigateTo({
-//     path: '/article',
-//     query: {
-//       ...route.query || {},
-//       page: _page,
-//     }
-//   })
-// }
+
 
 const queryArticles = async (filter_tags: any) => {
   let query = queryCollection('content')
@@ -109,18 +104,34 @@ const queryArticles = async (filter_tags: any) => {
   return query.order('date', 'DESC').select('id', 'path', 'title', 'showTitle', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta').all()
 }
 
-const { data, status, refresh } = await useAsyncData(hash('artile-page' + formatDate(new Date())), async () => {
+const { data, status, refresh } = await useAsyncData(computed(() => `filter-tags-${filter_tags.value}`), async () => {
   return queryArticles(filter_tags.value)
-}, { watch: [filter_tags], lazy: true })
+}, { lazy: true })
 
 const selectTag = async (tag: { name: string, value: number }) => {
   selectedTags.value = tag;
   await changeTags(tag.name);
 }
 
-// const articles = computed(() => {
+const queryArticleInteractivity = async () => {
+  const res = await $api.get<Record<string, number>>('/api/v1/like/list')
 
-// })
+  if (res.data) {
+    articleLikeMap.value = res.data
+  }
+}
 
+const queryArticleCommentStat = async () => {
+  const res = await $api.get<Record<string, number>>('/api/v1/comment/stat/list')
+
+  if (res.data) {
+    articleCommentMap.value = res.data
+  }
+
+}
+onMounted(() => {
+  queryArticleInteractivity()
+  queryArticleCommentStat();
+})
 
 </script>

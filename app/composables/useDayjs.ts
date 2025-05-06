@@ -21,7 +21,7 @@ export default function useDayjs() {
    * @returns 
    */
   const checkUpdate = (updateDate: string, createDate: string) => {
-    return checkDate(updateDate) && dayjs(updateDate).diff(createDate, 'day') > 1
+    return checkDate(updateDate) && dayjs(updateDate).diff(createDate, 'day') > 0
   }
   
   /**
