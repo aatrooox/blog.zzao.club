@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.1.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.0.2...v1.1.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Nuxt upgrade 3.17.2; article page add like&comment stat count ([3732342](https://github.com/aatrooox/blog.zzao.club/commit/3732342))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Nuxt upgrade 3.17.2; article page add like&comment stat count ([3732342](https://github.com/aatrooox/blog.zzao.club/commit/3732342))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.0.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.0.1...v1.0.2)
