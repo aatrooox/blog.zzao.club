@@ -157,7 +157,8 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true },
     '/article': { prerender: true },
-    '/post/**': { prerender: true }
+    '/post/**': { prerender: true },
+    '/settings': { prerender: false}
   },
   css: ['@/assets/css/main.css', 'viewerjs/dist/viewer.css'],
   runtimeConfig: {
