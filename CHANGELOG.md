@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.2.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.2.1...v1.2.2)
+
+### 🏡 Chore
+
+- Ci ([518f643](https://github.com/aatrooox/blog.zzao.club/commit/518f643))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.2.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.2.0...v1.2.1)
