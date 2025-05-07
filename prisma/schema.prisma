@@ -24,8 +24,20 @@ model User {
   likes        BlogLike[]
   oauth        OAuth[]
   tokens       AccessToken[]
+  user_config  UserConfig?
 
   @@map("blog_user")
+}
+
+model UserConfig {
+  id               String   @id @default(uuid(7))
+  userId           String   @unique
+  userInfo         User     @relation(fields: [userId], references: [id])
+  allowEmailNotify Int?     @default(0) // 是否接收邮件通知
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("blog_user_config")
 }
 
 model AccessToken {

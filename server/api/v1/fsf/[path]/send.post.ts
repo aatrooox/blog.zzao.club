@@ -20,17 +20,9 @@ export default defineEventHandler( async (event) => {
     })
   }
 
+  // 目前支持简单的换行
   if (path === 'mail') {
     const { name, text, to } = body.data
-
-    const subject = `来自早早集市的回复`
-
-    const html = `
-      <div>
-        <p>Hi，${name}：</p>
-        <p>${text.replace(/\n/g, '<br>')}</p>
-      </div>
-    `
-    await sendMail({ subject, html, to})
+    return sendMailNotice( name, { text, to })
   }
 })

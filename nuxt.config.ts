@@ -90,7 +90,6 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/robots',
     '@nuxt/content',
-    // '@primevue/nuxt-module',
     '@nuxt/image',
     '@nuxt/icon',
     // '@nuxtjs/robots',
@@ -125,10 +124,6 @@ export default defineNuxtConfig({
     storage: 'localStorage', // or 'sessionStorage' or 'cookie'
     storageKey: 'nuxt-color-mode'
   },
-  // primevue 移除中
-  // primevue: {
-  //   importTheme: { from: '@@/primevue/theme.ts' },
-  // },
   shadcn: {
     /**
      * Prefix for all the imported component
@@ -140,9 +135,17 @@ export default defineNuxtConfig({
      */
     componentDir: './app/components/ui'
   },
+  components: [
+    {
+      path: '~/components/common',
+      prefix: ''
+    }
+  ],
   nodemailer: {
-    from: 'gnakzz@qq.com',
+    from: '"Aatrox" <gnakzz@qq.com>',
     host: 'smtp.qq.com',
+    port: 465,
+    secure: true,
     auth: {
       user: '',
       pass: ''
@@ -154,7 +157,8 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true },
     '/article': { prerender: true },
-    '/post/**': { prerender: true }
+    '/post/**': { prerender: true },
+    '/settings': { prerender: false}
   },
   css: ['@/assets/css/main.css', 'viewerjs/dist/viewer.css'],
   runtimeConfig: {
@@ -164,7 +168,7 @@ export default defineNuxtConfig({
     imgHost: 'https://img.zzao.club',
     jwtSecret: 'your_jwt_secret',
     public: {
-      ContentVersion: '3.0.0',
+      ContentVersion: '3.0.0', 
       Z_BLOG_VERSION: appVersion,
       // nuxtSecretKey:`blog-zzao-club-${uuid}`,
       imgHost: 'https://img.zzao.club',

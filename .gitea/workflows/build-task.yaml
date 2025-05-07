@@ -20,6 +20,10 @@ jobs:
           NUXT_JWT_SECRET: ${{ secrets.NUXT_JWT_SECRET }}
           NUXT_FEISHU_WEBHOOK: ${{ secrets.NUXT_FEISHU_WEBHOOK }}
           NUXT_FEISHU_USER_ID: ${{ secrets.NUXT_FEISHU_USER_ID }}
+          NUXT_NODEMAILER_HOST: ${{ secrets.NUXT_NODEMAILER_HOST }}
+          NUXT_NODEMAILER_PORT: ${{ secrets.NUXT_NODEMAILER_PORT }}
+          NUXT_NODEMAILER_AUTH_USER: ${{ secrets.NUXT_NODEMAILER_AUTH_USER }}
+          NUXT_NODEMAILER_AUTH_PASS: ${{ secrets.NUXT_NODEMAILER_AUTH_PASS }}
         run: NODE_OPTIONS="--max-old-space-size=4080" pnpm build
       - name: Copy and Build
         env: 
@@ -28,15 +32,19 @@ jobs:
           NUXT_FEISHU_WEBHOOK: ${{ secrets.NUXT_FEISHU_WEBHOOK }}
           NUXT_FEISHU_USER_ID: ${{ secrets.NUXT_FEISHU_USER_ID }}
           NUXT_JWT_SECRET: ${{ secrets.NUXT_JWT_SECRET }}
+          NUXT_NODEMAILER_HOST: ${{ secrets.NUXT_NODEMAILER_HOST }}
+          NUXT_NODEMAILER_PORT: ${{ secrets.NUXT_NODEMAILER_PORT }}
+          NUXT_NODEMAILER_AUTH_USER: ${{ secrets.NUXT_NODEMAILER_AUTH_USER }}
+          NUXT_NODEMAILER_AUTH_PASS: ${{ secrets.NUXT_NODEMAILER_AUTH_PASS }}
         run: |
           rm -rf /root/web/blog3/*
           mkdir -p /root/web/blog3/prisma
           cp -R .output/* /root/web/blog3/
           cp -R prisma/* /root/web/blog3/prisma/
-          cp -R ecosystem.config.cjs /root/web/blog3/ecosystem.config.cjs
+          cp -R pm2.config.json /root/web/blog3/pm2.config.json
           cd /root/web/blog3
           prisma migrate deploy
-          pm2 restart ecosystem.config.cjs --env production
+          pm2 restart pm2.config.json --env production
       - run: echo "  The ${{ gitea.repository }} repository has been cloned to the runner."
       - run: echo " ️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository

@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "name": "Blog",
+      "port": "4571",
+      "exec_mode": "fork",
+      "script": "./server/index.mjs"
+    }
+  ]
+}

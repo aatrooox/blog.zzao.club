@@ -341,7 +341,8 @@ const createComment = async (data) => {
   const res = await $api.post('/api/v1/comment/create', {
     article_id: page.value?.id,
     content: data.content,
-    user_id: userStore.user.id
+    user_id: userStore.user.id,
+    path: 'https://zzao.club' + route.fullPath
   })
 
   if (!res.error) {

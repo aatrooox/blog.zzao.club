@@ -9,9 +9,14 @@
         </div>
         <div
           class="comment-info flex-1 rounded-md box-border bg-white/90 dark:bg-zinc-900/80 hover:shadow-lg transition-all duration-300 ease-in-out">
-          <div class="header px-4 py-1"><span
+          <div class="header px-4 py-1">
+            <a v-if="comment.user_info?.website" :href="comment.user_info?.website" target="_blank"
+              class="flex items-center hover:!underline"> {{
+                comment?.user_info?.nickname ||
+                comment?.user_info?.username }} <Icon name="material-symbols:web-traffic-rounded"></Icon></a>
+            <span v-else
               :class="`${comment.user_info?.role === 'superAdmin' ? 'text-cyan-700 font-bold' : 'font-bold'}`">{{
-                comment?.user_info?.username }}</span>
+                comment?.user_info?.nickname || comment?.user_info?.username }}</span>
           </div>
           <div class="content py-4 px-4">
             <template v-if="comment.reply_sub_comment_id">
@@ -75,8 +80,8 @@
 
     </div>
     <div class="reply-box w-full pl-4 mt-2" v-if="showCommentInput">
-      <AppCommentInput type="reply" :target="comment.user_info.username" @cancel="showCommentInput = false"
-        @send="createSubComment($event, comment)">
+      <AppCommentInput type="reply" :target="comment.user_info.nickname || comment.user_info.username"
+        @cancel="showCommentInput = false" @send="createSubComment($event, comment)">
       </AppCommentInput>
     </div>
   </div>
