@@ -12,3 +12,6 @@ node_modules
 
 .idea
 # .husky
+data
+redis_data
+conf
