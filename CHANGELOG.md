@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.3.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.2.2...v1.3.0)
+
+### 🚀 Enhancements
+
+- 评论时增加邮件提示 ([f869c13](https://github.com/aatrooox/blog.zzao.club/commit/f869c13))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.2.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.2.1...v1.2.2)
