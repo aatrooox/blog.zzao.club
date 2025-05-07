@@ -44,10 +44,10 @@ jobs:
           mkdir -p /root/web/blog3/prisma
           cp -R .output/* /root/web/blog3/
           cp -R prisma/* /root/web/blog3/prisma/
-          cp -R ecosystem.config.cjs /root/web/blog3/ecosystem.config.cjs
+          cp -R pm2.config.json /root/web/blog3/pm2.config.json
           cd /root/web/blog3
           prisma migrate deploy
-          pm2 restart ecosystem.config.cjs --env production
+          pm2 restart pm2.config.json --env production
       - run: echo "  The ${{ gitea.repository }} repository has been cloned to the runner."
       - run: echo " ️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
