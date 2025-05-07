@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
     visitorId: z.number().or(z.string()).transform(v => v.toString()),
     visitorName: z.string().optional(),
     visitorEmail: z.string().optional(),
-    visitorWebsite: z.string().optional()
+    visitorWebsite: z.string().optional(),
   }))
 
   if (!body.success) {
@@ -24,8 +24,8 @@ export default defineEventHandler(async (event) => {
 
   // 点赞时触发，则创建一个游客用户
   // 评论时注册，则使用自定义用户名
-  const username = visitorName ?? `visitor${useNanoId(6)}`
-
+  const username = `visitor${useNanoId(6)}`
+  const nickname = visitorName || username
   
 
   if (_user) { 
@@ -45,6 +45,7 @@ export default defineEventHandler(async (event) => {
     data: {
       id: visitorId,
       username,
+      nickname,
       password: 'null',
       email: visitorEmail,
       website: visitorWebsite,

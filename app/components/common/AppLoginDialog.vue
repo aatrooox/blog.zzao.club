@@ -13,9 +13,6 @@
         <div class="flex items-center gap-2"><span class="inline-block w-20 text-right"> 密码</span><Input
             v-model="password" type="password"></Input>
         </div>
-        <div class="flex items-center gap-2"><span class="inline-block w-20 text-right"> 邮箱</span><Input v-model="email"
-            type="email"></Input>
-        </div>
       </div>
       <DrawerFooter class="flex flex-row justify-end">
         <DrawerClose>
@@ -36,7 +33,6 @@ const emit = defineEmits(['showRegisterDialog'])
 const props = defineProps<{ login: (form: { username: string, password: string }) => {} }>()
 const username = ref('')
 const password = ref('')
-const email = ref('')
 
 const submit = () => {
   if (!username.value || !password.value) return

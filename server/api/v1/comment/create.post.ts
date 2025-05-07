@@ -19,6 +19,7 @@ export default defineEventHandler(async (event) => {
     type: z.string().optional().default('article'), // 对象 blog / memo / article
     article_id: z.string(),
     user_id: z.string(), // 评论者
+    path: z.string().optional(),
     email: z.object({
       to: z.string().email(),
       text: z.string(),
@@ -28,25 +29,23 @@ export default defineEventHandler(async (event) => {
     visitorName: z.string().optional(),
     visitorEmail: z.string().email().optional()
   }))
+
   if (!body.success) {
     throw createError({
       statusCode: 400,
       message: JSON.stringify(body.error)
     })
   }
-  const { type, content, article_id, user_id, email } = body.data
-  
+  const { type, content, article_id, user_id, email, path } = body.data
+
   const data = await prisma.blogComment.create({
     data: { type, content, article_id, user_id }
   })
 
-  if (email) {
-    $fetch('/api/v1/fsf/mail/send', { method: 'POST', body: {
-      name: email.name,
-      to: email.to,
-      text: email.text
-    }})
-  }
+  const myEmail = 'gnakzz@qq.com'
+  try {
+    sendMailNotice( '有新的评论', { text: content, to: myEmail, subject: '博客有新评论了', path })
+  } catch( err) {}
 
   return {
     data,

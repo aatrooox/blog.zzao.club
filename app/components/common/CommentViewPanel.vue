@@ -5,10 +5,15 @@
         <UserAvatar :user-info="comment.user_info" class="size-10"></UserAvatar>
       </div>
       <div
-        class="comment-info flex-1 rounded-md box-border transition-all py-2 duration-300 bg-white/90 dark:bg-zinc-900/80 hover:shadow-lg">
-        <div class="header px-4 py-1"><span
-            :class="`${comment.user_info.role === 'superAdmin' ? 'text-cyan-700 font-bold' : 'font-bold'}`">{{
-              comment?.user_info?.username }}</span>
+        class="comment-info flex-1 rounded-md box-border transition-all pb-2 duration-300 bg-white/90 dark:bg-zinc-900/80 hover:shadow-lg">
+        <div class="header px-4 py-1">
+          <a v-if="comment.user_info?.website" :href="comment.user_info?.website" target="_blank"
+            class="flex items-center hover:!underline"> {{
+              comment?.user_info?.nickname ||
+              comment?.user_info?.username }} <Icon name="material-symbols:web-traffic-rounded"></Icon></a>
+          <span v-else :class="`${comment.user_info?.role === 'superAdmin' ? 'text-cyan-700 font-bold' : 'font-bold'}`">
+            {{ comment?.user_info?.nickname || comment?.user_info?.username }}</span>
+
         </div>
         <div class="content py-4 px-4 ">
           {{ comment.content }}
@@ -37,8 +42,8 @@
     </div>
     <!-- 回复某条评论 -->
     <div class="reply-box w-full pl-4 mt-2 mb-4" v-if="commentReplyOpen">
-      <AppCommentInput type="reply" :target="comment.user_info.username" @cancel="commentReplyOpen = false"
-        @send="createSubComment">
+      <AppCommentInput type="reply" :target="comment.user_info?.nickname || comment.user_info?.username"
+        @cancel="commentReplyOpen = false" @send="createSubComment">
       </AppCommentInput>
     </div>
     <template v-for="subComment in comment.sub_comments">
@@ -74,7 +79,7 @@ const props = defineProps<Props>()
 const commentUserMap = computed(() => {
   const map: Record<string, string> = {}
   for (const subComment of props.comment.sub_comments) {
-    map[subComment.id] = subComment.user_info.username
+    map[subComment.id] = subComment.user_info!.nickname || subComment.user_info!.username
   }
   return map
 })

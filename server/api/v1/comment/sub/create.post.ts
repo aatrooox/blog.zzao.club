@@ -20,6 +20,7 @@ export default defineEventHandler(async (event) => {
       content: z.string(), // 内容
       comment_id: z.string(), // 评论的哪条评论
       reply_sub_comment_id: z.string().optional(), // 评论的哪条回复
+      path: z.string().optional(),
       user_id: z.string() // 评论者
     }))
     if (!body.success) {
@@ -39,6 +40,39 @@ export default defineEventHandler(async (event) => {
   const commentData = {
       ...body.data
   }
+
+  // 被回复的评论者, 是否允许邮件通知
+  const comment = await prisma.blogComment.findUnique({
+    where: {
+      id: commentData.comment_id
+    },
+    include: {
+      user_info: {
+        select: {
+          email: true,
+          nickname: true,
+          username: true,
+          user_config: {
+            select: {
+              allowEmailNotify: true
+            }
+          }
+        }
+      }
+    }
+  })
+
+  if (comment?.user_info?.email && comment?.user_info?.user_config?.allowEmailNotify === 1) {
+    try {
+      sendMailNotice(comment?.user_info?.nickname || comment?.user_info?.username, {
+        to: comment?.user_info?.email,
+        subject: '有人回复了你在早早集市的评论',
+        text: commentData.content,
+        path: commentData.path
+      })
+    } catch (err) {}
+  }
+
   const data = await prisma.blogSubComment.create({
     data: commentData
   })
