@@ -28,6 +28,7 @@ export default defineEventHandler(async (event) => {
     visitorName: z.string().optional(),
     visitorEmail: z.string().email().optional()
   }))
+  
   if (!body.success) {
     throw createError({
       statusCode: 400,

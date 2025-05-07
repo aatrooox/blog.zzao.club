@@ -135,6 +135,12 @@ export default defineNuxtConfig({
      */
     componentDir: './app/components/ui'
   },
+  components: [
+    {
+      path: '~/components/common',
+      prefix: ''
+    }
+  ],
   nodemailer: {
     from: '"Aatrox" <gnakzz@qq.com>',
     host: 'smtp.qq.com',

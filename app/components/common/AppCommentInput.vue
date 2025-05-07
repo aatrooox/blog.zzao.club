@@ -6,7 +6,7 @@
         <Input placeholder="邮箱" v-model="visitorEmail" type="email"></Input>
         <Input placeholder="你的主页" v-model="visitorWebsite"></Input>
       </div>
-      <div class="text-sm pb-2" v-else>Hi，{{ userStore.user.username }}。欢迎评论👏</div>
+      <div class="text-sm pb-2" v-else>Hi，{{ userStore.user.nickname || userStore.user.username }}。欢迎评论👏</div>
       <div class="visitor-quick-btns flex gap-2 py-2" v-show="!userStore.isLogin && visitorEmail">
         <div class="items-top flex space-x-2">
           <Checkbox id="terms2" v-model="allowEmailNotify" />

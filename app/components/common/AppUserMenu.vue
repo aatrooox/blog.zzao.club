@@ -16,8 +16,12 @@ const logout = async () => {
       <UserAvatar :userInfo="(userStore.user as User)"></UserAvatar>
     </DropdownMenuTrigger>
     <DropdownMenuContent class="w-56">
-      <DropdownMenuLabel>{{ (userStore.user as User).username }}</DropdownMenuLabel>
+      <DropdownMenuLabel>{{ (userStore.user as User).nickname || (userStore.user as User).username }}
+      </DropdownMenuLabel>
       <DropdownMenuSeparator />
+      <DropdownMenuItem @click="navigateTo('/settings')">
+        <span>设置</span>
+      </DropdownMenuItem>
       <DropdownMenuItem @click="logout">
         <span>退出登录</span>
       </DropdownMenuItem>
