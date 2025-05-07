@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.2.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.2.0...v1.2.1)
+
+### 🩹 Fixes
+
+- Settings prerender false ([1f5f7d5](https://github.com/aatrooox/blog.zzao.club/commit/1f5f7d5))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.2.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.1.1...v1.2.0)
