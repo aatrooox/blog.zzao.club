@@ -59,9 +59,9 @@ content: defineCollection({
       // 所以为了匹配这个路径要加这个路由前缀
       prefix: '/post',
       // cwd: process.env.CONTENT_FS_PATH,
-      // TODO 替换为你的仓库地址
+      // TODO 替换为你的仓库地址  不能使用组织仓库
       repository: 'https://github.com/aatrooox/Blog',
-      // TODO 替换为你的token
+      // TODO 替换为你的token 在 github > settings > developers settings > personal access tokens 
       authToken: process.env.CONTENT_REPO_TOKEN
     },
     // md文件的元信息, 根据自己的实际情况来, 这些字段会用作数据库中的表头
@@ -86,6 +86,12 @@ NUXT_FEISHU_WEBHOOK=
 NUXT_FEISHU_USER_ID=
 ```
 先启动 mysql、redis
+
+## 初始化数据库和表结构
+
+```bash
+npx prisma migrate dev
+```
 
 ## 启动项目
 
