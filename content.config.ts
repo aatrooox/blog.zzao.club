@@ -9,7 +9,7 @@ export default defineContentConfig({
         exclude: ['**/-*.md', 'book/**/*.md', 'Excalidraw/**/*.*'],
         prefix: '/post',
         // cwd: process.env.CONTENT_FS_PATH,
-        repository: 'https://github.com/eastgold15/siyuan.git',
+        repository: process.env.CONTENT_MD_REPO_URL,
         authToken: process.env.CONTENT_REPO_TOKEN
       },
       schema: z.object({
