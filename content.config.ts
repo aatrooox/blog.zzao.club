@@ -8,6 +8,7 @@ export const collections = {
       exclude: ['**/-*.md', 'book/**/*.md', 'Excalidraw/**/*.*'],
       prefix: '/post',
       // cwd: process.env.CONTENT_FS_PATH,
+      // 注意这个仓库只能是自己github账号的，不能是组织的项目。
       repository: 'https://github.com/aatrooox/Blog',
       authToken: process.env.CONTENT_REPO_TOKEN
     },

@@ -59,7 +59,7 @@ content: defineCollection({
       // 所以为了匹配这个路径要加这个路由前缀
       prefix: '/post',
       // cwd: process.env.CONTENT_FS_PATH,
-      // TODO 替换为你的仓库地址
+      // TODO 替换为你的仓库地址，不能是组织仓库
       repository: 'https://github.com/aatrooox/Blog',
       // TODO 替换为你的token
       authToken: process.env.CONTENT_REPO_TOKEN
@@ -89,11 +89,46 @@ NUXT_FEISHU_USER_ID=
 
 ## 启动项目
 
+先copy 环境变量
+copy  `.env.example` to `.env`，把环境变量填上
+```bash
+NUXT_AUTH_SECTRET和 NUXT_JWT_SECRET 随便填
+CONTENT_REPO_TOKEN 需要到 github setting > developer settings > personal access tokens 生产一个Fine-grained 精细token 只需要打开content这个权限就好
+```
+初始化数据库和表结构 
+```bash
+pnpm run prisma:migrate
+```
+
+启动
 ```bash
 pnpm dev
 ```
 
+
 ## 部署
+
+这里有个很简单的方法，fock项目使用vercel 来构建
+```js
+https://vercel.com/ 进入这个网站，开始导入项目
+
+1. 点击导入项目
+2. 选择 Git Repository
+3. 选择你的项目
+
+一共用的的命令
+nuxt build
+root directory
+#output directory
+dist
+#install command
+pnpm i
+#输入环境变量
+...
+
+最后点击部署即可
+```
+
 
 想起来再写
 
