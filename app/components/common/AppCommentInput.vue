@@ -9,7 +9,7 @@
       <div class="text-sm pb-2" v-else>Hi，{{ userStore.user.nickname || userStore.user.username }}。欢迎评论👏</div>
       <div class="visitor-quick-btns flex gap-2 py-2" v-show="!userStore.isLogin && visitorEmail">
         <div class="items-top flex space-x-2">
-          <Checkbox id="terms2" v-model="allowEmailNotify" />
+          <Checkbox id="terms2" disabled v-model="allowEmailNotify" />
           <label for="terms2" class="text-sm leading-none peer-disabled:cursosr-not-allowed peer-disabled:opacity-70">
             收到回复时邮件通知我
           </label>
