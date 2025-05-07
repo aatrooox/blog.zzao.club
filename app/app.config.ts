@@ -1,17 +1,17 @@
 export default defineAppConfig({
   // 网站基本信息
-  author: '早早集市',
+  author: '学途工具箱',
   // 组织
-  organization: '',
+  organization: 'scujjxy创新',
   // 组织地址
-  organizationUrl: 'https://zzao.club',
+  organizationUrl: 'https://github.com/SCUJJ-OSIG',
   // 描述
-  desciption: '人生游戏 DLC',
+  desciption: '愿你实现心中多想',
   // 头像
-  avatar: 'https://img.zzao.club/article/202412301500611.png',
+  avatar: 'https://avatars.githubusercontent.com/u/98154003?v=4',
   // 社交媒体 icon 从 https://icones.js.org/ 里找
   social: [
-    {
+  /*   {
       name: 'Github',
       icon: 'icon-park-outline:github',
       // 这是一个 hover 弹出框，目前用来放一个图片
@@ -22,10 +22,10 @@ export default defineAppConfig({
       name: '微信公众号',
       icon: 'icon-park-outline:weixin-top-stories',
       popover: 'https://img.zzao.club/article/202412301618068.jpg',
-    },
+    }, */
     {
-      name: '个人微信',
-      icon: 'icon-park-outline:wechat',
+      name: 'QQ群',
+      icon: 'i-fa-qq',
       popover: 'https://img.zzao.club/article/202412301618241.jpg'
     },
     {
@@ -38,7 +38,7 @@ export default defineAppConfig({
   // 配置后会以此处配置的标签作为 /article 页面筛选栏
   // 比如: tags: ['哈哈'], 则会搜索 文章中 tags 字段中包含(模糊搜索) '哈哈' 的文章
   // 因为观察到其他博客，如果把所有的 tags 都自动罗列出来，会有很多 tag 只有一篇文章，可能是当时随手加的，所以不如自己维护几个高频的
-  tags: ['全部', 'Nuxt', 'Hono', 'Vue', '生活'],
+  tags: ['全部', 'Nuxt', '前端全栈', 'Vue', '工具'],
   authLayer: {
     enabled: false
   },

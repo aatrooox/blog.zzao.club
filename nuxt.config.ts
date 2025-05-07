@@ -164,7 +164,7 @@ export default defineNuxtConfig({
     imgHost: 'https://img.zzao.club',
     jwtSecret: 'your_jwt_secret',
     public: {
-      ContentVersion: '3.0.0',
+      ContentVersion: '3.0.0', 
       Z_BLOG_VERSION: appVersion,
       // nuxtSecretKey:`blog-zzao-club-${uuid}`,
       imgHost: 'https://img.zzao.club',
