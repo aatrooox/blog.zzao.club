@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v1.2.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.1.1...v1.2.0)
+
+### 🚀 Enhancements
+
+- 新增邮件通知接口 ([8566e1f](https://github.com/aatrooox/blog.zzao.club/commit/8566e1f))
+- 增加用户配置表 ([ddbfc3e](https://github.com/aatrooox/blog.zzao.club/commit/ddbfc3e))
+- ⚠️  新增用户设置界面; 组件位置移动; 优化代码 ([2191ecf](https://github.com/aatrooox/blog.zzao.club/commit/2191ecf))
+
+### 🏡 Chore
+
+- 优化 ([48feb6c](https://github.com/aatrooox/blog.zzao.club/commit/48feb6c))
+- Gitea env ([012b488](https://github.com/aatrooox/blog.zzao.club/commit/012b488))
+- Env example ([8f19fb6](https://github.com/aatrooox/blog.zzao.club/commit/8f19fb6))
+- Nuxt/content config; pm2 json config; readme ([532a247](https://github.com/aatrooox/blog.zzao.club/commit/532a247))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  新增用户设置界面; 组件位置移动; 优化代码 ([2191ecf](https://github.com/aatrooox/blog.zzao.club/commit/2191ecf))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.1.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.1.0...v1.1.1)
