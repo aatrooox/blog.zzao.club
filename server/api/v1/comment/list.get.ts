@@ -1,11 +1,32 @@
 import prisma from "~~/server/utils/prisma"
+const schema = z.object({
+  type: z.string().optional().default('article'),
+  page: z.string().optional().default('1').transform(Number),
+  size: z.string().optional().default('10').transform(Number),
+  article_id: z.string(),
+})
+
+// only allows static definition
+// wait for nitro support
+// https://github.com/nitrojs/nitro/issues/2974
+defineRouteMeta({
+  openAPI: {
+    tags: ["comment"],
+    description: "登录",
+    parameters: [
+      { in: 'query', name: 'type', schema: { type: 'string', enum: ['article'] } },
+      { in: 'query', name: 'page', schema: { type: 'string' } },
+      { in: 'query', name: 'size', schema: { type: 'string' } },
+      { in: 'query', name: 'article_id', schema: { type: 'string' } },
+    ]
+  },
+});
+
+
+
+// console.log(`schema`, schema)
 export default defineEventHandler(async (event) => {
-  const schema = z.object({
-    type: z.string().optional().default('article'),
-    page: z.string().optional().default('1').transform(Number),
-    size: z.string().optional().default('10').transform(Number),
-    article_id: z.string(),
-  })
+  
   const query = await useSafeValidatedQuery(event, schema)
   
   if (!query.success) {

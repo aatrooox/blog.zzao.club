@@ -1,9 +1,10 @@
-// 登录接口, 获取jwt token
+export const schema = z.object({
+  username: z.string(),
+  password: z.string()
+})
+
 export default defineEventHandler(async (event) => {
-  const body = await useSafeValidatedBody(event, z.object({
-    username: z.string(),
-    password: z.string()
-  }))
+  const body = await useSafeValidatedBody(event, schema)
 
   if (!body.success) {
     throw createError({

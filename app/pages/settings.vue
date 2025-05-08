@@ -62,7 +62,7 @@ definePageMeta({
   middleware: [
     function (to, from) {
       // Custom inline middleware
-      if (!localStorage.getItem('blog/token')) {
+      if (!localStorage?.getItem('blog/token')) {
         return navigateTo('/', { redirectCode: 301 })
         // return abortNavigation('请先登录')
       }
@@ -86,6 +86,8 @@ const passwordSchema = z.object({
     })
     .describe('密码')
 })
+
+console.log(`passwordSchema`, passwordSchema, z.string().describe('密码'))
 async function onSubmit(values: Record<string, any>) {
   // 过滤掉空值
   values = Object.fromEntries(Object.entries(values).filter(([_, value]) => value !== null && value !== undefined))

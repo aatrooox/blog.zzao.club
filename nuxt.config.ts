@@ -223,6 +223,21 @@ export default defineNuxtConfig({
   },
   nitro: {
     // preset: 'bun',
+    experimental: {
+      openAPI: true
+    },
+    openAPI: {
+      route: '/_docs/openapi.json',
+      ui: {
+        scalar: {
+          route: '/_docs/scalar',
+          theme: 'purple',
+        },
+        swagger: {
+          route: '/_docs/swagger',
+        },
+      },
+    },
     storage: {
       redis: {
         driver: 'redis',
