@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v1.3.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.3.0...v1.3.1)
+
+### 🚀 Enhancements
+
+- Openapi的尝试,还需要等待nitro官方支持 ([81186f9](https://github.com/aatrooox/blog.zzao.club/commit/81186f9))
+- 应用落霞孤鹜新致宋字体 ([f642595](https://github.com/aatrooox/blog.zzao.club/commit/f642595))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.3.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.2.2...v1.3.0)
