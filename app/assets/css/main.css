@@ -1,8 +1,14 @@
-@import "./tailwind.css";
-
 @font-face {
   font-family: 'LXGWS';
-  src: url('~/assets/fonts/LXGWNeoZhiSong.ttf') format('ttf');
+  src: url('/fonts/LXGWNeoZhiSong.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IPIX';
+  src: url('/fonts/IPIX.ttf') format('ttf');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -14,6 +20,7 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'LXGWS', sans-serif;
+  font-size: 18px;
   overflwow: hidden;
 }
 body {

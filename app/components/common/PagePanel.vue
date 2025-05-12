@@ -3,7 +3,7 @@
     <div class="flex flex-col gap-3">
       <div class="flex flex-col gap-2">
         <NuxtLink :to="page.path"
-          class="text-xl font-bold hover:text-primary-600 dark:hover:text-primary-400 transition-colors line-clamp-2 leading-tight">
+          class="text-xl font-bold hover:text-primary-600 dark:hover:text-primary-400 transition-colors line-clamp-2 leading-tight  ">
           {{ page.title }}
         </NuxtLink>
         <div class="flex flex-wrap gap-1.5">

@@ -160,7 +160,7 @@ export default defineNuxtConfig({
     '/post/**': { prerender: true },
     '/settings': { prerender: false}
   },
-  css: ['@/assets/css/main.css', 'viewerjs/dist/viewer.css'],
+  css: ['@/assets/css/tailwind.css', 'viewerjs/dist/viewer.css'],
   runtimeConfig: {
     feishuWebhook: '',
     feishuUserId: '',

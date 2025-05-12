@@ -119,3 +119,16 @@ pnpm release:minor
 # 1.0.0 => 2.0.0  0.1.0 => 0.2.0
 pnpm release:major
 ```
+
+## 自定义字体
+
+使用自定义字体，要注意 format 的值
+
+```
+.woff 文件：使用 format('woff')
+.woff2 文件：使用 format('woff2')
+.ttf 文件：使用 format('truetype')
+.otf 文件：使用 format('opentype')
+.eot 文件：使用 format('embedded-opentype')
+.svg 文件：使用 format('svg')
+```

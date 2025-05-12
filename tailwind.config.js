@@ -67,6 +67,13 @@ export default {
         },
       }
     },
+    fontFamily: {
+      lxgws: ['LXGWS', 'sans-serif'],
+      // douyin: ['DouYin', 'sans-serif'],
+      // ipix: ['IPIX', 'sans-serif'],
+      // silver: ['Silver', 'sans-serif'],
+      // nanodsong: ['NanoDSong', 'sans-serif']
+    },
     screens: {
       'xs': '480px',
       'sm': '640px',
