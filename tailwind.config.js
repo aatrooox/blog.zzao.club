@@ -68,6 +68,7 @@ export default {
       }
     },
     fontFamily: {
+      sans: ['LXGWS', 'sans-serif'],
       lxgws: ['LXGWS', 'sans-serif'],
       // douyin: ['DouYin', 'sans-serif'],
       // ipix: ['IPIX', 'sans-serif'],
