@@ -23,7 +23,7 @@
                 {{ `@${config.organization}` }}
               </Button>
               <span class="text-sm text-zinc-500 dark:text-zinc-400 font-normal">V{{ runtimeConfig.Z_BLOG_VERSION
-                }}</span>
+              }}</span>
             </div>
             <p class="mt-2 text-base text-zinc-600 dark:text-zinc-400">{{ config.desciption }}</p>
             <div class="flex flex-wrap gap-2 justify-center md:justify-start mt-3">
