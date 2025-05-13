@@ -64,6 +64,22 @@
             <article ref="curMdContentRef" class="content-wrap w-full max-w-full md:flex-1 !md:max-w-2xl">
               <ContentRenderer :value="page?.body" class="!w-full !max-w-full "></ContentRenderer>
             </article>
+            <!-- 相邻的文章 -->
+            <ClientOnly v-if="adjacentPages.length">
+              <Separator class="my-1" label="END" />
+              <div class="flex justify-between text-xs py-4">
+                <div class="flex-1 flex items-center gap-1">
+                  <template v-if="adjacentPages[0]">
+                    <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em"></Icon>
+                    <NuxtLink class="!underline" :href="adjacentPages[0].path">{{ adjacentPages[0].title }}</NuxtLink>
+                  </template>
+                </div>
+                <div class="flex-1 text-right flex items-center justify-end gap-1">
+                  <NuxtLink class="!underline" :href="adjacentPages[1].path">{{ adjacentPages[1].title }}</NuxtLink>
+                  <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em"></Icon>
+                </div>
+              </div>
+            </ClientOnly>
             <!-- 评论区 -->
             <ClientOnly>
               <div>
@@ -127,6 +143,7 @@ const isLiked = ref(false)
 const comments = ref<BlogCommentWithUserInfo[]>([])
 const isDefer = ref(true)
 
+const adjacentPages = ref<any[]>([])
 let _htmlCache = {}
 let _styleValueCache = {}
 let copyHTML = ``
@@ -399,11 +416,23 @@ const formatCommentCount = computed(() => {
   if (count > 99) return '99+'
   return count
 })
+
+const getSurroundingPage = async () => {
+  const paths = route.path.split('/').filter(Boolean);
+  console.log(`paths`, route.path)
+  const { data } = await useAsyncData(page.value?.id || 'surrounding-page', () => {
+    return queryCollectionItemSurroundings('content', route.path).order('date', 'DESC')
+  })
+
+  console.log(`data`, data.value)
+  adjacentPages.value = data.value || []
+}
 watchEffect(async () => {
   if (page.value?.id) {
     setTimeout(() => {
       initComment();
       initLikeCount();
+      getSurroundingPage();
     }, 800)
   }
 })

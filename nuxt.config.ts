@@ -57,7 +57,8 @@ export default defineNuxtConfig({
         {
           src: 'https://umami.zzao.club/script.js',
           defer: true,
-          "data-website-id": "ede2b0ce-e029-41f7-9d56-be35fc07ba6c"
+          "data-website-id": "ede2b0ce-e029-41f7-9d56-be35fc07ba6c",
+          "data-domains": "zzao.club"
         }
       ],
       meta: [

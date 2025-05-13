@@ -1,6 +1,6 @@
 <template>
   <div :id="props.id" class="heading mt-16 mb-6 cursor-pointer scroll-mt-20">
-    <span class="text-xl font-bold ">
+    <span class="text-2xl font-bold ">
       <a v-if="props.id && generate" :href="`#${props.id}`" class="!text-zinc-800 dark:!text-zinc-200">
         <slot />
       </a>
