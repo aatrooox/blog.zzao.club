@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.3.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.3.1...v1.3.2)
+
+### 🚀 Enhancements
+
+- 优化显示; umami 限制域名 ([f591d9c](https://github.com/aatrooox/blog.zzao.club/commit/f591d9c))
+
+### 🏡 Chore
+
+- 默认无衬线字体 ([9f89334](https://github.com/aatrooox/blog.zzao.club/commit/9f89334))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.3.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.3.0...v1.3.1)
