@@ -122,7 +122,6 @@
 </template>
 
 <script setup lang="ts">
-import { navigateTo } from '#app';
 import { EffectCssAttrs, camelCaseToHyphen, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs, customTagCssAttrs } from '@/config/richText';
 const toast = useGlobalToast()
 const { $api } = useNuxtApp();

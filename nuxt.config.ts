@@ -222,6 +222,36 @@ export default defineNuxtConfig({
       }
     ]
   },
+  /**
+   * {
+   *  file: {
+   *    id: '',
+   *    body: '',
+   *    path: '',
+   *    dirname: '',
+   *    extension: '.md'
+   *  },
+   *  collection: {}
+   * }
+   */
+  hooks: {
+    'content:file:beforeParse'(ctx) {
+      const body: string = ctx.file.body;
+      const title = '这篇文章'
+      const linkRegex = /\[\[(.*?)\]\]/g
+
+      const replacedMarkdown = body.replace(
+        linkRegex,
+        (match, content) => {
+          // 返回替换后的格式：[这篇文章](https://zzao.club/xxx)
+          const path = content.split('|')[0]
+          return `[${title}](https://zzao.club/post/${path})`;
+        }
+      );
+
+      ctx.file.body = replacedMarkdown;
+    }
+  },
   nitro: {
     // preset: 'bun',
     experimental: {
