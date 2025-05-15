@@ -25,6 +25,8 @@ model User {
   oauth        OAuth[]
   tokens       AccessToken[]
   user_config  UserConfig?
+  memos        BlogMemo[]
+  tags         MemoTag[]
 
   @@map("blog_user")
 }
@@ -91,6 +93,8 @@ model BlogComment {
   visitorName  String?
   sub_comments BlogSubComment[] // 一对多的二级评论
   likes        BlogLike[]
+  memo_id      String?
+  memo_info    BlogMemo?        @relation(fields: [memo_id], references: [id])
 
   @@map("blog_comment")
 }
@@ -125,6 +129,49 @@ model BlogLike {
   comment_info     BlogComment?    @relation(fields: [comment_id], references: [id])
   user_id          String
   user_info        User            @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  blogMemoInfo     BlogMemo?       @relation(fields: [blogMemoId], references: [id])
+  blogMemoId       String?
 
   @@map("blog_like")
+}
+
+model BlogMemo {
+  id            String             @id @default(uuid(7))
+  content       String
+  create_ts     DateTime           @default(now())
+  updated_ts    DateTime           @updatedAt
+  visible       String             @default("public") // 可见性 public / group / private 
+  defalt_floded Boolean            @default(false) // 默认折起
+  flod_tip      String? // 折起时，在标题栏展示折起的原因
+  user_id       String
+  user_info     User               @relation(fields: [user_id], references: [id], onDelete: NoAction)
+  tags          MemoTagRelations[]
+  comments      BlogComment[]
+  likes         BlogLike[]
+
+  @@map("blog_memos")
+}
+
+model MemoTag {
+  id         String             @id @default(uuid(7))
+  tag_name   String             @unique
+  create_ts  DateTime           @default(now())
+  updated_ts DateTime           @updatedAt
+  user_id    String
+  user_info  User               @relation(fields: [user_id], references: [id], onDelete: NoAction)
+  memos      MemoTagRelations[]
+
+  @@map("blog_memo_tag")
+}
+
+model MemoTagRelations {
+  tagId      String
+  tag        MemoTag  @relation(fields: [tagId], references: [id], onDelete: NoAction)
+  memoId     String
+  memo       BlogMemo @relation(fields: [memoId], references: [id], onDelete: NoAction)
+  create_ts  DateTime @default(now())
+  updated_ts DateTime @updatedAt
+
+  @@id([tagId, memoId])
+  @@map("blog_memo_tag_relations")
 }
