@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.5.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.4.0...v1.5.0)
+
+### 🚀 Enhancements
+
+- 简单的支持obsidian 出链跳转 ([f1660c9](https://github.com/aatrooox/blog.zzao.club/commit/f1660c9))
+- 二级评论邮件通知 ([4c62937](https://github.com/aatrooox/blog.zzao.club/commit/4c62937))
+
+### 🏡 Chore
+
+- Memo + tag 相关表结构 ([de86164](https://github.com/aatrooox/blog.zzao.club/commit/de86164))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.4.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.3.2...v1.4.0)
