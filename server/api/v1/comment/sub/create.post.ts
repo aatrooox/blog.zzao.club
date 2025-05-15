@@ -73,6 +73,39 @@ export default defineEventHandler(async (event) => {
     } catch (err) {}
   }
 
+  // 如果是回复的二级评论
+  if (body.data.reply_sub_comment_id) {
+    const subComment = await prisma.blogSubComment.findUnique({
+      where: {
+        id: body.data.reply_sub_comment_id
+      },
+      include: {
+        user_info: {
+          select: {
+            email: true,
+            nickname: true,
+            username: true,
+            user_config: {
+              select: {
+                allowEmailNotify: true
+              }
+            }
+          }
+        }
+      }
+    })
+
+    if (subComment?.user_info?.email && subComment?.user_info?.user_config?.allowEmailNotify === 1 && subComment?.user_info?.email !== comment?.user_info?.email) {
+      try {
+        sendMailNotice(subComment?.user_info?.nickname || subComment?.user_info?.username, {
+          to: subComment!.user_info!.email,
+          subject: '有人回复了你在早早集市的评论',
+          text: commentData.content,
+          path: commentData.path
+        })
+      } catch ( err ) {}
+    }
+  }
   const data = await prisma.blogSubComment.create({
     data: commentData
   })
