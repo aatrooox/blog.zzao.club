@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v1.5.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.5.0...v1.5.1)
+
+### 🏡 Chore
+
+- Upgrade mdc 0.17.0 ([ef4e21f](https://github.com/aatrooox/blog.zzao.club/commit/ef4e21f))
+- 优化 keywords; 增加文章划词评论气泡展示 ([75a7890](https://github.com/aatrooox/blog.zzao.club/commit/75a7890))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.5.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.4.0...v1.5.0)
