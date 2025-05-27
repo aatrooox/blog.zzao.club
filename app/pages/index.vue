@@ -23,7 +23,7 @@
                 {{ `@${config.organization}` }}
               </Button>
               <span class="text-sm text-zinc-500 dark:text-zinc-400 font-normal">V{{ runtimeConfig.Z_BLOG_VERSION
-              }}</span>
+                }}</span>
             </div>
             <p class="mt-2 text-base text-zinc-600 dark:text-zinc-400">{{ config.desciption }}</p>
             <div class="flex flex-wrap gap-2 justify-center md:justify-start mt-3">
@@ -129,7 +129,7 @@ useHead({
     },
     {
       name: 'keywords',
-      content: '早早集市,博客站,前端,前端工程化,前端架构,Node,Nuxt3,Hono,副业',
+      content: '早早集市,博客站,NuxtContent,Content,Obsidian,Vue,Vue3,Vue2,Node,前端,前端工程化,前端架构,Node,Nuxt3,Hono,爬虫,副业,生活感悟',
     },
   ],
   link: [

@@ -13,7 +13,7 @@
       </Button>
     </div>
     <div class="flex flex-wrap gap-6" v-if="data">
-      <div class="left-pages w-full md:flex-1 flex flex-col gap-6">
+      <transition-group tag="div" class="left-pages w-full md:flex-1 flex flex-col gap-6">
         <template v-for="page of (data as any[]).filter((_, index) => index % 2 === 0)" :key="page.path">
           <div class="group">
             <div
@@ -23,7 +23,7 @@
             </div>
           </div>
         </template>
-      </div>
+      </transition-group>
 
       <div class="right-pages w-full md:flex-1 flex flex-col gap-6">
         <template v-for="page of (data as any[]).filter((_, index) => index % 2 === 1)" :key="page.path">
@@ -50,7 +50,7 @@ useHead({
     },
     {
       name: 'keywords',
-      content: '早早集市,博客站,前端,前端工程化,前端架构,Node,Nuxt3,Nuxt4,Hono,副业',
+      content: '早早集市,博客站,NuxtContent,Content,Obsidian,Vue,Vue3,Vue2,Node,前端,前端工程化,前端架构,Node,Nuxt3,Hono,爬虫,副业,生活感悟',
     },
   ],
 })

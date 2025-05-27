@@ -55,14 +55,24 @@
               </div>
             </div>
           </ClientOnly>
-          <div class="article-warp flex flex-col max-w-full w-full box-border md:px-20 lg:px-60 2xl:px-10">
+          <div class="article-warp relative flex flex-col max-w-full w-full box-border md:px-20 lg:px-60 2xl:px-10"
+            ref="acticleWrap">
+            <ClientOnly>
+              <transition appear @enter="commentEnter" @before-enter="commentBeforeEnter" @leave="commentLeave">
+                <Icon class="absolute cursor-pointer opacity-0" name="material-symbols:comment" size="1.5em"
+                  v-if="commentIconPosition.top !== 0 || commentIconPosition.left !== 0"
+                  :style="{ top: commentIconPosition.top + 'px', left: commentIconPosition.left + 'px' }"
+                  @click.stop="handleCommentPragph" />
+              </transition>
+            </ClientOnly>
             <!-- 悬浮标题栏 -->
             <div
               class="fixed-title text-lg font-bold text-center w-full overflow-hidden text-ellipsis h-12 leading-12 sticky top-0 transition-all delay-200 bg-white/90 dark:bg-zinc-900/80 md:text-xl"
               v-if="navBarStore.navBar?.isHidden"> {{ page?.title }}</div>
-
+            <!-- <pre> {{ rects }}</pre> -->
             <article ref="curMdContentRef" class="content-wrap w-full max-w-full md:flex-1 !md:max-w-2xl">
-              <ContentRenderer :value="page?.body" class="!w-full !max-w-full "></ContentRenderer>
+              <ContentRenderer :value="page?.body" class="!w-full !max-w-full">
+              </ContentRenderer>
             </article>
             <!-- 相邻的文章 -->
             <ClientOnly v-if="adjacentPages.length">
@@ -123,6 +133,12 @@
 
 <script setup lang="ts">
 import { EffectCssAttrs, camelCaseToHyphen, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs, customTagCssAttrs } from '@/config/richText';
+import { Prisma, type User } from '@prisma/client';
+
+type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{
+  include: { user_info: true, _count: true, sub_comments: { include: { user_info: true } } }
+}>
+
 const toast = useGlobalToast()
 const { $api } = useNuxtApp();
 const userStore = useUserStore();
@@ -132,16 +148,76 @@ const clientjs = useClientjs()
 const route = useRoute();
 const activeTocId = ref('')
 const curMdContentRef = ref(null)
-import { Prisma, type User } from '@prisma/client';
+const acticleWrap = templateRef('acticleWrap')
+const selectedText = ref('')
+const { text, rects, ranges, selection } = useTextSelection()
 
-type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{
-  include: { user_info: true, _count: true, sub_comments: { include: { user_info: true } } }
-}>
 const likeCount = ref(0)
 const isLiked = ref(false)
 const comments = ref<BlogCommentWithUserInfo[]>([])
 const isDefer = ref(true)
 
+const commentIconPosition = computed(() => {
+  if (text.value.trim().length) {
+    // 发生划词时，记录当前划线的滚动距离
+    if (navBarStore.selectionScrollY === 0) {
+      navBarStore.setSelectionScrollY(navBarStore.scrollY)
+    }
+    let left = -50;
+    if (selection?.value) {
+      const range = selection?.value?.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+      left = rect.left
+      console.log(`rect`, left, rect)
+    }
+
+    selectedText.value = text.value
+
+    return {
+      top: (rects?.value?.[0]?.top || 0) - 80 + navBarStore.selectionScrollY,
+      left
+    }
+  } else {
+    // 取消划词时，恢复数据
+    navBarStore.setSelectionScrollY(0)
+    return {
+      top: 0,
+      left: 0
+    }
+  }
+
+})
+
+const commentEnter = (el) => {
+  animate(el, {
+    scale: [0.5, 1, 1.5, 1],
+    opacity: '1',
+    duration: 300,
+    delay: 500,
+    ease: 'inOut'
+  })
+}
+const commentBeforeEnter = (el) => {
+  el.style.opacity = '0'
+}
+
+const commentLeave = (el, done) => {
+  animate(el, {
+    scale: [1, 1.5, 1.2, 1],
+    opacity: '0',
+    duration: 300,
+    delay: 500,
+    ease: 'inOut',
+    onComplete: () => {
+      done()
+    }
+  })
+}
+
+
+const handleCommentPragph = () => {
+  console.log('评论段落', selectedText.value)
+}
 const adjacentPages = ref<any[]>([])
 let _htmlCache = {}
 let _styleValueCache = {}
@@ -190,6 +266,16 @@ watch(page, (page) => {
 const tocData = computed(() => {
   return page.value?.body?.toc?.links
 })
+
+
+// const handleSelection = () => {
+//   const selection = window.getSelection()
+
+//   if (selection && selection?.rangeCount > 0 && selection?.toString().trim().length > 0) {
+//     const range = selection.getRangeAt(0)
+//     console.log(`range`, range, selection, selection.toString())
+//   }
+// }
 
 const getContentDom = () => {
   const articleDom: any = curMdContentRef.value

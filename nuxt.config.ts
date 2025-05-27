@@ -219,6 +219,10 @@ export default defineNuxtConfig({
       {
         from: "vue-sonner",
         imports: ['toast']
+      },
+      {
+        from: "animejs",
+        imports: ['animate']
       }
     ]
   },

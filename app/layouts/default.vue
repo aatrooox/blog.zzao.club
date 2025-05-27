@@ -70,10 +70,13 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
 }, { deep: true })
 
 function onScroll(state: UseScrollReturn) {
-  // console.log(state) // {x, y, isScrolling, arrivedState, directions}
+  navBarStore.setScrollY(state.y.value || 0)
+  navBarStore.setPageScroll(state.isScrolling.value)
+
   if (state.isScrolling.value) {
     scrollDirection.value = state.directions.bottom ? 'bottom' : 'top'
   }
+
   // 往下滑并且距离顶部大于50
   if (isScrollBottom.value && state.y.value > 50) {
     if (isPostPage.value) {
