@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.5.2...v1.5.3)
+
+### 🏡 Chore
+
+- 微调气泡位置 ([a39e92a](https://github.com/aatrooox/blog.zzao.club/commit/a39e92a))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.5.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.5.1...v1.5.2)
