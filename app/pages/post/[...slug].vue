@@ -172,9 +172,19 @@ const commentIconPosition = computed(() => {
     let left = -50;
     if (selection?.value) {
       const range = selection?.value?.getRangeAt(0);
-      const rect = range.getBoundingClientRect();
-      left = rect.left
-      console.log(`rect`, left, rect)
+      if (range) {
+        const rectList = range.getClientRects();
+        if (rectList.length > 0) {
+          const firstRect = rectList[0];
+          const containerRect = acticleWrap.value?.getBoundingClientRect();
+          const rectLeft = firstRect?.left ?? window.scrollX;
+          if (containerRect) {
+            left = rectLeft - containerRect.left;
+          } else {
+            left = rectLeft + window.scrollX;
+          }
+        }
+      }
     }
 
     selectedText.value = text.value
@@ -184,7 +194,6 @@ const commentIconPosition = computed(() => {
       left
     }
   } else {
-    // 取消划词时，恢复数据
     navBarStore.setSelectionScrollY(0)
     return {
       top: 0,
