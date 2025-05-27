@@ -180,7 +180,7 @@ const commentIconPosition = computed(() => {
     selectedText.value = text.value
 
     return {
-      top: (rects?.value?.[0]?.top || 0) - 80 + navBarStore.selectionScrollY,
+      top: (rects?.value?.[0]?.top || 0) - 110 + navBarStore.selectionScrollY,
       left
     }
   } else {
