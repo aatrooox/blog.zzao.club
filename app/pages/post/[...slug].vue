@@ -59,10 +59,16 @@
             ref="acticleWrap">
             <ClientOnly>
               <transition appear @enter="commentEnter" @before-enter="commentBeforeEnter" @leave="commentLeave">
-                <Icon class="absolute cursor-pointer opacity-0" name="material-symbols:comment" size="1.5em"
+                <div class="page-btns absolute opacity-0 bg-cyan-600/90 rounded-sm px-2 py-1 flex items-center gap-2"
                   v-if="commentIconPosition.top !== 0 || commentIconPosition.left !== 0"
-                  :style="{ top: commentIconPosition.top + 'px', left: commentIconPosition.left + 'px' }"
-                  @click.stop="handleCommentPragph" />
+                  :style="{ top: commentIconPosition.top + 'px', left: commentIconPosition.left + 'px' }">
+                  <Icon class="cursor-pointer page-operation-btn" name="icon-park-outline:comments" size="1.5em"
+                    @click.stop="handleCommentPragph" />
+                  <Icon class="cursor-pointer page-operation-btn" name="material-symbols:image-arrow-up-rounded"
+                    size="1.5em" @click.stop="handleCommentPragph" />
+                  <Icon class="cursor-pointer page-operation-btn" name="icon-park-outline:comments" size="1.5em"
+                    @click.stop="handleCommentPragph" />
+                </div>
               </transition>
             </ClientOnly>
             <!-- 悬浮标题栏 -->
@@ -190,11 +196,31 @@ const commentIconPosition = computed(() => {
 
 const commentEnter = (el) => {
   animate(el, {
-    scale: [0.5, 1, 1.5, 1],
+    // scale: [0.5, 1, 1.5, 1],
     opacity: '1',
-    duration: 300,
-    delay: 500,
-    ease: 'inOut'
+    duration: 100,
+    delay: 200,
+    ease: 'inOut',
+    onComplete: () => {
+      animate('.page-operation-btn', {
+        // scale: [0.5, 1, 1.5, 1],
+        y: [
+          { to: '-1.75rem', ease: 'outExpo', duration: 200 },
+          { to: 0, ease: 'outBounce', duration: 200, delay: 150 }
+        ],
+        rotate: {
+          from: '-1turn',
+          delay: 0
+        },
+        opacity: '1',
+        duration: 300,
+        delay: (_, i) => i * 50,
+        ease: 'inOutCirc',
+        onComplete: () => {
+
+        }
+      })
+    }
   })
 }
 const commentBeforeEnter = (el) => {
@@ -203,10 +229,10 @@ const commentBeforeEnter = (el) => {
 
 const commentLeave = (el, done) => {
   animate(el, {
-    scale: [1, 1.5, 1.2, 1],
+    scale: [1, 1.1, 1],
     opacity: '0',
-    duration: 300,
-    delay: 500,
+    duration: 200,
+    delay: 300,
     ease: 'inOut',
     onComplete: () => {
       done()
