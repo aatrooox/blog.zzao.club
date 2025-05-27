@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.4
+
+[compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v1.5.3...v1.5.4)
+
+### 🩹 Fixes
+
+- 精准的气泡位置 (41fb50b)
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.5.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.5.2...v1.5.3)
