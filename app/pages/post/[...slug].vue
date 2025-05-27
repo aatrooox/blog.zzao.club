@@ -259,7 +259,7 @@ const handleCommentPragph = () => {
 }
 
 const applySelectedText = () => {
-  // underlineSavedSelection(selectedText.value)
+  underlineSavedSelection(selectedText.value)
 }
 function serializeSelection(range) {
   if (!range) return {}
@@ -316,12 +316,215 @@ function getNodeXPath(node) {
   return path.join('');
 }
 
-type SerializedSelection = {
+// selection-utils.ts
+
+export type SerializedSelection = {
   startNodePath: string;
   startOffset: number;
   endNodePath: string;
   endOffset: number;
 };
+
+function getNodeByXPath(path: string, contextNode: Node = document): Node | null {
+  const result = document.evaluate(path, contextNode, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+  return result.singleNodeValue;
+}
+
+/**
+ * Wraps a portion of a TextNode with a styled <span>.
+ * @param textNode The text node to modify.
+ * @param start The start offset in the text node.
+ * @param end The end offset in the text node.
+ */
+function wrapTextNodePortion(textNode: Text, start: number, end: number): void {
+  if (start >= end) return; // Nothing to wrap
+
+  const range = document.createRange();
+  try {
+    range.setStart(textNode, start);
+    range.setEnd(textNode, end);
+  } catch (e) {
+    console.error("Error setting range for text node portion:", e, { textNode, start, end });
+    return;
+  }
+
+  const span = document.createElement('span');
+  span.style.textDecoration = 'underline';
+  // 或者使用 CSS class: span.className = 'highlighted-selection';
+
+  try {
+    // surroundContents is generally preferred as it's cleaner.
+    // It will split the textNode and wrap the specified part.
+    range.surroundContents(span);
+  } catch (e) {
+    console.warn("surroundContents failed, trying fallback for text node:", textNode, e);
+    // Fallback: Manually extract, wrap, and insert.
+    // This can be more robust if surroundContents has issues with the range.
+    try {
+      const selectedTextFragment = range.extractContents(); // Extracts the content
+      span.appendChild(selectedTextFragment);
+      range.insertNode(span); // Inserts the span at the range's original start
+    } catch (fallbackError) {
+      console.error("Fallback for wrapping text node portion also failed:", fallbackError);
+    }
+  }
+}
+// gemini2.5-pro-preview
+function underlineSavedSelection(data: SerializedSelection): void {
+  const startNode = getNodeByXPath(data.startNodePath);
+  const endNode = getNodeByXPath(data.endNodePath);
+
+  if (!startNode || !endNode) {
+    console.error("Could not find start or end node for selection.", {
+      startPath: data.startNodePath,
+      endPath: data.endNodePath
+    });
+    return;
+  }
+
+  const selectionRange = document.createRange();
+  try {
+    selectionRange.setStart(startNode, data.startOffset);
+    selectionRange.setEnd(endNode, data.endOffset);
+  } catch (e) {
+    console.error("Error setting initial selection range:", e, { data, startNode, endNode });
+    return;
+  }
+
+  if (selectionRange.collapsed) {
+    console.log("Selection is collapsed, nothing to underline.");
+    return; // No text selected
+  }
+
+  // Operations to perform: { node: Text, start: number, end: number }
+  // These operations define which part of which original text node to underline.
+  const ops: Array<{ node: Text; start: number; end: number }> = [];
+
+  // Use NodeIterator to find all text nodes within the common ancestor of the range.
+  // We only care about text nodes that are actually part of the selection.
+  const commonAncestor = selectionRange.commonAncestorContainer;
+  const nodeIterator = document.createNodeIterator(
+    commonAncestor,
+    NodeFilter.SHOW_TEXT, // Only consider text nodes
+    {
+      acceptNode: (node) => {
+        // Check if the node intersects with the selectionRange.
+        // This is a broad check; specific parts are determined later.
+        if (selectionRange.intersectsNode(node)) {
+          return NodeFilter.FILTER_ACCEPT;
+        }
+        return NodeFilter.FILTER_REJECT;
+      }
+    }
+  );
+
+  let iterNode: Node | null;
+  while ((iterNode = nodeIterator.nextNode())) {
+    const textNode = iterNode as Text;
+
+    // Determine the precise start and end offsets for this specific textNode
+    // based on whether it's the startNode, endNode, or an intermediate node of the selection.
+
+    // Create a temporary range for the current text node to compare boundaries
+    const currentTextNodeRange = document.createRange();
+    currentTextNodeRange.selectNodeContents(textNode);
+
+    // Skip if textNode is entirely outside the selectionRange
+    // (NodeIterator's intersectsNode should handle this, but double check boundaries)
+    if (selectionRange.compareBoundaryPoints(Range.END_TO_START, currentTextNodeRange) >= 0) {
+      // selectionRange ends before currentTextNodeRange starts
+      continue;
+    }
+    if (selectionRange.compareBoundaryPoints(Range.START_TO_END, currentTextNodeRange) <= 0) {
+      // selectionRange starts after currentTextNodeRange ends
+      continue;
+    }
+
+    // At this point, textNode is at least partially within selectionRange.
+    let opStart = 0;
+    let opEnd = textNode.length;
+
+    // If this textNode is where the selection starts
+    if (startNode.nodeType === Node.TEXT_NODE && textNode === startNode) {
+      opStart = data.startOffset;
+    } else if (selectionRange.compareBoundaryPoints(Range.START_TO_START, currentTextNodeRange) > 0) {
+
+    }
+
+
+    // If this textNode is where the selection ends
+    if (endNode.nodeType === Node.TEXT_NODE && textNode === endNode) {
+      opEnd = data.endOffset;
+    } else if (selectionRange.compareBoundaryPoints(Range.END_TO_END, currentTextNodeRange) < 0) {
+
+    }
+
+    if (textNode === startNode && startNode.nodeType === Node.TEXT_NODE) {
+      opStart = data.startOffset;
+    } else if (selectionRange.compareBoundaryPoints(Range.START_TO_START, currentTextNodeRange) > 0) {
+      // selectionRange starts somewhere within this textNode
+      const tempRange = document.createRange();
+      tempRange.selectNodeContents(textNode);
+      tempRange.setStart(selectionRange.startContainer, selectionRange.startOffset);
+      opStart = tempRange.startOffset; // This is tricky, relative to what?
+
+    }
+
+
+
+    if (textNode === endNode && endNode.nodeType === Node.TEXT_NODE) {
+      opEnd = data.endOffset;
+    } else if (selectionRange.compareBoundaryPoints(Range.END_TO_END, currentTextNodeRange) < 0) {
+      // selectionRange ends somewhere within this textNode.
+      // The effective end for this node is its full length if it's not the actual endNode.
+    }
+
+
+    // Final check for opStart and opEnd for the current textNode
+    // If selectionRange.startContainer is this textNode, opStart is selectionRange.startOffset
+    // else if selectionRange starts before this node, opStart is 0
+    // else (selectionRange starts after this node starts), opStart is where selectionRange starts IN this node (complex)
+    // Simplified:
+    opStart = (textNode === selectionRange.startContainer && selectionRange.startContainer.nodeType === Node.TEXT_NODE) ? selectionRange.startOffset : 0;
+    // If selectionRange starts before this node, then opStart for this node is 0.
+    if (selectionRange.compareBoundaryPoints(Range.START_TO_START, currentTextNodeRange) < 0) {
+      opStart = 0;
+    }
+
+
+    opEnd = (textNode === selectionRange.endContainer && selectionRange.endContainer.nodeType === Node.TEXT_NODE) ? selectionRange.endOffset : textNode.length;
+    // If selectionRange ends after this node, then opEnd for this node is its length.
+    if (selectionRange.compareBoundaryPoints(Range.END_TO_END, currentTextNodeRange) > 0) {
+      opEnd = textNode.length;
+    }
+
+
+    if (opStart < opEnd) { // Only add if there's a valid segment to wrap
+      ops.push({ node: textNode, start: opStart, end: opEnd });
+    }
+  }
+
+  // Sort ops in reverse document order. This is crucial for DOM modifications.
+  // Nodes later in the document are processed first.
+  // For the same node, segments with larger start offsets (later parts) are processed first.
+  ops.sort((a, b) => {
+    const pos = b.node.compareDocumentPosition(a.node);
+    if (pos & Node.DOCUMENT_POSITION_FOLLOWING) { // b follows a (b is later in doc)
+      return -1; // Process b first
+    }
+    if (pos & Node.DOCUMENT_POSITION_PRECEDING) { // b precedes a (b is earlier in doc)
+      return 1;  // Process a first
+    }
+    // Same node, sort by start offset descending (process end of node first)
+    return b.start - a.start;
+  });
+
+  // Apply operations
+  for (const op of ops) {
+    wrapTextNodePortion(op.node, op.start, op.end);
+  }
+}
+
 
 
 const adjacentPages = ref<any[]>([])
