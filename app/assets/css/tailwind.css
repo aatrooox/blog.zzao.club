@@ -219,3 +219,8 @@ body {
   width: 0;
   height: 0;
 }
+
+.highlight {
+  text-decoration: underline;
+    background-color: yellow; /* 可选：背景色增强可读性 [[7]] */
+}

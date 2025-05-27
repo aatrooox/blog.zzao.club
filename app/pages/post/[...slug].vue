@@ -68,7 +68,7 @@
                   <Icon class="cursor-pointer page-operation-btn" name="material-symbols:image-arrow-up-rounded"
                     size="1.5em" @click.stop="handleCommentPragph" />
                   <Icon class="cursor-pointer page-operation-btn" name="icon-park-outline:comments" size="1.5em"
-                    @click.stop="handleCommentPragph" />
+                    @click.stop="applySelectedText" />
                 </div>
               </transition>
             </ClientOnly>
@@ -156,7 +156,7 @@ const route = useRoute();
 const activeTocId = ref('')
 const curMdContentRef = ref(null)
 const acticleWrap = templateRef('acticleWrap')
-const selectedText = ref('')
+const selectedText = ref()
 const { text, rects, ranges, selection } = useTextSelection()
 
 const likeCount = ref(0)
@@ -175,6 +175,9 @@ const commentIconPosition = computed(() => {
       const range = selection?.value?.getRangeAt(0);
       if (range) {
         const rectList = range.getClientRects();
+
+        selectedText.value = serializeSelection(range)
+
         if (rectList.length > 0) {
           const firstRect = rectList[0];
           const containerRect = acticleWrap.value?.getBoundingClientRect();
@@ -188,7 +191,7 @@ const commentIconPosition = computed(() => {
       }
     }
 
-    selectedText.value = text.value
+
 
     return {
       top: (rects?.value?.[0]?.top || 0) - 110 + navBarStore.selectionScrollY,
@@ -254,6 +257,73 @@ const commentLeave = (el, done) => {
 const handleCommentPragph = () => {
   console.log('评论段落', selectedText.value)
 }
+
+const applySelectedText = () => {
+  // underlineSavedSelection(selectedText.value)
+}
+function serializeSelection(range) {
+  if (!range) return {}
+  console.log('range =>', range)
+  // 获取起始和结束节点路径及偏移量
+  const startNodePath = getNodeXPath(range.startContainer);
+  const endNodePath = getNodeXPath(range.endContainer);
+
+  return {
+    startNodePath,
+    startOffset: range.startOffset,
+    endNodePath,
+    endOffset: range.endOffset
+  }
+}
+
+function getNodeXPath(node) {
+  const path: string[] = [];
+
+  // 如果是文本节点，则定位到它的父元素，并记录它是第几个文本子节点
+  if (node.nodeType === Node.TEXT_NODE) {
+    let index = 0;
+    let sibling = node.previousSibling;
+
+    while (sibling) {
+      if (sibling.nodeType === Node.TEXT_NODE && sibling.textContent.trim()) {
+        index++;
+      }
+      sibling = sibling.previousSibling;
+    }
+
+    const parentPath = getNodeXPath(node.parentNode); // 递归获取父元素路径
+    path.unshift(`${parentPath}/text()[${index + 1}]`);
+  } else if (node.nodeType === Node.ELEMENT_NODE) {
+    // 元素节点，计算它是同级同名元素中的第几个
+    let index = 0;
+    let sibling = node.previousElementSibling;
+
+    while (sibling) {
+      if (sibling.tagName === node.tagName) {
+        index++;
+      }
+      sibling = sibling.previousElementSibling;
+    }
+
+    const parentPath = node.parentNode ? getNodeXPath(node.parentNode) : '';
+    if (parentPath) {
+      path.unshift(`${parentPath}/${node.tagName.toLowerCase()}[${index + 1}]`);
+    } else {
+      path.unshift(`/${node.tagName.toLowerCase()}[${index + 1}]`);
+    }
+  }
+
+  return path.join('');
+}
+
+type SerializedSelection = {
+  startNodePath: string;
+  startOffset: number;
+  endNodePath: string;
+  endOffset: number;
+};
+
+
 const adjacentPages = ref<any[]>([])
 let _htmlCache = {}
 let _styleValueCache = {}
