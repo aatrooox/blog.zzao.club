@@ -59,7 +59,8 @@
             ref="acticleWrap">
             <ClientOnly>
               <transition appear @enter="commentEnter" @before-enter="commentBeforeEnter" @leave="commentLeave">
-                <div class="page-btns absolute opacity-0 bg-cyan-600/90 rounded-sm px-2 py-1 flex items-center gap-2"
+                <div
+                  class="page-btns absolute opacity-0 bg-zinc-800/90 text-zinc-100 dark:bg-zinc-200/90 dark:text-zinc-800 rounded-sm px-2 py-1 flex items-center gap-2"
                   v-if="commentIconPosition.top !== 0 || commentIconPosition.left !== 0"
                   :style="{ top: commentIconPosition.top + 'px', left: commentIconPosition.left + 'px' }">
                   <Icon class="cursor-pointer page-operation-btn" name="icon-park-outline:comments" size="1.5em"
@@ -222,7 +223,7 @@ const commentEnter = (el) => {
           delay: 0
         },
         opacity: '1',
-        duration: 300,
+        duration: 400,
         delay: (_, i) => i * 50,
         ease: 'inOutCirc',
         onComplete: () => {
