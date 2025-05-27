@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.5.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.5.1...v1.5.2)
+
+### 🚀 Enhancements
+
+- 优化展示和动画效果 ([7133bbf](https://github.com/aatrooox/blog.zzao.club/commit/7133bbf))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.5.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.5.0...v1.5.1)
