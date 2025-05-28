@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v1.6.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.5.4...v1.6.0)
+
+### 🚀 Enhancements
+
+- 新增注解表以及为文章添加注解的相关逻辑 ([5569d71](https://github.com/aatrooox/blog.zzao.club/commit/5569d71))
+
+### 🏡 Chore
+
+- 优化样式 ([077bef4](https://github.com/aatrooox/blog.zzao.club/commit/077bef4))
+- 序列化选中元素数据 ([847d212](https://github.com/aatrooox/blog.zzao.club/commit/847d212))
+- 使用 gemini 完成 range 数据划线逻辑 ([2f7d3b0](https://github.com/aatrooox/blog.zzao.club/commit/2f7d3b0))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.5.4
 
 [compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v1.5.3...v1.5.4)
