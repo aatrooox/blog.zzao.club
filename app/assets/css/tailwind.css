@@ -220,7 +220,6 @@ body {
   height: 0;
 }
 
-.highlight {
-  text-decoration: underline;
-    background-color: yellow; /* 可选：背景色增强可读性 [[7]] */
+.highlighted-selection {
+  text-decoration: underline oklch(60.9% 0.126 221.723) wavy 2px;
 }

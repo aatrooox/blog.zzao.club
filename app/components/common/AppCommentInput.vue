@@ -6,7 +6,8 @@
         <Input placeholder="邮箱" v-model="visitorEmail" type="email"></Input>
         <Input placeholder="你的主页" v-model="visitorWebsite"></Input>
       </div>
-      <div class="text-sm pb-2" v-else>Hi，{{ userStore.user.nickname || userStore.user.username }}。欢迎评论👏</div>
+      <div class="text-sm pb-2" v-else-if="showHello">Hi，{{ userStore.user.nickname || userStore.user.username }}。欢迎评论👏
+      </div>
       <div class="visitor-quick-btns flex gap-2 py-2" v-show="!userStore.isLogin && visitorEmail">
         <div class="items-top flex space-x-2">
           <Checkbox id="terms2" disabled v-model="allowEmailNotify" />
@@ -16,23 +17,17 @@
         </div>
       </div>
       <Textarea class="w-full" id="over_label" autoResize v-model="comment" :rows="rows"
-        @value-change="emit('value-change', comment)" maxlength="256" ref="commentInputRef" />
+        @value-change="emit('value-change', comment)" @click.stop maxlength="256" ref="commentInputRef" />
       <div class="btns flex justify-between items-center pt-2">
         <div class="left flex items-center gap-2">
-
-          <span class="text-xs text-zinc-400">最多256字符</span>
-
-          <span class="text-xs text-zinc-400">
-            所有人可以回复
-          </span>
-
+          <span class="text-xs text-zinc-400">{{ inputTip }}</span>
         </div>
         <div class="right flex gap-2">
           <Button size="sm" variant="outline" @click="cancelSend">
-            <Icon name="icon-park-outline:close-one"></Icon><span>取消</span>
+            <Icon name="icon-park-outline:close-one"></Icon><span>{{ cancelBtnText }}</span>
           </Button>
           <Button size="sm" variant="secondary" @click="sendComment">
-            <Icon name="icon-park-outline:send"></Icon><span>发送</span>
+            <Icon name="icon-park-outline:send"></Icon><span>{{ submitBtnText }}</span>
           </Button>
         </div>
       </div>
@@ -40,6 +35,8 @@
   </ClientOnly>
 </template>
 <script lang="ts" setup>
+import type { CommentData } from '@nuxtjs/mdc'
+
 const emit = defineEmits(['value-change', 'send', 'cancel'])
 const userStore = useUserStore()
 const emojiPopover = ref(null)
@@ -51,13 +48,22 @@ const visitorName = ref('')
 const visitorEmail = ref('')
 const visitorWebsite = ref('')
 const allowEmailNotify = ref(false)
+
 // 是否显示标签列表
 // 当前输入的标签在输入内容的位置
 const searchTagIndex = ref<number[]>([]);
 //
 const inputTag = ref<string>('')
 // type 在哪里评论， target 评论的对象
-const { type = 'comment', target = '' } = defineProps<{ type?: string, target?: string }>()
+const {
+  type = 'comment',
+  target = '',
+  showHello = true,
+  submitBtnText = '发送',
+  cancelBtnText = '取消',
+  inputTip = '最多256字符，所有人可以回复'
+} = defineProps<{ type?: string, target?: string, showHello?: boolean, submitBtnText?: string, cancelBtnText?: string, inputTip?: string }>()
+
 const selectedCity = ref();
 const tags = ref();
 
@@ -159,16 +165,18 @@ const clear = () => {
 const sendComment = () => {
   const tags = extractTags(comment.value);
 
-
-  // comment.value = removeTagsFromTextarea(comment.value);
-  if (comment.value) emit('send', {
-    content: comment.value, tags, visitor: {
+  const data: CommentData = {
+    content: comment.value,
+    tags,
+    visitor: {
       name: visitorName.value,
       email: visitorEmail.value,
       website: visitorWebsite.value,
       allowEmailNotify: allowEmailNotify.value
     }
-  })
+  }
+  // comment.value = removeTagsFromTextarea(comment.value);
+  if (comment.value) emit('send', data)
   clear()
 }
 

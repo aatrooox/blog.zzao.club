@@ -20,11 +20,16 @@ export const useUserStore = defineStore('user', () => {
     return user.value.role === 'visitor'
   })
 
+  const isSuperAdmin = computed(() => {
+    return user.value.role === 'superAdmin'
+  })
+
   return {
     user: skipHydrate(user),
     setUser,
     isLogin,
     isVisitor,
+    isSuperAdmin,
     logout
   }
 })

@@ -213,3 +213,19 @@ export async function upsertAccessToken(userId: string) {
 
   return tokenInfo
 }
+
+export async function verifyUserRole(userId: string, allRoles=['superAdmin']) {
+  const userData = await prisma.user.findUnique({
+    where: {
+      id: userId
+    }
+  })
+  console.log(`userData?.role`, userData?.role)
+  // 如果不包含所需要的权限
+  if (!allRoles.includes(userData?.role ?? '')) {
+    console.log(` 无权限`, )
+    return false
+  }
+
+  return true
+}

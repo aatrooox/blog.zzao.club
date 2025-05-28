@@ -83,10 +83,8 @@ model BlogComment {
   content      String
   create_ts    DateTime         @default(now())
   updated_ts   DateTime         @updatedAt
-  type         String           @default("article") // article / memo / blog / paragraph
-  startAnchor  String? // 选中文本的前15个字符
-  endAnchor    String? // 选中文本的后15个字符
-  fullText     String? // 完整的选中文本（用于校验）
+  type         String           @default("article") // article / memo / blog / paragraph(引用段落评论) 
+  quoteContent String? // 引用内容
   article_id   String?
   user_id      String?
   user_info    User?            @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -97,6 +95,18 @@ model BlogComment {
   memo_info    BlogMemo?        @relation(fields: [memo_id], references: [id])
 
   @@map("blog_comment")
+}
+
+// 博客文章注解，用于解释某个名词或者语义 （仅限一个 p 标签内）
+model BlogExplain {
+  id         String   @id @default(uuid(7))
+  create_ts  DateTime @default(now())
+  updated_ts DateTime @updatedAt
+  text       String // 对应的名词和文本
+  content    String // 注解内容
+  article_id String
+
+  @@map("blog_explain")
 }
 
 // 博客 二级评论表

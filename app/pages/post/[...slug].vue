@@ -57,6 +57,7 @@
           </ClientOnly>
           <div class="article-warp relative flex flex-col max-w-full w-full box-border md:px-20 lg:px-60 2xl:px-10"
             ref="acticleWrap">
+            <!-- 选中文字的悬浮气泡 -->
             <ClientOnly>
               <transition appear @enter="commentEnter" @before-enter="commentBeforeEnter" @leave="commentLeave">
                 <div
@@ -67,8 +68,9 @@
                     @click.stop="handleCommentPragph" />
                   <Icon class="cursor-pointer page-operation-btn" name="material-symbols:image-arrow-up-rounded"
                     size="1.5em" @click.stop="handleCommentPragph" />
-                  <Icon class="cursor-pointer page-operation-btn" name="icon-park-outline:comments" size="1.5em"
-                    @click.stop="applySelectedText" />
+                  <Icon class="cursor-pointer page-operation-btn"
+                    name="material-symbols:stylus-fountain-pen-outline-rounded" size="1.5em"
+                    @click="isOpenDrawer = true" />
                 </div>
               </transition>
             </ClientOnly>
@@ -76,7 +78,6 @@
             <div
               class="fixed-title text-lg font-bold text-center w-full overflow-hidden text-ellipsis h-12 leading-12 sticky top-0 transition-all delay-200 bg-white/90 dark:bg-zinc-900/80 md:text-xl"
               v-if="navBarStore.navBar?.isHidden"> {{ page?.title }}</div>
-            <!-- <pre> {{ rects }}</pre> -->
             <article ref="curMdContentRef" class="content-wrap w-full max-w-full md:flex-1 !md:max-w-2xl">
               <ContentRenderer :value="page?.body" class="!w-full !max-w-full">
               </ContentRenderer>
@@ -113,6 +114,22 @@
               </div>
 
             </ClientOnly>
+
+            <!-- 作者添加注解 v-model:open="isOpen"-->
+            <Drawer :dismissible="true" v-model:open="isOpenDrawer">
+              <DrawerContent>
+                <DrawerHeader>
+                  <DrawerTitle>
+
+                  </DrawerTitle>
+                </DrawerHeader>
+                <div class="border-box px-4 pb-8 md:px-20">
+                  <QuoteComment :content="selectedText?.text ?? ''" :article-id="page?.id"
+                    @close="isOpenDrawer = false">
+                  </QuoteComment>
+                </div>
+              </DrawerContent>
+            </Drawer>
           </div>
         </div>
       </div>
@@ -140,7 +157,9 @@
 
 <script setup lang="ts">
 import { EffectCssAttrs, camelCaseToHyphen, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs, customTagCssAttrs } from '@/config/richText';
+import type { CommentData } from '@nuxtjs/mdc';
 import { Prisma, type User } from '@prisma/client';
+import type { Visitor } from '~~/types/blog';
 
 type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{
   include: { user_info: true, _count: true, sub_comments: { include: { user_info: true } } }
@@ -163,6 +182,7 @@ const likeCount = ref(0)
 const isLiked = ref(false)
 const comments = ref<BlogCommentWithUserInfo[]>([])
 const isDefer = ref(true)
+const isOpenDrawer = ref(false)
 
 const commentIconPosition = computed(() => {
   if (text.value.trim().length) {
@@ -176,7 +196,7 @@ const commentIconPosition = computed(() => {
       if (range) {
         const rectList = range.getClientRects();
 
-        selectedText.value = serializeSelection(range)
+        selectedText.value = serializeSelection(text.value)
 
         if (rectList.length > 0) {
           const firstRect = rectList[0];
@@ -194,7 +214,7 @@ const commentIconPosition = computed(() => {
 
 
     return {
-      top: (rects?.value?.[0]?.top || 0) - 110 + navBarStore.selectionScrollY,
+      top: (rects?.value?.[0]?.top || 0) - 50 + navBarStore.selectionScrollY + (rects?.value?.[0]?.height || 0),
       left
     }
   } else {
@@ -259,271 +279,18 @@ const handleCommentPragph = () => {
 }
 
 const applySelectedText = () => {
-  underlineSavedSelection(selectedText.value)
+  // underlineSavedSelection(selectedText.value)
 }
-function serializeSelection(range) {
-  if (!range) return {}
-  console.log('range =>', range)
-  // 获取起始和结束节点路径及偏移量
-  const startNodePath = getNodeXPath(range.startContainer);
-  const endNodePath = getNodeXPath(range.endContainer);
-
+// 选中时及时保存当前文字
+function serializeSelection(text?: string) {
+  if (!text) return {}
   return {
-    startNodePath,
-    startOffset: range.startOffset,
-    endNodePath,
-    endOffset: range.endOffset
+    text: text
   }
 }
 
-function getNodeXPath(node) {
-  const path: string[] = [];
-
-  // 如果是文本节点，则定位到它的父元素，并记录它是第几个文本子节点
-  if (node.nodeType === Node.TEXT_NODE) {
-    let index = 0;
-    let sibling = node.previousSibling;
-
-    while (sibling) {
-      if (sibling.nodeType === Node.TEXT_NODE && sibling.textContent.trim()) {
-        index++;
-      }
-      sibling = sibling.previousSibling;
-    }
-
-    const parentPath = getNodeXPath(node.parentNode); // 递归获取父元素路径
-    path.unshift(`${parentPath}/text()[${index + 1}]`);
-  } else if (node.nodeType === Node.ELEMENT_NODE) {
-    // 元素节点，计算它是同级同名元素中的第几个
-    let index = 0;
-    let sibling = node.previousElementSibling;
-
-    while (sibling) {
-      if (sibling.tagName === node.tagName) {
-        index++;
-      }
-      sibling = sibling.previousElementSibling;
-    }
-
-    const parentPath = node.parentNode ? getNodeXPath(node.parentNode) : '';
-    if (parentPath) {
-      path.unshift(`${parentPath}/${node.tagName.toLowerCase()}[${index + 1}]`);
-    } else {
-      path.unshift(`/${node.tagName.toLowerCase()}[${index + 1}]`);
-    }
-  }
-
-  return path.join('');
-}
-
-// selection-utils.ts
-
-export type SerializedSelection = {
-  startNodePath: string;
-  startOffset: number;
-  endNodePath: string;
-  endOffset: number;
-};
-
-function getNodeByXPath(path: string, contextNode: Node = document): Node | null {
-  const result = document.evaluate(path, contextNode, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-  return result.singleNodeValue;
-}
-
-/**
- * Wraps a portion of a TextNode with a styled <span>.
- * @param textNode The text node to modify.
- * @param start The start offset in the text node.
- * @param end The end offset in the text node.
- */
-function wrapTextNodePortion(textNode: Text, start: number, end: number): void {
-  if (start >= end) return; // Nothing to wrap
-
-  const range = document.createRange();
-  try {
-    range.setStart(textNode, start);
-    range.setEnd(textNode, end);
-  } catch (e) {
-    console.error("Error setting range for text node portion:", e, { textNode, start, end });
-    return;
-  }
-
-  const span = document.createElement('span');
-  span.style.textDecoration = 'underline';
-  // 或者使用 CSS class: span.className = 'highlighted-selection';
-
-  try {
-    // surroundContents is generally preferred as it's cleaner.
-    // It will split the textNode and wrap the specified part.
-    range.surroundContents(span);
-  } catch (e) {
-    console.warn("surroundContents failed, trying fallback for text node:", textNode, e);
-    // Fallback: Manually extract, wrap, and insert.
-    // This can be more robust if surroundContents has issues with the range.
-    try {
-      const selectedTextFragment = range.extractContents(); // Extracts the content
-      span.appendChild(selectedTextFragment);
-      range.insertNode(span); // Inserts the span at the range's original start
-    } catch (fallbackError) {
-      console.error("Fallback for wrapping text node portion also failed:", fallbackError);
-    }
-  }
-}
-// gemini2.5-pro-preview
-function underlineSavedSelection(data: SerializedSelection): void {
-  const startNode = getNodeByXPath(data.startNodePath);
-  const endNode = getNodeByXPath(data.endNodePath);
-
-  if (!startNode || !endNode) {
-    console.error("Could not find start or end node for selection.", {
-      startPath: data.startNodePath,
-      endPath: data.endNodePath
-    });
-    return;
-  }
-
-  const selectionRange = document.createRange();
-  try {
-    selectionRange.setStart(startNode, data.startOffset);
-    selectionRange.setEnd(endNode, data.endOffset);
-  } catch (e) {
-    console.error("Error setting initial selection range:", e, { data, startNode, endNode });
-    return;
-  }
-
-  if (selectionRange.collapsed) {
-    console.log("Selection is collapsed, nothing to underline.");
-    return; // No text selected
-  }
-
-  // Operations to perform: { node: Text, start: number, end: number }
-  // These operations define which part of which original text node to underline.
-  const ops: Array<{ node: Text; start: number; end: number }> = [];
-
-  // Use NodeIterator to find all text nodes within the common ancestor of the range.
-  // We only care about text nodes that are actually part of the selection.
-  const commonAncestor = selectionRange.commonAncestorContainer;
-  const nodeIterator = document.createNodeIterator(
-    commonAncestor,
-    NodeFilter.SHOW_TEXT, // Only consider text nodes
-    {
-      acceptNode: (node) => {
-        // Check if the node intersects with the selectionRange.
-        // This is a broad check; specific parts are determined later.
-        if (selectionRange.intersectsNode(node)) {
-          return NodeFilter.FILTER_ACCEPT;
-        }
-        return NodeFilter.FILTER_REJECT;
-      }
-    }
-  );
-
-  let iterNode: Node | null;
-  while ((iterNode = nodeIterator.nextNode())) {
-    const textNode = iterNode as Text;
-
-    // Determine the precise start and end offsets for this specific textNode
-    // based on whether it's the startNode, endNode, or an intermediate node of the selection.
-
-    // Create a temporary range for the current text node to compare boundaries
-    const currentTextNodeRange = document.createRange();
-    currentTextNodeRange.selectNodeContents(textNode);
-
-    // Skip if textNode is entirely outside the selectionRange
-    // (NodeIterator's intersectsNode should handle this, but double check boundaries)
-    if (selectionRange.compareBoundaryPoints(Range.END_TO_START, currentTextNodeRange) >= 0) {
-      // selectionRange ends before currentTextNodeRange starts
-      continue;
-    }
-    if (selectionRange.compareBoundaryPoints(Range.START_TO_END, currentTextNodeRange) <= 0) {
-      // selectionRange starts after currentTextNodeRange ends
-      continue;
-    }
-
-    // At this point, textNode is at least partially within selectionRange.
-    let opStart = 0;
-    let opEnd = textNode.length;
-
-    // If this textNode is where the selection starts
-    if (startNode.nodeType === Node.TEXT_NODE && textNode === startNode) {
-      opStart = data.startOffset;
-    } else if (selectionRange.compareBoundaryPoints(Range.START_TO_START, currentTextNodeRange) > 0) {
-
-    }
 
 
-    // If this textNode is where the selection ends
-    if (endNode.nodeType === Node.TEXT_NODE && textNode === endNode) {
-      opEnd = data.endOffset;
-    } else if (selectionRange.compareBoundaryPoints(Range.END_TO_END, currentTextNodeRange) < 0) {
-
-    }
-
-    if (textNode === startNode && startNode.nodeType === Node.TEXT_NODE) {
-      opStart = data.startOffset;
-    } else if (selectionRange.compareBoundaryPoints(Range.START_TO_START, currentTextNodeRange) > 0) {
-      // selectionRange starts somewhere within this textNode
-      const tempRange = document.createRange();
-      tempRange.selectNodeContents(textNode);
-      tempRange.setStart(selectionRange.startContainer, selectionRange.startOffset);
-      opStart = tempRange.startOffset; // This is tricky, relative to what?
-
-    }
-
-
-
-    if (textNode === endNode && endNode.nodeType === Node.TEXT_NODE) {
-      opEnd = data.endOffset;
-    } else if (selectionRange.compareBoundaryPoints(Range.END_TO_END, currentTextNodeRange) < 0) {
-      // selectionRange ends somewhere within this textNode.
-      // The effective end for this node is its full length if it's not the actual endNode.
-    }
-
-
-    // Final check for opStart and opEnd for the current textNode
-    // If selectionRange.startContainer is this textNode, opStart is selectionRange.startOffset
-    // else if selectionRange starts before this node, opStart is 0
-    // else (selectionRange starts after this node starts), opStart is where selectionRange starts IN this node (complex)
-    // Simplified:
-    opStart = (textNode === selectionRange.startContainer && selectionRange.startContainer.nodeType === Node.TEXT_NODE) ? selectionRange.startOffset : 0;
-    // If selectionRange starts before this node, then opStart for this node is 0.
-    if (selectionRange.compareBoundaryPoints(Range.START_TO_START, currentTextNodeRange) < 0) {
-      opStart = 0;
-    }
-
-
-    opEnd = (textNode === selectionRange.endContainer && selectionRange.endContainer.nodeType === Node.TEXT_NODE) ? selectionRange.endOffset : textNode.length;
-    // If selectionRange ends after this node, then opEnd for this node is its length.
-    if (selectionRange.compareBoundaryPoints(Range.END_TO_END, currentTextNodeRange) > 0) {
-      opEnd = textNode.length;
-    }
-
-
-    if (opStart < opEnd) { // Only add if there's a valid segment to wrap
-      ops.push({ node: textNode, start: opStart, end: opEnd });
-    }
-  }
-
-  // Sort ops in reverse document order. This is crucial for DOM modifications.
-  // Nodes later in the document are processed first.
-  // For the same node, segments with larger start offsets (later parts) are processed first.
-  ops.sort((a, b) => {
-    const pos = b.node.compareDocumentPosition(a.node);
-    if (pos & Node.DOCUMENT_POSITION_FOLLOWING) { // b follows a (b is later in doc)
-      return -1; // Process b first
-    }
-    if (pos & Node.DOCUMENT_POSITION_PRECEDING) { // b precedes a (b is earlier in doc)
-      return 1;  // Process a first
-    }
-    // Same node, sort by start offset descending (process end of node first)
-    return b.start - a.start;
-  });
-
-  // Apply operations
-  for (const op of ops) {
-    wrapTextNodePortion(op.node, op.start, op.end);
-  }
-}
 
 
 
@@ -743,11 +510,9 @@ const copyLink = async () => {
   await navigator.clipboard.writeText('https://zzao.club' + route.fullPath);
   toast.add({ message: '已复制链接!' })
 }
-const createComment = async (data) => {
+const createComment = async (data: CommentData) => {
   if (!userStore.user.id) {
-    const res = await $api.post<{ user: User, token: string }>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId(), visitorName: data.visitor.name, visitorEmail: data.visitor.email, visitorWebsite: data.visitor.website })
-    userStore.setUser(res.data.user)
-    tokenStore.setToken(res.data.token)
+    await createVistorID(data.visitor as Visitor)
   }
   const res = await $api.post('/api/v1/comment/create', {
     article_id: page.value?.id,
