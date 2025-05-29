@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.7.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.6.0...v1.7.0)
+
+### 🚀 Enhancements
+
+- 纯前端实现注解内容展示; ([b870bfc](https://github.com/aatrooox/blog.zzao.club/commit/b870bfc))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.6.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.5.4...v1.6.0)
