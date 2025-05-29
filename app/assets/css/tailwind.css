@@ -220,6 +220,77 @@ body {
   height: 0;
 }
 
-.highlighted-selection {
+.highlight-explain-selection {
   text-decoration: underline oklch(60.9% 0.126 221.723) wavy 2px;
+  position: relative;
+  cursor: pointer;
+}
+
+/* 气泡提示样式 */
+.explain-tooltip {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* 定位在文本上方 */
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 500px;
+    @apply bg-amber-100;
+    color: #333;
+    text-align: left;
+    border-radius: 6px;
+    padding: 10px;
+    min-width: 200px;
+    max-width: 300px;
+    width: max-content;
+    max-height: 500px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.4s, visibility 0.4s;
+    font-size: 14px;
+    line-height: 1.4;
+    border: 1px solid #ddd;
+    -webkit-user-select: none;
+    -ms-user-select: none;  
+    user-select: none;  
+}
+
+.explain-content {
+  width: 100%;
+  overflow-y: auto; /* 纵向超出时显示滚动条 */
+  max-height: 476px; /* 最大高度减去内边距 */
+  font-size: 14px;
+  font-weight: 800;
+  word-break: nowrap;
+}
+/* 气泡箭头 */
+.explain-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -8px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+    @apply border-t-amber-100;
+}
+
+/* 显示气泡 */
+.highlight-explain-selection:hover .explain-tooltip,
+.highlight-explain-selection.active .explain-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.highlight-explain-selection::after {
+  content: " ";
+  /* width: 8px;
+  height: 8px;
+  font-weight: bold;
+  border-radius: 50%;
+  background-color: oklch(60.9% 0.126 221.723);
+  position: absolute;
+  right: -8px;
+  top: -6px; */
 }

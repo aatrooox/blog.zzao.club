@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
 
   const data = await prisma.blogExplain.findMany({
     where: {
-      article_id: id
+      article_id: decodeURIComponent(id)
     }
   })
 

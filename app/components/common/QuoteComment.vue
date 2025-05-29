@@ -8,7 +8,7 @@ const {
   articleId
 } = defineProps<{ content: string, articleId: string }>()
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'success'])
 
 const createQuoteComment = async (comment: CommentData) => {
   if (!articleId) {
@@ -29,7 +29,7 @@ const createQuoteComment = async (comment: CommentData) => {
   if (!res.error) {
     toast.add({ type: 'success', message: '已添加注解' })
     umami.track('explain', { page: articleId, isOk: true });
-    emit('close')
+    emit('success')
   }
 }
 </script>
