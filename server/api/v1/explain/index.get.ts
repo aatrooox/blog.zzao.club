@@ -2,19 +2,23 @@ import prisma from "~~/server/utils/prisma"
 
 export default defineEventHandler(async (event) => {
   // 文章id
-  const id = getRouterParam(event, 'id')
+  // const id = getRouterParam(event, 'id')
+  const schema = z.object({
+    id: z.string()
+  })
+  const query = await useSafeValidatedQuery(event, schema)
 
-  if (!id) {
+  if (!query.success) {
     throw createError({
       statusCode: 400,
-      message: '无 article_id'
+      statusMessage: (query as any).message ?? '参数错误'
     })
   }
   
 
   const data = await prisma.blogExplain.findMany({
     where: {
-      article_id: decodeURIComponent(id)
+      article_id: decodeURIComponent(query.data.id)
     }
   })
 

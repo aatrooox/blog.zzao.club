@@ -592,7 +592,7 @@ function handleSubmitExplain() {
 }
 // 初始化注释内容
 const initExplain = async () => {
-  const res = await $api.get(`/api/v1/explain/${encodeURIComponent(page.value?.id ?? '')}`);
+  const res = await $api.get(`/api/v1/explain?id=${encodeURIComponent(page.value?.id ?? '')}`);
   if (!res.error) {
     const explains = res.data;
     const container = curMdContentRef.value
