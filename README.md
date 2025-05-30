@@ -1,6 +1,6 @@
 # 博客站
 
-一个基于 [Nuxt@3.16.2](https://nuxt.com/)、[NuxtContent@3.4.0](https://content.nuxt.com/)、[shadcn/vue](https://www.shadcn-vue.com/)、[inspira-ui](https://inspira-ui.com/components) 的全栈站点
+一个基于 [Nuxt@3.17.2](https://nuxt.com/)、[NuxtContent@3.4.0](https://content.nuxt.com/)、[shadcn/vue](https://www.shadcn-vue.com/)、[inspira-ui](https://inspira-ui.com/components) 的全栈站点
 
 ## 功能
 
@@ -132,3 +132,12 @@ pnpm release:major
 .eot 文件：使用 format('embedded-opentype')
 .svg 文件：使用 format('svg')
 ```
+
+### Nuxt 交流群
+
+- 小群 （少于 50 人）
+- 分享 Nuxt 相关高质量资料
+- 探讨 Nuxt 的各种问题
+- 分享自己在做的项目
+
+![](https://img.zzao.club/article/202505301015267.png)

@@ -55,7 +55,7 @@
               </div>
             </div>
           </ClientOnly>
-          <div class="article-warp relative flex flex-col max-w-full w-full box-border md:px-20 lg:px-60 2xl:px-10"
+          <div class="article-warp relative flex flex-col max-w-full w-full px-6 box-border md:px-20 lg:px-60 2xl:px-10"
             ref="acticleWrap">
             <!-- 选中文字的悬浮气泡 -->
             <ClientOnly>
