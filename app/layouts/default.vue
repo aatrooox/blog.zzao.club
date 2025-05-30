@@ -1,17 +1,12 @@
 <template>
-  <div class="h-full box-border max-w-7xl px-4 lg:w-6xl md:w-3xl m-auto bg-grid-dashed overflow-y-auto" ref="scrollWrap"
+  <div class="h-full box-border max-w-7xl px-4 lg:w-5xl md:w-3xl m-auto bg-grid-dashed overflow-y-auto" ref="scrollWrap"
     v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]">
     <Toaster position="top-right" richColors></Toaster>
     <Icon name="twemoji:up-arrow" class="fixed right-2 bottom-2 z-[50] md:right-10 md:bottom-6 cursor-pointer"
       size="2em" v-if="showScrollTopBtn" @click="scrollToTop"></Icon>
-    <div class="m-auto flex gap-5 box-border">
-      <div class="w-[100%] md:w-[100%] lg:w-[100%] h-full">
-        <AppMenuBar></AppMenuBar>
-        <slot />
-      </div>
-      <div class="hidden sticky top-4 h-screen">
-        <!-- <AppMsgFlow></AppMsgFlow> -->
-      </div>
+    <div class="w-full box-border">
+      <AppMenuBar></AppMenuBar>
+      <slot />
     </div>
   </div>
 

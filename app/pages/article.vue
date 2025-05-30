@@ -16,8 +16,7 @@
       <transition-group tag="div" class="left-pages w-full md:flex-1 flex flex-col gap-6">
         <template v-for="page of (data as any[]).filter((_, index) => index % 2 === 0)" :key="page.path">
           <div class="group">
-            <div
-              class="box-border transition-all duration-200 rounded-lg bg-white dark:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-600 border border-zinc-100 dark:border-zinc-700">
+            <div class="article-post-item">
               <PagePanel :page="page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0">
               </PagePanel>
             </div>
@@ -28,8 +27,7 @@
       <div class="right-pages w-full md:flex-1 flex flex-col gap-6">
         <template v-for="page of (data as any[]).filter((_, index) => index % 2 === 1)" :key="page.path">
           <div class="group">
-            <div
-              class="box-border transition-all duration-200 rounded-lg bg-white dark:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-200 dark:hover:shadow-zinc-600 border border-zinc-100 dark:border-zinc-700">
+            <div class="article-post-item">
               <PagePanel :page="page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0">
               </PagePanel>
             </div>

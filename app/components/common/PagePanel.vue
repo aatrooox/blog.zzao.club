@@ -3,8 +3,10 @@
     <div class="flex flex-col gap-3">
       <div class="flex flex-col gap-2">
         <NuxtLink :to="page.path"
-          class="text-xl font-bold hover:text-primary-600 dark:hover:text-primary-400 transition-colors line-clamp-2 leading-tight  ">
+          class="text-xl font-bold group-hover:underline underline-offset-4 decoration-dotted dark:hover:text-primary-400 transition-colors line-clamp-2 leading-tight  ">
           {{ page.title }}
+          <Icon name="material-symbols:web-traffic-rounded"
+            class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out" />
         </NuxtLink>
         <div class="flex flex-wrap gap-1.5">
           <template v-if="page.versions">
@@ -23,11 +25,11 @@
 
       <div class="flex items-center gap-4 text-xs text-zinc-500 dark:text-zinc-400">
         <div class="flex items-center gap-1">
-          <i class="i-carbon-time"></i>
+          <Icon name="material-symbols:nest-clock-farsight-analog-outline-rounded"></Icon>
           {{ checkDate(page.date) ? formatDate(page.date) : '' }}
         </div>
         <div v-if="checkUpdate(page.lastmod, page.date)" class="flex items-center gap-1">
-          <i class="i-carbon-update"></i>
+          <Icon name="material-symbols:update-rounded"></Icon>
           {{ updateDateFromNow(page.lastmod || page?.meta?.lastmod) + '更新' }}
         </div>
         <Button variant="ghost" text size="sm" v-if="like">

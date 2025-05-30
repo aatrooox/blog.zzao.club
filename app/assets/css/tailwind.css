@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 .mdc-prose {
-  @apply prose prose-zinc prose-p:text-zinc-600 dark:prose-p:text-zinc-300 dark:prose-invert prose-pre:bg-zinc-100 dark:prose-pre:bg-zinc-800 dark:text-zinc-200 dark:prose-strong:text-zinc-200 dark:prose-blockquote:text-zinc-300 prose-code:font-bold prose-code:text-cyan-600 prose-p:text-lg
+  @apply prose prose-zinc prose-p:text-zinc-600 dark:prose-p:text-zinc-300 dark:prose-invert prose-pre:bg-zinc-100 dark:prose-pre:bg-zinc-800 dark:text-zinc-200 dark:prose-strong:text-zinc-200 dark:prose-blockquote:text-zinc-300 prose-code:font-bold prose-code:text-cyan-600 prose-p:text-lg max-w-full;
 }
 
 /* 针对page的prose颜色配置 */
@@ -203,6 +203,7 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'LXGWS', sans-serif;
+  font-size: 16px;
   overflwow: hidden;
 }
 body {
@@ -293,4 +294,9 @@ body {
   position: absolute;
   right: -8px;
   top: -6px; */
+}
+
+
+.article-post-item {
+  @apply box-border transition-all duration-300 rounded-lg bg-white/60 dark:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-200 hover:border-solid hover:bg-white dark:hover:shadow-zinc-600 border border-zinc-100 border-dashed dark:border-zinc-700
 }

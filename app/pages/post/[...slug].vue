@@ -1,6 +1,5 @@
 <template>
   <div class="pb-10 m-auto mb-4 sm:rounded-lg">
-    <main class="w-full max-w-full relative flex justify-center gap-4">
       <div class="relative w-full max-w-full">
         <!-- 底部固定的操作栏 -->
         <ClientOnly>
@@ -31,10 +30,10 @@
           </div>
         </ClientOnly>
 
-        <div class="mdc-prose flex !max-w-full" v-if="page">
+        <div class="mdc-prose flex w-full" v-if="page">
           <!-- 左侧点赞评论操作栏 -->
           <ClientOnly>
-            <div class="flex-col gap-8 px-10 h-80 hidden md:flex fixed top-28 left-[2%]">
+            <div class="flex-col gap-8 h-80 hidden md:flex top-28 sticky">
               <div class="flex flex-col items-center cursor-pointer">
                 <Icon name="icon-park-outline:thumbs-up" size="1.5em" ref="likeIcon" @click="likePage" />
                 <span slot="badge">{{ likeCount }}</span>
@@ -55,8 +54,7 @@
               </div>
             </div>
           </ClientOnly>
-          <div class="article-warp relative flex flex-col max-w-full w-full px-6 box-border md:px-20 lg:px-60 2xl:px-10"
-            ref="acticleWrap">
+          <div class="article-wrap relative flex flex-col  flex-1 px-6 box-border overflow-x-auto" ref="articleWrap">
             <!-- 选中文字的悬浮气泡 -->
             <ClientOnly>
               <transition appear @enter="commentEnter" @before-enter="commentBeforeEnter" @leave="commentLeave">
@@ -76,10 +74,12 @@
             </ClientOnly>
             <!-- 悬浮标题栏 -->
             <div
-              class="fixed-title text-lg font-bold text-center w-full overflow-hidden text-ellipsis h-12 leading-12 sticky top-0 transition-all delay-200 bg-white/90 dark:bg-zinc-900/80 md:text-xl"
+              class="fixed-title text-lg font-bold text-center overflow-hidden text-ellipsis h-12 leading-12 sticky top-0 transition-all delay-200 bg-white/90 dark:bg-zinc-900/80 md:text-xl"
               v-if="navBarStore.navBar?.isHidden"> {{ page?.title }}</div>
-            <article ref="curMdContentRef" class="content-wrap w-full max-w-full md:flex-1 !md:max-w-2xl">
-              <ContentRenderer :value="page?.body" class="!w-full !max-w-full">
+
+            <!-- 文章内容 markdown -->
+            <article ref="curMdContentRef" class="content-wrap">
+              <ContentRenderer :value="page?.body">
               </ContentRenderer>
             </article>
             <!-- 相邻的文章 -->
@@ -131,27 +131,14 @@
               </DrawerContent>
             </Drawer>
           </div>
+
+          <ClientOnly>
+            <div class="sticky top-28 hidden lg:block h-[500px]">
+              <AppToc v-if="tocData && tocData.length" :toc-data="tocData" :active-id="activeTocId"></AppToc>
+            </div>
+          </ClientOnly>
         </div>
       </div>
-      <ClientOnly>
-        <div
-          class="version-info fixed h-[80px] right-0 lg:right-0 pc:right-10 xl:right-[1%] 2xl:right-[10%] top-[10%] w-[220px] hidden lg:flex box-border dark:text-zinc-500  lg:flex-col lg:gap-2"
-          v-if="page?.versions">
-          <div class="flex" v-for="v of page?.versions" :key="v">
-            <Badge :value="v" class=""></Badge>
-          </div>
-        </div>
-        <!-- <div
-          class="toc fixed h-[30px] right-0 lg:right-0 pc:right-10 xl:right-40 2xl:right-[15%] top-[20%] w-[220px] hidden lg:block box-border dark:text-zinc-500">
-          <Button v-tooltip.top="'复制到公众号[Alpha]'" @click="getInnerHTML" variant="primary" rounded size="small"
-            variant="text">
-            <Icon slot="icon" size="1.5em" name="icon-park-outline:wechat"></Icon>
-          </Button>
-        </div> -->
-        <AppToc v-if="tocData && tocData.length" :toc-data="tocData" :active-id="activeTocId"></AppToc>
-      </ClientOnly>
-
-    </main>
   </div>
 </template>
 
@@ -174,7 +161,7 @@ const clientjs = useClientjs()
 const route = useRoute();
 const activeTocId = ref('')
 const curMdContentRef = ref(null)
-const acticleWrap = templateRef('acticleWrap')
+const articleWrap = templateRef('articleWrap')
 const selectedText = ref()
 const { text, rects, ranges, selection } = useTextSelection()
 
@@ -200,7 +187,7 @@ const commentIconPosition = computed(() => {
 
         if (rectList.length > 0) {
           const firstRect = rectList[0];
-          const containerRect = acticleWrap.value?.getBoundingClientRect();
+          const containerRect = articleWrap.value?.getBoundingClientRect();
           const rectLeft = firstRect?.left ?? window.scrollX;
           if (containerRect) {
             left = rectLeft - containerRect.left;
