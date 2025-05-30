@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.7.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.7.1...v1.7.2)
+
+### 📖 Documentation
+
+- Readme ([0ed6ac9](https://github.com/aatrooox/blog.zzao.club/commit/0ed6ac9))
+
+### 🎨 Styles
+
+- 优化大量样式 ([1cb4eb3](https://github.com/aatrooox/blog.zzao.club/commit/1cb4eb3))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.7.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.7.0...v1.7.1)
