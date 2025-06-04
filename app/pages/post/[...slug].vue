@@ -1,144 +1,143 @@
 <template>
   <div class="pb-10 m-auto mb-4 sm:rounded-lg">
-      <div class="relative w-full max-w-full">
-        <!-- 底部固定的操作栏 -->
+    <div class="relative w-full max-w-full">
+      <!-- 底部固定的操作栏 -->
+      <ClientOnly>
+        <div
+          class="md:hidden page-fixed-footer fixed left-0 right-0 bottom-0 bg-white/10 dark:bg-zinc-800/10 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[49] !backdrop-blur-md !backdrop-opacity-90 ">
+          <div class="left flex gap-2">
+            <Button variant="ghost" text size="sm">
+              <Icon slot="icon" name="icon-park-outline:thumbs-up" ref="likeIcon" @click="likePage" />
+              <span slot="badge">{{ likeCount }}</span>
+            </Button>
+            <Button variant="ghost" text size="sm" @click="navigateTo('#评论区')">
+              <Icon name="icon-park-outline:comments">
+              </Icon>
+              <span slot="badge">{{ formatCommentCount }}</span>
+            </Button>
+            <Button variant="ghost" text size="sm" @click="copyLink">
+              <Icon name="material-symbols:share-reviews-outline-rounded"></Icon>
+            </Button>
+            <Button variant="ghost" text size="sm" @click="getInnerHTML">
+              <Icon slot="icon" name="icon-park-outline:wechat"></Icon>
+            </Button>
+          </div>
+          <div class="right pr-6 md:pr-0">
+            <Button label="返回" variant="secondary" @click="navigateTo('/article')">
+              <Icon name="icon-park-outline:back" slot="icon"></Icon>
+            </Button>
+          </div>
+        </div>
+      </ClientOnly>
+
+      <div class="mdc-prose flex w-full" v-if="page">
+        <!-- 左侧点赞评论操作栏 -->
         <ClientOnly>
-          <div
-            class="md:hidden page-fixed-footer fixed left-0 right-0 bottom-0 bg-white/10 dark:bg-zinc-800/10 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[49] !backdrop-blur-md !backdrop-opacity-90 ">
-            <div class="left flex gap-2">
-              <Button variant="ghost" text size="sm">
-                <Icon slot="icon" name="icon-park-outline:thumbs-up" ref="likeIcon" @click="likePage" />
-                <span slot="badge">{{ likeCount }}</span>
-              </Button>
-              <Button variant="ghost" text size="sm" @click="navigateTo('#评论区')">
-                <Icon name="icon-park-outline:comments">
+          <div class="flex-col gap-8 h-80 hidden md:flex top-28 sticky">
+            <div class="flex flex-col items-center cursor-pointer">
+              <Icon name="icon-park-outline:thumbs-up" size="1.5em" ref="likeIcon" @click="likePage" />
+              <span slot="badge">{{ likeCount }}</span>
+            </div>
+            <div class=" cursor-pointer">
+              <NuxtLink href="#评论区" class="flex flex-col items-center">
+                <Icon name="icon-park-outline:comments" size="1.5em">
                 </Icon>
                 <span slot="badge">{{ formatCommentCount }}</span>
-              </Button>
-              <Button variant="ghost" text size="sm" @click="copyLink">
-                <Icon name="material-symbols:share-reviews-outline-rounded"></Icon>
-              </Button>
-              <Button variant="ghost" text size="sm" @click="getInnerHTML">
-                <Icon slot="icon" name="icon-park-outline:wechat"></Icon>
-              </Button>
+              </NuxtLink>
             </div>
-            <div class="right pr-6 md:pr-0">
-              <Button label="返回" variant="secondary" @click="navigateTo('/article')">
-                <Icon name="icon-park-outline:back" slot="icon"></Icon>
-              </Button>
+            <div class="flex flex-col items-center cursor-pointer" @click="copyLink">
+              <Icon name="material-symbols:share-reviews-outline-rounded" size="1.5em"></Icon>
+            </div>
+            <div class="flex flex-col items-center cursor-pointer" @click="getInnerHTML" data-umami-event="wx-copy-btn">
+              <Icon slot="icon" name="icon-park-outline:wechat" size="1.5em"></Icon>
             </div>
           </div>
         </ClientOnly>
-
-        <div class="mdc-prose flex w-full" v-if="page">
-          <!-- 左侧点赞评论操作栏 -->
+        <div class="article-wrap relative flex flex-col  flex-1 px-6 box-border overflow-x-auto" ref="articleWrap">
+          <!-- 选中文字的悬浮气泡 -->
           <ClientOnly>
-            <div class="flex-col gap-8 h-80 hidden md:flex top-28 sticky">
-              <div class="flex flex-col items-center cursor-pointer">
-                <Icon name="icon-park-outline:thumbs-up" size="1.5em" ref="likeIcon" @click="likePage" />
-                <span slot="badge">{{ likeCount }}</span>
+            <transition appear @enter="commentEnter" @before-enter="commentBeforeEnter" @leave="commentLeave">
+              <div
+                class="page-btns absolute opacity-0 bg-zinc-800/90 text-zinc-100 dark:bg-zinc-200/90 dark:text-zinc-800 rounded-sm px-2 py-1 flex items-center gap-2"
+                v-if="commentIconPosition.top !== 0 || commentIconPosition.left !== 0"
+                :style="{ top: commentIconPosition.top + 'px', left: commentIconPosition.left + 'px' }">
+                <Icon class="cursor-pointer page-operation-btn" name="icon-park-outline:comments" size="1.5em"
+                  @click.stop="handleCommentPragph" />
+                <Icon class="cursor-pointer page-operation-btn" name="material-symbols:image-arrow-up-rounded"
+                  size="1.5em" @click.stop="handleCommentPragph" />
+                <Icon class="cursor-pointer page-operation-btn"
+                  name="material-symbols:stylus-fountain-pen-outline-rounded" size="1.5em"
+                  @click="isOpenDrawer = true" />
               </div>
-              <div class=" cursor-pointer">
-                <NuxtLink href="#评论区" class="flex flex-col items-center">
-                  <Icon name="icon-park-outline:comments" size="1.5em">
-                  </Icon>
-                  <span slot="badge">{{ formatCommentCount }}</span>
-                </NuxtLink>
-              </div>
-              <div class="flex flex-col items-center cursor-pointer" @click="copyLink">
-                <Icon name="material-symbols:share-reviews-outline-rounded" size="1.5em"></Icon>
-              </div>
-              <div class="flex flex-col items-center cursor-pointer" @click="getInnerHTML"
-                data-umami-event="wx-copy-btn">
-                <Icon slot="icon" name="icon-park-outline:wechat" size="1.5em"></Icon>
-              </div>
-            </div>
+            </transition>
           </ClientOnly>
-          <div class="article-wrap relative flex flex-col  flex-1 px-6 box-border overflow-x-auto" ref="articleWrap">
-            <!-- 选中文字的悬浮气泡 -->
-            <ClientOnly>
-              <transition appear @enter="commentEnter" @before-enter="commentBeforeEnter" @leave="commentLeave">
-                <div
-                  class="page-btns absolute opacity-0 bg-zinc-800/90 text-zinc-100 dark:bg-zinc-200/90 dark:text-zinc-800 rounded-sm px-2 py-1 flex items-center gap-2"
-                  v-if="commentIconPosition.top !== 0 || commentIconPosition.left !== 0"
-                  :style="{ top: commentIconPosition.top + 'px', left: commentIconPosition.left + 'px' }">
-                  <Icon class="cursor-pointer page-operation-btn" name="icon-park-outline:comments" size="1.5em"
-                    @click.stop="handleCommentPragph" />
-                  <Icon class="cursor-pointer page-operation-btn" name="material-symbols:image-arrow-up-rounded"
-                    size="1.5em" @click.stop="handleCommentPragph" />
-                  <Icon class="cursor-pointer page-operation-btn"
-                    name="material-symbols:stylus-fountain-pen-outline-rounded" size="1.5em"
-                    @click="isOpenDrawer = true" />
-                </div>
-              </transition>
-            </ClientOnly>
-            <!-- 悬浮标题栏 -->
-            <div
-              class="fixed-title text-lg font-bold text-center overflow-hidden text-ellipsis h-12 leading-12 sticky top-0 transition-all delay-200 bg-white/90 dark:bg-zinc-900/80 md:text-xl"
-              v-if="navBarStore.navBar?.isHidden"> {{ page?.title }}</div>
+          <!-- 悬浮标题栏 -->
+          <div
+            class="fixed-title text-lg font-bold text-center overflow-hidden text-ellipsis h-12 leading-12 sticky top-0 transition-all delay-200 bg-white/90 dark:bg-zinc-900/80 md:text-xl"
+            v-if="navBarStore.navBar?.isHidden"> {{ page?.title }}</div>
 
-            <!-- 文章内容 markdown -->
-            <article ref="curMdContentRef" class="content-wrap">
-              <ContentRenderer :value="page?.body">
-              </ContentRenderer>
-            </article>
-            <!-- 相邻的文章 -->
-            <ClientOnly v-if="adjacentPages.length">
-              <Separator class="my-1" label="END" />
-              <div class="flex justify-between text-xs py-4">
-                <div class="flex-1 flex items-center gap-1">
-                  <template v-if="adjacentPages[0]">
-                    <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em"></Icon>
-                    <NuxtLink class="!underline" :href="adjacentPages[0].path">{{ adjacentPages[0].title }}</NuxtLink>
-                  </template>
-                </div>
-                <div class="flex-1 text-right flex items-center justify-end gap-1">
-                  <NuxtLink class="!underline" :href="adjacentPages[1].path">{{ adjacentPages[1].title }}</NuxtLink>
-                  <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em"></Icon>
-                </div>
-              </div>
-            </ClientOnly>
-            <!-- 评论区 -->
-            <ClientOnly>
-              <div>
-                <template v-if="page?.body && !isDefer">
-                  <Separator label="END" />
-                  <div class="text-xl py-4" id="评论区">评论区</div>
-                  <AppCommentInput @send="createComment"></AppCommentInput>
-                  <div class="py-4"></div>
-                  <template v-for="comment in comments">
-                    <CommentViewPanel :comment="comment" @refresh="initComment"></CommentViewPanel>
-                  </template>
-
+          <!-- 文章内容 markdown -->
+          <article ref="curMdContentRef" class="content-wrap">
+            <ContentRenderer :value="page?.body">
+            </ContentRenderer>
+          </article>
+          <!-- 相邻的文章 -->
+          <ClientOnly v-if="adjacentPages.length">
+            <Separator class="my-1" label="END" />
+            <div class="flex justify-between text-xs py-4">
+              <div class="flex-1 flex items-center gap-1">
+                <template v-if="adjacentPages[0]">
+                  <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em"></Icon>
+                  <NuxtLink class="!underline" :href="adjacentPages[0].path">{{ adjacentPages[0].title }}</NuxtLink>
                 </template>
               </div>
-
-            </ClientOnly>
-
-            <!-- 作者添加注解 v-model:open="isOpen"-->
-            <Drawer :dismissible="true" v-model:open="isOpenDrawer">
-              <DrawerContent>
-                <DrawerHeader>
-                  <DrawerTitle>
-
-                  </DrawerTitle>
-                </DrawerHeader>
-                <div class="border-box px-4 pb-8 md:px-20">
-                  <QuoteComment :content="selectedText?.text ?? ''" :article-id="page?.id" @close="isOpenDrawer = false"
-                    @success="handleSubmitExplain">
-                  </QuoteComment>
-                </div>
-              </DrawerContent>
-            </Drawer>
-          </div>
-
-          <ClientOnly>
-            <div class="sticky top-28 hidden lg:block h-[500px]">
-              <AppToc v-if="tocData && tocData.length" :toc-data="tocData" :active-id="activeTocId"></AppToc>
+              <div class="flex-1 text-right flex items-center justify-end gap-1">
+                <NuxtLink class="!underline" :href="adjacentPages[1].path">{{ adjacentPages[1].title }}</NuxtLink>
+                <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em"></Icon>
+              </div>
             </div>
           </ClientOnly>
+          <!-- 评论区 -->
+          <ClientOnly>
+            <div>
+              <template v-if="page?.body && !isDefer">
+                <Separator label="END" />
+                <div class="text-xl py-4" id="评论区">评论区</div>
+                <AppCommentInput @send="createComment"></AppCommentInput>
+                <div class="py-4"></div>
+                <template v-for="comment in comments">
+                  <CommentViewPanel :comment="comment" @refresh="initComment"></CommentViewPanel>
+                </template>
+
+              </template>
+            </div>
+
+          </ClientOnly>
+
+          <!-- 作者添加注解 v-model:open="isOpen"-->
+          <Drawer :dismissible="true" v-model:open="isOpenDrawer">
+            <DrawerContent>
+              <DrawerHeader>
+                <DrawerTitle>
+
+                </DrawerTitle>
+              </DrawerHeader>
+              <div class="border-box px-4 pb-8 md:px-20">
+                <QuoteComment :content="selectedText?.text ?? ''" :article-id="page?.id" @close="isOpenDrawer = false"
+                  @success="handleSubmitExplain">
+                </QuoteComment>
+              </div>
+            </DrawerContent>
+          </Drawer>
         </div>
+
+        <ClientOnly>
+          <div class="sticky top-28 hidden lg:block h-[500px]">
+            <AppToc v-if="tocData && tocData.length" :toc-data="tocData" :active-id="activeTocId"></AppToc>
+          </div>
+        </ClientOnly>
       </div>
+    </div>
   </div>
 </template>
 
@@ -160,7 +159,7 @@ const navBarStore = useNavBarStore()
 const clientjs = useClientjs()
 const route = useRoute();
 const activeTocId = ref('')
-const curMdContentRef = ref(null)
+const curMdContentRef = templateRef('curMdContentRef')
 const articleWrap = templateRef('articleWrap')
 const selectedText = ref()
 const { text, rects, ranges, selection } = useTextSelection()
@@ -181,20 +180,33 @@ const commentIconPosition = computed(() => {
     if (selection?.value) {
       const range = selection?.value?.getRangeAt(0);
       if (range) {
-        const rectList = range.getClientRects();
 
-        selectedText.value = serializeSelection(text.value)
+        const startNode = range.startContainer;
+        const endNode = range.endContainer;
+        const targetElement = curMdContentRef.value
+        // 判断选中的文本是否完全包含在目标元素内
+        if (targetElement && targetElement?.contains(startNode) && targetElement?.contains(endNode)) {
+          const rectList = range.getClientRects();
 
-        if (rectList.length > 0) {
-          const firstRect = rectList[0];
-          const containerRect = articleWrap.value?.getBoundingClientRect();
-          const rectLeft = firstRect?.left ?? window.scrollX;
-          if (containerRect) {
-            left = rectLeft - containerRect.left;
-          } else {
-            left = rectLeft + window.scrollX;
+          selectedText.value = serializeSelection(text.value)
+
+          if (rectList.length > 0) {
+            const firstRect = rectList[0];
+            const containerRect = articleWrap.value?.getBoundingClientRect();
+            const rectLeft = firstRect?.left ?? window.scrollX;
+            if (containerRect) {
+              left = rectLeft - containerRect.left;
+            } else {
+              left = rectLeft + window.scrollX;
+            }
+          }
+        } else {
+          return {
+            top: 0,
+            left: 0
           }
         }
+
       }
     }
 
