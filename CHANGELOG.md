@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.7.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.7.2...v1.7.3)
+
+### 🩹 Fixes
+
+- 判断选中文字是否在文章内 ([23674a0](https://github.com/aatrooox/blog.zzao.club/commit/23674a0))
+
+### 🎨 Styles
+
+- 增加一些过渡动画 ([eb47f7f](https://github.com/aatrooox/blog.zzao.club/commit/eb47f7f))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.7.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.7.1...v1.7.2)
