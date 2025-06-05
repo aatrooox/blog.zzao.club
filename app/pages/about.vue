@@ -33,14 +33,6 @@
         <p><strong>为什么不选 NextJS xxx ...?</strong></p>
         <p>目前大部分工作量其实都是在写后端逻辑，前端框架的选择实在微不足道，因为不是受雇于人，所以我选择了上手最快的全栈框架</p>
       </div>
-      <div class="flex gap-4">
-        <template v-for="frame of frameworks">
-          <div class="border rounded-lg p-1 bg-background">
-            <AppImg :src="`https://imgx.zzao.club/001/${frame.version}?icon=[${frame.icon}]&format=svg`" :width="100">
-            </AppImg>
-          </div>
-        </template>
-      </div>
 
     </div>
   </div>

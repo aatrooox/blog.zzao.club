@@ -23,7 +23,7 @@
                 {{ `@${config.organization}` }}
               </Button>
               <span class="text-sm text-zinc-500 dark:text-zinc-400 font-normal">V{{ runtimeConfig.Z_BLOG_VERSION
-                }}</span>
+              }}</span>
             </div>
             <p class="mt-2 text-base text-zinc-600 dark:text-zinc-400">{{ config.desciption }}</p>
             <div class="flex flex-wrap gap-2 justify-center md:justify-start mt-3">
@@ -73,36 +73,39 @@
       </div>
 
       <div class="grid gap-2">
-        <template v-for="page of articles" :key="page.path">
-          <div class="group">
-            <div
-              class="p-3 rounded-lg bg-white dark:bg-zinc-800 border border-zinc-100 dark:border-zinc-700 hover:shadow-md hover:shadow-zinc-200 dark:hover:shadow-zinc-600 transition-all duration-200">
-              <div class="flex flex-col md:flex-row md:items-center gap-2">
-                <div class="flex items-center gap-2 flex-1">
-                  <Icon name="icon-park-outline:right"
-                    class="text-zinc-400 group-hover:text-primary-500 transition-colors"></Icon>
-                  <NuxtLink :to="page.path" class="flex-1 min-w-0">
-                    <div
-                      class="text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors truncate">
-                      {{ page.title }}
-                    </div>
-                    <div class="text-sm text-zinc-500 dark:text-zinc-400">
-                      {{ formatDate(page.date, '/') }}
-                    </div>
-                  </NuxtLink>
-                </div>
-                <div class="flex flex-wrap gap-1.5">
-                  <template v-if="page.versions">
-                    <Badge v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v">{{ v }}</Badge>
-                  </template>
-                  <template v-else>
-                    <Badge v-for="tag of page.tags" :key="tag">{{ tag }}</Badge>
-                  </template>
+        <transition-group name="page-transition" appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
+          <template v-for="page of articles" :key="page.path">
+            <div class="group home-post-item">
+              <div
+                class="p-3 rounded-lg bg-white/50 dark:bg-zinc-800 group-hover:border-zinc-100 dark:border-zinc-700 hover:shadow-md hover:shadow-zinc-200 dark:hover:shadow-zinc-600 transition-all duration-200">
+                <div class="flex flex-col md:flex-row md:items-center gap-2">
+                  <div class="flex items-center gap-2 flex-1">
+                    <Icon name="icon-park-outline:right"
+                      class="text-zinc-400 group-hover:text-primary-500 transition-all group-hover:translate-x-2 group-hover:translate-y-[-10px]">
+                    </Icon>
+                    <NuxtLink :to="page.path" class="flex-1 min-w-0">
+                      <div
+                        class="text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors truncate">
+                        {{ page.title }}
+                      </div>
+                      <div class="text-sm text-zinc-500 dark:text-zinc-400">
+                        {{ formatDate(page.date, '/') }}
+                      </div>
+                    </NuxtLink>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5">
+                    <template v-if="page.versions">
+                      <Badge v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v">{{ v }}</Badge>
+                    </template>
+                    <template v-else>
+                      <Badge v-for="tag of page.tags" :key="tag">{{ tag }}</Badge>
+                    </template>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </template>
+          </template>
+        </transition-group>
       </div>
     </div>
 
@@ -153,11 +156,53 @@ interface Page {
   versions?: string[];
   showTitle: string;
 }
+
+// const { animateEnter, animateLeave, animateBeforeEnter } = useTransition()
 // console.log(`count`, count, maxPage)
 const { data: articles } = await useAsyncData('articles', () => {
   return queryCollection('content').order('date', 'DESC').limit(5).select('path', 'title', 'showTitle', 'date', 'tags', 'versions', 'lastmod').all()
 })
 
+const onEnter = (el) => {
+  animate(el, {
+    opacity: '1',
+    duration: 100,
+    delay: 200,
+    ease: 'inOut',
+    onComplete: () => {
+      animate('.home-post-item', {
+        // scale: [0.5, 1, 1.5, 1],
+        x: [
+          { to: '20px', ease: 'outExpo', duration: 200 },
+          { to: 0, ease: 'outBounce', duration: 200, delay: 150 }
+        ],
+        opacity: '1',
+        duration: 400,
+        delay: (_, i) => i * 50,
+        ease: 'inOutCirc',
+        onComplete: () => {
+
+        }
+      })
+    }
+  })
+}
+const onBeforeEnter = (el) => {
+  el.style.opacity = '0'
+}
+
+const onLeave = (el, done) => {
+  animate(el, {
+    scale: [1, 1.1, 1],
+    opacity: '0',
+    duration: 200,
+    delay: 300,
+    ease: 'inOut',
+    onComplete: () => {
+      done && done()
+    }
+  })
+}
 const toggle = (event, socail: any) => {
   curSocial.value = socail;
   if (socail.url) {

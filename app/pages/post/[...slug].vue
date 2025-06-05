@@ -105,9 +105,11 @@
                 <div class="text-xl py-4" id="评论区">评论区</div>
                 <AppCommentInput @send="createComment"></AppCommentInput>
                 <div class="py-4"></div>
-                <template v-for="comment in comments">
-                  <CommentViewPanel :comment="comment" @refresh="initComment"></CommentViewPanel>
-                </template>
+                <transition-group appear @enter="commentEnter" @leave="commentLeave" @before-enter="commentBeforeEnter">
+                  <template v-for="comment in comments">
+                    <CommentViewPanel :comment="comment" @refresh="initComment"></CommentViewPanel>
+                  </template>
+                </transition-group>
 
               </template>
             </div>

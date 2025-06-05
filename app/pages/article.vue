@@ -13,10 +13,11 @@
       </Button>
     </div>
     <div class="flex flex-wrap gap-6" v-if="data">
-      <transition-group tag="div" class="left-pages w-full md:flex-1 flex flex-col gap-6">
+      <transition-group tag="div" class="left-pages w-full md:flex-1 flex flex-col gap-6" appear @enter="onEnter"
+        @leave="onLeave" @before-enter="onBeforeEnter">
         <template v-for="page of (data as any[]).filter((_, index) => index % 2 === 0)" :key="page.path">
-          <div class="group">
-            <div class="article-post-item">
+          <div class="group article-post-item">
+            <div class="">
               <PagePanel :page="page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0">
               </PagePanel>
             </div>
@@ -25,14 +26,16 @@
       </transition-group>
 
       <div class="right-pages w-full md:flex-1 flex flex-col gap-6">
-        <template v-for="page of (data as any[]).filter((_, index) => index % 2 === 1)" :key="page.path">
-          <div class="group">
-            <div class="article-post-item">
-              <PagePanel :page="page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0">
-              </PagePanel>
+        <transition-group appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
+          <template v-for="page of (data as any[]).filter((_, index) => index % 2 === 1)" :key="page.path">
+            <div class="group article-post-item">
+              <div class="">
+                <PagePanel :page="page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0">
+                </PagePanel>
+              </div>
             </div>
-          </div>
-        </template>
+          </template>
+        </transition-group>
       </div>
 
     </div>
@@ -72,6 +75,40 @@ const selectedTags = computed(() => {
   }
 })
 
+const onEnter = (el) => {
+  animate(el, {
+    opacity: [
+      { to: '1', delay: 100, duration: 100 }
+    ],
+    filter: [
+      { to: 'blur(0px)', delay: 200, duration: 100 }
+    ],
+    duration: 200,
+    // delay: 200,
+    ease: 'inOut',
+  })
+}
+const onBeforeEnter = (el) => {
+  el.style.opacity = '0'
+  animate(el, {
+    filter: 'blur(5px)',
+    duration: 100,
+    ease: 'inOutCirc',
+  })
+}
+
+const onLeave = (el, done) => {
+  animate(el, {
+    scale: [1, 1.1, 1],
+    opacity: '0',
+    duration: 200,
+    delay: 300,
+    ease: 'inOut',
+    onComplete: () => {
+      done && done()
+    }
+  })
+}
 const filter_tags = computed(() => {
   if (queryTag.value) {
     const query_tags = queryTag.value as string
