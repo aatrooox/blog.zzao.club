@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.8.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.7.3...v1.8.0)
+
+### 🚀 Enhancements
+
+- 集成 umami api 获取页面浏览量 ([2ba79ce](https://github.com/aatrooox/blog.zzao.club/commit/2ba79ce))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.7.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.7.2...v1.7.3)
