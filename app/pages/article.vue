@@ -176,7 +176,6 @@ const queryPageviews = async () => {
 
   if (res.data) {
     postViewsMap.value = res.data
-    console.log(`pages`, data.value)
   }
 }
 onMounted(() => {

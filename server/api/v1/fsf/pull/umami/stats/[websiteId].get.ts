@@ -29,7 +29,6 @@ export default defineCachedEventHandler(async (event) => {
       umamiCreatedAt = +res.user.createdAt
     }
   }
-  console.log(`umamiToken: `, umamiToken)
   const data = await $fetch<any[]>(`${umamiHost}/api/websites/${websiteId}/metrics`, { method: 'GET', query: {
     startAt: umamiCreatedAt, 
     endAt: +new Date(),

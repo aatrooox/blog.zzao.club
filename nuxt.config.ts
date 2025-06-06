@@ -74,8 +74,10 @@ export default defineNuxtConfig({
       ]
     }
   },
-  // mdc 0.11 及以下版本可能需要
   vite: {
+    esbuild: {
+      drop: ['console', 'debugger']
+    },
     plugins: [
       tailwindcss()
     ],
