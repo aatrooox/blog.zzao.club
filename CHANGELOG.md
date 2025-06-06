@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.8.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.8.0...v1.8.1)
+
+### 🏡 Chore
+
+- Vite config ([e1fa78d](https://github.com/aatrooox/blog.zzao.club/commit/e1fa78d))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.8.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.7.3...v1.8.0)
