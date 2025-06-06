@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-6 max-w-7xl box-border mx-auto sm:px-4">
-    <div class="flex flex-wrap gap-2 sticky py-2 px-2 top-10 rounded-md bg-white/90 dark:bg-zinc-800/80">
+    <div class="flex flex-wrap gap-2 sticky py-2 px-2 top-10 z-[55] rounded-md bg-white/90 dark:bg-zinc-800/80">
       <Button v-for="tag in tags" :key="tag.value" :variant="selectedTags?.value === tag.value ? 'secondary' : 'link'"
         :class="[
           'text-sm px-3 py-1.5 rounded-md transition-all duration-200',
@@ -18,7 +18,8 @@
         <template v-for="page of (data as any[]).filter((_, index) => index % 2 === 0)" :key="page.path">
           <div class="group article-post-item">
             <div class="">
-              <PagePanel :page="page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0">
+              <PagePanel :page="page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0"
+                :view="postViewsMap[page.path] || 0">
               </PagePanel>
             </div>
           </div>
@@ -30,7 +31,8 @@
           <template v-for="page of (data as any[]).filter((_, index) => index % 2 === 1)" :key="page.path">
             <div class="group article-post-item">
               <div class="">
-                <PagePanel :page="page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0">
+                <PagePanel :page="page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0"
+                  :view="postViewsMap[page.path] || 0">
                 </PagePanel>
               </div>
             </div>
@@ -64,6 +66,7 @@ const tags = computed(() => appConfig.tags.map((tag, index) => ({ name: tag, val
 const route = useRoute();
 const articleLikeMap = ref<Record<string, number>>({})
 const articleCommentMap = ref<Record<string, number>>({})
+const postViewsMap = ref<Record<string, number>>({})
 const queryTag = computed(() => route.query.tag)
 
 const selectedTags = computed(() => {
@@ -167,10 +170,19 @@ const queryArticleCommentStat = async () => {
   }
 
 }
+
+const queryPageviews = async () => {
+  const res = await $api.get<Record<string, number>>('/api/v1/fsf/pull/umami/stats/ede2b0ce-e029-41f7-9d56-be35fc07ba6c')
+
+  if (res.data) {
+    postViewsMap.value = res.data
+    console.log(`pages`, data.value)
+  }
+}
 onMounted(() => {
   queryArticleInteractivity();
   queryArticleCommentStat();
-
+  queryPageviews();
   selectTag(selectedTags.value)
 })
 

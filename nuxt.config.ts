@@ -168,6 +168,9 @@ export default defineNuxtConfig({
     baseURL: 'https://zzao.club',
     imgHost: 'https://img.zzao.club',
     jwtSecret: 'your_jwt_secret',
+    umamiHost: 'https://umami.abc.com',
+    umamiUser: 'admin',
+    umamiPass: 'your_umami_password',
     public: {
       ContentVersion: '3.0.0',
       Z_BLOG_VERSION: appVersion,

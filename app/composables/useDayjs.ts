@@ -33,7 +33,7 @@ export default function useDayjs() {
     if (split) {
       return dayjs(date).format(`YYYY${split}MM${split}DD`)
     } 
-    return dayjs(date).format('YYYY年MM月DD日')
+    return dayjs(date).format('YYYY/MM/DD')
   }
   
   const formatFullDate = () => {

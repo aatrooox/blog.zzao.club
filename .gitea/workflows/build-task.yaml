@@ -24,6 +24,9 @@ jobs:
           NUXT_NODEMAILER_PORT: ${{ secrets.NUXT_NODEMAILER_PORT }}
           NUXT_NODEMAILER_AUTH_USER: ${{ secrets.NUXT_NODEMAILER_AUTH_USER }}
           NUXT_NODEMAILER_AUTH_PASS: ${{ secrets.NUXT_NODEMAILER_AUTH_PASS }}
+          NUXT_UMAMI_HOST: ${{  secrets.NUXT_UMAMI_HOST }}
+          NUXT_UMAMI_USER: ${{ secrets.NUXT_UMAMI_USER }}
+          NUXT_UMAMI_PASS: ${{ secrets.NUXT_UMAMI_PASS }}
         run: NODE_OPTIONS="--max-old-space-size=4080" pnpm build
       - name: Copy and Build
         env: 
@@ -36,6 +39,9 @@ jobs:
           NUXT_NODEMAILER_PORT: ${{ secrets.NUXT_NODEMAILER_PORT }}
           NUXT_NODEMAILER_AUTH_USER: ${{ secrets.NUXT_NODEMAILER_AUTH_USER }}
           NUXT_NODEMAILER_AUTH_PASS: ${{ secrets.NUXT_NODEMAILER_AUTH_PASS }}
+          NUXT_UMAMI_HOST: ${{  secrets.NUXT_UMAMI_HOST }}
+          NUXT_UMAMI_USER: ${{ secrets.NUXT_UMAMI_USER }}
+          NUXT_UMAMI_PASS: ${{ secrets.NUXT_UMAMI_PASS }}
         run: |
           rm -rf /root/web/blog3/*
           mkdir -p /root/web/blog3/prisma

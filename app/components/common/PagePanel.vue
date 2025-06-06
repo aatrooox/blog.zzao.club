@@ -28,18 +28,34 @@
           <Icon name="material-symbols:nest-clock-farsight-analog-outline-rounded"></Icon>
           {{ checkDate(page.date) ? formatDate(page.date) : '' }}
         </div>
-        <div v-if="checkUpdate(page.lastmod, page.date)" class="flex items-center gap-1">
-          <Icon name="material-symbols:update-rounded"></Icon>
-          {{ updateDateFromNow(page.lastmod || page?.meta?.lastmod) + '更新' }}
+        <template v-if="checkUpdate(page.lastmod, page.date)">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <div class="flex items-center gap-1">
+                  <Icon name="material-symbols:update-rounded"></Icon>
+                  {{ updateDateFromNow(page.lastmod || page?.meta?.lastmod) }}
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>上次更新时间</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </template>
+        <div class="flex items-center gap-1">
+          <Icon name="icon-park-outline:eyes"></Icon>
+          {{ formatNumberForView(view || 0) }}
         </div>
-        <Button variant="ghost" text size="sm" v-if="like">
-          <Icon slot="icon" name="icon-park-outline:thumbs-up" />
-          <span slot="badge" class="!text-zinc-500 !text-sm">{{ like || 0 }}</span>
-        </Button>
-        <Button variant="ghost" text size="sm" v-if="comment">
-          <Icon slot="icon" name="icon-park-outline:comments" />
-          <span slot="badge" class="!text-zinc-500 !text-sm">{{ comment || 0 }}</span>
-        </Button>
+        <div class="flex items-center gap-1" v-if="like">
+          <Icon name="icon-park-outline:thumbs-up"></Icon>
+          {{ formatNumberForView(like || 0) }}
+        </div>
+        <div class="flex items-center gap-1" v-if="comment">
+          <Icon name="icon-park-outline:comments"></Icon>
+          {{ formatNumberForView(comment || 0) }}
+        </div>
+
       </div>
     </div>
   </div>
@@ -60,6 +76,6 @@ interface Page {
   showTitle?: string;
   versions?: string[];
 }
-defineProps<{ page: Page, like: number, comment: number }>()
+defineProps<{ page: Page, like: number, comment: number, view: number }>()
 </script>
 <style lang="less" scoped></style>

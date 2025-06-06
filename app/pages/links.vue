@@ -97,7 +97,7 @@ const addLink = async () => {
 
   console.log(propsObj)
   const res = await $api.post('/api/v1/link/add', propsObj)
-  const fsfData = await $api.post('/api/v1/fsf/mail/send', {
+  const fsfData = await $api.post('/api/v1/fsf/push/mail/send', {
     name: "测试人员",
     text: '你好，我试试邮件\n 可以么？\n 测试一下',
     to: 'gnakzz@qq.com'
