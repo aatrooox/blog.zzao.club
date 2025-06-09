@@ -149,4 +149,4 @@ pnpm release:major
 - 探讨 Nuxt 的各种问题
 - 分享自己在做的项目
 
-![](https://img.zzao.club/article/202505301015267.png)
+![](githubAssets/wxgroup.png)
