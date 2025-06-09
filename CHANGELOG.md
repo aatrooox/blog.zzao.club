@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v1.8.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.8.1...v1.8.2)
+
+### 🏡 Chore
+
+- 微信群二维码 ([9e94f88](https://github.com/aatrooox/blog.zzao.club/commit/9e94f88))
+- Seo ([2575743](https://github.com/aatrooox/blog.zzao.club/commit/2575743))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.8.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.8.0...v1.8.1)
