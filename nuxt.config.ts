@@ -70,6 +70,10 @@ export default defineNuxtConfig({
         {
           name: 'msvalidate.01',
           content: 'A7FB0FAB6DCCC738B8B3D60179F1496C'
+        },
+        {
+          name: 'keywords',
+          content: 'Nuxt4,Nuxt3,Nitro,NuxtContent,Content,Obsidian,Vue,Vue3,Vue2,Node,博客站,前端,前端工程化,前端架构,Node,Hono,爬虫,副业'
         }
       ]
     }

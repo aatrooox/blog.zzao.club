@@ -42,16 +42,12 @@ const { $api } = useNuxtApp();
 const toast = useGlobalToast()
 
 useHead({
-  title: '友链｜早早集市',
+  title: '关于｜早早集市',
   meta: [
     {
       name: 'description',
-      content: '早早集市｜博客站｜前端｜全栈｜前端架构｜Node｜Nuxt｜Hono｜Bun|副业',
-    },
-    {
-      name: 'keywords',
-      content: '早早集市,博客站,NuxtContent,Content,Obsidian,Vue,Vue3,Vue2,Node,前端,前端工程化,前端架构,Node,Nuxt3,Hono,爬虫,副业,生活感悟',
-    },
+      content: '点击了解什么是早早集市，包含本站全栈开发过程以及作者的开发愿景',
+    }
   ],
 })
 

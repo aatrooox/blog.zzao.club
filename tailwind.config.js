@@ -34,14 +34,14 @@ export default {
             },
             blockquote: {
               // borderInlineStartWidth: 0,
-              '& > p': {
-                '&::before': {
-                  content: `'「'!important`,
-                },
-                '&::after': {
-                  content: `'」'!important`,
-                }
-              }
+              // '& > p': {
+              //   '&::before': {
+              //     content: `'「'!important`,
+              //   },
+              //   '&::after': {
+              //     content: `'」'!important`,
+              //   }
+              // }
             },
             p: {
               lineHeight: '2',

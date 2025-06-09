@@ -51,10 +51,6 @@ useHead({
       name: 'description',
       content: '设置个人信息',
     },
-    {
-      name: 'keywords',
-      content: '早早集市,博客站,前端,前端工程化,前端架构,Node,Nuxt,Hono,副业',
-    },
   ],
 })
 
