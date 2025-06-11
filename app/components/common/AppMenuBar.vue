@@ -93,7 +93,7 @@ const modeIcon = computed(() => {
 
 
 const items = ref([
-{
+  {
       label: '首页',
       icon: 'twemoji:wedding',
       route: '/'
@@ -102,6 +102,11 @@ const items = ref([
       label: '文章',
       icon: 'twemoji:page-facing-up',
       route: '/article',
+  },
+  {
+      label: 'Memoz',
+      icon: 'twemoji:page-facing-up',
+      route: '/memo',
   },
   {
       label: '友链',

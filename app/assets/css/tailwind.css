@@ -15,7 +15,7 @@
 
 /* 针对memo的prose颜色配置 */
 .mdc-memo-prose {
-  @apply prose prose-zinc prose-p:leading-5 prose-p:mb-2 dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-red-100 dark:prose-code:bg-red-200 prose-code:text-zinc-800 dark:prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300
+  @apply prose prose-zinc prose-p:leading-5 prose-p:mb-2 dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-cyan-100 dark:prose-code:bg-cyan-600 prose-code:text-zinc-800 dark:prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300
 }
 
 .hover-shadow-cyan {

@@ -7,3 +7,9 @@ export interface AppFetchError extends FetchError {
     group: string
   }
 }
+
+export interface ApiResponse<T = any> {
+  data: T,
+  message?: string,
+  error?: any
+}

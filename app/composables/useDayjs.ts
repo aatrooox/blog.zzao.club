@@ -24,16 +24,17 @@ export default function useDayjs() {
     return checkDate(updateDate) && dayjs(updateDate).diff(createDate, 'day') > 0
   }
   
+  
   /**
    * 格式化日期: 2222年2月2日
    * @param date 日期字符串
    * @returns 
    */
-  const formatDate = (date: string | Date, split?: string) => {
+  const formatDate = (date: string | Date, split?: string, short?: boolean) => {
     if (split) {
-      return dayjs(date).format(`YYYY${split}MM${split}DD`)
+      return dayjs(date).format(short ? `YY${split}MM${split}DD` : `YYYY${split}MM${split}DD`)
     } 
-    return dayjs(date).format('YYYY/MM/DD')
+    return dayjs(date).format(short ? 'YYYY/MM/DD' : 'YY/MM/DD')
   }
   
   const formatFullDate = () => {

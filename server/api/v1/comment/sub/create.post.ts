@@ -1,17 +1,5 @@
 import prisma from "~~/server/utils/prisma"
 
-// content              String
-//   create_ts            DateTime @default(now())
-//   updated_ts           DateTime @updatedAt
-//   comment_id           Int
-//   // 如果一级评论删除了，则删除所有二级评论
-//   comment_info         Comments @relation(fields: [comment_id], references: [id], onDelete: Cascade)
-//   reply_sub_comment_id Int?
-//   user_id              Int
-//   user_info            User     @relation(fields: [user_id], references: [id], onDelete: NoAction)
-//   memo_id              Int?
-//   likes                Likes[]
-
 export default defineEventHandler(async (event) => {
 
   let  body

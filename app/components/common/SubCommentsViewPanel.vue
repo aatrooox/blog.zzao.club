@@ -22,7 +22,7 @@
             <template v-if="comment.reply_sub_comment_id">
               <!-- 如果是回复其他评论 -->
               <span>@</span><span class="font-bold pr-1">{{ getSubCommentUsernameById(comment.reply_sub_comment_id)
-              }}</span>
+                }}</span>
             </template>
             {{ comment.content }}
           </div>
@@ -159,8 +159,8 @@ const delComment = async (subComment: Props['comment']) => {
 }
 
 const fetchSubComments = async () => {
-  const { data, error, status, refresh } = await $http.post<any[]>('/api/v1/comment/sub/list', { comment_id: props.comment.id }, { server: false, watch: [userStore] })
-  subComments.value = data.value?.data ?? []
+  // const { data, error, status, refresh } = await $http.post<any[]>('/api/v1/comment/sub/list', { comment_id: props.comment.id }, { server: false, watch: [userStore] })
+  // subComments.value = data.value?.data ?? []
 }
 const likeMemo = async (className: string) => {
   console.log(`classNaem`, className)

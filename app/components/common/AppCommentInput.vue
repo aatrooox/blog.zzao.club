@@ -17,7 +17,8 @@
         </div>
       </div>
       <Textarea class="w-full" id="over_label" autoResize v-model="comment" :rows="rows"
-        @value-change="emit('value-change', comment)" @click.stop maxlength="256" ref="commentInputRef" />
+        @value-change="emit('value-change', comment)" @click.stop maxlength="256" ref="commentInputRef"
+        :placeholder="placeholder" />
       <div class="btns flex justify-between items-center pt-2">
         <div class="left flex items-center gap-2">
           <span class="text-xs text-zinc-400">{{ inputTip }}</span>
@@ -61,8 +62,9 @@ const {
   showHello = true,
   submitBtnText = '发送',
   cancelBtnText = '取消',
-  inputTip = '最多256字符，所有人可以回复'
-} = defineProps<{ type?: string, target?: string, showHello?: boolean, submitBtnText?: string, cancelBtnText?: string, inputTip?: string }>()
+  inputTip = '最多256字符，所有人可以回复',
+  placeholder = '说点什么吧！'
+} = defineProps<{ type?: string, target?: string, showHello?: boolean, submitBtnText?: string, cancelBtnText?: string, inputTip?: string, placeholder?: string }>()
 
 const selectedCity = ref();
 const tags = ref();
@@ -89,8 +91,8 @@ const label = computed(() => {
 })
 
 const initTagList = async (tag: string) => {
-  const { data } = await $http.get<any[]>('/api/v1/tag/list', { tag }, { key: 'tags - ' + inputTag.value, server: false })
-  tags.value = data.value?.data;
+  // const { data } = await $http.get<any[]>('/api/v1/tag/list', { tag }, { key: 'tags - ' + inputTag.value, server: false })
+  // tags.value = data.value?.data;
 }
 
 const rows = ref<number>(3)

@@ -1,10 +1,6 @@
 import type { UseFetchOptions } from 'nuxt/app'
 // 定义响应数据类型
-interface ApiResponse<T = any> {
-  data: T,
-  message?: string,
-  error?: any
-}
+import type { ApiResponse } from '~~/types/fetch'
 
 // 定义请求方法类型
 type HttpMethod = "get" | "post" | "put" | "delete" | "patch" | "head" | "connect" | "options" | "trace" | "GET" | "HEAD" | "PATCH" | "POST" | "PUT" | "DELETE" | "CONNECT" | "OPTIONS" | "TRACE" | undefined

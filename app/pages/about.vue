@@ -26,12 +26,13 @@
         <p>......</p>
         <h2 class="text-lg font-bold"># 技术</h2>
         <p>技术层面: 完全基于 Nuxt、Nitro、NuxtContent 自建，古法手工敲制。</p>
-        <p>部署 在<strong>海外[新加坡]轻量服务器[2H 8G Debian12]</strong>上</p>
+        <p>部署 在<strong>海外[新加坡]轻量服务器[2C 8G Debian12]</strong>上</p>
         <p>图片 目前用的是腾讯云对象存储+CDN</p>
         <p>文章 源于 Obsidian 的 Github 仓库，自动同步文章</p>
         <p>自动更新 基于 Gitea 的 workflow，定时更新文章</p>
         <p><strong>为什么不选 NextJS xxx ...?</strong></p>
-        <p>目前大部分工作量其实都是在写后端逻辑，前端框架的选择实在微不足道，因为不是受雇于人，所以我选择了上手最快的全栈框架</p>
+        <p>目前大部分工作量其实都是在写后端逻辑，前端框架的选择实在不值得考量，因为不是受雇于人，所以我选择了上手最快的全栈框架</p>
+        <p>实际使用下来，Nuxt为中小型项目服务，够用且好用</p>
       </div>
 
     </div>

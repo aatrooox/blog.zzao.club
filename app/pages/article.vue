@@ -174,6 +174,7 @@ const queryPageviews = async () => {
     postViewsMap.value = res.data
   }
 }
+
 onMounted(() => {
   queryArticleInteractivity();
   queryArticleCommentStat();
