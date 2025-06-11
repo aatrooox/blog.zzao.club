@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.9.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.8.2...v1.9.0)
+
+### 🚀 Enhancements
+
+- 新增 memoz(朋友圈) 页面及接口 ([2959ae9](https://github.com/aatrooox/blog.zzao.club/commit/2959ae9))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.8.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.8.1...v1.8.2)
