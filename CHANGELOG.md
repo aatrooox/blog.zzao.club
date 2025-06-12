@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.9.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.9.1...v1.9.2)
+
+### 🩹 Fixes
+
+- Oauth env config ([648fa94](https://github.com/aatrooox/blog.zzao.club/commit/648fa94))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.9.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.9.0...v1.9.1)
