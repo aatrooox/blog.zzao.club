@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.9.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.9.2...v1.9.3)
+
+### 🩹 Fixes
+
+- Gitea actions config ([3e46853](https://github.com/aatrooox/blog.zzao.club/commit/3e46853))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.9.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.9.1...v1.9.2)
