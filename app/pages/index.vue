@@ -140,7 +140,7 @@ const { formatDate } = useDayjs();
 
 console.log(`loggedIn`, loggedIn.value)
 // 登录成功后，同步github信息
-onMounted(async () => {
+watchEffect(async () => {
   if (loggedIn.value && route.query.login === 'github' && route.query.status === 'success') {
     const { data, error } = await $api.post('/api/v1/auth/connect/github', {
       id: user.value?.id,
@@ -157,6 +157,7 @@ onMounted(async () => {
     router.replace('/')
   }
 })
+
 interface Page {
   title?: string | undefined;
   path: string;

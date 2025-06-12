@@ -3,10 +3,12 @@ import type { User } from '@prisma/client'
 const { $api } = useNuxtApp()
 const userStore = useUserStore()
 const tokenStore = useTokenStore()
+const { clear } = useUserSession()
 const logout = async () => {
   await $api.post('/api/v1/user/logout')
   userStore.logout();
   tokenStore.setToken('')
+  clear()
 }
 
 </script>

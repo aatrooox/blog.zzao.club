@@ -13,7 +13,7 @@
 <script lang="ts" setup>
 import type { NuxtError } from '#app'
 const props = defineProps<{ error: NuxtError }>()
-
+const toast = useGlobalToast()
 const errMsg = computed(() => {
   switch (props.error?.statusCode) {
     case 404:
@@ -24,6 +24,15 @@ const errMsg = computed(() => {
       return '未知错误'
   }
 })
+
+// 如果是服务器错误，重定向到首页
+watch(props.error?.statusCode, (code) => {
+  if (code === 500) {
+    toast.error('服务器开错啦，请稍后再试')
+    clearError({ redirect: '/' })
+  }
+})
+
 const handleError = () => clearError({ redirect: '/' })
 
 </script>
