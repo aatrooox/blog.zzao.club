@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.9.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.9.0...v1.9.1)
+
+### 🚀 Enhancements
+
+- Oauth => github ([b793e38](https://github.com/aatrooox/blog.zzao.club/commit/b793e38))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.9.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.8.2...v1.9.0)
