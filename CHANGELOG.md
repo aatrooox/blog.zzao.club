@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.9.4
+
+[compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v1.9.3...v1.9.4)
+
+### 🩹 Fixes
+
+- Prerender page onMounted do not work (e5a90d2)
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.9.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.9.2...v1.9.3)
