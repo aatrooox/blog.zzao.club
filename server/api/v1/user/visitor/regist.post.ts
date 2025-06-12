@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
-    visitorId: z.number().or(z.string()).transform(v => v.toString()),
+    visitorId: z.number().or(z.string()).transform((v: string | number) => v.toString()),
     visitorName: z.string().optional(),
     visitorEmail: z.string().optional(),
     visitorWebsite: z.string().optional(),
@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
       id: visitorId,
       username,
       nickname,
-      password: 'null',
+      password: 'NEED_RESET_PASSWORD',
       email: visitorEmail,
       website: visitorWebsite,
       role,

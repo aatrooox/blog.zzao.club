@@ -207,14 +207,19 @@ html, body {
   overflwow: hidden;
 }
 body {
-  background-image: linear-gradient(90deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%), linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%);
-  background-size: 20px 20px;
+  /* background-image: linear-gradient(90deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%), linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%); */
+  /* background-image: url('/placeholder.svg'); */
+  /* background-repeat: repeat; */
+  /* background-size: 20px 20px; */
+  /* background-position: 0 0, 50px 0, 0 50px, 50px 50px; */
+
 }
 
 #__nuxt {
   width: 100%;
   height: 100%;
 }
+
 
 ::-webkit-scrollbar {
   width: 0;
@@ -299,4 +304,21 @@ body {
 
 .article-post-item {
   @apply box-border transition-all duration-300 rounded-lg bg-white/60 dark:bg-zinc-800 hover:shadow-lg hover:shadow-zinc-200 hover:border-solid hover:bg-white dark:hover:shadow-zinc-600 border border-zinc-100 border-dashed dark:border-zinc-700
+}
+
+
+@theme inline {
+  --animate-aurora: aurora 60s linear infinite;
+  @keyframes aurora {
+    from {
+      background-position:
+        50% 50%,
+        50% 50%;
+    }
+    to {
+      background-position:
+        350% 50%,
+        350% 50%;
+    }
+  }
 }

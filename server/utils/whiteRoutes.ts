@@ -4,6 +4,7 @@ export function getWhiteRoutes () {
     '/api/v1/user/logout',
     '/api/v1/user/regist',
     '/api/v1/user/visitor/regist',
+    '/api/v1/auth/connect/github',
     '/api/v1/link/add'
   ]
 }

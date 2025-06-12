@@ -1,6 +1,6 @@
 <template>
-  <div class="h-full box-border max-w-7xl px-4 lg:w-5xl md:w-3xl m-auto bg-grid-dashed overflow-y-auto" ref="scrollWrap"
-    v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]">
+  <div class="app-layout h-full box-border max-w-7xl px-4 lg:w-5xl md:w-3xl m-auto bg-grid-dashed overflow-y-auto"
+    ref="scrollWrap" v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]">
     <Toaster position="top-right" richColors></Toaster>
     <Icon name="twemoji:up-arrow" class="fixed right-2 bottom-2 z-[50] md:right-10 md:bottom-6 cursor-pointer"
       size="2em" v-if="showScrollTopBtn" @click="scrollToTop"></Icon>
@@ -8,6 +8,10 @@
       <AppMenuBar></AppMenuBar>
       <slot />
     </div>
+    <!-- <ClientOnly>
+      <InteractiveGridPattern :class="'[mask-image:radial-gradient(350px_circle_at_center,white,transparent)] -z-10'"
+        :width="40" :height="40" :squares="[80, 80]" squares-class-name="hover:fill-blue-500" />
+    </ClientOnly> -->
   </div>
 
 </template>

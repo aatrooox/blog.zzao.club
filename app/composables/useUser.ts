@@ -4,9 +4,13 @@ import type { User } from '@prisma/client'
 
 export const useUserStore = defineStore('user', () => {
   const user = useStorage<User | any>('blog/user', {});
-
+  const token = useStorage<string>('blog/token', '');
   const setUser = (userData: User) => {
     user.value = userData;
+  }
+
+  const setToken = (newToken: string) => {
+    token.value = newToken;
   }
   const logout = () => {
     user.value = {};
@@ -26,7 +30,9 @@ export const useUserStore = defineStore('user', () => {
 
   return {
     user: skipHydrate(user),
+    token: skipHydrate(token),
     setUser,
+    setToken,
     isLogin,
     isVisitor,
     isSuperAdmin,

@@ -13,26 +13,42 @@ export default defineEventHandler(async (event) => {
     })
   }
   const { username, password } = body.data
-  const user = await prisma.user.findUnique({
+
+  if (password === 'NEED_RESET_PASSWORD') {
+    throw createError({
+      statusCode: 400,
+      message: '未设置密码，请使用其他登录方式'
+    })
+  }
+
+  let user = await prisma.user.findUnique({
     where: {
       username
     }
   })
 
   if (!user) {
-    throw createError({
-      statusCode: 400,
-      message: '用户不存在'
+    // throw createError({
+    //   statusCode: 400,
+    //   message: '用户不存在'
+    // })
+    // 创建新用户
+    user = await prisma.user.create({
+      data: {
+        username,
+        password,
+        role: 'user',
+      }
     })
+  } else {
+    if (user.password !== password) {
+      throw createError({
+        status: 400,
+        statusText: '账号或密码错误'
+      })
+    }
   }
 
-  if (user.password !== password) {
-    throw createError({
-      status: 400,
-      statusText: '账号或密码错误'
-    })
-  }
- 
   const tokenInfo = await upsertAccessToken(user.id)
 
   return {

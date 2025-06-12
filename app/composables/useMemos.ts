@@ -10,6 +10,7 @@ export default function useMemos() {
     '/api/v1/memo/list',
     {
       immediate: false,
+      lazy: true
     }
   );
 

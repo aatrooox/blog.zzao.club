@@ -1,0 +1,10 @@
+ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - '@prisma/client'
+  - '@tailwindcss/oxide'
+  - clientjs
+  - esbuild
+  - sharp
+  - vue-demi
+onlyBuiltDependencies:
+  - better-sqlite3

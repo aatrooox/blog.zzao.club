@@ -111,7 +111,8 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'shadcn-nuxt',
     'vue-sonner/nuxt',
-    'nuxt-nodemailer'
+    'nuxt-nodemailer',
+    'nuxt-auth-utils'
   ],
   // 把 icon 和客户端捆绑在一起， 减少请求服务端
   icon: {
@@ -146,6 +147,10 @@ export default defineNuxtConfig({
     {
       path: '~/components/common',
       prefix: ''
+    },
+    {
+      path: '~/components/animate',
+      prefix: 'Animate'
     }
   ],
   nodemailer: {

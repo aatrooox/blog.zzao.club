@@ -4,7 +4,7 @@
     <DrawerContent>
       <DrawerHeader>
         <DrawerTitle>登录</DrawerTitle>
-        <DrawerDescription>登录后可以参与更多互动</DrawerDescription>
+        <DrawerDescription>登录后可以参与更多互动 (未注册的用户会注册后自动登录) </DrawerDescription>
       </DrawerHeader>
       <div class="form flex flex-col gap-4 px-4">
         <div class="flex items-center gap-2"><span class="inline-block w-20 text-right"> 用户名</span><Input
@@ -15,6 +15,7 @@
         </div>
       </div>
       <DrawerFooter class="flex flex-row justify-end">
+        <Button href="/api/v1/auth/github" as="a"> Github </Button>
         <DrawerClose>
           <Button @click="submit">登录</Button>
         </DrawerClose>
