@@ -9,26 +9,25 @@ export default defineEventHandler(async (event) => {
   if (!body.success) {
     throw createError({
       statusCode: 400,
-      message: JSON.stringify(body.error)
+      message: JSON.stringify(body.error),
     })
-  }  
-  let role = 'visitor'
+  }
+  const role = 'visitor'
   // 前端校验合法性
   const { visitorId, visitorName, visitorEmail, visitorWebsite } = body.data
 
-  let _user = await prisma.user.findUnique({
+  const _user = await prisma.user.findUnique({
     where: {
-      id: visitorId
-    }
+      id: visitorId,
+    },
   })
 
   // 点赞时触发，则创建一个游客用户
   // 评论时注册，则使用自定义用户名
   const username = `visitor${useNanoId(6)}`
   const nickname = visitorName || username
-  
 
-  if (_user) { 
+  if (_user) {
     const tokenInfo = await upsertAccessToken(_user.id)
     return {
       data: {
@@ -37,8 +36,8 @@ export default defineEventHandler(async (event) => {
       },
       message: '注册成功',
     }
-  } 
-  
+  }
+
   // 创建新用户 - 游客 游客不需要登录，依靠前端生成指纹来判断唯一性
   // 但相应的会无法参与某一部分互动
   const user = await prisma.user.create({
@@ -50,7 +49,7 @@ export default defineEventHandler(async (event) => {
       email: visitorEmail,
       website: visitorWebsite,
       role,
-    }
+    },
   })
 
   const tokenInfo = await upsertAccessToken(user.id)

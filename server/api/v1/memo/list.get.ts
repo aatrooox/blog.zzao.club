@@ -1,16 +1,17 @@
-import prisma from "~~/server/utils/prisma"
+import prisma from '~~/server/utils/prisma'
+
 export default defineEventHandler(async (event) => {
   const schema = z.object({
     page: z.string().optional().default('1').transform(Number),
     size: z.string().optional().default('50').transform(Number),
-    qc: z.string().optional().default('0').transform(Number)
+    qc: z.string().optional().default('0').transform(Number),
   })
   const query = await useSafeValidatedQuery(event, schema)
-  
+
   if (!query.success) {
     throw createError({
       statusCode: 400,
-      statusMessage: (query as any).message ?? '参数错误'
+      statusMessage: (query as any).message ?? '参数错误',
     })
   }
 
@@ -23,8 +24,8 @@ export default defineEventHandler(async (event) => {
     user_info: {
       select: {
         username: true,
-        avatar_url: true
-      }
+        avatar_url: true,
+      },
     },
     // 默认查询评论数量
     // _count: {
@@ -44,15 +45,15 @@ export default defineEventHandler(async (event) => {
         user_info: {
           select: {
             username: true,
-            avatar_url: true
-          }
+            avatar_url: true,
+          },
         },
         // _count: {
         //   select: {
         //     sub_comments: true
         //   }
         // }
-      }
+      },
     }
   }
 
@@ -61,23 +62,23 @@ export default defineEventHandler(async (event) => {
     select: {
       user_id: true,
       id: true,
-    }
+    },
   }
-  
+
   const memos = await prisma.blogMemo.findMany({
     skip,
     take,
     orderBy: [
       {
-        create_ts: 'desc'
-      }
+        create_ts: 'desc',
+      },
     ],
-    include: queryInclude
+    include: queryInclude,
   })
 
   console.log(`memos`, memos)
   return {
     data: memos,
-    msg: 'ok'
+    msg: 'ok',
   }
 })

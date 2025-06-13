@@ -1,9 +1,10 @@
 import typography from '@tailwindcss/typography'
+
 /** @type {import('tailwindcss').Config} */
 export default {
   // important: true,
   content: [
-    './app/**/*.{vue,js,ts}'
+    './app/**/*.{vue,js,ts}',
   ],
   plugins: [typography()],
   theme: {
@@ -12,12 +13,12 @@ export default {
         DEFAULT: {
           css: {
             'code::before': {
-              content: '""'  // 移除前引号
+              content: '""', // 移除前引号
             },
             'code::after': {
-              content: '""'  // 移除后引号
+              content: '""', // 移除后引号
             },
-            code: {
+            'code': {
               // backgroundColor: theme('colors.gray.100'),
               // color: theme('colors.orange.400'),
               fontWeight: 'normal',
@@ -32,7 +33,7 @@ export default {
               //   content: `''!important`
               // }
             },
-            blockquote: {
+            'blockquote': {
               // borderInlineStartWidth: 0,
               // '& > p': {
               //   '&::before': {
@@ -43,11 +44,11 @@ export default {
               //   }
               // }
             },
-            p: {
+            'p': {
               lineHeight: '2',
               // color: ''
             },
-            pre: {
+            'pre': {
               // paddingBottom: 0,
               // paddingTop: 0,
               // '& > code': {
@@ -56,16 +57,16 @@ export default {
               // }
               // backgroundColor: theme('colors.zinc.100'),
             },
-            a: {
-              textDecoration: 'none'
+            'a': {
+              textDecoration: 'none',
             },
-            img: {
+            'img': {
               marginTop: 0,
               marginBottom: 0,
-            }
-          }
+            },
+          },
         },
-      }
+      },
     },
     fontFamily: {
       sans: ['LXGWS', 'sans-serif'],
@@ -83,9 +84,8 @@ export default {
       'pc': '1140px',
       'xl': '1280px',
       '2xl': '1536px',
-      '3xl': '1920px'
-    }
+      '3xl': '1920px',
+    },
   },
-  
-}
 
+}

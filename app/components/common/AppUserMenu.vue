@@ -1,24 +1,26 @@
 <script lang="ts" setup>
 import type { User } from '@prisma/client'
+
 const { $api } = useNuxtApp()
 const userStore = useUserStore()
 const tokenStore = useTokenStore()
 const { clear } = useUserSession()
-const logout = async () => {
+async function logout() {
   await $api.post('/api/v1/user/logout')
-  userStore.logout();
+  userStore.logout()
   tokenStore.setToken('')
   clear()
 }
-
 </script>
+
 <template>
   <DropdownMenu>
     <DropdownMenuTrigger as-child>
-      <UserAvatar :userInfo="(userStore.user as User)"></UserAvatar>
+      <UserAvatar :user-info="(userStore.user as User)" />
     </DropdownMenuTrigger>
     <DropdownMenuContent class="w-56">
-      <DropdownMenuLabel>{{ (userStore.user as User).nickname || (userStore.user as User).username }}
+      <DropdownMenuLabel>
+        {{ (userStore.user as User).nickname || (userStore.user as User).username }}
       </DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuItem @click="navigateTo('/settings')">
@@ -30,4 +32,5 @@ const logout = async () => {
     </DropdownMenuContent>
   </DropdownMenu>
 </template>
+
 <style scoped></style>

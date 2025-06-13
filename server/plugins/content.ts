@@ -1,5 +1,4 @@
-// @ts-ignore
-export default defineNitroPlugin((nitroApp) => {
+export default defineNitroPlugin(() => {
   // nitroApp.hooks.hook('content:file:beforeParse', (file: { body: string }) => {
   //   // 匹配markdown文件内的元信息
   //   const match = file.body.match(/---\n([\s\S]+?)\n---\n([\s\S]*)/);
@@ -24,6 +23,6 @@ export default defineNitroPlugin((nitroApp) => {
   //   file.body = newContent;
   //   }
   //   // 如果页面内没有 _path 属性, 则自动添加为 /blog/ + 文件名
-    
+
   // });
 })

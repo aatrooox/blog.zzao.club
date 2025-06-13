@@ -1,38 +1,37 @@
-import prisma from "~~/server/utils/prisma"
+import prisma from '~~/server/utils/prisma'
 
 export default defineEventHandler(async (event) => {
-
-  let  body
+  let body
   try {
     body = await useSafeValidatedBody(event, z.object({
       content: z.string(), // 内容
       comment_id: z.string(), // 评论的哪条评论
       reply_sub_comment_id: z.string().optional(), // 评论的哪条回复
       path: z.string().optional(),
-      user_id: z.string() // 评论者
+      user_id: z.string(), // 评论者
     }))
     if (!body.success) {
       throw createError({
         statusCode: 400,
-        message: JSON.stringify(body.error)
+        message: JSON.stringify(body.error),
       })
     }
-  } catch (err) {
+  }
+  catch {
     throw createError({
       statusCode: 400,
-      message: '参数解析失败'
+      message: '参数解析失败',
     })
-
   }
-   
+
   const commentData = {
-      ...body.data
+    ...body.data,
   }
 
   // 被回复的评论者, 是否允许邮件通知
   const comment = await prisma.blogComment.findUnique({
     where: {
-      id: commentData.comment_id
+      id: commentData.comment_id,
     },
     include: {
       user_info: {
@@ -42,12 +41,12 @@ export default defineEventHandler(async (event) => {
           username: true,
           user_config: {
             select: {
-              allowEmailNotify: true
-            }
-          }
-        }
-      }
-    }
+              allowEmailNotify: true,
+            },
+          },
+        },
+      },
+    },
   })
 
   if (comment?.user_info?.email && comment?.user_info?.user_config?.allowEmailNotify === 1) {
@@ -56,16 +55,17 @@ export default defineEventHandler(async (event) => {
         to: comment?.user_info?.email,
         subject: '有人回复了你在早早集市的评论',
         text: commentData.content,
-        path: commentData.path
+        path: commentData.path,
       })
-    } catch (err) {}
+    }
+    catch {}
   }
 
   // 如果是回复的二级评论
   if (body.data.reply_sub_comment_id) {
     const subComment = await prisma.blogSubComment.findUnique({
       where: {
-        id: body.data.reply_sub_comment_id
+        id: body.data.reply_sub_comment_id,
       },
       include: {
         user_info: {
@@ -75,12 +75,12 @@ export default defineEventHandler(async (event) => {
             username: true,
             user_config: {
               select: {
-                allowEmailNotify: true
-              }
-            }
-          }
-        }
-      }
+                allowEmailNotify: true,
+              },
+            },
+          },
+        },
+      },
     })
 
     if (subComment?.user_info?.email && subComment?.user_info?.user_config?.allowEmailNotify === 1 && subComment?.user_info?.email !== comment?.user_info?.email) {
@@ -89,17 +89,18 @@ export default defineEventHandler(async (event) => {
           to: subComment!.user_info!.email,
           subject: '有人回复了你在早早集市的评论',
           text: commentData.content,
-          path: commentData.path
+          path: commentData.path,
         })
-      } catch ( err ) {}
+      }
+      catch {}
     }
   }
   const data = await prisma.blogSubComment.create({
-    data: commentData
+    data: commentData,
   })
 
   return {
     data,
-    message: 'ok'
+    message: 'ok',
   }
 })

@@ -11,13 +11,12 @@ export function useClientjs() {
       genFingerprint()
     }
 
-    return fingerprint.value 
+    return fingerprint.value
   }
 
   return {
     fingerprint,
     genFingerprint,
-    getVisitorId
+    getVisitorId,
   }
-  
 }

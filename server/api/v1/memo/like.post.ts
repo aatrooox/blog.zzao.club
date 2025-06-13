@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
   console.log(`body`, body)
-  const { type, memo_id } = body
+  // const { type, memo_id } = body
   // const db = event.context.db
   // const docname = `likes-memo-${memo_id}`
   // // 获取_id是likes的数据
@@ -17,10 +17,9 @@ export default defineEventHandler(async (event) => {
   //  } else {
   //   await db.insert({_id: docname, count: 1, ...body})
   //  }
-  
 
   return {
     data: 0,
-    msg: 'ok'
+    msg: 'ok',
   }
 })

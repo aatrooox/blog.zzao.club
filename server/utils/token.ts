@@ -66,11 +66,8 @@ export async function revokeCachedToken(userId?: string, scope: string = 'all') 
     isRevoked: true,
   }, { ttl: 60 * 60 * 24 })
 }
-/**
- *  检测 token 是否有效 （从 redis 和 mysql 校验）
- * @param token 被校验的 token
- * @returns boolean
- */
+
+// 检测 token 是否有效 （从 redis 和 mysql 校验）
 export async function verifyAccessToken({ token }: { token?: string }): Promise<{ isAuth: boolean, userId?: string, scope?: string }> {
   const cachedUser = await useCachedUser(token)
   // 有缓存
@@ -79,14 +76,14 @@ export async function verifyAccessToken({ token }: { token?: string }): Promise<
       return {
         isAuth: false,
         userId: cachedUser.userId,
-        scope: cachedUser.scope
+        scope: cachedUser.scope,
       }
     }
 
     return {
       isAuth: true,
       userId: cachedUser.userId,
-      scope: cachedUser.scope
+      scope: cachedUser.scope,
     }
   }
   // 无缓存
@@ -105,19 +102,19 @@ export async function verifyAccessToken({ token }: { token?: string }): Promise<
     return {
       isAuth: false,
       userId: tokenData?.userId,
-      scope: tokenData?.scope
+      scope: tokenData?.scope,
     }
   }
 
   return {
     isAuth: true,
     userId: tokenData?.userId,
-    scope: tokenData?.scope
+    scope: tokenData?.scope,
   }
 }
 
 export async function verifyAccessUser({ userId, scope = 'all' }: { userId?: string, scope?: string }) {
-  // 没有传 token，则按 userId + scope 校验  
+  // 没有传 token，则按 userId + scope 校验
   const cachedToken = await useCachedToken(userId, scope)
   // 如果命中缓存 则不查库
   if (cachedToken) {
@@ -131,7 +128,7 @@ export async function verifyAccessUser({ userId, scope = 'all' }: { userId?: str
   const tokenData = await prisma.accessToken.findFirst({
     where: {
       userId,
-      scope
+      scope,
     },
   })
   // 已经无效了了, 写入到缓存中避免多次去查库
@@ -141,12 +138,9 @@ export async function verifyAccessUser({ userId, scope = 'all' }: { userId?: str
   }
 
   return true
-
 }
-/**
- * 撤销 token, 更新 mysql redis 中的 token 信息
- * @param param0 { token, userId }
- */
+
+// 撤销 token, 更新 mysql redis 中的 token 信息
 export async function revokeAccessToken({ token, userId, scope = 'all' }: { userId: string, token?: string, scope?: string }) {
   const revokeToken = async () => {
     const whereOption: any = { userId, scope }
@@ -163,7 +157,7 @@ export async function revokeAccessToken({ token, userId, scope = 'all' }: { user
 
     revokeCachedToken(userId, scope)
   }
-  
+
   if (token) {
     await revokeToken()
     return
@@ -172,7 +166,7 @@ export async function revokeAccessToken({ token, userId, scope = 'all' }: { user
   const tokens = await prisma.accessToken.findMany({
     where: {
       userId,
-      scope
+      scope,
     },
   })
 
@@ -184,14 +178,13 @@ export async function revokeAccessToken({ token, userId, scope = 'all' }: { user
   await prisma.accessToken.updateMany({
     where: {
       userId,
-      scope
+      scope,
     },
     data: {
       isRevoked: true,
     },
   })
 }
-
 
 export async function upsertAccessToken(userId: string) {
   const [token, expiresAt] = await generateAccessToken(userId)
@@ -203,27 +196,27 @@ export async function upsertAccessToken(userId: string) {
   }
   const tokenInfo = await prisma.accessToken.upsert({
     where: {
-      token
+      token,
     },
     create: {
-      ...data
+      ...data,
     },
-    update: {}
+    update: {},
   })
 
   return tokenInfo
 }
 
-export async function verifyUserRole(userId: string, allRoles=['superAdmin']) {
+export async function verifyUserRole(userId: string, allRoles = ['superAdmin']) {
   const userData = await prisma.user.findUnique({
     where: {
-      id: userId
-    }
+      id: userId,
+    },
   })
   console.log(`userData?.role`, userData?.role)
   // 如果不包含所需要的权限
   if (!allRoles.includes(userData?.role ?? '')) {
-    console.log(` 无权限`, )
+    console.log(` 无权限`)
     return false
   }
 

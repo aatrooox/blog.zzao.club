@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 
 </script>
+
 <template>
   <div class="btn-svg-wrap">
     <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
@@ -9,6 +10,7 @@
     </svg>
   </div>
 </template>
+
 <style>
 .btn-svg-wrap .outline {
   stroke-dasharray: 100 500;

@@ -3,8 +3,8 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "noImplicitAny": false,
-    "sourceMap": true,
-    "inlineSources": true
+    "inlineSources": true,
+    "sourceMap": true
   },
   "strict": false,
   "allowJs": true

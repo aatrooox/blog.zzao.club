@@ -1,18 +1,13 @@
 interface MailOptions {
-  to: string;
-  subject?: string;
-  text?: string;
-  html?: string;
-  path?: string;
+  to: string
+  subject?: string
+  text?: string
+  html?: string
+  path?: string
 }
-/**
- * 发送邮件通知
- * @param name 对方称呼
- * @param param1 邮件配置
- * @returns nodemailer 发送邮件返回的信息
- */
+
 export function sendMailNotice(name: string, { to, subject, text, path }: MailOptions) {
-  const { sendMail } = useNodeMailer();
+  const { sendMail } = useNodeMailer()
   const _subject = subject || `来自早早集市(zzao.club)的回复`
   const _html = `
       <div>
@@ -22,5 +17,5 @@ export function sendMailNotice(name: string, { to, subject, text, path }: MailOp
       </div>
     `
 
-  return sendMail({ to, subject: _subject, html: _html });
+  return sendMail({ to, subject: _subject, html: _html })
 }

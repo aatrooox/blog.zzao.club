@@ -1,24 +1,24 @@
-import prisma from "~~/server/utils/prisma"
+import prisma from '~~/server/utils/prisma'
 
 export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
-    id: z.string()
+    id: z.string(),
   }))
 
   if (!body.success) {
     throw createError({
       statusCode: 400,
-      message: JSON.stringify(body.error)
+      message: JSON.stringify(body.error),
     })
   }
-  
+
   const queryInclude: any = {
     // 默认查询用户信息
     user_info: {
       select: {
         username: true,
-        avatar_url: true
-      }
+        avatar_url: true,
+      },
     },
     comments: {
       // 关联查询 评论
@@ -27,15 +27,15 @@ export default defineEventHandler(async (event) => {
         user_info: {
           select: {
             username: true,
-            avatar_url: true
-          }
+            avatar_url: true,
+          },
         },
         _count: {
           select: {
-            sub_comments: true
-          }
-        }
-      }
+            sub_comments: true,
+          },
+        },
+      },
     },
     // likes: {
     //   include: {
@@ -46,20 +46,20 @@ export default defineEventHandler(async (event) => {
     // 默认查询评论数量
     _count: {
       select: {
-        comments: true
-      }
-    }
+        comments: true,
+      },
+    },
   }
 
   const data = await prisma.blogMemo.findFirst({
     where: {
-      id: body.data.id
+      id: body.data.id,
     },
-    include: queryInclude
+    include: queryInclude,
   })
 
   return {
     data,
-    message: 'ok'
+    message: 'ok',
   }
 })

@@ -1,6 +1,6 @@
 export const schema = z.object({
   username: z.string(),
-  password: z.string()
+  password: z.string(),
 })
 
 export default defineEventHandler(async (event) => {
@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   if (!body.success) {
     throw createError({
       statusCode: 400,
-      message: JSON.stringify(body.error)
+      message: JSON.stringify(body.error),
     })
   }
   const { username, password } = body.data
@@ -17,14 +17,14 @@ export default defineEventHandler(async (event) => {
   if (password === 'NEED_RESET_PASSWORD') {
     throw createError({
       statusCode: 400,
-      message: '未设置密码，请使用其他登录方式'
+      message: '未设置密码，请使用其他登录方式',
     })
   }
 
   let user = await prisma.user.findUnique({
     where: {
-      username
-    }
+      username,
+    },
   })
 
   if (!user) {
@@ -38,13 +38,14 @@ export default defineEventHandler(async (event) => {
         username,
         password,
         role: 'user',
-      }
+      },
     })
-  } else {
+  }
+  else {
     if (user.password !== password) {
       throw createError({
         status: 400,
-        statusText: '账号或密码错误'
+        statusText: '账号或密码错误',
       })
     }
   }
@@ -54,8 +55,8 @@ export default defineEventHandler(async (event) => {
   return {
     data: {
       token: tokenInfo.token,
-      user
+      user,
     },
-    msg: '登录成功'
+    msg: '登录成功',
   }
 })

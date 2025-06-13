@@ -33,18 +33,18 @@ export const EffectCssAttrs = [
 
 // 全局属性，防止里面子元素重复取值或太长时存在性能问题
 export const GlobCssAttrs = [
-  'fontFamily'
+  'fontFamily',
 ]
 
 // 代码中，只有颜色属性有用
 export const PreCodeCssAttrs = [
-  'color'
+  'color',
 ]
 
 // 某些元素需要特殊的属性值
 // 比如 h2 自定义了一个黑色小方块作为样式
 export const customTagCssAttrs = {
-  'h2-box': ['display', 'width','height']
+  'h2-box': ['display', 'width', 'height'],
 }
 
 export const IMG_WRAP_CLASS = 'blog-zzao-club-img-component'
@@ -52,7 +52,7 @@ export const IMG_WRAP_CLASS = 'blog-zzao-club-img-component'
 // 需要排除掉的元素的class
 export const ExcludeClassList = ['copy-button']
 
-export function camelCaseToHyphen (str: string) {
+export function camelCaseToHyphen(str: string) {
   return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
 }
 // 获取所有article下的子元素

@@ -1,15 +1,16 @@
 import { ref } from 'vue'
+
 interface ToastMessageOptions {
-  type?: 'success' | 'info' | 'contrast' | 'warning' | 'error' | 'promise',
-  message: string,
+  type?: 'success' | 'info' | 'contrast' | 'warning' | 'error' | 'promise'
+  message: string
   options?: {
-    description?: string,
-    action?: Function,
-    class?: string,
-    style?: Record<string, string>,
-    loading?: string,
-    success?: Function,
-    error?: Function
+    description?: string
+    action?: () => void
+    class?: string
+    style?: Record<string, string>
+    loading?: string
+    success?: () => void
+    error?: () => void
   }
 }
 interface ToastState {
@@ -17,7 +18,7 @@ interface ToastState {
 }
 
 const toastState = ref<ToastState>({
-  messages: []
+  messages: [],
 })
 
 export function useGlobalToast() {
@@ -29,7 +30,7 @@ export function useGlobalToast() {
     toastState.value.messages.push({
       type: 'warning',
       message,
-      ...options
+      ...options,
     })
   }
 
@@ -37,7 +38,7 @@ export function useGlobalToast() {
     toastState.value.messages.push({
       type: 'success',
       message,
-      ...options
+      ...options,
     })
   }
 
@@ -45,7 +46,7 @@ export function useGlobalToast() {
     toastState.value.messages.push({
       type: 'error',
       message,
-      ...options
+      ...options,
     })
   }
 
@@ -53,15 +54,15 @@ export function useGlobalToast() {
     toastState.value.messages.push({
       type: 'contrast',
       message,
-      ...options
+      ...options,
     })
   }
 
-   const info = (message: string, options?: ToastMessageOptions) => {
+  const info = (message: string, options?: ToastMessageOptions) => {
     toastState.value.messages.push({
       type: 'info',
       message,
-      ...options
+      ...options,
     })
   }
 
@@ -77,6 +78,6 @@ export function useGlobalToast() {
     warn,
     info,
     contrast,
-    clear
+    clear,
   }
 }

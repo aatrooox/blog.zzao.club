@@ -1,4 +1,5 @@
-import { defineCollection, defineContentConfig, z } from '@nuxt/content';
+import process from 'node:process'
+import { defineCollection, defineContentConfig, z } from '@nuxt/content'
 
 export default defineContentConfig({
   collections: {
@@ -10,7 +11,7 @@ export default defineContentConfig({
         prefix: '/post',
         // cwd: process.env.CONTENT_FS_PATH,
         repository: 'https://github.com/aatrooox/Blog',
-        authToken: process.env.CONTENT_REPO_TOKEN
+        authToken: process.env.CONTENT_REPO_TOKEN,
       },
       schema: z.object({
         date: z.date(),
@@ -18,9 +19,9 @@ export default defineContentConfig({
         lastmod: z.date(),
         tags: z.array(z.string()),
         versions: z.array(z.string()),
-        rawbody: z.string()
-      })
-    })
-  }
-  
-}) 
+        rawbody: z.string(),
+      }),
+    }),
+  },
+
+})

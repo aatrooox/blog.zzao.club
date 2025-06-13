@@ -1,25 +1,26 @@
-import type { ApiResponse } from "~~/types/fetch";
-import type { BlogMemosWithUser, BlogMemoWithUser } from "~~/types/memo";
+import type { ApiResponse } from '~~/types/fetch'
+import type { BlogMemosWithUser, BlogMemoWithUser } from '~~/types/memo'
+
 export default function useMemos() {
-  const { $api } = useNuxtApp();
-  const userStore = useUserStore();
+  const { $api } = useNuxtApp()
+  const userStore = useUserStore()
   const toast = useGlobalToast()
   const memos = useState<BlogMemosWithUser>('memos', () => [])
 
-  const { data, error, status, refresh } = useFetch<ApiResponse<BlogMemosWithUser>>(
+  const { data, status, refresh } = useFetch<ApiResponse<BlogMemosWithUser>>(
     '/api/v1/memo/list',
     {
       immediate: false,
-      lazy: true
-    }
-  );
+      lazy: true,
+    },
+  )
 
   async function getMemos() {
-    if (status.value !== 'idle' || !memos.value) return;
-    await refresh();
+    if (status.value !== 'idle' || !memos.value)
+      return
+    await refresh()
     memos.value = data.value?.data ?? []
   }
-
 
   async function createMemo({ content, tags = [] }: { content: string, tags?: any[] }) {
     if (!userStore.isLogin) {
@@ -36,20 +37,20 @@ export default function useMemos() {
     if (content) {
       // const content = memoContent.value.replaceAll('`', '\\`')
       const { data, error } = await $api.post<BlogMemoWithUser>('/api/v1/memo/create', {
-        content: content,
+        content,
         tags,
-        user_id: userStore.user?.id
+        user_id: userStore.user?.id,
       })
 
       if (error) {
         // disposeError(error)
         toast.error('出错了，再试一下')
-        return;
+        return
       }
-      
+
       memos.value.unshift(data)
       toast.success('已发送一条Memo')
-      
+
       // toast.add({ severity: 'success', summary: '已发送一条Memo', life: 3000 })
     }
   }
@@ -57,7 +58,6 @@ export default function useMemos() {
     memos,
     status,
     getMemos,
-    createMemo
-  };
-
+    createMemo,
+  }
 }

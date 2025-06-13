@@ -1,18 +1,18 @@
-import { skipHydrate } from 'pinia'
 import { useStorage } from '@vueuse/core'
+import { skipHydrate } from 'pinia'
 
 interface NavBarStatus {
   isHidden: boolean
 }
 
 export const useNavBarStore = defineStore('navBar', () => {
-  const navBar = useStorage<NavBarStatus | Record<any, any>>('blog/navBar', {});
-  const pageScrolling = useStorage('blog/pageScrolling', false);
-  const scrollY = useStorage('blog/scrollY', 0);
-  const selectionScrollY = useStorage('blog/selectionScrollY', 0);
+  const navBar = useStorage<NavBarStatus | Record<any, any>>('blog/navBar', {})
+  const pageScrolling = useStorage('blog/pageScrolling', false)
+  const scrollY = useStorage('blog/scrollY', 0)
+  const selectionScrollY = useStorage('blog/selectionScrollY', 0)
 
   const setNavStatus = (data: NavBarStatus) => {
-    navBar.value = data;
+    navBar.value = data
   }
 
   const setPageScroll = (flag: boolean) => {
@@ -35,6 +35,6 @@ export const useNavBarStore = defineStore('navBar', () => {
     setNavStatus,
     setPageScroll,
     setScrollY,
-    setSelectionScrollY
+    setSelectionScrollY,
   }
 })

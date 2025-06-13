@@ -3,7 +3,7 @@ import type { UseFetchOptions } from 'nuxt/app'
 import type { ApiResponse } from '~~/types/fetch'
 
 // 定义请求方法类型
-type HttpMethod = "get" | "post" | "put" | "delete" | "patch" | "head" | "connect" | "options" | "trace" | "GET" | "HEAD" | "PATCH" | "POST" | "PUT" | "DELETE" | "CONNECT" | "OPTIONS" | "TRACE" | undefined
+type HttpMethod = 'get' | 'post' | 'put' | 'delete' | 'patch' | 'head' | 'connect' | 'options' | 'trace' | 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | undefined
 
 export default defineNuxtPlugin({
   name: 'custom-fetch',
@@ -14,19 +14,19 @@ export default defineNuxtPlugin({
         options.headers.set('Authorization', `Bearer ${useTokenStore()?.token ?? ''}`)
       },
       onResponseError({ response }) {
-        console.error('[useHttp] [error]', response.status);
+        console.error('[useHttp] [error]', response.status)
         // 过期/未登录 - 禁止访问 => 退出登录，清除信息
         if (response?.status === 403) {
           useUserStore().logout()
         }
         // 无权限，仅提示
         // 处理错误
-        let errorMessage = response?._data.message || '请求失败'
-        
-         // 使用全局 toast 显示错误信息
+        const errorMessage = response?._data.message || '请求失败'
+
+        // 使用全局 toast 显示错误信息
         const globalToast = useGlobalToast()
-        globalToast.add({ message: errorMessage, type: 'error'})
-      }
+        globalToast.add({ message: errorMessage, type: 'error' })
+      },
     })
 
     const $$fetch = {
@@ -35,61 +35,61 @@ export default defineNuxtPlugin({
         url: string,
         method: HttpMethod,
         data?: any,
-        options?: UseFetchOptions<T>
+        options?: UseFetchOptions<T>,
       ): Promise<ApiResponse<T>> {
         // 合并默认选项和用户选项
         const defaultOptions: UseFetchOptions<T> = {
           method,
-          ...options ?? {}
+          ...options ?? {},
         }
-    
+
         // 根据请求方法设置数据
         if (method === 'GET') {
           defaultOptions.query = data
-        } else {
+        }
+        else {
           defaultOptions.body = data
         }
-          try {
-            // @ts-ignore
-            const response: any = await $api<T>(url, defaultOptions)
-            return { data: response?.data }
-          } catch (error) {
-            return { data: null as any, error: true }
-          }
-         
-       
+        try {
+          // @ts-expect-error unkown error
+          const response: any = await $api<T>(url, defaultOptions)
+          return { data: response?.data }
+        }
+        catch {
+          return { data: null as any, error: true }
+        }
       },
-    
+
       // GET 请求
       get<T = any>(url: string, params?: any, options?: UseFetchOptions<T>) {
         return this.request<T>(url, 'GET', params, options)
       },
-    
+
       // POST 请求
       post<T = any>(url: string, data?: any, options?: UseFetchOptions<T>) {
         return this.request<T>(url, 'POST', data, options)
       },
-    
+
       // PUT 请求
       put<T = any>(url: string, data?: any, options?: UseFetchOptions<T>) {
         return this.request<T>(url, 'PUT', data, options)
       },
-    
+
       // DELETE 请求
       delete<T = any>(url: string, data?: any, options?: UseFetchOptions<T>) {
         return this.request<T>(url, 'DELETE', data, options)
       },
-    
+
       // PATCH 请求
       patch<T = any>(url: string, data?: any, options?: UseFetchOptions<T>) {
         return this.request<T>(url, 'PATCH', data, options)
-      }
+      },
     }
 
     return {
       provide: {
-        api: $$fetch
-      }
+        api: $$fetch,
+      },
     }
-  }
+  },
 })

@@ -1,32 +1,15 @@
-<template>
-  <div class="app-layout h-full box-border max-w-7xl px-4 lg:w-5xl md:w-3xl m-auto bg-grid-dashed overflow-y-auto"
-    ref="scrollWrap" v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]">
-    <Toaster position="top-right" richColors></Toaster>
-    <Icon name="twemoji:up-arrow" class="fixed right-2 bottom-2 z-[50] md:right-10 md:bottom-6 cursor-pointer"
-      size="2em" v-if="showScrollTopBtn" @click="scrollToTop"></Icon>
-    <div class="w-full box-border">
-      <AppMenuBar></AppMenuBar>
-      <slot />
-    </div>
-    <!-- <ClientOnly>
-      <InteractiveGridPattern :class="'[mask-image:radial-gradient(350px_circle_at_center,white,transparent)] -z-10'"
-        :width="40" :height="40" :squares="[80, 80]" squares-class-name="hover:fill-blue-500" />
-    </ClientOnly> -->
-  </div>
-
-</template>
-
 <script lang="ts" setup>
-const globalToast = useGlobalToast()
-const { $toast } = useNuxtApp()
-const route = useRoute()
 import type { UseScrollReturn } from '@vueuse/core'
 import { vScroll } from '@vueuse/components'
+
+const globalToast = useGlobalToast()
+const { $toast } = useNuxtApp() as any
+const route = useRoute()
 const navBarStore = useNavBarStore()
 const scrollWrap = useTemplateRef<HTMLElement>('scrollWrap')
 const scrollDirection = ref('')
 const showScrollTopBtn = ref(false)
-const { x, y } = useWindowScroll()
+// const { x, y } = useWindowScroll()
 
 const isPostPage = computed(() => {
   return route.path.startsWith('/post')
@@ -45,26 +28,26 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
     messages.forEach((message) => {
       switch (message.type) {
         case 'success':
-          $toast.success(message.message, message.options as any);
-          break;
+          $toast.success(message.message, message.options as any)
+          break
         case 'error':
-          $toast.error(message.message, message.options as any);
-          break;
+          $toast.error(message.message, message.options as any)
+          break
         case 'info':
-          $toast.info(message.message, message.options as any);
-          break;
+          $toast.info(message.message, message.options as any)
+          break
         case 'warning':
-          $toast.warning(message.message, message.options as any);
-          break;
+          $toast.warning(message.message, message.options as any)
+          break
         case 'promise':
-          $toast.promise(message.options as any);
-          break;
+          $toast.promise(message.options as any)
+          break
         default:
           $toast(message.message, message.options as any)
       }
     })
 
-    globalToast.clear();
+    globalToast.clear()
   }
 }, { deep: true })
 
@@ -88,15 +71,35 @@ function onScroll(state: UseScrollReturn) {
   }
 
   showScrollTopBtn.value = state.y.value > 100
-
 }
 
 function scrollToTop() {
   scrollWrap.value?.scrollTo(0, 0)
 }
 
-
-watch(() => route.path, (newVal, oldVal) => {
-  if (isPostPage.value) scrollToTop();
+watch(() => route.path, () => {
+  if (isPostPage.value)
+    scrollToTop()
 })
 </script>
+
+<template>
+  <div
+    ref="scrollWrap"
+    v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]" class="app-layout h-full box-border max-w-7xl px-4 lg:w-5xl md:w-3xl m-auto bg-grid-dashed overflow-y-auto"
+  >
+    <Toaster position="top-right" rich-colors />
+    <Icon
+      v-if="showScrollTopBtn" name="twemoji:up-arrow"
+      class="fixed right-2 bottom-2 z-[50] md:right-10 md:bottom-6 cursor-pointer" size="2em" @click="scrollToTop"
+    />
+    <div class="w-full box-border">
+      <AppMenuBar />
+      <slot />
+    </div>
+    <!-- <ClientOnly>
+      <InteractiveGridPattern :class="'[mask-image:radial-gradient(350px_circle_at_center,white,transparent)] -z-10'"
+        :width="40" :height="40" :squares="[80, 80]" squares-class-name="hover:fill-blue-500" />
+    </ClientOnly> -->
+  </div>
+</template>

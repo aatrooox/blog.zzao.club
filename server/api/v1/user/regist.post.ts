@@ -8,30 +8,30 @@ export default defineEventHandler(async (event) => {
   if (!body.success) {
     throw createError({
       statusCode: 400,
-      message: JSON.stringify(body.error)
+      message: JSON.stringify(body.error),
     })
-  }  
+  }
   let role = 'user'
   // 前端校验合法性
   const { email, password, username } = body.data
 
   // 获取用户数
-  const count = await prisma.user.count();
+  const count = await prisma.user.count()
   // 第一个注册的用户为管理员
   if (count === 0) {
     role = 'superAdmin'
-  } 
+  }
 
   const _user = await prisma.user.findUnique({
     where: {
-      username
-    }
+      username,
+    },
   })
 
-  if (_user) { 
+  if (_user) {
     throw createError({
       statusCode: 400,
-      message: '用户名已存在'
+      message: '用户名已存在',
     })
   }
   // 创建新用户
@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
       password,
       email,
       role,
-    }
+    },
   })
 
   return {

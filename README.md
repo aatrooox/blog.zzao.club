@@ -1,24 +1,25 @@
 # 博客站
 
-一个基于 [Nuxt@3.17.2](https://nuxt.com/)、[NuxtContent@3.4.0](https://content.nuxt.com/)、[shadcn/vue](https://www.shadcn-vue.com/)、[inspira-ui](https://inspira-ui.com/components) 的全栈站点
+一个基于 [Nuxt@3.17.2](https://nuxt.com/)、[NuxtContent@3.4.0](https://content.nuxt.com/)、[shadcn/vue](https://www.shadcn-vue.com/)、[inspira-ui](https://inspira-ui.com/components)、Prisma、MySQL、Redis的全栈站点
 
 ## 功能
 
 - 登录注册(用户名+密码)
+- Github登录
 - 点赞
 - 评论
 - mysql
 - redis
-- umami数据统计
+- umami网站数据统计
 - 亮暗色切换
 - 一键复制HTML到公众号(保留所有样式)
 - 基于Github仓库的md文件生成文章
-- useFetch 最佳实践
+- `$fetch/useFetch`最佳实践
 - Sitemap
 - Rss
 - robots.txt
+
 - [ ] IMGX
-- [ ] Github登录
 
 ## 安装依赖
 
@@ -29,16 +30,15 @@
 安装
 
 ```bash
-npm i 
+npm i
 
-pnpm i 
+pnpm i
 
 ```
 
 视报错信息而定:
 
 涉及从 npm 切换到 pnpm 时，可能需要重新 `pnpm add better-sqlite3` 和 `pnpm rebuild better-sqlite3`
-
 
 ## 运行前配置
 
@@ -61,7 +61,7 @@ content: defineCollection({
       // cwd: process.env.CONTENT_FS_PATH,
       // TODO 替换为你的仓库地址  不能使用组织仓库
       repository: 'https://github.com/aatrooox/Blog',
-      // TODO 替换为你的token 在 github > settings > developers settings > personal access tokens 
+      // TODO 替换为你的token 在 github > settings > developers settings > personal access tokens
       authToken: process.env.CONTENT_REPO_TOKEN
     },
     // md文件的元信息, 根据自己的实际情况来, 这些字段会用作数据库中的表头
@@ -113,7 +113,7 @@ pnpm build
 
 ```bash
 # 1.0.0 => 1.0.1  0.1.0 => 0.1.1
-pnpm release:patch 
+pnpm release:patch
 # 1.0.0 => 1.1.0  0.1.0 => 0.1.1
 pnpm release:minor
 # 1.0.0 => 2.0.0  0.1.0 => 0.2.0
@@ -140,7 +140,6 @@ pnpm release:major
 生产环境如何设置环境变量，取决于你的生产环境是什么。
 
 因为有些 `serverless` / `cf worker` 环境下没有传统的文件系统，所以 `nuxt` 选择不维护环境变量的生产环境配置。
-
 
 ### Nuxt 交流群
 

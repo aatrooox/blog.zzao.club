@@ -2,33 +2,33 @@
 export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     userId: z.string(),
-    allowEmailNotify: z.number().optional().default(0)
+    allowEmailNotify: z.number().optional().default(0),
   }))
 
   if (!body.success) {
     throw createError({
       statusCode: 400,
-      message: JSON.stringify(body.error)
+      message: JSON.stringify(body.error),
     })
-  }  
+  }
   // 前端校验合法性
   const { userId, allowEmailNotify } = body.data
 
-  let config = await prisma.userConfig.upsert({
+  const config = await prisma.userConfig.upsert({
     where: {
-      userId
+      userId,
     },
     update: {
-      allowEmailNotify
+      allowEmailNotify,
     },
     create: {
       userId,
-      allowEmailNotify
-    }
+      allowEmailNotify,
+    },
   })
 
   return {
     data: config,
-    msg: 'ok'
+    msg: 'ok',
   }
 })

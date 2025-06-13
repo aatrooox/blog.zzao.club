@@ -1,12 +1,13 @@
 import { z } from 'zod'
+
 export default function useRegisterValidator() {
-  
   const validateEmail = (email: string) => {
     const emailSchema = z.string().email()
     try {
       emailSchema.parse(email)
       return true
-    } catch (e) {
+    }
+    catch {
       return false
     }
   }
@@ -16,7 +17,8 @@ export default function useRegisterValidator() {
     try {
       passwordSchema.parse(password)
       return true
-    } catch (e) {
+    }
+    catch {
       return false
     }
   }
@@ -26,7 +28,8 @@ export default function useRegisterValidator() {
     try {
       usernameSchema.parse(username)
       return true
-    } catch (e) {
+    }
+    catch {
       return false
     }
   }
@@ -34,6 +37,6 @@ export default function useRegisterValidator() {
   return {
     validateEmail,
     validatePassword,
-    validateUsername
+    validateUsername,
   }
 }

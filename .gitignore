@@ -8,7 +8,7 @@ node_modules
 .data
 .env
 .env.prod
-.vscode
+# .vscode
 
 .idea
 # .husky

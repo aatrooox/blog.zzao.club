@@ -1,20 +1,22 @@
 export function useTransition() {
-  const animateEnter = (el: HTMLElement, completeCallback: Function) => {
+  const animateEnter = (el: HTMLElement, completeCallback: () => void) => {
     animate(el, {
       opacity: '1',
       duration: 100,
       delay: 200,
       ease: 'inOut',
       onComplete: () => {
-        completeCallback && completeCallback()
-      }
+        if (completeCallback) {
+          completeCallback()
+        }
+      },
     })
   }
   const animateBeforeEnter = (el: HTMLElement) => {
     el.style.opacity = '0'
   }
 
-  const animateLeave = (el: HTMLElement, done: any) => {
+  const animateLeave = (el: HTMLElement, done: () => void) => {
     animate(el, {
       scale: [1, 1.1, 1],
       opacity: '0',
@@ -22,15 +24,16 @@ export function useTransition() {
       delay: 300,
       ease: 'inOut',
       onComplete: () => {
-        done && done()
-      }
+        if (done) {
+          done()
+        }
+      },
     })
   }
-
 
   return {
     animateBeforeEnter,
     animateLeave,
-    animateEnter
+    animateEnter,
   }
 }

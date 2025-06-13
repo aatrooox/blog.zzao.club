@@ -1,23 +1,23 @@
-import { skipHydrate } from 'pinia'
-import { useStorage } from '@vueuse/core'
 import type { User } from '@prisma/client'
+import { useStorage } from '@vueuse/core'
+import { skipHydrate } from 'pinia'
 
 export const useUserStore = defineStore('user', () => {
-  const user = useStorage<User | any>('blog/user', {});
-  const token = useStorage<string>('blog/token', '');
+  const user = useStorage<User | any>('blog/user', {})
+  const token = useStorage<string>('blog/token', '')
   const setUser = (userData: User) => {
-    user.value = userData;
+    user.value = userData
   }
 
   const setToken = (newToken: string) => {
-    token.value = newToken;
+    token.value = newToken
   }
   const logout = () => {
-    user.value = {};
+    user.value = {}
   }
 
   const isLogin = computed(() => {
-    return !!(user.value as User).id;
+    return !!(user.value as User).id
   })
 
   const isVisitor = computed(() => {
@@ -36,6 +36,6 @@ export const useUserStore = defineStore('user', () => {
     isLogin,
     isVisitor,
     isSuperAdmin,
-    logout
+    logout,
   }
 })

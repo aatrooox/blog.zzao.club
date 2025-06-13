@@ -1,5 +1,3 @@
-import prisma from "~~/server/utils/prisma"
-
 export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     name: z.string(),
@@ -10,7 +8,7 @@ export default defineEventHandler(async (event) => {
   if (!body.success) {
     throw createError({
       statusCode: 400,
-      message: JSON.stringify(body.error)
+      message: JSON.stringify(body.error),
     })
   }
 
@@ -19,42 +17,42 @@ export default defineEventHandler(async (event) => {
   $fetch(feishuWebhook, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      "msg_type": "post",
-      "content": {
-          "post": {
-              "zh_cn": {
-                  "title": "友链申请",
-                  "content": [
-                      [
-                      {
-                          "tag": "text",
-                          "text": "有新申请: "
-                      }, 
-                      {
-                          "tag": "text",
-                          "text": `${body.data.name} - ${body.data.desc}`
-                      },
-                      {
-                        "tag": "a",
-                        "text": "查看网站",
-                        "href": body.data.url
-                      }, 
-                      {
-                          "tag": "at",
-                          "user_id": feishuUserId
-                      }
-                    ]
-                  ]
-              }
-          }
-      }
-    })
+      msg_type: 'post',
+      content: {
+        post: {
+          zh_cn: {
+            title: '友链申请',
+            content: [
+              [
+                {
+                  tag: 'text',
+                  text: '有新申请: ',
+                },
+                {
+                  tag: 'text',
+                  text: `${body.data.name} - ${body.data.desc}`,
+                },
+                {
+                  tag: 'a',
+                  text: '查看网站',
+                  href: body.data.url,
+                },
+                {
+                  tag: 'at',
+                  user_id: feishuUserId,
+                },
+              ],
+            ],
+          },
+        },
+      },
+    }),
   })
 
   return {
-    msg: '已通知博主'
+    msg: '已通知博主',
   }
 })

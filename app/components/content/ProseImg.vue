@@ -1,32 +1,24 @@
-<template>
-  <ClientOnly>
-    <div class="blog-zzao-club-img-component card inline" v-viewer>
-      <NuxtImg :src="refinedSrc" loading="lazy" alt="image" :width="width" :height="height"
-      placeholder />
-    </div>
-  </ClientOnly>
-</template>
 <script lang="ts" setup>
-import { withTrailingSlash, withLeadingSlash, joinURL } from 'ufo'
-import { useRuntimeConfig, computed } from '#imports'
+import { computed, useRuntimeConfig } from '#imports'
+import { joinURL, withLeadingSlash, withTrailingSlash } from 'ufo'
 
 const props = defineProps({
   src: {
     type: String,
-    default: ''
+    default: '',
   },
   alt: {
     type: String,
-    default: ''
+    default: '',
   },
   width: {
     type: [String, Number],
-    default: undefined
+    default: undefined,
   },
   height: {
     type: [String, Number],
-    default: undefined
-  }
+    default: undefined,
+  },
 })
 
 const refinedSrc = computed(() => {
@@ -39,4 +31,16 @@ const refinedSrc = computed(() => {
   return props.src
 })
 </script>
+
+<template>
+  <ClientOnly>
+    <div v-viewer class="blog-zzao-club-img-component card inline">
+      <NuxtImg
+        :src="refinedSrc" loading="lazy" alt="image" :width="width" :height="height"
+        placeholder
+      />
+    </div>
+  </ClientOnly>
+</template>
+
 <style lang="less" scoped></style>

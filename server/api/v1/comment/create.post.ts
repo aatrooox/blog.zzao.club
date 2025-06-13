@@ -1,4 +1,4 @@
-import prisma from "~~/server/utils/prisma"
+import prisma from '~~/server/utils/prisma'
 
 export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
@@ -10,32 +10,33 @@ export default defineEventHandler(async (event) => {
     email: z.object({
       to: z.string().email(),
       text: z.string(),
-      name:  z.string()
+      name: z.string(),
     }).optional(),
     // 作为游客评论时，临时存储
     visitorName: z.string().optional(),
-    visitorEmail: z.string().email().optional()
+    visitorEmail: z.string().email().optional(),
   }))
 
   if (!body.success) {
     throw createError({
       statusCode: 400,
-      message: JSON.stringify(body.error)
+      message: JSON.stringify(body.error),
     })
   }
-  const { type, content, article_id, user_id, email, path } = body.data
+  const { type, content, article_id, user_id, path } = body.data
 
   const data = await prisma.blogComment.create({
-    data: { type, content, article_id, user_id }
+    data: { type, content, article_id, user_id },
   })
 
   const myEmail = 'gnakzz@qq.com'
   try {
-    sendMailNotice( '有新的评论', { text: content, to: myEmail, subject: '博客有新评论了', path })
-  } catch( err) {}
+    sendMailNotice('有新的评论', { text: content, to: myEmail, subject: '博客有新评论了', path })
+  }
+  catch {}
 
   return {
     data,
-    message: 'ok'
+    message: 'ok',
   }
 })

@@ -1,4 +1,4 @@
-export default defineEventHandler( async (event) => {
+export default defineEventHandler(async (event) => {
   const path = getRouterParam(event, 'path')
   if (!path) {
     throw createError({
@@ -16,13 +16,13 @@ export default defineEventHandler( async (event) => {
   if (!body.success) {
     throw createError({
       statusCode: 400,
-      message: JSON.stringify(body.error)
+      message: JSON.stringify(body.error),
     })
   }
 
   // 目前支持简单的换行
   if (path === 'mail') {
     const { name, text, to } = body.data
-    return sendMailNotice( name, { text, to })
+    return sendMailNotice(name, { text, to })
   }
 })

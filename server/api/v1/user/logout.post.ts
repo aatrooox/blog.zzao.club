@@ -5,6 +5,6 @@ export default defineEventHandler(async (event) => {
   revokeAccessToken({ token: event.context.token, userId: event.context.userId })
 
   return {
-    msg: '已退出登录'
+    msg: '已退出登录',
   }
 })

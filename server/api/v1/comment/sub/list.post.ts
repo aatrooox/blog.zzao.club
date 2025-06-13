@@ -1,4 +1,4 @@
-import prisma from "~~/server/utils/prisma"
+import prisma from '~~/server/utils/prisma'
 
 // 获取评论下的二级评论
 export default defineEventHandler(async (event) => {
@@ -8,20 +8,20 @@ export default defineEventHandler(async (event) => {
   if (!body.success) {
     throw createError({
       statusCode: 400,
-      message: JSON.stringify(body.error)
+      message: JSON.stringify(body.error),
     })
   }
- 
+
   // 查询所有二级评论
   const data = await prisma.blogSubComment.findMany({
     where: {
-      comment_id: body.data.comment_id
+      comment_id: body.data.comment_id,
     },
     // 最先评论的在最上边
     orderBy: [
       {
-        create_ts: 'asc'
-      }
+        create_ts: 'asc',
+      },
     ],
     include: {
       user_info: {
@@ -29,14 +29,14 @@ export default defineEventHandler(async (event) => {
           username: true,
           nickname: true,
           website: true,
-          avatar_url: true
-        }
+          avatar_url: true,
+        },
       },
-    }
+    },
   })
 
   return {
     data,
-    message: 'ok'
+    message: 'ok',
   }
 })
