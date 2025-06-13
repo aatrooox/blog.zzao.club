@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.9.6
+
+[compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v1.9.5...v1.9.6)
+
+### 🚀 Enhancements
+
+- 移动端 nav (aaf7e95)
+
+### 🏡 Chore
+
+- Eslint vue configs (35b3a26)
+- Fix eslint (c4090c4)
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.9.5
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.9.4...v1.9.5)
