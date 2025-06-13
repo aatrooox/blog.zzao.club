@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.9.5
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.9.4...v1.9.5)
+
+### 🏡 Chore
+
+- Add eslint, husky, .vscode configs; ([182ff0f](https://github.com/aatrooox/blog.zzao.club/commit/182ff0f))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.9.4
 
 [compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v1.9.3...v1.9.4)
