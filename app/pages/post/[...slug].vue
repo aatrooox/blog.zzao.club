@@ -355,14 +355,12 @@ function getImgDomHTML(imgWrapDom) {
   return imgDom?.outerHTML
 }
 
-function findImgDom(dom: HTMLElement | ChildNode): HTMLElement {
-  const childDoms: ChildNode[] = Array.from(dom.childNodes).filter((node: any) => node.nodeType === Node.ELEMENT_NODE)
-  const imgDom = childDoms.find((node: any) => node.tagName.toLowerCase() === 'img')
+function findImgDom(dom?: HTMLElement | ChildNode): HTMLElement {
+  const childDoms: ChildNode[] = Array.from(dom?.childNodes ?? []).filter((node: any) => node.nodeType === Node.ELEMENT_NODE)
+  let imgDom = childDoms.find((node: any) => node.tagName.toLowerCase() === 'img')
 
   if (!imgDom && childDoms && childDoms.length > 0) {
-    for (const childDom of childDoms) {
-      return findImgDom(childDom)
-    }
+    imgDom = findImgDom(childDoms?.[0])
   }
 
   return imgDom as HTMLElement
