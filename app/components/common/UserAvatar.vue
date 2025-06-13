@@ -12,7 +12,7 @@ const imgUrl = computed(() => {
 </script>
 
 <template>
-  <Avatar shape="circle">
+  <Avatar shape="circle" class="w-9 h-9">
     <AvatarImage :src="imgUrl ?? ''" alt="@unovue" />
     <AvatarFallback> {{ (userInfo?.nickname?.[0] || userInfo?.username[0])?.toUpperCase() ?? 'Z' }} </AvatarFallback>
   </Avatar>

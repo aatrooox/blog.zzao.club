@@ -18,7 +18,11 @@ function submit() {
 
 <template>
   <Drawer>
-    <DrawerTrigger>登录</DrawerTrigger>
+    <DrawerTrigger>
+      <Button variant="ghost">
+        <Icon name="solar:user-cross-line-duotone" size="1.5em" />
+      </Button>
+    </DrawerTrigger>
     <DrawerContent>
       <DrawerHeader>
         <DrawerTitle>登录</DrawerTitle>

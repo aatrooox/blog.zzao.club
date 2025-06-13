@@ -43,7 +43,7 @@ function onLeave(el, done) {
 
 <template>
   <div class="memos">
-    <div class="memo-editor mx-auto bg-white mb-4 sticky top-10 z-[60] w-full md:w-[500px]">
+    <div class="memo-editor mx-auto bg-white mb-4 sticky top-10 z-[40] w-full md:w-[500px]">
       <AppCommentInput :show-hello="false" input-tip="当前仅博主可发表 Memo" @send="createMemo" />
     </div>
     <div class="w-full flex flex-col items-center">

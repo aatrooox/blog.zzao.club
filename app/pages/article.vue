@@ -145,7 +145,7 @@ onMounted(() => {
 
 <template>
   <div class="flex flex-col gap-6 max-w-7xl box-border mx-auto sm:px-4">
-    <div class="flex flex-wrap gap-2 sticky py-2 px-2 top-10 z-[55] rounded-md bg-white/90 dark:bg-zinc-800/80">
+    <div class="flex flex-wrap gap-2 sticky py-2 px-2 top-10 z-[50] rounded-md bg-white/90 dark:bg-zinc-800/80">
       <Button
         v-for="tag in tags" :key="tag.value" :variant="selectedTags?.value === tag.value ? 'secondary' : 'link'"
         class="text-sm px-3 py-1.5 rounded-md transition-all duration-200" @click="selectTag(tag)"

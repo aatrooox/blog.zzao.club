@@ -11,8 +11,6 @@ const tokenStore = useTokenStore()
 const navBarStore = useNavBarStore()
 const colorMode = useColorMode()
 const { $api } = useNuxtApp()
-const route = useRoute()
-const curLabel = ref('首页')
 const modes = ['light', 'dark']
 const index = ref(modes.indexOf(colorMode.preference))
 const modeIcon = computed(() => {
@@ -61,25 +59,6 @@ const items = ref([
   },
 ])
 
-watch(() => route.path, (newVal) => {
-  switch (newVal) {
-    case '/':
-      curLabel.value = '首页'
-      break
-    case '/article':
-      curLabel.value = '文章'
-      break
-    case '/memos':
-      curLabel.value = '动态'
-      break
-    case '/category':
-      curLabel.value = '小册'
-      break
-    default:
-      break
-  }
-})
-
 async function loginBlog(body) {
   const res = await $api.post('/api/v1/user/login', body)
   if (res) {
@@ -89,11 +68,8 @@ async function loginBlog(body) {
   }
 }
 
-// async function userRegist(body) {
-//   const res = await $api.post('/api/v1/user/regist', body)
-//   if (res) {
-//     await loginBlog(body)
-//   }
+// function showAppMenu() {
+
 // }
 
 function showRegisterDialog() {
@@ -124,8 +100,11 @@ function toggleDarkMode() {
     <!-- <AppRegisterDialog :regist="userRegist" ref="registerForm"></AppRegisterDialog> -->
     <!-- <AppUserSetting ref="userSetting"></AppUserSetting> -->
     <!-- <AppSearchDialog ref="searchDialog"></AppSearchDialog> -->
+    <nav class="block md:hidden">
+      <AppNavDrawer />
+    </nav>
 
-    <NavigationMenu>
+    <NavigationMenu class="hidden md:block">
       <NavigationMenuList>
         <NavigationMenuItem v-for="menu in items" :key="menu.label">
           <template v-if="menu.children">
@@ -175,8 +154,8 @@ function toggleDarkMode() {
           @show-register-dialog="showRegisterDialog"
         />
         <AppUserMenu v-else />
-        <Button variant="outline" size="icon" @click="toggleDarkMode">
-          <Icon :name="modeIcon" />
+        <Button variant="ghost" size="icon" @click="toggleDarkMode">
+          <Icon :name="modeIcon" size="1.5em" />
         </Button>
       </div>
     </ClientOnly>
