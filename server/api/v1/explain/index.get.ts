@@ -1,5 +1,3 @@
-import prisma from '~~/server/utils/prisma'
-
 export default defineEventHandler(async (event) => {
   // 文章id
   // const id = getRouterParam(event, 'id')

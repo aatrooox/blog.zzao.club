@@ -4,10 +4,10 @@ import type { z, ZodAny } from 'zod'
 import type { Config, ConfigItem, Dependency, Shape } from './interface'
 import { toTypedSchema } from '@vee-validate/zod'
 import { computed, toRefs } from 'vue'
+import { Form } from '@/components/ui/form'
 import AutoFormField from './AutoFormField.vue'
 import { provideDependencies } from './dependencies'
 import { getBaseSchema, getBaseType, getDefaultValueInZodStack, getObjectFormSchema, type ZodObjectOrWrapped } from './utils'
-import { Form } from '@/components/ui/form'
 
 const props = defineProps<{
   schema: T

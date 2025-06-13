@@ -1,5 +1,3 @@
-import prisma from '~~/server/utils/prisma'
-
 export default defineEventHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     content: z.string(),

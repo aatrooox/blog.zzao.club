@@ -85,6 +85,7 @@ DATABASE_URL=mysql://root:root@127.0.0.1:3306/blog
 NUXT_FEISHU_WEBHOOK=
 NUXT_FEISHU_USER_ID=
 ```
+
 先启动 mysql、redis
 
 ## 初始化数据库和表结构

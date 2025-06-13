@@ -1,5 +1,3 @@
-import prisma from '~~/server/utils/prisma'
-
 const schema = z.object({
   type: z.string().optional().default('article'),
   page: z.string().optional().default('1').transform(Number),

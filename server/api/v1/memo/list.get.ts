@@ -1,5 +1,3 @@
-import prisma from '~~/server/utils/prisma'
-
 export default defineEventHandler(async (event) => {
   const schema = z.object({
     page: z.string().optional().default('1').transform(Number),

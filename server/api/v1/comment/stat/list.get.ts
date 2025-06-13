@@ -1,5 +1,3 @@
-import prisma from '~~/server/utils/prisma'
-
 export default defineCachedEventHandler(async (event) => {
   const schema = z.object({
     type: z.string().optional().default('article'),
