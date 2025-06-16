@@ -36,7 +36,7 @@ export default function useMemos() {
 
     if (content) {
       // const content = memoContent.value.replaceAll('`', '\\`')
-      const { data, error } = await $api.post<BlogMemoWithUser>('/api/v1/memo/create', {
+      const { data, error } = await $api.post<ApiResponse<BlogMemoWithUser>>('/api/v1/memo/create', {
         content,
         tags,
         user_id: userStore.user?.id,

@@ -44,11 +44,13 @@ const items = ref([
     <DrawerContent>
       <ul class="pt-4">
         <li v-for="item in items" :key="item.label">
-          <NuxtLink :to="item.route">
-            <Button variant="link">
-              {{ item.label }}
-            </Button>
-          </NuxtLink>
+          <DrawerClose>
+            <NuxtLink :to="item.route">
+              <Button variant="link">
+                {{ item.label }}
+              </Button>
+            </NuxtLink>
+          </DrawerClose>
         </li>
       </ul>
       <!-- <DrawerFooter class="flex flex-row justify-end">
