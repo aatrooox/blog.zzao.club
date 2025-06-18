@@ -15,7 +15,7 @@ export default antfu(
       html: true,
       markdown: false,
     },
-    ignores: ['app/components/ui/**', '**/*.md'],
+    ignores: ['app/components/ui/**', '**/*.md', 'prisma/migrations/**'],
   },
   // {
   //   files: ['*.vue'],
