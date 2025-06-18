@@ -155,6 +155,8 @@ model BlogMemo {
   flod_tip      String? // 折起时，在标题栏展示折起的原因
   user_id       String
   user_info     User               @relation(fields: [user_id], references: [id], onDelete: NoAction)
+  from          String? // 来自什么平台 微信读书 浏览器 第三方平台调用api 等
+  courier       String? // 通过谁录入此信息
   tags          MemoTagRelations[]
   comments      BlogComment[]
   likes         BlogLike[]
