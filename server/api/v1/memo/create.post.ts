@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     content: z.string(),
     tags: z.array(z.string()).optional(),
@@ -56,8 +56,5 @@ export default defineEventHandler(async (event) => {
     data: createData,
   })
 
-  return {
-    data,
-    message: 'ok',
-  }
+  return data
 })

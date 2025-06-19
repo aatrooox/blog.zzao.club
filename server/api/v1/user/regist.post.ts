@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     username: z.string(),
     password: z.string(),
@@ -44,8 +44,5 @@ export default defineEventHandler(async (event) => {
     },
   })
 
-  return {
-    data: user,
-    message: '注册成功',
-  }
+  return user
 })

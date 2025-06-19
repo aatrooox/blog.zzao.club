@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// import anime from 'animejs/lib/anime.es.js'
 import type { BlogMemoWithUser } from '~~/types/memo.d'
 
 // 评论类型
@@ -24,13 +23,14 @@ interface Props {
 // const refreshKey = ref(1)
 // const commentType = 'memo'// 解析特殊用户字符的展示, 如标签, 双链等
 const parsedContent = computed(() => {
-  // 把props.memo.content 中的以#开头,以空格结尾的部分提取,并替换成 链接
-  return props.memo.content?.replace(/#([^\s#]+)/g, (match, p1) => {
-    // 以a标签外加传参的方式渲染tag
-    return `[#${p1}](?tag=${p1}){target="_self"}`
-    // 解析为vue组件, 避免不了换行问题, 只有换行才能触发渲染vue组件, 而如果把ProseP的p标签去掉, 还要处理需要换行的情况
-    // return `::prose-a{href="?tag=${p1}"}\n#${p1}\n::`
-  })
+  return props.memo.content
+  // // 把props.memo.content 中的以#开头,以空格结尾的部分提取,并替换成 链接
+  // return props.memo.content?.replace(/#([^\s#]+)/g, (match, p1) => {
+  //   // 以a标签外加传参的方式渲染tag
+  //   return `[#${p1}](?tag=${p1}){target="_self"}`
+  //   // 解析为vue组件, 避免不了换行问题, 只有换行才能触发渲染vue组件, 而如果把ProseP的p标签去掉, 还要处理需要换行的情况
+  //   // return `::prose-a{href="?tag=${p1}"}\n#${p1}\n::`
+  // })
 })
 
 // async function copyURL2Clipboard() {
@@ -136,11 +136,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="memoWrap" class="">
+  <div ref="memoWrap" class="min-h-[150px] flex flex-col">
     <!-- <AppOverflowContent :show-all="!!showAll">
 
       </AppOverflowContent> -->
-    <MDC :value="parsedContent" tag="section" class="mdc-memo-prose prose" />
+    <MDC :value="parsedContent" tag="section" class="mdc-memo-prose prose flex-1" />
     <div class="memo-info flex items-center justify-between py-2">
       <span />
       <span>

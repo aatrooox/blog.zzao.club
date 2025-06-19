@@ -44,6 +44,10 @@ export default defineNuxtConfig({
       path: '~/components/animate',
       prefix: 'Animate',
     },
+    {
+      path: '~/components/content',
+      global: true,
+    },
   ],
   imports: {
     presets: [
@@ -142,6 +146,9 @@ export default defineNuxtConfig({
   },
   // 3.0.0-alpha.8
   mdc: {
+    components: {
+      prose: true,
+    },
     headings: {
       anchorLinks: {
         h1: true,

@@ -1,6 +1,6 @@
 // 使用 github 授权后，客户端发起关联请求，自动创建一个新用户
 // 授权成功后，客户端判断是否已登录，未登录时，调用此接口生成用户，然后走自己的登录逻辑
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     id: z.any(),
     avatar_url: z.string().url(),
@@ -78,10 +78,7 @@ export default defineEventHandler(async (event) => {
   const tokenInfo = await upsertAccessToken(userData!.id)
 
   return {
-    data: {
-      user: userData,
-      token: tokenInfo.token,
-    },
-    message: '关联成功',
+    user: userData,
+    token: tokenInfo.token,
   }
 })

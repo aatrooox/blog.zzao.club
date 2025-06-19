@@ -22,7 +22,7 @@ defineRouteMeta({
 })
 
 // console.log(`schema`, schema)
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const query = await useSafeValidatedQuery(event, schema)
 
   if (!query.success) {
@@ -77,8 +77,5 @@ export default defineEventHandler(async (event) => {
     },
   })
 
-  return {
-    data: comments,
-    msg: 'ok',
-  }
+  return comments
 })

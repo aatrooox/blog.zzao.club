@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   let body
   try {
     body = await useSafeValidatedBody(event, z.object({
@@ -97,8 +97,5 @@ export default defineEventHandler(async (event) => {
     data: commentData,
   })
 
-  return {
-    data,
-    message: 'ok',
-  }
+  return data
 })

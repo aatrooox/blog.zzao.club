@@ -21,7 +21,6 @@ function onEnter(el) {
         delay: (_, i) => i * 50,
         ease: 'inOutCirc',
         onComplete: () => {
-
         },
       })
     },
@@ -93,4 +92,5 @@ onUnmounted(() => observer.value?.disconnect())
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>

@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const schema = z.object({
     page: z.string().optional().default('1').transform(Number),
     size: z.string().optional().default('50').transform(Number),
@@ -75,8 +75,5 @@ export default defineEventHandler(async (event) => {
   })
 
   console.log(`memos`, memos)
-  return {
-    data: memos,
-    msg: 'ok',
-  }
+  return memos
 })

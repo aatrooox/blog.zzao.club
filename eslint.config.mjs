@@ -35,6 +35,7 @@ export default antfu(
       'vue-a11y/mouse-events-have-key-events': 'off',
       'vue-a11y/form-control-has-label': 'off',
       'vue-a11y/label-has-for': 'off',
+      'antfu/top-level-function': 'off',
     },
   },
 )

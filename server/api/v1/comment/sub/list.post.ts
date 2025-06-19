@@ -1,5 +1,5 @@
 // 获取评论下的二级评论
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     comment_id: z.string(),
   }))
@@ -33,8 +33,5 @@ export default defineEventHandler(async (event) => {
     },
   })
 
-  return {
-    data,
-    message: 'ok',
-  }
+  return data
 })

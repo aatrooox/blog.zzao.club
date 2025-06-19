@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const schema = z.object({
     id: z.string(),
     // size: z.string().optional().default('10').transform(Number),
@@ -20,8 +20,5 @@ export default defineEventHandler(async (event) => {
     },
   })
 
-  return {
-    data: count,
-    msg: 'ok',
-  }
+  return count
 })

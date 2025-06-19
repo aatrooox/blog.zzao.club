@@ -4,8 +4,8 @@ export default defineCachedEventHandler(async (event) => {
   const websiteId = getRouterParam(event, 'websiteId')
   const schema = z.object({
     url: z.string().optional(),
-    startAt: z.string().transform(str => Number(str)).optional(), // ms
-    endAt: z.string().transform(str => Number(str)).optional(), // ms
+    startAt: z.string().transform((str: string) => Number(str)).optional(), // ms
+    endAt: z.string().transform((str: string) => Number(str)).optional(), // ms
   })
   const query = await useSafeValidatedQuery(event, schema)
 

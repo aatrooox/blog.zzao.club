@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   // 文章id
   // const id = getRouterParam(event, 'id')
   const schema = z.object({
@@ -19,8 +19,5 @@ export default defineEventHandler(async (event) => {
     },
   })
 
-  return {
-    data,
-    message: 'ok',
-  }
+  return data
 })

@@ -3,7 +3,7 @@ export const schema = z.object({
   password: z.string(),
 })
 
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, schema)
 
   if (!body.success) {
@@ -53,10 +53,7 @@ export default defineEventHandler(async (event) => {
   const tokenInfo = await upsertAccessToken(user.id)
 
   return {
-    data: {
-      token: tokenInfo.token,
-      user,
-    },
-    msg: '登录成功',
+    token: tokenInfo.token,
+    user,
   }
 })

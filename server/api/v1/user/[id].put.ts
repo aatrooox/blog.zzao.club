@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const id = getRouterParam(event, 'id')
   const body = await useSafeValidatedBody(event, z.object({
     email: z.string().optional(),
@@ -68,8 +68,5 @@ export default defineEventHandler(async (event) => {
     data: updateData,
   })
 
-  return {
-    data: updateUser,
-    message: 'ok',
-  }
+  return updateUser
 })

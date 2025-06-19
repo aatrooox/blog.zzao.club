@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const body = await readBody(event)
   console.log(`body`, body)
   // const { type, memo_id } = body
@@ -18,8 +18,5 @@ export default defineEventHandler(async (event) => {
   //   await db.insert({_id: docname, count: 1, ...body})
   //  }
 
-  return {
-    data: 0,
-    msg: 'ok',
-  }
+  return 0
 })

@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     content: z.string(), // 内容
     type: z.string().optional().default('article'), // 对象 blog / memo / article
@@ -33,8 +33,5 @@ export default defineEventHandler(async (event) => {
   }
   catch {}
 
-  return {
-    data,
-    message: 'ok',
-  }
+  return data
 })

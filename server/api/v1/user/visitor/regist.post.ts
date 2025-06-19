@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     visitorId: z.number().or(z.string()).transform((v: string | number) => v.toString()),
     visitorName: z.string().optional(),
@@ -30,11 +30,8 @@ export default defineEventHandler(async (event) => {
   if (_user) {
     const tokenInfo = await upsertAccessToken(_user.id)
     return {
-      data: {
-        token: tokenInfo.token,
-        user: _user,
-      },
-      message: '注册成功',
+      token: tokenInfo.token,
+      user: _user,
     }
   }
 
@@ -54,10 +51,7 @@ export default defineEventHandler(async (event) => {
 
   const tokenInfo = await upsertAccessToken(user.id)
   return {
-    data: {
-      token: tokenInfo.token,
-      user,
-    },
-    message: '注册成功',
+    token: tokenInfo.token,
+    user,
   }
 })

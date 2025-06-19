@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const id = getRouterParam(event, 'id')
 
   if (!id) {
@@ -23,8 +23,5 @@ export default defineEventHandler(async (event) => {
     },
   })
 
-  return {
-    data,
-    message: 'ok',
-  }
+  return data
 })

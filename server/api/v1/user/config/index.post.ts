@@ -1,5 +1,5 @@
 // 更新和创建用户配置
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     userId: z.string(),
     allowEmailNotify: z.number().optional().default(0),
@@ -27,8 +27,5 @@ export default defineEventHandler(async (event) => {
     },
   })
 
-  return {
-    data: config,
-    msg: 'ok',
-  }
+  return config
 })

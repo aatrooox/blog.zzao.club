@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineStandardResponseHandler(async (event) => {
   const schema = z.object({
     article_id: z.string(),
     user_id: z.string().optional(),
@@ -27,15 +27,9 @@ export default defineEventHandler(async (event) => {
     })
 
     return {
-      data: {
-        count,
-        isLiked: !!isLiked,
-      },
-      msg: 'ok',
+      count,
+      isLiked: !!isLiked,
     }
   }
-  return {
-    data: { count },
-    msg: 'ok',
-  }
+  return { count }
 })
