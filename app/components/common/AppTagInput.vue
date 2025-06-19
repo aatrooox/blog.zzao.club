@@ -180,7 +180,7 @@ function focusActualInput(): void {
         @focus="handleFocus"
         @blur="handleBlur"
         @keydown="handleKeydown"
-      />
+      >
     </div>
     <Transition
       enter-active-class="transition ease-out duration-100"

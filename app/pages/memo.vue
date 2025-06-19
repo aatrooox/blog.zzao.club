@@ -55,9 +55,9 @@ function onLeave(el, done) {
             class="card w-full md:w-[500px] mb-8 border rounded-sm border-zinc-800 border-b-6 border-r-6 box-border px-4 pb-0 bg-white transition-all duration-200 dark:bg-zinc-800 dark:border-zinc-700 break-inside-avoid"
           >
             <div class="w-full h-2 py-2 flex gap-2 justify-end">
-              <div class="w-2 h-2 rounded-full bg-zinc-700"></div>
-              <div class="w-2 h-2 rounded-full border-2 border-zinc-800"></div>
-              <div class="w-2 h-2 rounded-full border-2 border-zinc-800"></div>
+              <div class="w-2 h-2 rounded-full bg-zinc-700" />
+              <div class="w-2 h-2 rounded-full border-2 border-zinc-800" />
+              <div class="w-2 h-2 rounded-full border-2 border-zinc-800" />
             </div>
             <MemoPanel :memo="memo" />
           </div>
