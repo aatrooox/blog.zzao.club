@@ -45,6 +45,10 @@ export default defineNuxtConfig({
       prefix: 'Animate',
     },
     {
+      path: '~/components/memo',
+      prefix: 'Memo',
+    },
+    {
       path: '~/components/content',
       global: true,
     },

@@ -16,6 +16,11 @@ export default defineStandardResponseHandler(async (event) => {
     where: {
       id: body.data.id,
     },
+  }).catch((err) => {
+    throw createError({
+      statusCode: 500,
+      message: '删除失败',
+    })
   })
 
   return data

@@ -14,7 +14,7 @@ const imgUrl = computed(() => {
 <template>
   <Avatar shape="circle" class="w-9 h-9">
     <AvatarImage :src="imgUrl ?? ''" alt="@unovue" />
-    <AvatarFallback> {{ (userInfo?.nickname?.[0] || userInfo?.username[0])?.toUpperCase() ?? 'Z' }} </AvatarFallback>
+    <AvatarFallback> {{ (userInfo?.nickname?.[0] || userInfo?.username?.[0])?.toUpperCase() ?? 'Z' }} </AvatarFallback>
   </Avatar>
   <!-- <Avatar :label="userInfo?.username[0]?.toUpperCase() || 'B'" shape="circle" v-else>
   </Avatar> -->

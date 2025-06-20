@@ -22,6 +22,7 @@ export default defineStandardResponseHandler(async (event) => {
     user_info: {
       select: {
         username: true,
+        nickname: true,
         avatar_url: true,
       },
     },

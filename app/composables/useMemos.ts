@@ -16,7 +16,7 @@ export default function useMemos() {
   )
 
   async function getMemos() {
-    if (status.value !== 'idle' || !memos.value)
+    if (status.value === 'pending')
       return
     await refresh()
     memos.value = data.value?.data ?? []
