@@ -1,6 +1,35 @@
 # Changelog
 
 
+## v1.9.7
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.9.6...v1.9.7)
+
+### 🚀 Enhancements
+
+- ⚠️  统一的 response body 🤩 ([7c3cab4](https://github.com/aatrooox/blog.zzao.club/commit/7c3cab4))
+- ⚠️  重构 memoz 页面 ([fa84894](https://github.com/aatrooox/blog.zzao.club/commit/fa84894))
+
+### 🩹 Fixes
+
+- Eslint ([29251e4](https://github.com/aatrooox/blog.zzao.club/commit/29251e4))
+
+### 🏡 Chore
+
+- 优化代码; 更新二维码 ([3ac5f43](https://github.com/aatrooox/blog.zzao.club/commit/3ac5f43))
+- 新增表字段 ([f9957db](https://github.com/aatrooox/blog.zzao.club/commit/f9957db))
+- Eslint ([e5c87c5](https://github.com/aatrooox/blog.zzao.club/commit/e5c87c5))
+- Eslint ([931c43b](https://github.com/aatrooox/blog.zzao.club/commit/931c43b))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  统一的 response body 🤩 ([7c3cab4](https://github.com/aatrooox/blog.zzao.club/commit/7c3cab4))
+- ⚠️  重构 memoz 页面 ([fa84894](https://github.com/aatrooox/blog.zzao.club/commit/fa84894))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.9.6
 
 [compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v1.9.5...v1.9.6)
