@@ -26,7 +26,9 @@ export default defineOAuthGitHubEventHandler({
       })
     }
 
-    return sendRedirect(event, '/?login=github&status=success')
+    // 请求 github 时，携带一个 settings 参数
+    const query = getQuery(event)
+    return sendRedirect(event, query?.setting ? '/settings' : '/?login=github&status=success')
   },
   // Optional, will return a json error and 401 status code by default
   onError(event: any, error: any) {

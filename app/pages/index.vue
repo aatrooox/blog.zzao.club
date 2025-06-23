@@ -28,6 +28,22 @@ const { formatDate } = useDayjs()
 console.log(`loggedIn`, loggedIn.value)
 // 登录成功后，同步github信息
 watchEffect(async () => {
+  if (userStore.isLogin) {
+    // 关联 github 的头像
+    if (loggedIn.value && route.query.login === 'github' && route.query.status === 'success') {
+      const { data, error } = await $api.put(`/api/v1/user/${userStore.user.id}`, {
+        avatar_url: user.value?.avatar_url,
+      })
+
+      if (!error) {
+        userStore.setUser(data.user)
+        userStore.setToken(data.token)
+      }
+
+      router.replace('/settings')
+      return
+    }
+  }
   if (loggedIn.value && route.query.login === 'github' && route.query.status === 'success') {
     const { data, error } = await $api.post('/api/v1/auth/connect/github', {
       id: user.value?.id,

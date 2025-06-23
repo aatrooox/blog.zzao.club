@@ -81,7 +81,7 @@ model OAuth {
 // 博客 一级评论表
 model BlogComment {
   id           String           @id @default(uuid(7))
-  content      String
+  content      String           @db.MediumText
   create_ts    DateTime         @default(now())
   updated_ts   DateTime         @updatedAt
   type         String           @default("article") // article / memo / blog / paragraph(引用段落评论) 
@@ -103,8 +103,8 @@ model BlogExplain {
   id         String   @id @default(uuid(7))
   create_ts  DateTime @default(now())
   updated_ts DateTime @updatedAt
-  text       String // 对应的名词和文本
-  content    String // 注解内容
+  text       String   @db.MediumText // 对应的名词和文本
+  content    String   @db.MediumText // 注解内容
   article_id String
 
   @@map("blog_explain")
@@ -113,7 +113,7 @@ model BlogExplain {
 // 博客 二级评论表
 model BlogSubComment {
   id                   String      @id @default(uuid(7))
-  content              String
+  content              String      @db.MediumText
   create_ts            DateTime    @default(now())
   updated_ts           DateTime    @updatedAt
   comment_id           String
@@ -148,7 +148,7 @@ model BlogLike {
 
 model BlogMemo {
   id            String             @id @default(uuid(7))
-  content       String
+  content       String?            @db.MediumText
   create_ts     DateTime           @default(now())
   updated_ts    DateTime           @updatedAt
   visible       String             @default("public") // 可见性 public / group / private 

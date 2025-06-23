@@ -5,10 +5,12 @@ import type { BlogMemoWithUser } from '~~/types/memo.d'
 const props = defineProps<Props>()
 defineEmits(['refresh'])
 const memoWrap = ref<any>(null)
+const contentRef = ref<any>(null)
 // const userStore = useUserStore()
 // const { $api } = useNuxtApp()
-const { updateDateFromNow } = useDayjs()
+// const { updateDateFromNow } = useDayjs()
 const showInfo = ref(true)
+const isContentOverflowing = ref(false)
 // const commentReplyOpen = ref(false)
 // const isLikedLocal = ref(false);
 const observer = ref()
@@ -99,6 +101,21 @@ function updateTextColor() {
   textFontSize.value = `${fontSize}px`
 }
 
+// 检测内容是否溢出
+function checkContentOverflow() {
+  if (contentRef.value) {
+    const element = contentRef.value.$el || contentRef.value
+    isContentOverflowing.value = element.scrollHeight > element.clientHeight
+  }
+}
+
+// 监听内容变化
+watch(() => props.memo.content, () => {
+  nextTick(() => {
+    checkContentOverflow()
+  })
+}, { immediate: true })
+
 onMounted(() => {
   // isLikedLocal.value = false;
   const callback = (entries: any) => {
@@ -109,6 +126,10 @@ onMounted(() => {
         showInfo.value = true
         updateTextColor()
         window.addEventListener('scroll', updateTextColor)
+        // 检测内容溢出
+        nextTick(() => {
+          checkContentOverflow()
+        })
       }
       else {
         console.log('Div 离开视口')
@@ -127,6 +148,11 @@ onMounted(() => {
 
   observer.value = new IntersectionObserver(callback, options)
   observer.value.observe(memoWrap.value) // 开始观察
+
+  // 初始检测
+  nextTick(() => {
+    checkContentOverflow()
+  })
 })
 
 onUnmounted(() => {
@@ -140,14 +166,7 @@ onUnmounted(() => {
     <!-- <AppOverflowContent :show-all="!!showAll">
 
       </AppOverflowContent> -->
-    <MDC :value="parsedContent" tag="section" class="mdc-memo-prose prose flex-1" />
-    <div class="memo-info flex items-center justify-between py-2">
-      <span />
-      <span>
-        <!-- <span class=" text-md mr-2">{{ props.memo?.user_info?.username }}</span> -->
-        <span class="text-zinc-400 text-xs">{{ updateDateFromNow(props.memo.create_ts) }}</span>
-      </span>
-    </div>
+    <MDC ref="contentRef" :value="parsedContent" tag="section" class="mdc-memo-prose prose flex-1" />
     <!-- <transition enter-active-class="transition-all transform ease-in-out duration-300 delay-900"
         enter-from-class="opacity-0 scale-90" enter-to-class="opacity-100 scale-100"
         leave-active-class="transition-all transform ease-in-out duration-300 delay-400"

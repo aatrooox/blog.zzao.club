@@ -3,7 +3,6 @@ import type { ApiResponse } from '~~/types/fetch'
 import { AutoForm } from '#components'
 import md5 from 'md5'
 import * as z from 'zod'
-import { Button } from '@/components/ui/button'
 
 useHead({
   title: '设置',
@@ -149,8 +148,11 @@ onMounted(() => {
     </h2>
     <div class="flex flex-col gap-8 mb-4">
       <AutoForm v-if="schema" class="space-y-6" :schema="schema" @submit="onSubmit">
-        <Button type="submit">
+        <Button type="submit" class="mr-2">
           保存
+        </Button>
+        <Button href="/api/v1/auth/github?setting=1" as="a">
+          关联 Github 头像
         </Button>
       </AutoForm>
     </div>

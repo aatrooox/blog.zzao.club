@@ -1,5 +1,6 @@
-import { NuxtLink } from '../../.nuxt/content/components';
 <script lang="ts" setup>
+import { useElementSize } from '@vueuse/core'
+
 definePageMeta({
   layout: false,
 })
@@ -14,33 +15,177 @@ const userStore = useUserStore()
 // const { $api } = useNuxtApp()
 
 const tags = ref([])
-await getMemos() // Ensure memos are fetched
 
-// Computed property to split memos into two columns for waterfall layout
-const columnizedMemos = computed(() => {
-  if (!memos.value || memos.value.length === 0) {
-    return { left: [], right: [] }
+// Ensure memos are loaded on component mount
+onMounted(async () => {
+  await getMemos() // Ensure memos are fetched
+})
+
+// Waterfall layout configuration
+interface MemoPosition {
+  memo: any
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
+const containerRef = ref<HTMLElement>()
+const { width: containerWidth } = useElementSize(containerRef)
+
+// 高度缓存：存储每个memo的实际测量高度
+const heightCache = ref<Map<string, number>>(new Map())
+
+// 防抖计时器
+let layoutUpdateTimer: NodeJS.Timeout | null = null
+// 布局更新触发器
+const layoutTrigger = ref(0)
+
+// 处理高度测量事件
+function handleHeightMeasured({ memoId, height }: { memoId: string, height: number }) {
+  const previousHeight = heightCache.value.get(memoId)
+
+  // 只有高度变化超过阈值才更新（避免微小变化导致频繁重计算）
+  const threshold = 5
+  if (previousHeight && Math.abs(previousHeight - height) < threshold) {
+    return
   }
-  // Assuming memos are already sorted by time (newest first by default from useMemos)
-  // To achieve left-to-right, top-to-bottom with earlier items on the left:
-  // We need to sort them oldest first for this distribution logic.
-  // If useMemos provides newest first, we might need to reverse or sort them.
-  // For now, let's assume they are in the desired chronological order (oldest to newest for this logic)
-  // Or, if they are newest first, we can reverse them before splitting.
-  const sortedMemos = [...memos.value]// Oldest first for left-to-right distribution
 
-  const leftColumn: typeof memos.value = []
-  const rightColumn: typeof memos.value = []
+  heightCache.value.set(memoId, height)
 
-  sortedMemos.forEach((memo, index) => {
-    if (index % 2 === 0) {
-      leftColumn.push(memo)
+  // 如果高度发生变化，使用防抖机制触发瀑布流重新计算
+  if (previousHeight !== height) {
+    // 清除之前的计时器
+    if (layoutUpdateTimer) {
+      clearTimeout(layoutUpdateTimer)
     }
-    else {
-      rightColumn.push(memo)
+
+    // 设置新的计时器，防抖延迟50ms
+    layoutUpdateTimer = setTimeout(() => {
+      nextTick(() => {
+        // 通过更新响应式变量强制重新计算布局
+        layoutTrigger.value++
+        layoutUpdateTimer = null
+      })
+    }, 50)
+  }
+}
+
+// 处理删除事件 - 立即从本地数据中移除
+function handleDelete(memoId: string) {
+  const index = memos.value.findIndex(memo => memo.id === memoId)
+  if (index !== -1) {
+    memos.value.splice(index, 1)
+    // 同时清除高度缓存
+    heightCache.value.delete(memoId)
+  }
+}
+
+// Get container and card dimensions
+function getContainerInfo() {
+  const minCardWidth = 280
+  const gap = 16
+  const containerPadding = 0
+
+  const availableWidth = (containerWidth.value || 800) - containerPadding * 2
+  const columns = Math.max(1, Math.floor((availableWidth + gap) / (minCardWidth + gap)))
+  const cardWidth = Math.floor((availableWidth - gap * (columns - 1)) / columns)
+
+  return {
+    containerWidth: availableWidth,
+    cardWidth,
+    columns,
+    gap,
+  }
+}
+
+// Calculate waterfall layout positions
+const waterfallLayout = computed((): MemoPosition[] => {
+  // 依赖layoutTrigger确保高度更新时重新计算
+  void layoutTrigger.value
+
+  if (!memos.value || memos.value.length === 0) {
+    return []
+  }
+
+  const { cardWidth, columns, gap } = getContainerInfo()
+  const columnHeights = Array.from({ length: columns }, () => 0)
+  const positions: MemoPosition[] = []
+
+  memos.value.forEach((memo) => {
+    // Find the shortest column
+    const shortestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights))
+
+    // Calculate position
+    const x = shortestColumnIndex * (cardWidth + gap)
+    const y = columnHeights[shortestColumnIndex] as number
+
+    // Get cached height or estimate
+    let cardHeight = heightCache.value.get(memo.id)
+    if (!cardHeight) {
+      // Estimate height based on content
+      const baseHeight = 120 // Base card height (header + padding)
+
+      // More precise content height estimation
+      const contentLength = memo.content?.length || 0
+      let actualContentHeight = 0
+
+      if (contentLength === 0) {
+        actualContentHeight = 20 // Empty content
+      }
+      else if (contentLength <= 50) {
+        actualContentHeight = 30 // Short content
+      }
+      else if (contentLength <= 200) {
+        actualContentHeight = Math.ceil(contentLength / 40) * 24 // Medium content
+      }
+      else {
+        // Long content - more precise calculation
+        const estimatedLines = Math.ceil(contentLength / 35) // ~35 chars per line
+        actualContentHeight = estimatedLines * 24 // 24px line height
+      }
+
+      // Add buffer for long content
+      const bufferHeight = contentLength > 1000 ? 50 : 20
+      cardHeight = baseHeight + actualContentHeight + bufferHeight
+    }
+
+    positions.push({
+      memo,
+      x,
+      y,
+      width: cardWidth,
+      height: cardHeight,
+    })
+
+    // Update column height with boundary check
+    if (shortestColumnIndex >= 0 && shortestColumnIndex < columnHeights.length) {
+      const currentHeight = columnHeights[shortestColumnIndex] ?? 0
+      columnHeights[shortestColumnIndex] = currentHeight + cardHeight + gap
     }
   })
-  return { left: leftColumn, right: rightColumn }
+
+  return positions
+})
+
+// Container height based on tallest column
+const containerHeight = computed(() => {
+  if (waterfallLayout.value.length === 0) {
+    return 0
+  }
+
+  const { columns, gap } = getContainerInfo()
+  const columnHeights = Array.from({ length: columns }, () => 0)
+
+  waterfallLayout.value.forEach((position) => {
+    const columnIndex = Math.floor(position.x / (position.width + gap))
+    if (columnIndex >= 0 && columnIndex < columnHeights.length) {
+      const currentHeight = columnHeights[columnIndex] ?? 0
+      columnHeights[columnIndex] = Math.max(currentHeight, position.y + position.height)
+    }
+  })
+
+  return Math.max(...columnHeights)
 })
 
 function onEnter(el) {
@@ -59,11 +204,10 @@ function onBeforeEnter(el) {
 
 function onLeave(el, done) {
   animate(el, {
-    scale: [1, 1.1, 1],
+    scale: [1, 0.8],
     opacity: '0',
-    duration: 200,
-    delay: 300,
-    ease: 'inOut',
+    duration: 150,
+    ease: 'out',
     onComplete: () => {
       done && done()
     },
@@ -176,28 +320,33 @@ const popularTags = ref([
         </div>
       </div>
 
-      <!-- Modified Memos List Container -->
-      <div class="memos-list-container flex flex-col sm:flex-row gap-6">
-        <!-- Left Column for Memos -->
-        <div class="w-full sm:w-1/2 space-y-6">
-          <transition-group appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
-            <template v-for="memo in columnizedMemos.left" :key="`left-${memo?.id}`">
-              <MemoWrap :memo="memo" @refresh="getMemos">
-                <MemoPanel :memo="memo" />
-              </MemoWrap>
-            </template>
-          </transition-group>
-        </div>
-        <!-- Right Column for Memos -->
-        <div class="w-full sm:w-1/2 space-y-6">
-          <transition-group appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
-            <template v-for="memo in columnizedMemos.right" :key="`right-${memo?.id}`">
-              <MemoWrap :memo="memo" @refresh="getMemos">
-                <MemoPanel :memo="memo" />
-              </MemoWrap>
-            </template>
-          </transition-group>
-        </div>
+      <!-- Memos waterfall container -->
+      <div
+        ref="containerRef"
+        class="memos-waterfall-container"
+        :style="{ height: `${containerHeight}px`, position: 'relative' }"
+      >
+        <transition-group appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
+          <template v-for="position in waterfallLayout" :key="position.memo?.id">
+            <MemoWrap
+              :memo="position.memo"
+              class="memo-item hover:z-50"
+              :style="{
+                position: 'absolute',
+                left: `${position.x}px`,
+                top: `${position.y}px`,
+                width: `${position.width}px`,
+                transition: 'all 0.3s ease',
+                zIndex: 1,
+              }"
+              @refresh="getMemos"
+              @height-measured="handleHeightMeasured"
+              @delete="handleDelete"
+            >
+              <MemoPanel :memo="position.memo" />
+            </MemoWrap>
+          </template>
+        </transition-group>
       </div>
     </main>
 
@@ -227,4 +376,38 @@ const popularTags = ref([
   </div>
 </template>
 
-<!-- Removed <style scoped> section -->
+<style scoped>
+.memos-waterfall-container {
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+}
+
+.memo-item {
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.memo-item:hover {
+  z-index: 50 !important;
+}
+
+/* 移除内容高度限制，现在由Wrap组件控制 */
+
+/* Alternative CSS Grid approach (commented out) */
+/*
+.memos-waterfall-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.memo-item {
+  width: 100%;
+}
+*/
+</style>

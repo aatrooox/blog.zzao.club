@@ -60,6 +60,6 @@ export default defineStandardResponseHandler(async (event) => {
       message: '创建失败',
     })
   })
-
+  console.log('create ok => ', data)
   return data
 })
