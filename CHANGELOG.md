@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.10.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.9.7...v1.10.0)
+
+### 🚀 Enhancements
+
+- Github 登录的用户设置为临时状态 ([88aa990](https://github.com/aatrooox/blog.zzao.club/commit/88aa990))
+- Memoz 瀑布流重构; 新增设置 github 头像 ([b849a55](https://github.com/aatrooox/blog.zzao.club/commit/b849a55))
+
+### 🏡 Chore
+
+- Memoz 字数改为 512 ([f501ad3](https://github.com/aatrooox/blog.zzao.club/commit/f501ad3))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.9.7
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.9.6...v1.9.7)
