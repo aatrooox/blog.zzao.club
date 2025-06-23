@@ -54,6 +54,11 @@ export default defineStandardResponseHandler(async (event) => {
   }
   const data = await prisma.blogMemo.create({
     data: createData,
+  }).catch(() => {
+    throw createError({
+      statusCode: 500,
+      message: '创建失败',
+    })
   })
 
   return data

@@ -182,7 +182,7 @@ defineExpose({ clear })
       <Textarea
         id="over_label"
         ref="commentInputRef" v-model="comment" class="w-full" auto-resize :rows="rows"
-        maxlength="256" :placeholder="placeholder" @value-change="emit('valueChange', comment)" @click.stop
+        maxlength="512" :placeholder="placeholder" @value-change="emit('valueChange', comment)" @click.stop
       />
       <div class="btns flex justify-between items-center pt-2">
         <div class="left flex items-center gap-2">

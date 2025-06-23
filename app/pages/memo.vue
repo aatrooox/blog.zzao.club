@@ -181,7 +181,7 @@ const popularTags = ref([
         <!-- Left Column for Memos -->
         <div class="w-full sm:w-1/2 space-y-6">
           <transition-group appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
-            <template v-for="memo in columnizedMemos.left" :key="`left-${memo.id}`">
+            <template v-for="memo in columnizedMemos.left" :key="`left-${memo?.id}`">
               <MemoWrap :memo="memo" @refresh="getMemos">
                 <MemoPanel :memo="memo" />
               </MemoWrap>
@@ -191,7 +191,7 @@ const popularTags = ref([
         <!-- Right Column for Memos -->
         <div class="w-full sm:w-1/2 space-y-6">
           <transition-group appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
-            <template v-for="memo in columnizedMemos.right" :key="`right-${memo.id}`">
+            <template v-for="memo in columnizedMemos.right" :key="`right-${memo?.id}`">
               <MemoWrap :memo="memo" @refresh="getMemos">
                 <MemoPanel :memo="memo" />
               </MemoWrap>
