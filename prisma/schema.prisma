@@ -19,6 +19,7 @@ model User {
   avatar_url   String?
   website      String? // 个人网站
   role         String           @default("user") // user / visitor / admin /superAdmin
+  status       Int              @default(1) // 1: 正常，2: 临时 3: 禁用 
   comments     BlogComment[]
   sub_comments BlogSubComment[]
   likes        BlogLike[]

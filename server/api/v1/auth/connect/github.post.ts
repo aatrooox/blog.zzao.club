@@ -47,6 +47,7 @@ export default defineStandardResponseHandler(async (event) => {
         email,
         avatar_url,
         role: 'user',
+        status: 2, // 临时用户
       },
     }).catch(() => {
       throw createError({
@@ -60,19 +61,7 @@ export default defineStandardResponseHandler(async (event) => {
   }
 
   // update user_id field for oauth table
-  await prisma.oAuth.update({
-    where: {
-      id: authData.id,
-    },
-    data: {
-      userId: userData!.id,
-    },
-  }).catch(() => {
-    throw createError({
-      statusCode: 500,
-      message: '更新用户失败',
-    })
-  })
+  await updateOAuthUser(authData.id, userData!.id)
 
   // 如果有，则已经生成 user 了，走一遍登录即可
   const tokenInfo = await upsertAccessToken(userData!.id)
