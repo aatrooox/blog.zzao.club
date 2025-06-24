@@ -15,7 +15,8 @@ const {
   cancelBtnText = '取消',
   inputTip = '最多256字符，所有人可以回复',
   placeholder = '说点什么吧！',
-} = defineProps<{ type?: string, target?: string, showHello?: boolean, submitBtnText?: string, cancelBtnText?: string, inputTip?: string, placeholder?: string }>()
+  initialValue = '',
+} = defineProps<{ type?: string, target?: string, showHello?: boolean, submitBtnText?: string, cancelBtnText?: string, inputTip?: string, placeholder?: string, initialValue?: string }>()
 const emit = defineEmits(['valueChange', 'send', 'cancel'])
 const userStore = useUserStore()
 // const emojiPopover = ref(null)
@@ -155,6 +156,10 @@ function cancelSend() {
 onMounted(() => {
   if (userStore.user?.username) {
     visitorName.value = userStore.user.username
+  }
+  // 设置初始值
+  if (initialValue) {
+    comment.value = initialValue
   }
 })
 defineExpose({ clear })

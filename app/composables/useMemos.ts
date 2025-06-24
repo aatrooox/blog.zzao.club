@@ -36,7 +36,7 @@ export default function useMemos() {
 
     if (content) {
       // const content = memoContent.value.replaceAll('`', '\\`')
-      const { data, error } = await $api.post<ApiResponse<BlogMemoWithUser>>('/api/v1/memo/create', {
+      const { error } = await $api.post<ApiResponse<BlogMemoWithUser>>('/api/v1/memo/create', {
         content,
         tags,
         user_id: userStore.user?.id,
@@ -48,10 +48,38 @@ export default function useMemos() {
         return
       }
 
-      memos.value.unshift(data)
+      // memos.value.unshift(data)
+      getMemos()
       toast.success('已发送一条Memo')
 
       // toast.add({ severity: 'success', summary: '已发送一条Memo', life: 3000 })
+    }
+  }
+
+  async function updateMemo(id: string, { content, tags = [] }: { content: string, tags?: any[] }) {
+    if (!userStore.isLogin) {
+      toast.warn('登录后才能编辑！')
+      return
+    }
+
+    if (!userStore.isSuperAdmin) {
+      toast.warn('当前仅博主可编辑～')
+      return
+    }
+
+    if (content) {
+      const { error } = await $api.post<ApiResponse<BlogMemoWithUser>>('/api/v1/memo/update', {
+        id,
+        content,
+        tags,
+      })
+
+      if (error) {
+        toast.error('更新失败，再试一下')
+        return
+      }
+
+      toast.success('Memo 已更新')
     }
   }
   return {
@@ -59,5 +87,6 @@ export default function useMemos() {
     status,
     getMemos,
     createMemo,
+    updateMemo,
   }
 }

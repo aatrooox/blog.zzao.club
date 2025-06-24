@@ -2,23 +2,79 @@
 import { useElementSize } from '@vueuse/core'
 
 definePageMeta({
-  layout: false,
+  layout: 'memo',
 })
 
 useSeoMeta({
   title: 'Memoz｜早早集市',
-  description: '基于Api数据实现SSR的页面，一些牢骚，一些知识碎片',
+  description: '基于Api数据实现SSR的页面，一些日常记录、知识碎片、其他平台的摘录',
 })
+// 集中式高度管理
+const resizeObserver = ref<ResizeObserver | null>(null)
+const isMemosReady = ref(false)
+const pendingMeasurements = ref(new Set<string>())
+const containerRef = ref<HTMLElement>()
+const { width: containerWidth } = useElementSize(containerRef)
 
-const { getMemos, memos, createMemo } = useMemos()
-const userStore = useUserStore()
-// const { $api } = useNuxtApp()
+// 高度缓存：存储每个memo的实际测量高度
+const heightCache = ref<Map<string, number>>(new Map())
+
+// 防抖计时器
+let layoutUpdateTimer: NodeJS.Timeout | null = null
+// 布局更新触发器ull
+const layoutTrigger = ref(0)
+const { getMemos, memos, createMemo, updateMemo } = useMemos()
 
 const tags = ref([])
+
+// 编辑相关状态
+const isEditDrawerOpen = ref(false)
+const editingMemo = ref<any>(null)
+const editTags = ref([])
 
 // Ensure memos are loaded on component mount
 onMounted(async () => {
   await getMemos() // Ensure memos are fetched
+  initResizeObserver() // 初始化ResizeObserver
+})
+
+// 监听memos数组变化，统一管理高度测量
+watch(memos, (newMemos) => {
+  if (newMemos && newMemos.length > 0) {
+    isMemosReady.value = true
+    // 等待DOM渲染完成后统一观察所有memo元素
+    nextTick(() => {
+      observeAllMemoElements()
+    })
+  }
+}, { immediate: true })
+
+// 统一观察所有memo元素
+function observeAllMemoElements() {
+  if (!resizeObserver.value) {
+    return
+  }
+
+  // 查找所有memo元素并开始观察
+  const memoElements = document.querySelectorAll('.memo-item')
+  memoElements.forEach((element) => {
+    const memoId = element.getAttribute('data-memo-id')
+    if (memoId && element instanceof HTMLElement) {
+      observeMemoElement(element, memoId)
+    }
+  })
+}
+
+// 组件卸载时清理
+onUnmounted(() => {
+  if (resizeObserver.value) {
+    resizeObserver.value.disconnect()
+    resizeObserver.value = null
+  }
+  if (layoutUpdateTimer) {
+    clearTimeout(layoutUpdateTimer)
+    layoutUpdateTimer = null
+  }
 })
 
 // Waterfall layout configuration
@@ -30,16 +86,68 @@ interface MemoPosition {
   height: number
 }
 
-const containerRef = ref<HTMLElement>()
-const { width: containerWidth } = useElementSize(containerRef)
+// 批量更新高度
+function batchUpdateHeights(measurements: { memoId: string, height: number }[]) {
+  let hasChanges = false
+  const threshold = 5
 
-// 高度缓存：存储每个memo的实际测量高度
-const heightCache = ref<Map<string, number>>(new Map())
+  measurements.forEach(({ memoId, height }) => {
+    const previousHeight = heightCache.value.get(memoId)
 
-// 防抖计时器
-let layoutUpdateTimer: NodeJS.Timeout | null = null
-// 布局更新触发器
-const layoutTrigger = ref(0)
+    if (!previousHeight || Math.abs(previousHeight - height) >= threshold) {
+      heightCache.value.set(memoId, height)
+      hasChanges = true
+    }
+  })
+
+  // 防抖更新布局
+  if (hasChanges) {
+    if (layoutUpdateTimer) {
+      clearTimeout(layoutUpdateTimer)
+    }
+
+    layoutUpdateTimer = setTimeout(() => {
+      nextTick(() => {
+        layoutTrigger.value++
+        layoutUpdateTimer = null
+      })
+    }, 100) // 增加防抖时间到100ms
+  }
+}
+
+// 初始化ResizeObserver
+function initResizeObserver() {
+  if (resizeObserver.value) {
+    resizeObserver.value.disconnect()
+  }
+
+  resizeObserver.value = new ResizeObserver((entries) => {
+    const measurements: { memoId: string, height: number }[] = []
+
+    entries.forEach((entry) => {
+      const memoId = entry.target.getAttribute('data-memo-id')
+      if (memoId) {
+        const height = entry.contentRect.height
+        measurements.push({ memoId, height })
+        pendingMeasurements.value.delete(memoId)
+      }
+    })
+
+    // 批量处理高度更新
+    if (measurements.length > 0) {
+      batchUpdateHeights(measurements)
+    }
+  })
+}
+
+// 观察memo元素
+function observeMemoElement(element: HTMLElement, memoId: string) {
+  if (resizeObserver.value && !pendingMeasurements.value.has(memoId)) {
+    element.setAttribute('data-memo-id', memoId)
+    resizeObserver.value.observe(element)
+    pendingMeasurements.value.add(memoId)
+  }
+}
 
 // 处理高度测量事件
 function handleHeightMeasured({ memoId, height }: { memoId: string, height: number }) {
@@ -78,6 +186,37 @@ function handleDelete(memoId: string) {
     memos.value.splice(index, 1)
     // 同时清除高度缓存
     heightCache.value.delete(memoId)
+  }
+}
+
+// 处理编辑事件
+function handleEdit(memo: any) {
+  editingMemo.value = memo
+  editTags.value = memo.tags || []
+  isEditDrawerOpen.value = true
+}
+
+// 更新memo
+async function handleUpdateMemo(data: any) {
+  if (!editingMemo.value)
+    return
+
+  try {
+    await updateMemo(editingMemo.value.id, {
+      content: data.content,
+      tags: data.tags,
+    })
+
+    // 关闭抽屉
+    isEditDrawerOpen.value = false
+    editingMemo.value = null
+    editTags.value = []
+
+    // 重新获取数据
+    await getMemos()
+  }
+  catch (error) {
+    console.error('更新失败:', error)
   }
 }
 
@@ -213,167 +352,72 @@ function onLeave(el, done) {
     },
   })
 }
-
-const userInfo = ref({
-  name: 'Memoz',
-  avatar: 'https://avatars.githubusercontent.com/u/13368294?v=4',
-  memoCount: 128,
-  activeDays: 365,
-})
-
-// const heatmapData = ref(Array.from({ length: 365 }, (_, i) => ({
-//   date: new Date(Date.now() - (365 - i) * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-//   count: Math.floor(Math.random() * 5),
-// })))
-
-const popularTags = ref([
-  { id: '1', name: 'Nuxt', count: 20 },
-  { id: '2', name: 'Vue', count: 15 },
-  { id: '3', name: 'TypeScript', count: 18 },
-  { id: '4', name: 'TailwindCSS', count: 12 },
-  { id: '5', name: 'SSR', count: 10 },
-])
 </script>
 
 <template>
-  <div class="memos-page-container min-h-screen bg-gray-100 dark:bg-zinc-900 p-4 flex flex-col md:flex-row gap-4">
-    <!-- Left Column: User Info & Stats -->
-    <aside class="w-1/4 lg:w-1/5 hidden md:block p-4 bg-white dark:bg-zinc-800 rounded-lg shadow sticky top-4 self-start">
-      <div class="user-info text-center">
-        <NuxtLink to="/">
-          <UserAvatar :user-info="userStore.user" alt="User Avatar" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-zinc-300 dark:border-zinc-700" />
-        </NuxtLink>
-        <h2 class="text-xl font-semibold dark:text-white">
-          {{ userStore.user.nickname }}
-        </h2>
-      </div>
-      <div class="stats mt-6 space-y-2">
-        <div class="stat-item flex justify-between dark:text-gray-300">
-          <span>Memos 发表:</span>
-          <span class="font-semibold dark:text-white">{{ userInfo.memoCount }} 条</span>
-        </div>
-        <div class="stat-item flex justify-between dark:text-gray-300">
-          <span>活跃天数:</span>
-          <span class="font-semibold dark:text-white">{{ userInfo.activeDays }} 天</span>
-        </div>
-        <!-- Add more stats as needed -->
-      </div>
-      <!-- Right sidebar content when lg breakpoint is not met -->
-      <div class="md:block lg:hidden mt-6 space-y-6">
-        <transition name="slide-down" appear>
-          <div class="heatmap-container">
-            <h3 class="text-lg font-semibold mb-2 dark:text-white">
-              贡献热力图
-            </h3>
-            <div class="heatmap bg-gray-200 dark:bg-zinc-700 p-2 rounded h-32 flex items-center justify-center text-gray-500 dark:text-gray-400 text-sm">
-              <!-- Placeholder for Heatmap Component -->
-              热力图占位
-              <!-- Example: <GithubHeatmap :data="heatmapData" /> -->
-            </div>
-          </div>
-        </transition>
-        <transition name="slide-down" appear>
-          <div class="tags-cloud">
-            <h3 class="text-lg font-semibold mb-2 dark:text-white">
-              热门标签
-            </h3>
-            <div class="flex flex-wrap gap-2">
-              <span v-for="tag in popularTags" :key="tag.id" class="px-2 py-1 bg-sky-100 text-sky-700 dark:bg-sky-700 dark:text-sky-100 rounded-md text-sm cursor-pointer hover:bg-sky-200 dark:hover:bg-sky-600">
-                {{ tag.name }} ({{ tag.count }})
-              </span>
-            </div>
-          </div>
-        </transition>
-      </div>
-    </aside>
-
-    <!-- Middle Column: Memo Editor & Memos List -->
-    <main class="w-full md:flex-1 md:max-w-3xl md:mx-auto">
-      <!-- Compact User Info for Mobile/Small Screens -->
-      <div class="compact-user-info md:hidden mb-6 bg-white dark:bg-zinc-800 rounded-lg shadow p-3">
-        <div class="flex items-center space-x-3">
-          <NuxtLink to="/" class="flex-shrink-0">
-            <img :src="userInfo.avatar" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-zinc-300 dark:border-zinc-700 hover:opacity-80 transition-opacity cursor-pointer">
-          </NuxtLink>
-          <div class="flex-1 flex items-center space-x-4">
-            <h2 class="text-base font-semibold dark:text-white">
-              {{ userInfo.name }}
-            </h2>
-            <div class="flex space-x-3 text-sm text-gray-600 dark:text-gray-400">
-              <span class="flex items-center space-x-1">
-                <Icon name="material-symbols:edit-note-outline" class="w-4 h-4" />
-                <span>{{ userInfo.memoCount }} 条</span>
-              </span>
-              <span class="flex items-center space-x-1">
-                <Icon name="material-symbols:calendar-today-outline" class="w-4 h-4" />
-                <span>{{ userInfo.activeDays }} 天</span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="memo-editor-wrapper mb-6 z-10">
-        <div class="memo-editor mx-auto bg-white dark:bg-zinc-800 rounded-lg shadow p-4">
-          <AppTagInput v-model="tags" />
-          <AppCommentInput :show-hello="false" input-tip="当前仅博主可发表 Memo" @send="createMemo" />
-        </div>
-      </div>
-
-      <!-- Memos waterfall container -->
-      <div
-        ref="containerRef"
-        class="memos-waterfall-container"
-        :style="{ height: `${containerHeight}px`, position: 'relative' }"
-      >
-        <transition-group appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
-          <template v-for="position in waterfallLayout" :key="position.memo?.id">
-            <MemoWrap
-              :memo="position.memo"
-              class="memo-item hover:z-50"
-              :style="{
-                position: 'absolute',
-                left: `${position.x}px`,
-                top: `${position.y}px`,
-                width: `${position.width}px`,
-                transition: 'all 0.3s ease',
-                zIndex: 1,
-              }"
-              @refresh="getMemos"
-              @height-measured="handleHeightMeasured"
-              @delete="handleDelete"
-            >
-              <MemoPanel :memo="position.memo" />
-            </MemoWrap>
-          </template>
-        </transition-group>
-      </div>
-    </main>
-
-    <!-- Right Column: Heatmap & Tags -->
-    <aside class="w-1/4 lg:w-1/5 hidden lg:block p-4 bg-white dark:bg-zinc-800 rounded-lg shadow sticky top-4 self-start">
-      <div class="heatmap-container mb-6">
-        <h3 class="text-lg font-semibold mb-2 dark:text-white">
-          贡献热力图
-        </h3>
-        <div class="heatmap bg-gray-200 dark:bg-zinc-700 p-2 rounded h-40 flex items-center justify-center text-gray-500 dark:text-gray-400">
-          <!-- Placeholder for Heatmap Component -->
-          热力图占位
-          <!-- Example: <GithubHeatmap :data="heatmapData" /> -->
-        </div>
-      </div>
-      <div class="tags-cloud">
-        <h3 class="text-lg font-semibold mb-2 dark:text-white">
-          热门标签
-        </h3>
-        <div class="flex flex-wrap gap-2">
-          <span v-for="tag in popularTags" :key="tag.id" class="px-2 py-1 bg-sky-100 text-sky-700 dark:bg-sky-700 dark:text-sky-100 rounded-md text-sm cursor-pointer hover:bg-sky-200 dark:hover:bg-sky-600">
-            {{ tag.name }} ({{ tag.count }})
-          </span>
-        </div>
-      </div>
-    </aside>
+  <div class="memo-editor-wrapper mb-6 z-10">
+    <div class="memo-editor mx-auto bg-white dark:bg-zinc-800 rounded-lg shadow p-4">
+      <AppTagInput v-model="tags" />
+      <AppCommentInput :show-hello="false" input-tip="当前仅博主可发表 Memo" @send="createMemo" />
+    </div>
   </div>
+
+  <!-- Memos waterfall container -->
+  <div
+    ref="containerRef"
+    class="memos-waterfall-container"
+    :style="{ height: `${containerHeight}px`, position: 'relative' }"
+  >
+    <transition-group appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
+      <template v-for="position in waterfallLayout" :key="position.memo?.id">
+        <MemoWrap
+          :memo="position.memo"
+          class="memo-item hover:z-50"
+          :data-memo-id="position.memo?.id"
+          :style="{
+            position: 'absolute',
+            left: `${position.x}px`,
+            top: `${position.y}px`,
+            width: `${position.width}px`,
+            transition: 'all 0.3s ease',
+            zIndex: 1,
+          }"
+          @refresh="getMemos"
+          @height-measured="handleHeightMeasured"
+          @delete="handleDelete"
+          @edit="handleEdit"
+        >
+          <MemoPanel :memo="position.memo" />
+        </MemoWrap>
+      </template>
+    </transition-group>
+  </div>
+
+  <!-- 编辑 Drawer -->
+  <Drawer v-model:open="isEditDrawerOpen">
+    <DrawerContent>
+      <DrawerHeader>
+        <DrawerTitle>正在编辑 Memo</DrawerTitle>
+        <DrawerDescription></DrawerDescription>
+      </DrawerHeader>
+      <div class="px-4 pb-4">
+        <div class="mb-4">
+          <AppTagInput v-model="editTags" />
+        </div>
+        <AppCommentInput
+          v-if="editingMemo"
+          :key="editingMemo.id"
+          :show-hello="false"
+          :initial-value="editingMemo.content"
+          placeholder="修改你的想法..."
+          input-tip="修改你的 Memo 内容"
+          submit-btn-text="更新"
+          @send="handleUpdateMemo"
+          @cancel="isEditDrawerOpen = false"
+        />
+      </div>
+    </DrawerContent>
+  </Drawer>
 </template>
 
 <style scoped>

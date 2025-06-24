@@ -8,45 +8,9 @@ interface propsData {
 
 const { memo } = defineProps<propsData>()
 
-const emit = defineEmits(['refresh', 'heightMeasured', 'delete'])
+const emit = defineEmits(['refresh', 'heightMeasured', 'delete', 'edit'])
 const wrapRef = ref<HTMLElement>()
 
-// 测量高度的函数
-function measureHeight() {
-  if (wrapRef.value) {
-    const height = wrapRef.value.offsetHeight
-    emit('heightMeasured', { memoId: memo.id, height })
-  }
-}
-
-// 在组件挂载后测量实际高度，使用多次测量确保准确性
-onMounted(() => {
-  // 立即测量一次
-  nextTick(() => {
-    measureHeight()
-  })
-
-  // 延迟测量，确保内容完全渲染
-  setTimeout(() => {
-    measureHeight()
-  }, 100)
-
-  // 再次延迟测量，处理图片等异步内容
-  setTimeout(() => {
-    measureHeight()
-  }, 500)
-})
-
-// 监听内容变化，重新测量高度
-watch(() => memo.content, () => {
-  nextTick(() => {
-    measureHeight()
-    // 内容变化后也需要延迟测量
-    setTimeout(() => {
-      measureHeight()
-    }, 100)
-  })
-}, { deep: true })
 const userStore = useUserStore()
 const { $api } = useNuxtApp()
 const toast = useGlobalToast()
@@ -127,7 +91,7 @@ async function removeMemo() {
               <Icon name="material-symbols:imagesmode-outline-rounded" class="w-3 h-3  transition-transform" />
             </Button>
             <template v-if="userStore.isSuperAdmin">
-              <Button class="action-btn group rounded-full dark:bg-yellow-900/20 hover:text-yellow-600 hover:bg-yellow-100 dark:hover:bg-yellow-900/40 transition-all duration-150 w-7 h-7 p-0" variant="ghost" size="sm">
+              <Button class="action-btn group rounded-full dark:bg-yellow-900/20 hover:text-yellow-600 hover:bg-yellow-100 dark:hover:bg-yellow-900/40 transition-all duration-150 w-7 h-7 p-0" variant="ghost" size="sm" @click="() => emit('edit', memo)">
                 <Icon name="material-symbols:edit-outline" class="w-3 h-3  transition-transform" />
               </Button>
               <Button class="action-btn group rounded-full dark:bg-gray-900/20 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-900/40 transition-all duration-150 w-7 h-7 p-0" variant="ghost" size="sm" @click="() => { console.log('删除按钮被点击了！'); removeMemo(); }">
