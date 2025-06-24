@@ -395,7 +395,9 @@ function onLeave(el, done) {
     </div>
     <template #fallback>
       <div class="flex justify-center items-center py-20">
-        <div class="text-gray-500">加载中...</div>
+        <div class="text-gray-500">
+          加载中...
+        </div>
       </div>
     </template>
   </ClientOnly>
