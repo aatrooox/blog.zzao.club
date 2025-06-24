@@ -25,7 +25,6 @@ export default function useMemos() {
   async function createMemo({ content, tags = [] }: { content: string, tags?: any[] }) {
     if (!userStore.isLogin) {
       toast.warn('登录后才能发送！')
-      // toast.add({ severity: 'warn', summary: '登录后即可发送', life: 3000 })
       return
     }
 
@@ -35,7 +34,6 @@ export default function useMemos() {
     }
 
     if (content) {
-      // const content = memoContent.value.replaceAll('`', '\\`')
       const { error } = await $api.post<ApiResponse<BlogMemoWithUser>>('/api/v1/memo/create', {
         content,
         tags,

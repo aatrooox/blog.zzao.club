@@ -5,6 +5,13 @@
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "eslint.enable": true,
+  "eslint.format.enable": true,
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
   "files.associations": {
     "*.css": "tailwindcss"
   },

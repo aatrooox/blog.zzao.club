@@ -34,7 +34,7 @@ const editTags = ref([])
 
 // Ensure memos are loaded on component mount
 onMounted(async () => {
-  await getMemos() // Ensure memos are fetched
+  await getMemos() // 在客户端获取数据
   initResizeObserver() // 初始化ResizeObserver
 })
 
@@ -363,42 +363,49 @@ function onLeave(el, done) {
   </div>
 
   <!-- Memos waterfall container -->
-  <div
-    ref="containerRef"
-    class="memos-waterfall-container"
-    :style="{ height: `${containerHeight}px`, position: 'relative' }"
-  >
-    <transition-group appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
-      <template v-for="position in waterfallLayout" :key="position.memo?.id">
-        <MemoWrap
-          :memo="position.memo"
-          class="memo-item hover:z-50"
-          :data-memo-id="position.memo?.id"
-          :style="{
-            position: 'absolute',
-            left: `${position.x}px`,
-            top: `${position.y}px`,
-            width: `${position.width}px`,
-            transition: 'all 0.3s ease',
-            zIndex: 1,
-          }"
-          @refresh="getMemos"
-          @height-measured="handleHeightMeasured"
-          @delete="handleDelete"
-          @edit="handleEdit"
-        >
-          <MemoPanel :memo="position.memo" />
-        </MemoWrap>
-      </template>
-    </transition-group>
-  </div>
+  <ClientOnly>
+    <div
+      ref="containerRef"
+      class="memos-waterfall-container"
+      :style="{ height: `${containerHeight}px`, position: 'relative' }"
+    >
+      <transition-group appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
+        <template v-for="position in waterfallLayout" :key="position.memo?.id">
+          <MemoWrap
+            :memo="position.memo"
+            class="memo-item hover:z-50"
+            :data-memo-id="position.memo?.id"
+            :style="{
+              position: 'absolute',
+              left: `${position.x}px`,
+              top: `${position.y}px`,
+              width: `${position.width}px`,
+              transition: 'all 0.3s ease',
+              zIndex: 1,
+            }"
+            @refresh="getMemos"
+            @height-measured="handleHeightMeasured"
+            @delete="handleDelete"
+            @edit="handleEdit"
+          >
+            <MemoPanel :memo="position.memo" />
+          </MemoWrap>
+        </template>
+      </transition-group>
+    </div>
+    <template #fallback>
+      <div class="flex justify-center items-center py-20">
+        <div class="text-gray-500">加载中...</div>
+      </div>
+    </template>
+  </ClientOnly>
 
   <!-- 编辑 Drawer -->
   <Drawer v-model:open="isEditDrawerOpen">
     <DrawerContent>
       <DrawerHeader>
         <DrawerTitle>正在编辑 Memo</DrawerTitle>
-        <DrawerDescription></DrawerDescription>
+        <DrawerDescription />
       </DrawerHeader>
       <div class="px-4 pb-4">
         <div class="mb-4">
