@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.10.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.10.1...v1.10.2)
+
+### 🚀 Enhancements
+
+- Prose-pre 组件完善; 修复部分SSR水合问题 ([c10df00](https://github.com/aatrooox/blog.zzao.club/commit/c10df00))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.10.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.10.0...v1.10.1)
