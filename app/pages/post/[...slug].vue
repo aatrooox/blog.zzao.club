@@ -651,22 +651,26 @@ watchEffect(async () => {
             <ContentRenderer :value="page?.body" />
           </article>
           <!-- 相邻的文章 -->
-          <ClientOnly v-if="adjacentPages.length">
-            <Separator class="my-1" label="END" />
-            <div class="flex justify-between text-xs py-4">
-              <div class="flex-1 flex items-center gap-1">
-                <template v-if="adjacentPages[0]">
-                  <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em" />
-                  <NuxtLink class="!underline" :href="adjacentPages[0].path">
-                    {{ adjacentPages[0].title }}
-                  </NuxtLink>
-                </template>
-              </div>
-              <div class="flex-1 text-right flex items-center justify-end gap-1">
-                <NuxtLink class="!underline" :href="adjacentPages[1].path">
-                  {{ adjacentPages[1].title }}
-                </NuxtLink>
-                <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em" />
+          <ClientOnly>
+            <div v-if="adjacentPages.length">
+              <Separator class="my-1" label="END" />
+              <div class="flex justify-between text-xs py-4">
+                <div class="flex-1 flex items-center gap-1">
+                  <template v-if="adjacentPages[0]">
+                    <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em" />
+                    <NuxtLink class="!underline" :href="adjacentPages[0].path">
+                      {{ adjacentPages[0].title }}
+                    </NuxtLink>
+                  </template>
+                </div>
+                <div class="flex-1 text-right flex items-center justify-end gap-1">
+                  <template v-if="adjacentPages[1]">
+                    <NuxtLink class="!underline" :href="adjacentPages[1].path">
+                      {{ adjacentPages[1].title }}
+                    </NuxtLink>
+                    <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em" />
+                  </template>
+                </div>
               </div>
             </div>
           </ClientOnly>

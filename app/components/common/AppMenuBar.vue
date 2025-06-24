@@ -100,9 +100,11 @@ function toggleDarkMode() {
     <!-- <AppRegisterDialog :regist="userRegist" ref="registerForm"></AppRegisterDialog> -->
     <!-- <AppUserSetting ref="userSetting"></AppUserSetting> -->
     <!-- <AppSearchDialog ref="searchDialog"></AppSearchDialog> -->
-    <nav class="block md:hidden">
-      <AppNavDrawer />
-    </nav>
+    <ClientOnly>
+      <nav class="block md:hidden">
+        <AppNavDrawer />
+      </nav>
+    </ClientOnly>
 
     <NavigationMenu class="hidden md:block">
       <NavigationMenuList>

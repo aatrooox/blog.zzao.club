@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 .mdc-prose {
-  @apply prose prose-zinc prose-p:text-zinc-600 dark:prose-p:text-zinc-300 dark:prose-invert prose-pre:bg-zinc-100 dark:prose-pre:bg-zinc-800 dark:text-zinc-200 dark:prose-strong:text-zinc-200 dark:prose-blockquote:text-zinc-300 prose-code:font-bold prose-code:text-cyan-600 prose-p:text-lg max-w-full;
+  @apply prose prose-zinc prose-p:text-zinc-600 dark:prose-p:text-zinc-300 dark:prose-invert prose-pre:bg-zinc-100 prose-pre:mt-0 dark:prose-pre:bg-zinc-800 dark:text-zinc-200 dark:prose-strong:text-zinc-200 dark:prose-blockquote:text-zinc-300 prose-code:font-bold prose-code:text-cyan-600 prose-p:text-lg max-w-full;
 }
 
 /* 针对page的prose颜色配置 */

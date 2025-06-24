@@ -6,7 +6,10 @@ interface NavBarStatus {
 }
 
 export const useNavBarStore = defineStore('navBar', () => {
-  const navBar = useStorage<NavBarStatus | Record<any, any>>('blog/navBar', {})
+  // 为文章页面设置合理的初始状态
+  const navBar = useStorage<NavBarStatus | Record<any, any>>('blog/navBar', {
+    isHidden: true,
+  })
   const pageScrolling = useStorage('blog/pageScrolling', false)
   const scrollY = useStorage('blog/scrollY', 0)
   const selectionScrollY = useStorage('blog/selectionScrollY', 0)
