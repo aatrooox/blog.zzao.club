@@ -569,33 +569,23 @@ watchEffect(async () => {
         >
           <div class="left flex gap-2">
             <Button variant="ghost" text size="sm">
-              <template #icon>
-                <Icon name="icon-park-outline:thumbs-up" @click="likePage" />
-              </template>
-              <template #badge>
-                <span>{{ likeCount }}</span>
-              </template>
+              <Icon name="icon-park-outline:thumbs-up" @click="likePage" />
+              <span>{{ likeCount }}</span>
             </Button>
             <Button variant="ghost" text size="sm" @click="navigateTo('#评论区')">
               <Icon name="icon-park-outline:comments" />
-              <template #badge>
-                <span>{{ formatCommentCount }}</span>
-              </template>
+              <span>{{ formatCommentCount }}</span>
             </Button>
             <Button variant="ghost" text size="sm" @click="copyLink">
               <Icon name="material-symbols:share-reviews-outline-rounded" />
             </Button>
             <Button variant="ghost" text size="sm" @click="getInnerHTML">
-              <template #icon>
-                <Icon name="icon-park-outline:wechat" />
-              </template>
+              <Icon name="icon-park-outline:wechat" />
             </Button>
           </div>
           <div class="right pr-6 md:pr-0">
             <Button label="返回" variant="secondary" @click="navigateTo('/article')">
-              <template #icon>
-                <Icon name="icon-park-outline:back" />
-              </template>
+              <Icon name="icon-park-outline:back" />
             </Button>
           </div>
         </div>
@@ -650,8 +640,8 @@ watchEffect(async () => {
           </ClientOnly>
           <!-- 悬浮标题栏 -->
           <div
-            v-if="navBarStore.navBar?.isHidden"
-            class="fixed-title text-lg font-bold text-center overflow-hidden text-ellipsis h-12 leading-12 sticky top-0 transition-all delay-200 bg-white/90 dark:bg-zinc-900/80 md:text-xl"
+            v-if="!navBarStore.navBar?.isHidden"
+            class="fixed-title text-lg font-bold text-center overflow-hidden text-ellipsis h-12 leading-12 fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-white/90 dark:bg-zinc-900/80 backdrop-blur-sm md:text-xl"
           >
             {{ page?.title }}
           </div>

@@ -12,7 +12,7 @@ export const defineStandardResponseHandler = <T extends EventHandlerRequest, D> 
     }
     catch {
       // Error handling
-      createError({
+      throw createError({
         statusCode: 500,
         message: '出错啦，请稍后再试～',
       })

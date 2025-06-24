@@ -193,6 +193,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-10-29',
   nitro: {
     // preset: 'bun',
+    errorHandler: '~~/server/error',
     experimental: {
       openAPI: true,
     },

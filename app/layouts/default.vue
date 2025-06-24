@@ -59,28 +59,43 @@ function onScroll(state: UseScrollReturn) {
     scrollDirection.value = state.directions.bottom ? 'bottom' : 'top'
   }
 
-  // 往下滑并且距离顶部大于50
-  if (isScrollBottom.value && state.y.value > 50) {
-    if (isPostPage.value) {
+  if (isPostPage.value) {
+    // 往下滑并且距离顶部大于50时显示悬浮标题栏
+    if (isScrollBottom.value && state.y.value > 50) {
+      navBarStore.setNavStatus({ isHidden: false })
+    }
+    // 往上滑或距离顶部小于等于50时隐藏悬浮标题栏
+    else if (isScrollTop.value || state.y.value <= 50) {
       navBarStore.setNavStatus({ isHidden: true })
     }
-  }
-
-  if (isScrollTop.value && isPostPage.value) {
-    navBarStore.setNavStatus({ isHidden: false })
   }
 
   showScrollTopBtn.value = state.y.value > 100
 }
 
+// 初始化导航栏状态
+function initNavBarStatus() {
+  if (isPostPage.value) {
+    navBarStore.setNavStatus({ isHidden: true })
+  }
+}
+
+// 页面加载时初始化
+onMounted(() => {
+  initNavBarStatus()
+})
+
+// 路由变化时重新初始化
+watch(() => route.path, () => {
+  initNavBarStatus()
+  if (isPostPage.value) {
+    scrollToTop()
+  }
+})
+
 function scrollToTop() {
   scrollWrap.value?.scrollTo(0, 0)
 }
-
-watch(() => route.path, () => {
-  if (isPostPage.value)
-    scrollToTop()
-})
 </script>
 
 <template>

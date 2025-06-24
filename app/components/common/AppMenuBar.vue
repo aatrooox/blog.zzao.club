@@ -94,7 +94,7 @@ function toggleDarkMode() {
   <div
     class="flex sticky justify-between items-center mb-4 h-12 top-0 w-full z-[49] bg-white/80 dark:bg-zinc-950/80 transition-all duration-150 transition-discrete"
     :style="{
-      top: navBarStore.navBar?.isHidden ? '-100px' : '0px',
+      top: navBarStore.navBar?.isHidden ? '0px' : '-100px',
     }"
   >
     <!-- <AppRegisterDialog :regist="userRegist" ref="registerForm"></AppRegisterDialog> -->

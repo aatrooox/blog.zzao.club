@@ -9,14 +9,14 @@ const contentRef = ref<any>(null)
 // const userStore = useUserStore()
 // const { $api } = useNuxtApp()
 // const { updateDateFromNow } = useDayjs()
-const showInfo = ref(true)
-const isContentOverflowing = ref(false)
+// const showInfo = ref(true)
+// const isContentOverflowing = ref(false)
 // const commentReplyOpen = ref(false)
 // const isLikedLocal = ref(false);
-const observer = ref()
-const textColor = ref()
-const textFontSize = ref()
-const colorMode = useColorMode()
+// const observer = ref()
+// const textColor = ref()
+// const textFontSize = ref()
+// const colorMode = useColorMode()
 interface Props {
   memo: BlogMemoWithUser
   showAll?: boolean
@@ -78,87 +78,87 @@ const parsedContent = computed(() => {
 //   emit('refresh')
 // }
 
-function updateTextColor() {
-  const rect = memoWrap.value.getBoundingClientRect()
-  const viewportHeight = window.innerHeight
+// function updateTextColor() {
+//   const rect = memoWrap.value.getBoundingClientRect()
+//   const viewportHeight = window.innerHeight
 
-  // 计算组件中心相对于文档顶部的距离
-  const componentCenter = rect.top + rect.height / 2 + window.scrollY
+//   // 计算组件中心相对于文档顶部的距离
+//   const componentCenter = rect.top + rect.height / 2 + window.scrollY
 
-  // 计算视口中心相对于文档顶部的距离
-  const viewportCenter = window.scrollY + viewportHeight / 2
+//   // 计算视口中心相对于文档顶部的距离
+//   const viewportCenter = window.scrollY + viewportHeight / 2
 
-  // 计算组件中心与视口中心的距离
-  const distanceFromCenter = Math.abs(componentCenter - viewportCenter)
-  // 根据距离调整透明度
-  const opacity = 1 - Math.min(distanceFromCenter / (viewportHeight / 2), 1)
-  const isDark = colorMode.preference === 'dark'
-  textColor.value = isDark ? `rgba(255, 255, 255, ${0.5 + opacity * 0.5})` : `rgba(0, 0, 0, ${0.5 + opacity * 0.5})` // 颜色从浅到深
-  // 根据距离调整字号
-  const minFontSize = 10 // 最小字号
-  const maxFontSize = 18 // 最大字号
-  const fontSize = minFontSize + (maxFontSize - minFontSize) * opacity // 动态计算字号
-  textFontSize.value = `${fontSize}px`
-}
+//   // 计算组件中心与视口中心的距离
+//   const distanceFromCenter = Math.abs(componentCenter - viewportCenter)
+//   // 根据距离调整透明度
+//   const opacity = 1 - Math.min(distanceFromCenter / (viewportHeight / 2), 1)
+//   const isDark = colorMode.preference === 'dark'
+//   textColor.value = isDark ? `rgba(255, 255, 255, ${0.5 + opacity * 0.5})` : `rgba(0, 0, 0, ${0.5 + opacity * 0.5})` // 颜色从浅到深
+//   // 根据距离调整字号
+//   const minFontSize = 10 // 最小字号
+//   const maxFontSize = 18 // 最大字号
+//   const fontSize = minFontSize + (maxFontSize - minFontSize) * opacity // 动态计算字号
+//   textFontSize.value = `${fontSize}px`
+// }
 
 // 检测内容是否溢出
-function checkContentOverflow() {
-  if (contentRef.value) {
-    const element = contentRef.value.$el || contentRef.value
-    isContentOverflowing.value = element.scrollHeight > element.clientHeight
-  }
-}
+// function checkContentOverflow() {
+//   if (contentRef.value) {
+//     const element = contentRef.value.$el || contentRef.value
+//     isContentOverflowing.value = element.scrollHeight > element.clientHeight
+//   }
+// }
 
 // 监听内容变化
-watch(() => props.memo.content, () => {
-  nextTick(() => {
-    checkContentOverflow()
-  })
-}, { immediate: true })
+// watch(() => props.memo.content, () => {
+//   nextTick(() => {
+//     checkContentOverflow()
+//   })
+// }, { immediate: true })
 
-onMounted(() => {
-  // isLikedLocal.value = false;
-  const callback = (entries: any) => {
-    entries.forEach((entry: any) => {
-      if (entry.isIntersecting) {
-        console.log('Div 进入视口')
-        // entry.target.style.backgroundColor = "green";
-        showInfo.value = true
-        updateTextColor()
-        window.addEventListener('scroll', updateTextColor)
-        // 检测内容溢出
-        nextTick(() => {
-          checkContentOverflow()
-        })
-      }
-      else {
-        console.log('Div 离开视口')
-        showInfo.value = false
-        window.removeEventListener('scroll', updateTextColor)
-        // entry.target.style.backgroundColor = "red";
-      }
-    })
-  }
+// onMounted(() => {
+//   // isLikedLocal.value = false;
+//   const callback = (entries: any) => {
+//     entries.forEach((entry: any) => {
+//       if (entry.isIntersecting) {
+//         console.log('Div 进入视口')
+//         // entry.target.style.backgroundColor = "green";
+//         showInfo.value = true
+//         updateTextColor()
+//         window.addEventListener('scroll', updateTextColor)
+//         // 检测内容溢出
+//         nextTick(() => {
+//           checkContentOverflow()
+//         })
+//       }
+//       else {
+//         console.log('Div 离开视口')
+//         showInfo.value = false
+//         window.removeEventListener('scroll', updateTextColor)
+//         // entry.target.style.backgroundColor = "red";
+//       }
+//     })
+//   }
 
-  const options = {
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.5,
-  }
+//   const options = {
+//     root: null,
+//     rootMargin: '0px',
+//     threshold: 0.5,
+//   }
 
-  observer.value = new IntersectionObserver(callback, options)
-  observer.value.observe(memoWrap.value) // 开始观察
+//   observer.value = new IntersectionObserver(callback, options)
+//   observer.value.observe(memoWrap.value) // 开始观察
 
-  // 初始检测
-  nextTick(() => {
-    checkContentOverflow()
-  })
-})
+//   // 初始检测
+//   nextTick(() => {
+//     checkContentOverflow()
+//   })
+// })
 
-onUnmounted(() => {
-  observer.value?.disconnect()
-  window.removeEventListener('scroll', updateTextColor)
-})
+// onUnmounted(() => {
+//   observer.value?.disconnect()
+//   window.removeEventListener('scroll', updateTextColor)
+// })
 </script>
 
 <template>
