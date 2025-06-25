@@ -1,6 +1,21 @@
 # Changelog
 
 
+## v1.10.4
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.10.3...v1.10.4)
+
+### 🏡 Chore
+
+- Vscode config ([0765b87](https://github.com/aatrooox/blog.zzao.club/commit/0765b87))
+- Eslint fix ([cf1f513](https://github.com/aatrooox/blog.zzao.club/commit/cf1f513))
+- Husky ([f0f9ae3](https://github.com/aatrooox/blog.zzao.club/commit/f0f9ae3))
+- Shiki lang add shell ([f967497](https://github.com/aatrooox/blog.zzao.club/commit/f967497))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.10.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.10.2...v1.10.3)
