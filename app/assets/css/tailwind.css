@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 .mdc-prose {
-  @apply prose prose-zinc prose-p:text-zinc-600 dark:prose-p:text-zinc-300 dark:prose-invert prose-pre:bg-zinc-100 prose-pre:mt-0 dark:prose-pre:bg-zinc-800 dark:text-zinc-200 dark:prose-strong:text-zinc-200 dark:prose-blockquote:text-zinc-300 prose-code:font-bold prose-code:text-cyan-600 prose-p:text-lg max-w-full;
+  @apply prose prose-zinc prose-p:text-zinc-600 dark:prose-p:text-zinc-300 dark:prose-invert prose-pre:bg-zinc-100 prose-pre:mt-0 dark:prose-pre:bg-zinc-800 dark:text-zinc-200 dark:prose-strong:text-zinc-200 dark:prose-blockquote:text-zinc-300 prose-code:font-bold prose-code:text-cyan-600 prose-p:text-base max-w-full;
 }
 
 /* 针对page的prose颜色配置 */
@@ -208,14 +208,6 @@ body {
   padding: 0;
   font-family: 'LXGWS', sans-serif;
   font-size: 16px;
-  overflwow: hidden;
-}
-body {
-  /* background-image: linear-gradient(90deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%), linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%); */
-  /* background-image: url('/placeholder.svg'); */
-  /* background-repeat: repeat; */
-  /* background-size: 20px 20px; */
-  /* background-position: 0 0, 50px 0, 0 50px, 50px 50px; */
 }
 
 #__nuxt {

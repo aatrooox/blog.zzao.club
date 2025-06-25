@@ -1,8 +1,7 @@
 export default defineStandardResponseHandler(async (event) => {
   const schema = z.object({
     id: z.string(),
-    // size: z.string().optional().default('10').transform(Number),
-    // qc: z.string().optional().default('0').transform(Number)
+    user_id: z.string().optional(),
   })
   const query = await useSafeValidatedQuery(event, schema)
 
@@ -20,5 +19,19 @@ export default defineStandardResponseHandler(async (event) => {
     },
   })
 
-  return count
+  // 查询该用户是否已经点赞
+  if (query.data.user_id) {
+    const isLiked = await prisma.blogLike.findFirst({
+      where: {
+        blogMemoId: query.data.id,
+        user_id: query.data.user_id,
+      },
+    })
+
+    return {
+      count,
+      isLiked: !!isLiked,
+    }
+  }
+  return { count }
 })

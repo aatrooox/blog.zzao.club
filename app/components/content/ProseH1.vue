@@ -10,7 +10,7 @@ const props = defineProps<{ id?: string }>()
 <template>
   <h1
     :id="props.id"
-    class="heading text-center my-10 scroll-mt-14 text-black px-3 py-2 !text-3xl font-bold  dark:text-zinc-200 "
+    class="heading text-center my-10 scroll-mt-14 text-black px-3 py-2 !text-2xl font-bold  dark:text-zinc-200 "
   >
     <slot />
   </h1>

@@ -1,12 +1,10 @@
 export default defineStandardResponseHandler(async (event) => {
-  const body = await useSafeValidatedBody(event, z.object({
-    id: z.string(),
-  }))
+  const id = getRouterParam(event, 'id')
 
-  if (!body.success) {
+  if (!id) {
     throw createError({
       statusCode: 400,
-      message: JSON.stringify(body.error),
+      message: 'id is required',
     })
   }
 
@@ -35,6 +33,17 @@ export default defineStandardResponseHandler(async (event) => {
         },
       },
     },
+    // 关联查询 tags
+    tags: {
+      include: {
+        tag: {
+          select: {
+            id: true,
+            tag_name: true,
+          },
+        },
+      },
+    },
     // likes: {
     //   include: {
     //     user_id: true,
@@ -51,7 +60,7 @@ export default defineStandardResponseHandler(async (event) => {
 
   const data = await prisma.blogMemo.findFirst({
     where: {
-      id: body.data.id,
+      id,
     },
     include: queryInclude,
   })

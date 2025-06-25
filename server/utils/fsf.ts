@@ -7,6 +7,9 @@ interface MailOptions {
 }
 
 export function sendMailNotice(name: string, { to, subject, text, path }: MailOptions) {
+  if (process.env.NODE_ENV === 'development') {
+    return
+  }
   const { sendMail } = useNodeMailer()
   const _subject = subject || `来自早早集市(zzao.club)的回复`
   const _html = `

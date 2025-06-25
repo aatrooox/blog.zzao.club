@@ -25,7 +25,7 @@ interface Props {
 // const refreshKey = ref(1)
 // const commentType = 'memo'// 解析特殊用户字符的展示, 如标签, 双链等
 const parsedContent = computed(() => {
-  return props.memo.content
+  return props.memo.content as string
   // // 把props.memo.content 中的以#开头,以空格结尾的部分提取,并替换成 链接
   // return props.memo.content?.replace(/#([^\s#]+)/g, (match, p1) => {
   //   // 以a标签外加传参的方式渲染tag

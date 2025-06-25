@@ -12,7 +12,6 @@ const packageJson = JSON.parse(
 
 const appVersion = packageJson.version
 
-// const uuid = useNanoId(8)
 const isDev = process.env.NODE_ENV === 'development'
 console.log(` 当前环境为：${isDev ? '开发' : '生产'}`)
 
@@ -23,7 +22,6 @@ const prismaClient = `prisma${path.sep}client`
 const prismaClientIndexBrowser = resolve('@prisma/client/index-browser').replace(`@${prismaClient}`, `.${prismaClient}`)
 // console.log(`nuxt-secret-key已更新: `, uuid)
 export default defineNuxtConfig({
-  // extends: '@nuxt-themes/typography',
   extends: [
     // README https://github.com/aatrooox/zc-auth-layer
     // ['github:aatrooox/zc-auth-layer', { install: true }]
@@ -68,7 +66,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   app: {
     pageTransition: false,
-    layoutTransition: false,
+    layoutTransition: true,
     head: {
       script: [
         {
@@ -148,7 +146,6 @@ export default defineNuxtConfig({
       },
     },
   },
-  // 3.0.0-alpha.8
   mdc: {
     components: {
       prose: true,
@@ -268,18 +265,6 @@ export default defineNuxtConfig({
     },
   },
   debug: isDev,
-  /**
-   * {
-   *  file: {
-   *    id: '',
-   *    body: '',
-   *    path: '',
-   *    dirname: '',
-   *    extension: '.md'
-   *  },
-   *  collection: {}
-   * }
-   */
   hooks: {
     'content:file:beforeParse': function (ctx) {
       const body: string = ctx.file.body
@@ -325,14 +310,7 @@ export default defineNuxtConfig({
     sitemap: 'https://zzao.club/sitemap.xml',
   },
   shadcn: {
-    /**
-     * Prefix for all the imported component
-     */
     prefix: '',
-    /**
-     * Directory that the component lives in.
-     * @default "./components/ui"
-     */
     componentDir: './app/components/ui',
   },
 })

@@ -26,12 +26,13 @@ export default defineStandardResponseHandler(async (event) => {
         avatar_url: true,
       },
     },
-    // 默认查询评论数量
-    // _count: {
-    //   select: {
-    //     comments: true
-    //   }
-    // }
+    // 默认查询评论数量和点赞数量
+    _count: {
+      select: {
+        comments: true,
+        likes: true
+      }
+    }
   }
   // 是否查询关联的评论信息
   // query comment ?

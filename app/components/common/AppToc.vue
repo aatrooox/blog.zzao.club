@@ -7,7 +7,6 @@ const activeId = ref('')
 const observer = ref()
 
 function onEnter(el) {
-  console.log(props.tocData)
   animate(el, {
     duration: 100,
     ease: 'inOut',
@@ -46,7 +45,6 @@ function onLeave(el, done) {
 onMounted(async () => {
   await nextTick()
   setTimeout(() => {
-    console.log(props.tocData)
     const headings = document.querySelectorAll('.heading')
     observer.value = new IntersectionObserver((_entries) => {
       // 重新检查所有标题的可见性，而不仅仅是状态变化的标题

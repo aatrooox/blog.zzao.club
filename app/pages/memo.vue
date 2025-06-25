@@ -30,7 +30,6 @@ const tags = ref([])
 // 编辑相关状态
 const isEditDrawerOpen = ref(false)
 const editingMemo = ref<any>(null)
-const editTags = ref([])
 
 // Ensure memos are loaded on component mount
 onMounted(async () => {
@@ -192,32 +191,14 @@ function handleDelete(memoId: string) {
 // 处理编辑事件
 function handleEdit(memo: any) {
   editingMemo.value = memo
-  editTags.value = memo.tags || []
   isEditDrawerOpen.value = true
 }
 
-// 更新memo
-async function handleUpdateMemo(data: any) {
-  if (!editingMemo.value)
-    return
-
-  try {
-    await updateMemo(editingMemo.value.id, {
-      content: data.content,
-      tags: data.tags,
-    })
-
-    // 关闭抽屉
-    isEditDrawerOpen.value = false
-    editingMemo.value = null
-    editTags.value = []
-
-    // 重新获取数据
-    await getMemos()
-  }
-  catch (error) {
-    console.error('更新失败:', error)
-  }
+// 处理memo更新完成
+async function handleMemoUpdated() {
+  editingMemo.value = null
+  // 重新获取数据
+  await getMemos()
 }
 
 // Get container and card dimensions
@@ -403,30 +384,11 @@ function onLeave(el, done) {
   </ClientOnly>
 
   <!-- 编辑 Drawer -->
-  <Drawer v-model:open="isEditDrawerOpen">
-    <DrawerContent>
-      <DrawerHeader>
-        <DrawerTitle>正在编辑 Memo</DrawerTitle>
-        <DrawerDescription />
-      </DrawerHeader>
-      <div class="px-4 pb-4">
-        <div class="mb-4">
-          <AppTagInput v-model="editTags" />
-        </div>
-        <AppCommentInput
-          v-if="editingMemo"
-          :key="editingMemo.id"
-          :show-hello="false"
-          :initial-value="editingMemo.content"
-          placeholder="修改你的想法..."
-          input-tip="修改你的 Memo 内容"
-          submit-btn-text="更新"
-          @send="handleUpdateMemo"
-          @cancel="isEditDrawerOpen = false"
-        />
-      </div>
-    </DrawerContent>
-  </Drawer>
+  <MemoEditDrawer
+    v-model:open="isEditDrawerOpen"
+    :memo="editingMemo"
+    @update="handleMemoUpdated"
+  />
 </template>
 
 <style scoped>
