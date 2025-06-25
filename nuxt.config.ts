@@ -136,7 +136,7 @@ export default defineNuxtConfig({
             // Theme used if `html.sepia`
             // sepia: 'text'
           },
-          langs: ['ts', 'js', 'vue', 'json', 'yml', 'yaml', 'typescript', 'javascript', 'sql'],
+          langs: ['ts', 'js', 'vue', 'json', 'yml', 'yaml', 'typescript', 'javascript', 'sql', 'shell'],
         },
       },
       pathMeta: {
