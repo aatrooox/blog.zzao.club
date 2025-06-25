@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { User } from '@prisma/client'
+import type { ApiResponse } from '~~/types/fetch'
 import { useElementSize } from '@vueuse/core'
 
 definePageMeta({
@@ -27,26 +29,96 @@ const { getMemos, memos, createMemo } = useMemos()
 
 const tags = ref([])
 
+// 点赞相关状态
+const memoLikeMap = ref<Record<string, number>>({})
+// 移除了memoLikedMap，不再跟踪用户点赞状态
+const { $api } = useNuxtApp()
+
 // 编辑相关状态
 const isEditDrawerOpen = ref(false)
 const editingMemo = ref<any>(null)
+
+// 获取memo点赞统计
+async function queryMemoLikes() {
+  if (!memos.value || memos.value.length === 0)
+    return
+
+  const memoIds = memos.value.map(memo => memo.id)
+  const params = new URLSearchParams()
+  memoIds.forEach(id => params.append('memo_ids', id))
+
+  const res = await $api.get<ApiResponse<Record<string, number>>>(`/api/v1/memo/like/list?${params.toString()}`)
+
+  if (res.data) {
+    memoLikeMap.value = res.data
+  }
+}
+
+// 移除了queryUserLikedMemos函数，不再检查用户点赞状态
+
+// 处理点赞事件
+async function handleLike(memoId: string) {
+  const userStore = useUserStore()
+  const tokenStore = useTokenStore()
+  const clientjs = useClientjs()
+  const toast = useGlobalToast()
+
+  // 游客处理 - 生成指纹 -> 注册为游客 (随机用户名 + 固定id)
+  if (!userStore.user.id) {
+    const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
+    userStore.setUser(res.data.user)
+    tokenStore.setToken(res.data.token)
+  }
+
+  try {
+    const res = await $api.post<ApiResponse<{ success: boolean, message?: string, data?: any }>>('/api/v1/memo/like', {
+      memo_id: memoId,
+      user_id: userStore.user.id,
+    })
+
+    console.log(res?.data)
+    if (res?.data && res.data.success) {
+      // 显示相应的提示信息
+      if (res.data.message) {
+        toast.success('您已经点赞过了')
+      }
+      else {
+        toast.success('感谢支持！')
+        // 更新点赞数量 - 增加1
+        const currentCount = memoLikeMap.value[memoId] || 0
+        memoLikeMap.value[memoId] = currentCount + 1
+      }
+    }
+  }
+  catch (error) {
+    console.error('点赞操作失败:', error)
+    toast.error('点赞失败，请重试')
+  }
+}
 
 // Ensure memos are loaded on component mount
 onMounted(async () => {
   await getMemos() // 在客户端获取数据
   initResizeObserver() // 初始化ResizeObserver
+
+  // 获取点赞数量数据
+  await queryMemoLikes()
 })
 
 // 监听memos数组变化，统一管理高度测量
-watch(memos, (newMemos) => {
+watch(memos, async (newMemos) => {
   if (newMemos && newMemos.length > 0) {
     isMemosReady.value = true
+    // 重新获取点赞数据
+    await queryMemoLikes()
     // 等待DOM渲染完成后统一观察所有memo元素
     nextTick(() => {
       observeAllMemoElements()
     })
   }
 }, { immediate: true })
+
+// 移除了用户登录状态监听器，不再需要重新获取点赞状态
 
 // 统一观察所有memo元素
 function observeAllMemoElements() {
@@ -199,6 +271,9 @@ async function handleMemoUpdated() {
   editingMemo.value = null
   // 重新获取数据
   await getMemos()
+
+  // 重新获取点赞数量数据
+  await queryMemoLikes()
 }
 
 // Get container and card dimensions
@@ -354,6 +429,8 @@ function onLeave(el, done) {
         <template v-for="position in waterfallLayout" :key="position.memo?.id">
           <MemoWrap
             :memo="position.memo"
+            :like-count="memoLikeMap[position.memo?.id] || 0"
+            :is-liked="false"
             class="memo-item hover:z-50"
             :data-memo-id="position.memo?.id"
             :style="{
@@ -368,6 +445,7 @@ function onLeave(el, done) {
             @height-measured="handleHeightMeasured"
             @delete="handleDelete"
             @edit="handleEdit"
+            @like="handleLike"
           >
             <MemoPanel :memo="position.memo" />
           </MemoWrap>

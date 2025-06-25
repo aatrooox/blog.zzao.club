@@ -1,20 +1,21 @@
 <script setup lang="ts">
-import type { User } from '@prisma/client'
 import type { ApiResponse } from '~~/types/fetch'
 import type { BlogMemoWithUser } from '~~/types/memo.d'
 
-interface propsData {
+interface Props {
   memo: BlogMemoWithUser
+  likeCount: number
+  isLiked: boolean
 }
 
-const { memo } = defineProps<propsData>()
+const { memo, likeCount, isLiked } = defineProps<Props>()
 
-const emit = defineEmits(['refresh', 'heightMeasured', 'delete', 'edit'])
+const emit = defineEmits(['refresh', 'heightMeasured', 'delete', 'edit', 'like'])
 const wrapRef = ref<HTMLElement>()
 
-const userStore = useUserStore()
+// const { formatDate } = useDayjs()
 const { $api } = useNuxtApp()
-const toast = useGlobalToast()
+const userStore = useUserStore()
 const router = useRouter()
 
 // 计算评论数量
@@ -22,66 +23,19 @@ const commentCount = computed(() => {
   return memo._count?.comments || 0
 })
 
-// 点赞相关状态
-const likeCount = ref(memo._count?.likes || 0)
-const isLiked = ref(false)
-
 // 跳转到详情页
 function goToDetail() {
   router.push(`/m/${memo.id}`)
 }
 
-// 点赞操作
-async function handleLike(event: Event) {
-  event.stopPropagation() // 阻止事件冒泡，避免触发跳转
-
-  // 游客点赞 生成指纹 -> 注册为游客
-  if (!userStore.user.id) {
-    const clientjs = useClientjs()
-    const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-    userStore.setUser(res.data.user)
-    const tokenStore = useTokenStore()
-    tokenStore.setToken(res.data.token)
-  }
-
-  if (isLiked.value) {
-    return toast.warn('已经点过赞了')
-  }
-
-  const res = await $api.post<ApiResponse>('/api/v1/memo/like', { memo_id: memo.id, user_id: userStore.user.id })
-
-  if (!res.error) {
-    toast.success('感谢支持！')
-    initLikeCount()
-  }
+// 处理点赞
+function handleLike() {
+  emit('like', memo.id)
 }
-
-// 初始化点赞数据
-async function initLikeCount() {
-  if (!userStore.user.id)
-    return
-
-  const res = await $api.get<ApiResponse>('/api/v1/memo/like', { id: memo.id, user_id: userStore.user.id })
-  if (!res.error) {
-    likeCount.value = res.data.count
-    isLiked.value = res.data.isLiked
-  }
-}
-
-// 检查用户是否已点赞
-function checkUserLiked() {
-  if (!userStore.user.id || !memo.likes)
-    return
-
-  isLiked.value = memo.likes.some((like: any) => like.user_id === userStore.user.id)
-}
-// 组件挂载时初始化点赞数据
-onMounted(() => {
-  checkUserLiked()
-  if (userStore.user.id) {
-    initLikeCount()
-  }
-})
+// 组件挂载时测量高度
+// onMounted(() => {
+//   measureHeight()
+// })
 
 async function removeMemo() {
   try {
