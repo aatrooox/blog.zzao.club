@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.11.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.10.4...v1.11.0)
+
+### 🚀 Enhancements
+
+- Memo 详情页面、点赞、评论相关功能 ([b90fb96](https://github.com/aatrooox/blog.zzao.club/commit/b90fb96))
+
+### 🏡 Chore
+
+- Eslint ([38f91ba](https://github.com/aatrooox/blog.zzao.club/commit/38f91ba))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.10.4
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.10.3...v1.10.4)
