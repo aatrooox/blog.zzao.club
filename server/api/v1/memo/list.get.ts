@@ -30,9 +30,9 @@ export default defineStandardResponseHandler(async (event) => {
     _count: {
       select: {
         comments: true,
-        likes: true
-      }
-    }
+        likes: true,
+      },
+    },
   }
   // 是否查询关联的评论信息
   // query comment ?

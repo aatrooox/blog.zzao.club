@@ -28,16 +28,17 @@ watch(() => props.memo, (newMemo) => {
 // 计算属性：是否打开
 const isOpen = computed({
   get: () => props.open,
-  set: (value) => emit('update:open', value)
+  set: value => emit('update:open', value),
 })
 
 // 更新memo
 async function handleUpdateMemo(data: any) {
-  if (!props.memo) return
+  if (!props.memo)
+    return
 
   try {
     isUpdating.value = true
-    
+
     await updateMemo(props.memo.id, {
       content: data.content,
       tags: data.tags,
@@ -45,11 +46,11 @@ async function handleUpdateMemo(data: any) {
 
     // 关闭抽屉
     isOpen.value = false
-    
+
     // 触发更新事件
     emit('update', {
       content: data.content,
-      tags: data.tags
+      tags: data.tags,
     })
   }
   catch (error) {

@@ -4,8 +4,8 @@ const schema = z.object({
   size: z.string().optional().default('10').transform(Number),
   article_id: z.string().optional(),
   memo_id: z.string().optional(),
-}).refine((data: { article_id?: string; memo_id?: string }) => data.article_id || data.memo_id, {
-  message: "Either article_id or memo_id must be provided",
+}).refine((data: { article_id?: string, memo_id?: string }) => data.article_id || data.memo_id, {
+  message: 'Either article_id or memo_id must be provided',
 })
 
 // only allows static definition
@@ -38,20 +38,20 @@ export default defineStandardResponseHandler(async (event) => {
 
   const take = query.data.size
   const skip = (query.data.page - 1) * take
-  
+
   // 构建动态查询条件
   const whereCondition: any = {
     type: query.data.type,
   }
-  
+
   if (query.data.article_id) {
     whereCondition.article_id = query.data.article_id
   }
-  
+
   if (query.data.memo_id) {
     whereCondition.memo_id = query.data.memo_id
   }
-  
+
   const comments = await prisma.blogComment.findMany({
     where: whereCondition,
     skip,

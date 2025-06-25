@@ -14,9 +14,9 @@ export default defineStandardResponseHandler(async (event) => {
     // 作为游客评论时，临时存储
     visitorName: z.string().optional(),
     visitorEmail: z.string().email().optional(),
-  }).refine((data: { article_id?: string; memo_id?: string }) => data.article_id || data.memo_id, {
-  message: "Either article_id or memo_id must be provided",
-}))
+  }).refine((data: { article_id?: string, memo_id?: string }) => data.article_id || data.memo_id, {
+    message: 'Either article_id or memo_id must be provided',
+  }))
 
   if (!body.success) {
     throw createError({

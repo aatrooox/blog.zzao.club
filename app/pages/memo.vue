@@ -23,7 +23,7 @@ const heightCache = ref<Map<string, number>>(new Map())
 let layoutUpdateTimer: NodeJS.Timeout | null = null
 // 布局更新触发器ull
 const layoutTrigger = ref(0)
-const { getMemos, memos, createMemo, updateMemo } = useMemos()
+const { getMemos, memos, createMemo } = useMemos()
 
 const tags = ref([])
 

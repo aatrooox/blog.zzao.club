@@ -34,7 +34,7 @@ function goToDetail() {
 // 点赞操作
 async function handleLike(event: Event) {
   event.stopPropagation() // 阻止事件冒泡，避免触发跳转
-  
+
   // 游客点赞 生成指纹 -> 注册为游客
   if (!userStore.user.id) {
     const clientjs = useClientjs()
@@ -58,8 +58,9 @@ async function handleLike(event: Event) {
 
 // 初始化点赞数据
 async function initLikeCount() {
-  if (!userStore.user.id) return
-  
+  if (!userStore.user.id)
+    return
+
   const res = await $api.get<ApiResponse>('/api/v1/memo/like', { id: memo.id, user_id: userStore.user.id })
   if (!res.error) {
     likeCount.value = res.data.count
@@ -69,8 +70,9 @@ async function initLikeCount() {
 
 // 检查用户是否已点赞
 function checkUserLiked() {
-  if (!userStore.user.id || !memo.likes) return
-  
+  if (!userStore.user.id || !memo.likes)
+    return
+
   isLiked.value = memo.likes.some((like: any) => like.user_id === userStore.user.id)
 }
 // 组件挂载时初始化点赞数据
@@ -150,26 +152,25 @@ async function removeMemo() {
           <div class="flex items-center gap-2">
             <div class="flex items-center gap-2 cursor-pointer" @click="goToDetail">
               <Icon name="icon-park-outline:comments" />
-              <span class="text-xs" v-if="commentCount">{{ commentCount > 99 ? '99+' : commentCount }}</span>
+              <span v-if="commentCount" class="text-xs">{{ commentCount > 99 ? '99+' : commentCount }}</span>
             </div>
             <!-- 点赞按钮 -->
-            <div 
-              :class="[
-                'flex items-center gap-1 cursor-pointer transition-all duration-150 px-2 py-1 rounded-full',
-                isLiked 
-                  ? 'text-red-500 bg-red-100 dark:bg-red-900/40' 
-                  : 'hover:text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40'
+            <div
+              class="flex items-center gap-1 cursor-pointer transition-all duration-150 px-2 py-1 rounded-full" :class="[
+                isLiked
+                  ? 'text-red-500 bg-red-100 dark:bg-red-900/40'
+                  : 'hover:text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40',
               ]"
-              @click="handleLike"
               :title="isLiked ? '已点赞' : '点赞'"
+              @click="handleLike"
             >
               <Icon :name="isLiked ? 'material-symbols:favorite' : 'material-symbols:favorite-outline'" class="w-4 h-4" />
-              <span class="text-xs" v-if="likeCount > 0">{{ likeCount > 99 ? '99+' : likeCount }}</span>
+              <span v-if="likeCount > 0" class="text-xs">{{ likeCount > 99 ? '99+' : likeCount }}</span>
             </div>
             <!-- 评论按钮 -->
-            <!-- <Button 
-              class="action-btn group rounded-full dark:bg-green-900/20 hover:text-green-500 hover:bg-green-100 dark:hover:bg-green-900/40 transition-all duration-150 w-7 h-7 p-0" 
-              variant="ghost" 
+            <!-- <Button
+              class="action-btn group rounded-full dark:bg-green-900/20 hover:text-green-500 hover:bg-green-100 dark:hover:bg-green-900/40 transition-all duration-150 w-7 h-7 p-0"
+              variant="ghost"
               size="sm"
               @click="goToDetail"
               :title="`查看评论 (${commentCount})`"

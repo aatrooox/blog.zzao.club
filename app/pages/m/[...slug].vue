@@ -18,9 +18,9 @@ const { $api } = useNuxtApp()
 const userStore = useUserStore()
 const toast = useGlobalToast()
 
-const memoId = computed(() => route.params.slug && route.params.slug[0] || '')
-const { memo, status, getMemo, deleteMemo } = useMemo(memoId.value)
-const { $dayjs } = useNuxtApp()
+const memoId = computed(() => (route.params.slug && route.params.slug[0]) ?? '')
+const { memo, getMemo, deleteMemo } = useMemo(memoId.value)
+// const { $dayjs } = useNuxtApp()
 const comments = ref<BlogCommentWithUserInfo[]>([])
 const isDefer = ref(true)
 
@@ -90,9 +90,9 @@ async function createComment(data: CommentData) {
 
 // 初始化评论
 async function initComment() {
-  const res = await $api.get<ApiResponse>('/api/v1/comment/list', { 
+  const res = await $api.get<ApiResponse>('/api/v1/comment/list', {
     type: 'memo',
-    memo_id: memoId.value 
+    memo_id: memoId.value,
   })
   if (!res.error) {
     comments.value = res.data
@@ -175,9 +175,9 @@ async function initLikeCount() {
       <div v-else class="space-y-6">
         <!-- 返回按钮 -->
         <div class="flex items-center mb-4">
-          <Button 
-            variant="ghost" 
-            size="sm" 
+          <Button
+            variant="ghost"
+            size="sm"
             class="flex items-center gap-2 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
             @click="router.push('/memo')"
           >
@@ -190,165 +190,163 @@ async function initLikeCount() {
         <div class="bg-white p-4 dark:bg-zinc-900 rounded-lg shadow-md overflow-hidden">
           <MemoPanel :memo="memo" :show-all="true" :hide-btns="true" />
         </div>
-        
 
         <!-- Tags显示 -->
-            <div v-if="memo.tags && memo.tags.length > 0" class="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-4">
-              <div class="flex items-center gap-2 mb-3">
-                <Icon name="material-symbols:tag" class="w-4 h-4 text-gray-500" />
-                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">标签</span>
-              </div>
-              <div class="flex flex-wrap gap-2">
-                <span 
-                  v-for="tagRelation in memo.tags" 
-                  :key="tagRelation.tag.id"
-                  class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
-                >
-                  {{ tagRelation.tag.tag_name }}
-                </span>
-              </div>
-            </div>
+        <div v-if="memo.tags && memo.tags.length > 0" class="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-4">
+          <div class="flex items-center gap-2 mb-3">
+            <Icon name="material-symbols:tag" class="w-4 h-4 text-gray-500" />
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">标签</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-for="tagRelation in memo.tags"
+              :key="tagRelation.tag.id"
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
+            >
+              {{ tagRelation.tag.tag_name }}
+            </span>
+          </div>
+        </div>
 
-          <!-- 交互按钮区域 -->
-           
-          <ClientOnly> 
-            <div class="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-4">
-              <div class="flex items-center justify-between">
-                <!-- 左侧用户信息 -->
-                <div class="flex items-center space-x-3">
-                  <UserAvatar :user-info="memo.user_info" />
-                  <div>
-                    <div class="font-medium text-gray-900 dark:text-gray-100">
-                      {{ memo.user_info?.username || '匿名用户' }}
-                    </div>
-                    <!-- <div class="text-sm text-gray-500 dark:text-gray-400">
+        <!-- 交互按钮区域 -->
+
+        <ClientOnly>
+          <div class="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-4">
+            <div class="flex items-center justify-between">
+              <!-- 左侧用户信息 -->
+              <div class="flex items-center space-x-3">
+                <UserAvatar :user-info="memo.user_info" />
+                <div>
+                  <div class="font-medium text-gray-900 dark:text-gray-100">
+                    {{ memo.user_info?.username || '匿名用户' }}
+                  </div>
+                  <!-- <div class="text-sm text-gray-500 dark:text-gray-400">
                       {{ $dayjs(memo.create_ts).format('YYYY-MM-DD HH:mm') }}
                     </div> -->
-                  </div>
                 </div>
+              </div>
 
-                <!-- 右侧操作按钮 -->
-                <div class="flex items-center gap-2">
-                  <ClientOnly>
-                    <Button 
-                      :class="[
-                        'rounded-full transition-all duration-150 flex items-center gap-1',
-                        isLiked 
-                          ? 'text-red-500 bg-red-100 dark:bg-red-900/40' 
-                          : 'hover:text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40'
-                      ]" 
-                      variant="ghost" 
-                      size="sm"
-                      @click="handleLike"
-                    >
-                      <Icon :name="isLiked ? 'material-symbols:favorite' : 'material-symbols:favorite-outline'" class="w-4 h-4" />
-                      <span v-if="likeCount > 0" class="text-xs">{{ likeCount }}</span>
-                    </Button>
-                    <template #fallback>
-                      <Button 
-                        class="rounded-full hover:text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40 transition-all duration-150" 
-                        variant="ghost" 
-                        size="sm"
-                      >
-                        <Icon name="material-symbols:favorite-outline" class="w-4 h-4" />
-                      </Button>
-                    </template>
-                  </ClientOnly>
-                  <Button 
-                    class="rounded-full hover:text-blue-500 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all duration-150" 
-                    variant="ghost" 
+              <!-- 右侧操作按钮 -->
+              <div class="flex items-center gap-2">
+                <ClientOnly>
+                  <Button
+                    class="rounded-full transition-all duration-150 flex items-center gap-1" :class="[
+                      isLiked
+                        ? 'text-red-500 bg-red-100 dark:bg-red-900/40'
+                        : 'hover:text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40',
+                    ]"
+                    variant="ghost"
                     size="sm"
+                    @click="handleLike"
                   >
-                    <Icon name="material-symbols:share-reviews-outline-rounded" class="w-4 h-4" />
+                    <Icon :name="isLiked ? 'material-symbols:favorite' : 'material-symbols:favorite-outline'" class="w-4 h-4" />
+                    <span v-if="likeCount > 0" class="text-xs">{{ likeCount }}</span>
                   </Button>
-                  <Button 
-                    class="rounded-full hover:text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-all duration-150" 
-                    variant="ghost" 
-                    size="sm"
-                  >
-                    <Icon name="material-symbols:imagesmode-outline-rounded" class="w-4 h-4" />
-                  </Button>
-                  <template v-if="userStore.isSuperAdmin">
-                    <Button 
-                      class="rounded-full hover:text-yellow-600 hover:bg-yellow-100 dark:hover:bg-yellow-900/40 transition-all duration-150" 
-                      variant="ghost" 
+                  <template #fallback>
+                    <Button
+                      class="rounded-full hover:text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40 transition-all duration-150"
+                      variant="ghost"
                       size="sm"
-                      @click="handleEdit"
                     >
-                      <Icon name="material-symbols:edit-outline" class="w-4 h-4" />
-                    </Button>
-                    <Button 
-                      class="rounded-full hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-900/40 transition-all duration-150" 
-                      variant="ghost" 
-                      size="sm"
-                      @click="handleDelete"
-                    >
-                      <Icon name="icon-park-outline:delete" class="w-4 h-4" />
+                      <Icon name="material-symbols:favorite-outline" class="w-4 h-4" />
                     </Button>
                   </template>
-                </div>
+                </ClientOnly>
+                <Button
+                  class="rounded-full hover:text-blue-500 hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-all duration-150"
+                  variant="ghost"
+                  size="sm"
+                >
+                  <Icon name="material-symbols:share-reviews-outline-rounded" class="w-4 h-4" />
+                </Button>
+                <Button
+                  class="rounded-full hover:text-purple-600 hover:bg-purple-100 dark:hover:bg-purple-900/40 transition-all duration-150"
+                  variant="ghost"
+                  size="sm"
+                >
+                  <Icon name="material-symbols:imagesmode-outline-rounded" class="w-4 h-4" />
+                </Button>
+                <template v-if="userStore.isSuperAdmin">
+                  <Button
+                    class="rounded-full hover:text-yellow-600 hover:bg-yellow-100 dark:hover:bg-yellow-900/40 transition-all duration-150"
+                    variant="ghost"
+                    size="sm"
+                    @click="handleEdit"
+                  >
+                    <Icon name="material-symbols:edit-outline" class="w-4 h-4" />
+                  </Button>
+                  <Button
+                    class="rounded-full hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-900/40 transition-all duration-150"
+                    variant="ghost"
+                    size="sm"
+                    @click="handleDelete"
+                  >
+                    <Icon name="icon-park-outline:delete" class="w-4 h-4" />
+                  </Button>
+                </template>
               </div>
             </div>
-          </ClientOnly>
-          <!-- 评论区 -->
-          <div class="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-6">
-            <div class="text-xl font-bold mb-6 flex items-center gap-2">
-              <Icon name="icon-park-outline:comments" class="w-5 h-5" />
-              评论区
-              <ClientOnly>
-                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                  ({{ formatCommentCount }})
-                </span>
-                <template #fallback>
-                  <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                    (0)
-                  </span>
-                </template>
-              </ClientOnly>
-            </div>
-            
-            <!-- 评论输入框 -->
-            <div class="mb-6">
-              <AppCommentInput @send="createComment" />
-            </div>
-            
-            <!-- 评论列表 - 使用ClientOnly包装动态内容 -->
+          </div>
+        </ClientOnly>
+        <!-- 评论区 -->
+        <div class="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-6">
+          <div class="text-xl font-bold mb-6 flex items-center gap-2">
+            <Icon name="icon-park-outline:comments" class="w-5 h-5" />
+            评论区
             <ClientOnly>
-              <div v-if="!isDefer" class="space-y-4">
-                <template v-if="comments.length > 0">
-                  <transition-group appear>
-                    <template v-for="comment in comments" :key="comment.id">
-                      <CommentViewPanel :comment="comment" @refresh="initComment" />
-                    </template>
-                  </transition-group>
-                </template>
-                <div v-else class="text-center py-8 text-gray-500 dark:text-gray-400">
-                  暂无评论，快来抢沙发吧！
-                </div>
-              </div>
-              
-              <!-- 评论加载中 -->
-              <div v-else class="flex justify-center py-8">
-                <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500" />
-              </div>
-              
+              <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                ({{ formatCommentCount }})
+              </span>
               <template #fallback>
-                <div class="flex justify-center py-8">
-                  <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500" />
-                </div>
+                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                  (0)
+                </span>
               </template>
             </ClientOnly>
           </div>
+
+          <!-- 评论输入框 -->
+          <div class="mb-6">
+            <AppCommentInput @send="createComment" />
+          </div>
+
+          <!-- 评论列表 - 使用ClientOnly包装动态内容 -->
+          <ClientOnly>
+            <div v-if="!isDefer" class="space-y-4">
+              <template v-if="comments.length > 0">
+                <transition-group appear>
+                  <template v-for="comment in comments" :key="comment.id">
+                    <CommentViewPanel :comment="comment" @refresh="initComment" />
+                  </template>
+                </transition-group>
+              </template>
+              <div v-else class="text-center py-8 text-gray-500 dark:text-gray-400">
+                暂无评论，快来抢沙发吧！
+              </div>
+            </div>
+
+            <!-- 评论加载中 -->
+            <div v-else class="flex justify-center py-8">
+              <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500" />
+            </div>
+
+            <template #fallback>
+              <div class="flex justify-center py-8">
+                <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500" />
+              </div>
+            </template>
+          </ClientOnly>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- 编辑 Drawer -->
-    <MemoEditDrawer
-      v-model:open="isEditDrawerOpen"
-      :memo="memo"
-      @update="handleMemoUpdated"
-    />
-  </template>
+  <!-- 编辑 Drawer -->
+  <MemoEditDrawer
+    v-model:open="isEditDrawerOpen"
+    :memo="memo"
+    @update="handleMemoUpdated"
+  />
+</template>
 
 <style lang="less" scoped></style>
