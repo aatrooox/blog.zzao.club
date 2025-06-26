@@ -62,13 +62,13 @@ export default defineAppConfig({
     },
     {
       name: '封闭脑袋',
-      url:  'https://www.joomaen.com/',
+      url: 'https://www.joomaen.com/',
       logo: 'https://media.235421.xyz/favicon.png',
       desc: '零落残魂何处断',
     },
     {
       name: 'Memento',
-      url:  'https://zhongxuyang.github.io/blog/',
+      url: 'https://zhongxuyang.github.io/blog/',
       logo: 'https://avatars.githubusercontent.com/u/20455656?v=4',
       desc: '记忆碎片',
     },
