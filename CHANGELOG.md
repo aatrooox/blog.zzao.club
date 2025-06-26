@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v1.11.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.11.0...v1.11.1)
+
+### 🏡 Chore
+
+- 优化 memo 点赞逻辑 ([c6dcec4](https://github.com/aatrooox/blog.zzao.club/commit/c6dcec4))
+- 更新友链 ([edd1793](https://github.com/aatrooox/blog.zzao.club/commit/edd1793))
+- 123 ([c3cab8b](https://github.com/aatrooox/blog.zzao.club/commit/c3cab8b))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.11.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.10.4...v1.11.0)
