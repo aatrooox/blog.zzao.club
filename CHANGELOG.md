@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.11.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.11.1...v1.11.2)
+
+### 🏡 Chore
+
+- 一些简单的优化 ([685085c](https://github.com/aatrooox/blog.zzao.club/commit/685085c))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.11.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.11.0...v1.11.1)
