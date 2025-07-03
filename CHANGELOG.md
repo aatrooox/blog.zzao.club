@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.11.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.11.2...v1.11.3)
+
+### 🏡 Chore
+
+- 移除 dark theme 切换 ([6ca9165](https://github.com/aatrooox/blog.zzao.club/commit/6ca9165))
+
+### 🎨 Styles
+
+- 首页更加简洁，扁平化 ([adde44f](https://github.com/aatrooox/blog.zzao.club/commit/adde44f))
+- 文章页更加简洁、扁平化 ([2301c6c](https://github.com/aatrooox/blog.zzao.club/commit/2301c6c))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.11.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.11.1...v1.11.2)
