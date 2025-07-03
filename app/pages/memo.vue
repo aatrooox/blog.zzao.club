@@ -40,15 +40,8 @@ const editingMemo = ref<any>(null)
 
 // 获取memo点赞统计
 async function queryMemoLikes() {
-  if (!memos.value || memos.value.length === 0)
-    return
-
-  const memoIds = memos.value.map(memo => memo.id)
-  const params = new URLSearchParams()
-  memoIds.forEach(id => params.append('memo_ids', id))
-
-  const res = await $api.get<ApiResponse<Record<string, number>>>(`/api/v1/memo/like/list?${params.toString()}`)
-
+  // 获取所有 memo 的点赞统计
+  const res = await $api.get<ApiResponse<Record<string, number>>>('/api/v1/memo/like/list')
   if (res.data) {
     memoLikeMap.value = res.data
   }
@@ -305,9 +298,8 @@ const waterfallLayout = computed((): MemoPosition[] => {
 
   const { cardWidth, columns, gap } = getContainerInfo()
   const columnHeights = Array.from({ length: columns }, () => 0)
-  const positions: MemoPosition[] = []
-
-  memos.value.forEach((memo) => {
+  const positions: MemoPosition[] = [];
+  (memos.value ?? []).forEach((memo) => {
     // Find the shortest column
     const shortestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights))
 

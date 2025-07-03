@@ -67,9 +67,6 @@ async function removeMemo() {
 
 <template>
   <div ref="wrapRef" class="group relative w-full mb-4 rounded-lg">
-    <!-- 阴影层 -->
-    <div class="absolute inset-0 bg-white dark:bg-zinc-900 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 z-0" />
-
     <!-- 内容层 -->
     <div class="relative z-10 bg-white dark:bg-zinc-900 rounded-lg overflow-hidden text-base sm:text-sm selection:bg-blue-500/20 selection:text-inherit">
       <!-- 主要内容区域 -->
@@ -100,6 +97,7 @@ async function removeMemo() {
           <!-- 左侧用户头像 -->
           <div class="flex items-center space-x-2">
             <UserAvatar :user-info="memo?.user_info" />
+            <NuxtTime locale="zh-CN" :datetime="memo.create_ts" class="text-xs" />
           </div>
 
           <!-- 右侧操作按钮 -->

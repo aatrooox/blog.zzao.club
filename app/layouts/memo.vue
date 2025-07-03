@@ -1,12 +1,9 @@
 <script lang="ts" setup>
 const userStore = useUserStore()
 
-const userInfo = ref({
-  name: 'Memoz',
-  avatar: 'https://avatars.githubusercontent.com/u/13368294?v=4',
-  memoCount: 128,
-  activeDays: 365,
-})
+const { memoStats, getMemoStats } = useMemoStats()
+
+await getMemoStats()
 
 const popularTags = ref([
   { id: '1', name: 'Nuxt', count: 20 },
@@ -41,13 +38,13 @@ const popularTags = ref([
       </div>
       <div class="stats mt-6 space-y-2">
         <div class="stat-item flex justify-between dark:text-gray-300">
-          <span>Memos 发表:</span>
-          <span class="font-semibold dark:text-white">{{ userInfo.memoCount }} 条</span>
+          <span>动态:</span>
+          <span class="font-semibold dark:text-white">{{ memoStats.count }} 条</span>
         </div>
-        <div class="stat-item flex justify-between dark:text-gray-300">
+        <!-- <div class="stat-item flex justify-between dark:text-gray-300">
           <span>活跃天数:</span>
           <span class="font-semibold dark:text-white">{{ userInfo.activeDays }} 天</span>
-        </div>
+        </div> -->
         <!-- Add more stats as needed -->
       </div>
       <!-- Right sidebar content when lg breakpoint is not met -->
@@ -84,22 +81,22 @@ const popularTags = ref([
       <!-- Compact User Info for Mobile/Small Screens -->
       <div class="compact-user-info md:hidden mb-6 bg-white dark:bg-zinc-800 rounded-lg shadow p-3">
         <div class="flex items-center space-x-3">
-          <NuxtLink to="/" class="flex-shrink-0">
-            <img :src="userInfo.avatar" alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-zinc-300 dark:border-zinc-700 hover:opacity-80 transition-opacity cursor-pointer">
+          <NuxtLink to="/">
+            <UserAvatar :user-info="userStore.user" alt="User Avatar" class="w-10 h-10 rounded-full mx-auto border-2 border-zinc-300 dark:border-zinc-700" />
           </NuxtLink>
           <div class="flex-1 flex items-center space-x-4">
             <h2 class="text-base font-semibold dark:text-white">
-              {{ userInfo.name }}
+              {{ userStore.user.nickname }}
             </h2>
             <div class="flex space-x-3 text-sm text-gray-600 dark:text-gray-400">
               <span class="flex items-center space-x-1">
                 <Icon name="material-symbols:edit-note-outline" class="w-4 h-4" />
-                <span>{{ userInfo.memoCount }} 条</span>
+                <span>{{ memoStats.count }} 条</span>
               </span>
-              <span class="flex items-center space-x-1">
+              <!-- <span class="flex items-center space-x-1">
                 <Icon name="material-symbols:calendar-today-outline" class="w-4 h-4" />
                 <span>{{ userInfo.activeDays }} 天</span>
-              </span>
+              </span> -->
             </div>
           </div>
         </div>

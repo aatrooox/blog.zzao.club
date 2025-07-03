@@ -2,6 +2,8 @@
 
 一个基于 [Nuxt@3.17.2](https://nuxt.com/)、[NuxtContent@3.4.0](https://content.nuxt.com/)、[shadcn/vue](https://www.shadcn-vue.com/)、[inspira-ui](https://inspira-ui.com/components)、Prisma、MySQL、Redis的全栈站点
 
+**娱乐性质的个人空间，可不兴学啊！**
+
 ## 功能
 
 - 登录注册(用户名+密码)

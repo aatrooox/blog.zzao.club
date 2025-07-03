@@ -162,7 +162,7 @@ const parsedContent = computed(() => {
 </script>
 
 <template>
-  <div ref="memoWrap" class="min-h-[150px] flex flex-col">
+  <div ref="memoWrap" class="min-h-[30px] flex flex-col">
     <!-- <AppOverflowContent :show-all="!!showAll">
 
       </AppOverflowContent> -->

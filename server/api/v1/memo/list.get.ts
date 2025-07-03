@@ -76,6 +76,5 @@ export default defineStandardResponseHandler(async (event) => {
     include: queryInclude,
   })
 
-  console.log(`memos`, memos)
   return memos
 })

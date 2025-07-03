@@ -172,7 +172,7 @@ async function initLikeCount() {
       </div>
 
       <!-- Memo内容 -->
-      <div v-else class="space-y-6">
+      <div v-else class="">
         <!-- 返回按钮 -->
         <div class="flex items-center mb-4">
           <Button
@@ -186,44 +186,23 @@ async function initLikeCount() {
           </Button>
         </div>
 
-        <!-- Memo面板 -->
-        <div class="bg-white p-4 dark:bg-zinc-900 rounded-lg shadow-md overflow-hidden">
-          <MemoPanel :memo="memo" :show-all="true" :hide-btns="true" />
-        </div>
-
-        <!-- Tags显示 -->
-        <div v-if="memo.tags && memo.tags.length > 0" class="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-4">
-          <div class="flex items-center gap-2 mb-3">
-            <Icon name="material-symbols:tag" class="w-4 h-4 text-gray-500" />
-            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">标签</span>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span
-              v-for="tagRelation in memo.tags"
-              :key="tagRelation.tag.id"
-              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
-            >
-              {{ tagRelation.tag.tag_name }}
-            </span>
-          </div>
-        </div>
-
         <!-- 交互按钮区域 -->
 
         <ClientOnly>
-          <div class="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-4">
+          <div class="bg-white dark:bg-zinc-900 rounded-t-lg shadow-md p-4">
             <div class="flex items-center justify-between">
               <!-- 左侧用户信息 -->
               <div class="flex items-center space-x-3">
                 <UserAvatar :user-info="memo.user_info" />
                 <div>
-                  <div class="font-medium text-gray-900 dark:text-gray-100">
+                  <div class="text-zinc-900 dark:text-gray-100">
                     {{ memo.user_info?.username || '匿名用户' }}
                   </div>
                   <!-- <div class="text-sm text-gray-500 dark:text-gray-400">
                       {{ $dayjs(memo.create_ts).format('YYYY-MM-DD HH:mm') }}
                     </div> -->
                 </div>
+                <NuxtTime :datetime="memo.create_ts" class="text-xs text-gray-500 dark:text-gray-400" />
               </div>
 
               <!-- 右侧操作按钮 -->
@@ -288,8 +267,29 @@ async function initLikeCount() {
             </div>
           </div>
         </ClientOnly>
+        <!-- Memo面板 -->
+        <div class="bg-white p-4 dark:bg-zinc-900 rounded-b-lg shadow-md overflow-hidden">
+          <MemoPanel :memo="memo" :show-all="true" :hide-btns="true" />
+        </div>
+
+        <!-- Tags显示 -->
+        <div v-if="memo.tags && memo.tags.length > 0" class="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-4">
+          <div class="flex items-center gap-2 mb-3">
+            <Icon name="material-symbols:tag" class="w-4 h-4 text-gray-500" />
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">标签</span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-for="tagRelation in memo.tags"
+              :key="tagRelation.tag.id"
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
+            >
+              {{ tagRelation.tag.tag_name }}
+            </span>
+          </div>
+        </div>
         <!-- 评论区 -->
-        <div class="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-6">
+        <div class="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-6 mt-6">
           <div class="text-xl font-bold mb-6 flex items-center gap-2">
             <Icon name="icon-park-outline:comments" class="w-5 h-5" />
             评论区
