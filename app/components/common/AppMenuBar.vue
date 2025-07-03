@@ -9,21 +9,21 @@ const registerForm = ref(null)
 const userStore = useUserStore()
 const tokenStore = useTokenStore()
 const navBarStore = useNavBarStore()
-const colorMode = useColorMode()
+// const colorMode = useColorMode()
 const { $api } = useNuxtApp()
-const modes = ['light', 'dark']
-const index = ref(modes.indexOf(colorMode.preference))
-const modeIcon = computed(() => {
-  console.log(`colorMode.preference`, colorMode.preference)
-  switch (colorMode.preference) {
-    case 'light':
-      return 'icon-park-outline:sun-one'
-    case 'dark':
-      return 'icon-park-outline:moon'
-    default:
-      return 'icon-park-outline:computer'
-  }
-})
+// const modes = ['light', 'dark']
+// const index = ref(modes.indexOf(colorMode.preference))
+// const modeIcon = computed(() => {
+//   console.log(`colorMode.preference`, colorMode.preference)
+//   switch (colorMode.preference) {
+//     case 'light':
+//       return 'icon-park-outline:sun-one'
+//     case 'dark':
+//       return 'icon-park-outline:moon'
+//     default:
+//       return 'icon-park-outline:computer'
+//   }
+// })
 
 const items = ref([
   {
@@ -85,9 +85,9 @@ function showRegisterDialog() {
 //   searchDialog.value?.show()
 // }
 
-function toggleDarkMode() {
-  colorMode.preference = modes[(++index.value) % modes.length]
-}
+// function toggleDarkMode() {
+//   colorMode.preference = modes[(++index.value) % modes.length]
+// }
 </script>
 
 <template>
@@ -156,9 +156,9 @@ function toggleDarkMode() {
           @show-register-dialog="showRegisterDialog"
         />
         <AppUserMenu v-else />
-        <Button variant="ghost" size="icon" @click="toggleDarkMode">
+        <!-- <Button variant="ghost" size="icon" @click="toggleDarkMode">
           <Icon :name="modeIcon" size="1.5em" />
-        </Button>
+        </Button> -->
       </div>
     </ClientOnly>
   </div>
