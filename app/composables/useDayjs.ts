@@ -4,12 +4,12 @@ import 'dayjs/locale/zh-cn'
 
 export default function useDayjs() {
   dayjs.extend(relativeTime)
-  const checkDate = (date: string) => {
+  const checkDate = (date: string | Date) => {
     return dayjs(date).isValid()
   }
 
   // 检测日期有效, 且更新日期距离创建日期超过1天(当天更新文章视为纠错)
-  const checkUpdate = (updateDate: string, createDate: string) => {
+  const checkUpdate = (updateDate: string | Date, createDate: string | Date) => {
     return checkDate(updateDate) && dayjs(updateDate).diff(createDate, 'day') > 0
   }
 

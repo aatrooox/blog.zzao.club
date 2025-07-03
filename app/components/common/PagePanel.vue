@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 defineProps<{ page: Page, like: number, comment: number, view: number }>()
 const { checkDate, updateDateFromNow, checkUpdate, formatDate } = useDayjs()
-interface Page {
+export interface Page {
   id: string
   title?: string | undefined
   path: string
   description: string
-  date: string
-  lastmod: string
+  date: string | Date
+  lastmod: string | Date
   meta: {
     lastmod: string
   }
@@ -31,18 +31,6 @@ interface Page {
             class="opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out"
           />
         </NuxtLink>
-        <div class="flex flex-wrap gap-1.5">
-          <template v-if="page.versions">
-            <Badge v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v" class="text-xs">
-              {{ v }}
-            </Badge>
-          </template>
-          <template v-else>
-            <Badge v-for="tag of page.tags" :key="tag" class="text-xs">
-              {{ tag }}
-            </Badge>
-          </template>
-        </div>
       </div>
 
       <div v-if="page.description" class="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2 leading-relaxed">
@@ -69,6 +57,11 @@ interface Page {
             </Tooltip>
           </TooltipProvider>
         </template>
+        <div class="flex flex-wrap gap-1.5">
+          <Badge v-for="tag of page.tags" :key="tag" class="text-xs">
+            {{ tag }}
+          </Badge>
+        </div>
         <div class="flex items-center gap-1">
           <Icon name="icon-park-outline:eyes" />
           {{ formatNumberForView(view || 0) }}

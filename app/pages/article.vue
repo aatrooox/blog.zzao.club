@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { ApiResponse } from '~~/types/fetch'
+import type { Page } from '~/components/common/PagePanel.vue'
 
 useHead({
   title: '文章｜早早集市',
@@ -14,23 +15,23 @@ useHead({
 const { $api } = useNuxtApp()
 // const { formatDate } = useDayjs()
 
-const appConfig = useAppConfig()
-const tags = computed(() => appConfig.tags.map((tag, index) => ({ name: tag, value: index })))
+// const appConfig = useAppConfig()
+// const tags = computed(() => appConfig.tags.map((tag, index) => ({ name: tag, value: index })))
 const route = useRoute()
 const articleLikeMap = ref<Record<string, number>>({})
 const articleCommentMap = ref<Record<string, number>>({})
 const postViewsMap = ref<Record<string, number>>({})
 const queryTag = computed(() => route.query.tag)
 
-const selectedTags = computed(() => {
-  if (queryTag.value) {
-    const query_tags = queryTag.value as string
-    return tags.value.filter(tag => tag.name === query_tags)[0]
-  }
-  else {
-    return tags.value[0]
-  }
-})
+// const selectedTags = computed(() => {
+//   if (queryTag.value) {
+//     const query_tags = queryTag.value as string
+//     return tags.value.filter(tag => tag.name === query_tags)[0]
+//   }
+//   else {
+//     return tags.value[0]
+//   }
+// })
 
 function onEnter(el) {
   animate(el, {
@@ -79,18 +80,18 @@ const filter_tags = computed(() => {
   }
 })
 
-async function changeTags(tag: string) {
-  let tags_str = tag
-  if (tags_str === '全部')
-    tags_str = ''
-  navigateTo({
-    path: '/article',
-    query: {
-      ...route.query || {},
-      tag: tags_str || '',
-    },
-  })
-}
+// async function changeTags(tag: string) {
+//   let tags_str = tag
+//   if (tags_str === '全部')
+//     tags_str = ''
+//   navigateTo({
+//     path: '/article',
+//     query: {
+//       ...route.query || {},
+//       tag: tags_str || '',
+//     },
+//   })
+// }
 
 async function queryArticles(filter_tags: any) {
   let query = queryCollection('content')
@@ -102,14 +103,14 @@ async function queryArticles(filter_tags: any) {
   return query.order('date', 'DESC').select('id', 'path', 'title', 'showTitle', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta').all()
 }
 
-const { data, status } = await useAsyncData(computed(() => `filter-tags-${filter_tags.value}`), async () => {
+const { data } = await useAsyncData(computed(() => `filter-tags-${filter_tags.value}`), async () => {
   return queryArticles(filter_tags.value)
 }, { lazy: true })
 
-async function selectTag(tag: { name: string, value: number } | undefined) {
-  tag = tag ?? tags.value[0]
-  await changeTags(tag!.name)
-}
+// async function selectTag(tag: { name: string, value: number } | undefined) {
+//   tag = tag ?? tags.value[0]
+//   await changeTags(tag!.name)
+// }
 
 async function queryArticleInteractivity() {
   const res = await $api.get<ApiResponse<Record<string, number>>>('/api/v1/like/list')
@@ -139,13 +140,13 @@ onMounted(() => {
   queryArticleInteractivity()
   queryArticleCommentStat()
   queryPageviews()
-  selectTag(selectedTags.value)
+  // selectTag(selectedTags.value)
 })
 </script>
 
 <template>
   <div class="flex flex-col gap-6 max-w-7xl box-border mx-auto sm:px-4">
-    <div class="flex flex-wrap gap-2 sticky py-2 px-2 top-10 z-[50] rounded-md bg-white/90 dark:bg-zinc-800/80">
+    <!-- <div class="flex flex-wrap gap-2 sticky py-2 px-2 top-10 z-[50] rounded-md bg-white/90 dark:bg-zinc-800/80">
       <Button
         v-for="tag in tags" :key="tag.value" :variant="selectedTags?.value === tag.value ? 'secondary' : 'link'"
         class="text-sm px-3 py-1.5 rounded-md transition-all duration-200" @click="selectTag(tag)"
@@ -155,38 +156,23 @@ onMounted(() => {
           || 0 }})</span>
         <Icon v-if="selectedTags?.value === tag.value && status === 'pending'" name="svg-spinners:pulse-rings-multiple" />
       </Button>
-    </div>
-    <div v-if="data" class="flex flex-wrap gap-6">
+    </div> -->
+    <div v-if="data" class="flex flex-col gap-6">
       <transition-group
-        tag="div" class="left-pages w-full md:flex-1 flex flex-col gap-6" appear @enter="onEnter"
+        tag="div" class="w-full flex flex-col gap-6" appear @enter="onEnter"
         @leave="onLeave" @before-enter="onBeforeEnter"
       >
-        <template v-for="page of (data as any[]).filter((_, index) => index % 2 === 0)" :key="page.path">
+        <template v-for="page of data" :key="page.path">
           <div class="group article-post-item">
             <div class="">
               <PagePanel
-                :page="page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0"
+                :page="page as Page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0"
                 :view="postViewsMap[page.path] || 0"
               />
             </div>
           </div>
         </template>
       </transition-group>
-
-      <div class="right-pages w-full md:flex-1 flex flex-col gap-6">
-        <transition-group appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
-          <template v-for="page of (data as any[]).filter((_, index) => index % 2 === 1)" :key="page.path">
-            <div class="group article-post-item">
-              <div class="">
-                <PagePanel
-                  :page="page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0"
-                  :view="postViewsMap[page.path] || 0"
-                />
-              </div>
-            </div>
-          </template>
-        </transition-group>
-      </div>
     </div>
   </div>
 </template>
