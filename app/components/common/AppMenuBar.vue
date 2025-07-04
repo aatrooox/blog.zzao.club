@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { Ref } from 'vue'
 import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu'
 
 // const searchDialog = ref(null)
