@@ -16,12 +16,12 @@ const _tags = ref<string[]>(['nuxt', 'vue', 'hono', '全栈', '动态']) // 可�
 
 const hasResults = computed(() => articles.value.length > 0 || feeds.value.length > 0)
 
-const searchModeOptions = [
-  { value: 'content', label: '内容' },
-  { value: 'tag', label: '标签' },
-]
+// const searchModeOptions = [
+//   { value: 'content', label: '内容' },
+//   { value: 'tag', label: '标签' },
+// ]
 
-const { onEnter, onBeforeEnter, onLeave } = useStaggeredListTransition('.search-result-item')
+// const { onEnter, onBeforeEnter, onLeave } = useStaggeredListTransition('.search-result-item')
 
 async function fetchArticles() {
   loading.value = true
@@ -41,11 +41,14 @@ onMounted(() => {
 watch(
   () => [searchParams.value.tag, searchParams.value.text],
   ([tag, text]) => {
-    if (tag) searchMode.value = 'tag'
-    else if (text) searchMode.value = 'content'
-    if (tag) fetchArticles()
+    if (tag)
+      searchMode.value = 'tag'
+    else if (text)
+      searchMode.value = 'content'
+    if (tag)
+      fetchArticles()
   },
-  { immediate: true }
+  { immediate: true },
 )
 </script>
 
@@ -86,7 +89,7 @@ watch(
                   class="relative font-medium transition-colors duration-200 group-hover:text-cyan-600 hover-underline-animate"
                 >
                   {{ article.title }}
-                  <span class="hover-underline"></span>
+                  <span class="hover-underline" />
                 </span>
               </div>
             </div>
@@ -114,7 +117,6 @@ watch(
 
 <style>
 .custom-vertical-inner-shadow {
-  box-shadow:
-    inset 0 16px 24px -12px rgba(8,145,178,0.10)
+  box-shadow: inset 0 16px 24px -12px rgba(8, 145, 178, 0.1);
 }
 </style>

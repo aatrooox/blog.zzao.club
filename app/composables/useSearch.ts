@@ -5,7 +5,8 @@ const showSearchDialog = ref(false)
 const searchParams = ref<{ tag?: string, text?: string }>({})
 
 function openSearchDialog(params?: { tag?: string, text?: string }) {
-  if (params) searchParams.value = params
+  if (params)
+    searchParams.value = params
   showSearchDialog.value = true
 }
 function closeSearchDialog() {

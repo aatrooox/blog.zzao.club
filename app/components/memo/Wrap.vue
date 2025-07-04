@@ -8,7 +8,7 @@ interface Props {
   isLiked: boolean
 }
 
-const { memo, likeCount, isLiked } = defineProps<Props>()
+const { memo } = defineProps<Props>()
 
 const emit = defineEmits(['refresh', 'heightMeasured', 'delete', 'edit', 'like'])
 const wrapRef = ref<HTMLElement>()
@@ -29,9 +29,9 @@ function goToDetail() {
 }
 
 // 处理点赞
-function handleLike() {
-  emit('like', memo.id)
-}
+// function handleLike() {
+//   emit('like', memo.id)
+// }
 // 组件挂载时测量高度
 // onMounted(() => {
 //   measureHeight()

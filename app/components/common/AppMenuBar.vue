@@ -24,7 +24,7 @@ const { $api } = useNuxtApp()
 //       return 'icon-park-outline:computer'
 //   }
 // })
-const { openSearchDialog, showSearchDialog } = useSearch()
+// const { openSearchDialog, showSearchDialog } = useSearch()
 
 interface MenuItem {
   label: string
