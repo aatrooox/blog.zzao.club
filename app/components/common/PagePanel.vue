@@ -1,19 +1,25 @@
 <script lang="ts" setup>
+type ParsedContent = Record<string, any>
+
 defineProps<{ page: Page, like: number, comment: number, view: number }>()
 const { checkDate, updateDateFromNow, checkUpdate, formatDate } = useDayjs()
-export interface Page {
+
+export interface Page extends ParsedContent {
   id: string
-  title?: string | undefined
   path: string
-  description: string
-  date: string | Date
-  lastmod: string | Date
-  meta: {
-    lastmod: string
-  }
-  tags?: string[]
+  title: string
   showTitle?: string
+  date?: string
+  tags?: string[]
+  description?: string
   versions?: string[]
+  lastmod?: string
+  meta?: any
+  seo?: {
+    title?: string
+    description?: string
+  }
+  body?: any
 }
 </script>
 
@@ -40,15 +46,15 @@ export interface Page {
       <div class="flex items-center gap-4 text-xs text-zinc-500 dark:text-zinc-400">
         <div class="flex items-center gap-1">
           <Icon name="material-symbols:nest-clock-farsight-analog-outline-rounded" />
-          {{ checkDate(page.date) ? formatDate(page.date) : '' }}
+          {{ checkDate(page.date ?? '') ? formatDate(page.date ?? '') : '' }}
         </div>
-        <template v-if="checkUpdate(page.lastmod, page.date)">
+        <template v-if="checkUpdate(page.lastmod ?? '', page.date ?? '')">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
                 <div class="flex items-center gap-1">
                   <Icon name="material-symbols:update-rounded" />
-                  {{ updateDateFromNow(page.lastmod || page?.meta?.lastmod) }}
+                  {{ updateDateFromNow(page.lastmod ?? page?.meta?.lastmod ?? '') }}
                 </div>
               </TooltipTrigger>
               <TooltipContent>

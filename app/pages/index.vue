@@ -61,22 +61,7 @@ watchEffect(async () => {
   }
 })
 
-// interface Page {
-//   title?: string | undefined
-//   path: string
-//   description: string
-//   date: string
-//   lastmod: string
-//   tags?: string[]
-//   versions?: string[]
-//   showTitle: string
-// }
-
-// const { animateEnter, animateLeave, animateBeforeEnter } = useTransition()
-// console.log(`count`, count, maxPage)
-const { data: articles } = await useAsyncData('articles', () => {
-  return queryCollection('content').order('date', 'DESC').limit(5).select('path', 'title', 'showTitle', 'date', 'tags', 'versions', 'lastmod').all()
-})
+const { data: articles } = await usePages({ limit: 5 })
 
 function onEnter(el) {
   animate(el, {

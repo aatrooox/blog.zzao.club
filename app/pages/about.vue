@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-// const { $api } = useNuxtApp()
-// const toast = useGlobalToast()
-
 useHead({
   title: '关于｜早早集市',
   meta: [
@@ -11,47 +8,6 @@ useHead({
     },
   ],
 })
-
-// const { frameworks } = useAppConfig()
-
-// const newLink = ref(JSON.stringify({
-//   name: '网站名称',
-//   url: 'https://www.example.com',
-//   desc: '网站描述',
-// }, null, 2))
-
-// async function addLink() {
-//   console.log(newLink.value)
-//   let propsObj: any
-//   try {
-//     // 先尝试直接解析\
-//     propsObj = JSON.parse(newLink.value)
-//   }
-//   catch (e) {
-//     try {
-//       // 如果直接解析失败，尝试处理格式
-//       const jsonStr = newLink.value
-//         .replace(/(['"])?(\w+)(['"])?:/g, '"$2":') // 只处理键名部分
-//         .replace(/'/g, '"') // 将单引号替换为双引号
-
-//       propsObj = JSON.parse(jsonStr)
-//     }
-//     catch (e) {
-//       console.error('转换失败', e)
-//       return
-//     }
-//   }
-
-//   console.log(propsObj)
-//   const res = await $api.post('/api/v1/link/add', propsObj)
-
-//   if (res.error) {
-//     // toast.add({ type: 'warning', message: res.error.message ?? '提交失败，请检查格式'})
-//   }
-//   else {
-//     toast.add({ type: 'success', message: '提交成功' })
-//   }
-// }
 </script>
 
 <template>

@@ -6,41 +6,7 @@ defineProps<{
 const activeId = ref('')
 const observer = ref()
 
-function onEnter(el) {
-  animate(el, {
-    duration: 100,
-    ease: 'inOut',
-    onComplete: () => {
-      animate('.toc-item', {
-        x: [
-          { to: '30px', ease: 'outExpo', duration: 200 },
-          { to: 0, ease: 'outBounce', duration: 200, delay: 150 },
-        ],
-        opacity: '1',
-        duration: 300,
-        delay: (_, i) => i * 50,
-        ease: 'inOutCirc',
-        onComplete: () => {
-        },
-      })
-    },
-  })
-}
-function onBeforeEnter(el) {
-  el.style.opacity = '0'
-}
-
-function onLeave(el, done) {
-  animate(el, {
-    opacity: '0',
-    duration: 200,
-    delay: 300,
-    ease: 'inOut',
-    onComplete: () => {
-      done()
-    },
-  })
-}
+const { onEnter, onBeforeEnter, onLeave } = useStaggeredListTransition('.toc-item')
 
 onMounted(async () => {
   await nextTick()

@@ -13,25 +13,11 @@ useHead({
 })
 
 const { $api } = useNuxtApp()
-// const { formatDate } = useDayjs()
-
-// const appConfig = useAppConfig()
-// const tags = computed(() => appConfig.tags.map((tag, index) => ({ name: tag, value: index })))
 const route = useRoute()
 const articleLikeMap = ref<Record<string, number>>({})
 const articleCommentMap = ref<Record<string, number>>({})
 const postViewsMap = ref<Record<string, number>>({})
 const queryTag = computed(() => route.query.tag)
-
-// const selectedTags = computed(() => {
-//   if (queryTag.value) {
-//     const query_tags = queryTag.value as string
-//     return tags.value.filter(tag => tag.name === query_tags)[0]
-//   }
-//   else {
-//     return tags.value[0]
-//   }
-// })
 
 function onEnter(el) {
   animate(el, {
@@ -80,37 +66,7 @@ const filter_tags = computed(() => {
   }
 })
 
-// async function changeTags(tag: string) {
-//   let tags_str = tag
-//   if (tags_str === '全部')
-//     tags_str = ''
-//   navigateTo({
-//     path: '/article',
-//     query: {
-//       ...route.query || {},
-//       tag: tags_str || '',
-//     },
-//   })
-// }
-
-async function queryArticles(filter_tags: any) {
-  let query = queryCollection('content')
-
-  if (filter_tags) {
-    query = query.where('tags', 'LIKE', `%${filter_tags}%`)
-  }
-  // count.value = await query.count();
-  return query.order('date', 'DESC').select('id', 'path', 'title', 'showTitle', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta').all()
-}
-
-const { data } = await useAsyncData(computed(() => `filter-tags-${filter_tags.value}`), async () => {
-  return queryArticles(filter_tags.value)
-}, { lazy: true })
-
-// async function selectTag(tag: { name: string, value: number } | undefined) {
-//   tag = tag ?? tags.value[0]
-//   await changeTags(tag!.name)
-// }
+const { data, pending: _pending, refresh: _refresh, error: _error } = await usePages({ filter_tags: filter_tags.value })
 
 async function queryArticleInteractivity() {
   const res = await $api.get<ApiResponse<Record<string, number>>>('/api/v1/like/list')
@@ -146,17 +102,6 @@ onMounted(() => {
 
 <template>
   <div class="flex flex-col gap-6 max-w-7xl box-border mx-auto sm:px-4">
-    <!-- <div class="flex flex-wrap gap-2 sticky py-2 px-2 top-10 z-[50] rounded-md bg-white/90 dark:bg-zinc-800/80">
-      <Button
-        v-for="tag in tags" :key="tag.value" :variant="selectedTags?.value === tag.value ? 'secondary' : 'link'"
-        class="text-sm px-3 py-1.5 rounded-md transition-all duration-200" @click="selectTag(tag)"
-      >
-        {{ tag.name }}
-        <span v-if="selectedTags?.value === tag.value && status !== 'pending'" class="ml-1 text-xs">({{ data?.length
-          || 0 }})</span>
-        <Icon v-if="selectedTags?.value === tag.value && status === 'pending'" name="svg-spinners:pulse-rings-multiple" />
-      </Button>
-    </div> -->
     <div v-if="data" class="flex flex-col gap-6">
       <transition-group
         tag="div" class="w-full flex flex-col gap-6" appear @enter="onEnter"

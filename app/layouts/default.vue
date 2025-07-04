@@ -9,6 +9,7 @@ const navBarStore = useNavBarStore()
 const scrollWrap = useTemplateRef<HTMLElement>('scrollWrap')
 const scrollDirection = ref('')
 const showScrollTopBtn = ref(false)
+const showSearchDialog = ref(false)
 // const { x, y } = useWindowScroll()
 
 const isPostPage = computed(() => {
@@ -112,6 +113,7 @@ function scrollToTop() {
       <AppMenuBar />
       <slot />
     </div>
+    <ResourceSearchDialog v-model="showSearchDialog" />
     <!-- <ClientOnly>
       <InteractiveGridPattern :class="'[mask-image:radial-gradient(350px_circle_at_center,white,transparent)] -z-10'"
         :width="40" :height="40" :squares="[80, 80]" squares-class-name="hover:fill-blue-500" />

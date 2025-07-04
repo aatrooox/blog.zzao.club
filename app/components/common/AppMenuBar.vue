@@ -1,10 +1,11 @@
-<script setup>
+<script setup lang="ts">
+import type { Ref } from 'vue'
 import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu'
 
 // const searchDialog = ref(null)
 const toast = useGlobalToast()
 const loginForm = ref(null)
-const registerForm = ref(null)
+const registerForm = ref<{ show: () => void } | null>(null)
 // const config = useRuntimeConfig()
 const userStore = useUserStore()
 const tokenStore = useTokenStore()
@@ -24,8 +25,16 @@ const { $api } = useNuxtApp()
 //       return 'icon-park-outline:computer'
 //   }
 // })
+const { openSearchDialog, showSearchDialog } = useSearch()
 
-const items = ref([
+interface MenuItem {
+  label: string
+  icon: string
+  route?: string
+  href?: string
+  children?: MenuItem[]
+}
+const items = ref<MenuItem[]>([
   {
     label: '首页',
     icon: 'twemoji:wedding',
@@ -73,7 +82,7 @@ async function loginBlog(body) {
 // }
 
 function showRegisterDialog() {
-  registerForm.value?.show()
+  registerForm.value?.show && registerForm.value.show()
 }
 
 // function showLoginForm() {
@@ -109,13 +118,13 @@ function showRegisterDialog() {
     <NavigationMenu class="hidden md:block">
       <NavigationMenuList>
         <NavigationMenuItem v-for="menu in items" :key="menu.label">
-          <template v-if="menu.children">
+          <template v-if="menu.children?.length">
             <NavigationMenuTrigger class="text-md relative">
               <NuxtLink
                 v-if="menu.route" v-slot="{ isActive, href, navigate }" :to="menu.route || menu.href" custom
                 class="cursor-pointer text-md bg-transparent"
               >
-                <NavigationMenuLink :active="isActive" :href :class="navigationMenuTriggerStyle()" @click="navigate">
+                <NavigationMenuLink :active="isActive" :href="href" :class="navigationMenuTriggerStyle()" @click="navigate">
                   {{ menu.label }}
                 </NavigationMenuLink>
               </NuxtLink>
@@ -130,7 +139,7 @@ function showRegisterDialog() {
                     class="cursor-pointer text-md underline underline-offset-2 decoration-4 decoration-cyan-600"
                   >
                     <NavigationMenuLink
-                      :active="isActive" :href :class="navigationMenuTriggerStyle()"
+                      :active="isActive" :href="href" :class="navigationMenuTriggerStyle()"
                       @click="navigate"
                     >
                       {{ subMenu.label }}
@@ -142,7 +151,7 @@ function showRegisterDialog() {
           </template>
 
           <NuxtLink v-else v-slot="{ isActive, href, navigate }" :to="menu.route" custom class="cursor-pointer text-md">
-            <NavigationMenuLink :active="isActive" :href :class="navigationMenuTriggerStyle()" @click="navigate">
+            <NavigationMenuLink :active="isActive" :href="href" :class="navigationMenuTriggerStyle()" @click="navigate">
               {{ menu.label }}
             </NavigationMenuLink>
           </NuxtLink>
@@ -151,6 +160,9 @@ function showRegisterDialog() {
     </NavigationMenu>
     <ClientOnly>
       <div class="icons pr-4 flex gap-2">
+        <Button variant="ghost" size="icon" @click="openSearchDialog">
+          <Icon name="lucide:search" size="1.5em" />
+        </Button>
         <AppLoginDialog
           v-if="!userStore.isLogin" ref="loginForm" :login="loginBlog"
           @show-register-dialog="showRegisterDialog"
@@ -161,5 +173,6 @@ function showRegisterDialog() {
         </Button> -->
       </div>
     </ClientOnly>
+    <ResourceSearchDialog v-model="showSearchDialog" />
   </div>
 </template>

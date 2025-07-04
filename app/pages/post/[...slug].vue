@@ -140,10 +140,6 @@ function commentLeave(el, done) {
 function handleCommentPragph() {
   console.log('评论段落', selectedText.value)
 }
-
-// function applySelectedText() {
-//   // underlineSavedSelection(selectedText.value)
-// }
 // 选中时及时保存当前文字
 function serializeSelection(text?: string) {
   if (!text)
@@ -158,13 +154,11 @@ const _htmlCache = {}
 const _styleValueCache = {}
 let copyHTML = ``
 
-const { data: page, error, status } = await useAsyncData(route.path, () => {
-  return queryCollection('content').path(decodeURI(route.path)).first()
-}, { lazy: true })
+const { data: page, pending: _pending, refresh: _refresh, error: _error } = await usePageByPath(route.path)
 
 useSeoMeta({
-  title: page.value?.seo.title,
-  description: page.value?.seo.description,
+  title: page.value?.seo?.title,
+  description: page.value?.seo?.description,
 })
 
 useHead({
@@ -176,39 +170,19 @@ useHead({
   ],
 })
 
-watch(error, (err) => {
-  console.log(`error`, err)
-  throw createError({
-    statusCode: 404,
-    message: '页面不存在',
-    fatal: true,
-  })
-})
-
-watch(page, (page) => {
-  if (status.value === 'success' || status.value === 'error') {
-    if (!page) {
-      throw createError({
-        statusCode: 404,
-        message: '页面不存在',
-        fatal: true,
-      })
-    }
+watch(() => page, (val) => {
+  if (!val) {
+    throw createError({
+      statusCode: 404,
+      message: '页面不存在',
+      fatal: true,
+    })
   }
 })
 
 const tocData = computed(() => {
   return page.value?.body?.toc?.links
 })
-
-// const handleSelection = () => {
-//   const selection = window.getSelection()
-
-//   if (selection && selection?.rangeCount > 0 && selection?.toString().trim().length > 0) {
-//     const range = selection.getRangeAt(0)
-//     console.log(`range`, range, selection, selection.toString())
-//   }
-// }
 
 function getContentDom() {
   const articleDom: any = curMdContentRef.value

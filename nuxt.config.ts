@@ -39,6 +39,10 @@ export default defineNuxtConfig({
       prefix: '',
     },
     {
+      path: '~/components/ui',
+      prefix: '',
+    },
+    {
       path: '~/components/animate',
       prefix: 'Animate',
     },
@@ -311,6 +315,6 @@ export default defineNuxtConfig({
   },
   shadcn: {
     prefix: '',
-    componentDir: './app/components/ui',
+    componentDir: '~/components/ui',
   },
 })

@@ -198,6 +198,9 @@ importers:
       '@iconify-json/icon-park-outline':
         specifier: ^1.2.1
         version: 1.2.2
+      '@iconify-json/lucide':
+        specifier: ^1.2.54
+        version: 1.2.54
       '@iconify-json/material-symbols':
         specifier: ^1.2.12
         version: 1.2.25
@@ -746,6 +749,9 @@ packages:
 
   '@iconify-json/icon-park-outline@1.2.2':
     resolution: {integrity: sha512-7VkMWOZTIMNkC9+oAL4I5kVlVC5Pq3nQpruZ4E3cLyKaeV95gaUrEilUkvGW71fgsFYCBWAmOZ3KpM4ux0j0zA==}
+
+  '@iconify-json/lucide@1.2.54':
+    resolution: {integrity: sha512-sUHvGWE0WI+XVew//03Y1jw7AFRv57X1BFxrLBdjwt9xccr4Y2JartcWXM/Zeinxrr3ZgBt0n16WkeN/fx9QAQ==}
 
   '@iconify-json/material-symbols@1.2.25':
     resolution: {integrity: sha512-WIC8rKKA5fsqt8E2ZFT6lqRGP30BK8P+SAzlqo0GzPe6mxKY+NLcRs+Tk+SnpZElgDjnb27A9zMmUajMLQGPmQ==}
@@ -6629,6 +6635,10 @@ snapshots:
   '@humanwhocodes/retry@0.4.3': {}
 
   '@iconify-json/icon-park-outline@1.2.2':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/lucide@1.2.54':
     dependencies:
       '@iconify/types': 2.0.0
 
