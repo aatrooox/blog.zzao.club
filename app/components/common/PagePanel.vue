@@ -1,8 +1,11 @@
 <script lang="ts" setup>
+import { useSearch } from '~/composables/useSearch'
+
 type ParsedContent = Record<string, any>
 
 defineProps<{ page: Page, like: number, comment: number, view: number }>()
 const { checkDate, updateDateFromNow, checkUpdate, formatDate } = useDayjs()
+const { openSearchDialog } = useSearch()
 
 export interface Page extends ParsedContent {
   id: string
@@ -21,6 +24,10 @@ export interface Page extends ParsedContent {
   }
   body?: any
 }
+
+const showSearchDialog = (tag: string) => {
+  openSearchDialog({ tag })
+}
 </script>
 
 <template>
@@ -29,7 +36,7 @@ export interface Page extends ParsedContent {
       <div class="flex flex-col gap-2">
         <NuxtLink
           :to="page.path"
-          class="text-xl font-bold group-hover:underline underline-offset-4 decoration-dotted dark:hover:text-primary-400 transition-colors line-clamp-2 leading-tight  "
+          class="text-xl font-bold dark:hover:text-primary-400 transition-all duration-200 leading-tight group-hover:text-cyan-600"
         >
           {{ page.title }}
           <Icon
@@ -64,7 +71,7 @@ export interface Page extends ParsedContent {
           </TooltipProvider>
         </template>
         <div class="flex flex-wrap gap-1.5">
-          <Badge v-for="tag of page.tags" :key="tag" class="text-xs">
+          <Badge v-for="tag of page.tags" :key="tag" class="text-xs cursor-pointer group-hover:text-cyan-600 transition-all duration-300" @click="showSearchDialog(tag)">
             {{ tag }}
           </Badge>
         </div>

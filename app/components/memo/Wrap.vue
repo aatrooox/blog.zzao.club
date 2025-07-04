@@ -107,7 +107,7 @@ async function removeMemo() {
               <span v-if="commentCount" class="text-xs">{{ commentCount > 99 ? '99+' : commentCount }}</span>
             </div>
             <!-- 点赞按钮 -->
-            <div
+            <!-- <div
               class="flex items-center gap-1 cursor-pointer transition-all duration-150 px-2 py-1 rounded-full" :class="[
                 isLiked
                   ? 'text-red-500 bg-red-100 dark:bg-red-900/40'
@@ -118,7 +118,7 @@ async function removeMemo() {
             >
               <Icon :name="isLiked ? 'material-symbols:favorite' : 'material-symbols:favorite-outline'" class="w-4 h-4" />
               <span v-if="likeCount > 0" class="text-xs">{{ likeCount > 99 ? '99+' : likeCount }}</span>
-            </div>
+            </div> -->
             <!-- 评论按钮 -->
             <!-- <Button
               class="action-btn group rounded-full dark:bg-green-900/20 hover:text-green-500 hover:bg-green-100 dark:hover:bg-green-900/40 transition-all duration-150 w-7 h-7 p-0"

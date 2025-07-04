@@ -159,9 +159,9 @@ function showRegisterDialog() {
     </NavigationMenu>
     <ClientOnly>
       <div class="icons pr-4 flex gap-2">
-        <Button variant="ghost" size="icon" @click="openSearchDialog">
+        <!-- <Button variant="ghost" size="icon" @click="openSearchDialog">
           <Icon name="lucide:search" size="1.5em" />
-        </Button>
+        </Button> -->
         <AppLoginDialog
           v-if="!userStore.isLogin" ref="loginForm" :login="loginBlog"
           @show-register-dialog="showRegisterDialog"
@@ -172,6 +172,6 @@ function showRegisterDialog() {
         </Button> -->
       </div>
     </ClientOnly>
-    <ResourceSearchDialog v-model="showSearchDialog" />
+    <!-- <ResourceSearchDialog v-model="showSearchDialog" /> -->
   </div>
 </template>

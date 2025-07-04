@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { UseScrollReturn } from '@vueuse/core'
 import { vScroll } from '@vueuse/components'
+import { useSearch } from '~/composables/useSearch'
 
 const globalToast = useGlobalToast()
 const { $toast } = useNuxtApp() as any
@@ -9,7 +10,7 @@ const navBarStore = useNavBarStore()
 const scrollWrap = useTemplateRef<HTMLElement>('scrollWrap')
 const scrollDirection = ref('')
 const showScrollTopBtn = ref(false)
-const showSearchDialog = ref(false)
+const { showSearchDialog } = useSearch()
 // const { x, y } = useWindowScroll()
 
 const isPostPage = computed(() => {
