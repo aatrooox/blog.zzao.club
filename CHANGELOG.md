@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.11.4
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.11.3...v1.11.4)
+
+### 🚀 Enhancements
+
+- 优化大量代码 ([0c76e08](https://github.com/aatrooox/blog.zzao.club/commit/0c76e08))
+
+### 🏡 Chore
+
+- Eslint ([aad1644](https://github.com/aatrooox/blog.zzao.club/commit/aad1644))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.11.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.11.2...v1.11.3)
