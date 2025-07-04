@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v1.11.5
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.11.4...v1.11.5)
+
+### 🚀 Enhancements
+
+- 增加 tag 分类搜索; 优化动画、样式 ([1415347](https://github.com/aatrooox/blog.zzao.club/commit/1415347))
+
+### 🏡 Chore
+
+- 修复水合问题;mdc 组件本地管理 ([d024093](https://github.com/aatrooox/blog.zzao.club/commit/d024093))
+- Eslint ([0af4747](https://github.com/aatrooox/blog.zzao.club/commit/0af4747))
+- Eslint ([60eaa5e](https://github.com/aatrooox/blog.zzao.club/commit/60eaa5e))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.11.4
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.11.3...v1.11.4)
