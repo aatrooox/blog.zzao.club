@@ -161,8 +161,8 @@ export default defineNuxtConfig({
         h3: 'ProseH3',
         img: 'ProseImg',
         pre: 'ProsePre',
-        code: 'ProseCode'
-      }
+        code: 'ProseCode',
+      },
     },
     headings: {
       anchorLinks: {

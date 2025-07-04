@@ -12,7 +12,6 @@ const popularTags = ref([
   { id: '4', name: 'TailwindCSS', count: 12 },
   { id: '5', name: 'SSR', count: 10 },
 ])
-
 </script>
 
 <template>
