@@ -152,7 +152,17 @@ export default defineNuxtConfig({
   },
   mdc: {
     components: {
-      prose: true,
+      prose: false,
+      map: {
+        a: 'ProseA',
+        p: 'ProseP',
+        h1: 'ProseH1',
+        h2: 'ProseH2',
+        h3: 'ProseH3',
+        img: 'ProseImg',
+        pre: 'ProsePre',
+        code: 'ProseCode'
+      }
     },
     headings: {
       anchorLinks: {

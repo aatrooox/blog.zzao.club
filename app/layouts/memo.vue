@@ -12,6 +12,7 @@ const popularTags = ref([
   { id: '4', name: 'TailwindCSS', count: 12 },
   { id: '5', name: 'SSR', count: 10 },
 ])
+
 </script>
 
 <template>
@@ -24,7 +25,7 @@ const popularTags = ref([
             <UserAvatar :user-info="userStore.user" alt="User Avatar" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-zinc-300 dark:border-zinc-700" />
           </NuxtLink>
           <h2 class="text-xl font-semibold dark:text-white">
-            {{ userStore.user.nickname }}
+            {{ userStore?.user?.nickname || '早早集市' }}
           </h2>
           <template #fallback>
             <div class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-zinc-300 dark:border-zinc-700 bg-gray-200 dark:bg-zinc-700 flex items-center justify-center">
@@ -39,7 +40,9 @@ const popularTags = ref([
       <div class="stats mt-6 space-y-2">
         <div class="stat-item flex justify-between dark:text-gray-300">
           <span>动态:</span>
-          <span class="font-semibold dark:text-white">{{ memoStats.count }} 条</span>
+          <ClientOnly>
+            <span class="font-semibold dark:text-white">{{ memoStats.count || 0 }} 条</span>
+          </ClientOnly>
         </div>
         <!-- <div class="stat-item flex justify-between dark:text-gray-300">
           <span>活跃天数:</span>
@@ -86,12 +89,12 @@ const popularTags = ref([
           </NuxtLink>
           <div class="flex-1 flex items-center space-x-4">
             <h2 class="text-base font-semibold dark:text-white">
-              {{ userStore.user.nickname }}
+              {{ userStore?.user?.nickname || '早早集市' }}
             </h2>
             <div class="flex space-x-3 text-sm text-gray-600 dark:text-gray-400">
               <span class="flex items-center space-x-1">
                 <Icon name="material-symbols:edit-note-outline" class="w-4 h-4" />
-                <span>{{ memoStats.count }} 条</span>
+                <span>{{ memoStats.count || 0 }} 条</span>
               </span>
               <!-- <span class="flex items-center space-x-1">
                 <Icon name="material-symbols:calendar-today-outline" class="w-4 h-4" />
