@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { User } from '@prisma/client'
 import type { ApiResponse } from '~~/types/fetch'
+import useTags from '~/composables/useTags'
 
 const props = defineProps({
   selectedTags: {
@@ -30,6 +31,7 @@ const tokenStore = useTokenStore()
 const clientjs = useClientjs()
 const toast = useGlobalToast()
 const { $api } = useNuxtApp()
+const { getTags } = useTags()
 
 const route = useRoute()
 const selectedTags = computed(() => {
@@ -101,6 +103,7 @@ function handleEdit(memo: any) {
 async function handleMemoUpdated() {
   editingMemo.value = null
   await getMemos()
+  await getTags()
 }
 
 async function handleSendMemo(commentData) {
@@ -108,6 +111,7 @@ async function handleSendMemo(commentData) {
   if (success) {
     tags.value = []
     commentInputRef.value?.clear?.()
+    await getTags()
   }
 }
 
