@@ -16,7 +16,8 @@ const {
   inputTip = '最多256字符，所有人可以回复',
   placeholder = '说点什么吧！',
   initialValue = '',
-} = defineProps<{ type?: string, target?: string, showHello?: boolean, submitBtnText?: string, cancelBtnText?: string, inputTip?: string, placeholder?: string, initialValue?: string }>()
+  tags = [],
+} = defineProps<{ type?: string, target?: string, showHello?: boolean, submitBtnText?: string, cancelBtnText?: string, inputTip?: string, placeholder?: string, initialValue?: string, tags?: string[] }>()
 const emit = defineEmits(['valueChange', 'send', 'cancel'])
 const userStore = useUserStore()
 // const emojiPopover = ref(null)
@@ -61,21 +62,21 @@ const rows = ref<number>(3)
 // const cols = ref<number>(30)
 
 // 从textarea中提取标签
-function extractTags(content: string) {
-  const tagRegex = /#([^\s#]+)/g
-  const tags = new Set() // 使用 Set 去重
-  let match
+// function extractTags(content: string) {
+//   const tagRegex = /#([^\s#]+)/g
+//   const tags = new Set() // 使用 Set 去重
+//   let match
 
-  while (true) {
-    match = tagRegex.exec(content)
-    if (match === null) {
-      break
-    }
-    tags.add(match[1])
-  }
+//   while (true) {
+//     match = tagRegex.exec(content)
+//     if (match === null) {
+//       break
+//     }
+//     tags.add(match[1])
+//   }
 
-  return Array.from(tags) // 将 Set 转换为数组
-}
+//   return Array.from(tags) // 将 Set 转换为数组
+// }
 
 // 移除 textarea 中的标签
 // const removeTagsFromTextarea = (content: string) => {
@@ -130,22 +131,19 @@ function clear() {
 }
 
 function sendComment() {
-  const tags = extractTags(comment.value)
-
-  const data: CommentData = {
+  const data: CommentData & { tags?: string[] } = {
     content: comment.value,
-    tags,
     visitor: {
       name: visitorName.value,
       email: visitorEmail.value,
       website: visitorWebsite.value,
       allowEmailNotify: allowEmailNotify.value,
     },
+    tags,
   }
   // comment.value = removeTagsFromTextarea(comment.value);
   if (comment.value)
     emit('send', data)
-  clear()
 }
 
 function cancelSend() {
@@ -162,6 +160,7 @@ onMounted(() => {
     comment.value = initialValue
   }
 })
+
 defineExpose({ clear })
 </script>
 

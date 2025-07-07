@@ -26,11 +26,13 @@ definePageMeta({
   ],
 })
 
+const { user } = useUserSession()
 const { $api } = useNuxtApp()
 const toast = useGlobalToast()
 const userStore = useUserStore()
 const schema = ref<any>(null)
 const configSchema = ref<any>(null)
+const route = useRoute()
 
 const passwordSchema = z.object({
   password: z.string()
@@ -136,6 +138,20 @@ async function getUserInfo() {
   })
 }
 
+watchEffect(async () => {
+  // 关联 github 的头像
+  if (route.query.oath === '1') {
+    const { data, error } = await $api.put(`/api/v1/user/${userStore.user.id}`, {
+      avatar_url: user.value?.avatar_url,
+    })
+
+    if (!error) {
+      userStore.setUser(data.user)
+      userStore.setToken(data.token)
+      toast.success('已成功关联 github 头像')
+    }
+  }
+})
 onMounted(() => {
   getUserInfo()
 })

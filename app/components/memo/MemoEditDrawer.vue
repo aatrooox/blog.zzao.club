@@ -20,10 +20,14 @@ const isUpdating = ref(false)
 
 // 监听memo变化，更新tags
 watch(() => props.memo, (newMemo) => {
-  if (newMemo) {
-    editTags.value = newMemo.tags || []
+  if (newMemo && newMemo.tags) {
+    // 从 tag 对象中提取 tag_name
+    editTags.value = newMemo.tags.map((tagRelation: any) => tagRelation.tag.tag_name)
   }
-}, { immediate: true })
+  else {
+    editTags.value = []
+  }
+}, { immediate: true, deep: true })
 
 // 计算属性：是否打开
 const isOpen = computed({
@@ -82,6 +86,7 @@ function handleCancel() {
           v-if="memo"
           :key="memo.id"
           :show-hello="false"
+          :tags="editTags"
           :initial-value="memo.content"
           :disabled="isUpdating"
           placeholder="修改你的想法..."

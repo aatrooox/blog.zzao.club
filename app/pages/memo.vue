@@ -1,7 +1,17 @@
 <script lang="ts" setup>
 import type { User } from '@prisma/client'
 import type { ApiResponse } from '~~/types/fetch'
-import { useElementSize } from '@vueuse/core'
+
+const props = defineProps({
+  selectedTags: {
+    type: Array,
+    default: () => [],
+  },
+  onTagClick: {
+    type: Function,
+    default: undefined,
+  },
+})
 
 definePageMeta({
   layout: 'memo',
@@ -11,394 +21,109 @@ useSeoMeta({
   title: 'Memoz｜早早集市',
   description: '基于Api数据实现SSR的页面，一些日常记录、知识碎片、其他平台的摘录',
 })
-// 集中式高度管理
-const resizeObserver = ref<ResizeObserver | null>(null)
-const isMemosReady = ref(false)
-const pendingMeasurements = ref(new Set<string>())
-const containerRef = ref<HTMLElement>()
-const { width: containerWidth } = useElementSize(containerRef)
 
-// 高度缓存：存储每个memo的实际测量高度
 const heightCache = ref<Map<string, number>>(new Map())
 
-// 防抖计时器
-let layoutUpdateTimer: NodeJS.Timeout | null = null
-// 布局更新触发器ull
-const layoutTrigger = ref(0)
 const { getMemos, memos, createMemo } = useMemos()
-
-const tags = ref([])
-
-// 点赞相关状态
-const memoLikeMap = ref<Record<string, number>>({})
-// 移除了memoLikedMap，不再跟踪用户点赞状态
+const userStore = useUserStore()
+const tokenStore = useTokenStore()
+const clientjs = useClientjs()
+const toast = useGlobalToast()
 const { $api } = useNuxtApp()
 
-// 编辑相关状态
+const route = useRoute()
+const selectedTags = computed(() => {
+  const q = route.query.tags
+  if (!q)
+    return []
+  if (typeof q === 'string')
+    return q.split(',').filter(Boolean)
+  return []
+})
+
+const tags = ref<string[]>([])
+const commentInputRef = ref<any>(null)
+
 const isEditDrawerOpen = ref(false)
 const editingMemo = ref<any>(null)
 
-// 获取memo点赞统计
-async function queryMemoLikes() {
-  // 获取所有 memo 的点赞统计
-  const res = await $api.get<ApiResponse<Record<string, number>>>('/api/v1/memo/like/list')
-  if (res.data) {
-    memoLikeMap.value = res.data
-  }
-}
+const filteredMemos = computed(() => {
+  if (selectedTags.value.length === 0)
+    return memos.value
+  return memos.value.filter(memo =>
+    memo.tags && memo.tags.some(t => selectedTags.value.includes(t.tag.tag_name)),
+  )
+})
 
-// 移除了queryUserLikedMemos函数，不再检查用户点赞状态
+const { beforeLeave, leave, afterLeave } = useStaggeredListTransition('memo-fade')
 
-// 处理点赞事件
 async function handleLike(memoId: string) {
-  const userStore = useUserStore()
-  const tokenStore = useTokenStore()
-  const clientjs = useClientjs()
-  const toast = useGlobalToast()
-
-  // 游客处理 - 生成指纹 -> 注册为游客 (随机用户名 + 固定id)
   if (!userStore.user.id) {
     const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
     userStore.setUser(res.data.user)
     tokenStore.setToken(res.data.token)
   }
-
   try {
     const res = await $api.post<ApiResponse<{ success: boolean, message?: string, data?: any }>>('/api/v1/memo/like', {
       memo_id: memoId,
       user_id: userStore.user.id,
     })
-
-    console.log(res?.data)
     if (res?.data && res.data.success) {
-      // 显示相应的提示信息
       if (res.data.message) {
         toast.success('您已经点赞过了')
       }
       else {
         toast.success('感谢支持！')
-        // 更新点赞数量 - 增加1
-        const currentCount = memoLikeMap.value[memoId] || 0
-        memoLikeMap.value[memoId] = currentCount + 1
       }
+      await getMemos()
     }
   }
-  catch (error) {
-    console.error('点赞操作失败:', error)
+  catch {
     toast.error('点赞失败，请重试')
   }
 }
 
-// Ensure memos are loaded on component mount
-onMounted(async () => {
-  await getMemos() // 在客户端获取数据
-  initResizeObserver() // 初始化ResizeObserver
+await getMemos()
 
-  // 获取点赞数量数据
-  await queryMemoLikes()
-})
-
-// 监听memos数组变化，统一管理高度测量
-watch(memos, async (newMemos) => {
-  if (newMemos && newMemos.length > 0) {
-    isMemosReady.value = true
-    // 重新获取点赞数据
-    await queryMemoLikes()
-    // 等待DOM渲染完成后统一观察所有memo元素
-    nextTick(() => {
-      observeAllMemoElements()
-    })
-  }
-}, { immediate: true })
-
-// 移除了用户登录状态监听器，不再需要重新获取点赞状态
-
-// 统一观察所有memo元素
-function observeAllMemoElements() {
-  if (!resizeObserver.value) {
-    return
-  }
-
-  // 查找所有memo元素并开始观察
-  const memoElements = document.querySelectorAll('.memo-item')
-  memoElements.forEach((element) => {
-    const memoId = element.getAttribute('data-memo-id')
-    if (memoId && element instanceof HTMLElement) {
-      observeMemoElement(element, memoId)
-    }
-  })
-}
-
-// 组件卸载时清理
-onUnmounted(() => {
-  if (resizeObserver.value) {
-    resizeObserver.value.disconnect()
-    resizeObserver.value = null
-  }
-  if (layoutUpdateTimer) {
-    clearTimeout(layoutUpdateTimer)
-    layoutUpdateTimer = null
-  }
-})
-
-// Waterfall layout configuration
-interface MemoPosition {
-  memo: any
-  x: number
-  y: number
-  width: number
-  height: number
-}
-
-// 批量更新高度
-function batchUpdateHeights(measurements: { memoId: string, height: number }[]) {
-  let hasChanges = false
-  const threshold = 5
-
-  measurements.forEach(({ memoId, height }) => {
-    const previousHeight = heightCache.value.get(memoId)
-
-    if (!previousHeight || Math.abs(previousHeight - height) >= threshold) {
-      heightCache.value.set(memoId, height)
-      hasChanges = true
-    }
-  })
-
-  // 防抖更新布局
-  if (hasChanges) {
-    if (layoutUpdateTimer) {
-      clearTimeout(layoutUpdateTimer)
-    }
-
-    layoutUpdateTimer = setTimeout(() => {
-      nextTick(() => {
-        layoutTrigger.value++
-        layoutUpdateTimer = null
-      })
-    }, 100) // 增加防抖时间到100ms
-  }
-}
-
-// 初始化ResizeObserver
-function initResizeObserver() {
-  if (resizeObserver.value) {
-    resizeObserver.value.disconnect()
-  }
-
-  resizeObserver.value = new ResizeObserver((entries) => {
-    const measurements: { memoId: string, height: number }[] = []
-
-    entries.forEach((entry) => {
-      const memoId = entry.target.getAttribute('data-memo-id')
-      if (memoId) {
-        const height = entry.contentRect.height
-        measurements.push({ memoId, height })
-        pendingMeasurements.value.delete(memoId)
-      }
-    })
-
-    // 批量处理高度更新
-    if (measurements.length > 0) {
-      batchUpdateHeights(measurements)
-    }
-  })
-}
-
-// 观察memo元素
-function observeMemoElement(element: HTMLElement, memoId: string) {
-  if (resizeObserver.value && !pendingMeasurements.value.has(memoId)) {
-    element.setAttribute('data-memo-id', memoId)
-    resizeObserver.value.observe(element)
-    pendingMeasurements.value.add(memoId)
-  }
-}
-
-// 处理高度测量事件
-function handleHeightMeasured({ memoId, height }: { memoId: string, height: number }) {
-  const previousHeight = heightCache.value.get(memoId)
-
-  // 只有高度变化超过阈值才更新（避免微小变化导致频繁重计算）
-  const threshold = 5
-  if (previousHeight && Math.abs(previousHeight - height) < threshold) {
-    return
-  }
-
-  heightCache.value.set(memoId, height)
-
-  // 如果高度发生变化，使用防抖机制触发瀑布流重新计算
-  if (previousHeight !== height) {
-    // 清除之前的计时器
-    if (layoutUpdateTimer) {
-      clearTimeout(layoutUpdateTimer)
-    }
-
-    // 设置新的计时器，防抖延迟50ms
-    layoutUpdateTimer = setTimeout(() => {
-      nextTick(() => {
-        // 通过更新响应式变量强制重新计算布局
-        layoutTrigger.value++
-        layoutUpdateTimer = null
-      })
-    }, 50)
-  }
-}
-
-// 处理删除事件 - 立即从本地数据中移除
 function handleDelete(memoId: string) {
   const index = memos.value.findIndex(memo => memo.id === memoId)
   if (index !== -1) {
     memos.value.splice(index, 1)
-    // 同时清除高度缓存
     heightCache.value.delete(memoId)
   }
 }
 
-// 处理编辑事件
 function handleEdit(memo: any) {
   editingMemo.value = memo
   isEditDrawerOpen.value = true
 }
 
-// 处理memo更新完成
 async function handleMemoUpdated() {
   editingMemo.value = null
-  // 重新获取数据
   await getMemos()
-
-  // 重新获取点赞数量数据
-  await queryMemoLikes()
 }
 
-// Get container and card dimensions
-function getContainerInfo() {
-  const minCardWidth = 280
-  const gap = 16
-  const containerPadding = 0
-
-  const availableWidth = (containerWidth.value || 800) - containerPadding * 2
-  const columns = Math.max(1, Math.floor((availableWidth + gap) / (minCardWidth + gap)))
-  const cardWidth = Math.floor((availableWidth - gap * (columns - 1)) / columns)
-
-  return {
-    containerWidth: availableWidth,
-    cardWidth,
-    columns,
-    gap,
+async function handleSendMemo(commentData) {
+  const success = await createMemo({ ...commentData, tags: tags.value })
+  if (success) {
+    tags.value = []
+    commentInputRef.value?.clear?.()
   }
 }
 
-// Calculate waterfall layout positions
-const waterfallLayout = computed((): MemoPosition[] => {
-  // 依赖layoutTrigger确保高度更新时重新计算
-  void layoutTrigger.value
-
-  if (!memos.value || memos.value.length === 0) {
-    return []
-  }
-
-  const { cardWidth, columns, gap } = getContainerInfo()
-  const columnHeights = Array.from({ length: columns }, () => 0)
-  const positions: MemoPosition[] = [];
-  (memos.value ?? []).forEach((memo) => {
-    // Find the shortest column
-    const shortestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights))
-
-    // Calculate position
-    const x = shortestColumnIndex * (cardWidth + gap)
-    const y = columnHeights[shortestColumnIndex] as number
-
-    // Get cached height or estimate
-    let cardHeight = heightCache.value.get(memo.id)
-    if (!cardHeight) {
-      // Estimate height based on content
-      const baseHeight = 120 // Base card height (header + padding)
-
-      // More precise content height estimation
-      const contentLength = memo.content?.length || 0
-      let actualContentHeight = 0
-
-      if (contentLength === 0) {
-        actualContentHeight = 20 // Empty content
-      }
-      else if (contentLength <= 50) {
-        actualContentHeight = 30 // Short content
-      }
-      else if (contentLength <= 200) {
-        actualContentHeight = Math.ceil(contentLength / 40) * 24 // Medium content
-      }
-      else {
-        // Long content - more precise calculation
-        const estimatedLines = Math.ceil(contentLength / 35) // ~35 chars per line
-        actualContentHeight = estimatedLines * 24 // 24px line height
-      }
-
-      // Add buffer for long content
-      const bufferHeight = contentLength > 1000 ? 50 : 20
-      cardHeight = baseHeight + actualContentHeight + bufferHeight
-    }
-
-    positions.push({
-      memo,
-      x,
-      y,
-      width: cardWidth,
-      height: cardHeight,
-    })
-
-    // Update column height with boundary check
-    if (shortestColumnIndex >= 0 && shortestColumnIndex < columnHeights.length) {
-      const currentHeight = columnHeights[shortestColumnIndex] ?? 0
-      columnHeights[shortestColumnIndex] = currentHeight + cardHeight + gap
-    }
-  })
-
-  return positions
-})
-
-// Container height based on tallest column
-const containerHeight = computed(() => {
-  if (waterfallLayout.value.length === 0) {
-    return 0
-  }
-
-  const { columns, gap } = getContainerInfo()
-  const columnHeights = Array.from({ length: columns }, () => 0)
-
-  waterfallLayout.value.forEach((position) => {
-    const columnIndex = Math.floor(position.x / (position.width + gap))
-    if (columnIndex >= 0 && columnIndex < columnHeights.length) {
-      const currentHeight = columnHeights[columnIndex] ?? 0
-      columnHeights[columnIndex] = Math.max(currentHeight, position.y + position.height)
-    }
-  })
-
-  return Math.max(...columnHeights)
-})
-
-function onEnter(el) {
-  animate(el, {
-    opacity: [
-      { to: '1', delay: 100, duration: 100 },
-    ],
-    duration: 200,
-    // delay: 200,
-    ease: 'inOut',
-  })
-}
-function onBeforeEnter(el) {
-  el.style.opacity = '0'
+function handleComment(memo: any) {
+  navigateTo(`/m/${memo.id}`)
 }
 
-function onLeave(el, done) {
-  animate(el, {
-    scale: [1, 0.8],
-    opacity: '0',
-    duration: 150,
-    ease: 'out',
-    onComplete: () => {
-      done && done()
-    },
-  })
+function handleTagClick(tagName: string) {
+  navigateTo({ path: '/memo', query: { tags: tagName } })
+}
+
+function onMemoTagClick(tagName: string) {
+  if (props.onTagClick)
+    props.onTagClick(tagName)
+  else
+    handleTagClick(tagName)
 }
 </script>
 
@@ -406,54 +131,79 @@ function onLeave(el, done) {
   <div class="memo-editor-wrapper mb-6 z-10">
     <div class="memo-editor mx-auto bg-white dark:bg-zinc-800 rounded-lg shadow p-4">
       <AppTagInput v-model="tags" />
-      <AppCommentInput :show-hello="false" input-tip="当前仅博主可发表 Memo" @send="createMemo" />
+      <AppCommentInput
+        ref="commentInputRef"
+        :show-hello="false"
+        :tags="tags"
+        input-tip="当前仅博主可发表 Memo"
+        @send="handleSendMemo"
+      />
     </div>
   </div>
 
-  <!-- Memos waterfall container -->
-  <ClientOnly>
-    <div
-      ref="containerRef"
-      class="memos-waterfall-container"
-      :style="{ height: `${containerHeight}px`, position: 'relative' }"
+  <div class="mx-auto">
+    <transition-group
+      name="memo-fade"
+      tag="div"
+      appear
+      class="flex flex-col gap-4"
+      :css="true"
+      @before-leave="beforeLeave"
+      @leave="leave"
+      @after-leave="afterLeave"
     >
-      <transition-group appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
-        <template v-for="position in waterfallLayout" :key="position.memo?.id">
-          <MemoWrap
-            :memo="position.memo"
-            :like-count="memoLikeMap[position.memo?.id] || 0"
-            :is-liked="false"
-            class="memo-item hover:z-50"
-            :data-memo-id="position.memo?.id"
-            :style="{
-              position: 'absolute',
-              left: `${position.x}px`,
-              top: `${position.y}px`,
-              width: `${position.width}px`,
-              transition: 'all 0.3s ease',
-              zIndex: 1,
-            }"
-            @refresh="getMemos"
-            @height-measured="handleHeightMeasured"
-            @delete="handleDelete"
-            @edit="handleEdit"
-            @like="handleLike"
-          >
-            <MemoPanel :memo="position.memo" />
-          </MemoWrap>
-        </template>
-      </transition-group>
-    </div>
-    <template #fallback>
-      <div class="flex justify-center items-center py-20">
-        <div class="text-gray-500">
-          加载中...
+      <div
+        v-for="memo in filteredMemos"
+        :key="memo.id"
+        class="flex items-start bg-white dark:bg-zinc-900 rounded-lg shadow p-4 gap-4 relative group"
+      >
+        <div class="flex-shrink-0">
+          <UserAvatar :user-info="memo.user_info" size="md" />
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="font-bold text-base text-zinc-800 dark:text-zinc-100">{{ memo.user_info?.nickname || memo.user_info?.username || '匿名' }}</span>
+            <span class="text-xs text-zinc-400 dark:text-zinc-500">·</span>
+            <NuxtTime :datetime="memo.create_ts" class="text-xs text-zinc-400 dark:text-zinc-500" />
+          </div>
+          <div v-if="memo.tags && memo.tags.length > 0" class="mb-2 h-8 overflow-x-auto overflow-y-hidden flex items-center gap-1.5 pb-1">
+            <Badge
+              v-for="tagRelation in memo.tags"
+              :key="tagRelation.tag.id"
+              variant="secondary"
+              class="text-xs cursor-pointer hover:bg-cyan-100 dark:hover:bg-cyan-900/40 hover:text-cyan-700 dark:hover:text-cyan-300 transition-all duration-200 group flex-shrink-0 !rounded-none"
+              @click="onMemoTagClick(tagRelation.tag.tag_name)"
+            >
+              {{ tagRelation.tag.tag_name }}
+            </Badge>
+          </div>
+          <div class="mb-2">
+            <MemoPanel :memo="memo" />
+          </div>
+          <div class="flex items-center gap-4 mt-2 text-xs text-zinc-500 dark:text-zinc-400">
+            <div class="flex items-center gap-1 cursor-pointer hover:text-cyan-600" @click="handleComment(memo)">
+              <Icon name="icon-park-outline:comments" />
+              <span>{{ memo._count?.comments || 0 }}</span>
+            </div>
+            <div class="flex items-center gap-1 cursor-pointer hover:text-red-500" @click="handleLike(memo.id)">
+              <Icon name="icon-park-outline:thumbs-up" />
+              <span>{{ memo._count?.likes || 0 }}</span>
+            </div>
+            <template v-if="userStore.isSuperAdmin">
+              <span class="mx-1">|</span>
+              <span class="cursor-pointer hover:text-yellow-600" @click="handleEdit(memo)">
+                <Icon name="material-symbols:edit-outline" /> 编辑
+              </span>
+              <span class="cursor-pointer hover:text-gray-600" @click="handleDelete(memo.id)">
+                <Icon name="icon-park-outline:delete" /> 删除
+              </span>
+            </template>
+          </div>
         </div>
       </div>
-    </template>
-  </ClientOnly>
+    </transition-group>
+  </div>
 
-  <!-- 编辑 Drawer -->
   <MemoEditDrawer
     v-model:open="isEditDrawerOpen"
     :memo="editingMemo"
@@ -477,22 +227,31 @@ function onLeave(el, done) {
   z-index: 50 !important;
 }
 
-/* 移除内容高度限制，现在由Wrap组件控制 */
-
-/* Alternative CSS Grid approach (commented out) */
-/*
-.memos-waterfall-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.overflow-x-auto::-webkit-scrollbar {
+  height: 4px;
+}
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+}
+.dark .overflow-x-auto::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
 }
 
-.memo-item {
-  width: 100%;
+.memo-fade-enter-active,
+.memo-fade-leave-active {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
-*/
+.memo-fade-enter-from {
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+}
+.memo-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-24px) scale(0.98);
+}
+
+.memo-fade-move {
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
 </style>

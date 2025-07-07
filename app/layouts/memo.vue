@@ -5,16 +5,97 @@ const { memoStats, getMemoStats } = useMemoStats()
 
 await getMemoStats()
 
-const popularTags = ref([
-  { id: '1', name: 'Nuxt', count: 20 },
-  { id: '2', name: 'Vue', count: 15 },
-  { id: '3', name: 'TypeScript', count: 18 },
-  { id: '4', name: 'TailwindCSS', count: 12 },
-  { id: '5', name: 'SSR', count: 10 },
-])
+const { tags, getTags } = useTags()
+
+await getTags()
+
+const route = useRoute()
+const router = useRouter()
+
+const selectedTags = ref<string[]>([])
+
+// SSR/CSR: 初始化选中标签
+onMounted(() => {
+  updateSelectedTagsFromQuery()
+})
+watch(() => route.query.tags, updateSelectedTagsFromQuery)
+function updateSelectedTagsFromQuery() {
+  const q = route.query.tags
+  if (typeof q === 'string' && q.length > 0) {
+    selectedTags.value = q.split(',').filter(Boolean)
+  }
+  else {
+    selectedTags.value = []
+  }
+}
+
+const sortedTags = computed(() => {
+  return [...(tags.value || [])]
+    .sort((a, b) => (b._count?.memos || 0) - (a._count?.memos || 0))
+})
+
+function toggleTag(tagName: string) {
+  const idx = selectedTags.value.indexOf(tagName)
+  if (idx === -1) {
+    selectedTags.value.push(tagName)
+  }
+  else {
+    selectedTags.value.splice(idx, 1)
+  }
+  updateUrlWithTags()
+}
+function updateUrlWithTags() {
+  const tagsParam = selectedTags.value.length > 0 ? selectedTags.value.join(',') : undefined
+  router.replace({
+    path: route.path,
+    query: { ...route.query, tags: tagsParam },
+  })
+}
+function isTagSelected(tagName: string) {
+  return selectedTags.value.includes(tagName)
+}
+
+// 供 memo 卡片标签点击用，单选跳转
+function handleTagClickSingle(tagName: string) {
+  router.replace({
+    path: '/memo',
+    query: { ...route.query, tags: tagName },
+  })
+}
+
+// Toast 支持
+const globalToast = useGlobalToast()
+const { $toast } = useNuxtApp() as any
+watch(() => globalToast.toastState.value.messages, (messages) => {
+  if (messages.length > 0) {
+    messages.forEach((message) => {
+      switch (message.type) {
+        case 'success':
+          $toast.success(message.message, message.options as any)
+          break
+        case 'error':
+          $toast.error(message.message, message.options as any)
+          break
+        case 'info':
+          $toast.info(message.message, message.options as any)
+          break
+        case 'warning':
+          $toast.warning(message.message, message.options as any)
+          break
+        case 'promise':
+          $toast.promise(message.options as any)
+          break
+        default:
+          $toast(message.message, message.options as any)
+      }
+    })
+    globalToast.clear()
+  }
+}, { deep: true })
 </script>
 
 <template>
+  <Toaster position="top-right" rich-colors />
   <div class="memos-page-container min-h-screen bg-gray-100 dark:bg-zinc-900 p-4 flex flex-col md:flex-row gap-4">
     <!-- Left Column: User Info & Stats -->
     <aside class="w-1/4 lg:w-1/5 hidden md:block p-4 bg-white dark:bg-zinc-800 rounded-lg shadow sticky top-4 self-start">
@@ -69,8 +150,18 @@ const popularTags = ref([
               热门标签
             </h3>
             <div class="flex flex-wrap gap-2">
-              <span v-for="tag in popularTags" :key="tag.id" class="px-2 py-1 bg-sky-100 text-sky-700 dark:bg-sky-700 dark:text-sky-100 rounded-md text-sm cursor-pointer hover:bg-sky-200 dark:hover:bg-sky-600">
-                {{ tag.name }} ({{ tag.count }})
+              <span
+                v-for="tag in sortedTags"
+                :key="tag.id"
+                class="px-2 py-1 text-sm cursor-pointer rounded-none transition-all duration-200 group flex-shrink-0 hover:bg-cyan-100 dark:hover:bg-cyan-900/40 hover:text-cyan-700 dark:hover:text-cyan-300"
+                :class="[
+                  isTagSelected(tag.tag_name)
+                    ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300 font-bold'
+                    : 'bg-zinc-200 text-zinc-800 dark:bg-zinc-200 dark:text-zinc-800',
+                ]"
+                @click="toggleTag(tag.tag_name)"
+              >
+                {{ tag.tag_name }} ({{ tag._count?.memos || 0 }})
               </span>
             </div>
           </div>
@@ -105,7 +196,7 @@ const popularTags = ref([
       </div>
 
       <!-- Page content slot -->
-      <slot />
+      <slot :selected-tags="selectedTags" :on-tag-click="handleTagClickSingle" />
     </main>
 
     <!-- Right Column: Heatmap & Tags -->
@@ -122,11 +213,21 @@ const popularTags = ref([
       </div>
       <div class="tags-cloud">
         <h3 class="text-lg font-semibold mb-2 dark:text-white">
-          热门标签
+          全部标签
         </h3>
         <div class="flex flex-wrap gap-2">
-          <span v-for="tag in popularTags" :key="tag.id" class="px-2 py-1 bg-sky-100 text-sky-700 dark:bg-sky-700 dark:text-sky-100 rounded-md text-sm cursor-pointer hover:bg-sky-200 dark:hover:bg-sky-600">
-            {{ tag.name }} ({{ tag.count }})
+          <span
+            v-for="tag in sortedTags"
+            :key="tag.id"
+            class="px-2 py-1 text-sm cursor-pointer rounded-none transition-all duration-200 group flex-shrink-0 hover:text-cyan-700"
+            :class="[
+              isTagSelected(tag.tag_name)
+                ? 'border-cyan-600 border-2 box-border rounded-sm bg-zinc-100 text-zinc-800 font-bold'
+                : 'bg-zinc-100 text-zinc-800 dark:bg-zinc-200 dark:text-zinc-800',
+            ]"
+            @click="toggleTag(tag.tag_name)"
+          >
+            {{ tag.tag_name }} ({{ tag._count?.memos || 0 }})
           </span>
         </div>
       </div>

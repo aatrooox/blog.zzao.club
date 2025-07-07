@@ -65,6 +65,18 @@ export default defineStandardResponseHandler(async (event) => {
     },
   }
 
+  // 关联查询 tags
+  queryInclude.tags = {
+    include: {
+      tag: {
+        select: {
+          id: true,
+          tag_name: true,
+        },
+      },
+    },
+  }
+
   const memos = await prisma.blogMemo.findMany({
     skip,
     take,
@@ -75,6 +87,15 @@ export default defineStandardResponseHandler(async (event) => {
     ],
     include: queryInclude,
   })
+
+  // 通过 event.$fetch() 调用 tags 接口获取标签信息
+  try {
+    const tagsResponse = await event.$fetch('/api/v1/tag/list')
+    console.log('Tags response:', tagsResponse)
+  }
+  catch (error) {
+    console.error('Failed to fetch tags:', error)
+  }
 
   return memos
 })

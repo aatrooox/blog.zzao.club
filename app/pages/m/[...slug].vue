@@ -71,8 +71,14 @@ async function handleMemoUpdated() {
 
 // 创建评论
 async function createComment(data: CommentData) {
-  if (!userStore.user.id) {
-    await createVistorID(data.visitor as Visitor)
+  if (!userStore.user?.id) {
+    const v = data.visitor as Visitor
+    if (v && (v.name || v.email || v.website)) {
+      await createVistorIDWithInfo(v)
+    }
+    else {
+      await createVistorIDByFingerprint()
+    }
   }
   const res = await $api.post<ApiResponse>('/api/v1/comment/create', {
     type: 'memo',
@@ -88,6 +94,30 @@ async function createComment(data: CommentData) {
   }
 }
 
+// 有访客信息时注册
+async function createVistorIDWithInfo(visitor: Visitor) {
+  const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', {
+    name: visitor.name,
+    email: visitor.email,
+    website: visitor.website,
+  })
+  if (!res.error) {
+    userStore.setUser(res.data.user)
+    const tokenStore = useTokenStore()
+    tokenStore.setToken(res.data.token)
+  }
+}
+// 无访客信息时注册
+async function createVistorIDByFingerprint() {
+  const clientjs = useClientjs()
+  const tokenStore = useTokenStore()
+  const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
+  if (!res.error) {
+    userStore.setUser(res.data.user)
+    tokenStore.setToken(res.data.token)
+  }
+}
+
 // 初始化评论
 async function initComment() {
   const res = await $api.get<ApiResponse>('/api/v1/comment/list', {
@@ -98,18 +128,6 @@ async function initComment() {
     comments.value = res.data
   }
   isDefer.value = false
-}
-
-// 创建访客ID
-async function createVistorID(visitor: Visitor) {
-  const res = await $api.post<ApiResponse>('/api/v1/user/visitor/regist', {
-    name: visitor.name,
-    email: visitor.email,
-    website: visitor.website,
-  })
-  if (!res.error) {
-    userStore.setUser(res.data.user)
-  }
 }
 
 // 格式化评论数量
@@ -153,6 +171,11 @@ async function initLikeCount() {
     likeCount.value = res.data.count
     isLiked.value = res.data.isLiked
   }
+}
+
+// 新增标签点击跳转方法
+function handleTagClick(tagName: string) {
+  navigateTo({ path: '/memo', query: { tags: tagName } })
 }
 
 // 注意：评论初始化已移至客户端逻辑中
@@ -268,28 +291,26 @@ async function initLikeCount() {
           </div>
         </ClientOnly>
         <!-- Memo面板 -->
-        <div class="bg-white p-4 dark:bg-zinc-900 rounded-b-lg shadow-md overflow-hidden">
+        <div class="bg-white p-4 dark:bg-zinc-900 shadow-md overflow-hidden">
           <MemoPanel :memo="memo" :show-all="true" :hide-btns="true" />
         </div>
 
         <!-- Tags显示 -->
-        <div v-if="memo.tags && memo.tags.length > 0" class="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-4">
-          <div class="flex items-center gap-2 mb-3">
+        <div v-if="memo.tags && memo.tags.length > 0" class="bg-white dark:bg-zinc-900 rounded-b-lg shadow-md p-4">
+          <div class="flex flex-wrap gap-2 items-center">
             <Icon name="material-symbols:tag" class="w-4 h-4 text-gray-500" />
-            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">标签</span>
-          </div>
-          <div class="flex flex-wrap gap-2">
             <span
               v-for="tagRelation in memo.tags"
               :key="tagRelation.tag.id"
-              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
+              class="text-xs cursor-pointer bg-zinc-200 text-zinc-800 dark:bg-cyan-900/40 dark:text-cyan-300 transition-all duration-200 group flex-shrink-0 !rounded-none px-2 py-1"
+              @click="handleTagClick(tagRelation.tag.tag_name)"
             >
               {{ tagRelation.tag.tag_name }}
             </span>
           </div>
         </div>
         <!-- 评论区 -->
-        <div class="bg-white dark:bg-zinc-900 rounded-lg shadow-md p-6 mt-6">
+        <div class="bg-white dark:bg-zinc-900 rounded-lg p-6 mt-6">
           <div class="text-xl font-bold mb-6 flex items-center gap-2">
             <Icon name="icon-park-outline:comments" class="w-5 h-5" />
             评论区

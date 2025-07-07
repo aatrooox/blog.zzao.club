@@ -63,6 +63,12 @@ async function removeMemo() {
 }
 
 // 移除所有交互动画逻辑
+
+// 处理标签点击 memo 页目前没接入搜索
+function handleTagClick(_: string) {
+  // const { openSearchDialog } = useSearch()
+  // openSearchDialog({ tag: tagName })
+}
 </script>
 
 <template>
@@ -72,8 +78,22 @@ async function removeMemo() {
       <!-- 主要内容区域 -->
       <div class="px-6 py-6">
         <!-- 标签区域 -->
-        <div class="mb-4">
-          <slot name="tag" />
+        <div class="mb-4 h-8">
+          <div v-if="memo.tags && memo.tags.length > 0" class="h-full overflow-x-auto overflow-y-hidden flex items-center gap-1.5 pb-1">
+            <Badge
+              v-for="tagRelation in memo.tags"
+              :key="tagRelation.tag.id"
+              variant="secondary"
+              class="text-xs cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-300 transition-all duration-200 group flex-shrink-0"
+              @click="handleTagClick(tagRelation.tag.tag_name)"
+            >
+              <!-- <Icon name="icon-park-outline:tag" class="w-3 h-3 mr-1" /> -->
+              #{{ tagRelation.tag.tag_name }}
+            </Badge>
+          </div>
+          <!-- <div v-else class="text-xs text-gray-400 dark:text-gray-500 italic">
+            暂无标签
+          </div> -->
         </div>
         <!-- 实际内容 -->
         <div class="text-gray-700 dark:text-gray-200 leading-relaxed max-h-80 overflow-y-auto">
@@ -182,6 +202,32 @@ async function removeMemo() {
 }
 
 .dark .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 为标签区域添加横向滚动条样式 */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.dark .overflow-x-auto::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dark .overflow-x-auto::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
 }
 </style>

@@ -18,40 +18,14 @@ export default defineStandardResponseHandler(async (event) => {
     ...body.data,
   }
   console.log(`创建memo`, memoData)
-  const tagsCreate = []
-  // 创建memo时, 同步创建tag, 并更新关联表
-  if (memoData.tags?.length) {
-    for (const tag of memoData.tags) {
-      tagsCreate.push({
-        tag: {
-          connectOrCreate: {
-            where: {
-              tag_name: tag,
-            },
-            create: {
-              tag_name: tag,
-              user_id: event.context.userId,
-            },
-          },
-        },
-      })
-    }
-  }
 
   const createData: any = {
     ...memoData,
-    tags: null,
   }
 
-  if (tagsCreate.length) {
-    createData.tags = {
-      create: tagsCreate,
-    }
-  }
-  else {
-    // 不存在时要删除此字段, 不然会报错
-    delete createData.tags
-  }
+  // 删除 tags 字段，因为我们要单独处理
+  delete createData.tags
+
   const data = await prisma.blogMemo.create({
     data: createData,
   }).catch(() => {
@@ -60,6 +34,31 @@ export default defineStandardResponseHandler(async (event) => {
       message: '创建失败',
     })
   })
+
+  // 如果存在 tags，创建标签和关联
+  if (memoData.tags?.length) {
+    for (const tagName of memoData.tags) {
+      // 查找或创建标签
+      const tag = await prisma.memoTag.upsert({
+        where: {
+          tag_name: tagName,
+        },
+        update: {},
+        create: {
+          tag_name: tagName,
+          user_id: event.context.userId,
+        },
+      })
+
+      // 创建关联
+      await prisma.memoTagRelations.create({
+        data: {
+          tagId: tag.id,
+          memoId: data.id,
+        },
+      })
+    }
+  }
   console.log('create ok => ', data)
   return data
 })

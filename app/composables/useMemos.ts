@@ -25,33 +25,31 @@ export default function useMemos() {
   async function createMemo({ content, tags = [] }: { content: string, tags?: any[] }) {
     if (!userStore.isLogin) {
       toast.warn('登录后才能发送！')
-      return
+      return false
     }
-
     if (!userStore.isSuperAdmin) {
       toast.warn('当前仅博主可发表～')
-      return
+      return false
     }
-
+    if (tags && tags.length > 3) {
+      toast.warn('最多只能添加3个标签')
+      return false
+    }
     if (content) {
       const { error } = await $api.post<ApiResponse<BlogMemoWithUser>>('/api/v1/memo/create', {
         content,
         tags,
         user_id: userStore.user?.id,
       })
-
       if (error) {
-        // disposeError(error)
         toast.error('出错了，再试一下')
-        return
+        return false
       }
-
-      // memos.value.unshift(data)
       getMemos()
       toast.success('已发送一条Memo')
-
-      // toast.add({ severity: 'success', summary: '已发送一条Memo', life: 3000 })
+      return true
     }
+    return false
   }
 
   async function updateMemo(id: string, { content, tags = [] }: { content: string, tags?: any[] }) {
@@ -62,6 +60,12 @@ export default function useMemos() {
 
     if (!userStore.isSuperAdmin) {
       toast.warn('当前仅博主可编辑～')
+      return
+    }
+
+    // 检查标签数量限制
+    if (tags && tags.length > 3) {
+      toast.warn('最多只能添加3个标签')
       return
     }
 
