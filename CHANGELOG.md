@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.12.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.12.0...v1.12.1)
+
+### 🚀 Enhancements
+
+- 更新 memo 时，同步更新 tags 列表 ([f051413](https://github.com/aatrooox/blog.zzao.club/commit/f051413))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.12.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.11.5...v1.12.0)
