@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.12.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.11.5...v1.12.0)
+
+### 🚀 Enhancements
+
+- 完善 memo 和 tags 逻辑; 优化大量样式 ([2a3bbfe](https://github.com/aatrooox/blog.zzao.club/commit/2a3bbfe))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.11.5
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.11.4...v1.11.5)
