@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.12.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.12.1...v1.12.2)
+
+### 🚀 Enhancements
+
+- 完善 tag 输入组件模糊搜索功能 ([1df4e78](https://github.com/aatrooox/blog.zzao.club/commit/1df4e78))
+
+### 🏡 Chore
+
+- Eslint ([0f11523](https://github.com/aatrooox/blog.zzao.club/commit/0f11523))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.12.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.12.0...v1.12.1)
