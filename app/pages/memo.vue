@@ -159,7 +159,8 @@ function onMemoTagClick(tagName: string) {
       <div
         v-for="memo in filteredMemos"
         :key="memo.id"
-        class="flex items-start bg-white dark:bg-zinc-900 rounded-lg shadow p-4 gap-4 relative group"
+        class="flex items-start bg-white dark:bg-zinc-900 rounded-lg shadow p-4 gap-4 relative group memo-card-hover cursor-pointer"
+        @click="handleComment(memo)"
       >
         <div class="flex-shrink-0">
           <UserAvatar :user-info="memo.user_info" size="md" />
@@ -176,7 +177,7 @@ function onMemoTagClick(tagName: string) {
               :key="tagRelation.tag.id"
               variant="secondary"
               class="text-xs cursor-pointer hover:bg-cyan-100 dark:hover:bg-cyan-900/40 hover:text-cyan-700 dark:hover:text-cyan-300 transition-all duration-200 group flex-shrink-0 !rounded-none"
-              @click="onMemoTagClick(tagRelation.tag.tag_name)"
+              @click.stop="onMemoTagClick(tagRelation.tag.tag_name)"
             >
               {{ tagRelation.tag.tag_name }}
             </Badge>
@@ -185,20 +186,20 @@ function onMemoTagClick(tagName: string) {
             <MemoPanel :memo="memo" />
           </div>
           <div class="flex items-center gap-4 mt-2 text-xs text-zinc-500 dark:text-zinc-400">
-            <div class="flex items-center gap-1 cursor-pointer hover:text-cyan-600" @click="handleComment(memo)">
+            <div class="flex items-center gap-1 cursor-pointer hover:text-cyan-600" @click.stop="handleComment(memo)">
               <Icon name="icon-park-outline:comments" />
               <span>{{ memo._count?.comments || 0 }}</span>
             </div>
-            <div class="flex items-center gap-1 cursor-pointer hover:text-red-500" @click="handleLike(memo.id)">
+            <div class="flex items-center gap-1 cursor-pointer hover:text-red-500" @click.stop="handleLike(memo.id)">
               <Icon name="icon-park-outline:thumbs-up" />
               <span>{{ memo._count?.likes || 0 }}</span>
             </div>
             <template v-if="userStore.isSuperAdmin">
               <span class="mx-1">|</span>
-              <span class="cursor-pointer hover:text-yellow-600" @click="handleEdit(memo)">
+              <span class="cursor-pointer hover:text-yellow-600" @click.stop="handleEdit(memo)">
                 <Icon name="material-symbols:edit-outline" /> 编辑
               </span>
-              <span class="cursor-pointer hover:text-gray-600" @click="handleDelete(memo.id)">
+              <span class="cursor-pointer hover:text-gray-600" @click.stop="handleDelete(memo.id)">
                 <Icon name="icon-park-outline:delete" /> 删除
               </span>
             </template>
@@ -257,5 +258,13 @@ function onMemoTagClick(tagName: string) {
 
 .memo-fade-move {
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.memo-card-hover {
+  transition: box-shadow 0.2s, background 0.2s;
+}
+.memo-card-hover:hover {
+  box-shadow: 0 2px 8px 0 rgba(24, 182, 255, 0.04), 0 1px 3px 0 rgba(0,0,0,0.02);
+  background: rgba(237, 243, 245, 0.969);
 }
 </style>

@@ -1,23 +1,28 @@
 <script setup lang="ts">
+import useTags from '~/composables/useTags'
 const props = defineProps<{
   modelValue: string[]
 }>()
 
 const emit = defineEmits(['update:modelValue', 'change'])
 
-const tags = ref<string[]>([...props.modelValue])
+const { tags: allTags, getTags } = useTags()
+const myTags = ref<string[]>([...props.modelValue])
 const currentInput = ref<string>('')
 const showSuggestions = ref<boolean>(false)
 const suggestions = ref<string[]>([])
 const activeSuggestionIndex = ref<number>(-1)
-const allPossibleTags = ref<string[]>(['Vue', 'TypeScript', 'JavaScript', 'Nuxt', 'React', 'Angular', 'Svelte', 'NodeJS', 'Deno', 'Bun']) // 假数据
 const inputElement = ref<HTMLInputElement | null>(null)
 
 watch(() => props.modelValue, (newValue) => {
-  if (JSON.stringify(newValue) !== JSON.stringify(tags.value)) {
-    tags.value = [...newValue]
+  if (JSON.stringify(newValue) !== JSON.stringify(myTags.value)) {
+    myTags.value = [...newValue]
   }
 }, { deep: true })
+
+onMounted(() => {
+  getTags()
+})
 
 function resetActiveSuggestion(): void {
   activeSuggestionIndex.value = -1
@@ -29,30 +34,30 @@ function filterSuggestions(): void {
     showSuggestions.value = false
     return
   }
-  suggestions.value = allPossibleTags.value.filter(tag =>
-    tag.toLowerCase().includes(currentInput.value.toLowerCase()),
-  )
+  suggestions.value = allTags.value
+    .map(t => t.tag_name)
+    .filter(tag => tag.toLowerCase().includes(currentInput.value.toLowerCase()))
   showSuggestions.value = suggestions.value.length > 0
   resetActiveSuggestion()
 }
 
 function addTagFromInput(): void {
   const newTag = currentInput.value.trim()
-  if (newTag && !tags.value.includes(newTag)) {
-    tags.value.push(newTag)
+  if (newTag && !myTags.value.includes(newTag)) {
+    myTags.value.push(newTag)
     currentInput.value = ''
     publishChanges()
     showSuggestions.value = false
   }
-  else if (newTag && tags.value.includes(newTag)) {
+  else if (newTag && myTags.value.includes(newTag)) {
     currentInput.value = ''
     showSuggestions.value = false
   }
 }
 
 function selectTag(tag: string): void {
-  if (!tags.value.includes(tag)) {
-    tags.value.push(tag)
+  if (!myTags.value.includes(tag)) {
+    myTags.value.push(tag)
     publishChanges()
   }
   currentInput.value = ''
@@ -138,14 +143,14 @@ function handleEnter(): void {
 }
 
 function handleBackspace(): void {
-  if (currentInput.value === '' && tags.value.length > 0) {
-    tags.value.pop()
+  if (currentInput.value === '' && myTags.value.length > 0) {
+    myTags.value.pop()
     publishChanges()
   }
 }
 
 function publishChanges(): void {
-  const newTags = [...tags.value]
+  const newTags = [...myTags.value]
   emit('update:modelValue', newTags)
   emit('change', newTags)
 }
@@ -164,7 +169,7 @@ function focusActualInput(): void {
   >
     <div class="flex flex-wrap items-center gap-1.5">
       <span
-        v-for="(tag, index) in tags"
+        v-for="(tag, index) in myTags"
         :key="index"
         class="inline-flex items-center bg-zinc-200 dark:bg-zinc-200 text-zinc-800 dark:text-zinc-800 px-2 text-sm leading-5 whitespace-nowrap"
       >
