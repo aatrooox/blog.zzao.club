@@ -16,9 +16,9 @@ const props = defineProps({
 
 <template>
   <NuxtLink
+    :href="props.href"
+    :target="props.target" class="font-bold border-b-2 border-dashed border-zinc-600 hover:border-solid hover:border-zinc-900 dark:border-zinc-300 dark:hover:border-zinc-100 dark:text-zinc-200"
     @click.stop
-    :href="props.href" :target="props.target"
-    class="font-bold border-b-2 border-dashed border-zinc-600 hover:border-solid hover:border-zinc-900 dark:border-zinc-300 dark:hover:border-zinc-100 dark:text-zinc-200"
   >
     <slot />
   </NuxtLink>

@@ -261,10 +261,14 @@ function onMemoTagClick(tagName: string) {
 }
 
 .memo-card-hover {
-  transition: box-shadow 0.2s, background 0.2s;
+  transition:
+    box-shadow 0.2s,
+    background 0.2s;
 }
 .memo-card-hover:hover {
-  box-shadow: 0 2px 8px 0 rgba(24, 182, 255, 0.04), 0 1px 3px 0 rgba(0,0,0,0.02);
+  box-shadow:
+    0 2px 8px 0 rgba(24, 182, 255, 0.04),
+    0 1px 3px 0 rgba(0, 0, 0, 0.02);
   background: rgba(237, 243, 245, 0.969);
 }
 </style>

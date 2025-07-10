@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import useTags from '~/composables/useTags'
+
 const props = defineProps<{
   modelValue: string[]
 }>()
