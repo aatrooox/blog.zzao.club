@@ -535,7 +535,7 @@ const exportCanvas = async () => {
   }
   catch (err) {
     console.error('导出失败:', err)
-    alert('导出失败，请重试')
+    // alert('导出失败，请重试')
   }
 }
 
