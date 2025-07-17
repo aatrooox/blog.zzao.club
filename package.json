@@ -41,6 +41,7 @@
     "dayjs": "^1.11.13",
     "eslint": "^9.28.0",
     "fuse.js": "^7.0.0",
+    "gsap": "^3.13.0",
     "h3-zod": "^0.5.3",
     "hast-util-to-dom": "^4.0.0",
     "hast-util-to-html": "^9.0.4",

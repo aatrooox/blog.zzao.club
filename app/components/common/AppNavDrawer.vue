@@ -16,6 +16,11 @@ const items = ref([
     route: '/memo',
   },
   {
+    label: 'IMGX',
+    icon: 'twemoji:framed-picture',
+    route: '/imgx',
+  },
+  {
     label: '友链',
     icon: 'twemoji:clinking-beer-mugs',
     route: '/links',
