@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v1.13.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.12.2...v1.13.0)
+
+### 🚀 Enhancements
+
+- 调教 imgx 功能 ([3c652e7](https://github.com/aatrooox/blog.zzao.club/commit/3c652e7))
+- 增加切图功能;大量优化拼图功能 ([c701486](https://github.com/aatrooox/blog.zzao.club/commit/c701486))
+
+### 🩹 Fixes
+
+- 修复 imgx 的问题 ([fb13055](https://github.com/aatrooox/blog.zzao.club/commit/fb13055))
+
+### 🏡 Chore
+
+- Eslint ([b0b9504](https://github.com/aatrooox/blog.zzao.club/commit/b0b9504))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.12.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.12.1...v1.12.2)
