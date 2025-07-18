@@ -85,6 +85,9 @@ const selectedCellId = ref<string>('')
 const containerRef = ref<HTMLElement>()
 const showSplitMenu = ref(false)
 const splitMenuPosition = ref({ x: 0, y: 0 })
+const globalGap = ref(4) // 全局内间距，单位为像素
+const globalBorderRadius = ref(8) // 全局圆角大小
+const isGlobalBorderRadius = ref(false) // 是否启用全局圆角模式
 
 // 清除格子图片
 const clearCellImage = (cellId: string) => {
@@ -188,7 +191,7 @@ const splitCell = (cellId: string, splitType: SplitType = 'horizontal') => {
 
   const cell = cells.value[cellIndex] as GridCell
   const newCells: GridCell[] = []
-  const gap = 2 // 固定间距为2%
+  const gap = 0 // 分割时不使用间距，间距通过CSS padding实现
 
   switch (splitType) {
     case 'horizontal': {
@@ -349,11 +352,23 @@ const updateCellTitle = (cellId: string, title: string) => {
   }
 }
 
-// 更新格子圆角
-const updateCellBorderRadius = (cellId: string, borderRadius: number) => {
-  const cell = cells.value.find(cell => cell.id === cellId)
-  if (cell) {
-    cell.borderRadius = borderRadius
+// 更新全局圆角
+const updateGlobalBorderRadius = (borderRadius: number) => {
+  globalBorderRadius.value = borderRadius
+  if (isGlobalBorderRadius.value) {
+    // 全局模式：更新所有格子的圆角
+    cells.value.forEach((cell) => {
+      cell.borderRadius = borderRadius
+    })
+  }
+  else {
+    // 单个模式：只更新选中的格子
+    if (selectedCellId.value) {
+      const cell = cells.value.find(cell => cell.id === selectedCellId.value)
+      if (cell) {
+        cell.borderRadius = borderRadius
+      }
+    }
   }
 }
 
@@ -416,9 +431,7 @@ const exportCanvas = async () => {
     canvas.width = containerRect.width
     canvas.height = containerRect.height
 
-    // 填充背景色
-    ctx.fillStyle = '#f3f4f6' // 对应 bg-gray-100
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    // 不填充背景色，保持画布透明
 
     // 绘制每个格子
     const drawPromises = cells.value.map(async (cell) => {
@@ -427,58 +440,96 @@ const exportCanvas = async () => {
       const cellWidth = (cell.width / 100) * canvas.width
       const cellHeight = (cell.height / 100) * canvas.height
 
-      // 绘制格子背景
-      ctx.fillStyle = cell.image ? '#ffffff' : '#e5e7eb'
-      ctx.fillRect(cellX, cellY, cellWidth, cellHeight)
+      // 导出时需要应用与页面相同的padding效果，保持视觉一致
+      const padding = globalGap.value
 
-      // 如果有图片，绘制图片
+      // 计算实际的内容区域，确保不会出现负值
+      // 限制padding不能超过格子尺寸的一半，避免内容区域过小
+      const maxPadding = Math.min(padding, Math.min(cellWidth, cellHeight) / 2 - 1)
+      const safePadding = Math.max(0, maxPadding)
+
+      const contentX = cellX + safePadding
+      const contentY = cellY + safePadding
+      const contentWidth = Math.max(1, cellWidth - safePadding * 2)
+      const contentHeight = Math.max(1, cellHeight - safePadding * 2)
+
+      // 确保内容区域有足够的大小进行绘制
+      if (contentWidth < 1 || contentHeight < 1) {
+        console.warn(`格子 ${cell.id} 内容区域太小，跳过绘制:`, {
+          contentWidth,
+          contentHeight,
+          safePadding,
+          cellSize: `${cellWidth}x${cellHeight}`,
+        })
+        return Promise.resolve()
+      }
+
+      // 只有当格子有图片时才绘制内容
       if (cell.image) {
+        // 不绘制背景，保持透明
         return new Promise<void>((resolve) => {
           const img = new Image()
           img.crossOrigin = 'anonymous'
           img.onload = () => {
-            // 根据适配模式绘制图片
-            let drawX = cellX
-            let drawY = cellY
-            let drawWidth = cellWidth
-            let drawHeight = cellHeight
+            // 根据适配模式绘制图片（在内容区域内）
+            let drawX = contentX
+            let drawY = contentY
+            let drawWidth = contentWidth
+            let drawHeight = contentHeight
 
             const imgAspect = img.width / img.height
-            const cellAspect = cellWidth / cellHeight
+            const contentAspect = contentWidth / contentHeight
 
             if (cell.imageFit === 'cover') {
-              if (imgAspect > cellAspect) {
+              if (imgAspect > contentAspect) {
                 // 图片更宽，以高度为准
-                drawWidth = cellHeight * imgAspect
-                drawX = cellX - (drawWidth - cellWidth) / 2
+                drawWidth = contentHeight * imgAspect
+                drawX = contentX - (drawWidth - contentWidth) / 2
               }
               else {
                 // 图片更高，以宽度为准
-                drawHeight = cellWidth / imgAspect
-                drawY = cellY - (drawHeight - cellHeight) / 2
+                drawHeight = contentWidth / imgAspect
+                drawY = contentY - (drawHeight - contentHeight) / 2
               }
             }
             else if (cell.imageFit === 'contain') {
-              if (imgAspect > cellAspect) {
+              if (imgAspect > contentAspect) {
                 // 图片更宽，以宽度为准
-                drawHeight = cellWidth / imgAspect
-                drawY = cellY + (cellHeight - drawHeight) / 2
+                drawHeight = contentWidth / imgAspect
+                drawY = contentY + (contentHeight - drawHeight) / 2
               }
               else {
                 // 图片更高，以高度为准
-                drawWidth = cellHeight * imgAspect
-                drawX = cellX + (cellWidth - drawWidth) / 2
+                drawWidth = contentHeight * imgAspect
+                drawX = contentX + (contentWidth - drawWidth) / 2
               }
             }
 
             // 保存当前状态
             ctx.save()
 
-            // 创建圆角裁剪路径
+            // 启用抗锯齿以获得更平滑的圆角
+            ctx.imageSmoothingEnabled = true
+            ctx.imageSmoothingQuality = 'high'
+
+            // 创建圆角裁剪路径（基于内容区域）
             if (cell.borderRadius > 0) {
-              const radius = Math.min(cell.borderRadius, cellWidth / 2, cellHeight / 2)
+              // 使用更宽松的圆角限制，保持与页面显示一致
+              const maxRadius = Math.min(contentWidth / 2, contentHeight / 2)
+              const radius = Math.min(cell.borderRadius, maxRadius)
+
               ctx.beginPath()
-              ctx.roundRect(cellX, cellY, cellWidth, cellHeight, radius)
+              // 手动绘制圆角矩形路径以获得更好的控制
+              ctx.moveTo(contentX + radius, contentY)
+              ctx.lineTo(contentX + contentWidth - radius, contentY)
+              ctx.quadraticCurveTo(contentX + contentWidth, contentY, contentX + contentWidth, contentY + radius)
+              ctx.lineTo(contentX + contentWidth, contentY + contentHeight - radius)
+              ctx.quadraticCurveTo(contentX + contentWidth, contentY + contentHeight, contentX + contentWidth - radius, contentY + contentHeight)
+              ctx.lineTo(contentX + radius, contentY + contentHeight)
+              ctx.quadraticCurveTo(contentX, contentY + contentHeight, contentX, contentY + contentHeight - radius)
+              ctx.lineTo(contentX, contentY + radius)
+              ctx.quadraticCurveTo(contentX, contentY, contentX + radius, contentY)
+              ctx.closePath()
               ctx.clip()
             }
 
@@ -487,36 +538,27 @@ const exportCanvas = async () => {
             // 恢复状态
             ctx.restore()
 
-            // 绘制标题
+            // 绘制标题（在内容区域底部）
             if (cell.title) {
               const titleHeight = 24
               ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'
-              ctx.fillRect(cellX, cellY + cellHeight - titleHeight, cellWidth, titleHeight)
+              ctx.fillRect(contentX, contentY + contentHeight - titleHeight, contentWidth, titleHeight)
 
               ctx.fillStyle = '#ffffff'
               ctx.font = '12px sans-serif'
               ctx.textAlign = 'left'
               ctx.textBaseline = 'middle'
-              ctx.fillText(cell.title, cellX + 8, cellY + cellHeight - titleHeight / 2)
+              ctx.fillText(cell.title, contentX + 8, contentY + contentHeight - titleHeight / 2)
             }
 
             resolve()
           }
           img.onerror = () => resolve()
-          img.src = cell.image
+          img.src = cell.image as string
         })
       }
       else {
-        // 绘制占位符
-        ctx.fillStyle = '#9ca3af'
-        ctx.font = '16px sans-serif'
-        ctx.textAlign = 'center'
-        ctx.textBaseline = 'middle'
-        ctx.fillText('📷', cellX + cellWidth / 2, cellY + cellHeight / 2 - 10)
-
-        ctx.font = '10px sans-serif'
-        ctx.fillText('拖拽图片', cellX + cellWidth / 2, cellY + cellHeight / 2 + 8)
-
+        // 空格子保持透明，不绘制任何内容
         return Promise.resolve()
       }
     })
@@ -531,7 +573,12 @@ const exportCanvas = async () => {
     link.click()
 
     // 显示成功提示
-    console.log('图片导出成功！')
+    console.log('图片导出成功！', {
+      canvasSize: `${canvas.width}x${canvas.height}`,
+      cellsCount: cells.value.length,
+      cellsWithImages: cells.value.filter(c => c.image).length,
+      globalGap: globalGap.value,
+    })
   }
   catch (err) {
     console.error('导出失败:', err)
@@ -549,7 +596,7 @@ const selectedCell = computed(() => {
 // 页面加载时初始化
 onMounted(() => {
   if (templates.length > 0) {
-    initializeGrid(templates[0])
+    initializeGrid(templates[0] as GridTemplate)
   }
 
   // 监听键盘事件
@@ -607,21 +654,6 @@ onUnmounted(() => {
               placeholder="图片说明..."
               class="w-full px-2 py-1 text-xs border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
               @input="updateCellTitle(selectedCell.id, ($event.target as HTMLInputElement).value)"
-            >
-          </div>
-
-          <!-- 圆角调整 -->
-          <div class="mb-3">
-            <label class="block text-xs font-medium mb-1">
-              圆角: {{ selectedCell.borderRadius }}px
-            </label>
-            <input
-              :value="selectedCell.borderRadius"
-              type="range"
-              min="0"
-              max="50"
-              class="w-full"
-              @input="updateCellBorderRadius(selectedCell.id, Number(($event.target as HTMLInputElement).value))"
             >
           </div>
 
@@ -698,11 +730,53 @@ onUnmounted(() => {
           </div>
         </div>
 
-        <!-- 全局操作 -->
+        <!-- 全局设置 -->
         <div class="bg-white rounded-lg p-3 shadow-sm">
           <h3 class="text-sm font-semibold mb-3">
-            全局操作
+            全局设置
           </h3>
+
+          <!-- 间距调整 -->
+          <div class="mb-3">
+            <label class="block text-xs font-medium mb-1">
+              格子间距: {{ globalGap }}px
+            </label>
+            <input
+              v-model="globalGap"
+              type="range"
+              min="0"
+              max="20"
+              step="1"
+              class="w-full"
+            >
+          </div>
+
+          <!-- 全局圆角设置 -->
+          <div class="mb-3">
+            <div class="flex items-center mb-2">
+              <input
+                id="globalBorderRadius"
+                v-model="isGlobalBorderRadius"
+                type="checkbox"
+                class="mr-2"
+              >
+              <label for="globalBorderRadius" class="text-xs font-medium">
+                全局圆角: {{ globalBorderRadius }}px
+              </label>
+            </div>
+            <input
+              v-model="globalBorderRadius"
+              type="range"
+              min="0"
+              max="50"
+              step="1"
+              class="w-full"
+              @input="updateGlobalBorderRadius(Number(($event.target as HTMLInputElement).value))"
+            >
+            <div class="text-xs text-gray-500 mt-1">
+              {{ isGlobalBorderRadius ? '调整所有格子圆角' : '仅调整选中格子圆角' }}
+            </div>
+          </div>
 
           <button
             class="w-full px-3 py-2 text-xs bg-indigo-500 text-white rounded hover:bg-indigo-600 transition-colors"
@@ -713,7 +787,7 @@ onUnmounted(() => {
         </div>
 
         <!-- 使用提示 -->
-        <div class="bg-white rounded-lg p-3 shadow-sm">
+        <!-- <div class="bg-white rounded-lg p-3 shadow-sm">
           <h3 class="text-sm font-semibold mb-2">
             快捷键
           </h3>
@@ -723,7 +797,7 @@ onUnmounted(() => {
             <div>ESC: 取消选择</div>
             <div>右键: 更多选项</div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <!-- 右侧画布区域 -->
@@ -744,77 +818,85 @@ onUnmounted(() => {
               ref="containerRef"
               class="w-full h-full bg-gray-100 rounded-lg overflow-hidden relative"
             >
-              <!-- 格子 -->
+              <!-- 格子容器 -->
               <div
                 v-for="cell in cells"
                 :key="cell.id"
-                class="absolute cursor-pointer transition-all duration-200 border-2 overflow-hidden" :class="[
-                  selectedCellId === cell.id ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-300 hover:border-gray-400',
-                ]"
+                class="absolute cursor-pointer transition-all duration-200"
                 :style="{
                   left: `${cell.x}%`,
                   top: `${cell.y}%`,
                   width: `${cell.width}%`,
                   height: `${cell.height}%`,
-                  borderRadius: `${cell.borderRadius}px`,
+                  padding: `${globalGap}px`,
                 }"
                 @click="selectCell(cell.id)"
                 @contextmenu="showSplitMenuAt($event, cell.id)"
                 @dragover="handleDragOver"
                 @drop="handleDrop($event, cell.id)"
               >
-                <!-- 图片 -->
+                <!-- 格子内容 -->
                 <div
-                  v-if="cell.image"
-                  class="w-full h-full relative overflow-hidden"
-                >
-                  <img
-                    :src="cell.image"
-                    :alt="cell.title || '图片'"
-                    class="w-full h-full" :class="[
-                      cell.imageFit === 'cover' ? 'object-cover'
-                      : cell.imageFit === 'contain' ? 'object-contain'
-                        : 'object-fill',
-                    ]"
-                    :style="{ borderRadius: `${cell.borderRadius}px` }"
-                  >
-                </div>
-
-                <!-- 占位符 -->
-                <div
-                  v-else
-                  class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500"
-                >
-                  <div class="text-center p-2">
-                    <div class="text-xl mb-1">
-                      📷
-                    </div>
-                    <div class="text-xs">
-                      拖拽图片
-                    </div>
-                    <div class="text-xs">
-                      Ctrl+V
-                    </div>
-                  </div>
-                </div>
-
-                <!-- 标题栏 -->
-                <div
-                  v-if="cell.title"
-                  class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white px-2 py-1 text-xs"
+                  class="w-full h-full border-2 overflow-hidden relative" :class="[
+                    selectedCellId === cell.id ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-300 hover:border-gray-400',
+                  ]"
                   :style="{
-                    borderBottomLeftRadius: `${cell.borderRadius}px`,
-                    borderBottomRightRadius: `${cell.borderRadius}px`,
+                    borderRadius: `${cell.borderRadius}px`,
                   }"
                 >
-                  {{ cell.title }}
-                </div>
+                  <!-- 图片 -->
+                  <div
+                    v-if="cell.image"
+                    class="w-full h-full relative overflow-hidden"
+                  >
+                    <img
+                      :src="cell.image"
+                      :alt="cell.title || '图片'"
+                      class="w-full h-full" :class="[
+                        cell.imageFit === 'cover' ? 'object-cover'
+                        : cell.imageFit === 'contain' ? 'object-contain'
+                          : 'object-fill',
+                      ]"
+                      :style="{ borderRadius: `${cell.borderRadius}px` }"
+                    >
+                  </div>
 
-                <!-- 选中指示器 -->
-                <div
-                  v-if="selectedCellId === cell.id"
-                  class="absolute top-1 right-1 w-2 h-2 bg-blue-500 rounded-full"
-                />
+                  <!-- 占位符 -->
+                  <div
+                    v-else
+                    class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500"
+                  >
+                    <div class="text-center p-2">
+                      <div class="text-xl mb-1">
+                        📷
+                      </div>
+                      <div class="text-xs">
+                        拖拽图片
+                      </div>
+                      <div class="text-xs">
+                        Ctrl+V
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 标题栏 -->
+                  <div
+                    v-if="cell.title"
+                    class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white px-2 py-1 text-xs"
+                    :style="{
+                      borderBottomLeftRadius: `${cell.borderRadius}px`,
+                      borderBottomRightRadius: `${cell.borderRadius}px`,
+                    }"
+                  >
+                    {{ cell.title }}
+                  </div>
+
+                  <!-- 选中指示器 -->
+                  <div
+                    v-if="selectedCellId === cell.id"
+                    class="absolute top-1 right-1 w-2 h-2 bg-blue-500 rounded-full"
+                  />
+                </div>
               </div>
             </div>
           </div>
