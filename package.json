@@ -81,6 +81,7 @@
     "zod": "^3.24.3"
   },
   "devDependencies": {
+    "@iconify-json/fluent": "^1.2.27",
     "@iconify-json/icon-park-outline": "^1.2.1",
     "@iconify-json/lucide": "^1.2.54",
     "@iconify-json/material-symbols": "^1.2.12",

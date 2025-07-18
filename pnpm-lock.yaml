@@ -198,6 +198,9 @@ importers:
         specifier: ^3.24.3
         version: 3.25.62
     devDependencies:
+      '@iconify-json/fluent':
+        specifier: ^1.2.27
+        version: 1.2.27
       '@iconify-json/icon-park-outline':
         specifier: ^1.2.1
         version: 1.2.2
@@ -749,6 +752,9 @@ packages:
   '@humanwhocodes/retry@0.4.3':
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
+
+  '@iconify-json/fluent@1.2.27':
+    resolution: {integrity: sha512-ZEjiHPloDLo0EsDEIUfjPOyPEife6PSPO33215eFPj5vn+3e2m23Y0JhjqmM2YwQNZ+0Dh78sWTwWslc4ylwlw==}
 
   '@iconify-json/icon-park-outline@1.2.2':
     resolution: {integrity: sha512-7VkMWOZTIMNkC9+oAL4I5kVlVC5Pq3nQpruZ4E3cLyKaeV95gaUrEilUkvGW71fgsFYCBWAmOZ3KpM4ux0j0zA==}
@@ -6639,6 +6645,10 @@ snapshots:
   '@humanwhocodes/retry@0.3.1': {}
 
   '@humanwhocodes/retry@0.4.3': {}
+
+  '@iconify-json/fluent@1.2.27':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify-json/icon-park-outline@1.2.2':
     dependencies:

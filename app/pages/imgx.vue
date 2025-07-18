@@ -7,6 +7,12 @@ definePageMeta({
 
 useHead({
   title: 'IMGX - 图片拼图编辑器',
+  meta: [
+    {
+      name: 'description',
+      content: '免费图片拼接、免费图片切割、免费拼接长图、免费生成文字图',
+    },
+  ],
 })
 
 // 图片适配模式
@@ -16,7 +22,7 @@ type ImageFitMode = 'cover' | 'contain' | 'fill'
 interface GridCell {
   id: string
   image?: string
-  title: string
+  title?: string
   borderRadius: number
   width: number
   height: number
@@ -77,23 +83,163 @@ const templates: GridTemplate[] = [
       { borderRadius: 8, width: 50, height: 50, x: 50, y: 50, imageFit: 'cover' },
     ],
   },
+  {
+    name: '九宫格',
+    description: '九张图片网格排列',
+    cells: [
+      // 第一行
+      { borderRadius: 8, width: 33.33, height: 33.33, x: 0, y: 0, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.33, height: 33.33, x: 33.33, y: 0, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.34, height: 33.33, x: 66.66, y: 0, imageFit: 'cover' },
+      // 第二行
+      { borderRadius: 8, width: 33.33, height: 33.33, x: 0, y: 33.33, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.33, height: 33.33, x: 33.33, y: 33.33, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.34, height: 33.33, x: 66.66, y: 33.33, imageFit: 'cover' },
+      // 第三行
+      { borderRadius: 8, width: 33.33, height: 33.34, x: 0, y: 66.66, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.33, height: 33.34, x: 33.33, y: 66.66, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.34, height: 33.34, x: 66.66, y: 66.66, imageFit: 'cover' },
+    ],
+  },
+]
+
+// 宽高比选项
+interface AspectRatioOption {
+  name: string
+  ratio: number // 宽度/高度
+  description: string
+}
+
+const aspectRatioOptions: AspectRatioOption[] = [
+  { name: '1:1', ratio: 1, description: '正方形' },
+  { name: '2.35:1', ratio: 2.35, description: '电影比例' },
+  { name: '3:4', ratio: 3 / 4, description: '竖屏' },
+  { name: '4:3', ratio: 4 / 3, description: '传统横屏' },
+  { name: '16:9', ratio: 16 / 9, description: '宽屏' },
+  { name: '9:16', ratio: 9 / 16, description: '竖屏' },
+]
+
+// 工作模式
+type WorkMode = 'puzzle' | 'split' | 'long'
+
+interface WorkModeOption {
+  key: WorkMode
+  name: string
+  description: string
+  disabled?: boolean
+}
+
+const workModeOptions: WorkModeOption[] = [
+  { key: 'puzzle', name: '拼图', description: '手动拼接多张图片' },
+  { key: 'split', name: '分图', description: '自动分割单张图片' },
+  { key: 'long', name: '长图', description: '制作长图拼接', disabled: true },
 ]
 
 // 响应式数据
 const cells = ref<GridCell[]>([])
 const selectedCellId = ref<string>('')
 const containerRef = ref<HTMLElement>()
+const canvasRef = ref<HTMLElement>()
 const showSplitMenu = ref(false)
 const splitMenuPosition = ref({ x: 0, y: 0 })
 const globalGap = ref(4) // 全局内间距，单位为像素
 const globalBorderRadius = ref(8) // 全局圆角大小
 const isGlobalBorderRadius = ref(false) // 是否启用全局圆角模式
+const selectedAspectRatio = ref<AspectRatioOption>(aspectRatioOptions[0] as AspectRatioOption) // 默认1:1
+const currentWorkMode = ref<WorkMode>('puzzle') // 默认拼图模式
 
 // 清除格子图片
 const clearCellImage = (cellId: string) => {
   const cell = cells.value.find(cell => cell.id === cellId)
   if (cell) {
     cell.image = ''
+  }
+}
+
+// 图片分割功能
+const splitImageToGrid = async (imageUrl: string) => {
+  return new Promise<void>((resolve) => {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => {
+      // 创建临时canvas来分割图片
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      if (!ctx) {
+        resolve()
+        return
+      }
+
+      // 设置canvas尺寸为原图尺寸
+      canvas.width = img.width
+      canvas.height = img.height
+      ctx.drawImage(img, 0, 0)
+
+      // 根据网格分割图片
+      cells.value.forEach((cell) => {
+        // 计算每个格子在原图中的位置和尺寸
+        const sourceX = (cell.x / 100) * img.width
+        const sourceY = (cell.y / 100) * img.height
+        const sourceWidth = (cell.width / 100) * img.width
+        const sourceHeight = (cell.height / 100) * img.height
+
+        // 创建新的canvas来存储分割后的图片片段
+        const cellCanvas = document.createElement('canvas')
+        const cellCtx = cellCanvas.getContext('2d')
+        if (!cellCtx)
+          return
+
+        cellCanvas.width = sourceWidth
+        cellCanvas.height = sourceHeight
+
+        // 从原图中提取对应区域
+        cellCtx.drawImage(
+          img,
+          sourceX,
+          sourceY,
+          sourceWidth,
+          sourceHeight,
+          0,
+          0,
+          sourceWidth,
+          sourceHeight,
+        )
+
+        // 将分割后的图片设置到对应格子
+        cell.image = cellCanvas.toDataURL('image/png')
+      })
+
+      resolve()
+    }
+    img.onerror = () => resolve()
+    img.src = imageUrl
+  })
+}
+
+// 处理图片输入（支持分割模式）
+const handleImageInput = async (imageUrl: string) => {
+  if (currentWorkMode.value === 'split') {
+    // 分图模式：自动分割图片到所有格子
+    await splitImageToGrid(imageUrl)
+  }
+  else {
+    // 拼图模式：优先放到选中的格子，如果没有选中则放到第一个空格子，如果没有空格子则放到第一个格子
+    let targetCell = cells.value.find(cell => cell.id === selectedCellId.value)
+
+    // 如果没有选中的格子，优先找空格子
+    if (!targetCell) {
+      targetCell = cells.value.find(cell => !cell.image)
+    }
+
+    // 如果没有空格子，就用第一个格子
+    if (!targetCell) {
+      targetCell = cells.value[0]
+    }
+
+    if (targetCell) {
+      targetCell.image = imageUrl
+      selectedCellId.value = targetCell.id
+    }
   }
 }
 
@@ -107,19 +253,7 @@ const handlePasteFromClipboard = async () => {
         if (type.startsWith('image/')) {
           const blob = await clipboardItem.getType(type)
           const imageUrl = URL.createObjectURL(blob)
-
-          // 优先选择当前选中的格子，如果没有图片的话
-          let targetCell = cells.value.find(cell => cell.id === selectedCellId.value && !cell.image)
-
-          // 如果选中的格子已有图片，找第一个没有图片的格子
-          if (!targetCell) {
-            targetCell = cells.value.find(cell => !cell.image)
-          }
-
-          if (targetCell) {
-            targetCell.image = imageUrl
-            selectedCellId.value = targetCell.id
-          }
+          await handleImageInput(imageUrl)
           return
         }
       }
@@ -179,7 +313,33 @@ const selectCell = (cellId: string) => {
 const showSplitMenuAt = (event: MouseEvent, cellId: string) => {
   event.preventDefault()
   selectedCellId.value = cellId
-  splitMenuPosition.value = { x: event.clientX, y: event.clientY }
+
+  // 获取屏幕尺寸
+  const screenWidth = window.innerWidth
+  const screenHeight = window.innerHeight
+
+  // 估算菜单尺寸（基于按钮数量和大小）
+  const menuWidth = 400 // 估算菜单宽度
+  const menuHeight = 60 // 估算菜单高度
+
+  let x = event.clientX
+  let y = event.clientY
+
+  // 水平位置调整：如果鼠标在屏幕右侧，菜单出现在左侧
+  if (event.clientX + menuWidth > screenWidth) {
+    x = event.clientX - menuWidth
+  }
+
+  // 垂直位置调整：如果鼠标在屏幕底部，菜单出现在上方
+  if (event.clientY + menuHeight > screenHeight) {
+    y = event.clientY - menuHeight
+  }
+
+  // 确保菜单不会超出屏幕边界
+  x = Math.max(0, Math.min(x, screenWidth - menuWidth))
+  y = Math.max(0, Math.min(y, screenHeight - menuHeight))
+
+  splitMenuPosition.value = { x, y }
   showSplitMenu.value = true
 }
 
@@ -344,6 +504,294 @@ const deleteCell = (cellId: string) => {
   }
 }
 
+// 横向扩展格子 - 简化算法，更准确的空白检测
+// const expandCellHorizontally = (cellId: string) => {
+//   const cell = cells.value.find(c => c.id === cellId)
+//   if (!cell)
+//     return
+
+//   console.log(`开始横向扩展格子 ${cellId}:`, {
+//     x: cell.x,
+//     y: cell.y,
+//     width: cell.width,
+//     height: cell.height,
+//   })
+
+//   // 当前格子的右边界
+//   const rightBoundary = cell.x + cell.width
+
+//   // 找到所有可能阻挡扩展的格子
+//   const blockingCells: Array<{ cell: GridCell, distance: number }> = []
+
+//   for (const otherCell of cells.value) {
+//     if (otherCell.id === cellId)
+//       continue
+
+//     // 检查是否在垂直方向上有重叠（即在同一水平带上）
+//     const verticalOverlap = !(
+//       otherCell.y >= cell.y + cell.height
+//       || otherCell.y + otherCell.height <= cell.y
+//     )
+
+//     // 如果有垂直重叠且在右侧，则可能阻挡扩展
+//     if (verticalOverlap && otherCell.x >= rightBoundary) {
+//       blockingCells.push({
+//         cell: otherCell,
+//         distance: otherCell.x - rightBoundary,
+//       })
+//     }
+//   }
+
+//   // 找到最近的阻挡格子
+//   let maxExpandWidth = 100 - rightBoundary // 默认扩展到画布右边界
+
+//   if (blockingCells.length > 0) {
+//     // 按距离排序，找到最近的阻挡格子
+//     blockingCells.sort((a, b) => a.distance - b.distance)
+//     const nearestBlocking = blockingCells[0]
+//     maxExpandWidth = Math.min(maxExpandWidth, nearestBlocking.distance)
+//   }
+
+//   console.log(`检测结果:`, {
+//     rightBoundary,
+//     blockingCells: blockingCells.length,
+//     maxExpandWidth,
+//     canvasRightBoundary: 100,
+//   })
+
+//   // 如果有可扩展空间（至少0.1%），执行扩展
+//   if (maxExpandWidth > 0.1) {
+//     const oldWidth = cell.width
+//     cell.width += maxExpandWidth
+//     console.log(`格子 ${cellId} 横向扩展成功: ${oldWidth}% → ${cell.width}% (扩展了${maxExpandWidth}%)`)
+//   }
+//   else {
+//     console.log(`格子 ${cellId} 无法横向扩展，可用空间: ${maxExpandWidth}%`)
+//   }
+// }
+
+// 纵向扩展格子 - 简化算法，更准确的空白检测
+// const expandCellVertically = (cellId: string) => {
+//   const cell = cells.value.find(c => c.id === cellId)
+//   if (!cell)
+//     return
+
+//   console.log(`开始纵向扩展格子 ${cellId}:`, {
+//     x: cell.x,
+//     y: cell.y,
+//     width: cell.width,
+//     height: cell.height,
+//   })
+
+//   // 当前格子的下边界
+//   const bottomBoundary = cell.y + cell.height
+
+//   // 找到所有可能阻挡扩展的格子
+//   const blockingCells: Array<{ cell: GridCell, distance: number }> = []
+
+//   for (const otherCell of cells.value) {
+//     if (otherCell.id === cellId)
+//       continue
+
+//     // 检查是否在水平方向上有重叠（即在同一垂直带上）
+//     const horizontalOverlap = !(
+//       otherCell.x >= cell.x + cell.width
+//       || otherCell.x + otherCell.width <= cell.x
+//     )
+
+//     // 如果有水平重叠且在下方，则可能阻挡扩展
+//     if (horizontalOverlap && otherCell.y >= bottomBoundary) {
+//       blockingCells.push({
+//         cell: otherCell,
+//         distance: otherCell.y - bottomBoundary,
+//       })
+//     }
+//   }
+
+//   // 找到最近的阻挡格子
+//   let maxExpandHeight = 100 - bottomBoundary // 默认扩展到画布下边界
+
+//   if (blockingCells.length > 0) {
+//     // 按距离排序，找到最近的阻挡格子
+//     blockingCells.sort((a, b) => a.distance - b.distance)
+//     const nearestBlocking = blockingCells[0]
+//     maxExpandHeight = Math.min(maxExpandHeight, nearestBlocking.distance)
+//   }
+
+//   console.log(`检测结果:`, {
+//     bottomBoundary,
+//     blockingCells: blockingCells.length,
+//     maxExpandHeight,
+//     canvasBottomBoundary: 100,
+//   })
+
+//   // 如果有可扩展空间（至少0.1%），执行扩展
+//   if (maxExpandHeight > 0.1) {
+//     const oldHeight = cell.height
+//     cell.height += maxExpandHeight
+//     console.log(`格子 ${cellId} 纵向扩展成功: ${oldHeight}% → ${cell.height}% (扩展了${maxExpandHeight}%)`)
+//   }
+//   else {
+//     console.log(`格子 ${cellId} 无法纵向扩展，可用空间: ${maxExpandHeight}%`)
+//   }
+// }
+
+// 向右扩展格子
+const expandCellRight = (cellId: string) => {
+  const cell = cells.value.find(c => c.id === cellId)
+  if (!cell)
+    return
+
+  console.log(`开始向右扩展格子 ${cellId}:`, { x: cell.x, y: cell.y, width: cell.width, height: cell.height })
+
+  const rightBoundary = cell.x + cell.width
+  const blockingCells: Array<{ cell: GridCell, distance: number }> = []
+
+  for (const otherCell of cells.value) {
+    if (otherCell.id === cellId)
+      continue
+
+    const verticalOverlap = !(otherCell.y >= cell.y + cell.height || otherCell.y + otherCell.height <= cell.y)
+
+    if (verticalOverlap && otherCell.x >= rightBoundary) {
+      blockingCells.push({ cell: otherCell, distance: otherCell.x - rightBoundary })
+    }
+  }
+
+  let maxExpandWidth = 100 - rightBoundary
+  if (blockingCells.length > 0) {
+    blockingCells.sort((a, b) => a.distance - b.distance)
+    maxExpandWidth = Math.min(maxExpandWidth, blockingCells[0]!.distance)
+  }
+
+  if (maxExpandWidth > 0.1) {
+    const oldWidth = cell.width
+    cell.width += maxExpandWidth
+    console.log(`格子 ${cellId} 向右扩展成功: ${oldWidth}% → ${cell.width}%`)
+  }
+  else {
+    console.log(`格子 ${cellId} 无法向右扩展，可用空间: ${maxExpandWidth}%`)
+  }
+}
+
+// 向左扩展格子
+const expandCellLeft = (cellId: string) => {
+  const cell = cells.value.find(c => c.id === cellId)
+  if (!cell)
+    return
+
+  console.log(`开始向左扩展格子 ${cellId}:`, { x: cell.x, y: cell.y, width: cell.width, height: cell.height })
+
+  const leftBoundary = cell.x
+  const blockingCells: Array<{ cell: GridCell, distance: number }> = []
+
+  for (const otherCell of cells.value) {
+    if (otherCell.id === cellId)
+      continue
+
+    const verticalOverlap = !(otherCell.y >= cell.y + cell.height || otherCell.y + otherCell.height <= cell.y)
+
+    if (verticalOverlap && otherCell.x + otherCell.width <= leftBoundary) {
+      blockingCells.push({ cell: otherCell, distance: leftBoundary - (otherCell.x + otherCell.width) })
+    }
+  }
+
+  let maxExpandWidth = leftBoundary // 默认扩展到画布左边界
+  if (blockingCells.length > 0) {
+    blockingCells.sort((a, b) => a.distance - b.distance)
+    maxExpandWidth = Math.min(maxExpandWidth, blockingCells[0]!.distance)
+  }
+
+  if (maxExpandWidth > 0.1) {
+    const oldWidth = cell.width
+    const oldX = cell.x
+    cell.width += maxExpandWidth
+    cell.x -= maxExpandWidth
+    console.log(`格子 ${cellId} 向左扩展成功: 位置 ${oldX}% → ${cell.x}%, 宽度 ${oldWidth}% → ${cell.width}%`)
+  }
+  else {
+    console.log(`格子 ${cellId} 无法向左扩展，可用空间: ${maxExpandWidth}%`)
+  }
+}
+
+// 向下扩展格子
+const expandCellDown = (cellId: string) => {
+  const cell = cells.value.find(c => c.id === cellId)
+  if (!cell)
+    return
+
+  console.log(`开始向下扩展格子 ${cellId}:`, { x: cell.x, y: cell.y, width: cell.width, height: cell.height })
+
+  const bottomBoundary = cell.y + cell.height
+  const blockingCells: Array<{ cell: GridCell, distance: number }> = []
+
+  for (const otherCell of cells.value) {
+    if (otherCell.id === cellId)
+      continue
+
+    const horizontalOverlap = !(otherCell.x >= cell.x + cell.width || otherCell.x + otherCell.width <= cell.x)
+
+    if (horizontalOverlap && otherCell.y >= bottomBoundary) {
+      blockingCells.push({ cell: otherCell, distance: otherCell.y - bottomBoundary })
+    }
+  }
+
+  let maxExpandHeight = 100 - bottomBoundary
+  if (blockingCells.length > 0) {
+    blockingCells.sort((a, b) => a.distance - b.distance)
+    maxExpandHeight = Math.min(maxExpandHeight, blockingCells[0]!.distance)
+  }
+
+  if (maxExpandHeight > 0.1) {
+    const oldHeight = cell.height
+    cell.height += maxExpandHeight
+    console.log(`格子 ${cellId} 向下扩展成功: ${oldHeight}% → ${cell.height}%`)
+  }
+  else {
+    console.log(`格子 ${cellId} 无法向下扩展，可用空间: ${maxExpandHeight}%`)
+  }
+}
+
+// 向上扩展格子
+const expandCellUp = (cellId: string) => {
+  const cell = cells.value.find(c => c.id === cellId)
+  if (!cell)
+    return
+
+  console.log(`开始向上扩展格子 ${cellId}:`, { x: cell.x, y: cell.y, width: cell.width, height: cell.height })
+
+  const topBoundary = cell.y
+  const blockingCells: Array<{ cell: GridCell, distance: number }> = []
+
+  for (const otherCell of cells.value) {
+    if (otherCell.id === cellId)
+      continue
+
+    const horizontalOverlap = !(otherCell.x >= cell.x + cell.width || otherCell.x + otherCell.width <= cell.x)
+
+    if (horizontalOverlap && otherCell.y + otherCell.height <= topBoundary) {
+      blockingCells.push({ cell: otherCell, distance: topBoundary - (otherCell.y + otherCell.height) })
+    }
+  }
+
+  let maxExpandHeight = topBoundary // 默认扩展到画布上边界
+  if (blockingCells.length > 0) {
+    blockingCells.sort((a, b) => a.distance - b.distance)
+    maxExpandHeight = Math.min(maxExpandHeight, blockingCells[0]!.distance)
+  }
+
+  if (maxExpandHeight > 0.1) {
+    const oldHeight = cell.height
+    const oldY = cell.y
+    cell.height += maxExpandHeight
+    cell.y -= maxExpandHeight
+    console.log(`格子 ${cellId} 向上扩展成功: 位置 ${oldY}% → ${cell.y}%, 高度 ${oldHeight}% → ${cell.height}%`)
+  }
+  else {
+    console.log(`格子 ${cellId} 无法向上扩展，可用空间: ${maxExpandHeight}%`)
+  }
+}
+
 // 更新格子标题
 const updateCellTitle = (cellId: string, title: string) => {
   const cell = cells.value.find(cell => cell.id === cellId)
@@ -381,14 +829,22 @@ const updateImageFit = (cellId: string, imageFit: ImageFitMode) => {
 }
 
 // 上传图片
-const handleImageUpload = (cellId: string, event: Event) => {
+const handleImageUpload = async (cellId: string, event: Event) => {
   const input = event.target as HTMLInputElement
   const file = input.files?.[0]
   if (file) {
     const imageUrl = URL.createObjectURL(file)
-    const cell = cells.value.find(cell => cell.id === cellId)
-    if (cell) {
-      cell.image = imageUrl
+
+    if (currentWorkMode.value === 'split') {
+      // 分图模式：自动分割图片到所有格子
+      await splitImageToGrid(imageUrl)
+    }
+    else {
+      // 拼图模式：放到指定格子
+      const cell = cells.value.find(cell => cell.id === cellId)
+      if (cell) {
+        cell.image = imageUrl
+      }
     }
   }
 }
@@ -398,25 +854,66 @@ const handleDragOver = (event: DragEvent) => {
   event.preventDefault()
 }
 
-const handleDrop = (event: DragEvent, cellId: string) => {
+const handleDrop = async (event: DragEvent, cellId: string) => {
   event.preventDefault()
   const files = event.dataTransfer?.files
   if (files && files.length > 0) {
     const file = files[0]
     if (file && file.type.startsWith('image/')) {
       const imageUrl = URL.createObjectURL(file)
-      const cell = cells.value.find(cell => cell.id === cellId)
-      if (cell) {
-        cell.image = imageUrl
-        selectedCellId.value = cellId
+
+      if (currentWorkMode.value === 'split') {
+        // 分图模式：自动分割图片到所有格子
+        await splitImageToGrid(imageUrl)
+      }
+      else {
+        // 拼图模式：放到指定格子
+        const cell = cells.value.find(cell => cell.id === cellId)
+        if (cell) {
+          cell.image = imageUrl
+          selectedCellId.value = cellId
+        }
       }
     }
   }
 }
 
+// 计算画布尺寸（基于宽高比）
+const canvasDimensions = computed(() => {
+  if (!containerRef.value) {
+    return { width: 600, height: 600 }
+  }
+
+  const containerRect = containerRef.value.getBoundingClientRect()
+  const containerWidth = containerRect.width - 32 // 减去padding
+  const containerHeight = containerRect.height - 80 // 减去标题和padding
+
+  const targetRatio = selectedAspectRatio.value.ratio
+
+  let canvasWidth: number
+  let canvasHeight: number
+
+  // 根据容器尺寸和目标宽高比计算最佳画布尺寸
+  if (containerWidth / containerHeight > targetRatio) {
+    // 容器更宽，以高度为准
+    canvasHeight = containerHeight
+    canvasWidth = canvasHeight * targetRatio
+  }
+  else {
+    // 容器更高，以宽度为准
+    canvasWidth = containerWidth
+    canvasHeight = canvasWidth / targetRatio
+  }
+
+  return {
+    width: Math.floor(canvasWidth),
+    height: Math.floor(canvasHeight),
+  }
+})
+
 // 导出画布为图片
 const exportCanvas = async () => {
-  if (!containerRef.value)
+  if (!canvasRef.value)
     return
 
   try {
@@ -426,10 +923,9 @@ const exportCanvas = async () => {
     if (!ctx)
       return
 
-    // 设置画布尺寸
-    const containerRect = containerRef.value.getBoundingClientRect()
-    canvas.width = containerRect.width
-    canvas.height = containerRect.height
+    // 使用计算出的画布尺寸，保持宽高比
+    canvas.width = canvasDimensions.value.width
+    canvas.height = canvasDimensions.value.height
 
     // 不填充背景色，保持画布透明
 
@@ -538,17 +1034,54 @@ const exportCanvas = async () => {
             // 恢复状态
             ctx.restore()
 
-            // 绘制标题（在内容区域底部）
+            // 绘制标题（在内容区域底部）- 固定高度32px，支持两行文本
             if (cell.title) {
-              const titleHeight = 24
+              const titleHeight = 32 // 固定高度32px，与模板中的h-8一致
+              const padding = 8
+              const lineHeight = 14
+              const fontSize = 12
+
+              // 绘制标题背景
               ctx.fillStyle = 'rgba(0, 0, 0, 0.7)'
               ctx.fillRect(contentX, contentY + contentHeight - titleHeight, contentWidth, titleHeight)
 
+              // 设置文字样式
               ctx.fillStyle = '#ffffff'
-              ctx.font = '12px sans-serif'
+              ctx.font = `${fontSize}px sans-serif`
               ctx.textAlign = 'left'
-              ctx.textBaseline = 'middle'
-              ctx.fillText(cell.title, contentX + 8, contentY + contentHeight - titleHeight / 2)
+              ctx.textBaseline = 'top'
+
+              // 文本换行处理 - 最多两行
+              const maxWidth = contentWidth - padding * 2
+              const words = cell.title.split('')
+              const lines: string[] = []
+              let currentLine = ''
+
+              // 简单的字符换行逻辑
+              for (const char of words) {
+                const testLine = currentLine + char
+                const metrics = ctx.measureText(testLine)
+
+                if (metrics.width > maxWidth && currentLine !== '') {
+                  lines.push(currentLine)
+                  currentLine = char
+                  if (lines.length >= 2)
+                    break // 最多两行
+                }
+                else {
+                  currentLine = testLine
+                }
+              }
+
+              if (currentLine && lines.length < 2) {
+                lines.push(currentLine)
+              }
+
+              // 绘制文本行
+              const startY = contentY + contentHeight - titleHeight + (titleHeight - lines.length * lineHeight) / 2
+              lines.forEach((line, index) => {
+                ctx.fillText(line, contentX + padding, startY + index * lineHeight)
+              })
             }
 
             resolve()
@@ -591,6 +1124,16 @@ const selectedCell = computed(() => {
   return cells.value.find(cell => cell.id === selectedCellId.value)
 })
 
+// 计算圆角的最大值
+const maxBorderRadius = computed(() => {
+  // 圆角最大值应该是整个画布的最长边的一半，这样用户可以设置某个格子为圆形
+  const canvasLongestEdge = Math.max(canvasDimensions.value.width, canvasDimensions.value.height)
+  const maxRadius = canvasLongestEdge / 2
+
+  // 直接返回像素值，确保用户可以设置为完美圆形
+  return Math.max(8, Math.floor(maxRadius))
+})
+
 // 间距功能已移除，保持简单稳定的布局
 
 // 页面加载时初始化
@@ -620,34 +1163,75 @@ onUnmounted(() => {
     <div class="h-full grid grid-cols-5 gap-3">
       <!-- 左侧控制面板 -->
       <div class="col-span-1 space-y-3 overflow-y-auto">
-        <!-- 模板选择 -->
+        <!-- 宽高比选择 -->
         <div class="bg-white rounded-lg p-3 shadow-sm">
           <h3 class="text-sm font-semibold mb-3">
-            模板
+            画布比例 （{{ canvasDimensions.width }}×{{ canvasDimensions.height }}px）
           </h3>
-          <div class="space-y-1">
+          <div class="grid grid-cols-2 gap-2">
+            <button
+              v-for="option in aspectRatioOptions"
+              :key="option.name"
+              class="flex flex-col items-center p-2 text-xs rounded border transition-colors"
+              :class="[
+                selectedAspectRatio.name === option.name
+                  ? 'bg-blue-500 text-white border-blue-500'
+                  : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50',
+              ]"
+              @click="selectedAspectRatio = option"
+            >
+              <div class="font-medium">
+                {{ option.name }}
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- 模板选择 -->
+        <div class="bg-white rounded-lg p-3 shadow-sm">
+          <!-- <h3 class="text-sm font-semibold mb-3">
+            模板
+          </h3> -->
+          <div class="grid grid-cols-2 gap-2">
             <button
               v-for="template in templates"
               :key="template.name"
-              class="w-full text-left p-2 text-xs rounded border hover:bg-gray-50 transition-colors"
+              class="flex flex-col items-center p-2 text-xs rounded border hover:bg-gray-50 transition-colors group"
               @click="initializeGrid(template)"
             >
-              <div class="font-medium">
-                {{ template.name }}
+              <!-- 模板图标 -->
+              <div class="w-12 h-12 mb-2 relative bg-gray-100 rounded border">
+                <div
+                  v-for="cell in template.cells"
+                  :key="`${cell.x}-${cell.y}`"
+                  class="absolute bg-blue-200 group-hover:bg-blue-300 transition-colors rounded-sm"
+                  :style="{
+                    left: `${cell.x}%`,
+                    top: `${cell.y}%`,
+                    width: `${cell.width}%`,
+                    height: `${cell.height}%`,
+                    transform: 'scale(0.9)',
+                    transformOrigin: 'center',
+                  }"
+                />
               </div>
+              <!-- 模板名称 -->
+              <!-- <div class="font-medium text-center leading-tight">
+                {{ template.name }}
+              </div> -->
             </button>
           </div>
         </div>
 
         <!-- 格子设置 -->
         <div v-if="selectedCell" class="bg-white rounded-lg p-3 shadow-sm">
-          <h3 class="text-sm font-semibold mb-3">
+          <!-- <h3 class="text-sm font-semibold mb-3">
             格子设置
-          </h3>
+          </h3> -->
 
           <!-- 标题输入 -->
           <div class="mb-3">
-            <label class="block text-xs font-medium mb-1">标题</label>
+            <!-- <label class="block text-xs font-medium mb-1">标题</label> -->
             <input
               :value="selectedCell.title"
               type="text"
@@ -687,54 +1271,13 @@ onUnmounted(() => {
               @change="handleImageUpload(selectedCell.id, $event)"
             >
           </div>
-
-          <!-- 格子操作 -->
-          <div class="space-y-2">
-            <div class="text-xs font-medium">
-              操作
-            </div>
-            <div class="grid grid-cols-2 gap-1">
-              <button
-                class="px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600"
-                @click="splitCell(selectedCell.id, 'horizontal')"
-              >
-                水平分割
-              </button>
-              <button
-                class="px-2 py-1 text-xs bg-green-500 text-white rounded hover:bg-green-600"
-                @click="splitCell(selectedCell.id, 'vertical')"
-              >
-                垂直分割
-              </button>
-              <button
-                class="px-2 py-1 text-xs bg-purple-500 text-white rounded hover:bg-purple-600"
-                @click="splitCell(selectedCell.id, 'quad')"
-              >
-                四分割
-              </button>
-              <button
-                v-if="selectedCell.image"
-                class="px-2 py-1 text-xs bg-orange-500 text-white rounded hover:bg-orange-600"
-                @click="clearCellImage(selectedCell.id)"
-              >
-                清除图片
-              </button>
-            </div>
-            <button
-              v-if="cells.length > 1"
-              class="w-full px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600"
-              @click="deleteCell(selectedCell.id)"
-            >
-              删除格子
-            </button>
-          </div>
         </div>
 
         <!-- 全局设置 -->
         <div class="bg-white rounded-lg p-3 shadow-sm">
-          <h3 class="text-sm font-semibold mb-3">
+          <!-- <h3 class="text-sm font-semibold mb-3">
             全局设置
-          </h3>
+          </h3> -->
 
           <!-- 间距调整 -->
           <div class="mb-3">
@@ -768,7 +1311,7 @@ onUnmounted(() => {
               v-model="globalBorderRadius"
               type="range"
               min="0"
-              max="50"
+              :max="maxBorderRadius"
               step="1"
               class="w-full"
               @input="updateGlobalBorderRadius(Number(($event.target as HTMLInputElement).value))"
@@ -785,38 +1328,51 @@ onUnmounted(() => {
             导出图片
           </button>
         </div>
-
-        <!-- 使用提示 -->
-        <!-- <div class="bg-white rounded-lg p-3 shadow-sm">
-          <h3 class="text-sm font-semibold mb-2">
-            快捷键
-          </h3>
-          <div class="text-xs text-gray-600 space-y-1">
-            <div>Ctrl+V: 粘贴图片</div>
-            <div>Delete: 清除图片</div>
-            <div>ESC: 取消选择</div>
-            <div>右键: 更多选项</div>
-          </div>
-        </div> -->
       </div>
 
       <!-- 右侧画布区域 -->
       <div class="col-span-4">
         <div class="bg-white rounded-lg p-4 shadow-sm h-full flex flex-col">
           <div class="flex items-center justify-between mb-3">
-            <h3 class="text-lg font-semibold">
-              IMGX 画布
-            </h3>
-            <div class="text-xs text-gray-500">
-              拖拽图片 | Ctrl+V 粘贴 | 右键分割
+            <div class="flex items-center gap-4">
+              <h3 class="text-lg font-semibold">
+                IMGX
+              </h3>
+              <!-- 模式切换 -->
+              <div class="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+                <button
+                  v-for="mode in workModeOptions"
+                  :key="mode.key"
+                  class="px-3 py-1 text-xs rounded transition-colors"
+                  :class="[
+                    currentWorkMode === mode.key
+                      ? 'bg-white text-gray-900 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900',
+                  ]"
+                  :disabled="!!mode.disabled"
+                  @click="currentWorkMode = mode.key"
+                >
+                  {{ mode.name }}
+                </button>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="text-xs text-red-500">
+                {{ currentWorkMode === 'puzzle' ? '支持直接 Ctrl+V 粘贴 | 右键呼出操作面板'
+                  : currentWorkMode === 'split' ? '上传图片自动分割到网格，分割后可以再切换回继续拼图' : '制作长图拼接' }}
+              </div>
             </div>
           </div>
 
           <!-- 网格容器 -->
-          <div class="flex-1 relative">
+          <div ref="containerRef" class="flex-1 relative flex items-center justify-center">
             <div
-              ref="containerRef"
-              class="w-full h-full bg-gray-100 rounded-lg overflow-hidden relative"
+              ref="canvasRef"
+              class="bg-gray-100 rounded-lg overflow-hidden relative shadow-lg"
+              :style="{
+                width: `${canvasDimensions.width}px`,
+                height: `${canvasDimensions.height}px`,
+              }"
             >
               <!-- 格子容器 -->
               <div
@@ -882,13 +1438,15 @@ onUnmounted(() => {
                   <!-- 标题栏 -->
                   <div
                     v-if="cell.title"
-                    class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white px-2 py-1 text-xs"
+                    class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white px-2 py-1 text-xs h-8 flex items-center overflow-hidden"
                     :style="{
                       borderBottomLeftRadius: `${cell.borderRadius}px`,
                       borderBottomRightRadius: `${cell.borderRadius}px`,
                     }"
                   >
-                    {{ cell.title }}
+                    <div class="line-clamp-2 leading-tight">
+                      {{ cell.title }}
+                    </div>
                   </div>
 
                   <!-- 选中指示器 -->
@@ -904,46 +1462,185 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <!-- 右键分割菜单 -->
+    <!-- 右键操作菜单 -->
     <div
       v-if="showSplitMenu"
-      class="fixed bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-50"
+      class="fixed bg-white border border-gray-200 rounded-lg shadow-lg p-2 z-50"
       :style="{ left: `${splitMenuPosition.x}px`, top: `${splitMenuPosition.y}px` }"
       @click.stop
     >
-      <button
-        class="w-full px-3 py-1 text-left hover:bg-gray-100 text-xs"
-        @click="splitCell(selectedCellId, 'horizontal')"
-      >
-        水平分割
-      </button>
-      <button
-        class="w-full px-3 py-1 text-left hover:bg-gray-100 text-xs"
-        @click="splitCell(selectedCellId, 'vertical')"
-      >
-        垂直分割
-      </button>
-      <button
-        class="w-full px-3 py-1 text-left hover:bg-gray-100 text-xs"
-        @click="splitCell(selectedCellId, 'quad')"
-      >
-        四分割
-      </button>
-      <hr class="my-1">
-      <button
-        v-if="cells.find(c => c.id === selectedCellId)?.image"
-        class="w-full px-3 py-1 text-left hover:bg-gray-100 text-xs text-orange-600"
-        @click="clearCellImage(selectedCellId)"
-      >
-        清除图片
-      </button>
-      <button
-        v-if="cells.length > 1"
-        class="w-full px-3 py-1 text-left hover:bg-gray-100 text-xs text-red-600"
-        @click="deleteCell(selectedCellId)"
-      >
-        删除格子
-      </button>
+      <div class="flex items-center gap-1">
+        <!-- 分割操作 -->
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                variant="ghost"
+                size="sm"
+                class="p-2 h-auto"
+                @click="splitCell(selectedCellId, 'horizontal'); showSplitMenu = false"
+              >
+                <Icon name="fluent:split-horizontal-28-filled" size="1.5em" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>上下分割</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                variant="ghost"
+                size="sm"
+                class="p-2 h-auto"
+                @click="splitCell(selectedCellId, 'vertical'); showSplitMenu = false"
+              >
+                <Icon name="fluent:split-vertical-28-filled" size="1.5em" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>左右分割</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                variant="ghost"
+                size="sm"
+                class="p-2 h-auto"
+                @click="splitCell(selectedCellId, 'quad'); showSplitMenu = false"
+              >
+                <Icon name="fluent:layout-cell-four-24-filled" size="2em" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>四等分</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <!-- 分割线 -->
+        <Separator orientation="vertical" class="!h-4 mx-1" />
+
+        <!-- 扩展操作 -->
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                variant="ghost"
+                size="sm"
+                class="p-2 h-auto"
+                @click="expandCellLeft(selectedCellId); showSplitMenu = false"
+              >
+                <Icon name="fluent:panel-left-contract-24-filled" size="2em" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>向左扩展</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                variant="ghost"
+                size="sm"
+                class="p-2 h-auto"
+                @click="expandCellRight(selectedCellId); showSplitMenu = false"
+              >
+                <Icon name="fluent:panel-right-contract-24-filled" size="2em" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>向右扩展</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                variant="ghost"
+                size="sm"
+                class="p-2 h-auto"
+                @click="expandCellUp(selectedCellId); showSplitMenu = false"
+              >
+                <Icon name="fluent:panel-top-contract-20-filled" size="2em" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>向上扩展</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                variant="ghost"
+                size="sm"
+                class="p-2 h-auto"
+                @click="expandCellDown(selectedCellId); showSplitMenu = false"
+              >
+                <Icon name="fluent:panel-bottom-contract-20-filled" size="2em" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>向下扩展</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <!-- 分割线 -->
+        <Separator orientation="vertical" class="!h-4 mx-1" />
+
+        <!-- 管理操作 -->
+        <TooltipProvider v-if="cells.find(c => c.id === selectedCellId)?.image">
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                variant="ghost"
+                size="sm"
+                class="p-2 h-auto text-orange-600 hover:text-orange-700"
+                @click="clearCellImage(selectedCellId); showSplitMenu = false"
+              >
+                <Icon name="fluent:image-arrow-counterclockwise-24-filled" size="2em" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>清除图片</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider v-if="cells.length > 1">
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <Button
+                variant="ghost"
+                size="sm"
+                class="p-2 h-auto text-red-600 hover:text-red-700"
+                @click="deleteCell(selectedCellId); showSplitMenu = false"
+              >
+                <Icon name="fluent:delete-12-filled" size="2em" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>删除格子</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
     </div>
   </div>
 </template>
