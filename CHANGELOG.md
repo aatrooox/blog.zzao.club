@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.13.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.13.0...v1.13.1)
+
+### 🚀 Enhancements
+
+- 长图模式;支持横向和纵向 ([009930f](https://github.com/aatrooox/blog.zzao.club/commit/009930f))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.13.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.12.2...v1.13.0)
