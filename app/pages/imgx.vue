@@ -132,8 +132,11 @@ interface WorkModeOption {
 const workModeOptions: WorkModeOption[] = [
   { key: 'puzzle', name: '拼图', description: '手动拼接多张图片' },
   { key: 'split', name: '分图', description: '自动分割单张图片' },
-  { key: 'long', name: '长图', description: '制作长图拼接', disabled: true },
+  { key: 'long', name: '长图', description: '制作长图拼接' },
 ]
+
+// 长图方向类型
+type LongImageDirection = 'horizontal' | 'vertical'
 
 // 响应式数据
 const cells = ref<GridCell[]>([])
@@ -146,18 +149,232 @@ const globalGap = ref(4) // 全局内间距，单位为像素
 const globalBorderRadius = ref(8) // 全局圆角大小
 const isGlobalBorderRadius = ref(false) // 是否启用全局圆角模式
 const selectedAspectRatio = ref<AspectRatioOption>(aspectRatioOptions[0] as AspectRatioOption) // 默认1:1
-const currentWorkMode = ref<WorkMode>('puzzle') // 默认拼图模式
+const currentWorkMode = ref<WorkMode>('puzzle') // 当前工作模式
+const longImageDirection = ref<LongImageDirection>('vertical') // 长图方向，默认纵向
 
 // 清除格子图片
-const clearCellImage = (cellId: string) => {
+function clearCellImage(cellId: string) {
   const cell = cells.value.find(cell => cell.id === cellId)
   if (cell) {
     cell.image = ''
   }
 }
 
+// 添加新的长图格子
+function addLongImageCell(imageUrl: string) {
+  const currentCellCount = cells.value.length
+
+  let newCell: GridCell
+
+  if (longImageDirection.value === 'horizontal') {
+    // 横向长图：向右添加，每个格子保持固定尺寸
+    const cellWidth = 100 // 每个格子占100%宽度（在画布坐标系中）
+    const cellHeight = 100 // 每个格子占100%高度
+
+    newCell = {
+      id: `cell-${Date.now()}-${currentCellCount}`,
+      x: currentCellCount * cellWidth, // 新格子位置在右侧
+      y: 0,
+      width: cellWidth,
+      height: cellHeight,
+      borderRadius: 8,
+      imageFit: 'cover' as ImageFitMode,
+      image: imageUrl,
+      title: '',
+    }
+  }
+  else {
+    // 纵向长图：向下添加，每个格子保持固定尺寸
+    const cellWidth = 100 // 每个格子占100%宽度
+    const cellHeight = 100 // 每个格子占100%高度（在画布坐标系中）
+
+    newCell = {
+      id: `cell-${Date.now()}-${currentCellCount}`,
+      x: 0,
+      y: currentCellCount * cellHeight, // 新格子位置在下方
+      width: cellWidth,
+      height: cellHeight,
+      borderRadius: 8,
+      imageFit: 'cover' as ImageFitMode,
+      image: imageUrl,
+      title: '',
+    }
+  }
+
+  cells.value.push(newCell)
+  selectedCellId.value = newCell.id
+}
+
+// 初始化长图模式
+function initializeLongImage() {
+  // 创建第一个空格子
+  let cellWidth: number, cellHeight: number
+
+  if (longImageDirection.value === 'horizontal') {
+    // 横向长图：格子高度固定，宽度固定
+    cellWidth = 100 // 占满宽度
+    cellHeight = 100 // 占满高度
+  }
+  else {
+    // 纵向长图：格子宽度固定，高度固定
+    cellWidth = 100 // 占满宽度
+    cellHeight = 100 // 占满高度
+  }
+
+  cells.value = [{
+    id: `cell-${Date.now()}-0`,
+    x: 0,
+    y: 0,
+    width: cellWidth,
+    height: cellHeight,
+    borderRadius: 8,
+    imageFit: 'cover' as ImageFitMode,
+    image: '',
+    title: '',
+  }]
+
+  selectedCellId.value = cells.value[0]!.id
+}
+
+// 创建下一个长图格子（空格子）
+function createNextLongImageCell() {
+  const currentCellCount = cells.value.length
+
+  let newCell: GridCell
+
+  if (longImageDirection.value === 'horizontal') {
+    // 横向长图：向右添加，每个格子保持固定尺寸
+    const cellWidth = 100 // 每个格子占100%宽度（在画布坐标系中）
+    const cellHeight = 100 // 每个格子占100%高度
+
+    newCell = {
+      id: `cell-${Date.now()}-${currentCellCount}`,
+      x: currentCellCount * cellWidth, // 新格子位置在右侧
+      y: 0,
+      width: cellWidth,
+      height: cellHeight,
+      borderRadius: 8,
+      imageFit: 'cover' as ImageFitMode,
+      image: '',
+      title: '',
+    }
+  }
+  else {
+    // 纵向长图：向下添加，每个格子保持固定尺寸
+    const cellWidth = 100 // 每个格子占100%宽度
+    const cellHeight = 100 // 每个格子占100%高度（在画布坐标系中）
+
+    newCell = {
+      id: `cell-${Date.now()}-${currentCellCount}`,
+      x: 0,
+      y: currentCellCount * cellHeight, // 新格子位置在下方
+      width: cellWidth,
+      height: cellHeight,
+      borderRadius: 8,
+      imageFit: 'cover' as ImageFitMode,
+      image: '',
+      title: '',
+    }
+  }
+
+  cells.value.push(newCell)
+  selectedCellId.value = newCell.id
+}
+
+// 处理长图模式的图片输入
+async function handleLongImageInput(imageUrl: string) {
+  // 找到第一个空格子（image为空字符串或undefined）
+  const emptyCell = cells.value.find(cell => !cell.image || cell.image === '')
+
+  if (emptyCell) {
+    // 如果有空格子，直接填充
+    emptyCell.image = imageUrl
+    selectedCellId.value = emptyCell.id
+
+    // 填充后，检查是否还有空格子，如果没有则创建一个新的空格子
+    const hasEmptyCell = cells.value.some(cell => !cell.image || cell.image === '')
+    if (!hasEmptyCell) {
+      createNextLongImageCell()
+    }
+  }
+  else {
+    // 如果没有空格子，新增一个格子并填充图片
+    addLongImageCell(imageUrl)
+    // 添加新格子后，创建下一个空格子
+    createNextLongImageCell()
+  }
+}
+
+// 从长图模式切换到拼图模式时是否需要重置的标志
+const needsResetFromLong = ref(false)
+
+// 处理画布比例点击
+function handleAspectRatioClick(option: AspectRatioOption) {
+  selectedAspectRatio.value = option
+
+  // 如果是从长图模式切换过来的，重置标志并重新初始化网格
+  if (needsResetFromLong.value) {
+    needsResetFromLong.value = false
+    // 重置为默认模板
+    if (templates.length > 0) {
+      initializeGrid(templates[0] as GridTemplate)
+    }
+  }
+  // 如果是在拼图模式下切换比例，也需要重新初始化网格以适应新的画布尺寸
+  else if (currentWorkMode.value === 'puzzle') {
+    // 保存当前选中的模板（如果有的话）
+    const currentTemplate = templates.find(template =>
+      template.cells.length === cells.value.length
+      && template.cells.every((templateCell, index) => {
+        const cell = cells.value[index]
+        return cell
+          && Math.abs(templateCell.x - cell.x) < 0.01
+          && Math.abs(templateCell.y - cell.y) < 0.01
+          && Math.abs(templateCell.width - cell.width) < 0.01
+          && Math.abs(templateCell.height - cell.height) < 0.01
+      }),
+    )
+
+    // 如果找到了匹配的模板，重新初始化；否则使用默认模板
+    const templateToUse = currentTemplate || (templates.length > 0 ? templates[0] : null)
+    if (templateToUse) {
+      initializeGrid(templateToUse as GridTemplate)
+    }
+  }
+}
+
+// 处理模板点击
+function handleTemplateClick(template: GridTemplate) {
+  initializeGrid(template)
+
+  // 如果是从长图模式切换过来的，重置标志
+  if (needsResetFromLong.value) {
+    needsResetFromLong.value = false
+  }
+}
+
+// 监听工作模式变化
+watch(currentWorkMode, (newMode, oldMode) => {
+  if (newMode === 'long' && oldMode !== 'long') {
+    // 切换到长图模式时，初始化长图布局
+    initializeLongImage()
+  }
+  else if (oldMode === 'long' && newMode === 'puzzle') {
+    // 从长图模式切换到拼图模式时，标记需要重置
+    needsResetFromLong.value = true
+  }
+})
+
+// 监听长图方向变化
+watch(longImageDirection, (newDirection, oldDirection) => {
+  if (currentWorkMode.value === 'long' && newDirection !== oldDirection) {
+    // 长图模式下切换方向时，重新初始化布局
+    initializeLongImage()
+  }
+})
+
 // 图片分割功能
-const splitImageToGrid = async (imageUrl: string) => {
+async function splitImageToGrid(imageUrl: string) {
   return new Promise<void>((resolve) => {
     const img = new Image()
     img.crossOrigin = 'anonymous'
@@ -216,14 +433,28 @@ const splitImageToGrid = async (imageUrl: string) => {
   })
 }
 
-// 处理图片输入（支持分割模式）
-const handleImageInput = async (imageUrl: string) => {
+// 处理图片输入（支持分割模式和长图模式）
+async function handleImageInput(imageUrl: string) {
+  console.log('imageUrl', imageUrl)
   if (currentWorkMode.value === 'split') {
     // 分图模式：自动分割图片到所有格子
     await splitImageToGrid(imageUrl)
   }
+  else if (currentWorkMode.value === 'long') {
+    // 长图模式：添加图片到长图序列
+    await handleLongImageInput(imageUrl)
+  }
   else {
-    // 拼图模式：优先放到选中的格子，如果没有选中则放到第一个空格子，如果没有空格子则放到第一个格子
+    // 拼图模式：如果是从长图模式切换过来且用户还没有点击画布比例或模板，则重置布局
+    if (needsResetFromLong.value) {
+      // 重置为默认模板
+      if (templates.length > 0) {
+        initializeGrid(templates[0] as GridTemplate)
+      }
+      needsResetFromLong.value = false
+    }
+
+    // 优先放到选中的格子，如果没有选中则放到第一个空格子，如果没有空格子则放到第一个格子
     let targetCell = cells.value.find(cell => cell.id === selectedCellId.value)
 
     // 如果没有选中的格子，优先找空格子
@@ -244,7 +475,7 @@ const handleImageInput = async (imageUrl: string) => {
 }
 
 // 从剪贴板粘贴图片
-const handlePasteFromClipboard = async () => {
+async function handlePasteFromClipboard() {
   try {
     const clipboardItems = await navigator.clipboard.read()
 
@@ -265,7 +496,7 @@ const handlePasteFromClipboard = async () => {
 }
 
 // 处理键盘事件
-const handleKeyDown = (e: KeyboardEvent) => {
+function handleKeyDown(e: KeyboardEvent) {
   if (e.ctrlKey && e.key === 'v') {
     e.preventDefault()
     handlePasteFromClipboard()
@@ -284,7 +515,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
 }
 
 // 处理粘贴事件
-const handlePaste = (e: ClipboardEvent) => {
+function handlePaste(e: ClipboardEvent) {
   e.preventDefault()
   handlePasteFromClipboard()
 }
@@ -293,7 +524,7 @@ const handlePaste = (e: ClipboardEvent) => {
 // const currentTemplate = ref<GridTemplate | null>(null)
 
 // 初始化网格
-const initializeGrid = (template: GridTemplate) => {
+function initializeGrid(template: GridTemplate) {
   cells.value = template.cells.map((cell, index) => ({
     ...cell,
     id: `cell-${Date.now()}-${index}`,
@@ -304,14 +535,20 @@ const initializeGrid = (template: GridTemplate) => {
 }
 
 // 选择格子
-const selectCell = (cellId: string) => {
+function selectCell(cellId: string) {
   selectedCellId.value = cellId
   showSplitMenu.value = false
 }
 
 // 显示分割菜单
-const showSplitMenuAt = (event: MouseEvent, cellId: string) => {
+function showSplitMenuAt(event: MouseEvent, cellId: string) {
   event.preventDefault()
+
+  // 长图模式下不显示右键菜单
+  if (currentWorkMode.value === 'long') {
+    return
+  }
+
   selectedCellId.value = cellId
 
   // 获取屏幕尺寸
@@ -344,7 +581,23 @@ const showSplitMenuAt = (event: MouseEvent, cellId: string) => {
 }
 
 // 分割格子
-const splitCell = (cellId: string, splitType: SplitType = 'horizontal') => {
+function splitCell(cellId: string, splitType: SplitType = 'horizontal') {
+  // 长图模式下不允许分割格子
+  if (currentWorkMode.value === 'long') {
+    return
+  }
+
+  // 如果是从长图模式切换过来且用户还没有点击画布比例或模板，则重置布局
+  if (needsResetFromLong.value) {
+    // 重置为默认模板
+    if (templates.length > 0) {
+      initializeGrid(templates[0] as GridTemplate)
+    }
+    needsResetFromLong.value = false
+    // 重新获取cellId，因为布局已经重置
+    cellId = cells.value[0]?.id || ''
+  }
+
   const cellIndex = cells.value.findIndex(cell => cell.id === cellId)
   if (cellIndex === -1)
     return
@@ -491,7 +744,12 @@ const splitCell = (cellId: string, splitType: SplitType = 'horizontal') => {
 }
 
 // 删除格子
-const deleteCell = (cellId: string) => {
+function deleteCell(cellId: string) {
+  // 长图模式下不允许删除格子
+  if (currentWorkMode.value === 'long') {
+    return
+  }
+
   if (cells.value.length <= 1)
     return // 至少保留一个格子
 
@@ -637,7 +895,7 @@ const deleteCell = (cellId: string) => {
 // }
 
 // 向右扩展格子
-const expandCellRight = (cellId: string) => {
+function expandCellRight(cellId: string) {
   const cell = cells.value.find(c => c.id === cellId)
   if (!cell)
     return
@@ -675,7 +933,7 @@ const expandCellRight = (cellId: string) => {
 }
 
 // 向左扩展格子
-const expandCellLeft = (cellId: string) => {
+function expandCellLeft(cellId: string) {
   const cell = cells.value.find(c => c.id === cellId)
   if (!cell)
     return
@@ -715,7 +973,7 @@ const expandCellLeft = (cellId: string) => {
 }
 
 // 向下扩展格子
-const expandCellDown = (cellId: string) => {
+function expandCellDown(cellId: string) {
   const cell = cells.value.find(c => c.id === cellId)
   if (!cell)
     return
@@ -753,7 +1011,7 @@ const expandCellDown = (cellId: string) => {
 }
 
 // 向上扩展格子
-const expandCellUp = (cellId: string) => {
+function expandCellUp(cellId: string) {
   const cell = cells.value.find(c => c.id === cellId)
   if (!cell)
     return
@@ -793,7 +1051,7 @@ const expandCellUp = (cellId: string) => {
 }
 
 // 更新格子标题
-const updateCellTitle = (cellId: string, title: string) => {
+function updateCellTitle(cellId: string, title: string) {
   const cell = cells.value.find(cell => cell.id === cellId)
   if (cell) {
     cell.title = title
@@ -801,7 +1059,7 @@ const updateCellTitle = (cellId: string, title: string) => {
 }
 
 // 更新全局圆角
-const updateGlobalBorderRadius = (borderRadius: number) => {
+function updateGlobalBorderRadius(borderRadius: number) {
   globalBorderRadius.value = borderRadius
   if (isGlobalBorderRadius.value) {
     // 全局模式：更新所有格子的圆角
@@ -821,7 +1079,7 @@ const updateGlobalBorderRadius = (borderRadius: number) => {
 }
 
 // 更新图片适配模式
-const updateImageFit = (cellId: string, imageFit: ImageFitMode) => {
+function updateImageFit(cellId: string, imageFit: ImageFitMode) {
   const cell = cells.value.find(cell => cell.id === cellId)
   if (cell) {
     cell.imageFit = imageFit
@@ -829,7 +1087,7 @@ const updateImageFit = (cellId: string, imageFit: ImageFitMode) => {
 }
 
 // 上传图片
-const handleImageUpload = async (cellId: string, event: Event) => {
+async function handleImageUpload(cellId: string, event: Event) {
   const input = event.target as HTMLInputElement
   const file = input.files?.[0]
   if (file) {
@@ -838,6 +1096,10 @@ const handleImageUpload = async (cellId: string, event: Event) => {
     if (currentWorkMode.value === 'split') {
       // 分图模式：自动分割图片到所有格子
       await splitImageToGrid(imageUrl)
+    }
+    else if (currentWorkMode.value === 'long') {
+      // 长图模式：使用长图处理逻辑
+      await handleLongImageInput(imageUrl)
     }
     else {
       // 拼图模式：放到指定格子
@@ -850,11 +1112,11 @@ const handleImageUpload = async (cellId: string, event: Event) => {
 }
 
 // 处理拖拽
-const handleDragOver = (event: DragEvent) => {
+function handleDragOver(event: DragEvent) {
   event.preventDefault()
 }
 
-const handleDrop = async (event: DragEvent, cellId: string) => {
+async function handleDrop(event: DragEvent, cellId: string) {
   event.preventDefault()
   const files = event.dataTransfer?.files
   if (files && files.length > 0) {
@@ -878,6 +1140,40 @@ const handleDrop = async (event: DragEvent, cellId: string) => {
   }
 }
 
+// 计算单个格子的固定尺寸（长图模式专用）
+const fixedCellSize = computed(() => {
+  if (!containerRef.value || currentWorkMode.value !== 'long') {
+    return { width: 300, height: 300 }
+  }
+
+  const containerRect = containerRef.value.getBoundingClientRect()
+  const containerWidth = containerRect.width - 32 // 减去padding
+  const containerHeight = containerRect.height - 80 // 减去标题和padding
+
+  // 长图模式下使用用户选择的比例
+  const targetRatio = selectedAspectRatio.value.ratio
+
+  // 计算单个格子的固定尺寸（基于用户选择的比例）
+  let cellWidth: number, cellHeight: number
+
+  // 根据容器尺寸和目标宽高比计算单个格子的最佳尺寸
+  if (containerWidth / containerHeight > targetRatio) {
+    // 容器更宽，以高度为准
+    cellHeight = containerHeight * 0.8 // 使用容器高度的80%
+    cellWidth = cellHeight * targetRatio
+  }
+  else {
+    // 容器更高，以宽度为准
+    cellWidth = containerWidth * 0.8 // 使用容器宽度的80%
+    cellHeight = cellWidth / targetRatio
+  }
+
+  return {
+    width: Math.floor(cellWidth),
+    height: Math.floor(cellHeight),
+  }
+})
+
 // 计算画布尺寸（基于宽高比）
 const canvasDimensions = computed(() => {
   if (!containerRef.value) {
@@ -887,6 +1183,28 @@ const canvasDimensions = computed(() => {
   const containerRect = containerRef.value.getBoundingClientRect()
   const containerWidth = containerRect.width - 32 // 减去padding
   const containerHeight = containerRect.height - 80 // 减去标题和padding
+
+  // 长图模式下的特殊处理
+  if (currentWorkMode.value === 'long') {
+    // 使用固定的格子尺寸和格子数量来计算画布尺寸
+    const cellCount = Math.max(1, cells.value.length) // 至少显示一个格子
+    const cellSize = fixedCellSize.value
+
+    if (longImageDirection.value === 'horizontal') {
+      // 横向长图：格子尺寸固定，画布宽度根据所有格子数量扩展
+      return {
+        width: cellSize.width * cellCount,
+        height: cellSize.height,
+      }
+    }
+    else {
+      // 纵向长图：格子尺寸固定，画布高度根据所有格子数量扩展
+      return {
+        width: cellSize.width,
+        height: cellSize.height * cellCount,
+      }
+    }
+  }
 
   const targetRatio = selectedAspectRatio.value.ratio
 
@@ -912,7 +1230,7 @@ const canvasDimensions = computed(() => {
 })
 
 // 导出画布为图片
-const exportCanvas = async () => {
+async function exportCanvas() {
   if (!canvasRef.value)
     return
 
@@ -930,11 +1248,31 @@ const exportCanvas = async () => {
     // 不填充背景色，保持画布透明
 
     // 绘制每个格子
-    const drawPromises = cells.value.map(async (cell) => {
-      const cellX = (cell.x / 100) * canvas.width
-      const cellY = (cell.y / 100) * canvas.height
-      const cellWidth = (cell.width / 100) * canvas.width
-      const cellHeight = (cell.height / 100) * canvas.height
+    const drawPromises = cells.value.map(async (cell, index) => {
+      let cellX: number, cellY: number, cellWidth: number, cellHeight: number
+
+      if (currentWorkMode.value === 'long') {
+        // 长图模式：使用固定的像素值
+        const cellSize = fixedCellSize.value
+        cellWidth = cellSize.width
+        cellHeight = cellSize.height
+
+        if (longImageDirection.value === 'horizontal') {
+          cellX = index * cellWidth
+          cellY = 0
+        }
+        else {
+          cellX = 0
+          cellY = index * cellHeight
+        }
+      }
+      else {
+        // 拼图模式：使用百分比计算
+        cellX = (cell.x / 100) * canvas.width
+        cellY = (cell.y / 100) * canvas.height
+        cellWidth = (cell.width / 100) * canvas.width
+        cellHeight = (cell.height / 100) * canvas.height
+      }
 
       // 导出时需要应用与页面相同的padding效果，保持视觉一致
       const padding = globalGap.value
@@ -1163,10 +1501,10 @@ onUnmounted(() => {
     <div class="h-full grid grid-cols-5 gap-3">
       <!-- 左侧控制面板 -->
       <div class="col-span-1 space-y-3 overflow-y-auto">
-        <!-- 宽高比选择 -->
+        <!-- 比例选择 -->
         <div class="bg-white rounded-lg p-3 shadow-sm">
           <h3 class="text-sm font-semibold mb-3">
-            画布比例 （{{ canvasDimensions.width }}×{{ canvasDimensions.height }}px）
+            {{ currentWorkMode === 'long' ? '格子比例' : '画布比例' }} （{{ canvasDimensions.width }}×{{ canvasDimensions.height }}px）
           </h3>
           <div class="grid grid-cols-2 gap-2">
             <button
@@ -1178,7 +1516,7 @@ onUnmounted(() => {
                   ? 'bg-blue-500 text-white border-blue-500'
                   : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50',
               ]"
-              @click="selectedAspectRatio = option"
+              @click="handleAspectRatioClick(option)"
             >
               <div class="font-medium">
                 {{ option.name }}
@@ -1188,7 +1526,7 @@ onUnmounted(() => {
         </div>
 
         <!-- 模板选择 -->
-        <div class="bg-white rounded-lg p-3 shadow-sm">
+        <div v-if="currentWorkMode !== 'long'" class="bg-white rounded-lg p-3 shadow-sm">
           <!-- <h3 class="text-sm font-semibold mb-3">
             模板
           </h3> -->
@@ -1197,7 +1535,7 @@ onUnmounted(() => {
               v-for="template in templates"
               :key="template.name"
               class="flex flex-col items-center p-2 text-xs rounded border hover:bg-gray-50 transition-colors group"
-              @click="initializeGrid(template)"
+              @click="handleTemplateClick(template)"
             >
               <!-- 模板图标 -->
               <div class="w-12 h-12 mb-2 relative bg-gray-100 rounded border">
@@ -1339,21 +1677,49 @@ onUnmounted(() => {
                 IMGX
               </h3>
               <!-- 模式切换 -->
-              <div class="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
-                <button
-                  v-for="mode in workModeOptions"
-                  :key="mode.key"
-                  class="px-3 py-1 text-xs rounded transition-colors"
-                  :class="[
-                    currentWorkMode === mode.key
-                      ? 'bg-white text-gray-900 shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900',
-                  ]"
-                  :disabled="!!mode.disabled"
-                  @click="currentWorkMode = mode.key"
-                >
-                  {{ mode.name }}
-                </button>
+              <div class="flex items-center gap-3">
+                <div class="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+                  <button
+                    v-for="mode in workModeOptions"
+                    :key="mode.key"
+                    class="px-3 py-1 text-xs rounded transition-colors"
+                    :class="[
+                      currentWorkMode === mode.key
+                        ? 'bg-white text-gray-900 shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900',
+                    ]"
+                    :disabled="!!mode.disabled"
+                    @click="currentWorkMode = mode.key"
+                  >
+                    {{ mode.name }}
+                  </button>
+                </div>
+
+                <!-- 长图方向选择 -->
+                <div v-if="currentWorkMode === 'long'" class="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+                  <button
+                    class="px-2 py-1 text-xs rounded transition-colors"
+                    :class="[
+                      longImageDirection === 'vertical'
+                        ? 'bg-white text-gray-900 shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900',
+                    ]"
+                    @click="longImageDirection = 'vertical'"
+                  >
+                    纵向
+                  </button>
+                  <button
+                    class="px-2 py-1 text-xs rounded transition-colors"
+                    :class="[
+                      longImageDirection === 'horizontal'
+                        ? 'bg-white text-gray-900 shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900',
+                    ]"
+                    @click="longImageDirection = 'horizontal'"
+                  >
+                    横向
+                  </button>
+                </div>
               </div>
             </div>
             <div class="flex items-center gap-4">
@@ -1368,7 +1734,12 @@ onUnmounted(() => {
           <div ref="containerRef" class="flex-1 relative flex items-center justify-center">
             <div
               ref="canvasRef"
-              class="bg-gray-100 rounded-lg overflow-hidden relative shadow-lg"
+              class="bg-gray-100 rounded-lg relative shadow-lg"
+              :class="[
+                currentWorkMode === 'long'
+                  ? (longImageDirection === 'horizontal' ? 'overflow-x-auto overflow-y-hidden' : 'overflow-y-auto overflow-x-hidden')
+                  : 'overflow-hidden',
+              ]"
               :style="{
                 width: `${canvasDimensions.width}px`,
                 height: `${canvasDimensions.height}px`,
@@ -1376,10 +1747,16 @@ onUnmounted(() => {
             >
               <!-- 格子容器 -->
               <div
-                v-for="cell in cells"
+                v-for="(cell, index) in cells"
                 :key="cell.id"
                 class="absolute cursor-pointer transition-all duration-200"
-                :style="{
+                :style="currentWorkMode === 'long' ? {
+                  left: longImageDirection === 'horizontal' ? `${index * fixedCellSize.width}px` : '0px',
+                  top: longImageDirection === 'vertical' ? `${index * fixedCellSize.height}px` : '0px',
+                  width: `${fixedCellSize.width}px`,
+                  height: `${fixedCellSize.height}px`,
+                  padding: `${globalGap}px`,
+                } : {
                   left: `${cell.x}%`,
                   top: `${cell.y}%`,
                   width: `${cell.width}%`,
@@ -1393,12 +1770,13 @@ onUnmounted(() => {
               >
                 <!-- 格子内容 -->
                 <div
-                  class="w-full h-full border-2 overflow-hidden relative" :class="[
-                    selectedCellId === cell.id ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-300 hover:border-gray-400',
+                  class="w-full h-full border-2 overflow-hidden relative transition-all duration-200" :class="[
+                    selectedCellId === cell.id ? 'border-blue-500 ring-2 ring-blue-200 shadow-lg' : 'border-gray-300 hover:border-gray-400',
                   ]"
                   :style="{
                     borderRadius: `${cell.borderRadius}px`,
                   }"
+                  @click="selectedCellId = cell.id"
                 >
                   <!-- 图片 -->
                   <div
