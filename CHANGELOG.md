@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.13.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.13.1...v1.13.2)
+
+### 🩹 Fixes
+
+- 圆形及矩形大圆角导出样式修复 ([200f23f](https://github.com/aatrooox/blog.zzao.club/commit/200f23f))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.13.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.13.0...v1.13.1)
