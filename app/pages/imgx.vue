@@ -762,138 +762,6 @@ function deleteCell(cellId: string) {
   }
 }
 
-// 横向扩展格子 - 简化算法，更准确的空白检测
-// const expandCellHorizontally = (cellId: string) => {
-//   const cell = cells.value.find(c => c.id === cellId)
-//   if (!cell)
-//     return
-
-//   console.log(`开始横向扩展格子 ${cellId}:`, {
-//     x: cell.x,
-//     y: cell.y,
-//     width: cell.width,
-//     height: cell.height,
-//   })
-
-//   // 当前格子的右边界
-//   const rightBoundary = cell.x + cell.width
-
-//   // 找到所有可能阻挡扩展的格子
-//   const blockingCells: Array<{ cell: GridCell, distance: number }> = []
-
-//   for (const otherCell of cells.value) {
-//     if (otherCell.id === cellId)
-//       continue
-
-//     // 检查是否在垂直方向上有重叠（即在同一水平带上）
-//     const verticalOverlap = !(
-//       otherCell.y >= cell.y + cell.height
-//       || otherCell.y + otherCell.height <= cell.y
-//     )
-
-//     // 如果有垂直重叠且在右侧，则可能阻挡扩展
-//     if (verticalOverlap && otherCell.x >= rightBoundary) {
-//       blockingCells.push({
-//         cell: otherCell,
-//         distance: otherCell.x - rightBoundary,
-//       })
-//     }
-//   }
-
-//   // 找到最近的阻挡格子
-//   let maxExpandWidth = 100 - rightBoundary // 默认扩展到画布右边界
-
-//   if (blockingCells.length > 0) {
-//     // 按距离排序，找到最近的阻挡格子
-//     blockingCells.sort((a, b) => a.distance - b.distance)
-//     const nearestBlocking = blockingCells[0]
-//     maxExpandWidth = Math.min(maxExpandWidth, nearestBlocking.distance)
-//   }
-
-//   console.log(`检测结果:`, {
-//     rightBoundary,
-//     blockingCells: blockingCells.length,
-//     maxExpandWidth,
-//     canvasRightBoundary: 100,
-//   })
-
-//   // 如果有可扩展空间（至少0.1%），执行扩展
-//   if (maxExpandWidth > 0.1) {
-//     const oldWidth = cell.width
-//     cell.width += maxExpandWidth
-//     console.log(`格子 ${cellId} 横向扩展成功: ${oldWidth}% → ${cell.width}% (扩展了${maxExpandWidth}%)`)
-//   }
-//   else {
-//     console.log(`格子 ${cellId} 无法横向扩展，可用空间: ${maxExpandWidth}%`)
-//   }
-// }
-
-// 纵向扩展格子 - 简化算法，更准确的空白检测
-// const expandCellVertically = (cellId: string) => {
-//   const cell = cells.value.find(c => c.id === cellId)
-//   if (!cell)
-//     return
-
-//   console.log(`开始纵向扩展格子 ${cellId}:`, {
-//     x: cell.x,
-//     y: cell.y,
-//     width: cell.width,
-//     height: cell.height,
-//   })
-
-//   // 当前格子的下边界
-//   const bottomBoundary = cell.y + cell.height
-
-//   // 找到所有可能阻挡扩展的格子
-//   const blockingCells: Array<{ cell: GridCell, distance: number }> = []
-
-//   for (const otherCell of cells.value) {
-//     if (otherCell.id === cellId)
-//       continue
-
-//     // 检查是否在水平方向上有重叠（即在同一垂直带上）
-//     const horizontalOverlap = !(
-//       otherCell.x >= cell.x + cell.width
-//       || otherCell.x + otherCell.width <= cell.x
-//     )
-
-//     // 如果有水平重叠且在下方，则可能阻挡扩展
-//     if (horizontalOverlap && otherCell.y >= bottomBoundary) {
-//       blockingCells.push({
-//         cell: otherCell,
-//         distance: otherCell.y - bottomBoundary,
-//       })
-//     }
-//   }
-
-//   // 找到最近的阻挡格子
-//   let maxExpandHeight = 100 - bottomBoundary // 默认扩展到画布下边界
-
-//   if (blockingCells.length > 0) {
-//     // 按距离排序，找到最近的阻挡格子
-//     blockingCells.sort((a, b) => a.distance - b.distance)
-//     const nearestBlocking = blockingCells[0]
-//     maxExpandHeight = Math.min(maxExpandHeight, nearestBlocking.distance)
-//   }
-
-//   console.log(`检测结果:`, {
-//     bottomBoundary,
-//     blockingCells: blockingCells.length,
-//     maxExpandHeight,
-//     canvasBottomBoundary: 100,
-//   })
-
-//   // 如果有可扩展空间（至少0.1%），执行扩展
-//   if (maxExpandHeight > 0.1) {
-//     const oldHeight = cell.height
-//     cell.height += maxExpandHeight
-//     console.log(`格子 ${cellId} 纵向扩展成功: ${oldHeight}% → ${cell.height}% (扩展了${maxExpandHeight}%)`)
-//   }
-//   else {
-//     console.log(`格子 ${cellId} 无法纵向扩展，可用空间: ${maxExpandHeight}%`)
-//   }
-// }
-
 // 向右扩展格子
 function expandCellRight(cellId: string) {
   const cell = cells.value.find(c => c.id === cellId)
@@ -1108,6 +976,9 @@ async function handleImageUpload(cellId: string, event: Event) {
         cell.image = imageUrl
       }
     }
+
+    // 清空input的value，确保下次选择同一文件时也能触发change事件
+    input.value = ''
   }
 }
 
@@ -1156,15 +1027,14 @@ const fixedCellSize = computed(() => {
   // 计算单个格子的固定尺寸（基于用户选择的比例）
   let cellWidth: number, cellHeight: number
 
-  // 根据容器尺寸和目标宽高比计算单个格子的最佳尺寸
-  if (containerWidth / containerHeight > targetRatio) {
-    // 容器更宽，以高度为准
-    cellHeight = containerHeight * 0.8 // 使用容器高度的80%
+  if (longImageDirection.value === 'horizontal') {
+    // 横向长图：每个格子的高度固定，宽度按比例计算
+    cellHeight = containerHeight * 0.9
     cellWidth = cellHeight * targetRatio
   }
   else {
-    // 容器更高，以宽度为准
-    cellWidth = containerWidth * 0.8 // 使用容器宽度的80%
+    // 纵向长图：每个格子的宽度固定，高度按比例计算
+    cellWidth = containerWidth * 0.9
     cellHeight = cellWidth / targetRatio
   }
 
@@ -1241,21 +1111,57 @@ async function exportCanvas() {
     if (!ctx)
       return
 
-    // 使用计算出的画布尺寸，保持宽高比
-    canvas.width = canvasDimensions.value.width
-    canvas.height = canvasDimensions.value.height
+    // 为了确保导出尺寸与预览一致，在导出时重新计算尺寸
+    let exportCanvasWidth: number, exportCanvasHeight: number
+    let exportCellSize: { width: number, height: number }
+
+    if (currentWorkMode.value === 'long') {
+      // 长图模式：使用固定的基准尺寸来计算，避免依赖容器实时尺寸
+      const targetRatio = selectedAspectRatio.value.ratio
+      const baseDimension = 800 // 使用固定的基准尺寸
+
+      if (longImageDirection.value === 'horizontal') {
+        const cellHeight = baseDimension
+        const cellWidth = cellHeight * targetRatio
+        exportCellSize = { width: Math.floor(cellWidth), height: Math.floor(cellHeight) }
+
+        // 只计算有图片的格子数量，避免包含空格子
+        const cellCount = Math.max(1, cells.value.filter(cell => cell.image && cell.image.trim() !== '').length)
+        exportCanvasWidth = exportCellSize.width * cellCount
+        exportCanvasHeight = exportCellSize.height
+      }
+      else {
+        const cellWidth = baseDimension
+        const cellHeight = cellWidth / targetRatio
+        exportCellSize = { width: Math.floor(cellWidth), height: Math.floor(cellHeight) }
+
+        // 只计算有图片的格子数量，避免包含空格子
+        const cellCount = Math.max(1, cells.value.filter(cell => cell.image && cell.image.trim() !== '').length)
+        exportCanvasWidth = exportCellSize.width
+        exportCanvasHeight = exportCellSize.height * cellCount
+      }
+    }
+    else {
+      // 拼图模式：使用当前计算的画布尺寸
+      exportCanvasWidth = canvasDimensions.value.width
+      exportCanvasHeight = canvasDimensions.value.height
+      exportCellSize = { width: 0, height: 0 } // 拼图模式不需要
+    }
+
+    canvas.width = exportCanvasWidth
+    canvas.height = exportCanvasHeight
 
     // 不填充背景色，保持画布透明
 
     // 绘制每个格子
-    const drawPromises = cells.value.map(async (cell, index) => {
+    const cellsWithImages = cells.value.filter(cell => cell.image && cell.image.trim() !== '')
+    const drawPromises = cellsWithImages.map(async (cell, index) => {
       let cellX: number, cellY: number, cellWidth: number, cellHeight: number
 
       if (currentWorkMode.value === 'long') {
-        // 长图模式：使用固定的像素值
-        const cellSize = fixedCellSize.value
-        cellWidth = cellSize.width
-        cellHeight = cellSize.height
+        // 长图模式：使用导出时计算的固定像素值
+        cellWidth = exportCellSize.width
+        cellHeight = exportCellSize.height
 
         if (longImageDirection.value === 'horizontal') {
           cellX = index * cellWidth
@@ -1277,10 +1183,13 @@ async function exportCanvas() {
       // 导出时需要应用与页面相同的padding效果，保持视觉一致
       const padding = globalGap.value
 
-      // 计算实际的内容区域，确保不会出现负值
-      // 限制padding不能超过格子尺寸的一半，避免内容区域过小
-      const maxPadding = Math.min(padding, Math.min(cellWidth, cellHeight) / 2 - 1)
-      const safePadding = Math.max(0, maxPadding)
+      // 当间距为0时，直接使用0作为padding；否则进行安全计算
+      let safePadding = 0
+      if (padding > 0) {
+        // 限制padding不能超过格子尺寸的一半，避免内容区域过小
+        const maxPadding = Math.min(padding, Math.min(cellWidth, cellHeight) / 2 - 1)
+        safePadding = Math.max(0, maxPadding)
+      }
 
       const contentX = cellX + safePadding
       const contentY = cellY + safePadding
