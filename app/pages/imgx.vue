@@ -88,17 +88,17 @@ const templates: GridTemplate[] = [
     description: '九张图片网格排列',
     cells: [
       // 第一行
-      { borderRadius: 8, width: 33.33, height: 33.33, x: 0, y: 0, imageFit: 'cover' },
-      { borderRadius: 8, width: 33.33, height: 33.33, x: 33.33, y: 0, imageFit: 'cover' },
-      { borderRadius: 8, width: 33.34, height: 33.33, x: 66.66, y: 0, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.333333, height: 33.333333, x: 0, y: 0, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.333333, height: 33.333333, x: 33.333333, y: 0, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.333334, height: 33.333333, x: 66.666666, y: 0, imageFit: 'cover' },
       // 第二行
-      { borderRadius: 8, width: 33.33, height: 33.33, x: 0, y: 33.33, imageFit: 'cover' },
-      { borderRadius: 8, width: 33.33, height: 33.33, x: 33.33, y: 33.33, imageFit: 'cover' },
-      { borderRadius: 8, width: 33.34, height: 33.33, x: 66.66, y: 33.33, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.333333, height: 33.333333, x: 0, y: 33.333333, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.333333, height: 33.333333, x: 33.333333, y: 33.333333, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.333334, height: 33.333333, x: 66.666666, y: 33.333333, imageFit: 'cover' },
       // 第三行
-      { borderRadius: 8, width: 33.33, height: 33.34, x: 0, y: 66.66, imageFit: 'cover' },
-      { borderRadius: 8, width: 33.33, height: 33.34, x: 33.33, y: 66.66, imageFit: 'cover' },
-      { borderRadius: 8, width: 33.34, height: 33.34, x: 66.66, y: 66.66, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.333333, height: 33.333334, x: 0, y: 66.666666, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.333333, height: 33.333334, x: 33.333333, y: 66.666666, imageFit: 'cover' },
+      { borderRadius: 8, width: 33.333334, height: 33.333334, x: 66.666666, y: 66.666666, imageFit: 'cover' },
     ],
   },
 ]
@@ -1142,9 +1142,21 @@ async function exportCanvas() {
       }
     }
     else {
-      // 拼图模式：使用当前计算的画布尺寸
-      exportCanvasWidth = canvasDimensions.value.width
-      exportCanvasHeight = canvasDimensions.value.height
+      // 拼图模式：使用固定的基准尺寸来计算，确保导出与预览一致
+      const targetRatio = selectedAspectRatio.value.ratio
+      const baseDimension = 800 // 使用固定的基准尺寸
+
+      if (targetRatio >= 1) {
+        // 横向或正方形：以宽度为基准
+        exportCanvasWidth = baseDimension
+        exportCanvasHeight = baseDimension / targetRatio
+      }
+      else {
+        // 纵向：以高度为基准
+        exportCanvasHeight = baseDimension
+        exportCanvasWidth = baseDimension * targetRatio
+      }
+
       exportCellSize = { width: 0, height: 0 } // 拼图模式不需要
     }
 
