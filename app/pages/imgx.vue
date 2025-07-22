@@ -1348,21 +1348,29 @@ async function exportCanvas() {
 
             // 创建圆角裁剪路径（基于内容区域）
             if (cell.borderRadius > 0) {
-              // 使用更宽松的圆角限制，保持与页面显示一致
-              const maxRadius = Math.min(contentWidth / 2, contentHeight / 2)
-              const radius = Math.min(cell.borderRadius, maxRadius)
+              const minDimension = Math.min(contentWidth, contentHeight)
+              // 限制圆角半径不超过短边的一半，与CSS表现一致
+              const radius = Math.min(cell.borderRadius, minDimension / 2)
+              const isSquare = Math.abs(contentWidth - contentHeight) <= 2 // 允许2像素的误差
 
               ctx.beginPath()
-              // 手动绘制圆角矩形路径以获得更好的控制
-              ctx.moveTo(contentX + radius, contentY)
-              ctx.lineTo(contentX + contentWidth - radius, contentY)
-              ctx.quadraticCurveTo(contentX + contentWidth, contentY, contentX + contentWidth, contentY + radius)
-              ctx.lineTo(contentX + contentWidth, contentY + contentHeight - radius)
-              ctx.quadraticCurveTo(contentX + contentWidth, contentY + contentHeight, contentX + contentWidth - radius, contentY + contentHeight)
-              ctx.lineTo(contentX + radius, contentY + contentHeight)
-              ctx.quadraticCurveTo(contentX, contentY + contentHeight, contentX, contentY + contentHeight - radius)
-              ctx.lineTo(contentX, contentY + radius)
-              ctx.quadraticCurveTo(contentX, contentY, contentX + radius, contentY)
+
+              // 只有正方形且圆角值大于等于最小尺寸的一半时，才绘制完美圆形
+              if (isSquare && radius >= minDimension / 2) {
+                const centerX = contentX + contentWidth / 2
+                const centerY = contentY + contentHeight / 2
+                const circleRadius = minDimension / 2
+                ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2)
+              }
+              else {
+                // 使用 arcTo 方法绘制圆角矩形
+                ctx.moveTo(contentX + radius, contentY)
+                ctx.arcTo(contentX + contentWidth, contentY, contentX + contentWidth, contentY + radius, radius)
+                ctx.arcTo(contentX + contentWidth, contentY + contentHeight, contentX + contentWidth - radius, contentY + contentHeight, radius)
+                ctx.arcTo(contentX, contentY + contentHeight, contentX, contentY + contentHeight - radius, radius)
+                ctx.arcTo(contentX, contentY, contentX + radius, contentY, radius)
+              }
+
               ctx.closePath()
               ctx.clip()
             }
