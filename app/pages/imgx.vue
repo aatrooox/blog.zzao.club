@@ -1031,11 +1031,23 @@ const fixedCellSize = computed(() => {
     // 横向长图：每个格子的高度固定，宽度按比例计算
     cellHeight = containerHeight * 0.9
     cellWidth = cellHeight * targetRatio
+
+    // 确保格子宽度不超过容器宽度的90%
+    if (cellWidth > containerWidth * 0.9) {
+      cellWidth = containerWidth * 0.9
+      cellHeight = cellWidth / targetRatio
+    }
   }
   else {
     // 纵向长图：每个格子的宽度固定，高度按比例计算
     cellWidth = containerWidth * 0.9
     cellHeight = cellWidth / targetRatio
+
+    // 确保格子高度不超过容器高度的90%
+    if (cellHeight > containerHeight * 0.9) {
+      cellHeight = containerHeight * 0.9
+      cellWidth = cellHeight * targetRatio
+    }
   }
 
   return {
