@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.13.4
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.13.3...v1.13.4)
+
+### 🩹 Fixes
+
+- 长图模式切换比例时格子尺寸过大问题 ([164d155](https://github.com/aatrooox/blog.zzao.club/commit/164d155))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.13.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.13.2...v1.13.3)
