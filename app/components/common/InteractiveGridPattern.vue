@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { computed, type HTMLAttributes, ref } from 'vue'
+import type { HTMLAttributes } from 'vue'
+import { computed, ref } from 'vue'
 import { cn } from '@/lib/utils'
 
 interface InteractiveGridPatternProps {

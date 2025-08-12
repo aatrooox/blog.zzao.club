@@ -1,76 +1,74 @@
-
 /**
  * Client
-**/
+ */
 
-import * as runtime from './runtime/library.js';
+import * as runtime from './runtime/library.js'
 import $Types = runtime.Types // general types
-import $Public = runtime.Types.Public
-import $Utils = runtime.Types.Utils
 import $Extensions = runtime.Types.Extensions
+import $Public = runtime.Types.Public
 import $Result = runtime.Types.Result
+import $Utils = runtime.Types.Utils
 
 export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
-
 /**
  * Model User
- * 
+ *
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
  * Model UserConfig
- * 
+ *
  */
 export type UserConfig = $Result.DefaultSelection<Prisma.$UserConfigPayload>
 /**
  * Model AccessToken
- * 
+ *
  */
 export type AccessToken = $Result.DefaultSelection<Prisma.$AccessTokenPayload>
 /**
  * Model OAuth
- * 
+ *
  */
 export type OAuth = $Result.DefaultSelection<Prisma.$OAuthPayload>
 /**
  * Model BlogComment
- * 
+ *
  */
 export type BlogComment = $Result.DefaultSelection<Prisma.$BlogCommentPayload>
 /**
  * Model BlogExplain
- * 
+ *
  */
 export type BlogExplain = $Result.DefaultSelection<Prisma.$BlogExplainPayload>
 /**
  * Model BlogSubComment
- * 
+ *
  */
 export type BlogSubComment = $Result.DefaultSelection<Prisma.$BlogSubCommentPayload>
 /**
  * Model BlogLike
- * 
+ *
  */
 export type BlogLike = $Result.DefaultSelection<Prisma.$BlogLikePayload>
 /**
  * Model BlogMemo
- * 
+ *
  */
 export type BlogMemo = $Result.DefaultSelection<Prisma.$BlogMemoPayload>
 /**
  * Model MemoTag
- * 
+ *
  */
 export type MemoTag = $Result.DefaultSelection<Prisma.$MemoTagPayload>
 /**
  * Model MemoTagRelations
- * 
+ *
  */
 export type MemoTagRelations = $Result.DefaultSelection<Prisma.$MemoTagRelationsPayload>
 /**
  * Model GarminActivity
- * 
+ *
  */
 export type GarminActivity = $Result.DefaultSelection<Prisma.$GarminActivityPayload>
 
@@ -91,11 +89,11 @@ export type GarminActivity = $Result.DefaultSelection<Prisma.$GarminActivityPayl
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
   const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
-  ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+  ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
 
-    /**
+  /**
    * ##  Prisma Client ʲˢ
    *
    * Type-safe database client for TypeScript & Node.js
@@ -110,18 +108,18 @@ export class PrismaClient<
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
    */
 
-  constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
-  $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
+  constructor(optionsArg?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>)
+  $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient
 
   /**
    * Connect with the database
    */
-  $connect(): $Utils.JsPromise<void>;
+  $connect(): $Utils.JsPromise<void>
 
   /**
    * Disconnect from the database
    */
-  $disconnect(): $Utils.JsPromise<void>;
+  $disconnect(): $Utils.JsPromise<void>
 
   /**
    * Add a middleware
@@ -130,7 +128,7 @@ export class PrismaClient<
    */
   $use(cb: Prisma.Middleware): void
 
-/**
+  /**
    * Executes a prepared raw query and returns the number of affected rows.
    * @example
    * ```
@@ -139,7 +137,7 @@ export class PrismaClient<
    *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
-  $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
+  $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>
 
   /**
    * Executes a raw query and returns the number of affected rows.
@@ -151,7 +149,7 @@ export class PrismaClient<
    *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
-  $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
+  $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>
 
   /**
    * Performs a prepared raw query and returns the `SELECT` data.
@@ -162,7 +160,7 @@ export class PrismaClient<
    *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
-  $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
+  $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>
 
   /**
    * Performs a raw query and returns the `SELECT` data.
@@ -174,8 +172,7 @@ export class PrismaClient<
    *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
-  $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
-
+  $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>
 
   /**
    * Allows the running of a sequence of read/write operations that are guaranteed to either succeed or fail as a whole.
@@ -187,137 +184,136 @@ export class PrismaClient<
    *   prisma.user.create({ data: { name: 'Alice' } }),
    * ])
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
    */
   $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
 
-
-  $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<ClientOptions>, ExtArgs, $Utils.Call<Prisma.TypeMapCb<ClientOptions>, {
+  $extends: $Extensions.ExtendsHook<'extends', Prisma.TypeMapCb<ClientOptions>, ExtArgs, $Utils.Call<Prisma.TypeMapCb<ClientOptions>, {
     extArgs: ExtArgs
   }>>
 
-      /**
+  /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Users
-    * const users = await prisma.user.findMany()
-    * ```
-    */
-  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more Users
+   * const users = await prisma.user.findMany()
+   * ```
+   */
+  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>
 
   /**
    * `prisma.userConfig`: Exposes CRUD operations for the **UserConfig** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more UserConfigs
-    * const userConfigs = await prisma.userConfig.findMany()
-    * ```
-    */
-  get userConfig(): Prisma.UserConfigDelegate<ExtArgs, ClientOptions>;
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more UserConfigs
+   * const userConfigs = await prisma.userConfig.findMany()
+   * ```
+   */
+  get userConfig(): Prisma.UserConfigDelegate<ExtArgs, ClientOptions>
 
   /**
    * `prisma.accessToken`: Exposes CRUD operations for the **AccessToken** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more AccessTokens
-    * const accessTokens = await prisma.accessToken.findMany()
-    * ```
-    */
-  get accessToken(): Prisma.AccessTokenDelegate<ExtArgs, ClientOptions>;
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more AccessTokens
+   * const accessTokens = await prisma.accessToken.findMany()
+   * ```
+   */
+  get accessToken(): Prisma.AccessTokenDelegate<ExtArgs, ClientOptions>
 
   /**
    * `prisma.oAuth`: Exposes CRUD operations for the **OAuth** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more OAuths
-    * const oAuths = await prisma.oAuth.findMany()
-    * ```
-    */
-  get oAuth(): Prisma.OAuthDelegate<ExtArgs, ClientOptions>;
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more OAuths
+   * const oAuths = await prisma.oAuth.findMany()
+   * ```
+   */
+  get oAuth(): Prisma.OAuthDelegate<ExtArgs, ClientOptions>
 
   /**
    * `prisma.blogComment`: Exposes CRUD operations for the **BlogComment** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more BlogComments
-    * const blogComments = await prisma.blogComment.findMany()
-    * ```
-    */
-  get blogComment(): Prisma.BlogCommentDelegate<ExtArgs, ClientOptions>;
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more BlogComments
+   * const blogComments = await prisma.blogComment.findMany()
+   * ```
+   */
+  get blogComment(): Prisma.BlogCommentDelegate<ExtArgs, ClientOptions>
 
   /**
    * `prisma.blogExplain`: Exposes CRUD operations for the **BlogExplain** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more BlogExplains
-    * const blogExplains = await prisma.blogExplain.findMany()
-    * ```
-    */
-  get blogExplain(): Prisma.BlogExplainDelegate<ExtArgs, ClientOptions>;
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more BlogExplains
+   * const blogExplains = await prisma.blogExplain.findMany()
+   * ```
+   */
+  get blogExplain(): Prisma.BlogExplainDelegate<ExtArgs, ClientOptions>
 
   /**
    * `prisma.blogSubComment`: Exposes CRUD operations for the **BlogSubComment** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more BlogSubComments
-    * const blogSubComments = await prisma.blogSubComment.findMany()
-    * ```
-    */
-  get blogSubComment(): Prisma.BlogSubCommentDelegate<ExtArgs, ClientOptions>;
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more BlogSubComments
+   * const blogSubComments = await prisma.blogSubComment.findMany()
+   * ```
+   */
+  get blogSubComment(): Prisma.BlogSubCommentDelegate<ExtArgs, ClientOptions>
 
   /**
    * `prisma.blogLike`: Exposes CRUD operations for the **BlogLike** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more BlogLikes
-    * const blogLikes = await prisma.blogLike.findMany()
-    * ```
-    */
-  get blogLike(): Prisma.BlogLikeDelegate<ExtArgs, ClientOptions>;
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more BlogLikes
+   * const blogLikes = await prisma.blogLike.findMany()
+   * ```
+   */
+  get blogLike(): Prisma.BlogLikeDelegate<ExtArgs, ClientOptions>
 
   /**
    * `prisma.blogMemo`: Exposes CRUD operations for the **BlogMemo** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more BlogMemos
-    * const blogMemos = await prisma.blogMemo.findMany()
-    * ```
-    */
-  get blogMemo(): Prisma.BlogMemoDelegate<ExtArgs, ClientOptions>;
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more BlogMemos
+   * const blogMemos = await prisma.blogMemo.findMany()
+   * ```
+   */
+  get blogMemo(): Prisma.BlogMemoDelegate<ExtArgs, ClientOptions>
 
   /**
    * `prisma.memoTag`: Exposes CRUD operations for the **MemoTag** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more MemoTags
-    * const memoTags = await prisma.memoTag.findMany()
-    * ```
-    */
-  get memoTag(): Prisma.MemoTagDelegate<ExtArgs, ClientOptions>;
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more MemoTags
+   * const memoTags = await prisma.memoTag.findMany()
+   * ```
+   */
+  get memoTag(): Prisma.MemoTagDelegate<ExtArgs, ClientOptions>
 
   /**
    * `prisma.memoTagRelations`: Exposes CRUD operations for the **MemoTagRelations** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more MemoTagRelations
-    * const memoTagRelations = await prisma.memoTagRelations.findMany()
-    * ```
-    */
-  get memoTagRelations(): Prisma.MemoTagRelationsDelegate<ExtArgs, ClientOptions>;
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more MemoTagRelations
+   * const memoTagRelations = await prisma.memoTagRelations.findMany()
+   * ```
+   */
+  get memoTagRelations(): Prisma.MemoTagRelationsDelegate<ExtArgs, ClientOptions>
 
   /**
    * `prisma.garminActivity`: Exposes CRUD operations for the **GarminActivity** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more GarminActivities
-    * const garminActivities = await prisma.garminActivity.findMany()
-    * ```
-    */
-  get garminActivity(): Prisma.GarminActivityDelegate<ExtArgs, ClientOptions>;
+   * Example usage:
+   * ```ts
+   * // Fetch zero or more GarminActivities
+   * const garminActivities = await prisma.garminActivity.findMany()
+   * ```
+   */
+  get garminActivity(): Prisma.GarminActivityDelegate<ExtArgs, ClientOptions>
 }
 
 export namespace Prisma {
@@ -348,8 +344,6 @@ export namespace Prisma {
   export import raw = runtime.raw
   export import Sql = runtime.Sql
 
-
-
   /**
    * Decimal.js
    */
@@ -366,8 +360,8 @@ export namespace Prisma {
   export type MetricHistogramBucket = runtime.MetricHistogramBucket
 
   /**
-  * Extensions
-  */
+   * Extensions
+   */
   export import Extension = $Extensions.UserArgs
   export import getExtensionContext = runtime.Extensions.getExtensionContext
   export import Args = $Public.Args
@@ -379,7 +373,7 @@ export namespace Prisma {
    * Prisma Client JS version: 6.13.0
    * Query Engine version: 361e86d0ea4987e9f53a565309b3eed797a6bcbd
    */
-  export type PrismaVersion = {
+  export interface PrismaVersion {
     client: string
   }
 
@@ -388,7 +382,6 @@ export namespace Prisma {
   /**
    * Utility Types
    */
-
 
   export import JsonObject = runtime.JsonObject
   export import JsonArray = runtime.JsonArray
@@ -404,36 +397,36 @@ export namespace Prisma {
    */
   namespace NullTypes {
     /**
-    * Type of `Prisma.DbNull`.
-    *
-    * You cannot use other instances of this class. Please use the `Prisma.DbNull` value.
-    *
-    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
-    */
+     * Type of `Prisma.DbNull`.
+     *
+     * You cannot use other instances of this class. Please use the `Prisma.DbNull` value.
+     *
+     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+     */
     class DbNull {
       private DbNull: never
       private constructor()
     }
 
     /**
-    * Type of `Prisma.JsonNull`.
-    *
-    * You cannot use other instances of this class. Please use the `Prisma.JsonNull` value.
-    *
-    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
-    */
+     * Type of `Prisma.JsonNull`.
+     *
+     * You cannot use other instances of this class. Please use the `Prisma.JsonNull` value.
+     *
+     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+     */
     class JsonNull {
       private JsonNull: never
       private constructor()
     }
 
     /**
-    * Type of `Prisma.AnyNull`.
-    *
-    * You cannot use other instances of this class. Please use the `Prisma.AnyNull` value.
-    *
-    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
-    */
+     * Type of `Prisma.AnyNull`.
+     *
+     * You cannot use other instances of this class. Please use the `Prisma.AnyNull` value.
+     *
+     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+     */
     class AnyNull {
       private AnyNull: never
       private constructor()
@@ -461,12 +454,12 @@ export namespace Prisma {
    */
   export const AnyNull: NullTypes.AnyNull
 
-  type SelectAndInclude = {
+  interface SelectAndInclude {
     select: any
     include: any
   }
 
-  type SelectAndOmit = {
+  interface SelectAndOmit {
     select: any
     omit: any
   }
@@ -474,7 +467,7 @@ export namespace Prisma {
   /**
    * Get the type of the value, that the Promise holds.
    */
-  export type PromiseType<T extends PromiseLike<any>> = T extends PromiseLike<infer U> ? U : T;
+  export type PromiseType<T extends PromiseLike<any>> = T extends PromiseLike<infer U> ? U : T
 
   /**
    * Get the return type of a function which returns a Promise.
@@ -485,11 +478,10 @@ export namespace Prisma {
    * From T, pick a set of properties whose keys are in the union K
    */
   type Prisma__Pick<T, K extends keyof T> = {
-      [P in K]: T[P];
-  };
+    [P in K]: T[P];
+  }
 
-
-  export type Enumerable<T> = T | Array<T>;
+  export type Enumerable<T> = T | Array<T>
 
   export type RequiredKeys<T> = {
     [K in keyof T]-?: {} extends Prisma__Pick<T, K> ? never : K
@@ -507,7 +499,7 @@ export namespace Prisma {
    */
   export type Subset<T, U> = {
     [key in keyof T]: key extends keyof U ? T[key] : never;
-  };
+  }
 
   /**
    * SelectSubset
@@ -516,12 +508,12 @@ export namespace Prisma {
    */
   export type SelectSubset<T, U> = {
     [key in keyof T]: key extends keyof U ? T[key] : never
-  } &
-    (T extends SelectAndInclude
-      ? 'Please either choose `select` or `include`.'
-      : T extends SelectAndOmit
-        ? 'Please either choose `select` or `omit`.'
-        : {})
+  }
+  & (T extends SelectAndInclude
+    ? 'Please either choose `select` or `include`.'
+    : T extends SelectAndOmit
+      ? 'Please either choose `select` or `omit`.'
+      : {})
 
   /**
    * Subset + Intersection
@@ -529,37 +521,35 @@ export namespace Prisma {
    */
   export type SubsetIntersection<T, U, K> = {
     [key in keyof T]: key extends keyof U ? T[key] : never
-  } &
-    K
+  }
+  & K
 
-  type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
+  type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never }
 
   /**
    * XOR is needed to have a real mutually exclusive union type
    * https://stackoverflow.com/questions/42123407/does-typescript-support-mutually-exclusive-types
    */
-  type XOR<T, U> =
-    T extends object ?
-    U extends object ?
-      (Without<T, U> & U) | (Without<U, T> & T)
-    : U : T
-
+  type XOR<T, U>
+    = T extends object
+      ? U extends object
+        ? (Without<T, U> & U) | (Without<U, T> & T)
+        : U : T
 
   /**
    * Is T a Record?
    */
   type IsObject<T extends any> = T extends Array<any>
-  ? False
-  : T extends Date
-  ? False
-  : T extends Uint8Array
-  ? False
-  : T extends BigInt
-  ? False
-  : T extends object
-  ? True
-  : False
-
+    ? False
+    : T extends Date
+      ? False
+      : T extends Uint8Array
+        ? False
+        : T extends bigint
+          ? False
+          : T extends object
+            ? True
+            : False
 
   /**
    * If it's T[], return T
@@ -570,8 +560,8 @@ export namespace Prisma {
    * From ts-toolbelt
    */
 
-  type __Either<O extends object, K extends Key> = Omit<O, K> &
-    {
+  type __Either<O extends object, K extends Key> = Omit<O, K>
+    & {
       // Merge all but K
       [P in K]: Prisma__Pick<O, P & keyof O> // With K possibilities
     }[K]
@@ -583,7 +573,7 @@ export namespace Prisma {
   type _Either<
     O extends object,
     K extends Key,
-    strict extends Boolean
+    strict extends Boolean,
   > = {
     1: EitherStrict<O, K>
     0: EitherLoose<O, K>
@@ -592,7 +582,7 @@ export namespace Prisma {
   type Either<
     O extends object,
     K extends Key,
-    strict extends Boolean = 1
+    strict extends Boolean = 1,
   > = O extends unknown ? _Either<O, K, strict> : never
 
   export type Union = any
@@ -601,7 +591,7 @@ export namespace Prisma {
     [K in keyof O]: O[K] extends undefined ? At<O1, K> : O[K]
   } & {}
 
-  /** Helper Types for "Merge" **/
+  /** Helper Types for "Merge" */
   export type IntersectOf<U extends Union> = (
     U extends unknown ? (k: U) => void : never
   ) extends (k: infer I) => void
@@ -609,54 +599,55 @@ export namespace Prisma {
     : never
 
   export type Overwrite<O extends object, O1 extends object> = {
-      [K in keyof O]: K extends keyof O1 ? O1[K] : O[K];
-  } & {};
+    [K in keyof O]: K extends keyof O1 ? O1[K] : O[K];
+  } & {}
 
   type _Merge<U extends object> = IntersectOf<Overwrite<U, {
-      [K in keyof U]-?: At<U, K>;
-  }>>;
+    [K in keyof U]-?: At<U, K>;
+  }>>
 
-  type Key = string | number | symbol;
-  type AtBasic<O extends object, K extends Key> = K extends keyof O ? O[K] : never;
-  type AtStrict<O extends object, K extends Key> = O[K & keyof O];
-  type AtLoose<O extends object, K extends Key> = O extends unknown ? AtStrict<O, K> : never;
+  type Key = string | number | symbol
+  type AtBasic<O extends object, K extends Key> = K extends keyof O ? O[K] : never
+  type AtStrict<O extends object, K extends Key> = O[K & keyof O]
+  type AtLoose<O extends object, K extends Key> = O extends unknown ? AtStrict<O, K> : never
   export type At<O extends object, K extends Key, strict extends Boolean = 1> = {
-      1: AtStrict<O, K>;
-      0: AtLoose<O, K>;
-  }[strict];
+    1: AtStrict<O, K>
+    0: AtLoose<O, K>
+  }[strict]
 
   export type ComputeRaw<A extends any> = A extends Function ? A : {
     [K in keyof A]: A[K];
-  } & {};
+  } & {}
 
   export type OptionalFlat<O> = {
     [K in keyof O]?: O[K];
-  } & {};
+  } & {}
 
   type _Record<K extends keyof any, T> = {
     [P in K]: T;
-  };
+  }
 
   // cause typescript not to expand types and preserve names
-  type NoExpand<T> = T extends unknown ? T : never;
+  type NoExpand<T> = T extends unknown ? T : never
 
   // this type assumes the passed object is entirely optional
   type AtLeast<O extends object, K extends string> = NoExpand<
     O extends unknown
-    ? | (K extends keyof O ? { [P in K]: O[P] } & O : O)
-      | {[P in keyof O as P extends K ? P : never]-?: O[P]} & O
-    : never>;
+      ? | (K extends keyof O ? { [P in K]: O[P] } & O : O)
+      | { [P in keyof O as P extends K ? P : never]-?: O[P] } & O
+      : never
+>
 
-  type _Strict<U, _U = U> = U extends unknown ? U & OptionalFlat<_Record<Exclude<Keys<_U>, keyof U>, never>> : never;
+  type _Strict<U, _U = U> = U extends unknown ? U & OptionalFlat<_Record<Exclude<Keys<_U>, keyof U>, never>> : never
 
-  export type Strict<U extends object> = ComputeRaw<_Strict<U>>;
-  /** End Helper Types for "Merge" **/
+  export type Strict<U extends object> = ComputeRaw<_Strict<U>>
+  /** End Helper Types for "Merge" */
 
-  export type Merge<U extends object> = ComputeRaw<_Merge<Strict<U>>>;
+  export type Merge<U extends object> = ComputeRaw<_Merge<Strict<U>>>
 
   /**
   A [[Boolean]]
-  */
+   */
   export type Boolean = True | False
 
   // /**
@@ -666,7 +657,7 @@ export namespace Prisma {
 
   /**
   0
-  */
+   */
   export type False = 0
 
   export type Not<B extends Boolean> = {
@@ -677,8 +668,8 @@ export namespace Prisma {
   export type Extends<A1 extends any, A2 extends any> = [A1] extends [never]
     ? 0 // anything `never` is false
     : A1 extends A2
-    ? 1
-    : 0
+      ? 1
+      : 0
 
   export type Has<U extends Union, U1 extends Union> = Not<
     Extends<Exclude<U1, U>, U1>
@@ -697,11 +688,9 @@ export namespace Prisma {
 
   export type Keys<U extends Union> = U extends unknown ? keyof U : never
 
-  type Cast<A, B> = A extends B ? A : B;
+  type Cast<A, B> = A extends B ? A : B
 
-  export const type: unique symbol;
-
-
+  export const type: unique symbol
 
   /**
    * Used by group by
@@ -715,7 +704,7 @@ export namespace Prisma {
 
   type FieldPaths<
     T,
-    U = Omit<T, '_avg' | '_sum' | '_count' | '_min' | '_max'>
+    U = Omit<T, '_avg' | '_sum' | '_count' | '_min' | '_max'>,
   > = IsObject<T> extends True ? U : T
 
   type GetHavingFields<T> = {
@@ -724,14 +713,14 @@ export namespace Prisma {
       Extends<'NOT', K>
     > extends True
       ? // infer is only needed to not hit TS limit
-        // based on the brilliant idea of Pierre-Antoine Mills
-        // https://github.com/microsoft/TypeScript/issues/30188#issuecomment-478938437
-        T[K] extends infer TK
+    // based on the brilliant idea of Pierre-Antoine Mills
+    // https://github.com/microsoft/TypeScript/issues/30188#issuecomment-478938437
+      T[K] extends infer TK
         ? GetHavingFields<UnEnumerate<TK> extends object ? Merge<UnEnumerate<TK>> : never>
         : never
       : {} extends FieldPaths<T[K]>
-      ? never
-      : K
+          ? never
+          : K
   }[keyof T]
 
   /**
@@ -751,35 +740,32 @@ export namespace Prisma {
    */
   type ExcludeUnderscoreKeys<T extends string> = T extends `_${string}` ? never : T
 
-
   export type FieldRef<Model, FieldType> = runtime.FieldRef<Model, FieldType>
 
   type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRef<Model, FieldType>
 
-
   export const ModelName: {
-    User: 'User',
-    UserConfig: 'UserConfig',
-    AccessToken: 'AccessToken',
-    OAuth: 'OAuth',
-    BlogComment: 'BlogComment',
-    BlogExplain: 'BlogExplain',
-    BlogSubComment: 'BlogSubComment',
-    BlogLike: 'BlogLike',
-    BlogMemo: 'BlogMemo',
-    MemoTag: 'MemoTag',
-    MemoTagRelations: 'MemoTagRelations',
+    User: 'User'
+    UserConfig: 'UserConfig'
+    AccessToken: 'AccessToken'
+    OAuth: 'OAuth'
+    BlogComment: 'BlogComment'
+    BlogExplain: 'BlogExplain'
+    BlogSubComment: 'BlogSubComment'
+    BlogLike: 'BlogLike'
+    BlogMemo: 'BlogMemo'
+    MemoTag: 'MemoTag'
+    MemoTagRelations: 'MemoTagRelations'
     GarminActivity: 'GarminActivity'
-  };
+  }
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
 
-
-  export type Datasources = {
+  export interface Datasources {
     db?: Datasource
   }
 
-  interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
+  interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{ extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
     returns: Prisma.TypeMap<this['params']['extArgs'], ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}>
   }
 
@@ -788,7 +774,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "userConfig" | "accessToken" | "oAuth" | "blogComment" | "blogExplain" | "blogSubComment" | "blogLike" | "blogMemo" | "memoTag" | "memoTagRelations" | "garminActivity"
+      modelProps: 'user' | 'userConfig' | 'accessToken' | 'oAuth' | 'blogComment' | 'blogExplain' | 'blogSubComment' | 'blogLike' | 'blogMemo' | 'memoTag' | 'memoTagRelations' | 'garminActivity'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1590,25 +1576,25 @@ export namespace Prisma {
       payload: any
       operations: {
         $executeRaw: {
-          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
+          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]]
           result: any
         }
         $executeRawUnsafe: {
-          args: [query: string, ...values: any[]],
+          args: [query: string, ...values: any[]]
           result: any
         }
         $queryRaw: {
-          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
+          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]]
           result: any
         }
         $queryRawUnsafe: {
-          args: [query: string, ...values: any[]],
+          args: [query: string, ...values: any[]]
           result: any
         }
       }
     }
   }
-  export const defineExtension: $Extensions.ExtendsHook<"define", Prisma.TypeMapCb, $Extensions.DefaultArgs>
+  export const defineExtension: $Extensions.ExtendsHook<'define', Prisma.TypeMapCb, $Extensions.DefaultArgs>
   export type DefaultPrismaClient = PrismaClient
   export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
   export interface PrismaClientOptions {
@@ -1629,7 +1615,7 @@ export namespace Prisma {
      * ```
      * // Shorthand for `emit: 'stdout'`
      * log: ['query', 'info', 'warn', 'error']
-     * 
+     *
      * // Emit as events only
      * log: [
      *   { emit: 'event', level: 'query' },
@@ -1637,14 +1623,14 @@ export namespace Prisma {
      *   { emit: 'event', level: 'warn' }
      *   { emit: 'event', level: 'error' }
      * ]
-     * 
+     *
      * / Emit as events and log to stdout
      * og: [
      *  { emit: 'stdout', level: 'query' },
      *  { emit: 'stdout', level: 'info' },
      *  { emit: 'stdout', level: 'warn' }
      *  { emit: 'stdout', level: 'error' }
-     * 
+     *
      * ```
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
@@ -1661,7 +1647,7 @@ export namespace Prisma {
     }
     /**
      * Global configuration for omitting model fields by default.
-     * 
+     *
      * @example
      * ```
      * const prisma = new PrismaClient({
@@ -1675,7 +1661,7 @@ export namespace Prisma {
      */
     omit?: Prisma.GlobalOmitConfig
   }
-  export type GlobalOmitConfig = {
+  export interface GlobalOmitConfig {
     user?: UserOmit
     userConfig?: UserConfigOmit
     accessToken?: AccessTokenOmit
@@ -1692,22 +1678,22 @@ export namespace Prisma {
 
   /* Types for Logging */
   export type LogLevel = 'info' | 'query' | 'warn' | 'error'
-  export type LogDefinition = {
+  export interface LogDefinition {
     level: LogLevel
     emit: 'stdout' | 'event'
   }
 
-  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
+  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never
 
   export type GetLogType<T> = CheckIsLogLevel<
     T extends LogDefinition ? T['level'] : T
-  >;
+  >
 
   export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
     ? GetLogType<T[number]>
-    : never;
+    : never
 
-  export type QueryEvent = {
+  export interface QueryEvent {
     timestamp: Date
     query: string
     params: string
@@ -1715,41 +1701,40 @@ export namespace Prisma {
     target: string
   }
 
-  export type LogEvent = {
+  export interface LogEvent {
     timestamp: Date
     message: string
     target: string
   }
   /* End Types for Logging */
 
-
-  export type PrismaAction =
-    | 'findUnique'
-    | 'findUniqueOrThrow'
-    | 'findMany'
-    | 'findFirst'
-    | 'findFirstOrThrow'
-    | 'create'
-    | 'createMany'
-    | 'createManyAndReturn'
-    | 'update'
-    | 'updateMany'
-    | 'updateManyAndReturn'
-    | 'upsert'
-    | 'delete'
-    | 'deleteMany'
-    | 'executeRaw'
-    | 'queryRaw'
-    | 'aggregate'
-    | 'count'
-    | 'runCommandRaw'
-    | 'findRaw'
-    | 'groupBy'
+  export type PrismaAction
+    = | 'findUnique'
+      | 'findUniqueOrThrow'
+      | 'findMany'
+      | 'findFirst'
+      | 'findFirstOrThrow'
+      | 'create'
+      | 'createMany'
+      | 'createManyAndReturn'
+      | 'update'
+      | 'updateMany'
+      | 'updateManyAndReturn'
+      | 'upsert'
+      | 'delete'
+      | 'deleteMany'
+      | 'executeRaw'
+      | 'queryRaw'
+      | 'aggregate'
+      | 'count'
+      | 'runCommandRaw'
+      | 'findRaw'
+      | 'groupBy'
 
   /**
    * These options are being passed into the middleware as "params"
    */
-  export type MiddlewareParams = {
+  export interface MiddlewareParams {
     model?: ModelName
     action: PrismaAction
     args: any
@@ -1766,14 +1751,14 @@ export namespace Prisma {
   ) => $Utils.JsPromise<T>
 
   // tested in getLogLevel.test.ts
-  export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
+  export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined
 
   /**
    * `PrismaClient` proxy available in interactive transactions.
    */
   export type TransactionClient = Omit<Prisma.DefaultPrismaClient, runtime.ITXClientDenyList>
 
-  export type Datasource = {
+  export interface Datasource {
     url?: string
   }
 
@@ -1781,12 +1766,11 @@ export namespace Prisma {
    * Count Types
    */
 
-
   /**
    * Count Type UserCountOutputType
    */
 
-  export type UserCountOutputType = {
+  export interface UserCountOutputType {
     comments: number
     sub_comments: number
     likes: number
@@ -1796,7 +1780,7 @@ export namespace Prisma {
     tags: number
   }
 
-  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     comments?: boolean | UserCountOutputTypeCountCommentsArgs
     sub_comments?: boolean | UserCountOutputTypeCountSub_commentsArgs
     likes?: boolean | UserCountOutputTypeCountLikesArgs
@@ -1810,7 +1794,7 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the UserCountOutputType
      */
@@ -1820,63 +1804,62 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: BlogCommentWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountSub_commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserCountOutputTypeCountSub_commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: BlogSubCommentWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: BlogLikeWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountOauthArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserCountOutputTypeCountOauthArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: OAuthWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountTokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserCountOutputTypeCountTokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: AccessTokenWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountMemosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserCountOutputTypeCountMemosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: BlogMemoWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: MemoTagWhereInput
   }
-
 
   /**
    * Count Type BlogCommentCountOutputType
    */
 
-  export type BlogCommentCountOutputType = {
+  export interface BlogCommentCountOutputType {
     sub_comments: number
     likes: number
   }
 
-  export type BlogCommentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     sub_comments?: boolean | BlogCommentCountOutputTypeCountSub_commentsArgs
     likes?: boolean | BlogCommentCountOutputTypeCountLikesArgs
   }
@@ -1885,7 +1868,7 @@ export namespace Prisma {
   /**
    * BlogCommentCountOutputType without action
    */
-  export type BlogCommentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogCommentCountOutputType
      */
@@ -1895,27 +1878,26 @@ export namespace Prisma {
   /**
    * BlogCommentCountOutputType without action
    */
-  export type BlogCommentCountOutputTypeCountSub_commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentCountOutputTypeCountSub_commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: BlogSubCommentWhereInput
   }
 
   /**
    * BlogCommentCountOutputType without action
    */
-  export type BlogCommentCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: BlogLikeWhereInput
   }
-
 
   /**
    * Count Type BlogSubCommentCountOutputType
    */
 
-  export type BlogSubCommentCountOutputType = {
+  export interface BlogSubCommentCountOutputType {
     likes: number
   }
 
-  export type BlogSubCommentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     likes?: boolean | BlogSubCommentCountOutputTypeCountLikesArgs
   }
 
@@ -1923,7 +1905,7 @@ export namespace Prisma {
   /**
    * BlogSubCommentCountOutputType without action
    */
-  export type BlogSubCommentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogSubCommentCountOutputType
      */
@@ -1933,22 +1915,21 @@ export namespace Prisma {
   /**
    * BlogSubCommentCountOutputType without action
    */
-  export type BlogSubCommentCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: BlogLikeWhereInput
   }
-
 
   /**
    * Count Type BlogMemoCountOutputType
    */
 
-  export type BlogMemoCountOutputType = {
+  export interface BlogMemoCountOutputType {
     tags: number
     comments: number
     likes: number
   }
 
-  export type BlogMemoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     tags?: boolean | BlogMemoCountOutputTypeCountTagsArgs
     comments?: boolean | BlogMemoCountOutputTypeCountCommentsArgs
     likes?: boolean | BlogMemoCountOutputTypeCountLikesArgs
@@ -1958,7 +1939,7 @@ export namespace Prisma {
   /**
    * BlogMemoCountOutputType without action
    */
-  export type BlogMemoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogMemoCountOutputType
      */
@@ -1968,34 +1949,33 @@ export namespace Prisma {
   /**
    * BlogMemoCountOutputType without action
    */
-  export type BlogMemoCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: MemoTagRelationsWhereInput
   }
 
   /**
    * BlogMemoCountOutputType without action
    */
-  export type BlogMemoCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoCountOutputTypeCountCommentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: BlogCommentWhereInput
   }
 
   /**
    * BlogMemoCountOutputType without action
    */
-  export type BlogMemoCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoCountOutputTypeCountLikesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: BlogLikeWhereInput
   }
-
 
   /**
    * Count Type MemoTagCountOutputType
    */
 
-  export type MemoTagCountOutputType = {
+  export interface MemoTagCountOutputType {
     memos: number
   }
 
-  export type MemoTagCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     memos?: boolean | MemoTagCountOutputTypeCountMemosArgs
   }
 
@@ -2003,7 +1983,7 @@ export namespace Prisma {
   /**
    * MemoTagCountOutputType without action
    */
-  export type MemoTagCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTagCountOutputType
      */
@@ -2013,10 +1993,9 @@ export namespace Prisma {
   /**
    * MemoTagCountOutputType without action
    */
-  export type MemoTagCountOutputTypeCountMemosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagCountOutputTypeCountMemosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: MemoTagRelationsWhereInput
   }
-
 
   /**
    * Models
@@ -2026,7 +2005,7 @@ export namespace Prisma {
    * Model User
    */
 
-  export type AggregateUser = {
+  export interface AggregateUser {
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -2034,15 +2013,15 @@ export namespace Prisma {
     _max: UserMaxAggregateOutputType | null
   }
 
-  export type UserAvgAggregateOutputType = {
+  export interface UserAvgAggregateOutputType {
     status: number | null
   }
 
-  export type UserSumAggregateOutputType = {
+  export interface UserSumAggregateOutputType {
     status: number | null
   }
 
-  export type UserMinAggregateOutputType = {
+  export interface UserMinAggregateOutputType {
     id: string | null
     email: string | null
     phone: string | null
@@ -2055,7 +2034,7 @@ export namespace Prisma {
     status: number | null
   }
 
-  export type UserMaxAggregateOutputType = {
+  export interface UserMaxAggregateOutputType {
     id: string | null
     email: string | null
     phone: string | null
@@ -2068,7 +2047,7 @@ export namespace Prisma {
     status: number | null
   }
 
-  export type UserCountAggregateOutputType = {
+  export interface UserCountAggregateOutputType {
     id: number
     email: number
     phone: number
@@ -2082,16 +2061,15 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type UserAvgAggregateInputType = {
+  export interface UserAvgAggregateInputType {
     status?: true
   }
 
-  export type UserSumAggregateInputType = {
+  export interface UserSumAggregateInputType {
     status?: true
   }
 
-  export type UserMinAggregateInputType = {
+  export interface UserMinAggregateInputType {
     id?: true
     email?: true
     phone?: true
@@ -2104,7 +2082,7 @@ export namespace Prisma {
     status?: true
   }
 
-  export type UserMaxAggregateInputType = {
+  export interface UserMaxAggregateInputType {
     id?: true
     email?: true
     phone?: true
@@ -2117,7 +2095,7 @@ export namespace Prisma {
     status?: true
   }
 
-  export type UserCountAggregateInputType = {
+  export interface UserCountAggregateInputType {
     id?: true
     email?: true
     phone?: true
@@ -2131,79 +2109,76 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which User to aggregate.
      */
     where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Users to fetch.
      */
     orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Users
-    **/
+     */
     _count?: true | UserCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
-    **/
+     */
     _avg?: UserAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
-    **/
+     */
     _sum?: UserSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
-    **/
+     */
     _min?: UserMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
-    **/
+     */
     _max?: UserMaxAggregateInputType
   }
 
   export type GetUserAggregateType<T extends UserAggregateArgs> = {
-        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
+    [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateUser[P]>
       : GetScalarType<T[P], AggregateUser[P]>
   }
 
-
-
-
-  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: UserWhereInput
     orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
     by: UserScalarFieldEnum[] | UserScalarFieldEnum
@@ -2217,7 +2192,7 @@ export namespace Prisma {
     _max?: UserMaxAggregateInputType
   }
 
-  export type UserGroupByOutputType = {
+  export interface UserGroupByOutputType {
     id: string
     email: string | null
     phone: string | null
@@ -2237,17 +2212,16 @@ export namespace Prisma {
 
   type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<UserGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], UserGroupByOutputType[P]>
+      PickEnumerable<UserGroupByOutputType, T['by']>
+      & {
+        [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
             : GetScalarType<T[P], UserGroupByOutputType[P]>
-        }
+          : GetScalarType<T[P], UserGroupByOutputType[P]>
+      }
       >
     >
-
 
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
@@ -2269,11 +2243,9 @@ export namespace Prisma {
     memos?: boolean | User$memosArgs<ExtArgs>
     tags?: boolean | User$tagsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["user"]>
+  }, ExtArgs['result']['user']>
 
-
-
-  export type UserSelectScalar = {
+  export interface UserSelectScalar {
     id?: boolean
     email?: boolean
     phone?: boolean
@@ -2286,8 +2258,8 @@ export namespace Prisma {
     status?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "phone" | "username" | "nickname" | "password" | "avatar_url" | "website" | "role" | "status", ExtArgs["result"]["user"]>
-  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<'id' | 'email' | 'phone' | 'username' | 'nickname' | 'password' | 'avatar_url' | 'website' | 'role' | 'status', ExtArgs['result']['user']>
+  export interface UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     comments?: boolean | User$commentsArgs<ExtArgs>
     sub_comments?: boolean | User$sub_commentsArgs<ExtArgs>
     likes?: boolean | User$likesArgs<ExtArgs>
@@ -2299,8 +2271,8 @@ export namespace Prisma {
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
-  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "User"
+  export interface $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    name: 'User'
     objects: {
       comments: Prisma.$BlogCommentPayload<ExtArgs>[]
       sub_comments: Prisma.$BlogSubCommentPayload<ExtArgs>[]
@@ -2322,14 +2294,14 @@ export namespace Prisma {
       website: string | null
       role: string
       status: number
-    }, ExtArgs["result"]["user"]>
+    }, ExtArgs['result']['user']>
     composites: {}
   }
 
   type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
 
-  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs>
+    = Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: UserCountAggregateInputType | true
     }
 
@@ -2346,7 +2318,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one User that matches the filter or throw an error with `error.code='P2025'`
@@ -2360,7 +2332,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first User that matches the filter.
@@ -2375,7 +2347,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first User that matches the filter or
@@ -2391,7 +2363,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more Users that matches the filter.
@@ -2401,15 +2373,15 @@ export namespace Prisma {
      * @example
      * // Get all Users
      * const users = await prisma.user.findMany()
-     * 
+     *
      * // Get first 10 Users
      * const users = await prisma.user.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
-     * 
+     *
      */
-    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>
 
     /**
      * Create a User.
@@ -2421,9 +2393,9 @@ export namespace Prisma {
      *     // ... data to create a User
      *   }
      * })
-     * 
+     *
      */
-    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many Users.
@@ -2435,7 +2407,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -2449,9 +2421,9 @@ export namespace Prisma {
      *     // ... filter to delete one User
      *   }
      * })
-     * 
+     *
      */
-    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one User.
@@ -2466,9 +2438,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
-    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more Users.
@@ -2480,7 +2452,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -2499,7 +2471,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -2520,8 +2492,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Count the number of Users.
@@ -2535,7 +2506,7 @@ export namespace Prisma {
      *     // ... the filter for the Users we want to count
      *   }
      * })
-    **/
+     */
     count<T extends UserCountArgs>(
       args?: Subset<T, UserCountArgs>,
     ): Prisma.PrismaPromise<
@@ -2569,7 +2540,7 @@ export namespace Prisma {
      *   },
      *   take: 10,
      * })
-    **/
+     */
     aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
 
     /**
@@ -2588,8 +2559,8 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
-    **/
+     *
+     */
     groupBy<
       T extends UserGroupByArgs,
       HasSelectOrTake extends Or<
@@ -2606,52 +2577,52 @@ export namespace Prisma {
       HavingValid extends Has<ByFields, HavingFields>,
       ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
                 ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ]
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields],
     >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the User model
-   */
-  readonly fields: UserFieldRefs;
+    /**
+     * Fields of the User model
+     */
+    readonly fields: UserFieldRefs
   }
 
   /**
@@ -2661,15 +2632,15 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    comments<T extends User$commentsArgs<ExtArgs> = {}>(args?: Subset<T, User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    sub_comments<T extends User$sub_commentsArgs<ExtArgs> = {}>(args?: Subset<T, User$sub_commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    likes<T extends User$likesArgs<ExtArgs> = {}>(args?: Subset<T, User$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    oauth<T extends User$oauthArgs<ExtArgs> = {}>(args?: Subset<T, User$oauthArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    tokens<T extends User$tokensArgs<ExtArgs> = {}>(args?: Subset<T, User$tokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    user_config<T extends User$user_configArgs<ExtArgs> = {}>(args?: Subset<T, User$user_configArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    memos<T extends User$memosArgs<ExtArgs> = {}>(args?: Subset<T, User$memosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    tags<T extends User$tagsArgs<ExtArgs> = {}>(args?: Subset<T, User$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    readonly [Symbol.toStringTag]: 'PrismaPromise'
+    comments<T extends User$commentsArgs<ExtArgs> = {}>(args?: Subset<T, User$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>
+    sub_comments<T extends User$sub_commentsArgs<ExtArgs> = {}>(args?: Subset<T, User$sub_commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>
+    likes<T extends User$likesArgs<ExtArgs> = {}>(args?: Subset<T, User$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>
+    oauth<T extends User$oauthArgs<ExtArgs> = {}>(args?: Subset<T, User$oauthArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>
+    tokens<T extends User$tokensArgs<ExtArgs> = {}>(args?: Subset<T, User$tokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>
+    user_config<T extends User$user_configArgs<ExtArgs> = {}>(args?: Subset<T, User$user_configArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    memos<T extends User$memosArgs<ExtArgs> = {}>(args?: Subset<T, User$memosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>
+    tags<T extends User$tagsArgs<ExtArgs> = {}>(args?: Subset<T, User$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2692,31 +2663,27 @@ export namespace Prisma {
     finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
 
-
-
-
   /**
    * Fields of the User model
    */
   interface UserFieldRefs {
-    readonly id: FieldRef<"User", 'String'>
-    readonly email: FieldRef<"User", 'String'>
-    readonly phone: FieldRef<"User", 'String'>
-    readonly username: FieldRef<"User", 'String'>
-    readonly nickname: FieldRef<"User", 'String'>
-    readonly password: FieldRef<"User", 'String'>
-    readonly avatar_url: FieldRef<"User", 'String'>
-    readonly website: FieldRef<"User", 'String'>
-    readonly role: FieldRef<"User", 'String'>
-    readonly status: FieldRef<"User", 'Int'>
+    readonly id: FieldRef<'User', 'String'>
+    readonly email: FieldRef<'User', 'String'>
+    readonly phone: FieldRef<'User', 'String'>
+    readonly username: FieldRef<'User', 'String'>
+    readonly nickname: FieldRef<'User', 'String'>
+    readonly password: FieldRef<'User', 'String'>
+    readonly avatar_url: FieldRef<'User', 'String'>
+    readonly website: FieldRef<'User', 'String'>
+    readonly role: FieldRef<'User', 'String'>
+    readonly status: FieldRef<'User', 'Int'>
   }
-    
 
   // Custom InputTypes
   /**
    * User findUnique
    */
-  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2738,7 +2705,7 @@ export namespace Prisma {
   /**
    * User findUniqueOrThrow
    */
-  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2760,7 +2727,7 @@ export namespace Prisma {
   /**
    * User findFirst
    */
-  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2779,31 +2746,31 @@ export namespace Prisma {
     where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Users to fetch.
      */
     orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Users.
      */
     cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Users.
      */
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
@@ -2812,7 +2779,7 @@ export namespace Prisma {
   /**
    * User findFirstOrThrow
    */
-  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2831,31 +2798,31 @@ export namespace Prisma {
     where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Users to fetch.
      */
     orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Users.
      */
     cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Users.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Users.
      */
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
@@ -2864,7 +2831,7 @@ export namespace Prisma {
   /**
    * User findMany
    */
-  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2883,25 +2850,25 @@ export namespace Prisma {
     where?: UserWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Users to fetch.
      */
     orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Users.
      */
     cursor?: UserWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Users from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Users.
      */
     skip?: number
@@ -2911,7 +2878,7 @@ export namespace Prisma {
   /**
    * User create
    */
-  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2933,7 +2900,7 @@ export namespace Prisma {
   /**
    * User createMany
    */
-  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to create many Users.
      */
@@ -2944,7 +2911,7 @@ export namespace Prisma {
   /**
    * User update
    */
-  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the User
      */
@@ -2970,7 +2937,7 @@ export namespace Prisma {
   /**
    * User updateMany
    */
-  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to update Users.
      */
@@ -2988,7 +2955,7 @@ export namespace Prisma {
   /**
    * User upsert
    */
-  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the User
      */
@@ -3018,7 +2985,7 @@ export namespace Prisma {
   /**
    * User delete
    */
-  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the User
      */
@@ -3040,7 +3007,7 @@ export namespace Prisma {
   /**
    * User deleteMany
    */
-  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which Users to delete
      */
@@ -3054,7 +3021,7 @@ export namespace Prisma {
   /**
    * User.comments
    */
-  export type User$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface User$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogComment
      */
@@ -3078,7 +3045,7 @@ export namespace Prisma {
   /**
    * User.sub_comments
    */
-  export type User$sub_commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface User$sub_commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogSubComment
      */
@@ -3102,7 +3069,7 @@ export namespace Prisma {
   /**
    * User.likes
    */
-  export type User$likesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface User$likesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogLike
      */
@@ -3126,7 +3093,7 @@ export namespace Prisma {
   /**
    * User.oauth
    */
-  export type User$oauthArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface User$oauthArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the OAuth
      */
@@ -3150,7 +3117,7 @@ export namespace Prisma {
   /**
    * User.tokens
    */
-  export type User$tokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface User$tokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the AccessToken
      */
@@ -3174,7 +3141,7 @@ export namespace Prisma {
   /**
    * User.user_config
    */
-  export type User$user_configArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface User$user_configArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the UserConfig
      */
@@ -3193,7 +3160,7 @@ export namespace Prisma {
   /**
    * User.memos
    */
-  export type User$memosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface User$memosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogMemo
      */
@@ -3217,7 +3184,7 @@ export namespace Prisma {
   /**
    * User.tags
    */
-  export type User$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface User$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTag
      */
@@ -3241,7 +3208,7 @@ export namespace Prisma {
   /**
    * User without action
    */
-  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the User
      */
@@ -3256,12 +3223,11 @@ export namespace Prisma {
     include?: UserInclude<ExtArgs> | null
   }
 
-
   /**
    * Model UserConfig
    */
 
-  export type AggregateUserConfig = {
+  export interface AggregateUserConfig {
     _count: UserConfigCountAggregateOutputType | null
     _avg: UserConfigAvgAggregateOutputType | null
     _sum: UserConfigSumAggregateOutputType | null
@@ -3269,15 +3235,15 @@ export namespace Prisma {
     _max: UserConfigMaxAggregateOutputType | null
   }
 
-  export type UserConfigAvgAggregateOutputType = {
+  export interface UserConfigAvgAggregateOutputType {
     allowEmailNotify: number | null
   }
 
-  export type UserConfigSumAggregateOutputType = {
+  export interface UserConfigSumAggregateOutputType {
     allowEmailNotify: number | null
   }
 
-  export type UserConfigMinAggregateOutputType = {
+  export interface UserConfigMinAggregateOutputType {
     id: string | null
     userId: string | null
     allowEmailNotify: number | null
@@ -3285,7 +3251,7 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type UserConfigMaxAggregateOutputType = {
+  export interface UserConfigMaxAggregateOutputType {
     id: string | null
     userId: string | null
     allowEmailNotify: number | null
@@ -3293,7 +3259,7 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type UserConfigCountAggregateOutputType = {
+  export interface UserConfigCountAggregateOutputType {
     id: number
     userId: number
     allowEmailNotify: number
@@ -3302,16 +3268,15 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type UserConfigAvgAggregateInputType = {
+  export interface UserConfigAvgAggregateInputType {
     allowEmailNotify?: true
   }
 
-  export type UserConfigSumAggregateInputType = {
+  export interface UserConfigSumAggregateInputType {
     allowEmailNotify?: true
   }
 
-  export type UserConfigMinAggregateInputType = {
+  export interface UserConfigMinAggregateInputType {
     id?: true
     userId?: true
     allowEmailNotify?: true
@@ -3319,7 +3284,7 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type UserConfigMaxAggregateInputType = {
+  export interface UserConfigMaxAggregateInputType {
     id?: true
     userId?: true
     allowEmailNotify?: true
@@ -3327,7 +3292,7 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type UserConfigCountAggregateInputType = {
+  export interface UserConfigCountAggregateInputType {
     id?: true
     userId?: true
     allowEmailNotify?: true
@@ -3336,79 +3301,76 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type UserConfigAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which UserConfig to aggregate.
      */
     where?: UserConfigWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of UserConfigs to fetch.
      */
     orderBy?: UserConfigOrderByWithRelationInput | UserConfigOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: UserConfigWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` UserConfigs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` UserConfigs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned UserConfigs
-    **/
+     */
     _count?: true | UserConfigCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
-    **/
+     */
     _avg?: UserConfigAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
-    **/
+     */
     _sum?: UserConfigSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
-    **/
+     */
     _min?: UserConfigMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
-    **/
+     */
     _max?: UserConfigMaxAggregateInputType
   }
 
   export type GetUserConfigAggregateType<T extends UserConfigAggregateArgs> = {
-        [P in keyof T & keyof AggregateUserConfig]: P extends '_count' | 'count'
+    [P in keyof T & keyof AggregateUserConfig]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateUserConfig[P]>
       : GetScalarType<T[P], AggregateUserConfig[P]>
   }
 
-
-
-
-  export type UserConfigGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: UserConfigWhereInput
     orderBy?: UserConfigOrderByWithAggregationInput | UserConfigOrderByWithAggregationInput[]
     by: UserConfigScalarFieldEnum[] | UserConfigScalarFieldEnum
@@ -3422,7 +3384,7 @@ export namespace Prisma {
     _max?: UserConfigMaxAggregateInputType
   }
 
-  export type UserConfigGroupByOutputType = {
+  export interface UserConfigGroupByOutputType {
     id: string
     userId: string
     allowEmailNotify: number | null
@@ -3437,17 +3399,16 @@ export namespace Prisma {
 
   type GetUserConfigGroupByPayload<T extends UserConfigGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<UserConfigGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof UserConfigGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], UserConfigGroupByOutputType[P]>
+      PickEnumerable<UserConfigGroupByOutputType, T['by']>
+      & {
+        [P in ((keyof T) & (keyof UserConfigGroupByOutputType))]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
             : GetScalarType<T[P], UserConfigGroupByOutputType[P]>
-        }
+          : GetScalarType<T[P], UserConfigGroupByOutputType[P]>
+      }
       >
     >
-
 
   export type UserConfigSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
@@ -3456,11 +3417,9 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     userInfo?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["userConfig"]>
+  }, ExtArgs['result']['userConfig']>
 
-
-
-  export type UserConfigSelectScalar = {
+  export interface UserConfigSelectScalar {
     id?: boolean
     userId?: boolean
     allowEmailNotify?: boolean
@@ -3468,13 +3427,13 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserConfigOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "allowEmailNotify" | "createdAt" | "updatedAt", ExtArgs["result"]["userConfig"]>
-  export type UserConfigInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserConfigOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<'id' | 'userId' | 'allowEmailNotify' | 'createdAt' | 'updatedAt', ExtArgs['result']['userConfig']>
+  export interface UserConfigInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     userInfo?: boolean | UserDefaultArgs<ExtArgs>
   }
 
-  export type $UserConfigPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "UserConfig"
+  export interface $UserConfigPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    name: 'UserConfig'
     objects: {
       userInfo: Prisma.$UserPayload<ExtArgs>
     }
@@ -3484,14 +3443,14 @@ export namespace Prisma {
       allowEmailNotify: number | null
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["userConfig"]>
+    }, ExtArgs['result']['userConfig']>
     composites: {}
   }
 
   type UserConfigGetPayload<S extends boolean | null | undefined | UserConfigDefaultArgs> = $Result.GetResult<Prisma.$UserConfigPayload, S>
 
-  type UserConfigCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<UserConfigFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  type UserConfigCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs>
+    = Omit<UserConfigFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: UserConfigCountAggregateInputType | true
     }
 
@@ -3508,7 +3467,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends UserConfigFindUniqueArgs>(args: SelectSubset<T, UserConfigFindUniqueArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends UserConfigFindUniqueArgs>(args: SelectSubset<T, UserConfigFindUniqueArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one UserConfig that matches the filter or throw an error with `error.code='P2025'`
@@ -3522,7 +3481,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends UserConfigFindUniqueOrThrowArgs>(args: SelectSubset<T, UserConfigFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends UserConfigFindUniqueOrThrowArgs>(args: SelectSubset<T, UserConfigFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first UserConfig that matches the filter.
@@ -3537,7 +3496,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends UserConfigFindFirstArgs>(args?: SelectSubset<T, UserConfigFindFirstArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends UserConfigFindFirstArgs>(args?: SelectSubset<T, UserConfigFindFirstArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first UserConfig that matches the filter or
@@ -3553,7 +3512,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends UserConfigFindFirstOrThrowArgs>(args?: SelectSubset<T, UserConfigFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends UserConfigFindFirstOrThrowArgs>(args?: SelectSubset<T, UserConfigFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more UserConfigs that matches the filter.
@@ -3563,15 +3522,15 @@ export namespace Prisma {
      * @example
      * // Get all UserConfigs
      * const userConfigs = await prisma.userConfig.findMany()
-     * 
+     *
      * // Get first 10 UserConfigs
      * const userConfigs = await prisma.userConfig.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const userConfigWithIdOnly = await prisma.userConfig.findMany({ select: { id: true } })
-     * 
+     *
      */
-    findMany<T extends UserConfigFindManyArgs>(args?: SelectSubset<T, UserConfigFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends UserConfigFindManyArgs>(args?: SelectSubset<T, UserConfigFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>
 
     /**
      * Create a UserConfig.
@@ -3583,9 +3542,9 @@ export namespace Prisma {
      *     // ... data to create a UserConfig
      *   }
      * })
-     * 
+     *
      */
-    create<T extends UserConfigCreateArgs>(args: SelectSubset<T, UserConfigCreateArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends UserConfigCreateArgs>(args: SelectSubset<T, UserConfigCreateArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many UserConfigs.
@@ -3597,7 +3556,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends UserConfigCreateManyArgs>(args?: SelectSubset<T, UserConfigCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -3611,9 +3570,9 @@ export namespace Prisma {
      *     // ... filter to delete one UserConfig
      *   }
      * })
-     * 
+     *
      */
-    delete<T extends UserConfigDeleteArgs>(args: SelectSubset<T, UserConfigDeleteArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends UserConfigDeleteArgs>(args: SelectSubset<T, UserConfigDeleteArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one UserConfig.
@@ -3628,9 +3587,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
-    update<T extends UserConfigUpdateArgs>(args: SelectSubset<T, UserConfigUpdateArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends UserConfigUpdateArgs>(args: SelectSubset<T, UserConfigUpdateArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more UserConfigs.
@@ -3642,7 +3601,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends UserConfigDeleteManyArgs>(args?: SelectSubset<T, UserConfigDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -3661,7 +3620,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends UserConfigUpdateManyArgs>(args: SelectSubset<T, UserConfigUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -3682,8 +3641,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends UserConfigUpsertArgs>(args: SelectSubset<T, UserConfigUpsertArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
+    upsert<T extends UserConfigUpsertArgs>(args: SelectSubset<T, UserConfigUpsertArgs<ExtArgs>>): Prisma__UserConfigClient<$Result.GetResult<Prisma.$UserConfigPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Count the number of UserConfigs.
@@ -3697,7 +3655,7 @@ export namespace Prisma {
      *     // ... the filter for the UserConfigs we want to count
      *   }
      * })
-    **/
+     */
     count<T extends UserConfigCountArgs>(
       args?: Subset<T, UserConfigCountArgs>,
     ): Prisma.PrismaPromise<
@@ -3731,7 +3689,7 @@ export namespace Prisma {
      *   },
      *   take: 10,
      * })
-    **/
+     */
     aggregate<T extends UserConfigAggregateArgs>(args: Subset<T, UserConfigAggregateArgs>): Prisma.PrismaPromise<GetUserConfigAggregateType<T>>
 
     /**
@@ -3750,8 +3708,8 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
-    **/
+     *
+     */
     groupBy<
       T extends UserConfigGroupByArgs,
       HasSelectOrTake extends Or<
@@ -3768,52 +3726,52 @@ export namespace Prisma {
       HavingValid extends Has<ByFields, HavingFields>,
       ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
                 ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ]
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields],
     >(args: SubsetIntersection<T, UserConfigGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserConfigGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the UserConfig model
-   */
-  readonly fields: UserConfigFieldRefs;
+    /**
+     * Fields of the UserConfig model
+     */
+    readonly fields: UserConfigFieldRefs
   }
 
   /**
@@ -3823,8 +3781,8 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__UserConfigClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    userInfo<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    readonly [Symbol.toStringTag]: 'PrismaPromise'
+    userInfo<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3847,26 +3805,22 @@ export namespace Prisma {
     finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
 
-
-
-
   /**
    * Fields of the UserConfig model
    */
   interface UserConfigFieldRefs {
-    readonly id: FieldRef<"UserConfig", 'String'>
-    readonly userId: FieldRef<"UserConfig", 'String'>
-    readonly allowEmailNotify: FieldRef<"UserConfig", 'Int'>
-    readonly createdAt: FieldRef<"UserConfig", 'DateTime'>
-    readonly updatedAt: FieldRef<"UserConfig", 'DateTime'>
+    readonly id: FieldRef<'UserConfig', 'String'>
+    readonly userId: FieldRef<'UserConfig', 'String'>
+    readonly allowEmailNotify: FieldRef<'UserConfig', 'Int'>
+    readonly createdAt: FieldRef<'UserConfig', 'DateTime'>
+    readonly updatedAt: FieldRef<'UserConfig', 'DateTime'>
   }
-    
 
   // Custom InputTypes
   /**
    * UserConfig findUnique
    */
-  export type UserConfigFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the UserConfig
      */
@@ -3888,7 +3842,7 @@ export namespace Prisma {
   /**
    * UserConfig findUniqueOrThrow
    */
-  export type UserConfigFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the UserConfig
      */
@@ -3910,7 +3864,7 @@ export namespace Prisma {
   /**
    * UserConfig findFirst
    */
-  export type UserConfigFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the UserConfig
      */
@@ -3929,31 +3883,31 @@ export namespace Prisma {
     where?: UserConfigWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of UserConfigs to fetch.
      */
     orderBy?: UserConfigOrderByWithRelationInput | UserConfigOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for UserConfigs.
      */
     cursor?: UserConfigWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` UserConfigs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` UserConfigs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of UserConfigs.
      */
     distinct?: UserConfigScalarFieldEnum | UserConfigScalarFieldEnum[]
@@ -3962,7 +3916,7 @@ export namespace Prisma {
   /**
    * UserConfig findFirstOrThrow
    */
-  export type UserConfigFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the UserConfig
      */
@@ -3981,31 +3935,31 @@ export namespace Prisma {
     where?: UserConfigWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of UserConfigs to fetch.
      */
     orderBy?: UserConfigOrderByWithRelationInput | UserConfigOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for UserConfigs.
      */
     cursor?: UserConfigWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` UserConfigs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` UserConfigs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of UserConfigs.
      */
     distinct?: UserConfigScalarFieldEnum | UserConfigScalarFieldEnum[]
@@ -4014,7 +3968,7 @@ export namespace Prisma {
   /**
    * UserConfig findMany
    */
-  export type UserConfigFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the UserConfig
      */
@@ -4033,25 +3987,25 @@ export namespace Prisma {
     where?: UserConfigWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of UserConfigs to fetch.
      */
     orderBy?: UserConfigOrderByWithRelationInput | UserConfigOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing UserConfigs.
      */
     cursor?: UserConfigWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` UserConfigs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` UserConfigs.
      */
     skip?: number
@@ -4061,7 +4015,7 @@ export namespace Prisma {
   /**
    * UserConfig create
    */
-  export type UserConfigCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the UserConfig
      */
@@ -4083,7 +4037,7 @@ export namespace Prisma {
   /**
    * UserConfig createMany
    */
-  export type UserConfigCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to create many UserConfigs.
      */
@@ -4094,7 +4048,7 @@ export namespace Prisma {
   /**
    * UserConfig update
    */
-  export type UserConfigUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the UserConfig
      */
@@ -4120,7 +4074,7 @@ export namespace Prisma {
   /**
    * UserConfig updateMany
    */
-  export type UserConfigUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to update UserConfigs.
      */
@@ -4138,7 +4092,7 @@ export namespace Prisma {
   /**
    * UserConfig upsert
    */
-  export type UserConfigUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the UserConfig
      */
@@ -4168,7 +4122,7 @@ export namespace Prisma {
   /**
    * UserConfig delete
    */
-  export type UserConfigDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the UserConfig
      */
@@ -4190,7 +4144,7 @@ export namespace Prisma {
   /**
    * UserConfig deleteMany
    */
-  export type UserConfigDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which UserConfigs to delete
      */
@@ -4204,7 +4158,7 @@ export namespace Prisma {
   /**
    * UserConfig without action
    */
-  export type UserConfigDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface UserConfigDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the UserConfig
      */
@@ -4219,12 +4173,11 @@ export namespace Prisma {
     include?: UserConfigInclude<ExtArgs> | null
   }
 
-
   /**
    * Model AccessToken
    */
 
-  export type AggregateAccessToken = {
+  export interface AggregateAccessToken {
     _count: AccessTokenCountAggregateOutputType | null
     _avg: AccessTokenAvgAggregateOutputType | null
     _sum: AccessTokenSumAggregateOutputType | null
@@ -4232,15 +4185,15 @@ export namespace Prisma {
     _max: AccessTokenMaxAggregateOutputType | null
   }
 
-  export type AccessTokenAvgAggregateOutputType = {
+  export interface AccessTokenAvgAggregateOutputType {
     status: number | null
   }
 
-  export type AccessTokenSumAggregateOutputType = {
+  export interface AccessTokenSumAggregateOutputType {
     status: number | null
   }
 
-  export type AccessTokenMinAggregateOutputType = {
+  export interface AccessTokenMinAggregateOutputType {
     id: string | null
     userId: string | null
     token: string | null
@@ -4254,7 +4207,7 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type AccessTokenMaxAggregateOutputType = {
+  export interface AccessTokenMaxAggregateOutputType {
     id: string | null
     userId: string | null
     token: string | null
@@ -4268,7 +4221,7 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type AccessTokenCountAggregateOutputType = {
+  export interface AccessTokenCountAggregateOutputType {
     id: number
     userId: number
     token: number
@@ -4283,16 +4236,15 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type AccessTokenAvgAggregateInputType = {
+  export interface AccessTokenAvgAggregateInputType {
     status?: true
   }
 
-  export type AccessTokenSumAggregateInputType = {
+  export interface AccessTokenSumAggregateInputType {
     status?: true
   }
 
-  export type AccessTokenMinAggregateInputType = {
+  export interface AccessTokenMinAggregateInputType {
     id?: true
     userId?: true
     token?: true
@@ -4306,7 +4258,7 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type AccessTokenMaxAggregateInputType = {
+  export interface AccessTokenMaxAggregateInputType {
     id?: true
     userId?: true
     token?: true
@@ -4320,7 +4272,7 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type AccessTokenCountAggregateInputType = {
+  export interface AccessTokenCountAggregateInputType {
     id?: true
     userId?: true
     token?: true
@@ -4335,79 +4287,76 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type AccessTokenAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which AccessToken to aggregate.
      */
     where?: AccessTokenWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of AccessTokens to fetch.
      */
     orderBy?: AccessTokenOrderByWithRelationInput | AccessTokenOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: AccessTokenWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` AccessTokens from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` AccessTokens.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned AccessTokens
-    **/
+     */
     _count?: true | AccessTokenCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
-    **/
+     */
     _avg?: AccessTokenAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
-    **/
+     */
     _sum?: AccessTokenSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
-    **/
+     */
     _min?: AccessTokenMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
-    **/
+     */
     _max?: AccessTokenMaxAggregateInputType
   }
 
   export type GetAccessTokenAggregateType<T extends AccessTokenAggregateArgs> = {
-        [P in keyof T & keyof AggregateAccessToken]: P extends '_count' | 'count'
+    [P in keyof T & keyof AggregateAccessToken]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateAccessToken[P]>
       : GetScalarType<T[P], AggregateAccessToken[P]>
   }
 
-
-
-
-  export type AccessTokenGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: AccessTokenWhereInput
     orderBy?: AccessTokenOrderByWithAggregationInput | AccessTokenOrderByWithAggregationInput[]
     by: AccessTokenScalarFieldEnum[] | AccessTokenScalarFieldEnum
@@ -4421,7 +4370,7 @@ export namespace Prisma {
     _max?: AccessTokenMaxAggregateInputType
   }
 
-  export type AccessTokenGroupByOutputType = {
+  export interface AccessTokenGroupByOutputType {
     id: string
     userId: string
     token: string
@@ -4442,17 +4391,16 @@ export namespace Prisma {
 
   type GetAccessTokenGroupByPayload<T extends AccessTokenGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<AccessTokenGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof AccessTokenGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], AccessTokenGroupByOutputType[P]>
+      PickEnumerable<AccessTokenGroupByOutputType, T['by']>
+      & {
+        [P in ((keyof T) & (keyof AccessTokenGroupByOutputType))]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
             : GetScalarType<T[P], AccessTokenGroupByOutputType[P]>
-        }
+          : GetScalarType<T[P], AccessTokenGroupByOutputType[P]>
+      }
       >
     >
-
 
   export type AccessTokenSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
@@ -4467,11 +4415,9 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     userInfo?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["accessToken"]>
+  }, ExtArgs['result']['accessToken']>
 
-
-
-  export type AccessTokenSelectScalar = {
+  export interface AccessTokenSelectScalar {
     id?: boolean
     userId?: boolean
     token?: boolean
@@ -4485,13 +4431,13 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type AccessTokenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "token" | "roles" | "status" | "scope" | "isRevoked" | "ip" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["accessToken"]>
-  export type AccessTokenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AccessTokenOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<'id' | 'userId' | 'token' | 'roles' | 'status' | 'scope' | 'isRevoked' | 'ip' | 'expiresAt' | 'createdAt' | 'updatedAt', ExtArgs['result']['accessToken']>
+  export interface AccessTokenInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     userInfo?: boolean | UserDefaultArgs<ExtArgs>
   }
 
-  export type $AccessTokenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "AccessToken"
+  export interface $AccessTokenPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    name: 'AccessToken'
     objects: {
       userInfo: Prisma.$UserPayload<ExtArgs>
     }
@@ -4507,14 +4453,14 @@ export namespace Prisma {
       expiresAt: Date
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["accessToken"]>
+    }, ExtArgs['result']['accessToken']>
     composites: {}
   }
 
   type AccessTokenGetPayload<S extends boolean | null | undefined | AccessTokenDefaultArgs> = $Result.GetResult<Prisma.$AccessTokenPayload, S>
 
-  type AccessTokenCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<AccessTokenFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  type AccessTokenCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs>
+    = Omit<AccessTokenFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: AccessTokenCountAggregateInputType | true
     }
 
@@ -4531,7 +4477,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends AccessTokenFindUniqueArgs>(args: SelectSubset<T, AccessTokenFindUniqueArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends AccessTokenFindUniqueArgs>(args: SelectSubset<T, AccessTokenFindUniqueArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one AccessToken that matches the filter or throw an error with `error.code='P2025'`
@@ -4545,7 +4491,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends AccessTokenFindUniqueOrThrowArgs>(args: SelectSubset<T, AccessTokenFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends AccessTokenFindUniqueOrThrowArgs>(args: SelectSubset<T, AccessTokenFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first AccessToken that matches the filter.
@@ -4560,7 +4506,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends AccessTokenFindFirstArgs>(args?: SelectSubset<T, AccessTokenFindFirstArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends AccessTokenFindFirstArgs>(args?: SelectSubset<T, AccessTokenFindFirstArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first AccessToken that matches the filter or
@@ -4576,7 +4522,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends AccessTokenFindFirstOrThrowArgs>(args?: SelectSubset<T, AccessTokenFindFirstOrThrowArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends AccessTokenFindFirstOrThrowArgs>(args?: SelectSubset<T, AccessTokenFindFirstOrThrowArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more AccessTokens that matches the filter.
@@ -4586,15 +4532,15 @@ export namespace Prisma {
      * @example
      * // Get all AccessTokens
      * const accessTokens = await prisma.accessToken.findMany()
-     * 
+     *
      * // Get first 10 AccessTokens
      * const accessTokens = await prisma.accessToken.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const accessTokenWithIdOnly = await prisma.accessToken.findMany({ select: { id: true } })
-     * 
+     *
      */
-    findMany<T extends AccessTokenFindManyArgs>(args?: SelectSubset<T, AccessTokenFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends AccessTokenFindManyArgs>(args?: SelectSubset<T, AccessTokenFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>
 
     /**
      * Create a AccessToken.
@@ -4606,9 +4552,9 @@ export namespace Prisma {
      *     // ... data to create a AccessToken
      *   }
      * })
-     * 
+     *
      */
-    create<T extends AccessTokenCreateArgs>(args: SelectSubset<T, AccessTokenCreateArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends AccessTokenCreateArgs>(args: SelectSubset<T, AccessTokenCreateArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many AccessTokens.
@@ -4620,7 +4566,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends AccessTokenCreateManyArgs>(args?: SelectSubset<T, AccessTokenCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -4634,9 +4580,9 @@ export namespace Prisma {
      *     // ... filter to delete one AccessToken
      *   }
      * })
-     * 
+     *
      */
-    delete<T extends AccessTokenDeleteArgs>(args: SelectSubset<T, AccessTokenDeleteArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends AccessTokenDeleteArgs>(args: SelectSubset<T, AccessTokenDeleteArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one AccessToken.
@@ -4651,9 +4597,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
-    update<T extends AccessTokenUpdateArgs>(args: SelectSubset<T, AccessTokenUpdateArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends AccessTokenUpdateArgs>(args: SelectSubset<T, AccessTokenUpdateArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more AccessTokens.
@@ -4665,7 +4611,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends AccessTokenDeleteManyArgs>(args?: SelectSubset<T, AccessTokenDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -4684,7 +4630,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends AccessTokenUpdateManyArgs>(args: SelectSubset<T, AccessTokenUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -4705,8 +4651,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends AccessTokenUpsertArgs>(args: SelectSubset<T, AccessTokenUpsertArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
+    upsert<T extends AccessTokenUpsertArgs>(args: SelectSubset<T, AccessTokenUpsertArgs<ExtArgs>>): Prisma__AccessTokenClient<$Result.GetResult<Prisma.$AccessTokenPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Count the number of AccessTokens.
@@ -4720,7 +4665,7 @@ export namespace Prisma {
      *     // ... the filter for the AccessTokens we want to count
      *   }
      * })
-    **/
+     */
     count<T extends AccessTokenCountArgs>(
       args?: Subset<T, AccessTokenCountArgs>,
     ): Prisma.PrismaPromise<
@@ -4754,7 +4699,7 @@ export namespace Prisma {
      *   },
      *   take: 10,
      * })
-    **/
+     */
     aggregate<T extends AccessTokenAggregateArgs>(args: Subset<T, AccessTokenAggregateArgs>): Prisma.PrismaPromise<GetAccessTokenAggregateType<T>>
 
     /**
@@ -4773,8 +4718,8 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
-    **/
+     *
+     */
     groupBy<
       T extends AccessTokenGroupByArgs,
       HasSelectOrTake extends Or<
@@ -4791,52 +4736,52 @@ export namespace Prisma {
       HavingValid extends Has<ByFields, HavingFields>,
       ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
                 ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ]
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields],
     >(args: SubsetIntersection<T, AccessTokenGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAccessTokenGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the AccessToken model
-   */
-  readonly fields: AccessTokenFieldRefs;
+    /**
+     * Fields of the AccessToken model
+     */
+    readonly fields: AccessTokenFieldRefs
   }
 
   /**
@@ -4846,8 +4791,8 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__AccessTokenClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    userInfo<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    readonly [Symbol.toStringTag]: 'PrismaPromise'
+    userInfo<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4870,32 +4815,28 @@ export namespace Prisma {
     finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
 
-
-
-
   /**
    * Fields of the AccessToken model
    */
   interface AccessTokenFieldRefs {
-    readonly id: FieldRef<"AccessToken", 'String'>
-    readonly userId: FieldRef<"AccessToken", 'String'>
-    readonly token: FieldRef<"AccessToken", 'String'>
-    readonly roles: FieldRef<"AccessToken", 'String'>
-    readonly status: FieldRef<"AccessToken", 'Int'>
-    readonly scope: FieldRef<"AccessToken", 'String'>
-    readonly isRevoked: FieldRef<"AccessToken", 'Boolean'>
-    readonly ip: FieldRef<"AccessToken", 'String'>
-    readonly expiresAt: FieldRef<"AccessToken", 'DateTime'>
-    readonly createdAt: FieldRef<"AccessToken", 'DateTime'>
-    readonly updatedAt: FieldRef<"AccessToken", 'DateTime'>
+    readonly id: FieldRef<'AccessToken', 'String'>
+    readonly userId: FieldRef<'AccessToken', 'String'>
+    readonly token: FieldRef<'AccessToken', 'String'>
+    readonly roles: FieldRef<'AccessToken', 'String'>
+    readonly status: FieldRef<'AccessToken', 'Int'>
+    readonly scope: FieldRef<'AccessToken', 'String'>
+    readonly isRevoked: FieldRef<'AccessToken', 'Boolean'>
+    readonly ip: FieldRef<'AccessToken', 'String'>
+    readonly expiresAt: FieldRef<'AccessToken', 'DateTime'>
+    readonly createdAt: FieldRef<'AccessToken', 'DateTime'>
+    readonly updatedAt: FieldRef<'AccessToken', 'DateTime'>
   }
-    
 
   // Custom InputTypes
   /**
    * AccessToken findUnique
    */
-  export type AccessTokenFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the AccessToken
      */
@@ -4917,7 +4858,7 @@ export namespace Prisma {
   /**
    * AccessToken findUniqueOrThrow
    */
-  export type AccessTokenFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the AccessToken
      */
@@ -4939,7 +4880,7 @@ export namespace Prisma {
   /**
    * AccessToken findFirst
    */
-  export type AccessTokenFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the AccessToken
      */
@@ -4958,31 +4899,31 @@ export namespace Prisma {
     where?: AccessTokenWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of AccessTokens to fetch.
      */
     orderBy?: AccessTokenOrderByWithRelationInput | AccessTokenOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for AccessTokens.
      */
     cursor?: AccessTokenWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` AccessTokens from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` AccessTokens.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of AccessTokens.
      */
     distinct?: AccessTokenScalarFieldEnum | AccessTokenScalarFieldEnum[]
@@ -4991,7 +4932,7 @@ export namespace Prisma {
   /**
    * AccessToken findFirstOrThrow
    */
-  export type AccessTokenFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the AccessToken
      */
@@ -5010,31 +4951,31 @@ export namespace Prisma {
     where?: AccessTokenWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of AccessTokens to fetch.
      */
     orderBy?: AccessTokenOrderByWithRelationInput | AccessTokenOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for AccessTokens.
      */
     cursor?: AccessTokenWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` AccessTokens from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` AccessTokens.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of AccessTokens.
      */
     distinct?: AccessTokenScalarFieldEnum | AccessTokenScalarFieldEnum[]
@@ -5043,7 +4984,7 @@ export namespace Prisma {
   /**
    * AccessToken findMany
    */
-  export type AccessTokenFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the AccessToken
      */
@@ -5062,25 +5003,25 @@ export namespace Prisma {
     where?: AccessTokenWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of AccessTokens to fetch.
      */
     orderBy?: AccessTokenOrderByWithRelationInput | AccessTokenOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing AccessTokens.
      */
     cursor?: AccessTokenWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` AccessTokens from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` AccessTokens.
      */
     skip?: number
@@ -5090,7 +5031,7 @@ export namespace Prisma {
   /**
    * AccessToken create
    */
-  export type AccessTokenCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the AccessToken
      */
@@ -5112,7 +5053,7 @@ export namespace Prisma {
   /**
    * AccessToken createMany
    */
-  export type AccessTokenCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to create many AccessTokens.
      */
@@ -5123,7 +5064,7 @@ export namespace Prisma {
   /**
    * AccessToken update
    */
-  export type AccessTokenUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the AccessToken
      */
@@ -5149,7 +5090,7 @@ export namespace Prisma {
   /**
    * AccessToken updateMany
    */
-  export type AccessTokenUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to update AccessTokens.
      */
@@ -5167,7 +5108,7 @@ export namespace Prisma {
   /**
    * AccessToken upsert
    */
-  export type AccessTokenUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the AccessToken
      */
@@ -5197,7 +5138,7 @@ export namespace Prisma {
   /**
    * AccessToken delete
    */
-  export type AccessTokenDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the AccessToken
      */
@@ -5219,7 +5160,7 @@ export namespace Prisma {
   /**
    * AccessToken deleteMany
    */
-  export type AccessTokenDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which AccessTokens to delete
      */
@@ -5233,7 +5174,7 @@ export namespace Prisma {
   /**
    * AccessToken without action
    */
-  export type AccessTokenDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface AccessTokenDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the AccessToken
      */
@@ -5248,18 +5189,17 @@ export namespace Prisma {
     include?: AccessTokenInclude<ExtArgs> | null
   }
 
-
   /**
    * Model OAuth
    */
 
-  export type AggregateOAuth = {
+  export interface AggregateOAuth {
     _count: OAuthCountAggregateOutputType | null
     _min: OAuthMinAggregateOutputType | null
     _max: OAuthMaxAggregateOutputType | null
   }
 
-  export type OAuthMinAggregateOutputType = {
+  export interface OAuthMinAggregateOutputType {
     id: string | null
     userId: string | null
     provider: string | null
@@ -5271,7 +5211,7 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type OAuthMaxAggregateOutputType = {
+  export interface OAuthMaxAggregateOutputType {
     id: string | null
     userId: string | null
     provider: string | null
@@ -5283,7 +5223,7 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type OAuthCountAggregateOutputType = {
+  export interface OAuthCountAggregateOutputType {
     id: number
     userId: number
     provider: number
@@ -5296,8 +5236,7 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type OAuthMinAggregateInputType = {
+  export interface OAuthMinAggregateInputType {
     id?: true
     userId?: true
     provider?: true
@@ -5309,7 +5248,7 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type OAuthMaxAggregateInputType = {
+  export interface OAuthMaxAggregateInputType {
     id?: true
     userId?: true
     provider?: true
@@ -5321,7 +5260,7 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type OAuthCountAggregateInputType = {
+  export interface OAuthCountAggregateInputType {
     id?: true
     userId?: true
     provider?: true
@@ -5334,67 +5273,64 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type OAuthAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which OAuth to aggregate.
      */
     where?: OAuthWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of OAuths to fetch.
      */
     orderBy?: OAuthOrderByWithRelationInput | OAuthOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: OAuthWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` OAuths from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` OAuths.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned OAuths
-    **/
+     */
     _count?: true | OAuthCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
-    **/
+     */
     _min?: OAuthMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
-    **/
+     */
     _max?: OAuthMaxAggregateInputType
   }
 
   export type GetOAuthAggregateType<T extends OAuthAggregateArgs> = {
-        [P in keyof T & keyof AggregateOAuth]: P extends '_count' | 'count'
+    [P in keyof T & keyof AggregateOAuth]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateOAuth[P]>
       : GetScalarType<T[P], AggregateOAuth[P]>
   }
 
-
-
-
-  export type OAuthGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: OAuthWhereInput
     orderBy?: OAuthOrderByWithAggregationInput | OAuthOrderByWithAggregationInput[]
     by: OAuthScalarFieldEnum[] | OAuthScalarFieldEnum
@@ -5406,7 +5342,7 @@ export namespace Prisma {
     _max?: OAuthMaxAggregateInputType
   }
 
-  export type OAuthGroupByOutputType = {
+  export interface OAuthGroupByOutputType {
     id: string
     userId: string | null
     provider: string
@@ -5423,17 +5359,16 @@ export namespace Prisma {
 
   type GetOAuthGroupByPayload<T extends OAuthGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<OAuthGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof OAuthGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], OAuthGroupByOutputType[P]>
+      PickEnumerable<OAuthGroupByOutputType, T['by']>
+      & {
+        [P in ((keyof T) & (keyof OAuthGroupByOutputType))]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
             : GetScalarType<T[P], OAuthGroupByOutputType[P]>
-        }
+          : GetScalarType<T[P], OAuthGroupByOutputType[P]>
+      }
       >
     >
-
 
   export type OAuthSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
@@ -5446,11 +5381,9 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | OAuth$userArgs<ExtArgs>
-  }, ExtArgs["result"]["oAuth"]>
+  }, ExtArgs['result']['oAuth']>
 
-
-
-  export type OAuthSelectScalar = {
+  export interface OAuthSelectScalar {
     id?: boolean
     userId?: boolean
     provider?: boolean
@@ -5462,13 +5395,13 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type OAuthOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "provider" | "providerId" | "providerUnionId" | "providerToken" | "providerRefreshToken" | "createdAt" | "updatedAt", ExtArgs["result"]["oAuth"]>
-  export type OAuthInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type OAuthOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<'id' | 'userId' | 'provider' | 'providerId' | 'providerUnionId' | 'providerToken' | 'providerRefreshToken' | 'createdAt' | 'updatedAt', ExtArgs['result']['oAuth']>
+  export interface OAuthInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     user?: boolean | OAuth$userArgs<ExtArgs>
   }
 
-  export type $OAuthPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "OAuth"
+  export interface $OAuthPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    name: 'OAuth'
     objects: {
       user: Prisma.$UserPayload<ExtArgs> | null
     }
@@ -5482,14 +5415,14 @@ export namespace Prisma {
       providerRefreshToken: string | null
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["oAuth"]>
+    }, ExtArgs['result']['oAuth']>
     composites: {}
   }
 
   type OAuthGetPayload<S extends boolean | null | undefined | OAuthDefaultArgs> = $Result.GetResult<Prisma.$OAuthPayload, S>
 
-  type OAuthCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<OAuthFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  type OAuthCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs>
+    = Omit<OAuthFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: OAuthCountAggregateInputType | true
     }
 
@@ -5506,7 +5439,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends OAuthFindUniqueArgs>(args: SelectSubset<T, OAuthFindUniqueArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends OAuthFindUniqueArgs>(args: SelectSubset<T, OAuthFindUniqueArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one OAuth that matches the filter or throw an error with `error.code='P2025'`
@@ -5520,7 +5453,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends OAuthFindUniqueOrThrowArgs>(args: SelectSubset<T, OAuthFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends OAuthFindUniqueOrThrowArgs>(args: SelectSubset<T, OAuthFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first OAuth that matches the filter.
@@ -5535,7 +5468,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends OAuthFindFirstArgs>(args?: SelectSubset<T, OAuthFindFirstArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends OAuthFindFirstArgs>(args?: SelectSubset<T, OAuthFindFirstArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first OAuth that matches the filter or
@@ -5551,7 +5484,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends OAuthFindFirstOrThrowArgs>(args?: SelectSubset<T, OAuthFindFirstOrThrowArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends OAuthFindFirstOrThrowArgs>(args?: SelectSubset<T, OAuthFindFirstOrThrowArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more OAuths that matches the filter.
@@ -5561,15 +5494,15 @@ export namespace Prisma {
      * @example
      * // Get all OAuths
      * const oAuths = await prisma.oAuth.findMany()
-     * 
+     *
      * // Get first 10 OAuths
      * const oAuths = await prisma.oAuth.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const oAuthWithIdOnly = await prisma.oAuth.findMany({ select: { id: true } })
-     * 
+     *
      */
-    findMany<T extends OAuthFindManyArgs>(args?: SelectSubset<T, OAuthFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends OAuthFindManyArgs>(args?: SelectSubset<T, OAuthFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>
 
     /**
      * Create a OAuth.
@@ -5581,9 +5514,9 @@ export namespace Prisma {
      *     // ... data to create a OAuth
      *   }
      * })
-     * 
+     *
      */
-    create<T extends OAuthCreateArgs>(args: SelectSubset<T, OAuthCreateArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends OAuthCreateArgs>(args: SelectSubset<T, OAuthCreateArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many OAuths.
@@ -5595,7 +5528,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends OAuthCreateManyArgs>(args?: SelectSubset<T, OAuthCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -5609,9 +5542,9 @@ export namespace Prisma {
      *     // ... filter to delete one OAuth
      *   }
      * })
-     * 
+     *
      */
-    delete<T extends OAuthDeleteArgs>(args: SelectSubset<T, OAuthDeleteArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends OAuthDeleteArgs>(args: SelectSubset<T, OAuthDeleteArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one OAuth.
@@ -5626,9 +5559,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
-    update<T extends OAuthUpdateArgs>(args: SelectSubset<T, OAuthUpdateArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends OAuthUpdateArgs>(args: SelectSubset<T, OAuthUpdateArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more OAuths.
@@ -5640,7 +5573,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends OAuthDeleteManyArgs>(args?: SelectSubset<T, OAuthDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -5659,7 +5592,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends OAuthUpdateManyArgs>(args: SelectSubset<T, OAuthUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -5680,8 +5613,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends OAuthUpsertArgs>(args: SelectSubset<T, OAuthUpsertArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
+    upsert<T extends OAuthUpsertArgs>(args: SelectSubset<T, OAuthUpsertArgs<ExtArgs>>): Prisma__OAuthClient<$Result.GetResult<Prisma.$OAuthPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Count the number of OAuths.
@@ -5695,7 +5627,7 @@ export namespace Prisma {
      *     // ... the filter for the OAuths we want to count
      *   }
      * })
-    **/
+     */
     count<T extends OAuthCountArgs>(
       args?: Subset<T, OAuthCountArgs>,
     ): Prisma.PrismaPromise<
@@ -5729,7 +5661,7 @@ export namespace Prisma {
      *   },
      *   take: 10,
      * })
-    **/
+     */
     aggregate<T extends OAuthAggregateArgs>(args: Subset<T, OAuthAggregateArgs>): Prisma.PrismaPromise<GetOAuthAggregateType<T>>
 
     /**
@@ -5748,8 +5680,8 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
-    **/
+     *
+     */
     groupBy<
       T extends OAuthGroupByArgs,
       HasSelectOrTake extends Or<
@@ -5766,52 +5698,52 @@ export namespace Prisma {
       HavingValid extends Has<ByFields, HavingFields>,
       ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
                 ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ]
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields],
     >(args: SubsetIntersection<T, OAuthGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOAuthGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the OAuth model
-   */
-  readonly fields: OAuthFieldRefs;
+    /**
+     * Fields of the OAuth model
+     */
+    readonly fields: OAuthFieldRefs
   }
 
   /**
@@ -5821,8 +5753,8 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__OAuthClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends OAuth$userArgs<ExtArgs> = {}>(args?: Subset<T, OAuth$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    readonly [Symbol.toStringTag]: 'PrismaPromise'
+    user<T extends OAuth$userArgs<ExtArgs> = {}>(args?: Subset<T, OAuth$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5845,30 +5777,26 @@ export namespace Prisma {
     finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
 
-
-
-
   /**
    * Fields of the OAuth model
    */
   interface OAuthFieldRefs {
-    readonly id: FieldRef<"OAuth", 'String'>
-    readonly userId: FieldRef<"OAuth", 'String'>
-    readonly provider: FieldRef<"OAuth", 'String'>
-    readonly providerId: FieldRef<"OAuth", 'String'>
-    readonly providerUnionId: FieldRef<"OAuth", 'String'>
-    readonly providerToken: FieldRef<"OAuth", 'String'>
-    readonly providerRefreshToken: FieldRef<"OAuth", 'String'>
-    readonly createdAt: FieldRef<"OAuth", 'DateTime'>
-    readonly updatedAt: FieldRef<"OAuth", 'DateTime'>
+    readonly id: FieldRef<'OAuth', 'String'>
+    readonly userId: FieldRef<'OAuth', 'String'>
+    readonly provider: FieldRef<'OAuth', 'String'>
+    readonly providerId: FieldRef<'OAuth', 'String'>
+    readonly providerUnionId: FieldRef<'OAuth', 'String'>
+    readonly providerToken: FieldRef<'OAuth', 'String'>
+    readonly providerRefreshToken: FieldRef<'OAuth', 'String'>
+    readonly createdAt: FieldRef<'OAuth', 'DateTime'>
+    readonly updatedAt: FieldRef<'OAuth', 'DateTime'>
   }
-    
 
   // Custom InputTypes
   /**
    * OAuth findUnique
    */
-  export type OAuthFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the OAuth
      */
@@ -5890,7 +5818,7 @@ export namespace Prisma {
   /**
    * OAuth findUniqueOrThrow
    */
-  export type OAuthFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the OAuth
      */
@@ -5912,7 +5840,7 @@ export namespace Prisma {
   /**
    * OAuth findFirst
    */
-  export type OAuthFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the OAuth
      */
@@ -5931,31 +5859,31 @@ export namespace Prisma {
     where?: OAuthWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of OAuths to fetch.
      */
     orderBy?: OAuthOrderByWithRelationInput | OAuthOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for OAuths.
      */
     cursor?: OAuthWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` OAuths from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` OAuths.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of OAuths.
      */
     distinct?: OAuthScalarFieldEnum | OAuthScalarFieldEnum[]
@@ -5964,7 +5892,7 @@ export namespace Prisma {
   /**
    * OAuth findFirstOrThrow
    */
-  export type OAuthFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the OAuth
      */
@@ -5983,31 +5911,31 @@ export namespace Prisma {
     where?: OAuthWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of OAuths to fetch.
      */
     orderBy?: OAuthOrderByWithRelationInput | OAuthOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for OAuths.
      */
     cursor?: OAuthWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` OAuths from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` OAuths.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of OAuths.
      */
     distinct?: OAuthScalarFieldEnum | OAuthScalarFieldEnum[]
@@ -6016,7 +5944,7 @@ export namespace Prisma {
   /**
    * OAuth findMany
    */
-  export type OAuthFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the OAuth
      */
@@ -6035,25 +5963,25 @@ export namespace Prisma {
     where?: OAuthWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of OAuths to fetch.
      */
     orderBy?: OAuthOrderByWithRelationInput | OAuthOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing OAuths.
      */
     cursor?: OAuthWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` OAuths from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` OAuths.
      */
     skip?: number
@@ -6063,7 +5991,7 @@ export namespace Prisma {
   /**
    * OAuth create
    */
-  export type OAuthCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the OAuth
      */
@@ -6085,7 +6013,7 @@ export namespace Prisma {
   /**
    * OAuth createMany
    */
-  export type OAuthCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to create many OAuths.
      */
@@ -6096,7 +6024,7 @@ export namespace Prisma {
   /**
    * OAuth update
    */
-  export type OAuthUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the OAuth
      */
@@ -6122,7 +6050,7 @@ export namespace Prisma {
   /**
    * OAuth updateMany
    */
-  export type OAuthUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to update OAuths.
      */
@@ -6140,7 +6068,7 @@ export namespace Prisma {
   /**
    * OAuth upsert
    */
-  export type OAuthUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the OAuth
      */
@@ -6170,7 +6098,7 @@ export namespace Prisma {
   /**
    * OAuth delete
    */
-  export type OAuthDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the OAuth
      */
@@ -6192,7 +6120,7 @@ export namespace Prisma {
   /**
    * OAuth deleteMany
    */
-  export type OAuthDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which OAuths to delete
      */
@@ -6206,7 +6134,7 @@ export namespace Prisma {
   /**
    * OAuth.user
    */
-  export type OAuth$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuth$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the User
      */
@@ -6225,7 +6153,7 @@ export namespace Prisma {
   /**
    * OAuth without action
    */
-  export type OAuthDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface OAuthDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the OAuth
      */
@@ -6240,18 +6168,17 @@ export namespace Prisma {
     include?: OAuthInclude<ExtArgs> | null
   }
 
-
   /**
    * Model BlogComment
    */
 
-  export type AggregateBlogComment = {
+  export interface AggregateBlogComment {
     _count: BlogCommentCountAggregateOutputType | null
     _min: BlogCommentMinAggregateOutputType | null
     _max: BlogCommentMaxAggregateOutputType | null
   }
 
-  export type BlogCommentMinAggregateOutputType = {
+  export interface BlogCommentMinAggregateOutputType {
     id: string | null
     content: string | null
     create_ts: Date | null
@@ -6264,7 +6191,7 @@ export namespace Prisma {
     memo_id: string | null
   }
 
-  export type BlogCommentMaxAggregateOutputType = {
+  export interface BlogCommentMaxAggregateOutputType {
     id: string | null
     content: string | null
     create_ts: Date | null
@@ -6277,7 +6204,7 @@ export namespace Prisma {
     memo_id: string | null
   }
 
-  export type BlogCommentCountAggregateOutputType = {
+  export interface BlogCommentCountAggregateOutputType {
     id: number
     content: number
     create_ts: number
@@ -6291,8 +6218,7 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type BlogCommentMinAggregateInputType = {
+  export interface BlogCommentMinAggregateInputType {
     id?: true
     content?: true
     create_ts?: true
@@ -6305,7 +6231,7 @@ export namespace Prisma {
     memo_id?: true
   }
 
-  export type BlogCommentMaxAggregateInputType = {
+  export interface BlogCommentMaxAggregateInputType {
     id?: true
     content?: true
     create_ts?: true
@@ -6318,7 +6244,7 @@ export namespace Prisma {
     memo_id?: true
   }
 
-  export type BlogCommentCountAggregateInputType = {
+  export interface BlogCommentCountAggregateInputType {
     id?: true
     content?: true
     create_ts?: true
@@ -6332,67 +6258,64 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type BlogCommentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which BlogComment to aggregate.
      */
     where?: BlogCommentWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogComments to fetch.
      */
     orderBy?: BlogCommentOrderByWithRelationInput | BlogCommentOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: BlogCommentWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogComments from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogComments.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned BlogComments
-    **/
+     */
     _count?: true | BlogCommentCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
-    **/
+     */
     _min?: BlogCommentMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
-    **/
+     */
     _max?: BlogCommentMaxAggregateInputType
   }
 
   export type GetBlogCommentAggregateType<T extends BlogCommentAggregateArgs> = {
-        [P in keyof T & keyof AggregateBlogComment]: P extends '_count' | 'count'
+    [P in keyof T & keyof AggregateBlogComment]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateBlogComment[P]>
       : GetScalarType<T[P], AggregateBlogComment[P]>
   }
 
-
-
-
-  export type BlogCommentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: BlogCommentWhereInput
     orderBy?: BlogCommentOrderByWithAggregationInput | BlogCommentOrderByWithAggregationInput[]
     by: BlogCommentScalarFieldEnum[] | BlogCommentScalarFieldEnum
@@ -6404,7 +6327,7 @@ export namespace Prisma {
     _max?: BlogCommentMaxAggregateInputType
   }
 
-  export type BlogCommentGroupByOutputType = {
+  export interface BlogCommentGroupByOutputType {
     id: string
     content: string
     create_ts: Date
@@ -6422,17 +6345,16 @@ export namespace Prisma {
 
   type GetBlogCommentGroupByPayload<T extends BlogCommentGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<BlogCommentGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof BlogCommentGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], BlogCommentGroupByOutputType[P]>
+      PickEnumerable<BlogCommentGroupByOutputType, T['by']>
+      & {
+        [P in ((keyof T) & (keyof BlogCommentGroupByOutputType))]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
             : GetScalarType<T[P], BlogCommentGroupByOutputType[P]>
-        }
+          : GetScalarType<T[P], BlogCommentGroupByOutputType[P]>
+      }
       >
     >
-
 
   export type BlogCommentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
@@ -6450,11 +6372,9 @@ export namespace Prisma {
     likes?: boolean | BlogComment$likesArgs<ExtArgs>
     memo_info?: boolean | BlogComment$memo_infoArgs<ExtArgs>
     _count?: boolean | BlogCommentCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["blogComment"]>
+  }, ExtArgs['result']['blogComment']>
 
-
-
-  export type BlogCommentSelectScalar = {
+  export interface BlogCommentSelectScalar {
     id?: boolean
     content?: boolean
     create_ts?: boolean
@@ -6467,8 +6387,8 @@ export namespace Prisma {
     memo_id?: boolean
   }
 
-  export type BlogCommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "create_ts" | "updated_ts" | "type" | "quoteContent" | "article_id" | "user_id" | "visitorName" | "memo_id", ExtArgs["result"]["blogComment"]>
-  export type BlogCommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type BlogCommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<'id' | 'content' | 'create_ts' | 'updated_ts' | 'type' | 'quoteContent' | 'article_id' | 'user_id' | 'visitorName' | 'memo_id', ExtArgs['result']['blogComment']>
+  export interface BlogCommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     user_info?: boolean | BlogComment$user_infoArgs<ExtArgs>
     sub_comments?: boolean | BlogComment$sub_commentsArgs<ExtArgs>
     likes?: boolean | BlogComment$likesArgs<ExtArgs>
@@ -6476,8 +6396,8 @@ export namespace Prisma {
     _count?: boolean | BlogCommentCountOutputTypeDefaultArgs<ExtArgs>
   }
 
-  export type $BlogCommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "BlogComment"
+  export interface $BlogCommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    name: 'BlogComment'
     objects: {
       user_info: Prisma.$UserPayload<ExtArgs> | null
       sub_comments: Prisma.$BlogSubCommentPayload<ExtArgs>[]
@@ -6495,14 +6415,14 @@ export namespace Prisma {
       user_id: string | null
       visitorName: string | null
       memo_id: string | null
-    }, ExtArgs["result"]["blogComment"]>
+    }, ExtArgs['result']['blogComment']>
     composites: {}
   }
 
   type BlogCommentGetPayload<S extends boolean | null | undefined | BlogCommentDefaultArgs> = $Result.GetResult<Prisma.$BlogCommentPayload, S>
 
-  type BlogCommentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<BlogCommentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  type BlogCommentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs>
+    = Omit<BlogCommentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: BlogCommentCountAggregateInputType | true
     }
 
@@ -6519,7 +6439,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends BlogCommentFindUniqueArgs>(args: SelectSubset<T, BlogCommentFindUniqueArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends BlogCommentFindUniqueArgs>(args: SelectSubset<T, BlogCommentFindUniqueArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one BlogComment that matches the filter or throw an error with `error.code='P2025'`
@@ -6533,7 +6453,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends BlogCommentFindUniqueOrThrowArgs>(args: SelectSubset<T, BlogCommentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends BlogCommentFindUniqueOrThrowArgs>(args: SelectSubset<T, BlogCommentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first BlogComment that matches the filter.
@@ -6548,7 +6468,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends BlogCommentFindFirstArgs>(args?: SelectSubset<T, BlogCommentFindFirstArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends BlogCommentFindFirstArgs>(args?: SelectSubset<T, BlogCommentFindFirstArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first BlogComment that matches the filter or
@@ -6564,7 +6484,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends BlogCommentFindFirstOrThrowArgs>(args?: SelectSubset<T, BlogCommentFindFirstOrThrowArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends BlogCommentFindFirstOrThrowArgs>(args?: SelectSubset<T, BlogCommentFindFirstOrThrowArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more BlogComments that matches the filter.
@@ -6574,15 +6494,15 @@ export namespace Prisma {
      * @example
      * // Get all BlogComments
      * const blogComments = await prisma.blogComment.findMany()
-     * 
+     *
      * // Get first 10 BlogComments
      * const blogComments = await prisma.blogComment.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const blogCommentWithIdOnly = await prisma.blogComment.findMany({ select: { id: true } })
-     * 
+     *
      */
-    findMany<T extends BlogCommentFindManyArgs>(args?: SelectSubset<T, BlogCommentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends BlogCommentFindManyArgs>(args?: SelectSubset<T, BlogCommentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>
 
     /**
      * Create a BlogComment.
@@ -6594,9 +6514,9 @@ export namespace Prisma {
      *     // ... data to create a BlogComment
      *   }
      * })
-     * 
+     *
      */
-    create<T extends BlogCommentCreateArgs>(args: SelectSubset<T, BlogCommentCreateArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends BlogCommentCreateArgs>(args: SelectSubset<T, BlogCommentCreateArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many BlogComments.
@@ -6608,7 +6528,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends BlogCommentCreateManyArgs>(args?: SelectSubset<T, BlogCommentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -6622,9 +6542,9 @@ export namespace Prisma {
      *     // ... filter to delete one BlogComment
      *   }
      * })
-     * 
+     *
      */
-    delete<T extends BlogCommentDeleteArgs>(args: SelectSubset<T, BlogCommentDeleteArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends BlogCommentDeleteArgs>(args: SelectSubset<T, BlogCommentDeleteArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one BlogComment.
@@ -6639,9 +6559,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
-    update<T extends BlogCommentUpdateArgs>(args: SelectSubset<T, BlogCommentUpdateArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends BlogCommentUpdateArgs>(args: SelectSubset<T, BlogCommentUpdateArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more BlogComments.
@@ -6653,7 +6573,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends BlogCommentDeleteManyArgs>(args?: SelectSubset<T, BlogCommentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -6672,7 +6592,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends BlogCommentUpdateManyArgs>(args: SelectSubset<T, BlogCommentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -6693,8 +6613,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends BlogCommentUpsertArgs>(args: SelectSubset<T, BlogCommentUpsertArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
+    upsert<T extends BlogCommentUpsertArgs>(args: SelectSubset<T, BlogCommentUpsertArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Count the number of BlogComments.
@@ -6708,7 +6627,7 @@ export namespace Prisma {
      *     // ... the filter for the BlogComments we want to count
      *   }
      * })
-    **/
+     */
     count<T extends BlogCommentCountArgs>(
       args?: Subset<T, BlogCommentCountArgs>,
     ): Prisma.PrismaPromise<
@@ -6742,7 +6661,7 @@ export namespace Prisma {
      *   },
      *   take: 10,
      * })
-    **/
+     */
     aggregate<T extends BlogCommentAggregateArgs>(args: Subset<T, BlogCommentAggregateArgs>): Prisma.PrismaPromise<GetBlogCommentAggregateType<T>>
 
     /**
@@ -6761,8 +6680,8 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
-    **/
+     *
+     */
     groupBy<
       T extends BlogCommentGroupByArgs,
       HasSelectOrTake extends Or<
@@ -6779,52 +6698,52 @@ export namespace Prisma {
       HavingValid extends Has<ByFields, HavingFields>,
       ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
                 ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ]
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields],
     >(args: SubsetIntersection<T, BlogCommentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBlogCommentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the BlogComment model
-   */
-  readonly fields: BlogCommentFieldRefs;
+    /**
+     * Fields of the BlogComment model
+     */
+    readonly fields: BlogCommentFieldRefs
   }
 
   /**
@@ -6834,11 +6753,11 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__BlogCommentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    user_info<T extends BlogComment$user_infoArgs<ExtArgs> = {}>(args?: Subset<T, BlogComment$user_infoArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    sub_comments<T extends BlogComment$sub_commentsArgs<ExtArgs> = {}>(args?: Subset<T, BlogComment$sub_commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    likes<T extends BlogComment$likesArgs<ExtArgs> = {}>(args?: Subset<T, BlogComment$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    memo_info<T extends BlogComment$memo_infoArgs<ExtArgs> = {}>(args?: Subset<T, BlogComment$memo_infoArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    readonly [Symbol.toStringTag]: 'PrismaPromise'
+    user_info<T extends BlogComment$user_infoArgs<ExtArgs> = {}>(args?: Subset<T, BlogComment$user_infoArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    sub_comments<T extends BlogComment$sub_commentsArgs<ExtArgs> = {}>(args?: Subset<T, BlogComment$sub_commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>
+    likes<T extends BlogComment$likesArgs<ExtArgs> = {}>(args?: Subset<T, BlogComment$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>
+    memo_info<T extends BlogComment$memo_infoArgs<ExtArgs> = {}>(args?: Subset<T, BlogComment$memo_infoArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6861,31 +6780,27 @@ export namespace Prisma {
     finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
 
-
-
-
   /**
    * Fields of the BlogComment model
    */
   interface BlogCommentFieldRefs {
-    readonly id: FieldRef<"BlogComment", 'String'>
-    readonly content: FieldRef<"BlogComment", 'String'>
-    readonly create_ts: FieldRef<"BlogComment", 'DateTime'>
-    readonly updated_ts: FieldRef<"BlogComment", 'DateTime'>
-    readonly type: FieldRef<"BlogComment", 'String'>
-    readonly quoteContent: FieldRef<"BlogComment", 'String'>
-    readonly article_id: FieldRef<"BlogComment", 'String'>
-    readonly user_id: FieldRef<"BlogComment", 'String'>
-    readonly visitorName: FieldRef<"BlogComment", 'String'>
-    readonly memo_id: FieldRef<"BlogComment", 'String'>
+    readonly id: FieldRef<'BlogComment', 'String'>
+    readonly content: FieldRef<'BlogComment', 'String'>
+    readonly create_ts: FieldRef<'BlogComment', 'DateTime'>
+    readonly updated_ts: FieldRef<'BlogComment', 'DateTime'>
+    readonly type: FieldRef<'BlogComment', 'String'>
+    readonly quoteContent: FieldRef<'BlogComment', 'String'>
+    readonly article_id: FieldRef<'BlogComment', 'String'>
+    readonly user_id: FieldRef<'BlogComment', 'String'>
+    readonly visitorName: FieldRef<'BlogComment', 'String'>
+    readonly memo_id: FieldRef<'BlogComment', 'String'>
   }
-    
 
   // Custom InputTypes
   /**
    * BlogComment findUnique
    */
-  export type BlogCommentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogComment
      */
@@ -6907,7 +6822,7 @@ export namespace Prisma {
   /**
    * BlogComment findUniqueOrThrow
    */
-  export type BlogCommentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogComment
      */
@@ -6929,7 +6844,7 @@ export namespace Prisma {
   /**
    * BlogComment findFirst
    */
-  export type BlogCommentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogComment
      */
@@ -6948,31 +6863,31 @@ export namespace Prisma {
     where?: BlogCommentWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogComments to fetch.
      */
     orderBy?: BlogCommentOrderByWithRelationInput | BlogCommentOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for BlogComments.
      */
     cursor?: BlogCommentWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogComments from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogComments.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of BlogComments.
      */
     distinct?: BlogCommentScalarFieldEnum | BlogCommentScalarFieldEnum[]
@@ -6981,7 +6896,7 @@ export namespace Prisma {
   /**
    * BlogComment findFirstOrThrow
    */
-  export type BlogCommentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogComment
      */
@@ -7000,31 +6915,31 @@ export namespace Prisma {
     where?: BlogCommentWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogComments to fetch.
      */
     orderBy?: BlogCommentOrderByWithRelationInput | BlogCommentOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for BlogComments.
      */
     cursor?: BlogCommentWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogComments from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogComments.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of BlogComments.
      */
     distinct?: BlogCommentScalarFieldEnum | BlogCommentScalarFieldEnum[]
@@ -7033,7 +6948,7 @@ export namespace Prisma {
   /**
    * BlogComment findMany
    */
-  export type BlogCommentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogComment
      */
@@ -7052,25 +6967,25 @@ export namespace Prisma {
     where?: BlogCommentWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogComments to fetch.
      */
     orderBy?: BlogCommentOrderByWithRelationInput | BlogCommentOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing BlogComments.
      */
     cursor?: BlogCommentWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogComments from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogComments.
      */
     skip?: number
@@ -7080,7 +6995,7 @@ export namespace Prisma {
   /**
    * BlogComment create
    */
-  export type BlogCommentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogComment
      */
@@ -7102,7 +7017,7 @@ export namespace Prisma {
   /**
    * BlogComment createMany
    */
-  export type BlogCommentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to create many BlogComments.
      */
@@ -7113,7 +7028,7 @@ export namespace Prisma {
   /**
    * BlogComment update
    */
-  export type BlogCommentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogComment
      */
@@ -7139,7 +7054,7 @@ export namespace Prisma {
   /**
    * BlogComment updateMany
    */
-  export type BlogCommentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to update BlogComments.
      */
@@ -7157,7 +7072,7 @@ export namespace Prisma {
   /**
    * BlogComment upsert
    */
-  export type BlogCommentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogComment
      */
@@ -7187,7 +7102,7 @@ export namespace Prisma {
   /**
    * BlogComment delete
    */
-  export type BlogCommentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogComment
      */
@@ -7209,7 +7124,7 @@ export namespace Prisma {
   /**
    * BlogComment deleteMany
    */
-  export type BlogCommentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which BlogComments to delete
      */
@@ -7223,7 +7138,7 @@ export namespace Prisma {
   /**
    * BlogComment.user_info
    */
-  export type BlogComment$user_infoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogComment$user_infoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the User
      */
@@ -7242,7 +7157,7 @@ export namespace Prisma {
   /**
    * BlogComment.sub_comments
    */
-  export type BlogComment$sub_commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogComment$sub_commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogSubComment
      */
@@ -7266,7 +7181,7 @@ export namespace Prisma {
   /**
    * BlogComment.likes
    */
-  export type BlogComment$likesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogComment$likesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogLike
      */
@@ -7290,7 +7205,7 @@ export namespace Prisma {
   /**
    * BlogComment.memo_info
    */
-  export type BlogComment$memo_infoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogComment$memo_infoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogMemo
      */
@@ -7309,7 +7224,7 @@ export namespace Prisma {
   /**
    * BlogComment without action
    */
-  export type BlogCommentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogCommentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogComment
      */
@@ -7324,18 +7239,17 @@ export namespace Prisma {
     include?: BlogCommentInclude<ExtArgs> | null
   }
 
-
   /**
    * Model BlogExplain
    */
 
-  export type AggregateBlogExplain = {
+  export interface AggregateBlogExplain {
     _count: BlogExplainCountAggregateOutputType | null
     _min: BlogExplainMinAggregateOutputType | null
     _max: BlogExplainMaxAggregateOutputType | null
   }
 
-  export type BlogExplainMinAggregateOutputType = {
+  export interface BlogExplainMinAggregateOutputType {
     id: string | null
     create_ts: Date | null
     updated_ts: Date | null
@@ -7344,7 +7258,7 @@ export namespace Prisma {
     article_id: string | null
   }
 
-  export type BlogExplainMaxAggregateOutputType = {
+  export interface BlogExplainMaxAggregateOutputType {
     id: string | null
     create_ts: Date | null
     updated_ts: Date | null
@@ -7353,7 +7267,7 @@ export namespace Prisma {
     article_id: string | null
   }
 
-  export type BlogExplainCountAggregateOutputType = {
+  export interface BlogExplainCountAggregateOutputType {
     id: number
     create_ts: number
     updated_ts: number
@@ -7363,8 +7277,7 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type BlogExplainMinAggregateInputType = {
+  export interface BlogExplainMinAggregateInputType {
     id?: true
     create_ts?: true
     updated_ts?: true
@@ -7373,7 +7286,7 @@ export namespace Prisma {
     article_id?: true
   }
 
-  export type BlogExplainMaxAggregateInputType = {
+  export interface BlogExplainMaxAggregateInputType {
     id?: true
     create_ts?: true
     updated_ts?: true
@@ -7382,7 +7295,7 @@ export namespace Prisma {
     article_id?: true
   }
 
-  export type BlogExplainCountAggregateInputType = {
+  export interface BlogExplainCountAggregateInputType {
     id?: true
     create_ts?: true
     updated_ts?: true
@@ -7392,67 +7305,64 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type BlogExplainAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which BlogExplain to aggregate.
      */
     where?: BlogExplainWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogExplains to fetch.
      */
     orderBy?: BlogExplainOrderByWithRelationInput | BlogExplainOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: BlogExplainWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogExplains from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogExplains.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned BlogExplains
-    **/
+     */
     _count?: true | BlogExplainCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
-    **/
+     */
     _min?: BlogExplainMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
-    **/
+     */
     _max?: BlogExplainMaxAggregateInputType
   }
 
   export type GetBlogExplainAggregateType<T extends BlogExplainAggregateArgs> = {
-        [P in keyof T & keyof AggregateBlogExplain]: P extends '_count' | 'count'
+    [P in keyof T & keyof AggregateBlogExplain]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateBlogExplain[P]>
       : GetScalarType<T[P], AggregateBlogExplain[P]>
   }
 
-
-
-
-  export type BlogExplainGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: BlogExplainWhereInput
     orderBy?: BlogExplainOrderByWithAggregationInput | BlogExplainOrderByWithAggregationInput[]
     by: BlogExplainScalarFieldEnum[] | BlogExplainScalarFieldEnum
@@ -7464,7 +7374,7 @@ export namespace Prisma {
     _max?: BlogExplainMaxAggregateInputType
   }
 
-  export type BlogExplainGroupByOutputType = {
+  export interface BlogExplainGroupByOutputType {
     id: string
     create_ts: Date
     updated_ts: Date
@@ -7478,17 +7388,16 @@ export namespace Prisma {
 
   type GetBlogExplainGroupByPayload<T extends BlogExplainGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<BlogExplainGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof BlogExplainGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], BlogExplainGroupByOutputType[P]>
+      PickEnumerable<BlogExplainGroupByOutputType, T['by']>
+      & {
+        [P in ((keyof T) & (keyof BlogExplainGroupByOutputType))]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
             : GetScalarType<T[P], BlogExplainGroupByOutputType[P]>
-        }
+          : GetScalarType<T[P], BlogExplainGroupByOutputType[P]>
+      }
       >
     >
-
 
   export type BlogExplainSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
@@ -7497,11 +7406,9 @@ export namespace Prisma {
     text?: boolean
     content?: boolean
     article_id?: boolean
-  }, ExtArgs["result"]["blogExplain"]>
+  }, ExtArgs['result']['blogExplain']>
 
-
-
-  export type BlogExplainSelectScalar = {
+  export interface BlogExplainSelectScalar {
     id?: boolean
     create_ts?: boolean
     updated_ts?: boolean
@@ -7510,10 +7417,10 @@ export namespace Prisma {
     article_id?: boolean
   }
 
-  export type BlogExplainOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "create_ts" | "updated_ts" | "text" | "content" | "article_id", ExtArgs["result"]["blogExplain"]>
+  export type BlogExplainOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<'id' | 'create_ts' | 'updated_ts' | 'text' | 'content' | 'article_id', ExtArgs['result']['blogExplain']>
 
-  export type $BlogExplainPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "BlogExplain"
+  export interface $BlogExplainPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    name: 'BlogExplain'
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7522,14 +7429,14 @@ export namespace Prisma {
       text: string
       content: string
       article_id: string
-    }, ExtArgs["result"]["blogExplain"]>
+    }, ExtArgs['result']['blogExplain']>
     composites: {}
   }
 
   type BlogExplainGetPayload<S extends boolean | null | undefined | BlogExplainDefaultArgs> = $Result.GetResult<Prisma.$BlogExplainPayload, S>
 
-  type BlogExplainCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<BlogExplainFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  type BlogExplainCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs>
+    = Omit<BlogExplainFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: BlogExplainCountAggregateInputType | true
     }
 
@@ -7546,7 +7453,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends BlogExplainFindUniqueArgs>(args: SelectSubset<T, BlogExplainFindUniqueArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends BlogExplainFindUniqueArgs>(args: SelectSubset<T, BlogExplainFindUniqueArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one BlogExplain that matches the filter or throw an error with `error.code='P2025'`
@@ -7560,7 +7467,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends BlogExplainFindUniqueOrThrowArgs>(args: SelectSubset<T, BlogExplainFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends BlogExplainFindUniqueOrThrowArgs>(args: SelectSubset<T, BlogExplainFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first BlogExplain that matches the filter.
@@ -7575,7 +7482,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends BlogExplainFindFirstArgs>(args?: SelectSubset<T, BlogExplainFindFirstArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends BlogExplainFindFirstArgs>(args?: SelectSubset<T, BlogExplainFindFirstArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first BlogExplain that matches the filter or
@@ -7591,7 +7498,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends BlogExplainFindFirstOrThrowArgs>(args?: SelectSubset<T, BlogExplainFindFirstOrThrowArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends BlogExplainFindFirstOrThrowArgs>(args?: SelectSubset<T, BlogExplainFindFirstOrThrowArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more BlogExplains that matches the filter.
@@ -7601,15 +7508,15 @@ export namespace Prisma {
      * @example
      * // Get all BlogExplains
      * const blogExplains = await prisma.blogExplain.findMany()
-     * 
+     *
      * // Get first 10 BlogExplains
      * const blogExplains = await prisma.blogExplain.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const blogExplainWithIdOnly = await prisma.blogExplain.findMany({ select: { id: true } })
-     * 
+     *
      */
-    findMany<T extends BlogExplainFindManyArgs>(args?: SelectSubset<T, BlogExplainFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends BlogExplainFindManyArgs>(args?: SelectSubset<T, BlogExplainFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>
 
     /**
      * Create a BlogExplain.
@@ -7621,9 +7528,9 @@ export namespace Prisma {
      *     // ... data to create a BlogExplain
      *   }
      * })
-     * 
+     *
      */
-    create<T extends BlogExplainCreateArgs>(args: SelectSubset<T, BlogExplainCreateArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends BlogExplainCreateArgs>(args: SelectSubset<T, BlogExplainCreateArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many BlogExplains.
@@ -7635,7 +7542,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends BlogExplainCreateManyArgs>(args?: SelectSubset<T, BlogExplainCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -7649,9 +7556,9 @@ export namespace Prisma {
      *     // ... filter to delete one BlogExplain
      *   }
      * })
-     * 
+     *
      */
-    delete<T extends BlogExplainDeleteArgs>(args: SelectSubset<T, BlogExplainDeleteArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends BlogExplainDeleteArgs>(args: SelectSubset<T, BlogExplainDeleteArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one BlogExplain.
@@ -7666,9 +7573,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
-    update<T extends BlogExplainUpdateArgs>(args: SelectSubset<T, BlogExplainUpdateArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends BlogExplainUpdateArgs>(args: SelectSubset<T, BlogExplainUpdateArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more BlogExplains.
@@ -7680,7 +7587,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends BlogExplainDeleteManyArgs>(args?: SelectSubset<T, BlogExplainDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -7699,7 +7606,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends BlogExplainUpdateManyArgs>(args: SelectSubset<T, BlogExplainUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -7720,8 +7627,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends BlogExplainUpsertArgs>(args: SelectSubset<T, BlogExplainUpsertArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
+    upsert<T extends BlogExplainUpsertArgs>(args: SelectSubset<T, BlogExplainUpsertArgs<ExtArgs>>): Prisma__BlogExplainClient<$Result.GetResult<Prisma.$BlogExplainPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Count the number of BlogExplains.
@@ -7735,7 +7641,7 @@ export namespace Prisma {
      *     // ... the filter for the BlogExplains we want to count
      *   }
      * })
-    **/
+     */
     count<T extends BlogExplainCountArgs>(
       args?: Subset<T, BlogExplainCountArgs>,
     ): Prisma.PrismaPromise<
@@ -7769,7 +7675,7 @@ export namespace Prisma {
      *   },
      *   take: 10,
      * })
-    **/
+     */
     aggregate<T extends BlogExplainAggregateArgs>(args: Subset<T, BlogExplainAggregateArgs>): Prisma.PrismaPromise<GetBlogExplainAggregateType<T>>
 
     /**
@@ -7788,8 +7694,8 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
-    **/
+     *
+     */
     groupBy<
       T extends BlogExplainGroupByArgs,
       HasSelectOrTake extends Or<
@@ -7806,52 +7712,52 @@ export namespace Prisma {
       HavingValid extends Has<ByFields, HavingFields>,
       ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
                 ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ]
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields],
     >(args: SubsetIntersection<T, BlogExplainGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBlogExplainGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the BlogExplain model
-   */
-  readonly fields: BlogExplainFieldRefs;
+    /**
+     * Fields of the BlogExplain model
+     */
+    readonly fields: BlogExplainFieldRefs
   }
 
   /**
@@ -7861,7 +7767,7 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__BlogExplainClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
+    readonly [Symbol.toStringTag]: 'PrismaPromise'
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7884,27 +7790,23 @@ export namespace Prisma {
     finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
 
-
-
-
   /**
    * Fields of the BlogExplain model
    */
   interface BlogExplainFieldRefs {
-    readonly id: FieldRef<"BlogExplain", 'String'>
-    readonly create_ts: FieldRef<"BlogExplain", 'DateTime'>
-    readonly updated_ts: FieldRef<"BlogExplain", 'DateTime'>
-    readonly text: FieldRef<"BlogExplain", 'String'>
-    readonly content: FieldRef<"BlogExplain", 'String'>
-    readonly article_id: FieldRef<"BlogExplain", 'String'>
+    readonly id: FieldRef<'BlogExplain', 'String'>
+    readonly create_ts: FieldRef<'BlogExplain', 'DateTime'>
+    readonly updated_ts: FieldRef<'BlogExplain', 'DateTime'>
+    readonly text: FieldRef<'BlogExplain', 'String'>
+    readonly content: FieldRef<'BlogExplain', 'String'>
+    readonly article_id: FieldRef<'BlogExplain', 'String'>
   }
-    
 
   // Custom InputTypes
   /**
    * BlogExplain findUnique
    */
-  export type BlogExplainFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogExplain
      */
@@ -7922,7 +7824,7 @@ export namespace Prisma {
   /**
    * BlogExplain findUniqueOrThrow
    */
-  export type BlogExplainFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogExplain
      */
@@ -7940,7 +7842,7 @@ export namespace Prisma {
   /**
    * BlogExplain findFirst
    */
-  export type BlogExplainFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogExplain
      */
@@ -7955,31 +7857,31 @@ export namespace Prisma {
     where?: BlogExplainWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogExplains to fetch.
      */
     orderBy?: BlogExplainOrderByWithRelationInput | BlogExplainOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for BlogExplains.
      */
     cursor?: BlogExplainWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogExplains from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogExplains.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of BlogExplains.
      */
     distinct?: BlogExplainScalarFieldEnum | BlogExplainScalarFieldEnum[]
@@ -7988,7 +7890,7 @@ export namespace Prisma {
   /**
    * BlogExplain findFirstOrThrow
    */
-  export type BlogExplainFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogExplain
      */
@@ -8003,31 +7905,31 @@ export namespace Prisma {
     where?: BlogExplainWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogExplains to fetch.
      */
     orderBy?: BlogExplainOrderByWithRelationInput | BlogExplainOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for BlogExplains.
      */
     cursor?: BlogExplainWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogExplains from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogExplains.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of BlogExplains.
      */
     distinct?: BlogExplainScalarFieldEnum | BlogExplainScalarFieldEnum[]
@@ -8036,7 +7938,7 @@ export namespace Prisma {
   /**
    * BlogExplain findMany
    */
-  export type BlogExplainFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogExplain
      */
@@ -8051,25 +7953,25 @@ export namespace Prisma {
     where?: BlogExplainWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogExplains to fetch.
      */
     orderBy?: BlogExplainOrderByWithRelationInput | BlogExplainOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing BlogExplains.
      */
     cursor?: BlogExplainWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogExplains from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogExplains.
      */
     skip?: number
@@ -8079,7 +7981,7 @@ export namespace Prisma {
   /**
    * BlogExplain create
    */
-  export type BlogExplainCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogExplain
      */
@@ -8097,7 +7999,7 @@ export namespace Prisma {
   /**
    * BlogExplain createMany
    */
-  export type BlogExplainCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to create many BlogExplains.
      */
@@ -8108,7 +8010,7 @@ export namespace Prisma {
   /**
    * BlogExplain update
    */
-  export type BlogExplainUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogExplain
      */
@@ -8130,7 +8032,7 @@ export namespace Prisma {
   /**
    * BlogExplain updateMany
    */
-  export type BlogExplainUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to update BlogExplains.
      */
@@ -8148,7 +8050,7 @@ export namespace Prisma {
   /**
    * BlogExplain upsert
    */
-  export type BlogExplainUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogExplain
      */
@@ -8174,7 +8076,7 @@ export namespace Prisma {
   /**
    * BlogExplain delete
    */
-  export type BlogExplainDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogExplain
      */
@@ -8192,7 +8094,7 @@ export namespace Prisma {
   /**
    * BlogExplain deleteMany
    */
-  export type BlogExplainDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which BlogExplains to delete
      */
@@ -8206,7 +8108,7 @@ export namespace Prisma {
   /**
    * BlogExplain without action
    */
-  export type BlogExplainDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogExplainDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogExplain
      */
@@ -8217,18 +8119,17 @@ export namespace Prisma {
     omit?: BlogExplainOmit<ExtArgs> | null
   }
 
-
   /**
    * Model BlogSubComment
    */
 
-  export type AggregateBlogSubComment = {
+  export interface AggregateBlogSubComment {
     _count: BlogSubCommentCountAggregateOutputType | null
     _min: BlogSubCommentMinAggregateOutputType | null
     _max: BlogSubCommentMaxAggregateOutputType | null
   }
 
-  export type BlogSubCommentMinAggregateOutputType = {
+  export interface BlogSubCommentMinAggregateOutputType {
     id: string | null
     content: string | null
     create_ts: Date | null
@@ -8238,7 +8139,7 @@ export namespace Prisma {
     user_id: string | null
   }
 
-  export type BlogSubCommentMaxAggregateOutputType = {
+  export interface BlogSubCommentMaxAggregateOutputType {
     id: string | null
     content: string | null
     create_ts: Date | null
@@ -8248,7 +8149,7 @@ export namespace Prisma {
     user_id: string | null
   }
 
-  export type BlogSubCommentCountAggregateOutputType = {
+  export interface BlogSubCommentCountAggregateOutputType {
     id: number
     content: number
     create_ts: number
@@ -8259,8 +8160,7 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type BlogSubCommentMinAggregateInputType = {
+  export interface BlogSubCommentMinAggregateInputType {
     id?: true
     content?: true
     create_ts?: true
@@ -8270,7 +8170,7 @@ export namespace Prisma {
     user_id?: true
   }
 
-  export type BlogSubCommentMaxAggregateInputType = {
+  export interface BlogSubCommentMaxAggregateInputType {
     id?: true
     content?: true
     create_ts?: true
@@ -8280,7 +8180,7 @@ export namespace Prisma {
     user_id?: true
   }
 
-  export type BlogSubCommentCountAggregateInputType = {
+  export interface BlogSubCommentCountAggregateInputType {
     id?: true
     content?: true
     create_ts?: true
@@ -8291,67 +8191,64 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type BlogSubCommentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which BlogSubComment to aggregate.
      */
     where?: BlogSubCommentWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogSubComments to fetch.
      */
     orderBy?: BlogSubCommentOrderByWithRelationInput | BlogSubCommentOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: BlogSubCommentWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogSubComments from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogSubComments.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned BlogSubComments
-    **/
+     */
     _count?: true | BlogSubCommentCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
-    **/
+     */
     _min?: BlogSubCommentMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
-    **/
+     */
     _max?: BlogSubCommentMaxAggregateInputType
   }
 
   export type GetBlogSubCommentAggregateType<T extends BlogSubCommentAggregateArgs> = {
-        [P in keyof T & keyof AggregateBlogSubComment]: P extends '_count' | 'count'
+    [P in keyof T & keyof AggregateBlogSubComment]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateBlogSubComment[P]>
       : GetScalarType<T[P], AggregateBlogSubComment[P]>
   }
 
-
-
-
-  export type BlogSubCommentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: BlogSubCommentWhereInput
     orderBy?: BlogSubCommentOrderByWithAggregationInput | BlogSubCommentOrderByWithAggregationInput[]
     by: BlogSubCommentScalarFieldEnum[] | BlogSubCommentScalarFieldEnum
@@ -8363,7 +8260,7 @@ export namespace Prisma {
     _max?: BlogSubCommentMaxAggregateInputType
   }
 
-  export type BlogSubCommentGroupByOutputType = {
+  export interface BlogSubCommentGroupByOutputType {
     id: string
     content: string
     create_ts: Date
@@ -8378,17 +8275,16 @@ export namespace Prisma {
 
   type GetBlogSubCommentGroupByPayload<T extends BlogSubCommentGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<BlogSubCommentGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof BlogSubCommentGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], BlogSubCommentGroupByOutputType[P]>
+      PickEnumerable<BlogSubCommentGroupByOutputType, T['by']>
+      & {
+        [P in ((keyof T) & (keyof BlogSubCommentGroupByOutputType))]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
             : GetScalarType<T[P], BlogSubCommentGroupByOutputType[P]>
-        }
+          : GetScalarType<T[P], BlogSubCommentGroupByOutputType[P]>
+      }
       >
     >
-
 
   export type BlogSubCommentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
@@ -8402,11 +8298,9 @@ export namespace Prisma {
     user_info?: boolean | BlogSubComment$user_infoArgs<ExtArgs>
     likes?: boolean | BlogSubComment$likesArgs<ExtArgs>
     _count?: boolean | BlogSubCommentCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["blogSubComment"]>
+  }, ExtArgs['result']['blogSubComment']>
 
-
-
-  export type BlogSubCommentSelectScalar = {
+  export interface BlogSubCommentSelectScalar {
     id?: boolean
     content?: boolean
     create_ts?: boolean
@@ -8416,16 +8310,16 @@ export namespace Prisma {
     user_id?: boolean
   }
 
-  export type BlogSubCommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "create_ts" | "updated_ts" | "comment_id" | "reply_sub_comment_id" | "user_id", ExtArgs["result"]["blogSubComment"]>
-  export type BlogSubCommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type BlogSubCommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<'id' | 'content' | 'create_ts' | 'updated_ts' | 'comment_id' | 'reply_sub_comment_id' | 'user_id', ExtArgs['result']['blogSubComment']>
+  export interface BlogSubCommentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     comment_info?: boolean | BlogCommentDefaultArgs<ExtArgs>
     user_info?: boolean | BlogSubComment$user_infoArgs<ExtArgs>
     likes?: boolean | BlogSubComment$likesArgs<ExtArgs>
     _count?: boolean | BlogSubCommentCountOutputTypeDefaultArgs<ExtArgs>
   }
 
-  export type $BlogSubCommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "BlogSubComment"
+  export interface $BlogSubCommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    name: 'BlogSubComment'
     objects: {
       comment_info: Prisma.$BlogCommentPayload<ExtArgs>
       user_info: Prisma.$UserPayload<ExtArgs> | null
@@ -8439,14 +8333,14 @@ export namespace Prisma {
       comment_id: string
       reply_sub_comment_id: string | null
       user_id: string | null
-    }, ExtArgs["result"]["blogSubComment"]>
+    }, ExtArgs['result']['blogSubComment']>
     composites: {}
   }
 
   type BlogSubCommentGetPayload<S extends boolean | null | undefined | BlogSubCommentDefaultArgs> = $Result.GetResult<Prisma.$BlogSubCommentPayload, S>
 
-  type BlogSubCommentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<BlogSubCommentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  type BlogSubCommentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs>
+    = Omit<BlogSubCommentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: BlogSubCommentCountAggregateInputType | true
     }
 
@@ -8463,7 +8357,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends BlogSubCommentFindUniqueArgs>(args: SelectSubset<T, BlogSubCommentFindUniqueArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends BlogSubCommentFindUniqueArgs>(args: SelectSubset<T, BlogSubCommentFindUniqueArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one BlogSubComment that matches the filter or throw an error with `error.code='P2025'`
@@ -8477,7 +8371,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends BlogSubCommentFindUniqueOrThrowArgs>(args: SelectSubset<T, BlogSubCommentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends BlogSubCommentFindUniqueOrThrowArgs>(args: SelectSubset<T, BlogSubCommentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first BlogSubComment that matches the filter.
@@ -8492,7 +8386,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends BlogSubCommentFindFirstArgs>(args?: SelectSubset<T, BlogSubCommentFindFirstArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends BlogSubCommentFindFirstArgs>(args?: SelectSubset<T, BlogSubCommentFindFirstArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first BlogSubComment that matches the filter or
@@ -8508,7 +8402,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends BlogSubCommentFindFirstOrThrowArgs>(args?: SelectSubset<T, BlogSubCommentFindFirstOrThrowArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends BlogSubCommentFindFirstOrThrowArgs>(args?: SelectSubset<T, BlogSubCommentFindFirstOrThrowArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more BlogSubComments that matches the filter.
@@ -8518,15 +8412,15 @@ export namespace Prisma {
      * @example
      * // Get all BlogSubComments
      * const blogSubComments = await prisma.blogSubComment.findMany()
-     * 
+     *
      * // Get first 10 BlogSubComments
      * const blogSubComments = await prisma.blogSubComment.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const blogSubCommentWithIdOnly = await prisma.blogSubComment.findMany({ select: { id: true } })
-     * 
+     *
      */
-    findMany<T extends BlogSubCommentFindManyArgs>(args?: SelectSubset<T, BlogSubCommentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends BlogSubCommentFindManyArgs>(args?: SelectSubset<T, BlogSubCommentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>
 
     /**
      * Create a BlogSubComment.
@@ -8538,9 +8432,9 @@ export namespace Prisma {
      *     // ... data to create a BlogSubComment
      *   }
      * })
-     * 
+     *
      */
-    create<T extends BlogSubCommentCreateArgs>(args: SelectSubset<T, BlogSubCommentCreateArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends BlogSubCommentCreateArgs>(args: SelectSubset<T, BlogSubCommentCreateArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many BlogSubComments.
@@ -8552,7 +8446,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends BlogSubCommentCreateManyArgs>(args?: SelectSubset<T, BlogSubCommentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -8566,9 +8460,9 @@ export namespace Prisma {
      *     // ... filter to delete one BlogSubComment
      *   }
      * })
-     * 
+     *
      */
-    delete<T extends BlogSubCommentDeleteArgs>(args: SelectSubset<T, BlogSubCommentDeleteArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends BlogSubCommentDeleteArgs>(args: SelectSubset<T, BlogSubCommentDeleteArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one BlogSubComment.
@@ -8583,9 +8477,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
-    update<T extends BlogSubCommentUpdateArgs>(args: SelectSubset<T, BlogSubCommentUpdateArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends BlogSubCommentUpdateArgs>(args: SelectSubset<T, BlogSubCommentUpdateArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more BlogSubComments.
@@ -8597,7 +8491,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends BlogSubCommentDeleteManyArgs>(args?: SelectSubset<T, BlogSubCommentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -8616,7 +8510,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends BlogSubCommentUpdateManyArgs>(args: SelectSubset<T, BlogSubCommentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -8637,8 +8531,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends BlogSubCommentUpsertArgs>(args: SelectSubset<T, BlogSubCommentUpsertArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
+    upsert<T extends BlogSubCommentUpsertArgs>(args: SelectSubset<T, BlogSubCommentUpsertArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Count the number of BlogSubComments.
@@ -8652,7 +8545,7 @@ export namespace Prisma {
      *     // ... the filter for the BlogSubComments we want to count
      *   }
      * })
-    **/
+     */
     count<T extends BlogSubCommentCountArgs>(
       args?: Subset<T, BlogSubCommentCountArgs>,
     ): Prisma.PrismaPromise<
@@ -8686,7 +8579,7 @@ export namespace Prisma {
      *   },
      *   take: 10,
      * })
-    **/
+     */
     aggregate<T extends BlogSubCommentAggregateArgs>(args: Subset<T, BlogSubCommentAggregateArgs>): Prisma.PrismaPromise<GetBlogSubCommentAggregateType<T>>
 
     /**
@@ -8705,8 +8598,8 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
-    **/
+     *
+     */
     groupBy<
       T extends BlogSubCommentGroupByArgs,
       HasSelectOrTake extends Or<
@@ -8723,52 +8616,52 @@ export namespace Prisma {
       HavingValid extends Has<ByFields, HavingFields>,
       ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
                 ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ]
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields],
     >(args: SubsetIntersection<T, BlogSubCommentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBlogSubCommentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the BlogSubComment model
-   */
-  readonly fields: BlogSubCommentFieldRefs;
+    /**
+     * Fields of the BlogSubComment model
+     */
+    readonly fields: BlogSubCommentFieldRefs
   }
 
   /**
@@ -8778,10 +8671,10 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__BlogSubCommentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    comment_info<T extends BlogCommentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BlogCommentDefaultArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    user_info<T extends BlogSubComment$user_infoArgs<ExtArgs> = {}>(args?: Subset<T, BlogSubComment$user_infoArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    likes<T extends BlogSubComment$likesArgs<ExtArgs> = {}>(args?: Subset<T, BlogSubComment$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    readonly [Symbol.toStringTag]: 'PrismaPromise'
+    comment_info<T extends BlogCommentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BlogCommentDefaultArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user_info<T extends BlogSubComment$user_infoArgs<ExtArgs> = {}>(args?: Subset<T, BlogSubComment$user_infoArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    likes<T extends BlogSubComment$likesArgs<ExtArgs> = {}>(args?: Subset<T, BlogSubComment$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8804,28 +8697,24 @@ export namespace Prisma {
     finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
 
-
-
-
   /**
    * Fields of the BlogSubComment model
    */
   interface BlogSubCommentFieldRefs {
-    readonly id: FieldRef<"BlogSubComment", 'String'>
-    readonly content: FieldRef<"BlogSubComment", 'String'>
-    readonly create_ts: FieldRef<"BlogSubComment", 'DateTime'>
-    readonly updated_ts: FieldRef<"BlogSubComment", 'DateTime'>
-    readonly comment_id: FieldRef<"BlogSubComment", 'String'>
-    readonly reply_sub_comment_id: FieldRef<"BlogSubComment", 'String'>
-    readonly user_id: FieldRef<"BlogSubComment", 'String'>
+    readonly id: FieldRef<'BlogSubComment', 'String'>
+    readonly content: FieldRef<'BlogSubComment', 'String'>
+    readonly create_ts: FieldRef<'BlogSubComment', 'DateTime'>
+    readonly updated_ts: FieldRef<'BlogSubComment', 'DateTime'>
+    readonly comment_id: FieldRef<'BlogSubComment', 'String'>
+    readonly reply_sub_comment_id: FieldRef<'BlogSubComment', 'String'>
+    readonly user_id: FieldRef<'BlogSubComment', 'String'>
   }
-    
 
   // Custom InputTypes
   /**
    * BlogSubComment findUnique
    */
-  export type BlogSubCommentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogSubComment
      */
@@ -8847,7 +8736,7 @@ export namespace Prisma {
   /**
    * BlogSubComment findUniqueOrThrow
    */
-  export type BlogSubCommentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogSubComment
      */
@@ -8869,7 +8758,7 @@ export namespace Prisma {
   /**
    * BlogSubComment findFirst
    */
-  export type BlogSubCommentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogSubComment
      */
@@ -8888,31 +8777,31 @@ export namespace Prisma {
     where?: BlogSubCommentWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogSubComments to fetch.
      */
     orderBy?: BlogSubCommentOrderByWithRelationInput | BlogSubCommentOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for BlogSubComments.
      */
     cursor?: BlogSubCommentWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogSubComments from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogSubComments.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of BlogSubComments.
      */
     distinct?: BlogSubCommentScalarFieldEnum | BlogSubCommentScalarFieldEnum[]
@@ -8921,7 +8810,7 @@ export namespace Prisma {
   /**
    * BlogSubComment findFirstOrThrow
    */
-  export type BlogSubCommentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogSubComment
      */
@@ -8940,31 +8829,31 @@ export namespace Prisma {
     where?: BlogSubCommentWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogSubComments to fetch.
      */
     orderBy?: BlogSubCommentOrderByWithRelationInput | BlogSubCommentOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for BlogSubComments.
      */
     cursor?: BlogSubCommentWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogSubComments from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogSubComments.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of BlogSubComments.
      */
     distinct?: BlogSubCommentScalarFieldEnum | BlogSubCommentScalarFieldEnum[]
@@ -8973,7 +8862,7 @@ export namespace Prisma {
   /**
    * BlogSubComment findMany
    */
-  export type BlogSubCommentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogSubComment
      */
@@ -8992,25 +8881,25 @@ export namespace Prisma {
     where?: BlogSubCommentWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogSubComments to fetch.
      */
     orderBy?: BlogSubCommentOrderByWithRelationInput | BlogSubCommentOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing BlogSubComments.
      */
     cursor?: BlogSubCommentWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogSubComments from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogSubComments.
      */
     skip?: number
@@ -9020,7 +8909,7 @@ export namespace Prisma {
   /**
    * BlogSubComment create
    */
-  export type BlogSubCommentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogSubComment
      */
@@ -9042,7 +8931,7 @@ export namespace Prisma {
   /**
    * BlogSubComment createMany
    */
-  export type BlogSubCommentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to create many BlogSubComments.
      */
@@ -9053,7 +8942,7 @@ export namespace Prisma {
   /**
    * BlogSubComment update
    */
-  export type BlogSubCommentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogSubComment
      */
@@ -9079,7 +8968,7 @@ export namespace Prisma {
   /**
    * BlogSubComment updateMany
    */
-  export type BlogSubCommentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to update BlogSubComments.
      */
@@ -9097,7 +8986,7 @@ export namespace Prisma {
   /**
    * BlogSubComment upsert
    */
-  export type BlogSubCommentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogSubComment
      */
@@ -9127,7 +9016,7 @@ export namespace Prisma {
   /**
    * BlogSubComment delete
    */
-  export type BlogSubCommentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogSubComment
      */
@@ -9149,7 +9038,7 @@ export namespace Prisma {
   /**
    * BlogSubComment deleteMany
    */
-  export type BlogSubCommentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which BlogSubComments to delete
      */
@@ -9163,7 +9052,7 @@ export namespace Prisma {
   /**
    * BlogSubComment.user_info
    */
-  export type BlogSubComment$user_infoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubComment$user_infoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the User
      */
@@ -9182,7 +9071,7 @@ export namespace Prisma {
   /**
    * BlogSubComment.likes
    */
-  export type BlogSubComment$likesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubComment$likesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogLike
      */
@@ -9206,7 +9095,7 @@ export namespace Prisma {
   /**
    * BlogSubComment without action
    */
-  export type BlogSubCommentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogSubCommentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogSubComment
      */
@@ -9221,12 +9110,11 @@ export namespace Prisma {
     include?: BlogSubCommentInclude<ExtArgs> | null
   }
 
-
   /**
    * Model BlogLike
    */
 
-  export type AggregateBlogLike = {
+  export interface AggregateBlogLike {
     _count: BlogLikeCountAggregateOutputType | null
     _avg: BlogLikeAvgAggregateOutputType | null
     _sum: BlogLikeSumAggregateOutputType | null
@@ -9234,27 +9122,15 @@ export namespace Prisma {
     _max: BlogLikeMaxAggregateOutputType | null
   }
 
-  export type BlogLikeAvgAggregateOutputType = {
+  export interface BlogLikeAvgAggregateOutputType {
     id: number | null
   }
 
-  export type BlogLikeSumAggregateOutputType = {
+  export interface BlogLikeSumAggregateOutputType {
     id: number | null
   }
 
-  export type BlogLikeMinAggregateOutputType = {
-    id: number | null
-    create_ts: Date | null
-    updated_ts: Date | null
-    target: string | null
-    article_id: string | null
-    sub_comment_id: string | null
-    comment_id: string | null
-    user_id: string | null
-    blogMemoId: string | null
-  }
-
-  export type BlogLikeMaxAggregateOutputType = {
+  export interface BlogLikeMinAggregateOutputType {
     id: number | null
     create_ts: Date | null
     updated_ts: Date | null
@@ -9266,7 +9142,19 @@ export namespace Prisma {
     blogMemoId: string | null
   }
 
-  export type BlogLikeCountAggregateOutputType = {
+  export interface BlogLikeMaxAggregateOutputType {
+    id: number | null
+    create_ts: Date | null
+    updated_ts: Date | null
+    target: string | null
+    article_id: string | null
+    sub_comment_id: string | null
+    comment_id: string | null
+    user_id: string | null
+    blogMemoId: string | null
+  }
+
+  export interface BlogLikeCountAggregateOutputType {
     id: number
     create_ts: number
     updated_ts: number
@@ -9279,28 +9167,15 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type BlogLikeAvgAggregateInputType = {
+  export interface BlogLikeAvgAggregateInputType {
     id?: true
   }
 
-  export type BlogLikeSumAggregateInputType = {
+  export interface BlogLikeSumAggregateInputType {
     id?: true
   }
 
-  export type BlogLikeMinAggregateInputType = {
-    id?: true
-    create_ts?: true
-    updated_ts?: true
-    target?: true
-    article_id?: true
-    sub_comment_id?: true
-    comment_id?: true
-    user_id?: true
-    blogMemoId?: true
-  }
-
-  export type BlogLikeMaxAggregateInputType = {
+  export interface BlogLikeMinAggregateInputType {
     id?: true
     create_ts?: true
     updated_ts?: true
@@ -9312,7 +9187,19 @@ export namespace Prisma {
     blogMemoId?: true
   }
 
-  export type BlogLikeCountAggregateInputType = {
+  export interface BlogLikeMaxAggregateInputType {
+    id?: true
+    create_ts?: true
+    updated_ts?: true
+    target?: true
+    article_id?: true
+    sub_comment_id?: true
+    comment_id?: true
+    user_id?: true
+    blogMemoId?: true
+  }
+
+  export interface BlogLikeCountAggregateInputType {
     id?: true
     create_ts?: true
     updated_ts?: true
@@ -9325,79 +9212,76 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type BlogLikeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which BlogLike to aggregate.
      */
     where?: BlogLikeWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogLikes to fetch.
      */
     orderBy?: BlogLikeOrderByWithRelationInput | BlogLikeOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: BlogLikeWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogLikes from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogLikes.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned BlogLikes
-    **/
+     */
     _count?: true | BlogLikeCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
-    **/
+     */
     _avg?: BlogLikeAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
-    **/
+     */
     _sum?: BlogLikeSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
-    **/
+     */
     _min?: BlogLikeMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
-    **/
+     */
     _max?: BlogLikeMaxAggregateInputType
   }
 
   export type GetBlogLikeAggregateType<T extends BlogLikeAggregateArgs> = {
-        [P in keyof T & keyof AggregateBlogLike]: P extends '_count' | 'count'
+    [P in keyof T & keyof AggregateBlogLike]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateBlogLike[P]>
       : GetScalarType<T[P], AggregateBlogLike[P]>
   }
 
-
-
-
-  export type BlogLikeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: BlogLikeWhereInput
     orderBy?: BlogLikeOrderByWithAggregationInput | BlogLikeOrderByWithAggregationInput[]
     by: BlogLikeScalarFieldEnum[] | BlogLikeScalarFieldEnum
@@ -9411,7 +9295,7 @@ export namespace Prisma {
     _max?: BlogLikeMaxAggregateInputType
   }
 
-  export type BlogLikeGroupByOutputType = {
+  export interface BlogLikeGroupByOutputType {
     id: number
     create_ts: Date
     updated_ts: Date
@@ -9430,17 +9314,16 @@ export namespace Prisma {
 
   type GetBlogLikeGroupByPayload<T extends BlogLikeGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<BlogLikeGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof BlogLikeGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], BlogLikeGroupByOutputType[P]>
+      PickEnumerable<BlogLikeGroupByOutputType, T['by']>
+      & {
+        [P in ((keyof T) & (keyof BlogLikeGroupByOutputType))]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
             : GetScalarType<T[P], BlogLikeGroupByOutputType[P]>
-        }
+          : GetScalarType<T[P], BlogLikeGroupByOutputType[P]>
+      }
       >
     >
-
 
   export type BlogLikeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
@@ -9456,11 +9339,9 @@ export namespace Prisma {
     comment_info?: boolean | BlogLike$comment_infoArgs<ExtArgs>
     user_info?: boolean | UserDefaultArgs<ExtArgs>
     blogMemoInfo?: boolean | BlogLike$blogMemoInfoArgs<ExtArgs>
-  }, ExtArgs["result"]["blogLike"]>
+  }, ExtArgs['result']['blogLike']>
 
-
-
-  export type BlogLikeSelectScalar = {
+  export interface BlogLikeSelectScalar {
     id?: boolean
     create_ts?: boolean
     updated_ts?: boolean
@@ -9472,16 +9353,16 @@ export namespace Prisma {
     blogMemoId?: boolean
   }
 
-  export type BlogLikeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "create_ts" | "updated_ts" | "target" | "article_id" | "sub_comment_id" | "comment_id" | "user_id" | "blogMemoId", ExtArgs["result"]["blogLike"]>
-  export type BlogLikeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type BlogLikeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<'id' | 'create_ts' | 'updated_ts' | 'target' | 'article_id' | 'sub_comment_id' | 'comment_id' | 'user_id' | 'blogMemoId', ExtArgs['result']['blogLike']>
+  export interface BlogLikeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     sub_comment_info?: boolean | BlogLike$sub_comment_infoArgs<ExtArgs>
     comment_info?: boolean | BlogLike$comment_infoArgs<ExtArgs>
     user_info?: boolean | UserDefaultArgs<ExtArgs>
     blogMemoInfo?: boolean | BlogLike$blogMemoInfoArgs<ExtArgs>
   }
 
-  export type $BlogLikePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "BlogLike"
+  export interface $BlogLikePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    name: 'BlogLike'
     objects: {
       sub_comment_info: Prisma.$BlogSubCommentPayload<ExtArgs> | null
       comment_info: Prisma.$BlogCommentPayload<ExtArgs> | null
@@ -9498,14 +9379,14 @@ export namespace Prisma {
       comment_id: string | null
       user_id: string
       blogMemoId: string | null
-    }, ExtArgs["result"]["blogLike"]>
+    }, ExtArgs['result']['blogLike']>
     composites: {}
   }
 
   type BlogLikeGetPayload<S extends boolean | null | undefined | BlogLikeDefaultArgs> = $Result.GetResult<Prisma.$BlogLikePayload, S>
 
-  type BlogLikeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<BlogLikeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  type BlogLikeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs>
+    = Omit<BlogLikeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: BlogLikeCountAggregateInputType | true
     }
 
@@ -9522,7 +9403,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends BlogLikeFindUniqueArgs>(args: SelectSubset<T, BlogLikeFindUniqueArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends BlogLikeFindUniqueArgs>(args: SelectSubset<T, BlogLikeFindUniqueArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one BlogLike that matches the filter or throw an error with `error.code='P2025'`
@@ -9536,7 +9417,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends BlogLikeFindUniqueOrThrowArgs>(args: SelectSubset<T, BlogLikeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends BlogLikeFindUniqueOrThrowArgs>(args: SelectSubset<T, BlogLikeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first BlogLike that matches the filter.
@@ -9551,7 +9432,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends BlogLikeFindFirstArgs>(args?: SelectSubset<T, BlogLikeFindFirstArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends BlogLikeFindFirstArgs>(args?: SelectSubset<T, BlogLikeFindFirstArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first BlogLike that matches the filter or
@@ -9567,7 +9448,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends BlogLikeFindFirstOrThrowArgs>(args?: SelectSubset<T, BlogLikeFindFirstOrThrowArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends BlogLikeFindFirstOrThrowArgs>(args?: SelectSubset<T, BlogLikeFindFirstOrThrowArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more BlogLikes that matches the filter.
@@ -9577,15 +9458,15 @@ export namespace Prisma {
      * @example
      * // Get all BlogLikes
      * const blogLikes = await prisma.blogLike.findMany()
-     * 
+     *
      * // Get first 10 BlogLikes
      * const blogLikes = await prisma.blogLike.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const blogLikeWithIdOnly = await prisma.blogLike.findMany({ select: { id: true } })
-     * 
+     *
      */
-    findMany<T extends BlogLikeFindManyArgs>(args?: SelectSubset<T, BlogLikeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends BlogLikeFindManyArgs>(args?: SelectSubset<T, BlogLikeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>
 
     /**
      * Create a BlogLike.
@@ -9597,9 +9478,9 @@ export namespace Prisma {
      *     // ... data to create a BlogLike
      *   }
      * })
-     * 
+     *
      */
-    create<T extends BlogLikeCreateArgs>(args: SelectSubset<T, BlogLikeCreateArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends BlogLikeCreateArgs>(args: SelectSubset<T, BlogLikeCreateArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many BlogLikes.
@@ -9611,7 +9492,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends BlogLikeCreateManyArgs>(args?: SelectSubset<T, BlogLikeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -9625,9 +9506,9 @@ export namespace Prisma {
      *     // ... filter to delete one BlogLike
      *   }
      * })
-     * 
+     *
      */
-    delete<T extends BlogLikeDeleteArgs>(args: SelectSubset<T, BlogLikeDeleteArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends BlogLikeDeleteArgs>(args: SelectSubset<T, BlogLikeDeleteArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one BlogLike.
@@ -9642,9 +9523,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
-    update<T extends BlogLikeUpdateArgs>(args: SelectSubset<T, BlogLikeUpdateArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends BlogLikeUpdateArgs>(args: SelectSubset<T, BlogLikeUpdateArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more BlogLikes.
@@ -9656,7 +9537,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends BlogLikeDeleteManyArgs>(args?: SelectSubset<T, BlogLikeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -9675,7 +9556,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends BlogLikeUpdateManyArgs>(args: SelectSubset<T, BlogLikeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -9696,8 +9577,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends BlogLikeUpsertArgs>(args: SelectSubset<T, BlogLikeUpsertArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
+    upsert<T extends BlogLikeUpsertArgs>(args: SelectSubset<T, BlogLikeUpsertArgs<ExtArgs>>): Prisma__BlogLikeClient<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Count the number of BlogLikes.
@@ -9711,7 +9591,7 @@ export namespace Prisma {
      *     // ... the filter for the BlogLikes we want to count
      *   }
      * })
-    **/
+     */
     count<T extends BlogLikeCountArgs>(
       args?: Subset<T, BlogLikeCountArgs>,
     ): Prisma.PrismaPromise<
@@ -9745,7 +9625,7 @@ export namespace Prisma {
      *   },
      *   take: 10,
      * })
-    **/
+     */
     aggregate<T extends BlogLikeAggregateArgs>(args: Subset<T, BlogLikeAggregateArgs>): Prisma.PrismaPromise<GetBlogLikeAggregateType<T>>
 
     /**
@@ -9764,8 +9644,8 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
-    **/
+     *
+     */
     groupBy<
       T extends BlogLikeGroupByArgs,
       HasSelectOrTake extends Or<
@@ -9782,52 +9662,52 @@ export namespace Prisma {
       HavingValid extends Has<ByFields, HavingFields>,
       ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
                 ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ]
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields],
     >(args: SubsetIntersection<T, BlogLikeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBlogLikeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the BlogLike model
-   */
-  readonly fields: BlogLikeFieldRefs;
+    /**
+     * Fields of the BlogLike model
+     */
+    readonly fields: BlogLikeFieldRefs
   }
 
   /**
@@ -9837,11 +9717,11 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__BlogLikeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    sub_comment_info<T extends BlogLike$sub_comment_infoArgs<ExtArgs> = {}>(args?: Subset<T, BlogLike$sub_comment_infoArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    comment_info<T extends BlogLike$comment_infoArgs<ExtArgs> = {}>(args?: Subset<T, BlogLike$comment_infoArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    user_info<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    blogMemoInfo<T extends BlogLike$blogMemoInfoArgs<ExtArgs> = {}>(args?: Subset<T, BlogLike$blogMemoInfoArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    readonly [Symbol.toStringTag]: 'PrismaPromise'
+    sub_comment_info<T extends BlogLike$sub_comment_infoArgs<ExtArgs> = {}>(args?: Subset<T, BlogLike$sub_comment_infoArgs<ExtArgs>>): Prisma__BlogSubCommentClient<$Result.GetResult<Prisma.$BlogSubCommentPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    comment_info<T extends BlogLike$comment_infoArgs<ExtArgs> = {}>(args?: Subset<T, BlogLike$comment_infoArgs<ExtArgs>>): Prisma__BlogCommentClient<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user_info<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    blogMemoInfo<T extends BlogLike$blogMemoInfoArgs<ExtArgs> = {}>(args?: Subset<T, BlogLike$blogMemoInfoArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9864,30 +9744,26 @@ export namespace Prisma {
     finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
 
-
-
-
   /**
    * Fields of the BlogLike model
    */
   interface BlogLikeFieldRefs {
-    readonly id: FieldRef<"BlogLike", 'Int'>
-    readonly create_ts: FieldRef<"BlogLike", 'DateTime'>
-    readonly updated_ts: FieldRef<"BlogLike", 'DateTime'>
-    readonly target: FieldRef<"BlogLike", 'String'>
-    readonly article_id: FieldRef<"BlogLike", 'String'>
-    readonly sub_comment_id: FieldRef<"BlogLike", 'String'>
-    readonly comment_id: FieldRef<"BlogLike", 'String'>
-    readonly user_id: FieldRef<"BlogLike", 'String'>
-    readonly blogMemoId: FieldRef<"BlogLike", 'String'>
+    readonly id: FieldRef<'BlogLike', 'Int'>
+    readonly create_ts: FieldRef<'BlogLike', 'DateTime'>
+    readonly updated_ts: FieldRef<'BlogLike', 'DateTime'>
+    readonly target: FieldRef<'BlogLike', 'String'>
+    readonly article_id: FieldRef<'BlogLike', 'String'>
+    readonly sub_comment_id: FieldRef<'BlogLike', 'String'>
+    readonly comment_id: FieldRef<'BlogLike', 'String'>
+    readonly user_id: FieldRef<'BlogLike', 'String'>
+    readonly blogMemoId: FieldRef<'BlogLike', 'String'>
   }
-    
 
   // Custom InputTypes
   /**
    * BlogLike findUnique
    */
-  export type BlogLikeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogLike
      */
@@ -9909,7 +9785,7 @@ export namespace Prisma {
   /**
    * BlogLike findUniqueOrThrow
    */
-  export type BlogLikeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogLike
      */
@@ -9931,7 +9807,7 @@ export namespace Prisma {
   /**
    * BlogLike findFirst
    */
-  export type BlogLikeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogLike
      */
@@ -9950,31 +9826,31 @@ export namespace Prisma {
     where?: BlogLikeWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogLikes to fetch.
      */
     orderBy?: BlogLikeOrderByWithRelationInput | BlogLikeOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for BlogLikes.
      */
     cursor?: BlogLikeWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogLikes from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogLikes.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of BlogLikes.
      */
     distinct?: BlogLikeScalarFieldEnum | BlogLikeScalarFieldEnum[]
@@ -9983,7 +9859,7 @@ export namespace Prisma {
   /**
    * BlogLike findFirstOrThrow
    */
-  export type BlogLikeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogLike
      */
@@ -10002,31 +9878,31 @@ export namespace Prisma {
     where?: BlogLikeWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogLikes to fetch.
      */
     orderBy?: BlogLikeOrderByWithRelationInput | BlogLikeOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for BlogLikes.
      */
     cursor?: BlogLikeWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogLikes from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogLikes.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of BlogLikes.
      */
     distinct?: BlogLikeScalarFieldEnum | BlogLikeScalarFieldEnum[]
@@ -10035,7 +9911,7 @@ export namespace Prisma {
   /**
    * BlogLike findMany
    */
-  export type BlogLikeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogLike
      */
@@ -10054,25 +9930,25 @@ export namespace Prisma {
     where?: BlogLikeWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogLikes to fetch.
      */
     orderBy?: BlogLikeOrderByWithRelationInput | BlogLikeOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing BlogLikes.
      */
     cursor?: BlogLikeWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogLikes from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogLikes.
      */
     skip?: number
@@ -10082,7 +9958,7 @@ export namespace Prisma {
   /**
    * BlogLike create
    */
-  export type BlogLikeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogLike
      */
@@ -10104,7 +9980,7 @@ export namespace Prisma {
   /**
    * BlogLike createMany
    */
-  export type BlogLikeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to create many BlogLikes.
      */
@@ -10115,7 +9991,7 @@ export namespace Prisma {
   /**
    * BlogLike update
    */
-  export type BlogLikeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogLike
      */
@@ -10141,7 +10017,7 @@ export namespace Prisma {
   /**
    * BlogLike updateMany
    */
-  export type BlogLikeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to update BlogLikes.
      */
@@ -10159,7 +10035,7 @@ export namespace Prisma {
   /**
    * BlogLike upsert
    */
-  export type BlogLikeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogLike
      */
@@ -10189,7 +10065,7 @@ export namespace Prisma {
   /**
    * BlogLike delete
    */
-  export type BlogLikeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogLike
      */
@@ -10211,7 +10087,7 @@ export namespace Prisma {
   /**
    * BlogLike deleteMany
    */
-  export type BlogLikeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which BlogLikes to delete
      */
@@ -10225,7 +10101,7 @@ export namespace Prisma {
   /**
    * BlogLike.sub_comment_info
    */
-  export type BlogLike$sub_comment_infoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLike$sub_comment_infoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogSubComment
      */
@@ -10244,7 +10120,7 @@ export namespace Prisma {
   /**
    * BlogLike.comment_info
    */
-  export type BlogLike$comment_infoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLike$comment_infoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogComment
      */
@@ -10263,7 +10139,7 @@ export namespace Prisma {
   /**
    * BlogLike.blogMemoInfo
    */
-  export type BlogLike$blogMemoInfoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLike$blogMemoInfoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogMemo
      */
@@ -10282,7 +10158,7 @@ export namespace Prisma {
   /**
    * BlogLike without action
    */
-  export type BlogLikeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogLikeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogLike
      */
@@ -10297,18 +10173,17 @@ export namespace Prisma {
     include?: BlogLikeInclude<ExtArgs> | null
   }
 
-
   /**
    * Model BlogMemo
    */
 
-  export type AggregateBlogMemo = {
+  export interface AggregateBlogMemo {
     _count: BlogMemoCountAggregateOutputType | null
     _min: BlogMemoMinAggregateOutputType | null
     _max: BlogMemoMaxAggregateOutputType | null
   }
 
-  export type BlogMemoMinAggregateOutputType = {
+  export interface BlogMemoMinAggregateOutputType {
     id: string | null
     content: string | null
     create_ts: Date | null
@@ -10321,7 +10196,7 @@ export namespace Prisma {
     courier: string | null
   }
 
-  export type BlogMemoMaxAggregateOutputType = {
+  export interface BlogMemoMaxAggregateOutputType {
     id: string | null
     content: string | null
     create_ts: Date | null
@@ -10334,7 +10209,7 @@ export namespace Prisma {
     courier: string | null
   }
 
-  export type BlogMemoCountAggregateOutputType = {
+  export interface BlogMemoCountAggregateOutputType {
     id: number
     content: number
     create_ts: number
@@ -10348,8 +10223,7 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type BlogMemoMinAggregateInputType = {
+  export interface BlogMemoMinAggregateInputType {
     id?: true
     content?: true
     create_ts?: true
@@ -10362,7 +10236,7 @@ export namespace Prisma {
     courier?: true
   }
 
-  export type BlogMemoMaxAggregateInputType = {
+  export interface BlogMemoMaxAggregateInputType {
     id?: true
     content?: true
     create_ts?: true
@@ -10375,7 +10249,7 @@ export namespace Prisma {
     courier?: true
   }
 
-  export type BlogMemoCountAggregateInputType = {
+  export interface BlogMemoCountAggregateInputType {
     id?: true
     content?: true
     create_ts?: true
@@ -10389,67 +10263,64 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type BlogMemoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which BlogMemo to aggregate.
      */
     where?: BlogMemoWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogMemos to fetch.
      */
     orderBy?: BlogMemoOrderByWithRelationInput | BlogMemoOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: BlogMemoWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogMemos from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogMemos.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned BlogMemos
-    **/
+     */
     _count?: true | BlogMemoCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
-    **/
+     */
     _min?: BlogMemoMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
-    **/
+     */
     _max?: BlogMemoMaxAggregateInputType
   }
 
   export type GetBlogMemoAggregateType<T extends BlogMemoAggregateArgs> = {
-        [P in keyof T & keyof AggregateBlogMemo]: P extends '_count' | 'count'
+    [P in keyof T & keyof AggregateBlogMemo]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateBlogMemo[P]>
       : GetScalarType<T[P], AggregateBlogMemo[P]>
   }
 
-
-
-
-  export type BlogMemoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: BlogMemoWhereInput
     orderBy?: BlogMemoOrderByWithAggregationInput | BlogMemoOrderByWithAggregationInput[]
     by: BlogMemoScalarFieldEnum[] | BlogMemoScalarFieldEnum
@@ -10461,7 +10332,7 @@ export namespace Prisma {
     _max?: BlogMemoMaxAggregateInputType
   }
 
-  export type BlogMemoGroupByOutputType = {
+  export interface BlogMemoGroupByOutputType {
     id: string
     content: string | null
     create_ts: Date
@@ -10479,17 +10350,16 @@ export namespace Prisma {
 
   type GetBlogMemoGroupByPayload<T extends BlogMemoGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<BlogMemoGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof BlogMemoGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], BlogMemoGroupByOutputType[P]>
+      PickEnumerable<BlogMemoGroupByOutputType, T['by']>
+      & {
+        [P in ((keyof T) & (keyof BlogMemoGroupByOutputType))]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
             : GetScalarType<T[P], BlogMemoGroupByOutputType[P]>
-        }
+          : GetScalarType<T[P], BlogMemoGroupByOutputType[P]>
+      }
       >
     >
-
 
   export type BlogMemoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
@@ -10507,11 +10377,9 @@ export namespace Prisma {
     comments?: boolean | BlogMemo$commentsArgs<ExtArgs>
     likes?: boolean | BlogMemo$likesArgs<ExtArgs>
     _count?: boolean | BlogMemoCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["blogMemo"]>
+  }, ExtArgs['result']['blogMemo']>
 
-
-
-  export type BlogMemoSelectScalar = {
+  export interface BlogMemoSelectScalar {
     id?: boolean
     content?: boolean
     create_ts?: boolean
@@ -10524,8 +10392,8 @@ export namespace Prisma {
     courier?: boolean
   }
 
-  export type BlogMemoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "create_ts" | "updated_ts" | "visible" | "defalt_floded" | "flod_tip" | "user_id" | "from" | "courier", ExtArgs["result"]["blogMemo"]>
-  export type BlogMemoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type BlogMemoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<'id' | 'content' | 'create_ts' | 'updated_ts' | 'visible' | 'defalt_floded' | 'flod_tip' | 'user_id' | 'from' | 'courier', ExtArgs['result']['blogMemo']>
+  export interface BlogMemoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     user_info?: boolean | UserDefaultArgs<ExtArgs>
     tags?: boolean | BlogMemo$tagsArgs<ExtArgs>
     comments?: boolean | BlogMemo$commentsArgs<ExtArgs>
@@ -10533,8 +10401,8 @@ export namespace Prisma {
     _count?: boolean | BlogMemoCountOutputTypeDefaultArgs<ExtArgs>
   }
 
-  export type $BlogMemoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "BlogMemo"
+  export interface $BlogMemoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    name: 'BlogMemo'
     objects: {
       user_info: Prisma.$UserPayload<ExtArgs>
       tags: Prisma.$MemoTagRelationsPayload<ExtArgs>[]
@@ -10552,14 +10420,14 @@ export namespace Prisma {
       user_id: string
       from: string | null
       courier: string | null
-    }, ExtArgs["result"]["blogMemo"]>
+    }, ExtArgs['result']['blogMemo']>
     composites: {}
   }
 
   type BlogMemoGetPayload<S extends boolean | null | undefined | BlogMemoDefaultArgs> = $Result.GetResult<Prisma.$BlogMemoPayload, S>
 
-  type BlogMemoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<BlogMemoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  type BlogMemoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs>
+    = Omit<BlogMemoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: BlogMemoCountAggregateInputType | true
     }
 
@@ -10576,7 +10444,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends BlogMemoFindUniqueArgs>(args: SelectSubset<T, BlogMemoFindUniqueArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends BlogMemoFindUniqueArgs>(args: SelectSubset<T, BlogMemoFindUniqueArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one BlogMemo that matches the filter or throw an error with `error.code='P2025'`
@@ -10590,7 +10458,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends BlogMemoFindUniqueOrThrowArgs>(args: SelectSubset<T, BlogMemoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends BlogMemoFindUniqueOrThrowArgs>(args: SelectSubset<T, BlogMemoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first BlogMemo that matches the filter.
@@ -10605,7 +10473,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends BlogMemoFindFirstArgs>(args?: SelectSubset<T, BlogMemoFindFirstArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends BlogMemoFindFirstArgs>(args?: SelectSubset<T, BlogMemoFindFirstArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first BlogMemo that matches the filter or
@@ -10621,7 +10489,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends BlogMemoFindFirstOrThrowArgs>(args?: SelectSubset<T, BlogMemoFindFirstOrThrowArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends BlogMemoFindFirstOrThrowArgs>(args?: SelectSubset<T, BlogMemoFindFirstOrThrowArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more BlogMemos that matches the filter.
@@ -10631,15 +10499,15 @@ export namespace Prisma {
      * @example
      * // Get all BlogMemos
      * const blogMemos = await prisma.blogMemo.findMany()
-     * 
+     *
      * // Get first 10 BlogMemos
      * const blogMemos = await prisma.blogMemo.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const blogMemoWithIdOnly = await prisma.blogMemo.findMany({ select: { id: true } })
-     * 
+     *
      */
-    findMany<T extends BlogMemoFindManyArgs>(args?: SelectSubset<T, BlogMemoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends BlogMemoFindManyArgs>(args?: SelectSubset<T, BlogMemoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>
 
     /**
      * Create a BlogMemo.
@@ -10651,9 +10519,9 @@ export namespace Prisma {
      *     // ... data to create a BlogMemo
      *   }
      * })
-     * 
+     *
      */
-    create<T extends BlogMemoCreateArgs>(args: SelectSubset<T, BlogMemoCreateArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends BlogMemoCreateArgs>(args: SelectSubset<T, BlogMemoCreateArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many BlogMemos.
@@ -10665,7 +10533,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends BlogMemoCreateManyArgs>(args?: SelectSubset<T, BlogMemoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -10679,9 +10547,9 @@ export namespace Prisma {
      *     // ... filter to delete one BlogMemo
      *   }
      * })
-     * 
+     *
      */
-    delete<T extends BlogMemoDeleteArgs>(args: SelectSubset<T, BlogMemoDeleteArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends BlogMemoDeleteArgs>(args: SelectSubset<T, BlogMemoDeleteArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one BlogMemo.
@@ -10696,9 +10564,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
-    update<T extends BlogMemoUpdateArgs>(args: SelectSubset<T, BlogMemoUpdateArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends BlogMemoUpdateArgs>(args: SelectSubset<T, BlogMemoUpdateArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more BlogMemos.
@@ -10710,7 +10578,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends BlogMemoDeleteManyArgs>(args?: SelectSubset<T, BlogMemoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -10729,7 +10597,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends BlogMemoUpdateManyArgs>(args: SelectSubset<T, BlogMemoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -10750,8 +10618,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends BlogMemoUpsertArgs>(args: SelectSubset<T, BlogMemoUpsertArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
+    upsert<T extends BlogMemoUpsertArgs>(args: SelectSubset<T, BlogMemoUpsertArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Count the number of BlogMemos.
@@ -10765,7 +10632,7 @@ export namespace Prisma {
      *     // ... the filter for the BlogMemos we want to count
      *   }
      * })
-    **/
+     */
     count<T extends BlogMemoCountArgs>(
       args?: Subset<T, BlogMemoCountArgs>,
     ): Prisma.PrismaPromise<
@@ -10799,7 +10666,7 @@ export namespace Prisma {
      *   },
      *   take: 10,
      * })
-    **/
+     */
     aggregate<T extends BlogMemoAggregateArgs>(args: Subset<T, BlogMemoAggregateArgs>): Prisma.PrismaPromise<GetBlogMemoAggregateType<T>>
 
     /**
@@ -10818,8 +10685,8 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
-    **/
+     *
+     */
     groupBy<
       T extends BlogMemoGroupByArgs,
       HasSelectOrTake extends Or<
@@ -10836,52 +10703,52 @@ export namespace Prisma {
       HavingValid extends Has<ByFields, HavingFields>,
       ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
                 ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ]
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields],
     >(args: SubsetIntersection<T, BlogMemoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBlogMemoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the BlogMemo model
-   */
-  readonly fields: BlogMemoFieldRefs;
+    /**
+     * Fields of the BlogMemo model
+     */
+    readonly fields: BlogMemoFieldRefs
   }
 
   /**
@@ -10891,11 +10758,11 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__BlogMemoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    user_info<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    tags<T extends BlogMemo$tagsArgs<ExtArgs> = {}>(args?: Subset<T, BlogMemo$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    comments<T extends BlogMemo$commentsArgs<ExtArgs> = {}>(args?: Subset<T, BlogMemo$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    likes<T extends BlogMemo$likesArgs<ExtArgs> = {}>(args?: Subset<T, BlogMemo$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    readonly [Symbol.toStringTag]: 'PrismaPromise'
+    user_info<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tags<T extends BlogMemo$tagsArgs<ExtArgs> = {}>(args?: Subset<T, BlogMemo$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>
+    comments<T extends BlogMemo$commentsArgs<ExtArgs> = {}>(args?: Subset<T, BlogMemo$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogCommentPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>
+    likes<T extends BlogMemo$likesArgs<ExtArgs> = {}>(args?: Subset<T, BlogMemo$likesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlogLikePayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10918,31 +10785,27 @@ export namespace Prisma {
     finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
 
-
-
-
   /**
    * Fields of the BlogMemo model
    */
   interface BlogMemoFieldRefs {
-    readonly id: FieldRef<"BlogMemo", 'String'>
-    readonly content: FieldRef<"BlogMemo", 'String'>
-    readonly create_ts: FieldRef<"BlogMemo", 'DateTime'>
-    readonly updated_ts: FieldRef<"BlogMemo", 'DateTime'>
-    readonly visible: FieldRef<"BlogMemo", 'String'>
-    readonly defalt_floded: FieldRef<"BlogMemo", 'Boolean'>
-    readonly flod_tip: FieldRef<"BlogMemo", 'String'>
-    readonly user_id: FieldRef<"BlogMemo", 'String'>
-    readonly from: FieldRef<"BlogMemo", 'String'>
-    readonly courier: FieldRef<"BlogMemo", 'String'>
+    readonly id: FieldRef<'BlogMemo', 'String'>
+    readonly content: FieldRef<'BlogMemo', 'String'>
+    readonly create_ts: FieldRef<'BlogMemo', 'DateTime'>
+    readonly updated_ts: FieldRef<'BlogMemo', 'DateTime'>
+    readonly visible: FieldRef<'BlogMemo', 'String'>
+    readonly defalt_floded: FieldRef<'BlogMemo', 'Boolean'>
+    readonly flod_tip: FieldRef<'BlogMemo', 'String'>
+    readonly user_id: FieldRef<'BlogMemo', 'String'>
+    readonly from: FieldRef<'BlogMemo', 'String'>
+    readonly courier: FieldRef<'BlogMemo', 'String'>
   }
-    
 
   // Custom InputTypes
   /**
    * BlogMemo findUnique
    */
-  export type BlogMemoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogMemo
      */
@@ -10964,7 +10827,7 @@ export namespace Prisma {
   /**
    * BlogMemo findUniqueOrThrow
    */
-  export type BlogMemoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogMemo
      */
@@ -10986,7 +10849,7 @@ export namespace Prisma {
   /**
    * BlogMemo findFirst
    */
-  export type BlogMemoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogMemo
      */
@@ -11005,31 +10868,31 @@ export namespace Prisma {
     where?: BlogMemoWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogMemos to fetch.
      */
     orderBy?: BlogMemoOrderByWithRelationInput | BlogMemoOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for BlogMemos.
      */
     cursor?: BlogMemoWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogMemos from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogMemos.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of BlogMemos.
      */
     distinct?: BlogMemoScalarFieldEnum | BlogMemoScalarFieldEnum[]
@@ -11038,7 +10901,7 @@ export namespace Prisma {
   /**
    * BlogMemo findFirstOrThrow
    */
-  export type BlogMemoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogMemo
      */
@@ -11057,31 +10920,31 @@ export namespace Prisma {
     where?: BlogMemoWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogMemos to fetch.
      */
     orderBy?: BlogMemoOrderByWithRelationInput | BlogMemoOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for BlogMemos.
      */
     cursor?: BlogMemoWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogMemos from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogMemos.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of BlogMemos.
      */
     distinct?: BlogMemoScalarFieldEnum | BlogMemoScalarFieldEnum[]
@@ -11090,7 +10953,7 @@ export namespace Prisma {
   /**
    * BlogMemo findMany
    */
-  export type BlogMemoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogMemo
      */
@@ -11109,25 +10972,25 @@ export namespace Prisma {
     where?: BlogMemoWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of BlogMemos to fetch.
      */
     orderBy?: BlogMemoOrderByWithRelationInput | BlogMemoOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing BlogMemos.
      */
     cursor?: BlogMemoWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` BlogMemos from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` BlogMemos.
      */
     skip?: number
@@ -11137,7 +11000,7 @@ export namespace Prisma {
   /**
    * BlogMemo create
    */
-  export type BlogMemoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogMemo
      */
@@ -11159,7 +11022,7 @@ export namespace Prisma {
   /**
    * BlogMemo createMany
    */
-  export type BlogMemoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to create many BlogMemos.
      */
@@ -11170,7 +11033,7 @@ export namespace Prisma {
   /**
    * BlogMemo update
    */
-  export type BlogMemoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogMemo
      */
@@ -11196,7 +11059,7 @@ export namespace Prisma {
   /**
    * BlogMemo updateMany
    */
-  export type BlogMemoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to update BlogMemos.
      */
@@ -11214,7 +11077,7 @@ export namespace Prisma {
   /**
    * BlogMemo upsert
    */
-  export type BlogMemoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogMemo
      */
@@ -11244,7 +11107,7 @@ export namespace Prisma {
   /**
    * BlogMemo delete
    */
-  export type BlogMemoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogMemo
      */
@@ -11266,7 +11129,7 @@ export namespace Prisma {
   /**
    * BlogMemo deleteMany
    */
-  export type BlogMemoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which BlogMemos to delete
      */
@@ -11280,7 +11143,7 @@ export namespace Prisma {
   /**
    * BlogMemo.tags
    */
-  export type BlogMemo$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemo$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTagRelations
      */
@@ -11304,7 +11167,7 @@ export namespace Prisma {
   /**
    * BlogMemo.comments
    */
-  export type BlogMemo$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemo$commentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogComment
      */
@@ -11328,7 +11191,7 @@ export namespace Prisma {
   /**
    * BlogMemo.likes
    */
-  export type BlogMemo$likesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemo$likesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogLike
      */
@@ -11352,7 +11215,7 @@ export namespace Prisma {
   /**
    * BlogMemo without action
    */
-  export type BlogMemoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface BlogMemoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the BlogMemo
      */
@@ -11367,18 +11230,17 @@ export namespace Prisma {
     include?: BlogMemoInclude<ExtArgs> | null
   }
 
-
   /**
    * Model MemoTag
    */
 
-  export type AggregateMemoTag = {
+  export interface AggregateMemoTag {
     _count: MemoTagCountAggregateOutputType | null
     _min: MemoTagMinAggregateOutputType | null
     _max: MemoTagMaxAggregateOutputType | null
   }
 
-  export type MemoTagMinAggregateOutputType = {
+  export interface MemoTagMinAggregateOutputType {
     id: string | null
     tag_name: string | null
     create_ts: Date | null
@@ -11386,7 +11248,7 @@ export namespace Prisma {
     user_id: string | null
   }
 
-  export type MemoTagMaxAggregateOutputType = {
+  export interface MemoTagMaxAggregateOutputType {
     id: string | null
     tag_name: string | null
     create_ts: Date | null
@@ -11394,7 +11256,7 @@ export namespace Prisma {
     user_id: string | null
   }
 
-  export type MemoTagCountAggregateOutputType = {
+  export interface MemoTagCountAggregateOutputType {
     id: number
     tag_name: number
     create_ts: number
@@ -11403,8 +11265,7 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type MemoTagMinAggregateInputType = {
+  export interface MemoTagMinAggregateInputType {
     id?: true
     tag_name?: true
     create_ts?: true
@@ -11412,7 +11273,7 @@ export namespace Prisma {
     user_id?: true
   }
 
-  export type MemoTagMaxAggregateInputType = {
+  export interface MemoTagMaxAggregateInputType {
     id?: true
     tag_name?: true
     create_ts?: true
@@ -11420,7 +11281,7 @@ export namespace Prisma {
     user_id?: true
   }
 
-  export type MemoTagCountAggregateInputType = {
+  export interface MemoTagCountAggregateInputType {
     id?: true
     tag_name?: true
     create_ts?: true
@@ -11429,67 +11290,64 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type MemoTagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which MemoTag to aggregate.
      */
     where?: MemoTagWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of MemoTags to fetch.
      */
     orderBy?: MemoTagOrderByWithRelationInput | MemoTagOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: MemoTagWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` MemoTags from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` MemoTags.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned MemoTags
-    **/
+     */
     _count?: true | MemoTagCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
-    **/
+     */
     _min?: MemoTagMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
-    **/
+     */
     _max?: MemoTagMaxAggregateInputType
   }
 
   export type GetMemoTagAggregateType<T extends MemoTagAggregateArgs> = {
-        [P in keyof T & keyof AggregateMemoTag]: P extends '_count' | 'count'
+    [P in keyof T & keyof AggregateMemoTag]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateMemoTag[P]>
       : GetScalarType<T[P], AggregateMemoTag[P]>
   }
 
-
-
-
-  export type MemoTagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: MemoTagWhereInput
     orderBy?: MemoTagOrderByWithAggregationInput | MemoTagOrderByWithAggregationInput[]
     by: MemoTagScalarFieldEnum[] | MemoTagScalarFieldEnum
@@ -11501,7 +11359,7 @@ export namespace Prisma {
     _max?: MemoTagMaxAggregateInputType
   }
 
-  export type MemoTagGroupByOutputType = {
+  export interface MemoTagGroupByOutputType {
     id: string
     tag_name: string
     create_ts: Date
@@ -11514,17 +11372,16 @@ export namespace Prisma {
 
   type GetMemoTagGroupByPayload<T extends MemoTagGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<MemoTagGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof MemoTagGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], MemoTagGroupByOutputType[P]>
+      PickEnumerable<MemoTagGroupByOutputType, T['by']>
+      & {
+        [P in ((keyof T) & (keyof MemoTagGroupByOutputType))]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
             : GetScalarType<T[P], MemoTagGroupByOutputType[P]>
-        }
+          : GetScalarType<T[P], MemoTagGroupByOutputType[P]>
+      }
       >
     >
-
 
   export type MemoTagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
@@ -11535,11 +11392,9 @@ export namespace Prisma {
     user_info?: boolean | UserDefaultArgs<ExtArgs>
     memos?: boolean | MemoTag$memosArgs<ExtArgs>
     _count?: boolean | MemoTagCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["memoTag"]>
+  }, ExtArgs['result']['memoTag']>
 
-
-
-  export type MemoTagSelectScalar = {
+  export interface MemoTagSelectScalar {
     id?: boolean
     tag_name?: boolean
     create_ts?: boolean
@@ -11547,15 +11402,15 @@ export namespace Prisma {
     user_id?: boolean
   }
 
-  export type MemoTagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tag_name" | "create_ts" | "updated_ts" | "user_id", ExtArgs["result"]["memoTag"]>
-  export type MemoTagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MemoTagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<'id' | 'tag_name' | 'create_ts' | 'updated_ts' | 'user_id', ExtArgs['result']['memoTag']>
+  export interface MemoTagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     user_info?: boolean | UserDefaultArgs<ExtArgs>
     memos?: boolean | MemoTag$memosArgs<ExtArgs>
     _count?: boolean | MemoTagCountOutputTypeDefaultArgs<ExtArgs>
   }
 
-  export type $MemoTagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "MemoTag"
+  export interface $MemoTagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    name: 'MemoTag'
     objects: {
       user_info: Prisma.$UserPayload<ExtArgs>
       memos: Prisma.$MemoTagRelationsPayload<ExtArgs>[]
@@ -11566,14 +11421,14 @@ export namespace Prisma {
       create_ts: Date
       updated_ts: Date
       user_id: string
-    }, ExtArgs["result"]["memoTag"]>
+    }, ExtArgs['result']['memoTag']>
     composites: {}
   }
 
   type MemoTagGetPayload<S extends boolean | null | undefined | MemoTagDefaultArgs> = $Result.GetResult<Prisma.$MemoTagPayload, S>
 
-  type MemoTagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<MemoTagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  type MemoTagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs>
+    = Omit<MemoTagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: MemoTagCountAggregateInputType | true
     }
 
@@ -11590,7 +11445,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends MemoTagFindUniqueArgs>(args: SelectSubset<T, MemoTagFindUniqueArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends MemoTagFindUniqueArgs>(args: SelectSubset<T, MemoTagFindUniqueArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one MemoTag that matches the filter or throw an error with `error.code='P2025'`
@@ -11604,7 +11459,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends MemoTagFindUniqueOrThrowArgs>(args: SelectSubset<T, MemoTagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends MemoTagFindUniqueOrThrowArgs>(args: SelectSubset<T, MemoTagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first MemoTag that matches the filter.
@@ -11619,7 +11474,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends MemoTagFindFirstArgs>(args?: SelectSubset<T, MemoTagFindFirstArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends MemoTagFindFirstArgs>(args?: SelectSubset<T, MemoTagFindFirstArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first MemoTag that matches the filter or
@@ -11635,7 +11490,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends MemoTagFindFirstOrThrowArgs>(args?: SelectSubset<T, MemoTagFindFirstOrThrowArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends MemoTagFindFirstOrThrowArgs>(args?: SelectSubset<T, MemoTagFindFirstOrThrowArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more MemoTags that matches the filter.
@@ -11645,15 +11500,15 @@ export namespace Prisma {
      * @example
      * // Get all MemoTags
      * const memoTags = await prisma.memoTag.findMany()
-     * 
+     *
      * // Get first 10 MemoTags
      * const memoTags = await prisma.memoTag.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const memoTagWithIdOnly = await prisma.memoTag.findMany({ select: { id: true } })
-     * 
+     *
      */
-    findMany<T extends MemoTagFindManyArgs>(args?: SelectSubset<T, MemoTagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends MemoTagFindManyArgs>(args?: SelectSubset<T, MemoTagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>
 
     /**
      * Create a MemoTag.
@@ -11665,9 +11520,9 @@ export namespace Prisma {
      *     // ... data to create a MemoTag
      *   }
      * })
-     * 
+     *
      */
-    create<T extends MemoTagCreateArgs>(args: SelectSubset<T, MemoTagCreateArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends MemoTagCreateArgs>(args: SelectSubset<T, MemoTagCreateArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many MemoTags.
@@ -11679,7 +11534,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends MemoTagCreateManyArgs>(args?: SelectSubset<T, MemoTagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -11693,9 +11548,9 @@ export namespace Prisma {
      *     // ... filter to delete one MemoTag
      *   }
      * })
-     * 
+     *
      */
-    delete<T extends MemoTagDeleteArgs>(args: SelectSubset<T, MemoTagDeleteArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends MemoTagDeleteArgs>(args: SelectSubset<T, MemoTagDeleteArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one MemoTag.
@@ -11710,9 +11565,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
-    update<T extends MemoTagUpdateArgs>(args: SelectSubset<T, MemoTagUpdateArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends MemoTagUpdateArgs>(args: SelectSubset<T, MemoTagUpdateArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more MemoTags.
@@ -11724,7 +11579,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends MemoTagDeleteManyArgs>(args?: SelectSubset<T, MemoTagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -11743,7 +11598,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends MemoTagUpdateManyArgs>(args: SelectSubset<T, MemoTagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -11764,8 +11619,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends MemoTagUpsertArgs>(args: SelectSubset<T, MemoTagUpsertArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
+    upsert<T extends MemoTagUpsertArgs>(args: SelectSubset<T, MemoTagUpsertArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Count the number of MemoTags.
@@ -11779,7 +11633,7 @@ export namespace Prisma {
      *     // ... the filter for the MemoTags we want to count
      *   }
      * })
-    **/
+     */
     count<T extends MemoTagCountArgs>(
       args?: Subset<T, MemoTagCountArgs>,
     ): Prisma.PrismaPromise<
@@ -11813,7 +11667,7 @@ export namespace Prisma {
      *   },
      *   take: 10,
      * })
-    **/
+     */
     aggregate<T extends MemoTagAggregateArgs>(args: Subset<T, MemoTagAggregateArgs>): Prisma.PrismaPromise<GetMemoTagAggregateType<T>>
 
     /**
@@ -11832,8 +11686,8 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
-    **/
+     *
+     */
     groupBy<
       T extends MemoTagGroupByArgs,
       HasSelectOrTake extends Or<
@@ -11850,52 +11704,52 @@ export namespace Prisma {
       HavingValid extends Has<ByFields, HavingFields>,
       ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
                 ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ]
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields],
     >(args: SubsetIntersection<T, MemoTagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMemoTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the MemoTag model
-   */
-  readonly fields: MemoTagFieldRefs;
+    /**
+     * Fields of the MemoTag model
+     */
+    readonly fields: MemoTagFieldRefs
   }
 
   /**
@@ -11905,9 +11759,9 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__MemoTagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    user_info<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    memos<T extends MemoTag$memosArgs<ExtArgs> = {}>(args?: Subset<T, MemoTag$memosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    readonly [Symbol.toStringTag]: 'PrismaPromise'
+    user_info<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    memos<T extends MemoTag$memosArgs<ExtArgs> = {}>(args?: Subset<T, MemoTag$memosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11930,26 +11784,22 @@ export namespace Prisma {
     finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
 
-
-
-
   /**
    * Fields of the MemoTag model
    */
   interface MemoTagFieldRefs {
-    readonly id: FieldRef<"MemoTag", 'String'>
-    readonly tag_name: FieldRef<"MemoTag", 'String'>
-    readonly create_ts: FieldRef<"MemoTag", 'DateTime'>
-    readonly updated_ts: FieldRef<"MemoTag", 'DateTime'>
-    readonly user_id: FieldRef<"MemoTag", 'String'>
+    readonly id: FieldRef<'MemoTag', 'String'>
+    readonly tag_name: FieldRef<'MemoTag', 'String'>
+    readonly create_ts: FieldRef<'MemoTag', 'DateTime'>
+    readonly updated_ts: FieldRef<'MemoTag', 'DateTime'>
+    readonly user_id: FieldRef<'MemoTag', 'String'>
   }
-    
 
   // Custom InputTypes
   /**
    * MemoTag findUnique
    */
-  export type MemoTagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTag
      */
@@ -11971,7 +11821,7 @@ export namespace Prisma {
   /**
    * MemoTag findUniqueOrThrow
    */
-  export type MemoTagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTag
      */
@@ -11993,7 +11843,7 @@ export namespace Prisma {
   /**
    * MemoTag findFirst
    */
-  export type MemoTagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTag
      */
@@ -12012,31 +11862,31 @@ export namespace Prisma {
     where?: MemoTagWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of MemoTags to fetch.
      */
     orderBy?: MemoTagOrderByWithRelationInput | MemoTagOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for MemoTags.
      */
     cursor?: MemoTagWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` MemoTags from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` MemoTags.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of MemoTags.
      */
     distinct?: MemoTagScalarFieldEnum | MemoTagScalarFieldEnum[]
@@ -12045,7 +11895,7 @@ export namespace Prisma {
   /**
    * MemoTag findFirstOrThrow
    */
-  export type MemoTagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTag
      */
@@ -12064,31 +11914,31 @@ export namespace Prisma {
     where?: MemoTagWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of MemoTags to fetch.
      */
     orderBy?: MemoTagOrderByWithRelationInput | MemoTagOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for MemoTags.
      */
     cursor?: MemoTagWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` MemoTags from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` MemoTags.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of MemoTags.
      */
     distinct?: MemoTagScalarFieldEnum | MemoTagScalarFieldEnum[]
@@ -12097,7 +11947,7 @@ export namespace Prisma {
   /**
    * MemoTag findMany
    */
-  export type MemoTagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTag
      */
@@ -12116,25 +11966,25 @@ export namespace Prisma {
     where?: MemoTagWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of MemoTags to fetch.
      */
     orderBy?: MemoTagOrderByWithRelationInput | MemoTagOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing MemoTags.
      */
     cursor?: MemoTagWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` MemoTags from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` MemoTags.
      */
     skip?: number
@@ -12144,7 +11994,7 @@ export namespace Prisma {
   /**
    * MemoTag create
    */
-  export type MemoTagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTag
      */
@@ -12166,7 +12016,7 @@ export namespace Prisma {
   /**
    * MemoTag createMany
    */
-  export type MemoTagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to create many MemoTags.
      */
@@ -12177,7 +12027,7 @@ export namespace Prisma {
   /**
    * MemoTag update
    */
-  export type MemoTagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTag
      */
@@ -12203,7 +12053,7 @@ export namespace Prisma {
   /**
    * MemoTag updateMany
    */
-  export type MemoTagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to update MemoTags.
      */
@@ -12221,7 +12071,7 @@ export namespace Prisma {
   /**
    * MemoTag upsert
    */
-  export type MemoTagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTag
      */
@@ -12251,7 +12101,7 @@ export namespace Prisma {
   /**
    * MemoTag delete
    */
-  export type MemoTagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTag
      */
@@ -12273,7 +12123,7 @@ export namespace Prisma {
   /**
    * MemoTag deleteMany
    */
-  export type MemoTagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which MemoTags to delete
      */
@@ -12287,7 +12137,7 @@ export namespace Prisma {
   /**
    * MemoTag.memos
    */
-  export type MemoTag$memosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTag$memosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTagRelations
      */
@@ -12311,7 +12161,7 @@ export namespace Prisma {
   /**
    * MemoTag without action
    */
-  export type MemoTagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTag
      */
@@ -12326,32 +12176,31 @@ export namespace Prisma {
     include?: MemoTagInclude<ExtArgs> | null
   }
 
-
   /**
    * Model MemoTagRelations
    */
 
-  export type AggregateMemoTagRelations = {
+  export interface AggregateMemoTagRelations {
     _count: MemoTagRelationsCountAggregateOutputType | null
     _min: MemoTagRelationsMinAggregateOutputType | null
     _max: MemoTagRelationsMaxAggregateOutputType | null
   }
 
-  export type MemoTagRelationsMinAggregateOutputType = {
+  export interface MemoTagRelationsMinAggregateOutputType {
     tagId: string | null
     memoId: string | null
     create_ts: Date | null
     updated_ts: Date | null
   }
 
-  export type MemoTagRelationsMaxAggregateOutputType = {
+  export interface MemoTagRelationsMaxAggregateOutputType {
     tagId: string | null
     memoId: string | null
     create_ts: Date | null
     updated_ts: Date | null
   }
 
-  export type MemoTagRelationsCountAggregateOutputType = {
+  export interface MemoTagRelationsCountAggregateOutputType {
     tagId: number
     memoId: number
     create_ts: number
@@ -12359,22 +12208,21 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type MemoTagRelationsMinAggregateInputType = {
+  export interface MemoTagRelationsMinAggregateInputType {
     tagId?: true
     memoId?: true
     create_ts?: true
     updated_ts?: true
   }
 
-  export type MemoTagRelationsMaxAggregateInputType = {
+  export interface MemoTagRelationsMaxAggregateInputType {
     tagId?: true
     memoId?: true
     create_ts?: true
     updated_ts?: true
   }
 
-  export type MemoTagRelationsCountAggregateInputType = {
+  export interface MemoTagRelationsCountAggregateInputType {
     tagId?: true
     memoId?: true
     create_ts?: true
@@ -12382,67 +12230,64 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type MemoTagRelationsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which MemoTagRelations to aggregate.
      */
     where?: MemoTagRelationsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of MemoTagRelations to fetch.
      */
     orderBy?: MemoTagRelationsOrderByWithRelationInput | MemoTagRelationsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: MemoTagRelationsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` MemoTagRelations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` MemoTagRelations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned MemoTagRelations
-    **/
+     */
     _count?: true | MemoTagRelationsCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
-    **/
+     */
     _min?: MemoTagRelationsMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
-    **/
+     */
     _max?: MemoTagRelationsMaxAggregateInputType
   }
 
   export type GetMemoTagRelationsAggregateType<T extends MemoTagRelationsAggregateArgs> = {
-        [P in keyof T & keyof AggregateMemoTagRelations]: P extends '_count' | 'count'
+    [P in keyof T & keyof AggregateMemoTagRelations]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateMemoTagRelations[P]>
       : GetScalarType<T[P], AggregateMemoTagRelations[P]>
   }
 
-
-
-
-  export type MemoTagRelationsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: MemoTagRelationsWhereInput
     orderBy?: MemoTagRelationsOrderByWithAggregationInput | MemoTagRelationsOrderByWithAggregationInput[]
     by: MemoTagRelationsScalarFieldEnum[] | MemoTagRelationsScalarFieldEnum
@@ -12454,7 +12299,7 @@ export namespace Prisma {
     _max?: MemoTagRelationsMaxAggregateInputType
   }
 
-  export type MemoTagRelationsGroupByOutputType = {
+  export interface MemoTagRelationsGroupByOutputType {
     tagId: string
     memoId: string
     create_ts: Date
@@ -12466,17 +12311,16 @@ export namespace Prisma {
 
   type GetMemoTagRelationsGroupByPayload<T extends MemoTagRelationsGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<MemoTagRelationsGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof MemoTagRelationsGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], MemoTagRelationsGroupByOutputType[P]>
+      PickEnumerable<MemoTagRelationsGroupByOutputType, T['by']>
+      & {
+        [P in ((keyof T) & (keyof MemoTagRelationsGroupByOutputType))]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
             : GetScalarType<T[P], MemoTagRelationsGroupByOutputType[P]>
-        }
+          : GetScalarType<T[P], MemoTagRelationsGroupByOutputType[P]>
+      }
       >
     >
-
 
   export type MemoTagRelationsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     tagId?: boolean
@@ -12485,25 +12329,23 @@ export namespace Prisma {
     updated_ts?: boolean
     tag?: boolean | MemoTagDefaultArgs<ExtArgs>
     memo?: boolean | BlogMemoDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["memoTagRelations"]>
+  }, ExtArgs['result']['memoTagRelations']>
 
-
-
-  export type MemoTagRelationsSelectScalar = {
+  export interface MemoTagRelationsSelectScalar {
     tagId?: boolean
     memoId?: boolean
     create_ts?: boolean
     updated_ts?: boolean
   }
 
-  export type MemoTagRelationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"tagId" | "memoId" | "create_ts" | "updated_ts", ExtArgs["result"]["memoTagRelations"]>
-  export type MemoTagRelationsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type MemoTagRelationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<'tagId' | 'memoId' | 'create_ts' | 'updated_ts', ExtArgs['result']['memoTagRelations']>
+  export interface MemoTagRelationsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     tag?: boolean | MemoTagDefaultArgs<ExtArgs>
     memo?: boolean | BlogMemoDefaultArgs<ExtArgs>
   }
 
-  export type $MemoTagRelationsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "MemoTagRelations"
+  export interface $MemoTagRelationsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    name: 'MemoTagRelations'
     objects: {
       tag: Prisma.$MemoTagPayload<ExtArgs>
       memo: Prisma.$BlogMemoPayload<ExtArgs>
@@ -12513,14 +12355,14 @@ export namespace Prisma {
       memoId: string
       create_ts: Date
       updated_ts: Date
-    }, ExtArgs["result"]["memoTagRelations"]>
+    }, ExtArgs['result']['memoTagRelations']>
     composites: {}
   }
 
   type MemoTagRelationsGetPayload<S extends boolean | null | undefined | MemoTagRelationsDefaultArgs> = $Result.GetResult<Prisma.$MemoTagRelationsPayload, S>
 
-  type MemoTagRelationsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<MemoTagRelationsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  type MemoTagRelationsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs>
+    = Omit<MemoTagRelationsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: MemoTagRelationsCountAggregateInputType | true
     }
 
@@ -12537,7 +12379,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends MemoTagRelationsFindUniqueArgs>(args: SelectSubset<T, MemoTagRelationsFindUniqueArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends MemoTagRelationsFindUniqueArgs>(args: SelectSubset<T, MemoTagRelationsFindUniqueArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one MemoTagRelations that matches the filter or throw an error with `error.code='P2025'`
@@ -12551,7 +12393,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends MemoTagRelationsFindUniqueOrThrowArgs>(args: SelectSubset<T, MemoTagRelationsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends MemoTagRelationsFindUniqueOrThrowArgs>(args: SelectSubset<T, MemoTagRelationsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first MemoTagRelations that matches the filter.
@@ -12566,7 +12408,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends MemoTagRelationsFindFirstArgs>(args?: SelectSubset<T, MemoTagRelationsFindFirstArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends MemoTagRelationsFindFirstArgs>(args?: SelectSubset<T, MemoTagRelationsFindFirstArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first MemoTagRelations that matches the filter or
@@ -12582,7 +12424,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends MemoTagRelationsFindFirstOrThrowArgs>(args?: SelectSubset<T, MemoTagRelationsFindFirstOrThrowArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends MemoTagRelationsFindFirstOrThrowArgs>(args?: SelectSubset<T, MemoTagRelationsFindFirstOrThrowArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more MemoTagRelations that matches the filter.
@@ -12592,15 +12434,15 @@ export namespace Prisma {
      * @example
      * // Get all MemoTagRelations
      * const memoTagRelations = await prisma.memoTagRelations.findMany()
-     * 
+     *
      * // Get first 10 MemoTagRelations
      * const memoTagRelations = await prisma.memoTagRelations.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `tagId`
      * const memoTagRelationsWithTagIdOnly = await prisma.memoTagRelations.findMany({ select: { tagId: true } })
-     * 
+     *
      */
-    findMany<T extends MemoTagRelationsFindManyArgs>(args?: SelectSubset<T, MemoTagRelationsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends MemoTagRelationsFindManyArgs>(args?: SelectSubset<T, MemoTagRelationsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>
 
     /**
      * Create a MemoTagRelations.
@@ -12612,9 +12454,9 @@ export namespace Prisma {
      *     // ... data to create a MemoTagRelations
      *   }
      * })
-     * 
+     *
      */
-    create<T extends MemoTagRelationsCreateArgs>(args: SelectSubset<T, MemoTagRelationsCreateArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends MemoTagRelationsCreateArgs>(args: SelectSubset<T, MemoTagRelationsCreateArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many MemoTagRelations.
@@ -12626,7 +12468,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends MemoTagRelationsCreateManyArgs>(args?: SelectSubset<T, MemoTagRelationsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -12640,9 +12482,9 @@ export namespace Prisma {
      *     // ... filter to delete one MemoTagRelations
      *   }
      * })
-     * 
+     *
      */
-    delete<T extends MemoTagRelationsDeleteArgs>(args: SelectSubset<T, MemoTagRelationsDeleteArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends MemoTagRelationsDeleteArgs>(args: SelectSubset<T, MemoTagRelationsDeleteArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one MemoTagRelations.
@@ -12657,9 +12499,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
-    update<T extends MemoTagRelationsUpdateArgs>(args: SelectSubset<T, MemoTagRelationsUpdateArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends MemoTagRelationsUpdateArgs>(args: SelectSubset<T, MemoTagRelationsUpdateArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more MemoTagRelations.
@@ -12671,7 +12513,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends MemoTagRelationsDeleteManyArgs>(args?: SelectSubset<T, MemoTagRelationsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -12690,7 +12532,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends MemoTagRelationsUpdateManyArgs>(args: SelectSubset<T, MemoTagRelationsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -12711,8 +12553,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends MemoTagRelationsUpsertArgs>(args: SelectSubset<T, MemoTagRelationsUpsertArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
+    upsert<T extends MemoTagRelationsUpsertArgs>(args: SelectSubset<T, MemoTagRelationsUpsertArgs<ExtArgs>>): Prisma__MemoTagRelationsClient<$Result.GetResult<Prisma.$MemoTagRelationsPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Count the number of MemoTagRelations.
@@ -12726,7 +12567,7 @@ export namespace Prisma {
      *     // ... the filter for the MemoTagRelations we want to count
      *   }
      * })
-    **/
+     */
     count<T extends MemoTagRelationsCountArgs>(
       args?: Subset<T, MemoTagRelationsCountArgs>,
     ): Prisma.PrismaPromise<
@@ -12760,7 +12601,7 @@ export namespace Prisma {
      *   },
      *   take: 10,
      * })
-    **/
+     */
     aggregate<T extends MemoTagRelationsAggregateArgs>(args: Subset<T, MemoTagRelationsAggregateArgs>): Prisma.PrismaPromise<GetMemoTagRelationsAggregateType<T>>
 
     /**
@@ -12779,8 +12620,8 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
-    **/
+     *
+     */
     groupBy<
       T extends MemoTagRelationsGroupByArgs,
       HasSelectOrTake extends Or<
@@ -12797,52 +12638,52 @@ export namespace Prisma {
       HavingValid extends Has<ByFields, HavingFields>,
       ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
                 ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ]
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields],
     >(args: SubsetIntersection<T, MemoTagRelationsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMemoTagRelationsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the MemoTagRelations model
-   */
-  readonly fields: MemoTagRelationsFieldRefs;
+    /**
+     * Fields of the MemoTagRelations model
+     */
+    readonly fields: MemoTagRelationsFieldRefs
   }
 
   /**
@@ -12852,9 +12693,9 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__MemoTagRelationsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    tag<T extends MemoTagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MemoTagDefaultArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    memo<T extends BlogMemoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BlogMemoDefaultArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    readonly [Symbol.toStringTag]: 'PrismaPromise'
+    tag<T extends MemoTagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MemoTagDefaultArgs<ExtArgs>>): Prisma__MemoTagClient<$Result.GetResult<Prisma.$MemoTagPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    memo<T extends BlogMemoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, BlogMemoDefaultArgs<ExtArgs>>): Prisma__BlogMemoClient<$Result.GetResult<Prisma.$BlogMemoPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12877,25 +12718,21 @@ export namespace Prisma {
     finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
 
-
-
-
   /**
    * Fields of the MemoTagRelations model
    */
   interface MemoTagRelationsFieldRefs {
-    readonly tagId: FieldRef<"MemoTagRelations", 'String'>
-    readonly memoId: FieldRef<"MemoTagRelations", 'String'>
-    readonly create_ts: FieldRef<"MemoTagRelations", 'DateTime'>
-    readonly updated_ts: FieldRef<"MemoTagRelations", 'DateTime'>
+    readonly tagId: FieldRef<'MemoTagRelations', 'String'>
+    readonly memoId: FieldRef<'MemoTagRelations', 'String'>
+    readonly create_ts: FieldRef<'MemoTagRelations', 'DateTime'>
+    readonly updated_ts: FieldRef<'MemoTagRelations', 'DateTime'>
   }
-    
 
   // Custom InputTypes
   /**
    * MemoTagRelations findUnique
    */
-  export type MemoTagRelationsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTagRelations
      */
@@ -12917,7 +12754,7 @@ export namespace Prisma {
   /**
    * MemoTagRelations findUniqueOrThrow
    */
-  export type MemoTagRelationsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTagRelations
      */
@@ -12939,7 +12776,7 @@ export namespace Prisma {
   /**
    * MemoTagRelations findFirst
    */
-  export type MemoTagRelationsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTagRelations
      */
@@ -12958,31 +12795,31 @@ export namespace Prisma {
     where?: MemoTagRelationsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of MemoTagRelations to fetch.
      */
     orderBy?: MemoTagRelationsOrderByWithRelationInput | MemoTagRelationsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for MemoTagRelations.
      */
     cursor?: MemoTagRelationsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` MemoTagRelations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` MemoTagRelations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of MemoTagRelations.
      */
     distinct?: MemoTagRelationsScalarFieldEnum | MemoTagRelationsScalarFieldEnum[]
@@ -12991,7 +12828,7 @@ export namespace Prisma {
   /**
    * MemoTagRelations findFirstOrThrow
    */
-  export type MemoTagRelationsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTagRelations
      */
@@ -13010,31 +12847,31 @@ export namespace Prisma {
     where?: MemoTagRelationsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of MemoTagRelations to fetch.
      */
     orderBy?: MemoTagRelationsOrderByWithRelationInput | MemoTagRelationsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for MemoTagRelations.
      */
     cursor?: MemoTagRelationsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` MemoTagRelations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` MemoTagRelations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of MemoTagRelations.
      */
     distinct?: MemoTagRelationsScalarFieldEnum | MemoTagRelationsScalarFieldEnum[]
@@ -13043,7 +12880,7 @@ export namespace Prisma {
   /**
    * MemoTagRelations findMany
    */
-  export type MemoTagRelationsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTagRelations
      */
@@ -13062,25 +12899,25 @@ export namespace Prisma {
     where?: MemoTagRelationsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of MemoTagRelations to fetch.
      */
     orderBy?: MemoTagRelationsOrderByWithRelationInput | MemoTagRelationsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing MemoTagRelations.
      */
     cursor?: MemoTagRelationsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` MemoTagRelations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` MemoTagRelations.
      */
     skip?: number
@@ -13090,7 +12927,7 @@ export namespace Prisma {
   /**
    * MemoTagRelations create
    */
-  export type MemoTagRelationsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTagRelations
      */
@@ -13112,7 +12949,7 @@ export namespace Prisma {
   /**
    * MemoTagRelations createMany
    */
-  export type MemoTagRelationsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to create many MemoTagRelations.
      */
@@ -13123,7 +12960,7 @@ export namespace Prisma {
   /**
    * MemoTagRelations update
    */
-  export type MemoTagRelationsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTagRelations
      */
@@ -13149,7 +12986,7 @@ export namespace Prisma {
   /**
    * MemoTagRelations updateMany
    */
-  export type MemoTagRelationsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to update MemoTagRelations.
      */
@@ -13167,7 +13004,7 @@ export namespace Prisma {
   /**
    * MemoTagRelations upsert
    */
-  export type MemoTagRelationsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTagRelations
      */
@@ -13197,7 +13034,7 @@ export namespace Prisma {
   /**
    * MemoTagRelations delete
    */
-  export type MemoTagRelationsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTagRelations
      */
@@ -13219,7 +13056,7 @@ export namespace Prisma {
   /**
    * MemoTagRelations deleteMany
    */
-  export type MemoTagRelationsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which MemoTagRelations to delete
      */
@@ -13233,7 +13070,7 @@ export namespace Prisma {
   /**
    * MemoTagRelations without action
    */
-  export type MemoTagRelationsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface MemoTagRelationsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the MemoTagRelations
      */
@@ -13248,12 +13085,11 @@ export namespace Prisma {
     include?: MemoTagRelationsInclude<ExtArgs> | null
   }
 
-
   /**
    * Model GarminActivity
    */
 
-  export type AggregateGarminActivity = {
+  export interface AggregateGarminActivity {
     _count: GarminActivityCountAggregateOutputType | null
     _avg: GarminActivityAvgAggregateOutputType | null
     _sum: GarminActivitySumAggregateOutputType | null
@@ -13261,7 +13097,7 @@ export namespace Prisma {
     _max: GarminActivityMaxAggregateOutputType | null
   }
 
-  export type GarminActivityAvgAggregateOutputType = {
+  export interface GarminActivityAvgAggregateOutputType {
     distance: Decimal | null
     calories: number | null
     duration: Decimal | null
@@ -13283,7 +13119,7 @@ export namespace Prisma {
     lapCount: number | null
   }
 
-  export type GarminActivitySumAggregateOutputType = {
+  export interface GarminActivitySumAggregateOutputType {
     distance: Decimal | null
     calories: number | null
     duration: Decimal | null
@@ -13305,7 +13141,7 @@ export namespace Prisma {
     lapCount: number | null
   }
 
-  export type GarminActivityMinAggregateOutputType = {
+  export interface GarminActivityMinAggregateOutputType {
     id: string | null
     activityType: string | null
     date: Date | null
@@ -13335,7 +13171,7 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type GarminActivityMaxAggregateOutputType = {
+  export interface GarminActivityMaxAggregateOutputType {
     id: string | null
     activityType: string | null
     date: Date | null
@@ -13365,7 +13201,7 @@ export namespace Prisma {
     updatedAt: Date | null
   }
 
-  export type GarminActivityCountAggregateOutputType = {
+  export interface GarminActivityCountAggregateOutputType {
     id: number
     activityType: number
     date: number
@@ -13396,8 +13232,7 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type GarminActivityAvgAggregateInputType = {
+  export interface GarminActivityAvgAggregateInputType {
     distance?: true
     calories?: true
     duration?: true
@@ -13419,7 +13254,7 @@ export namespace Prisma {
     lapCount?: true
   }
 
-  export type GarminActivitySumAggregateInputType = {
+  export interface GarminActivitySumAggregateInputType {
     distance?: true
     calories?: true
     duration?: true
@@ -13441,7 +13276,7 @@ export namespace Prisma {
     lapCount?: true
   }
 
-  export type GarminActivityMinAggregateInputType = {
+  export interface GarminActivityMinAggregateInputType {
     id?: true
     activityType?: true
     date?: true
@@ -13471,7 +13306,7 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type GarminActivityMaxAggregateInputType = {
+  export interface GarminActivityMaxAggregateInputType {
     id?: true
     activityType?: true
     date?: true
@@ -13501,7 +13336,7 @@ export namespace Prisma {
     updatedAt?: true
   }
 
-  export type GarminActivityCountAggregateInputType = {
+  export interface GarminActivityCountAggregateInputType {
     id?: true
     activityType?: true
     date?: true
@@ -13532,79 +13367,76 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type GarminActivityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which GarminActivity to aggregate.
      */
     where?: GarminActivityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of GarminActivities to fetch.
      */
     orderBy?: GarminActivityOrderByWithRelationInput | GarminActivityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: GarminActivityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` GarminActivities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` GarminActivities.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned GarminActivities
-    **/
+     */
     _count?: true | GarminActivityCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
-    **/
+     */
     _avg?: GarminActivityAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
-    **/
+     */
     _sum?: GarminActivitySumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
-    **/
+     */
     _min?: GarminActivityMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
-    **/
+     */
     _max?: GarminActivityMaxAggregateInputType
   }
 
   export type GetGarminActivityAggregateType<T extends GarminActivityAggregateArgs> = {
-        [P in keyof T & keyof AggregateGarminActivity]: P extends '_count' | 'count'
+    [P in keyof T & keyof AggregateGarminActivity]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateGarminActivity[P]>
       : GetScalarType<T[P], AggregateGarminActivity[P]>
   }
 
-
-
-
-  export type GarminActivityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     where?: GarminActivityWhereInput
     orderBy?: GarminActivityOrderByWithAggregationInput | GarminActivityOrderByWithAggregationInput[]
     by: GarminActivityScalarFieldEnum[] | GarminActivityScalarFieldEnum
@@ -13618,7 +13450,7 @@ export namespace Prisma {
     _max?: GarminActivityMaxAggregateInputType
   }
 
-  export type GarminActivityGroupByOutputType = {
+  export interface GarminActivityGroupByOutputType {
     id: string
     activityType: string
     date: Date
@@ -13655,17 +13487,16 @@ export namespace Prisma {
 
   type GetGarminActivityGroupByPayload<T extends GarminActivityGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<GarminActivityGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof GarminActivityGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], GarminActivityGroupByOutputType[P]>
+      PickEnumerable<GarminActivityGroupByOutputType, T['by']>
+      & {
+        [P in ((keyof T) & (keyof GarminActivityGroupByOutputType))]: P extends '_count'
+          ? T[P] extends boolean
+            ? number
             : GetScalarType<T[P], GarminActivityGroupByOutputType[P]>
-        }
+          : GetScalarType<T[P], GarminActivityGroupByOutputType[P]>
+      }
       >
     >
-
 
   export type GarminActivitySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
@@ -13695,11 +13526,9 @@ export namespace Prisma {
     lapCount?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-  }, ExtArgs["result"]["garminActivity"]>
+  }, ExtArgs['result']['garminActivity']>
 
-
-
-  export type GarminActivitySelectScalar = {
+  export interface GarminActivitySelectScalar {
     id?: boolean
     activityType?: boolean
     date?: boolean
@@ -13729,10 +13558,10 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type GarminActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "activityType" | "date" | "isFavorite" | "title" | "distance" | "calories" | "duration" | "movingTime" | "elapsedTime" | "avgHr" | "maxHr" | "aerobicEffect" | "trainingStressScore" | "avgPace" | "bestPace" | "totalStrokes" | "avgSwolf" | "avgStrokeRate" | "steps" | "totalReps" | "totalSets" | "isGrit" | "bestLapTime" | "lapCount" | "createdAt" | "updatedAt", ExtArgs["result"]["garminActivity"]>
+  export type GarminActivityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<'id' | 'activityType' | 'date' | 'isFavorite' | 'title' | 'distance' | 'calories' | 'duration' | 'movingTime' | 'elapsedTime' | 'avgHr' | 'maxHr' | 'aerobicEffect' | 'trainingStressScore' | 'avgPace' | 'bestPace' | 'totalStrokes' | 'avgSwolf' | 'avgStrokeRate' | 'steps' | 'totalReps' | 'totalSets' | 'isGrit' | 'bestLapTime' | 'lapCount' | 'createdAt' | 'updatedAt', ExtArgs['result']['garminActivity']>
 
-  export type $GarminActivityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "GarminActivity"
+  export interface $GarminActivityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    name: 'GarminActivity'
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -13762,14 +13591,14 @@ export namespace Prisma {
       lapCount: number | null
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["garminActivity"]>
+    }, ExtArgs['result']['garminActivity']>
     composites: {}
   }
 
   type GarminActivityGetPayload<S extends boolean | null | undefined | GarminActivityDefaultArgs> = $Result.GetResult<Prisma.$GarminActivityPayload, S>
 
-  type GarminActivityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<GarminActivityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  type GarminActivityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs>
+    = Omit<GarminActivityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
       select?: GarminActivityCountAggregateInputType | true
     }
 
@@ -13786,7 +13615,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends GarminActivityFindUniqueArgs>(args: SelectSubset<T, GarminActivityFindUniqueArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends GarminActivityFindUniqueArgs>(args: SelectSubset<T, GarminActivityFindUniqueArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, 'findUnique', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one GarminActivity that matches the filter or throw an error with `error.code='P2025'`
@@ -13800,7 +13629,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends GarminActivityFindUniqueOrThrowArgs>(args: SelectSubset<T, GarminActivityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends GarminActivityFindUniqueOrThrowArgs>(args: SelectSubset<T, GarminActivityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, 'findUniqueOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first GarminActivity that matches the filter.
@@ -13815,7 +13644,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends GarminActivityFindFirstArgs>(args?: SelectSubset<T, GarminActivityFindFirstArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends GarminActivityFindFirstArgs>(args?: SelectSubset<T, GarminActivityFindFirstArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, 'findFirst', GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first GarminActivity that matches the filter or
@@ -13831,7 +13660,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends GarminActivityFindFirstOrThrowArgs>(args?: SelectSubset<T, GarminActivityFindFirstOrThrowArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends GarminActivityFindFirstOrThrowArgs>(args?: SelectSubset<T, GarminActivityFindFirstOrThrowArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, 'findFirstOrThrow', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more GarminActivities that matches the filter.
@@ -13841,15 +13670,15 @@ export namespace Prisma {
      * @example
      * // Get all GarminActivities
      * const garminActivities = await prisma.garminActivity.findMany()
-     * 
+     *
      * // Get first 10 GarminActivities
      * const garminActivities = await prisma.garminActivity.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const garminActivityWithIdOnly = await prisma.garminActivity.findMany({ select: { id: true } })
-     * 
+     *
      */
-    findMany<T extends GarminActivityFindManyArgs>(args?: SelectSubset<T, GarminActivityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends GarminActivityFindManyArgs>(args?: SelectSubset<T, GarminActivityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, 'findMany', GlobalOmitOptions>>
 
     /**
      * Create a GarminActivity.
@@ -13861,9 +13690,9 @@ export namespace Prisma {
      *     // ... data to create a GarminActivity
      *   }
      * })
-     * 
+     *
      */
-    create<T extends GarminActivityCreateArgs>(args: SelectSubset<T, GarminActivityCreateArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends GarminActivityCreateArgs>(args: SelectSubset<T, GarminActivityCreateArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, 'create', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many GarminActivities.
@@ -13875,7 +13704,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends GarminActivityCreateManyArgs>(args?: SelectSubset<T, GarminActivityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -13889,9 +13718,9 @@ export namespace Prisma {
      *     // ... filter to delete one GarminActivity
      *   }
      * })
-     * 
+     *
      */
-    delete<T extends GarminActivityDeleteArgs>(args: SelectSubset<T, GarminActivityDeleteArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends GarminActivityDeleteArgs>(args: SelectSubset<T, GarminActivityDeleteArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, 'delete', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one GarminActivity.
@@ -13906,9 +13735,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
-    update<T extends GarminActivityUpdateArgs>(args: SelectSubset<T, GarminActivityUpdateArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends GarminActivityUpdateArgs>(args: SelectSubset<T, GarminActivityUpdateArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, 'update', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more GarminActivities.
@@ -13920,7 +13749,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends GarminActivityDeleteManyArgs>(args?: SelectSubset<T, GarminActivityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -13939,7 +13768,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends GarminActivityUpdateManyArgs>(args: SelectSubset<T, GarminActivityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -13960,8 +13789,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends GarminActivityUpsertArgs>(args: SelectSubset<T, GarminActivityUpsertArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
+    upsert<T extends GarminActivityUpsertArgs>(args: SelectSubset<T, GarminActivityUpsertArgs<ExtArgs>>): Prisma__GarminActivityClient<$Result.GetResult<Prisma.$GarminActivityPayload<ExtArgs>, T, 'upsert', GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Count the number of GarminActivities.
@@ -13975,7 +13803,7 @@ export namespace Prisma {
      *     // ... the filter for the GarminActivities we want to count
      *   }
      * })
-    **/
+     */
     count<T extends GarminActivityCountArgs>(
       args?: Subset<T, GarminActivityCountArgs>,
     ): Prisma.PrismaPromise<
@@ -14009,7 +13837,7 @@ export namespace Prisma {
      *   },
      *   take: 10,
      * })
-    **/
+     */
     aggregate<T extends GarminActivityAggregateArgs>(args: Subset<T, GarminActivityAggregateArgs>): Prisma.PrismaPromise<GetGarminActivityAggregateType<T>>
 
     /**
@@ -14028,8 +13856,8 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
-    **/
+     *
+     */
     groupBy<
       T extends GarminActivityGroupByArgs,
       HasSelectOrTake extends Or<
@@ -14046,52 +13874,52 @@ export namespace Prisma {
       HavingValid extends Has<ByFields, HavingFields>,
       ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
+        ? `Error: "by" must not be empty.`
+        : HavingValid extends False
+          ? {
+              [P in HavingFields]: P extends ByFields
                 ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
+                : P extends string
+                  ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+                  : [
+                      Error,
+                      'Field ',
+                      P,
+                      ` in "having" needs to be provided in "by"`,
+                    ]
+            }[HavingFields]
+          : 'take' extends Keys<T>
+            ? 'orderBy' extends Keys<T>
+              ? ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields]
+              : 'Error: If you provide "take", you also need to provide "orderBy"'
+            : 'skip' extends Keys<T>
+              ? 'orderBy' extends Keys<T>
+                ? ByValid extends True
+                  ? {}
+                  : {
+                      [P in OrderFields]: P extends ByFields
+                        ? never
+                        : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                    }[OrderFields]
+                : 'Error: If you provide "skip", you also need to provide "orderBy"'
+              : ByValid extends True
+                ? {}
+                : {
+                    [P in OrderFields]: P extends ByFields
+                      ? never
+                      : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+                  }[OrderFields],
     >(args: SubsetIntersection<T, GarminActivityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGarminActivityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the GarminActivity model
-   */
-  readonly fields: GarminActivityFieldRefs;
+    /**
+     * Fields of the GarminActivity model
+     */
+    readonly fields: GarminActivityFieldRefs
   }
 
   /**
@@ -14101,7 +13929,7 @@ export namespace Prisma {
    * https://github.com/prisma/prisma-client-js/issues/707
    */
   export interface Prisma__GarminActivityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
+    readonly [Symbol.toStringTag]: 'PrismaPromise'
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14124,48 +13952,44 @@ export namespace Prisma {
     finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
   }
 
-
-
-
   /**
    * Fields of the GarminActivity model
    */
   interface GarminActivityFieldRefs {
-    readonly id: FieldRef<"GarminActivity", 'String'>
-    readonly activityType: FieldRef<"GarminActivity", 'String'>
-    readonly date: FieldRef<"GarminActivity", 'DateTime'>
-    readonly isFavorite: FieldRef<"GarminActivity", 'Boolean'>
-    readonly title: FieldRef<"GarminActivity", 'String'>
-    readonly distance: FieldRef<"GarminActivity", 'Decimal'>
-    readonly calories: FieldRef<"GarminActivity", 'Int'>
-    readonly duration: FieldRef<"GarminActivity", 'Decimal'>
-    readonly movingTime: FieldRef<"GarminActivity", 'Decimal'>
-    readonly elapsedTime: FieldRef<"GarminActivity", 'Decimal'>
-    readonly avgHr: FieldRef<"GarminActivity", 'Int'>
-    readonly maxHr: FieldRef<"GarminActivity", 'Int'>
-    readonly aerobicEffect: FieldRef<"GarminActivity", 'Decimal'>
-    readonly trainingStressScore: FieldRef<"GarminActivity", 'Decimal'>
-    readonly avgPace: FieldRef<"GarminActivity", 'Decimal'>
-    readonly bestPace: FieldRef<"GarminActivity", 'Decimal'>
-    readonly totalStrokes: FieldRef<"GarminActivity", 'Int'>
-    readonly avgSwolf: FieldRef<"GarminActivity", 'Int'>
-    readonly avgStrokeRate: FieldRef<"GarminActivity", 'Int'>
-    readonly steps: FieldRef<"GarminActivity", 'Int'>
-    readonly totalReps: FieldRef<"GarminActivity", 'Int'>
-    readonly totalSets: FieldRef<"GarminActivity", 'Int'>
-    readonly isGrit: FieldRef<"GarminActivity", 'Boolean'>
-    readonly bestLapTime: FieldRef<"GarminActivity", 'Decimal'>
-    readonly lapCount: FieldRef<"GarminActivity", 'Int'>
-    readonly createdAt: FieldRef<"GarminActivity", 'DateTime'>
-    readonly updatedAt: FieldRef<"GarminActivity", 'DateTime'>
+    readonly id: FieldRef<'GarminActivity', 'String'>
+    readonly activityType: FieldRef<'GarminActivity', 'String'>
+    readonly date: FieldRef<'GarminActivity', 'DateTime'>
+    readonly isFavorite: FieldRef<'GarminActivity', 'Boolean'>
+    readonly title: FieldRef<'GarminActivity', 'String'>
+    readonly distance: FieldRef<'GarminActivity', 'Decimal'>
+    readonly calories: FieldRef<'GarminActivity', 'Int'>
+    readonly duration: FieldRef<'GarminActivity', 'Decimal'>
+    readonly movingTime: FieldRef<'GarminActivity', 'Decimal'>
+    readonly elapsedTime: FieldRef<'GarminActivity', 'Decimal'>
+    readonly avgHr: FieldRef<'GarminActivity', 'Int'>
+    readonly maxHr: FieldRef<'GarminActivity', 'Int'>
+    readonly aerobicEffect: FieldRef<'GarminActivity', 'Decimal'>
+    readonly trainingStressScore: FieldRef<'GarminActivity', 'Decimal'>
+    readonly avgPace: FieldRef<'GarminActivity', 'Decimal'>
+    readonly bestPace: FieldRef<'GarminActivity', 'Decimal'>
+    readonly totalStrokes: FieldRef<'GarminActivity', 'Int'>
+    readonly avgSwolf: FieldRef<'GarminActivity', 'Int'>
+    readonly avgStrokeRate: FieldRef<'GarminActivity', 'Int'>
+    readonly steps: FieldRef<'GarminActivity', 'Int'>
+    readonly totalReps: FieldRef<'GarminActivity', 'Int'>
+    readonly totalSets: FieldRef<'GarminActivity', 'Int'>
+    readonly isGrit: FieldRef<'GarminActivity', 'Boolean'>
+    readonly bestLapTime: FieldRef<'GarminActivity', 'Decimal'>
+    readonly lapCount: FieldRef<'GarminActivity', 'Int'>
+    readonly createdAt: FieldRef<'GarminActivity', 'DateTime'>
+    readonly updatedAt: FieldRef<'GarminActivity', 'DateTime'>
   }
-    
 
   // Custom InputTypes
   /**
    * GarminActivity findUnique
    */
-  export type GarminActivityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the GarminActivity
      */
@@ -14183,7 +14007,7 @@ export namespace Prisma {
   /**
    * GarminActivity findUniqueOrThrow
    */
-  export type GarminActivityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the GarminActivity
      */
@@ -14201,7 +14025,7 @@ export namespace Prisma {
   /**
    * GarminActivity findFirst
    */
-  export type GarminActivityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the GarminActivity
      */
@@ -14216,31 +14040,31 @@ export namespace Prisma {
     where?: GarminActivityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of GarminActivities to fetch.
      */
     orderBy?: GarminActivityOrderByWithRelationInput | GarminActivityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for GarminActivities.
      */
     cursor?: GarminActivityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` GarminActivities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` GarminActivities.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of GarminActivities.
      */
     distinct?: GarminActivityScalarFieldEnum | GarminActivityScalarFieldEnum[]
@@ -14249,7 +14073,7 @@ export namespace Prisma {
   /**
    * GarminActivity findFirstOrThrow
    */
-  export type GarminActivityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the GarminActivity
      */
@@ -14264,31 +14088,31 @@ export namespace Prisma {
     where?: GarminActivityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of GarminActivities to fetch.
      */
     orderBy?: GarminActivityOrderByWithRelationInput | GarminActivityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for GarminActivities.
      */
     cursor?: GarminActivityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` GarminActivities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` GarminActivities.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of GarminActivities.
      */
     distinct?: GarminActivityScalarFieldEnum | GarminActivityScalarFieldEnum[]
@@ -14297,7 +14121,7 @@ export namespace Prisma {
   /**
    * GarminActivity findMany
    */
-  export type GarminActivityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the GarminActivity
      */
@@ -14312,25 +14136,25 @@ export namespace Prisma {
     where?: GarminActivityWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of GarminActivities to fetch.
      */
     orderBy?: GarminActivityOrderByWithRelationInput | GarminActivityOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing GarminActivities.
      */
     cursor?: GarminActivityWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` GarminActivities from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` GarminActivities.
      */
     skip?: number
@@ -14340,7 +14164,7 @@ export namespace Prisma {
   /**
    * GarminActivity create
    */
-  export type GarminActivityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the GarminActivity
      */
@@ -14358,7 +14182,7 @@ export namespace Prisma {
   /**
    * GarminActivity createMany
    */
-  export type GarminActivityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to create many GarminActivities.
      */
@@ -14369,7 +14193,7 @@ export namespace Prisma {
   /**
    * GarminActivity update
    */
-  export type GarminActivityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the GarminActivity
      */
@@ -14391,7 +14215,7 @@ export namespace Prisma {
   /**
    * GarminActivity updateMany
    */
-  export type GarminActivityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * The data used to update GarminActivities.
      */
@@ -14409,7 +14233,7 @@ export namespace Prisma {
   /**
    * GarminActivity upsert
    */
-  export type GarminActivityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the GarminActivity
      */
@@ -14435,7 +14259,7 @@ export namespace Prisma {
   /**
    * GarminActivity delete
    */
-  export type GarminActivityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the GarminActivity
      */
@@ -14453,7 +14277,7 @@ export namespace Prisma {
   /**
    * GarminActivity deleteMany
    */
-  export type GarminActivityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Filter which GarminActivities to delete
      */
@@ -14467,7 +14291,7 @@ export namespace Prisma {
   /**
    * GarminActivity without action
    */
-  export type GarminActivityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface GarminActivityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     /**
      * Select specific fields to fetch from the GarminActivity
      */
@@ -14478,420 +14302,380 @@ export namespace Prisma {
     omit?: GarminActivityOmit<ExtArgs> | null
   }
 
-
   /**
    * Enums
    */
 
   export const TransactionIsolationLevel: {
-    ReadUncommitted: 'ReadUncommitted',
-    ReadCommitted: 'ReadCommitted',
-    RepeatableRead: 'RepeatableRead',
+    ReadUncommitted: 'ReadUncommitted'
+    ReadCommitted: 'ReadCommitted'
+    RepeatableRead: 'RepeatableRead'
     Serializable: 'Serializable'
-  };
+  }
 
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
-
   export const UserScalarFieldEnum: {
-    id: 'id',
-    email: 'email',
-    phone: 'phone',
-    username: 'username',
-    nickname: 'nickname',
-    password: 'password',
-    avatar_url: 'avatar_url',
-    website: 'website',
-    role: 'role',
+    id: 'id'
+    email: 'email'
+    phone: 'phone'
+    username: 'username'
+    nickname: 'nickname'
+    password: 'password'
+    avatar_url: 'avatar_url'
+    website: 'website'
+    role: 'role'
     status: 'status'
-  };
+  }
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
-
   export const UserConfigScalarFieldEnum: {
-    id: 'id',
-    userId: 'userId',
-    allowEmailNotify: 'allowEmailNotify',
-    createdAt: 'createdAt',
+    id: 'id'
+    userId: 'userId'
+    allowEmailNotify: 'allowEmailNotify'
+    createdAt: 'createdAt'
     updatedAt: 'updatedAt'
-  };
+  }
 
   export type UserConfigScalarFieldEnum = (typeof UserConfigScalarFieldEnum)[keyof typeof UserConfigScalarFieldEnum]
 
-
   export const AccessTokenScalarFieldEnum: {
-    id: 'id',
-    userId: 'userId',
-    token: 'token',
-    roles: 'roles',
-    status: 'status',
-    scope: 'scope',
-    isRevoked: 'isRevoked',
-    ip: 'ip',
-    expiresAt: 'expiresAt',
-    createdAt: 'createdAt',
+    id: 'id'
+    userId: 'userId'
+    token: 'token'
+    roles: 'roles'
+    status: 'status'
+    scope: 'scope'
+    isRevoked: 'isRevoked'
+    ip: 'ip'
+    expiresAt: 'expiresAt'
+    createdAt: 'createdAt'
     updatedAt: 'updatedAt'
-  };
+  }
 
   export type AccessTokenScalarFieldEnum = (typeof AccessTokenScalarFieldEnum)[keyof typeof AccessTokenScalarFieldEnum]
 
-
   export const OAuthScalarFieldEnum: {
-    id: 'id',
-    userId: 'userId',
-    provider: 'provider',
-    providerId: 'providerId',
-    providerUnionId: 'providerUnionId',
-    providerToken: 'providerToken',
-    providerRefreshToken: 'providerRefreshToken',
-    createdAt: 'createdAt',
+    id: 'id'
+    userId: 'userId'
+    provider: 'provider'
+    providerId: 'providerId'
+    providerUnionId: 'providerUnionId'
+    providerToken: 'providerToken'
+    providerRefreshToken: 'providerRefreshToken'
+    createdAt: 'createdAt'
     updatedAt: 'updatedAt'
-  };
+  }
 
   export type OAuthScalarFieldEnum = (typeof OAuthScalarFieldEnum)[keyof typeof OAuthScalarFieldEnum]
 
-
   export const BlogCommentScalarFieldEnum: {
-    id: 'id',
-    content: 'content',
-    create_ts: 'create_ts',
-    updated_ts: 'updated_ts',
-    type: 'type',
-    quoteContent: 'quoteContent',
-    article_id: 'article_id',
-    user_id: 'user_id',
-    visitorName: 'visitorName',
+    id: 'id'
+    content: 'content'
+    create_ts: 'create_ts'
+    updated_ts: 'updated_ts'
+    type: 'type'
+    quoteContent: 'quoteContent'
+    article_id: 'article_id'
+    user_id: 'user_id'
+    visitorName: 'visitorName'
     memo_id: 'memo_id'
-  };
+  }
 
   export type BlogCommentScalarFieldEnum = (typeof BlogCommentScalarFieldEnum)[keyof typeof BlogCommentScalarFieldEnum]
 
-
   export const BlogExplainScalarFieldEnum: {
-    id: 'id',
-    create_ts: 'create_ts',
-    updated_ts: 'updated_ts',
-    text: 'text',
-    content: 'content',
+    id: 'id'
+    create_ts: 'create_ts'
+    updated_ts: 'updated_ts'
+    text: 'text'
+    content: 'content'
     article_id: 'article_id'
-  };
+  }
 
   export type BlogExplainScalarFieldEnum = (typeof BlogExplainScalarFieldEnum)[keyof typeof BlogExplainScalarFieldEnum]
 
-
   export const BlogSubCommentScalarFieldEnum: {
-    id: 'id',
-    content: 'content',
-    create_ts: 'create_ts',
-    updated_ts: 'updated_ts',
-    comment_id: 'comment_id',
-    reply_sub_comment_id: 'reply_sub_comment_id',
+    id: 'id'
+    content: 'content'
+    create_ts: 'create_ts'
+    updated_ts: 'updated_ts'
+    comment_id: 'comment_id'
+    reply_sub_comment_id: 'reply_sub_comment_id'
     user_id: 'user_id'
-  };
+  }
 
   export type BlogSubCommentScalarFieldEnum = (typeof BlogSubCommentScalarFieldEnum)[keyof typeof BlogSubCommentScalarFieldEnum]
 
-
   export const BlogLikeScalarFieldEnum: {
-    id: 'id',
-    create_ts: 'create_ts',
-    updated_ts: 'updated_ts',
-    target: 'target',
-    article_id: 'article_id',
-    sub_comment_id: 'sub_comment_id',
-    comment_id: 'comment_id',
-    user_id: 'user_id',
+    id: 'id'
+    create_ts: 'create_ts'
+    updated_ts: 'updated_ts'
+    target: 'target'
+    article_id: 'article_id'
+    sub_comment_id: 'sub_comment_id'
+    comment_id: 'comment_id'
+    user_id: 'user_id'
     blogMemoId: 'blogMemoId'
-  };
+  }
 
   export type BlogLikeScalarFieldEnum = (typeof BlogLikeScalarFieldEnum)[keyof typeof BlogLikeScalarFieldEnum]
 
-
   export const BlogMemoScalarFieldEnum: {
-    id: 'id',
-    content: 'content',
-    create_ts: 'create_ts',
-    updated_ts: 'updated_ts',
-    visible: 'visible',
-    defalt_floded: 'defalt_floded',
-    flod_tip: 'flod_tip',
-    user_id: 'user_id',
-    from: 'from',
+    id: 'id'
+    content: 'content'
+    create_ts: 'create_ts'
+    updated_ts: 'updated_ts'
+    visible: 'visible'
+    defalt_floded: 'defalt_floded'
+    flod_tip: 'flod_tip'
+    user_id: 'user_id'
+    from: 'from'
     courier: 'courier'
-  };
+  }
 
   export type BlogMemoScalarFieldEnum = (typeof BlogMemoScalarFieldEnum)[keyof typeof BlogMemoScalarFieldEnum]
 
-
   export const MemoTagScalarFieldEnum: {
-    id: 'id',
-    tag_name: 'tag_name',
-    create_ts: 'create_ts',
-    updated_ts: 'updated_ts',
+    id: 'id'
+    tag_name: 'tag_name'
+    create_ts: 'create_ts'
+    updated_ts: 'updated_ts'
     user_id: 'user_id'
-  };
+  }
 
   export type MemoTagScalarFieldEnum = (typeof MemoTagScalarFieldEnum)[keyof typeof MemoTagScalarFieldEnum]
 
-
   export const MemoTagRelationsScalarFieldEnum: {
-    tagId: 'tagId',
-    memoId: 'memoId',
-    create_ts: 'create_ts',
+    tagId: 'tagId'
+    memoId: 'memoId'
+    create_ts: 'create_ts'
     updated_ts: 'updated_ts'
-  };
+  }
 
   export type MemoTagRelationsScalarFieldEnum = (typeof MemoTagRelationsScalarFieldEnum)[keyof typeof MemoTagRelationsScalarFieldEnum]
 
-
   export const GarminActivityScalarFieldEnum: {
-    id: 'id',
-    activityType: 'activityType',
-    date: 'date',
-    isFavorite: 'isFavorite',
-    title: 'title',
-    distance: 'distance',
-    calories: 'calories',
-    duration: 'duration',
-    movingTime: 'movingTime',
-    elapsedTime: 'elapsedTime',
-    avgHr: 'avgHr',
-    maxHr: 'maxHr',
-    aerobicEffect: 'aerobicEffect',
-    trainingStressScore: 'trainingStressScore',
-    avgPace: 'avgPace',
-    bestPace: 'bestPace',
-    totalStrokes: 'totalStrokes',
-    avgSwolf: 'avgSwolf',
-    avgStrokeRate: 'avgStrokeRate',
-    steps: 'steps',
-    totalReps: 'totalReps',
-    totalSets: 'totalSets',
-    isGrit: 'isGrit',
-    bestLapTime: 'bestLapTime',
-    lapCount: 'lapCount',
-    createdAt: 'createdAt',
+    id: 'id'
+    activityType: 'activityType'
+    date: 'date'
+    isFavorite: 'isFavorite'
+    title: 'title'
+    distance: 'distance'
+    calories: 'calories'
+    duration: 'duration'
+    movingTime: 'movingTime'
+    elapsedTime: 'elapsedTime'
+    avgHr: 'avgHr'
+    maxHr: 'maxHr'
+    aerobicEffect: 'aerobicEffect'
+    trainingStressScore: 'trainingStressScore'
+    avgPace: 'avgPace'
+    bestPace: 'bestPace'
+    totalStrokes: 'totalStrokes'
+    avgSwolf: 'avgSwolf'
+    avgStrokeRate: 'avgStrokeRate'
+    steps: 'steps'
+    totalReps: 'totalReps'
+    totalSets: 'totalSets'
+    isGrit: 'isGrit'
+    bestLapTime: 'bestLapTime'
+    lapCount: 'lapCount'
+    createdAt: 'createdAt'
     updatedAt: 'updatedAt'
-  };
+  }
 
   export type GarminActivityScalarFieldEnum = (typeof GarminActivityScalarFieldEnum)[keyof typeof GarminActivityScalarFieldEnum]
 
-
   export const SortOrder: {
-    asc: 'asc',
+    asc: 'asc'
     desc: 'desc'
-  };
+  }
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
-
   export const NullsOrder: {
-    first: 'first',
+    first: 'first'
     last: 'last'
-  };
+  }
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
-
   export const UserOrderByRelevanceFieldEnum: {
-    id: 'id',
-    email: 'email',
-    phone: 'phone',
-    username: 'username',
-    nickname: 'nickname',
-    password: 'password',
-    avatar_url: 'avatar_url',
-    website: 'website',
+    id: 'id'
+    email: 'email'
+    phone: 'phone'
+    username: 'username'
+    nickname: 'nickname'
+    password: 'password'
+    avatar_url: 'avatar_url'
+    website: 'website'
     role: 'role'
-  };
+  }
 
   export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
 
-
   export const UserConfigOrderByRelevanceFieldEnum: {
-    id: 'id',
+    id: 'id'
     userId: 'userId'
-  };
+  }
 
   export type UserConfigOrderByRelevanceFieldEnum = (typeof UserConfigOrderByRelevanceFieldEnum)[keyof typeof UserConfigOrderByRelevanceFieldEnum]
 
-
   export const AccessTokenOrderByRelevanceFieldEnum: {
-    id: 'id',
-    userId: 'userId',
-    token: 'token',
-    roles: 'roles',
-    scope: 'scope',
+    id: 'id'
+    userId: 'userId'
+    token: 'token'
+    roles: 'roles'
+    scope: 'scope'
     ip: 'ip'
-  };
+  }
 
   export type AccessTokenOrderByRelevanceFieldEnum = (typeof AccessTokenOrderByRelevanceFieldEnum)[keyof typeof AccessTokenOrderByRelevanceFieldEnum]
 
-
   export const OAuthOrderByRelevanceFieldEnum: {
-    id: 'id',
-    userId: 'userId',
-    provider: 'provider',
-    providerId: 'providerId',
-    providerUnionId: 'providerUnionId',
-    providerToken: 'providerToken',
+    id: 'id'
+    userId: 'userId'
+    provider: 'provider'
+    providerId: 'providerId'
+    providerUnionId: 'providerUnionId'
+    providerToken: 'providerToken'
     providerRefreshToken: 'providerRefreshToken'
-  };
+  }
 
   export type OAuthOrderByRelevanceFieldEnum = (typeof OAuthOrderByRelevanceFieldEnum)[keyof typeof OAuthOrderByRelevanceFieldEnum]
 
-
   export const BlogCommentOrderByRelevanceFieldEnum: {
-    id: 'id',
-    content: 'content',
-    type: 'type',
-    quoteContent: 'quoteContent',
-    article_id: 'article_id',
-    user_id: 'user_id',
-    visitorName: 'visitorName',
+    id: 'id'
+    content: 'content'
+    type: 'type'
+    quoteContent: 'quoteContent'
+    article_id: 'article_id'
+    user_id: 'user_id'
+    visitorName: 'visitorName'
     memo_id: 'memo_id'
-  };
+  }
 
   export type BlogCommentOrderByRelevanceFieldEnum = (typeof BlogCommentOrderByRelevanceFieldEnum)[keyof typeof BlogCommentOrderByRelevanceFieldEnum]
 
-
   export const BlogExplainOrderByRelevanceFieldEnum: {
-    id: 'id',
-    text: 'text',
-    content: 'content',
+    id: 'id'
+    text: 'text'
+    content: 'content'
     article_id: 'article_id'
-  };
+  }
 
   export type BlogExplainOrderByRelevanceFieldEnum = (typeof BlogExplainOrderByRelevanceFieldEnum)[keyof typeof BlogExplainOrderByRelevanceFieldEnum]
 
-
   export const BlogSubCommentOrderByRelevanceFieldEnum: {
-    id: 'id',
-    content: 'content',
-    comment_id: 'comment_id',
-    reply_sub_comment_id: 'reply_sub_comment_id',
+    id: 'id'
+    content: 'content'
+    comment_id: 'comment_id'
+    reply_sub_comment_id: 'reply_sub_comment_id'
     user_id: 'user_id'
-  };
+  }
 
   export type BlogSubCommentOrderByRelevanceFieldEnum = (typeof BlogSubCommentOrderByRelevanceFieldEnum)[keyof typeof BlogSubCommentOrderByRelevanceFieldEnum]
 
-
   export const BlogLikeOrderByRelevanceFieldEnum: {
-    target: 'target',
-    article_id: 'article_id',
-    sub_comment_id: 'sub_comment_id',
-    comment_id: 'comment_id',
-    user_id: 'user_id',
+    target: 'target'
+    article_id: 'article_id'
+    sub_comment_id: 'sub_comment_id'
+    comment_id: 'comment_id'
+    user_id: 'user_id'
     blogMemoId: 'blogMemoId'
-  };
+  }
 
   export type BlogLikeOrderByRelevanceFieldEnum = (typeof BlogLikeOrderByRelevanceFieldEnum)[keyof typeof BlogLikeOrderByRelevanceFieldEnum]
 
-
   export const BlogMemoOrderByRelevanceFieldEnum: {
-    id: 'id',
-    content: 'content',
-    visible: 'visible',
-    flod_tip: 'flod_tip',
-    user_id: 'user_id',
-    from: 'from',
+    id: 'id'
+    content: 'content'
+    visible: 'visible'
+    flod_tip: 'flod_tip'
+    user_id: 'user_id'
+    from: 'from'
     courier: 'courier'
-  };
+  }
 
   export type BlogMemoOrderByRelevanceFieldEnum = (typeof BlogMemoOrderByRelevanceFieldEnum)[keyof typeof BlogMemoOrderByRelevanceFieldEnum]
 
-
   export const MemoTagOrderByRelevanceFieldEnum: {
-    id: 'id',
-    tag_name: 'tag_name',
+    id: 'id'
+    tag_name: 'tag_name'
     user_id: 'user_id'
-  };
+  }
 
   export type MemoTagOrderByRelevanceFieldEnum = (typeof MemoTagOrderByRelevanceFieldEnum)[keyof typeof MemoTagOrderByRelevanceFieldEnum]
 
-
   export const MemoTagRelationsOrderByRelevanceFieldEnum: {
-    tagId: 'tagId',
+    tagId: 'tagId'
     memoId: 'memoId'
-  };
+  }
 
   export type MemoTagRelationsOrderByRelevanceFieldEnum = (typeof MemoTagRelationsOrderByRelevanceFieldEnum)[keyof typeof MemoTagRelationsOrderByRelevanceFieldEnum]
 
-
   export const GarminActivityOrderByRelevanceFieldEnum: {
-    id: 'id',
-    activityType: 'activityType',
+    id: 'id'
+    activityType: 'activityType'
     title: 'title'
-  };
+  }
 
   export type GarminActivityOrderByRelevanceFieldEnum = (typeof GarminActivityOrderByRelevanceFieldEnum)[keyof typeof GarminActivityOrderByRelevanceFieldEnum]
-
 
   /**
    * Field references
    */
 
-
   /**
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
-    
-
 
   /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
 
   /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
-
 
   /**
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
 
   /**
    * Reference to a field of type 'Decimal'
    */
   export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
 
   /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
+
   /**
    * Deep Input Types
    */
 
-
-  export type UserWhereInput = {
+  export interface UserWhereInput {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    id?: StringFilter<"User"> | string
-    email?: StringNullableFilter<"User"> | string | null
-    phone?: StringNullableFilter<"User"> | string | null
-    username?: StringFilter<"User"> | string
-    nickname?: StringNullableFilter<"User"> | string | null
-    password?: StringFilter<"User"> | string
-    avatar_url?: StringNullableFilter<"User"> | string | null
-    website?: StringNullableFilter<"User"> | string | null
-    role?: StringFilter<"User"> | string
-    status?: IntFilter<"User"> | number
+    id?: StringFilter<'User'> | string
+    email?: StringNullableFilter<'User'> | string | null
+    phone?: StringNullableFilter<'User'> | string | null
+    username?: StringFilter<'User'> | string
+    nickname?: StringNullableFilter<'User'> | string | null
+    password?: StringFilter<'User'> | string
+    avatar_url?: StringNullableFilter<'User'> | string | null
+    website?: StringNullableFilter<'User'> | string | null
+    role?: StringFilter<'User'> | string
+    status?: IntFilter<'User'> | number
     comments?: BlogCommentListRelationFilter
     sub_comments?: BlogSubCommentListRelationFilter
     likes?: BlogLikeListRelationFilter
@@ -14902,7 +14686,7 @@ export namespace Prisma {
     tags?: MemoTagListRelationFilter
   }
 
-  export type UserOrderByWithRelationInput = {
+  export interface UserOrderByWithRelationInput {
     id?: SortOrder
     email?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
@@ -14931,13 +14715,13 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    email?: StringNullableFilter<"User"> | string | null
-    phone?: StringNullableFilter<"User"> | string | null
-    password?: StringFilter<"User"> | string
-    avatar_url?: StringNullableFilter<"User"> | string | null
-    website?: StringNullableFilter<"User"> | string | null
-    role?: StringFilter<"User"> | string
-    status?: IntFilter<"User"> | number
+    email?: StringNullableFilter<'User'> | string | null
+    phone?: StringNullableFilter<'User'> | string | null
+    password?: StringFilter<'User'> | string
+    avatar_url?: StringNullableFilter<'User'> | string | null
+    website?: StringNullableFilter<'User'> | string | null
+    role?: StringFilter<'User'> | string
+    status?: IntFilter<'User'> | number
     comments?: BlogCommentListRelationFilter
     sub_comments?: BlogSubCommentListRelationFilter
     likes?: BlogLikeListRelationFilter
@@ -14946,9 +14730,9 @@ export namespace Prisma {
     user_config?: XOR<UserConfigNullableScalarRelationFilter, UserConfigWhereInput> | null
     memos?: BlogMemoListRelationFilter
     tags?: MemoTagListRelationFilter
-  }, "id" | "username" | "nickname">
+  }, 'id' | 'username' | 'nickname'>
 
-  export type UserOrderByWithAggregationInput = {
+  export interface UserOrderByWithAggregationInput {
     id?: SortOrder
     email?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
@@ -14966,35 +14750,35 @@ export namespace Prisma {
     _sum?: UserSumOrderByAggregateInput
   }
 
-  export type UserScalarWhereWithAggregatesInput = {
+  export interface UserScalarWhereWithAggregatesInput {
     AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"User"> | string
-    email?: StringNullableWithAggregatesFilter<"User"> | string | null
-    phone?: StringNullableWithAggregatesFilter<"User"> | string | null
-    username?: StringWithAggregatesFilter<"User"> | string
-    nickname?: StringNullableWithAggregatesFilter<"User"> | string | null
-    password?: StringWithAggregatesFilter<"User"> | string
-    avatar_url?: StringNullableWithAggregatesFilter<"User"> | string | null
-    website?: StringNullableWithAggregatesFilter<"User"> | string | null
-    role?: StringWithAggregatesFilter<"User"> | string
-    status?: IntWithAggregatesFilter<"User"> | number
+    id?: StringWithAggregatesFilter<'User'> | string
+    email?: StringNullableWithAggregatesFilter<'User'> | string | null
+    phone?: StringNullableWithAggregatesFilter<'User'> | string | null
+    username?: StringWithAggregatesFilter<'User'> | string
+    nickname?: StringNullableWithAggregatesFilter<'User'> | string | null
+    password?: StringWithAggregatesFilter<'User'> | string
+    avatar_url?: StringNullableWithAggregatesFilter<'User'> | string | null
+    website?: StringNullableWithAggregatesFilter<'User'> | string | null
+    role?: StringWithAggregatesFilter<'User'> | string
+    status?: IntWithAggregatesFilter<'User'> | number
   }
 
-  export type UserConfigWhereInput = {
+  export interface UserConfigWhereInput {
     AND?: UserConfigWhereInput | UserConfigWhereInput[]
     OR?: UserConfigWhereInput[]
     NOT?: UserConfigWhereInput | UserConfigWhereInput[]
-    id?: StringFilter<"UserConfig"> | string
-    userId?: StringFilter<"UserConfig"> | string
-    allowEmailNotify?: IntNullableFilter<"UserConfig"> | number | null
-    createdAt?: DateTimeFilter<"UserConfig"> | Date | string
-    updatedAt?: DateTimeFilter<"UserConfig"> | Date | string
+    id?: StringFilter<'UserConfig'> | string
+    userId?: StringFilter<'UserConfig'> | string
+    allowEmailNotify?: IntNullableFilter<'UserConfig'> | number | null
+    createdAt?: DateTimeFilter<'UserConfig'> | Date | string
+    updatedAt?: DateTimeFilter<'UserConfig'> | Date | string
     userInfo?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
-  export type UserConfigOrderByWithRelationInput = {
+  export interface UserConfigOrderByWithRelationInput {
     id?: SortOrder
     userId?: SortOrder
     allowEmailNotify?: SortOrderInput | SortOrder
@@ -15010,13 +14794,13 @@ export namespace Prisma {
     AND?: UserConfigWhereInput | UserConfigWhereInput[]
     OR?: UserConfigWhereInput[]
     NOT?: UserConfigWhereInput | UserConfigWhereInput[]
-    allowEmailNotify?: IntNullableFilter<"UserConfig"> | number | null
-    createdAt?: DateTimeFilter<"UserConfig"> | Date | string
-    updatedAt?: DateTimeFilter<"UserConfig"> | Date | string
+    allowEmailNotify?: IntNullableFilter<'UserConfig'> | number | null
+    createdAt?: DateTimeFilter<'UserConfig'> | Date | string
+    updatedAt?: DateTimeFilter<'UserConfig'> | Date | string
     userInfo?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "userId">
+  }, 'id' | 'userId'>
 
-  export type UserConfigOrderByWithAggregationInput = {
+  export interface UserConfigOrderByWithAggregationInput {
     id?: SortOrder
     userId?: SortOrder
     allowEmailNotify?: SortOrderInput | SortOrder
@@ -15029,36 +14813,36 @@ export namespace Prisma {
     _sum?: UserConfigSumOrderByAggregateInput
   }
 
-  export type UserConfigScalarWhereWithAggregatesInput = {
+  export interface UserConfigScalarWhereWithAggregatesInput {
     AND?: UserConfigScalarWhereWithAggregatesInput | UserConfigScalarWhereWithAggregatesInput[]
     OR?: UserConfigScalarWhereWithAggregatesInput[]
     NOT?: UserConfigScalarWhereWithAggregatesInput | UserConfigScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"UserConfig"> | string
-    userId?: StringWithAggregatesFilter<"UserConfig"> | string
-    allowEmailNotify?: IntNullableWithAggregatesFilter<"UserConfig"> | number | null
-    createdAt?: DateTimeWithAggregatesFilter<"UserConfig"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"UserConfig"> | Date | string
+    id?: StringWithAggregatesFilter<'UserConfig'> | string
+    userId?: StringWithAggregatesFilter<'UserConfig'> | string
+    allowEmailNotify?: IntNullableWithAggregatesFilter<'UserConfig'> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<'UserConfig'> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<'UserConfig'> | Date | string
   }
 
-  export type AccessTokenWhereInput = {
+  export interface AccessTokenWhereInput {
     AND?: AccessTokenWhereInput | AccessTokenWhereInput[]
     OR?: AccessTokenWhereInput[]
     NOT?: AccessTokenWhereInput | AccessTokenWhereInput[]
-    id?: StringFilter<"AccessToken"> | string
-    userId?: StringFilter<"AccessToken"> | string
-    token?: StringFilter<"AccessToken"> | string
-    roles?: StringFilter<"AccessToken"> | string
-    status?: IntFilter<"AccessToken"> | number
-    scope?: StringFilter<"AccessToken"> | string
-    isRevoked?: BoolFilter<"AccessToken"> | boolean
-    ip?: StringNullableFilter<"AccessToken"> | string | null
-    expiresAt?: DateTimeFilter<"AccessToken"> | Date | string
-    createdAt?: DateTimeFilter<"AccessToken"> | Date | string
-    updatedAt?: DateTimeFilter<"AccessToken"> | Date | string
+    id?: StringFilter<'AccessToken'> | string
+    userId?: StringFilter<'AccessToken'> | string
+    token?: StringFilter<'AccessToken'> | string
+    roles?: StringFilter<'AccessToken'> | string
+    status?: IntFilter<'AccessToken'> | number
+    scope?: StringFilter<'AccessToken'> | string
+    isRevoked?: BoolFilter<'AccessToken'> | boolean
+    ip?: StringNullableFilter<'AccessToken'> | string | null
+    expiresAt?: DateTimeFilter<'AccessToken'> | Date | string
+    createdAt?: DateTimeFilter<'AccessToken'> | Date | string
+    updatedAt?: DateTimeFilter<'AccessToken'> | Date | string
     userInfo?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
-  export type AccessTokenOrderByWithRelationInput = {
+  export interface AccessTokenOrderByWithRelationInput {
     id?: SortOrder
     userId?: SortOrder
     token?: SortOrder
@@ -15080,19 +14864,19 @@ export namespace Prisma {
     AND?: AccessTokenWhereInput | AccessTokenWhereInput[]
     OR?: AccessTokenWhereInput[]
     NOT?: AccessTokenWhereInput | AccessTokenWhereInput[]
-    userId?: StringFilter<"AccessToken"> | string
-    roles?: StringFilter<"AccessToken"> | string
-    status?: IntFilter<"AccessToken"> | number
-    scope?: StringFilter<"AccessToken"> | string
-    isRevoked?: BoolFilter<"AccessToken"> | boolean
-    ip?: StringNullableFilter<"AccessToken"> | string | null
-    expiresAt?: DateTimeFilter<"AccessToken"> | Date | string
-    createdAt?: DateTimeFilter<"AccessToken"> | Date | string
-    updatedAt?: DateTimeFilter<"AccessToken"> | Date | string
+    userId?: StringFilter<'AccessToken'> | string
+    roles?: StringFilter<'AccessToken'> | string
+    status?: IntFilter<'AccessToken'> | number
+    scope?: StringFilter<'AccessToken'> | string
+    isRevoked?: BoolFilter<'AccessToken'> | boolean
+    ip?: StringNullableFilter<'AccessToken'> | string | null
+    expiresAt?: DateTimeFilter<'AccessToken'> | Date | string
+    createdAt?: DateTimeFilter<'AccessToken'> | Date | string
+    updatedAt?: DateTimeFilter<'AccessToken'> | Date | string
     userInfo?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "token">
+  }, 'id' | 'token'>
 
-  export type AccessTokenOrderByWithAggregationInput = {
+  export interface AccessTokenOrderByWithAggregationInput {
     id?: SortOrder
     userId?: SortOrder
     token?: SortOrder
@@ -15111,40 +14895,40 @@ export namespace Prisma {
     _sum?: AccessTokenSumOrderByAggregateInput
   }
 
-  export type AccessTokenScalarWhereWithAggregatesInput = {
+  export interface AccessTokenScalarWhereWithAggregatesInput {
     AND?: AccessTokenScalarWhereWithAggregatesInput | AccessTokenScalarWhereWithAggregatesInput[]
     OR?: AccessTokenScalarWhereWithAggregatesInput[]
     NOT?: AccessTokenScalarWhereWithAggregatesInput | AccessTokenScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AccessToken"> | string
-    userId?: StringWithAggregatesFilter<"AccessToken"> | string
-    token?: StringWithAggregatesFilter<"AccessToken"> | string
-    roles?: StringWithAggregatesFilter<"AccessToken"> | string
-    status?: IntWithAggregatesFilter<"AccessToken"> | number
-    scope?: StringWithAggregatesFilter<"AccessToken"> | string
-    isRevoked?: BoolWithAggregatesFilter<"AccessToken"> | boolean
-    ip?: StringNullableWithAggregatesFilter<"AccessToken"> | string | null
-    expiresAt?: DateTimeWithAggregatesFilter<"AccessToken"> | Date | string
-    createdAt?: DateTimeWithAggregatesFilter<"AccessToken"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"AccessToken"> | Date | string
+    id?: StringWithAggregatesFilter<'AccessToken'> | string
+    userId?: StringWithAggregatesFilter<'AccessToken'> | string
+    token?: StringWithAggregatesFilter<'AccessToken'> | string
+    roles?: StringWithAggregatesFilter<'AccessToken'> | string
+    status?: IntWithAggregatesFilter<'AccessToken'> | number
+    scope?: StringWithAggregatesFilter<'AccessToken'> | string
+    isRevoked?: BoolWithAggregatesFilter<'AccessToken'> | boolean
+    ip?: StringNullableWithAggregatesFilter<'AccessToken'> | string | null
+    expiresAt?: DateTimeWithAggregatesFilter<'AccessToken'> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<'AccessToken'> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<'AccessToken'> | Date | string
   }
 
-  export type OAuthWhereInput = {
+  export interface OAuthWhereInput {
     AND?: OAuthWhereInput | OAuthWhereInput[]
     OR?: OAuthWhereInput[]
     NOT?: OAuthWhereInput | OAuthWhereInput[]
-    id?: StringFilter<"OAuth"> | string
-    userId?: StringNullableFilter<"OAuth"> | string | null
-    provider?: StringFilter<"OAuth"> | string
-    providerId?: StringFilter<"OAuth"> | string
-    providerUnionId?: StringNullableFilter<"OAuth"> | string | null
-    providerToken?: StringNullableFilter<"OAuth"> | string | null
-    providerRefreshToken?: StringNullableFilter<"OAuth"> | string | null
-    createdAt?: DateTimeFilter<"OAuth"> | Date | string
-    updatedAt?: DateTimeFilter<"OAuth"> | Date | string
+    id?: StringFilter<'OAuth'> | string
+    userId?: StringNullableFilter<'OAuth'> | string | null
+    provider?: StringFilter<'OAuth'> | string
+    providerId?: StringFilter<'OAuth'> | string
+    providerUnionId?: StringNullableFilter<'OAuth'> | string | null
+    providerToken?: StringNullableFilter<'OAuth'> | string | null
+    providerRefreshToken?: StringNullableFilter<'OAuth'> | string | null
+    createdAt?: DateTimeFilter<'OAuth'> | Date | string
+    updatedAt?: DateTimeFilter<'OAuth'> | Date | string
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
-  export type OAuthOrderByWithRelationInput = {
+  export interface OAuthOrderByWithRelationInput {
     id?: SortOrder
     userId?: SortOrderInput | SortOrder
     provider?: SortOrder
@@ -15164,18 +14948,18 @@ export namespace Prisma {
     AND?: OAuthWhereInput | OAuthWhereInput[]
     OR?: OAuthWhereInput[]
     NOT?: OAuthWhereInput | OAuthWhereInput[]
-    userId?: StringNullableFilter<"OAuth"> | string | null
-    provider?: StringFilter<"OAuth"> | string
-    providerId?: StringFilter<"OAuth"> | string
-    providerUnionId?: StringNullableFilter<"OAuth"> | string | null
-    providerToken?: StringNullableFilter<"OAuth"> | string | null
-    providerRefreshToken?: StringNullableFilter<"OAuth"> | string | null
-    createdAt?: DateTimeFilter<"OAuth"> | Date | string
-    updatedAt?: DateTimeFilter<"OAuth"> | Date | string
+    userId?: StringNullableFilter<'OAuth'> | string | null
+    provider?: StringFilter<'OAuth'> | string
+    providerId?: StringFilter<'OAuth'> | string
+    providerUnionId?: StringNullableFilter<'OAuth'> | string | null
+    providerToken?: StringNullableFilter<'OAuth'> | string | null
+    providerRefreshToken?: StringNullableFilter<'OAuth'> | string | null
+    createdAt?: DateTimeFilter<'OAuth'> | Date | string
+    updatedAt?: DateTimeFilter<'OAuth'> | Date | string
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-  }, "id" | "provider_providerId">
+  }, 'id' | 'provider_providerId'>
 
-  export type OAuthOrderByWithAggregationInput = {
+  export interface OAuthOrderByWithAggregationInput {
     id?: SortOrder
     userId?: SortOrderInput | SortOrder
     provider?: SortOrder
@@ -15190,42 +14974,42 @@ export namespace Prisma {
     _min?: OAuthMinOrderByAggregateInput
   }
 
-  export type OAuthScalarWhereWithAggregatesInput = {
+  export interface OAuthScalarWhereWithAggregatesInput {
     AND?: OAuthScalarWhereWithAggregatesInput | OAuthScalarWhereWithAggregatesInput[]
     OR?: OAuthScalarWhereWithAggregatesInput[]
     NOT?: OAuthScalarWhereWithAggregatesInput | OAuthScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"OAuth"> | string
-    userId?: StringNullableWithAggregatesFilter<"OAuth"> | string | null
-    provider?: StringWithAggregatesFilter<"OAuth"> | string
-    providerId?: StringWithAggregatesFilter<"OAuth"> | string
-    providerUnionId?: StringNullableWithAggregatesFilter<"OAuth"> | string | null
-    providerToken?: StringNullableWithAggregatesFilter<"OAuth"> | string | null
-    providerRefreshToken?: StringNullableWithAggregatesFilter<"OAuth"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"OAuth"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"OAuth"> | Date | string
+    id?: StringWithAggregatesFilter<'OAuth'> | string
+    userId?: StringNullableWithAggregatesFilter<'OAuth'> | string | null
+    provider?: StringWithAggregatesFilter<'OAuth'> | string
+    providerId?: StringWithAggregatesFilter<'OAuth'> | string
+    providerUnionId?: StringNullableWithAggregatesFilter<'OAuth'> | string | null
+    providerToken?: StringNullableWithAggregatesFilter<'OAuth'> | string | null
+    providerRefreshToken?: StringNullableWithAggregatesFilter<'OAuth'> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<'OAuth'> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<'OAuth'> | Date | string
   }
 
-  export type BlogCommentWhereInput = {
+  export interface BlogCommentWhereInput {
     AND?: BlogCommentWhereInput | BlogCommentWhereInput[]
     OR?: BlogCommentWhereInput[]
     NOT?: BlogCommentWhereInput | BlogCommentWhereInput[]
-    id?: StringFilter<"BlogComment"> | string
-    content?: StringFilter<"BlogComment"> | string
-    create_ts?: DateTimeFilter<"BlogComment"> | Date | string
-    updated_ts?: DateTimeFilter<"BlogComment"> | Date | string
-    type?: StringFilter<"BlogComment"> | string
-    quoteContent?: StringNullableFilter<"BlogComment"> | string | null
-    article_id?: StringNullableFilter<"BlogComment"> | string | null
-    user_id?: StringNullableFilter<"BlogComment"> | string | null
-    visitorName?: StringNullableFilter<"BlogComment"> | string | null
-    memo_id?: StringNullableFilter<"BlogComment"> | string | null
+    id?: StringFilter<'BlogComment'> | string
+    content?: StringFilter<'BlogComment'> | string
+    create_ts?: DateTimeFilter<'BlogComment'> | Date | string
+    updated_ts?: DateTimeFilter<'BlogComment'> | Date | string
+    type?: StringFilter<'BlogComment'> | string
+    quoteContent?: StringNullableFilter<'BlogComment'> | string | null
+    article_id?: StringNullableFilter<'BlogComment'> | string | null
+    user_id?: StringNullableFilter<'BlogComment'> | string | null
+    visitorName?: StringNullableFilter<'BlogComment'> | string | null
+    memo_id?: StringNullableFilter<'BlogComment'> | string | null
     user_info?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     sub_comments?: BlogSubCommentListRelationFilter
     likes?: BlogLikeListRelationFilter
     memo_info?: XOR<BlogMemoNullableScalarRelationFilter, BlogMemoWhereInput> | null
   }
 
-  export type BlogCommentOrderByWithRelationInput = {
+  export interface BlogCommentOrderByWithRelationInput {
     id?: SortOrder
     content?: SortOrder
     create_ts?: SortOrder
@@ -15248,22 +15032,22 @@ export namespace Prisma {
     AND?: BlogCommentWhereInput | BlogCommentWhereInput[]
     OR?: BlogCommentWhereInput[]
     NOT?: BlogCommentWhereInput | BlogCommentWhereInput[]
-    content?: StringFilter<"BlogComment"> | string
-    create_ts?: DateTimeFilter<"BlogComment"> | Date | string
-    updated_ts?: DateTimeFilter<"BlogComment"> | Date | string
-    type?: StringFilter<"BlogComment"> | string
-    quoteContent?: StringNullableFilter<"BlogComment"> | string | null
-    article_id?: StringNullableFilter<"BlogComment"> | string | null
-    user_id?: StringNullableFilter<"BlogComment"> | string | null
-    visitorName?: StringNullableFilter<"BlogComment"> | string | null
-    memo_id?: StringNullableFilter<"BlogComment"> | string | null
+    content?: StringFilter<'BlogComment'> | string
+    create_ts?: DateTimeFilter<'BlogComment'> | Date | string
+    updated_ts?: DateTimeFilter<'BlogComment'> | Date | string
+    type?: StringFilter<'BlogComment'> | string
+    quoteContent?: StringNullableFilter<'BlogComment'> | string | null
+    article_id?: StringNullableFilter<'BlogComment'> | string | null
+    user_id?: StringNullableFilter<'BlogComment'> | string | null
+    visitorName?: StringNullableFilter<'BlogComment'> | string | null
+    memo_id?: StringNullableFilter<'BlogComment'> | string | null
     user_info?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     sub_comments?: BlogSubCommentListRelationFilter
     likes?: BlogLikeListRelationFilter
     memo_info?: XOR<BlogMemoNullableScalarRelationFilter, BlogMemoWhereInput> | null
-  }, "id">
+  }, 'id'>
 
-  export type BlogCommentOrderByWithAggregationInput = {
+  export interface BlogCommentOrderByWithAggregationInput {
     id?: SortOrder
     content?: SortOrder
     create_ts?: SortOrder
@@ -15279,35 +15063,35 @@ export namespace Prisma {
     _min?: BlogCommentMinOrderByAggregateInput
   }
 
-  export type BlogCommentScalarWhereWithAggregatesInput = {
+  export interface BlogCommentScalarWhereWithAggregatesInput {
     AND?: BlogCommentScalarWhereWithAggregatesInput | BlogCommentScalarWhereWithAggregatesInput[]
     OR?: BlogCommentScalarWhereWithAggregatesInput[]
     NOT?: BlogCommentScalarWhereWithAggregatesInput | BlogCommentScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"BlogComment"> | string
-    content?: StringWithAggregatesFilter<"BlogComment"> | string
-    create_ts?: DateTimeWithAggregatesFilter<"BlogComment"> | Date | string
-    updated_ts?: DateTimeWithAggregatesFilter<"BlogComment"> | Date | string
-    type?: StringWithAggregatesFilter<"BlogComment"> | string
-    quoteContent?: StringNullableWithAggregatesFilter<"BlogComment"> | string | null
-    article_id?: StringNullableWithAggregatesFilter<"BlogComment"> | string | null
-    user_id?: StringNullableWithAggregatesFilter<"BlogComment"> | string | null
-    visitorName?: StringNullableWithAggregatesFilter<"BlogComment"> | string | null
-    memo_id?: StringNullableWithAggregatesFilter<"BlogComment"> | string | null
+    id?: StringWithAggregatesFilter<'BlogComment'> | string
+    content?: StringWithAggregatesFilter<'BlogComment'> | string
+    create_ts?: DateTimeWithAggregatesFilter<'BlogComment'> | Date | string
+    updated_ts?: DateTimeWithAggregatesFilter<'BlogComment'> | Date | string
+    type?: StringWithAggregatesFilter<'BlogComment'> | string
+    quoteContent?: StringNullableWithAggregatesFilter<'BlogComment'> | string | null
+    article_id?: StringNullableWithAggregatesFilter<'BlogComment'> | string | null
+    user_id?: StringNullableWithAggregatesFilter<'BlogComment'> | string | null
+    visitorName?: StringNullableWithAggregatesFilter<'BlogComment'> | string | null
+    memo_id?: StringNullableWithAggregatesFilter<'BlogComment'> | string | null
   }
 
-  export type BlogExplainWhereInput = {
+  export interface BlogExplainWhereInput {
     AND?: BlogExplainWhereInput | BlogExplainWhereInput[]
     OR?: BlogExplainWhereInput[]
     NOT?: BlogExplainWhereInput | BlogExplainWhereInput[]
-    id?: StringFilter<"BlogExplain"> | string
-    create_ts?: DateTimeFilter<"BlogExplain"> | Date | string
-    updated_ts?: DateTimeFilter<"BlogExplain"> | Date | string
-    text?: StringFilter<"BlogExplain"> | string
-    content?: StringFilter<"BlogExplain"> | string
-    article_id?: StringFilter<"BlogExplain"> | string
+    id?: StringFilter<'BlogExplain'> | string
+    create_ts?: DateTimeFilter<'BlogExplain'> | Date | string
+    updated_ts?: DateTimeFilter<'BlogExplain'> | Date | string
+    text?: StringFilter<'BlogExplain'> | string
+    content?: StringFilter<'BlogExplain'> | string
+    article_id?: StringFilter<'BlogExplain'> | string
   }
 
-  export type BlogExplainOrderByWithRelationInput = {
+  export interface BlogExplainOrderByWithRelationInput {
     id?: SortOrder
     create_ts?: SortOrder
     updated_ts?: SortOrder
@@ -15322,14 +15106,14 @@ export namespace Prisma {
     AND?: BlogExplainWhereInput | BlogExplainWhereInput[]
     OR?: BlogExplainWhereInput[]
     NOT?: BlogExplainWhereInput | BlogExplainWhereInput[]
-    create_ts?: DateTimeFilter<"BlogExplain"> | Date | string
-    updated_ts?: DateTimeFilter<"BlogExplain"> | Date | string
-    text?: StringFilter<"BlogExplain"> | string
-    content?: StringFilter<"BlogExplain"> | string
-    article_id?: StringFilter<"BlogExplain"> | string
-  }, "id">
+    create_ts?: DateTimeFilter<'BlogExplain'> | Date | string
+    updated_ts?: DateTimeFilter<'BlogExplain'> | Date | string
+    text?: StringFilter<'BlogExplain'> | string
+    content?: StringFilter<'BlogExplain'> | string
+    article_id?: StringFilter<'BlogExplain'> | string
+  }, 'id'>
 
-  export type BlogExplainOrderByWithAggregationInput = {
+  export interface BlogExplainOrderByWithAggregationInput {
     id?: SortOrder
     create_ts?: SortOrder
     updated_ts?: SortOrder
@@ -15341,35 +15125,35 @@ export namespace Prisma {
     _min?: BlogExplainMinOrderByAggregateInput
   }
 
-  export type BlogExplainScalarWhereWithAggregatesInput = {
+  export interface BlogExplainScalarWhereWithAggregatesInput {
     AND?: BlogExplainScalarWhereWithAggregatesInput | BlogExplainScalarWhereWithAggregatesInput[]
     OR?: BlogExplainScalarWhereWithAggregatesInput[]
     NOT?: BlogExplainScalarWhereWithAggregatesInput | BlogExplainScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"BlogExplain"> | string
-    create_ts?: DateTimeWithAggregatesFilter<"BlogExplain"> | Date | string
-    updated_ts?: DateTimeWithAggregatesFilter<"BlogExplain"> | Date | string
-    text?: StringWithAggregatesFilter<"BlogExplain"> | string
-    content?: StringWithAggregatesFilter<"BlogExplain"> | string
-    article_id?: StringWithAggregatesFilter<"BlogExplain"> | string
+    id?: StringWithAggregatesFilter<'BlogExplain'> | string
+    create_ts?: DateTimeWithAggregatesFilter<'BlogExplain'> | Date | string
+    updated_ts?: DateTimeWithAggregatesFilter<'BlogExplain'> | Date | string
+    text?: StringWithAggregatesFilter<'BlogExplain'> | string
+    content?: StringWithAggregatesFilter<'BlogExplain'> | string
+    article_id?: StringWithAggregatesFilter<'BlogExplain'> | string
   }
 
-  export type BlogSubCommentWhereInput = {
+  export interface BlogSubCommentWhereInput {
     AND?: BlogSubCommentWhereInput | BlogSubCommentWhereInput[]
     OR?: BlogSubCommentWhereInput[]
     NOT?: BlogSubCommentWhereInput | BlogSubCommentWhereInput[]
-    id?: StringFilter<"BlogSubComment"> | string
-    content?: StringFilter<"BlogSubComment"> | string
-    create_ts?: DateTimeFilter<"BlogSubComment"> | Date | string
-    updated_ts?: DateTimeFilter<"BlogSubComment"> | Date | string
-    comment_id?: StringFilter<"BlogSubComment"> | string
-    reply_sub_comment_id?: StringNullableFilter<"BlogSubComment"> | string | null
-    user_id?: StringNullableFilter<"BlogSubComment"> | string | null
+    id?: StringFilter<'BlogSubComment'> | string
+    content?: StringFilter<'BlogSubComment'> | string
+    create_ts?: DateTimeFilter<'BlogSubComment'> | Date | string
+    updated_ts?: DateTimeFilter<'BlogSubComment'> | Date | string
+    comment_id?: StringFilter<'BlogSubComment'> | string
+    reply_sub_comment_id?: StringNullableFilter<'BlogSubComment'> | string | null
+    user_id?: StringNullableFilter<'BlogSubComment'> | string | null
     comment_info?: XOR<BlogCommentScalarRelationFilter, BlogCommentWhereInput>
     user_info?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     likes?: BlogLikeListRelationFilter
   }
 
-  export type BlogSubCommentOrderByWithRelationInput = {
+  export interface BlogSubCommentOrderByWithRelationInput {
     id?: SortOrder
     content?: SortOrder
     create_ts?: SortOrder
@@ -15388,18 +15172,18 @@ export namespace Prisma {
     AND?: BlogSubCommentWhereInput | BlogSubCommentWhereInput[]
     OR?: BlogSubCommentWhereInput[]
     NOT?: BlogSubCommentWhereInput | BlogSubCommentWhereInput[]
-    content?: StringFilter<"BlogSubComment"> | string
-    create_ts?: DateTimeFilter<"BlogSubComment"> | Date | string
-    updated_ts?: DateTimeFilter<"BlogSubComment"> | Date | string
-    comment_id?: StringFilter<"BlogSubComment"> | string
-    reply_sub_comment_id?: StringNullableFilter<"BlogSubComment"> | string | null
-    user_id?: StringNullableFilter<"BlogSubComment"> | string | null
+    content?: StringFilter<'BlogSubComment'> | string
+    create_ts?: DateTimeFilter<'BlogSubComment'> | Date | string
+    updated_ts?: DateTimeFilter<'BlogSubComment'> | Date | string
+    comment_id?: StringFilter<'BlogSubComment'> | string
+    reply_sub_comment_id?: StringNullableFilter<'BlogSubComment'> | string | null
+    user_id?: StringNullableFilter<'BlogSubComment'> | string | null
     comment_info?: XOR<BlogCommentScalarRelationFilter, BlogCommentWhereInput>
     user_info?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     likes?: BlogLikeListRelationFilter
-  }, "id">
+  }, 'id'>
 
-  export type BlogSubCommentOrderByWithAggregationInput = {
+  export interface BlogSubCommentOrderByWithAggregationInput {
     id?: SortOrder
     content?: SortOrder
     create_ts?: SortOrder
@@ -15412,39 +15196,39 @@ export namespace Prisma {
     _min?: BlogSubCommentMinOrderByAggregateInput
   }
 
-  export type BlogSubCommentScalarWhereWithAggregatesInput = {
+  export interface BlogSubCommentScalarWhereWithAggregatesInput {
     AND?: BlogSubCommentScalarWhereWithAggregatesInput | BlogSubCommentScalarWhereWithAggregatesInput[]
     OR?: BlogSubCommentScalarWhereWithAggregatesInput[]
     NOT?: BlogSubCommentScalarWhereWithAggregatesInput | BlogSubCommentScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"BlogSubComment"> | string
-    content?: StringWithAggregatesFilter<"BlogSubComment"> | string
-    create_ts?: DateTimeWithAggregatesFilter<"BlogSubComment"> | Date | string
-    updated_ts?: DateTimeWithAggregatesFilter<"BlogSubComment"> | Date | string
-    comment_id?: StringWithAggregatesFilter<"BlogSubComment"> | string
-    reply_sub_comment_id?: StringNullableWithAggregatesFilter<"BlogSubComment"> | string | null
-    user_id?: StringNullableWithAggregatesFilter<"BlogSubComment"> | string | null
+    id?: StringWithAggregatesFilter<'BlogSubComment'> | string
+    content?: StringWithAggregatesFilter<'BlogSubComment'> | string
+    create_ts?: DateTimeWithAggregatesFilter<'BlogSubComment'> | Date | string
+    updated_ts?: DateTimeWithAggregatesFilter<'BlogSubComment'> | Date | string
+    comment_id?: StringWithAggregatesFilter<'BlogSubComment'> | string
+    reply_sub_comment_id?: StringNullableWithAggregatesFilter<'BlogSubComment'> | string | null
+    user_id?: StringNullableWithAggregatesFilter<'BlogSubComment'> | string | null
   }
 
-  export type BlogLikeWhereInput = {
+  export interface BlogLikeWhereInput {
     AND?: BlogLikeWhereInput | BlogLikeWhereInput[]
     OR?: BlogLikeWhereInput[]
     NOT?: BlogLikeWhereInput | BlogLikeWhereInput[]
-    id?: IntFilter<"BlogLike"> | number
-    create_ts?: DateTimeFilter<"BlogLike"> | Date | string
-    updated_ts?: DateTimeFilter<"BlogLike"> | Date | string
-    target?: StringFilter<"BlogLike"> | string
-    article_id?: StringNullableFilter<"BlogLike"> | string | null
-    sub_comment_id?: StringNullableFilter<"BlogLike"> | string | null
-    comment_id?: StringNullableFilter<"BlogLike"> | string | null
-    user_id?: StringFilter<"BlogLike"> | string
-    blogMemoId?: StringNullableFilter<"BlogLike"> | string | null
+    id?: IntFilter<'BlogLike'> | number
+    create_ts?: DateTimeFilter<'BlogLike'> | Date | string
+    updated_ts?: DateTimeFilter<'BlogLike'> | Date | string
+    target?: StringFilter<'BlogLike'> | string
+    article_id?: StringNullableFilter<'BlogLike'> | string | null
+    sub_comment_id?: StringNullableFilter<'BlogLike'> | string | null
+    comment_id?: StringNullableFilter<'BlogLike'> | string | null
+    user_id?: StringFilter<'BlogLike'> | string
+    blogMemoId?: StringNullableFilter<'BlogLike'> | string | null
     sub_comment_info?: XOR<BlogSubCommentNullableScalarRelationFilter, BlogSubCommentWhereInput> | null
     comment_info?: XOR<BlogCommentNullableScalarRelationFilter, BlogCommentWhereInput> | null
     user_info?: XOR<UserScalarRelationFilter, UserWhereInput>
     blogMemoInfo?: XOR<BlogMemoNullableScalarRelationFilter, BlogMemoWhereInput> | null
   }
 
-  export type BlogLikeOrderByWithRelationInput = {
+  export interface BlogLikeOrderByWithRelationInput {
     id?: SortOrder
     create_ts?: SortOrder
     updated_ts?: SortOrder
@@ -15466,21 +15250,21 @@ export namespace Prisma {
     AND?: BlogLikeWhereInput | BlogLikeWhereInput[]
     OR?: BlogLikeWhereInput[]
     NOT?: BlogLikeWhereInput | BlogLikeWhereInput[]
-    create_ts?: DateTimeFilter<"BlogLike"> | Date | string
-    updated_ts?: DateTimeFilter<"BlogLike"> | Date | string
-    target?: StringFilter<"BlogLike"> | string
-    article_id?: StringNullableFilter<"BlogLike"> | string | null
-    sub_comment_id?: StringNullableFilter<"BlogLike"> | string | null
-    comment_id?: StringNullableFilter<"BlogLike"> | string | null
-    user_id?: StringFilter<"BlogLike"> | string
-    blogMemoId?: StringNullableFilter<"BlogLike"> | string | null
+    create_ts?: DateTimeFilter<'BlogLike'> | Date | string
+    updated_ts?: DateTimeFilter<'BlogLike'> | Date | string
+    target?: StringFilter<'BlogLike'> | string
+    article_id?: StringNullableFilter<'BlogLike'> | string | null
+    sub_comment_id?: StringNullableFilter<'BlogLike'> | string | null
+    comment_id?: StringNullableFilter<'BlogLike'> | string | null
+    user_id?: StringFilter<'BlogLike'> | string
+    blogMemoId?: StringNullableFilter<'BlogLike'> | string | null
     sub_comment_info?: XOR<BlogSubCommentNullableScalarRelationFilter, BlogSubCommentWhereInput> | null
     comment_info?: XOR<BlogCommentNullableScalarRelationFilter, BlogCommentWhereInput> | null
     user_info?: XOR<UserScalarRelationFilter, UserWhereInput>
     blogMemoInfo?: XOR<BlogMemoNullableScalarRelationFilter, BlogMemoWhereInput> | null
-  }, "id">
+  }, 'id'>
 
-  export type BlogLikeOrderByWithAggregationInput = {
+  export interface BlogLikeOrderByWithAggregationInput {
     id?: SortOrder
     create_ts?: SortOrder
     updated_ts?: SortOrder
@@ -15497,42 +15281,42 @@ export namespace Prisma {
     _sum?: BlogLikeSumOrderByAggregateInput
   }
 
-  export type BlogLikeScalarWhereWithAggregatesInput = {
+  export interface BlogLikeScalarWhereWithAggregatesInput {
     AND?: BlogLikeScalarWhereWithAggregatesInput | BlogLikeScalarWhereWithAggregatesInput[]
     OR?: BlogLikeScalarWhereWithAggregatesInput[]
     NOT?: BlogLikeScalarWhereWithAggregatesInput | BlogLikeScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"BlogLike"> | number
-    create_ts?: DateTimeWithAggregatesFilter<"BlogLike"> | Date | string
-    updated_ts?: DateTimeWithAggregatesFilter<"BlogLike"> | Date | string
-    target?: StringWithAggregatesFilter<"BlogLike"> | string
-    article_id?: StringNullableWithAggregatesFilter<"BlogLike"> | string | null
-    sub_comment_id?: StringNullableWithAggregatesFilter<"BlogLike"> | string | null
-    comment_id?: StringNullableWithAggregatesFilter<"BlogLike"> | string | null
-    user_id?: StringWithAggregatesFilter<"BlogLike"> | string
-    blogMemoId?: StringNullableWithAggregatesFilter<"BlogLike"> | string | null
+    id?: IntWithAggregatesFilter<'BlogLike'> | number
+    create_ts?: DateTimeWithAggregatesFilter<'BlogLike'> | Date | string
+    updated_ts?: DateTimeWithAggregatesFilter<'BlogLike'> | Date | string
+    target?: StringWithAggregatesFilter<'BlogLike'> | string
+    article_id?: StringNullableWithAggregatesFilter<'BlogLike'> | string | null
+    sub_comment_id?: StringNullableWithAggregatesFilter<'BlogLike'> | string | null
+    comment_id?: StringNullableWithAggregatesFilter<'BlogLike'> | string | null
+    user_id?: StringWithAggregatesFilter<'BlogLike'> | string
+    blogMemoId?: StringNullableWithAggregatesFilter<'BlogLike'> | string | null
   }
 
-  export type BlogMemoWhereInput = {
+  export interface BlogMemoWhereInput {
     AND?: BlogMemoWhereInput | BlogMemoWhereInput[]
     OR?: BlogMemoWhereInput[]
     NOT?: BlogMemoWhereInput | BlogMemoWhereInput[]
-    id?: StringFilter<"BlogMemo"> | string
-    content?: StringNullableFilter<"BlogMemo"> | string | null
-    create_ts?: DateTimeFilter<"BlogMemo"> | Date | string
-    updated_ts?: DateTimeFilter<"BlogMemo"> | Date | string
-    visible?: StringFilter<"BlogMemo"> | string
-    defalt_floded?: BoolFilter<"BlogMemo"> | boolean
-    flod_tip?: StringNullableFilter<"BlogMemo"> | string | null
-    user_id?: StringFilter<"BlogMemo"> | string
-    from?: StringNullableFilter<"BlogMemo"> | string | null
-    courier?: StringNullableFilter<"BlogMemo"> | string | null
+    id?: StringFilter<'BlogMemo'> | string
+    content?: StringNullableFilter<'BlogMemo'> | string | null
+    create_ts?: DateTimeFilter<'BlogMemo'> | Date | string
+    updated_ts?: DateTimeFilter<'BlogMemo'> | Date | string
+    visible?: StringFilter<'BlogMemo'> | string
+    defalt_floded?: BoolFilter<'BlogMemo'> | boolean
+    flod_tip?: StringNullableFilter<'BlogMemo'> | string | null
+    user_id?: StringFilter<'BlogMemo'> | string
+    from?: StringNullableFilter<'BlogMemo'> | string | null
+    courier?: StringNullableFilter<'BlogMemo'> | string | null
     user_info?: XOR<UserScalarRelationFilter, UserWhereInput>
     tags?: MemoTagRelationsListRelationFilter
     comments?: BlogCommentListRelationFilter
     likes?: BlogLikeListRelationFilter
   }
 
-  export type BlogMemoOrderByWithRelationInput = {
+  export interface BlogMemoOrderByWithRelationInput {
     id?: SortOrder
     content?: SortOrderInput | SortOrder
     create_ts?: SortOrder
@@ -15555,22 +15339,22 @@ export namespace Prisma {
     AND?: BlogMemoWhereInput | BlogMemoWhereInput[]
     OR?: BlogMemoWhereInput[]
     NOT?: BlogMemoWhereInput | BlogMemoWhereInput[]
-    content?: StringNullableFilter<"BlogMemo"> | string | null
-    create_ts?: DateTimeFilter<"BlogMemo"> | Date | string
-    updated_ts?: DateTimeFilter<"BlogMemo"> | Date | string
-    visible?: StringFilter<"BlogMemo"> | string
-    defalt_floded?: BoolFilter<"BlogMemo"> | boolean
-    flod_tip?: StringNullableFilter<"BlogMemo"> | string | null
-    user_id?: StringFilter<"BlogMemo"> | string
-    from?: StringNullableFilter<"BlogMemo"> | string | null
-    courier?: StringNullableFilter<"BlogMemo"> | string | null
+    content?: StringNullableFilter<'BlogMemo'> | string | null
+    create_ts?: DateTimeFilter<'BlogMemo'> | Date | string
+    updated_ts?: DateTimeFilter<'BlogMemo'> | Date | string
+    visible?: StringFilter<'BlogMemo'> | string
+    defalt_floded?: BoolFilter<'BlogMemo'> | boolean
+    flod_tip?: StringNullableFilter<'BlogMemo'> | string | null
+    user_id?: StringFilter<'BlogMemo'> | string
+    from?: StringNullableFilter<'BlogMemo'> | string | null
+    courier?: StringNullableFilter<'BlogMemo'> | string | null
     user_info?: XOR<UserScalarRelationFilter, UserWhereInput>
     tags?: MemoTagRelationsListRelationFilter
     comments?: BlogCommentListRelationFilter
     likes?: BlogLikeListRelationFilter
-  }, "id">
+  }, 'id'>
 
-  export type BlogMemoOrderByWithAggregationInput = {
+  export interface BlogMemoOrderByWithAggregationInput {
     id?: SortOrder
     content?: SortOrderInput | SortOrder
     create_ts?: SortOrder
@@ -15586,36 +15370,36 @@ export namespace Prisma {
     _min?: BlogMemoMinOrderByAggregateInput
   }
 
-  export type BlogMemoScalarWhereWithAggregatesInput = {
+  export interface BlogMemoScalarWhereWithAggregatesInput {
     AND?: BlogMemoScalarWhereWithAggregatesInput | BlogMemoScalarWhereWithAggregatesInput[]
     OR?: BlogMemoScalarWhereWithAggregatesInput[]
     NOT?: BlogMemoScalarWhereWithAggregatesInput | BlogMemoScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"BlogMemo"> | string
-    content?: StringNullableWithAggregatesFilter<"BlogMemo"> | string | null
-    create_ts?: DateTimeWithAggregatesFilter<"BlogMemo"> | Date | string
-    updated_ts?: DateTimeWithAggregatesFilter<"BlogMemo"> | Date | string
-    visible?: StringWithAggregatesFilter<"BlogMemo"> | string
-    defalt_floded?: BoolWithAggregatesFilter<"BlogMemo"> | boolean
-    flod_tip?: StringNullableWithAggregatesFilter<"BlogMemo"> | string | null
-    user_id?: StringWithAggregatesFilter<"BlogMemo"> | string
-    from?: StringNullableWithAggregatesFilter<"BlogMemo"> | string | null
-    courier?: StringNullableWithAggregatesFilter<"BlogMemo"> | string | null
+    id?: StringWithAggregatesFilter<'BlogMemo'> | string
+    content?: StringNullableWithAggregatesFilter<'BlogMemo'> | string | null
+    create_ts?: DateTimeWithAggregatesFilter<'BlogMemo'> | Date | string
+    updated_ts?: DateTimeWithAggregatesFilter<'BlogMemo'> | Date | string
+    visible?: StringWithAggregatesFilter<'BlogMemo'> | string
+    defalt_floded?: BoolWithAggregatesFilter<'BlogMemo'> | boolean
+    flod_tip?: StringNullableWithAggregatesFilter<'BlogMemo'> | string | null
+    user_id?: StringWithAggregatesFilter<'BlogMemo'> | string
+    from?: StringNullableWithAggregatesFilter<'BlogMemo'> | string | null
+    courier?: StringNullableWithAggregatesFilter<'BlogMemo'> | string | null
   }
 
-  export type MemoTagWhereInput = {
+  export interface MemoTagWhereInput {
     AND?: MemoTagWhereInput | MemoTagWhereInput[]
     OR?: MemoTagWhereInput[]
     NOT?: MemoTagWhereInput | MemoTagWhereInput[]
-    id?: StringFilter<"MemoTag"> | string
-    tag_name?: StringFilter<"MemoTag"> | string
-    create_ts?: DateTimeFilter<"MemoTag"> | Date | string
-    updated_ts?: DateTimeFilter<"MemoTag"> | Date | string
-    user_id?: StringFilter<"MemoTag"> | string
+    id?: StringFilter<'MemoTag'> | string
+    tag_name?: StringFilter<'MemoTag'> | string
+    create_ts?: DateTimeFilter<'MemoTag'> | Date | string
+    updated_ts?: DateTimeFilter<'MemoTag'> | Date | string
+    user_id?: StringFilter<'MemoTag'> | string
     user_info?: XOR<UserScalarRelationFilter, UserWhereInput>
     memos?: MemoTagRelationsListRelationFilter
   }
 
-  export type MemoTagOrderByWithRelationInput = {
+  export interface MemoTagOrderByWithRelationInput {
     id?: SortOrder
     tag_name?: SortOrder
     create_ts?: SortOrder
@@ -15632,14 +15416,14 @@ export namespace Prisma {
     AND?: MemoTagWhereInput | MemoTagWhereInput[]
     OR?: MemoTagWhereInput[]
     NOT?: MemoTagWhereInput | MemoTagWhereInput[]
-    create_ts?: DateTimeFilter<"MemoTag"> | Date | string
-    updated_ts?: DateTimeFilter<"MemoTag"> | Date | string
-    user_id?: StringFilter<"MemoTag"> | string
+    create_ts?: DateTimeFilter<'MemoTag'> | Date | string
+    updated_ts?: DateTimeFilter<'MemoTag'> | Date | string
+    user_id?: StringFilter<'MemoTag'> | string
     user_info?: XOR<UserScalarRelationFilter, UserWhereInput>
     memos?: MemoTagRelationsListRelationFilter
-  }, "id" | "tag_name">
+  }, 'id' | 'tag_name'>
 
-  export type MemoTagOrderByWithAggregationInput = {
+  export interface MemoTagOrderByWithAggregationInput {
     id?: SortOrder
     tag_name?: SortOrder
     create_ts?: SortOrder
@@ -15650,30 +15434,30 @@ export namespace Prisma {
     _min?: MemoTagMinOrderByAggregateInput
   }
 
-  export type MemoTagScalarWhereWithAggregatesInput = {
+  export interface MemoTagScalarWhereWithAggregatesInput {
     AND?: MemoTagScalarWhereWithAggregatesInput | MemoTagScalarWhereWithAggregatesInput[]
     OR?: MemoTagScalarWhereWithAggregatesInput[]
     NOT?: MemoTagScalarWhereWithAggregatesInput | MemoTagScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"MemoTag"> | string
-    tag_name?: StringWithAggregatesFilter<"MemoTag"> | string
-    create_ts?: DateTimeWithAggregatesFilter<"MemoTag"> | Date | string
-    updated_ts?: DateTimeWithAggregatesFilter<"MemoTag"> | Date | string
-    user_id?: StringWithAggregatesFilter<"MemoTag"> | string
+    id?: StringWithAggregatesFilter<'MemoTag'> | string
+    tag_name?: StringWithAggregatesFilter<'MemoTag'> | string
+    create_ts?: DateTimeWithAggregatesFilter<'MemoTag'> | Date | string
+    updated_ts?: DateTimeWithAggregatesFilter<'MemoTag'> | Date | string
+    user_id?: StringWithAggregatesFilter<'MemoTag'> | string
   }
 
-  export type MemoTagRelationsWhereInput = {
+  export interface MemoTagRelationsWhereInput {
     AND?: MemoTagRelationsWhereInput | MemoTagRelationsWhereInput[]
     OR?: MemoTagRelationsWhereInput[]
     NOT?: MemoTagRelationsWhereInput | MemoTagRelationsWhereInput[]
-    tagId?: StringFilter<"MemoTagRelations"> | string
-    memoId?: StringFilter<"MemoTagRelations"> | string
-    create_ts?: DateTimeFilter<"MemoTagRelations"> | Date | string
-    updated_ts?: DateTimeFilter<"MemoTagRelations"> | Date | string
+    tagId?: StringFilter<'MemoTagRelations'> | string
+    memoId?: StringFilter<'MemoTagRelations'> | string
+    create_ts?: DateTimeFilter<'MemoTagRelations'> | Date | string
+    updated_ts?: DateTimeFilter<'MemoTagRelations'> | Date | string
     tag?: XOR<MemoTagScalarRelationFilter, MemoTagWhereInput>
     memo?: XOR<BlogMemoScalarRelationFilter, BlogMemoWhereInput>
   }
 
-  export type MemoTagRelationsOrderByWithRelationInput = {
+  export interface MemoTagRelationsOrderByWithRelationInput {
     tagId?: SortOrder
     memoId?: SortOrder
     create_ts?: SortOrder
@@ -15688,15 +15472,15 @@ export namespace Prisma {
     AND?: MemoTagRelationsWhereInput | MemoTagRelationsWhereInput[]
     OR?: MemoTagRelationsWhereInput[]
     NOT?: MemoTagRelationsWhereInput | MemoTagRelationsWhereInput[]
-    tagId?: StringFilter<"MemoTagRelations"> | string
-    memoId?: StringFilter<"MemoTagRelations"> | string
-    create_ts?: DateTimeFilter<"MemoTagRelations"> | Date | string
-    updated_ts?: DateTimeFilter<"MemoTagRelations"> | Date | string
+    tagId?: StringFilter<'MemoTagRelations'> | string
+    memoId?: StringFilter<'MemoTagRelations'> | string
+    create_ts?: DateTimeFilter<'MemoTagRelations'> | Date | string
+    updated_ts?: DateTimeFilter<'MemoTagRelations'> | Date | string
     tag?: XOR<MemoTagScalarRelationFilter, MemoTagWhereInput>
     memo?: XOR<BlogMemoScalarRelationFilter, BlogMemoWhereInput>
-  }, "tagId_memoId">
+  }, 'tagId_memoId'>
 
-  export type MemoTagRelationsOrderByWithAggregationInput = {
+  export interface MemoTagRelationsOrderByWithAggregationInput {
     tagId?: SortOrder
     memoId?: SortOrder
     create_ts?: SortOrder
@@ -15706,50 +15490,50 @@ export namespace Prisma {
     _min?: MemoTagRelationsMinOrderByAggregateInput
   }
 
-  export type MemoTagRelationsScalarWhereWithAggregatesInput = {
+  export interface MemoTagRelationsScalarWhereWithAggregatesInput {
     AND?: MemoTagRelationsScalarWhereWithAggregatesInput | MemoTagRelationsScalarWhereWithAggregatesInput[]
     OR?: MemoTagRelationsScalarWhereWithAggregatesInput[]
     NOT?: MemoTagRelationsScalarWhereWithAggregatesInput | MemoTagRelationsScalarWhereWithAggregatesInput[]
-    tagId?: StringWithAggregatesFilter<"MemoTagRelations"> | string
-    memoId?: StringWithAggregatesFilter<"MemoTagRelations"> | string
-    create_ts?: DateTimeWithAggregatesFilter<"MemoTagRelations"> | Date | string
-    updated_ts?: DateTimeWithAggregatesFilter<"MemoTagRelations"> | Date | string
+    tagId?: StringWithAggregatesFilter<'MemoTagRelations'> | string
+    memoId?: StringWithAggregatesFilter<'MemoTagRelations'> | string
+    create_ts?: DateTimeWithAggregatesFilter<'MemoTagRelations'> | Date | string
+    updated_ts?: DateTimeWithAggregatesFilter<'MemoTagRelations'> | Date | string
   }
 
-  export type GarminActivityWhereInput = {
+  export interface GarminActivityWhereInput {
     AND?: GarminActivityWhereInput | GarminActivityWhereInput[]
     OR?: GarminActivityWhereInput[]
     NOT?: GarminActivityWhereInput | GarminActivityWhereInput[]
-    id?: StringFilter<"GarminActivity"> | string
-    activityType?: StringFilter<"GarminActivity"> | string
-    date?: DateTimeFilter<"GarminActivity"> | Date | string
-    isFavorite?: BoolFilter<"GarminActivity"> | boolean
-    title?: StringNullableFilter<"GarminActivity"> | string | null
-    distance?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    calories?: IntFilter<"GarminActivity"> | number
-    duration?: DecimalFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string
-    movingTime?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    elapsedTime?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    avgHr?: IntNullableFilter<"GarminActivity"> | number | null
-    maxHr?: IntNullableFilter<"GarminActivity"> | number | null
-    aerobicEffect?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    trainingStressScore?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    avgPace?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    bestPace?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    totalStrokes?: IntNullableFilter<"GarminActivity"> | number | null
-    avgSwolf?: IntNullableFilter<"GarminActivity"> | number | null
-    avgStrokeRate?: IntNullableFilter<"GarminActivity"> | number | null
-    steps?: IntNullableFilter<"GarminActivity"> | number | null
-    totalReps?: IntNullableFilter<"GarminActivity"> | number | null
-    totalSets?: IntNullableFilter<"GarminActivity"> | number | null
-    isGrit?: BoolNullableFilter<"GarminActivity"> | boolean | null
-    bestLapTime?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    lapCount?: IntNullableFilter<"GarminActivity"> | number | null
-    createdAt?: DateTimeFilter<"GarminActivity"> | Date | string
-    updatedAt?: DateTimeFilter<"GarminActivity"> | Date | string
+    id?: StringFilter<'GarminActivity'> | string
+    activityType?: StringFilter<'GarminActivity'> | string
+    date?: DateTimeFilter<'GarminActivity'> | Date | string
+    isFavorite?: BoolFilter<'GarminActivity'> | boolean
+    title?: StringNullableFilter<'GarminActivity'> | string | null
+    distance?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    calories?: IntFilter<'GarminActivity'> | number
+    duration?: DecimalFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string
+    movingTime?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    elapsedTime?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    avgHr?: IntNullableFilter<'GarminActivity'> | number | null
+    maxHr?: IntNullableFilter<'GarminActivity'> | number | null
+    aerobicEffect?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    trainingStressScore?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    avgPace?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    bestPace?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    totalStrokes?: IntNullableFilter<'GarminActivity'> | number | null
+    avgSwolf?: IntNullableFilter<'GarminActivity'> | number | null
+    avgStrokeRate?: IntNullableFilter<'GarminActivity'> | number | null
+    steps?: IntNullableFilter<'GarminActivity'> | number | null
+    totalReps?: IntNullableFilter<'GarminActivity'> | number | null
+    totalSets?: IntNullableFilter<'GarminActivity'> | number | null
+    isGrit?: BoolNullableFilter<'GarminActivity'> | boolean | null
+    bestLapTime?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    lapCount?: IntNullableFilter<'GarminActivity'> | number | null
+    createdAt?: DateTimeFilter<'GarminActivity'> | Date | string
+    updatedAt?: DateTimeFilter<'GarminActivity'> | Date | string
   }
 
-  export type GarminActivityOrderByWithRelationInput = {
+  export interface GarminActivityOrderByWithRelationInput {
     id?: SortOrder
     activityType?: SortOrder
     date?: SortOrder
@@ -15786,35 +15570,35 @@ export namespace Prisma {
     AND?: GarminActivityWhereInput | GarminActivityWhereInput[]
     OR?: GarminActivityWhereInput[]
     NOT?: GarminActivityWhereInput | GarminActivityWhereInput[]
-    activityType?: StringFilter<"GarminActivity"> | string
-    date?: DateTimeFilter<"GarminActivity"> | Date | string
-    isFavorite?: BoolFilter<"GarminActivity"> | boolean
-    title?: StringNullableFilter<"GarminActivity"> | string | null
-    distance?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    calories?: IntFilter<"GarminActivity"> | number
-    duration?: DecimalFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string
-    movingTime?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    elapsedTime?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    avgHr?: IntNullableFilter<"GarminActivity"> | number | null
-    maxHr?: IntNullableFilter<"GarminActivity"> | number | null
-    aerobicEffect?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    trainingStressScore?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    avgPace?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    bestPace?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    totalStrokes?: IntNullableFilter<"GarminActivity"> | number | null
-    avgSwolf?: IntNullableFilter<"GarminActivity"> | number | null
-    avgStrokeRate?: IntNullableFilter<"GarminActivity"> | number | null
-    steps?: IntNullableFilter<"GarminActivity"> | number | null
-    totalReps?: IntNullableFilter<"GarminActivity"> | number | null
-    totalSets?: IntNullableFilter<"GarminActivity"> | number | null
-    isGrit?: BoolNullableFilter<"GarminActivity"> | boolean | null
-    bestLapTime?: DecimalNullableFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    lapCount?: IntNullableFilter<"GarminActivity"> | number | null
-    createdAt?: DateTimeFilter<"GarminActivity"> | Date | string
-    updatedAt?: DateTimeFilter<"GarminActivity"> | Date | string
-  }, "id" | "date_activityType">
+    activityType?: StringFilter<'GarminActivity'> | string
+    date?: DateTimeFilter<'GarminActivity'> | Date | string
+    isFavorite?: BoolFilter<'GarminActivity'> | boolean
+    title?: StringNullableFilter<'GarminActivity'> | string | null
+    distance?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    calories?: IntFilter<'GarminActivity'> | number
+    duration?: DecimalFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string
+    movingTime?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    elapsedTime?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    avgHr?: IntNullableFilter<'GarminActivity'> | number | null
+    maxHr?: IntNullableFilter<'GarminActivity'> | number | null
+    aerobicEffect?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    trainingStressScore?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    avgPace?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    bestPace?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    totalStrokes?: IntNullableFilter<'GarminActivity'> | number | null
+    avgSwolf?: IntNullableFilter<'GarminActivity'> | number | null
+    avgStrokeRate?: IntNullableFilter<'GarminActivity'> | number | null
+    steps?: IntNullableFilter<'GarminActivity'> | number | null
+    totalReps?: IntNullableFilter<'GarminActivity'> | number | null
+    totalSets?: IntNullableFilter<'GarminActivity'> | number | null
+    isGrit?: BoolNullableFilter<'GarminActivity'> | boolean | null
+    bestLapTime?: DecimalNullableFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    lapCount?: IntNullableFilter<'GarminActivity'> | number | null
+    createdAt?: DateTimeFilter<'GarminActivity'> | Date | string
+    updatedAt?: DateTimeFilter<'GarminActivity'> | Date | string
+  }, 'id' | 'date_activityType'>
 
-  export type GarminActivityOrderByWithAggregationInput = {
+  export interface GarminActivityOrderByWithAggregationInput {
     id?: SortOrder
     activityType?: SortOrder
     date?: SortOrder
@@ -15849,40 +15633,40 @@ export namespace Prisma {
     _sum?: GarminActivitySumOrderByAggregateInput
   }
 
-  export type GarminActivityScalarWhereWithAggregatesInput = {
+  export interface GarminActivityScalarWhereWithAggregatesInput {
     AND?: GarminActivityScalarWhereWithAggregatesInput | GarminActivityScalarWhereWithAggregatesInput[]
     OR?: GarminActivityScalarWhereWithAggregatesInput[]
     NOT?: GarminActivityScalarWhereWithAggregatesInput | GarminActivityScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"GarminActivity"> | string
-    activityType?: StringWithAggregatesFilter<"GarminActivity"> | string
-    date?: DateTimeWithAggregatesFilter<"GarminActivity"> | Date | string
-    isFavorite?: BoolWithAggregatesFilter<"GarminActivity"> | boolean
-    title?: StringNullableWithAggregatesFilter<"GarminActivity"> | string | null
-    distance?: DecimalNullableWithAggregatesFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    calories?: IntWithAggregatesFilter<"GarminActivity"> | number
-    duration?: DecimalWithAggregatesFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string
-    movingTime?: DecimalNullableWithAggregatesFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    elapsedTime?: DecimalNullableWithAggregatesFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    avgHr?: IntNullableWithAggregatesFilter<"GarminActivity"> | number | null
-    maxHr?: IntNullableWithAggregatesFilter<"GarminActivity"> | number | null
-    aerobicEffect?: DecimalNullableWithAggregatesFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    trainingStressScore?: DecimalNullableWithAggregatesFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    avgPace?: DecimalNullableWithAggregatesFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    bestPace?: DecimalNullableWithAggregatesFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    totalStrokes?: IntNullableWithAggregatesFilter<"GarminActivity"> | number | null
-    avgSwolf?: IntNullableWithAggregatesFilter<"GarminActivity"> | number | null
-    avgStrokeRate?: IntNullableWithAggregatesFilter<"GarminActivity"> | number | null
-    steps?: IntNullableWithAggregatesFilter<"GarminActivity"> | number | null
-    totalReps?: IntNullableWithAggregatesFilter<"GarminActivity"> | number | null
-    totalSets?: IntNullableWithAggregatesFilter<"GarminActivity"> | number | null
-    isGrit?: BoolNullableWithAggregatesFilter<"GarminActivity"> | boolean | null
-    bestLapTime?: DecimalNullableWithAggregatesFilter<"GarminActivity"> | Decimal | DecimalJsLike | number | string | null
-    lapCount?: IntNullableWithAggregatesFilter<"GarminActivity"> | number | null
-    createdAt?: DateTimeWithAggregatesFilter<"GarminActivity"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"GarminActivity"> | Date | string
+    id?: StringWithAggregatesFilter<'GarminActivity'> | string
+    activityType?: StringWithAggregatesFilter<'GarminActivity'> | string
+    date?: DateTimeWithAggregatesFilter<'GarminActivity'> | Date | string
+    isFavorite?: BoolWithAggregatesFilter<'GarminActivity'> | boolean
+    title?: StringNullableWithAggregatesFilter<'GarminActivity'> | string | null
+    distance?: DecimalNullableWithAggregatesFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    calories?: IntWithAggregatesFilter<'GarminActivity'> | number
+    duration?: DecimalWithAggregatesFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string
+    movingTime?: DecimalNullableWithAggregatesFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    elapsedTime?: DecimalNullableWithAggregatesFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    avgHr?: IntNullableWithAggregatesFilter<'GarminActivity'> | number | null
+    maxHr?: IntNullableWithAggregatesFilter<'GarminActivity'> | number | null
+    aerobicEffect?: DecimalNullableWithAggregatesFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    trainingStressScore?: DecimalNullableWithAggregatesFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    avgPace?: DecimalNullableWithAggregatesFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    bestPace?: DecimalNullableWithAggregatesFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    totalStrokes?: IntNullableWithAggregatesFilter<'GarminActivity'> | number | null
+    avgSwolf?: IntNullableWithAggregatesFilter<'GarminActivity'> | number | null
+    avgStrokeRate?: IntNullableWithAggregatesFilter<'GarminActivity'> | number | null
+    steps?: IntNullableWithAggregatesFilter<'GarminActivity'> | number | null
+    totalReps?: IntNullableWithAggregatesFilter<'GarminActivity'> | number | null
+    totalSets?: IntNullableWithAggregatesFilter<'GarminActivity'> | number | null
+    isGrit?: BoolNullableWithAggregatesFilter<'GarminActivity'> | boolean | null
+    bestLapTime?: DecimalNullableWithAggregatesFilter<'GarminActivity'> | Decimal | DecimalJsLike | number | string | null
+    lapCount?: IntNullableWithAggregatesFilter<'GarminActivity'> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<'GarminActivity'> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<'GarminActivity'> | Date | string
   }
 
-  export type UserCreateInput = {
+  export interface UserCreateInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -15903,7 +15687,7 @@ export namespace Prisma {
     tags?: MemoTagCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserUncheckedCreateInput = {
+  export interface UserUncheckedCreateInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -15924,7 +15708,7 @@ export namespace Prisma {
     tags?: MemoTagUncheckedCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserUpdateInput = {
+  export interface UserUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15945,7 +15729,7 @@ export namespace Prisma {
     tags?: MemoTagUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type UserUncheckedUpdateInput = {
+  export interface UserUncheckedUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15966,7 +15750,7 @@ export namespace Prisma {
     tags?: MemoTagUncheckedUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type UserCreateManyInput = {
+  export interface UserCreateManyInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -15979,7 +15763,7 @@ export namespace Prisma {
     status?: number
   }
 
-  export type UserUpdateManyMutationInput = {
+  export interface UserUpdateManyMutationInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15992,7 +15776,7 @@ export namespace Prisma {
     status?: IntFieldUpdateOperationsInput | number
   }
 
-  export type UserUncheckedUpdateManyInput = {
+  export interface UserUncheckedUpdateManyInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16005,7 +15789,7 @@ export namespace Prisma {
     status?: IntFieldUpdateOperationsInput | number
   }
 
-  export type UserConfigCreateInput = {
+  export interface UserConfigCreateInput {
     id?: string
     allowEmailNotify?: number | null
     createdAt?: Date | string
@@ -16013,7 +15797,7 @@ export namespace Prisma {
     userInfo: UserCreateNestedOneWithoutUser_configInput
   }
 
-  export type UserConfigUncheckedCreateInput = {
+  export interface UserConfigUncheckedCreateInput {
     id?: string
     userId: string
     allowEmailNotify?: number | null
@@ -16021,7 +15805,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type UserConfigUpdateInput = {
+  export interface UserConfigUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     allowEmailNotify?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16029,7 +15813,7 @@ export namespace Prisma {
     userInfo?: UserUpdateOneRequiredWithoutUser_configNestedInput
   }
 
-  export type UserConfigUncheckedUpdateInput = {
+  export interface UserConfigUncheckedUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     allowEmailNotify?: NullableIntFieldUpdateOperationsInput | number | null
@@ -16037,7 +15821,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserConfigCreateManyInput = {
+  export interface UserConfigCreateManyInput {
     id?: string
     userId: string
     allowEmailNotify?: number | null
@@ -16045,14 +15829,14 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type UserConfigUpdateManyMutationInput = {
+  export interface UserConfigUpdateManyMutationInput {
     id?: StringFieldUpdateOperationsInput | string
     allowEmailNotify?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserConfigUncheckedUpdateManyInput = {
+  export interface UserConfigUncheckedUpdateManyInput {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     allowEmailNotify?: NullableIntFieldUpdateOperationsInput | number | null
@@ -16060,7 +15844,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AccessTokenCreateInput = {
+  export interface AccessTokenCreateInput {
     id?: string
     token: string
     roles?: string
@@ -16074,7 +15858,7 @@ export namespace Prisma {
     userInfo: UserCreateNestedOneWithoutTokensInput
   }
 
-  export type AccessTokenUncheckedCreateInput = {
+  export interface AccessTokenUncheckedCreateInput {
     id?: string
     userId: string
     token: string
@@ -16088,7 +15872,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type AccessTokenUpdateInput = {
+  export interface AccessTokenUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
     roles?: StringFieldUpdateOperationsInput | string
@@ -16102,7 +15886,7 @@ export namespace Prisma {
     userInfo?: UserUpdateOneRequiredWithoutTokensNestedInput
   }
 
-  export type AccessTokenUncheckedUpdateInput = {
+  export interface AccessTokenUncheckedUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
@@ -16116,7 +15900,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AccessTokenCreateManyInput = {
+  export interface AccessTokenCreateManyInput {
     id?: string
     userId: string
     token: string
@@ -16130,7 +15914,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type AccessTokenUpdateManyMutationInput = {
+  export interface AccessTokenUpdateManyMutationInput {
     id?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
     roles?: StringFieldUpdateOperationsInput | string
@@ -16143,7 +15927,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AccessTokenUncheckedUpdateManyInput = {
+  export interface AccessTokenUncheckedUpdateManyInput {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
@@ -16157,7 +15941,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type OAuthCreateInput = {
+  export interface OAuthCreateInput {
     id?: string
     provider: string
     providerId: string
@@ -16169,7 +15953,7 @@ export namespace Prisma {
     user?: UserCreateNestedOneWithoutOauthInput
   }
 
-  export type OAuthUncheckedCreateInput = {
+  export interface OAuthUncheckedCreateInput {
     id?: string
     userId?: string | null
     provider: string
@@ -16181,7 +15965,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type OAuthUpdateInput = {
+  export interface OAuthUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     provider?: StringFieldUpdateOperationsInput | string
     providerId?: StringFieldUpdateOperationsInput | string
@@ -16193,7 +15977,7 @@ export namespace Prisma {
     user?: UserUpdateOneWithoutOauthNestedInput
   }
 
-  export type OAuthUncheckedUpdateInput = {
+  export interface OAuthUncheckedUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     provider?: StringFieldUpdateOperationsInput | string
@@ -16205,7 +15989,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type OAuthCreateManyInput = {
+  export interface OAuthCreateManyInput {
     id?: string
     userId?: string | null
     provider: string
@@ -16217,7 +16001,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type OAuthUpdateManyMutationInput = {
+  export interface OAuthUpdateManyMutationInput {
     id?: StringFieldUpdateOperationsInput | string
     provider?: StringFieldUpdateOperationsInput | string
     providerId?: StringFieldUpdateOperationsInput | string
@@ -16228,7 +16012,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type OAuthUncheckedUpdateManyInput = {
+  export interface OAuthUncheckedUpdateManyInput {
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     provider?: StringFieldUpdateOperationsInput | string
@@ -16240,7 +16024,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type BlogCommentCreateInput = {
+  export interface BlogCommentCreateInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -16255,7 +16039,7 @@ export namespace Prisma {
     memo_info?: BlogMemoCreateNestedOneWithoutCommentsInput
   }
 
-  export type BlogCommentUncheckedCreateInput = {
+  export interface BlogCommentUncheckedCreateInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -16270,7 +16054,7 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedCreateNestedManyWithoutComment_infoInput
   }
 
-  export type BlogCommentUpdateInput = {
+  export interface BlogCommentUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16285,7 +16069,7 @@ export namespace Prisma {
     memo_info?: BlogMemoUpdateOneWithoutCommentsNestedInput
   }
 
-  export type BlogCommentUncheckedUpdateInput = {
+  export interface BlogCommentUncheckedUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16300,7 +16084,7 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedUpdateManyWithoutComment_infoNestedInput
   }
 
-  export type BlogCommentCreateManyInput = {
+  export interface BlogCommentCreateManyInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -16313,7 +16097,7 @@ export namespace Prisma {
     memo_id?: string | null
   }
 
-  export type BlogCommentUpdateManyMutationInput = {
+  export interface BlogCommentUpdateManyMutationInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16324,7 +16108,7 @@ export namespace Prisma {
     visitorName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogCommentUncheckedUpdateManyInput = {
+  export interface BlogCommentUncheckedUpdateManyInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16337,7 +16121,7 @@ export namespace Prisma {
     memo_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogExplainCreateInput = {
+  export interface BlogExplainCreateInput {
     id?: string
     create_ts?: Date | string
     updated_ts?: Date | string
@@ -16346,7 +16130,7 @@ export namespace Prisma {
     article_id: string
   }
 
-  export type BlogExplainUncheckedCreateInput = {
+  export interface BlogExplainUncheckedCreateInput {
     id?: string
     create_ts?: Date | string
     updated_ts?: Date | string
@@ -16355,7 +16139,7 @@ export namespace Prisma {
     article_id: string
   }
 
-  export type BlogExplainUpdateInput = {
+  export interface BlogExplainUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16364,7 +16148,7 @@ export namespace Prisma {
     article_id?: StringFieldUpdateOperationsInput | string
   }
 
-  export type BlogExplainUncheckedUpdateInput = {
+  export interface BlogExplainUncheckedUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16373,7 +16157,7 @@ export namespace Prisma {
     article_id?: StringFieldUpdateOperationsInput | string
   }
 
-  export type BlogExplainCreateManyInput = {
+  export interface BlogExplainCreateManyInput {
     id?: string
     create_ts?: Date | string
     updated_ts?: Date | string
@@ -16382,7 +16166,7 @@ export namespace Prisma {
     article_id: string
   }
 
-  export type BlogExplainUpdateManyMutationInput = {
+  export interface BlogExplainUpdateManyMutationInput {
     id?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16391,7 +16175,7 @@ export namespace Prisma {
     article_id?: StringFieldUpdateOperationsInput | string
   }
 
-  export type BlogExplainUncheckedUpdateManyInput = {
+  export interface BlogExplainUncheckedUpdateManyInput {
     id?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16400,7 +16184,7 @@ export namespace Prisma {
     article_id?: StringFieldUpdateOperationsInput | string
   }
 
-  export type BlogSubCommentCreateInput = {
+  export interface BlogSubCommentCreateInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -16411,7 +16195,7 @@ export namespace Prisma {
     likes?: BlogLikeCreateNestedManyWithoutSub_comment_infoInput
   }
 
-  export type BlogSubCommentUncheckedCreateInput = {
+  export interface BlogSubCommentUncheckedCreateInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -16422,7 +16206,7 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedCreateNestedManyWithoutSub_comment_infoInput
   }
 
-  export type BlogSubCommentUpdateInput = {
+  export interface BlogSubCommentUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16433,7 +16217,7 @@ export namespace Prisma {
     likes?: BlogLikeUpdateManyWithoutSub_comment_infoNestedInput
   }
 
-  export type BlogSubCommentUncheckedUpdateInput = {
+  export interface BlogSubCommentUncheckedUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16444,7 +16228,7 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedUpdateManyWithoutSub_comment_infoNestedInput
   }
 
-  export type BlogSubCommentCreateManyInput = {
+  export interface BlogSubCommentCreateManyInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -16454,7 +16238,7 @@ export namespace Prisma {
     user_id?: string | null
   }
 
-  export type BlogSubCommentUpdateManyMutationInput = {
+  export interface BlogSubCommentUpdateManyMutationInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16462,7 +16246,7 @@ export namespace Prisma {
     reply_sub_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogSubCommentUncheckedUpdateManyInput = {
+  export interface BlogSubCommentUncheckedUpdateManyInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16472,7 +16256,7 @@ export namespace Prisma {
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogLikeCreateInput = {
+  export interface BlogLikeCreateInput {
     create_ts?: Date | string
     updated_ts?: Date | string
     target?: string
@@ -16483,7 +16267,7 @@ export namespace Prisma {
     blogMemoInfo?: BlogMemoCreateNestedOneWithoutLikesInput
   }
 
-  export type BlogLikeUncheckedCreateInput = {
+  export interface BlogLikeUncheckedCreateInput {
     id?: number
     create_ts?: Date | string
     updated_ts?: Date | string
@@ -16495,7 +16279,7 @@ export namespace Prisma {
     blogMemoId?: string | null
   }
 
-  export type BlogLikeUpdateInput = {
+  export interface BlogLikeUpdateInput {
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     target?: StringFieldUpdateOperationsInput | string
@@ -16506,7 +16290,7 @@ export namespace Prisma {
     blogMemoInfo?: BlogMemoUpdateOneWithoutLikesNestedInput
   }
 
-  export type BlogLikeUncheckedUpdateInput = {
+  export interface BlogLikeUncheckedUpdateInput {
     id?: IntFieldUpdateOperationsInput | number
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16518,7 +16302,7 @@ export namespace Prisma {
     blogMemoId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogLikeCreateManyInput = {
+  export interface BlogLikeCreateManyInput {
     id?: number
     create_ts?: Date | string
     updated_ts?: Date | string
@@ -16530,14 +16314,14 @@ export namespace Prisma {
     blogMemoId?: string | null
   }
 
-  export type BlogLikeUpdateManyMutationInput = {
+  export interface BlogLikeUpdateManyMutationInput {
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     target?: StringFieldUpdateOperationsInput | string
     article_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogLikeUncheckedUpdateManyInput = {
+  export interface BlogLikeUncheckedUpdateManyInput {
     id?: IntFieldUpdateOperationsInput | number
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16549,7 +16333,7 @@ export namespace Prisma {
     blogMemoId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogMemoCreateInput = {
+  export interface BlogMemoCreateInput {
     id?: string
     content?: string | null
     create_ts?: Date | string
@@ -16565,7 +16349,7 @@ export namespace Prisma {
     likes?: BlogLikeCreateNestedManyWithoutBlogMemoInfoInput
   }
 
-  export type BlogMemoUncheckedCreateInput = {
+  export interface BlogMemoUncheckedCreateInput {
     id?: string
     content?: string | null
     create_ts?: Date | string
@@ -16581,7 +16365,7 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedCreateNestedManyWithoutBlogMemoInfoInput
   }
 
-  export type BlogMemoUpdateInput = {
+  export interface BlogMemoUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16597,7 +16381,7 @@ export namespace Prisma {
     likes?: BlogLikeUpdateManyWithoutBlogMemoInfoNestedInput
   }
 
-  export type BlogMemoUncheckedUpdateInput = {
+  export interface BlogMemoUncheckedUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16613,7 +16397,7 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedUpdateManyWithoutBlogMemoInfoNestedInput
   }
 
-  export type BlogMemoCreateManyInput = {
+  export interface BlogMemoCreateManyInput {
     id?: string
     content?: string | null
     create_ts?: Date | string
@@ -16626,7 +16410,7 @@ export namespace Prisma {
     courier?: string | null
   }
 
-  export type BlogMemoUpdateManyMutationInput = {
+  export interface BlogMemoUpdateManyMutationInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16638,7 +16422,7 @@ export namespace Prisma {
     courier?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogMemoUncheckedUpdateManyInput = {
+  export interface BlogMemoUncheckedUpdateManyInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16651,7 +16435,7 @@ export namespace Prisma {
     courier?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type MemoTagCreateInput = {
+  export interface MemoTagCreateInput {
     id?: string
     tag_name: string
     create_ts?: Date | string
@@ -16660,7 +16444,7 @@ export namespace Prisma {
     memos?: MemoTagRelationsCreateNestedManyWithoutTagInput
   }
 
-  export type MemoTagUncheckedCreateInput = {
+  export interface MemoTagUncheckedCreateInput {
     id?: string
     tag_name: string
     create_ts?: Date | string
@@ -16669,7 +16453,7 @@ export namespace Prisma {
     memos?: MemoTagRelationsUncheckedCreateNestedManyWithoutTagInput
   }
 
-  export type MemoTagUpdateInput = {
+  export interface MemoTagUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     tag_name?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16678,7 +16462,7 @@ export namespace Prisma {
     memos?: MemoTagRelationsUpdateManyWithoutTagNestedInput
   }
 
-  export type MemoTagUncheckedUpdateInput = {
+  export interface MemoTagUncheckedUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     tag_name?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16687,7 +16471,7 @@ export namespace Prisma {
     memos?: MemoTagRelationsUncheckedUpdateManyWithoutTagNestedInput
   }
 
-  export type MemoTagCreateManyInput = {
+  export interface MemoTagCreateManyInput {
     id?: string
     tag_name: string
     create_ts?: Date | string
@@ -16695,14 +16479,14 @@ export namespace Prisma {
     user_id: string
   }
 
-  export type MemoTagUpdateManyMutationInput = {
+  export interface MemoTagUpdateManyMutationInput {
     id?: StringFieldUpdateOperationsInput | string
     tag_name?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MemoTagUncheckedUpdateManyInput = {
+  export interface MemoTagUncheckedUpdateManyInput {
     id?: StringFieldUpdateOperationsInput | string
     tag_name?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16710,54 +16494,54 @@ export namespace Prisma {
     user_id?: StringFieldUpdateOperationsInput | string
   }
 
-  export type MemoTagRelationsCreateInput = {
+  export interface MemoTagRelationsCreateInput {
     create_ts?: Date | string
     updated_ts?: Date | string
     tag: MemoTagCreateNestedOneWithoutMemosInput
     memo: BlogMemoCreateNestedOneWithoutTagsInput
   }
 
-  export type MemoTagRelationsUncheckedCreateInput = {
+  export interface MemoTagRelationsUncheckedCreateInput {
     tagId: string
     memoId: string
     create_ts?: Date | string
     updated_ts?: Date | string
   }
 
-  export type MemoTagRelationsUpdateInput = {
+  export interface MemoTagRelationsUpdateInput {
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     tag?: MemoTagUpdateOneRequiredWithoutMemosNestedInput
     memo?: BlogMemoUpdateOneRequiredWithoutTagsNestedInput
   }
 
-  export type MemoTagRelationsUncheckedUpdateInput = {
+  export interface MemoTagRelationsUncheckedUpdateInput {
     tagId?: StringFieldUpdateOperationsInput | string
     memoId?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MemoTagRelationsCreateManyInput = {
+  export interface MemoTagRelationsCreateManyInput {
     tagId: string
     memoId: string
     create_ts?: Date | string
     updated_ts?: Date | string
   }
 
-  export type MemoTagRelationsUpdateManyMutationInput = {
+  export interface MemoTagRelationsUpdateManyMutationInput {
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MemoTagRelationsUncheckedUpdateManyInput = {
+  export interface MemoTagRelationsUncheckedUpdateManyInput {
     tagId?: StringFieldUpdateOperationsInput | string
     memoId?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type GarminActivityCreateInput = {
+  export interface GarminActivityCreateInput {
     id?: string
     activityType: string
     date: Date | string
@@ -16787,7 +16571,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type GarminActivityUncheckedCreateInput = {
+  export interface GarminActivityUncheckedCreateInput {
     id?: string
     activityType: string
     date: Date | string
@@ -16817,7 +16601,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type GarminActivityUpdateInput = {
+  export interface GarminActivityUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     activityType?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16847,7 +16631,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type GarminActivityUncheckedUpdateInput = {
+  export interface GarminActivityUncheckedUpdateInput {
     id?: StringFieldUpdateOperationsInput | string
     activityType?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16877,7 +16661,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type GarminActivityCreateManyInput = {
+  export interface GarminActivityCreateManyInput {
     id?: string
     activityType: string
     date: Date | string
@@ -16907,7 +16691,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type GarminActivityUpdateManyMutationInput = {
+  export interface GarminActivityUpdateManyMutationInput {
     id?: StringFieldUpdateOperationsInput | string
     activityType?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16937,7 +16721,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type GarminActivityUncheckedUpdateManyInput = {
+  export interface GarminActivityUncheckedUpdateManyInput {
     id?: StringFieldUpdateOperationsInput | string
     activityType?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16967,7 +16751,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type StringFilter<$PrismaModel = never> = {
+  export interface StringFilter<$PrismaModel = never> {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
     notIn?: string[]
@@ -16982,7 +16766,7 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
+  export interface StringNullableFilter<$PrismaModel = never> {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
     notIn?: string[] | null
@@ -16997,7 +16781,7 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type IntFilter<$PrismaModel = never> = {
+  export interface IntFilter<$PrismaModel = never> {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
     notIn?: number[]
@@ -17008,93 +16792,93 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type BlogCommentListRelationFilter = {
+  export interface BlogCommentListRelationFilter {
     every?: BlogCommentWhereInput
     some?: BlogCommentWhereInput
     none?: BlogCommentWhereInput
   }
 
-  export type BlogSubCommentListRelationFilter = {
+  export interface BlogSubCommentListRelationFilter {
     every?: BlogSubCommentWhereInput
     some?: BlogSubCommentWhereInput
     none?: BlogSubCommentWhereInput
   }
 
-  export type BlogLikeListRelationFilter = {
+  export interface BlogLikeListRelationFilter {
     every?: BlogLikeWhereInput
     some?: BlogLikeWhereInput
     none?: BlogLikeWhereInput
   }
 
-  export type OAuthListRelationFilter = {
+  export interface OAuthListRelationFilter {
     every?: OAuthWhereInput
     some?: OAuthWhereInput
     none?: OAuthWhereInput
   }
 
-  export type AccessTokenListRelationFilter = {
+  export interface AccessTokenListRelationFilter {
     every?: AccessTokenWhereInput
     some?: AccessTokenWhereInput
     none?: AccessTokenWhereInput
   }
 
-  export type UserConfigNullableScalarRelationFilter = {
+  export interface UserConfigNullableScalarRelationFilter {
     is?: UserConfigWhereInput | null
     isNot?: UserConfigWhereInput | null
   }
 
-  export type BlogMemoListRelationFilter = {
+  export interface BlogMemoListRelationFilter {
     every?: BlogMemoWhereInput
     some?: BlogMemoWhereInput
     none?: BlogMemoWhereInput
   }
 
-  export type MemoTagListRelationFilter = {
+  export interface MemoTagListRelationFilter {
     every?: MemoTagWhereInput
     some?: MemoTagWhereInput
     none?: MemoTagWhereInput
   }
 
-  export type SortOrderInput = {
+  export interface SortOrderInput {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
-  export type BlogCommentOrderByRelationAggregateInput = {
+  export interface BlogCommentOrderByRelationAggregateInput {
     _count?: SortOrder
   }
 
-  export type BlogSubCommentOrderByRelationAggregateInput = {
+  export interface BlogSubCommentOrderByRelationAggregateInput {
     _count?: SortOrder
   }
 
-  export type BlogLikeOrderByRelationAggregateInput = {
+  export interface BlogLikeOrderByRelationAggregateInput {
     _count?: SortOrder
   }
 
-  export type OAuthOrderByRelationAggregateInput = {
+  export interface OAuthOrderByRelationAggregateInput {
     _count?: SortOrder
   }
 
-  export type AccessTokenOrderByRelationAggregateInput = {
+  export interface AccessTokenOrderByRelationAggregateInput {
     _count?: SortOrder
   }
 
-  export type BlogMemoOrderByRelationAggregateInput = {
+  export interface BlogMemoOrderByRelationAggregateInput {
     _count?: SortOrder
   }
 
-  export type MemoTagOrderByRelationAggregateInput = {
+  export interface MemoTagOrderByRelationAggregateInput {
     _count?: SortOrder
   }
 
-  export type UserOrderByRelevanceInput = {
+  export interface UserOrderByRelevanceInput {
     fields: UserOrderByRelevanceFieldEnum | UserOrderByRelevanceFieldEnum[]
     sort: SortOrder
     search: string
   }
 
-  export type UserCountOrderByAggregateInput = {
+  export interface UserCountOrderByAggregateInput {
     id?: SortOrder
     email?: SortOrder
     phone?: SortOrder
@@ -17107,11 +16891,11 @@ export namespace Prisma {
     status?: SortOrder
   }
 
-  export type UserAvgOrderByAggregateInput = {
+  export interface UserAvgOrderByAggregateInput {
     status?: SortOrder
   }
 
-  export type UserMaxOrderByAggregateInput = {
+  export interface UserMaxOrderByAggregateInput {
     id?: SortOrder
     email?: SortOrder
     phone?: SortOrder
@@ -17124,7 +16908,7 @@ export namespace Prisma {
     status?: SortOrder
   }
 
-  export type UserMinOrderByAggregateInput = {
+  export interface UserMinOrderByAggregateInput {
     id?: SortOrder
     email?: SortOrder
     phone?: SortOrder
@@ -17137,11 +16921,11 @@ export namespace Prisma {
     status?: SortOrder
   }
 
-  export type UserSumOrderByAggregateInput = {
+  export interface UserSumOrderByAggregateInput {
     status?: SortOrder
   }
 
-  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+  export interface StringWithAggregatesFilter<$PrismaModel = never> {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
     notIn?: string[]
@@ -17159,7 +16943,7 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+  export interface StringNullableWithAggregatesFilter<$PrismaModel = never> {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
     notIn?: string[] | null
@@ -17177,7 +16961,7 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+  export interface IntWithAggregatesFilter<$PrismaModel = never> {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
     notIn?: number[]
@@ -17193,7 +16977,7 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
+  export interface IntNullableFilter<$PrismaModel = never> {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
     notIn?: number[] | null
@@ -17204,7 +16988,7 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
+  export interface DateTimeFilter<$PrismaModel = never> {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
     notIn?: Date[] | string[]
@@ -17215,18 +16999,18 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type UserScalarRelationFilter = {
+  export interface UserScalarRelationFilter {
     is?: UserWhereInput
     isNot?: UserWhereInput
   }
 
-  export type UserConfigOrderByRelevanceInput = {
+  export interface UserConfigOrderByRelevanceInput {
     fields: UserConfigOrderByRelevanceFieldEnum | UserConfigOrderByRelevanceFieldEnum[]
     sort: SortOrder
     search: string
   }
 
-  export type UserConfigCountOrderByAggregateInput = {
+  export interface UserConfigCountOrderByAggregateInput {
     id?: SortOrder
     userId?: SortOrder
     allowEmailNotify?: SortOrder
@@ -17234,11 +17018,11 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type UserConfigAvgOrderByAggregateInput = {
+  export interface UserConfigAvgOrderByAggregateInput {
     allowEmailNotify?: SortOrder
   }
 
-  export type UserConfigMaxOrderByAggregateInput = {
+  export interface UserConfigMaxOrderByAggregateInput {
     id?: SortOrder
     userId?: SortOrder
     allowEmailNotify?: SortOrder
@@ -17246,7 +17030,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type UserConfigMinOrderByAggregateInput = {
+  export interface UserConfigMinOrderByAggregateInput {
     id?: SortOrder
     userId?: SortOrder
     allowEmailNotify?: SortOrder
@@ -17254,11 +17038,11 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type UserConfigSumOrderByAggregateInput = {
+  export interface UserConfigSumOrderByAggregateInput {
     allowEmailNotify?: SortOrder
   }
 
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+  export interface IntNullableWithAggregatesFilter<$PrismaModel = never> {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
     notIn?: number[] | null
@@ -17274,7 +17058,7 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+  export interface DateTimeWithAggregatesFilter<$PrismaModel = never> {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
     notIn?: Date[] | string[]
@@ -17288,18 +17072,18 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
+  export interface BoolFilter<$PrismaModel = never> {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type AccessTokenOrderByRelevanceInput = {
+  export interface AccessTokenOrderByRelevanceInput {
     fields: AccessTokenOrderByRelevanceFieldEnum | AccessTokenOrderByRelevanceFieldEnum[]
     sort: SortOrder
     search: string
   }
 
-  export type AccessTokenCountOrderByAggregateInput = {
+  export interface AccessTokenCountOrderByAggregateInput {
     id?: SortOrder
     userId?: SortOrder
     token?: SortOrder
@@ -17313,11 +17097,11 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type AccessTokenAvgOrderByAggregateInput = {
+  export interface AccessTokenAvgOrderByAggregateInput {
     status?: SortOrder
   }
 
-  export type AccessTokenMaxOrderByAggregateInput = {
+  export interface AccessTokenMaxOrderByAggregateInput {
     id?: SortOrder
     userId?: SortOrder
     token?: SortOrder
@@ -17331,7 +17115,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type AccessTokenMinOrderByAggregateInput = {
+  export interface AccessTokenMinOrderByAggregateInput {
     id?: SortOrder
     userId?: SortOrder
     token?: SortOrder
@@ -17345,11 +17129,11 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type AccessTokenSumOrderByAggregateInput = {
+  export interface AccessTokenSumOrderByAggregateInput {
     status?: SortOrder
   }
 
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+  export interface BoolWithAggregatesFilter<$PrismaModel = never> {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
     _count?: NestedIntFilter<$PrismaModel>
@@ -17357,23 +17141,23 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type UserNullableScalarRelationFilter = {
+  export interface UserNullableScalarRelationFilter {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
   }
 
-  export type OAuthOrderByRelevanceInput = {
+  export interface OAuthOrderByRelevanceInput {
     fields: OAuthOrderByRelevanceFieldEnum | OAuthOrderByRelevanceFieldEnum[]
     sort: SortOrder
     search: string
   }
 
-  export type OAuthProviderProviderIdCompoundUniqueInput = {
+  export interface OAuthProviderProviderIdCompoundUniqueInput {
     provider: string
     providerId: string
   }
 
-  export type OAuthCountOrderByAggregateInput = {
+  export interface OAuthCountOrderByAggregateInput {
     id?: SortOrder
     userId?: SortOrder
     provider?: SortOrder
@@ -17385,7 +17169,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type OAuthMaxOrderByAggregateInput = {
+  export interface OAuthMaxOrderByAggregateInput {
     id?: SortOrder
     userId?: SortOrder
     provider?: SortOrder
@@ -17397,7 +17181,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type OAuthMinOrderByAggregateInput = {
+  export interface OAuthMinOrderByAggregateInput {
     id?: SortOrder
     userId?: SortOrder
     provider?: SortOrder
@@ -17409,18 +17193,18 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type BlogMemoNullableScalarRelationFilter = {
+  export interface BlogMemoNullableScalarRelationFilter {
     is?: BlogMemoWhereInput | null
     isNot?: BlogMemoWhereInput | null
   }
 
-  export type BlogCommentOrderByRelevanceInput = {
+  export interface BlogCommentOrderByRelevanceInput {
     fields: BlogCommentOrderByRelevanceFieldEnum | BlogCommentOrderByRelevanceFieldEnum[]
     sort: SortOrder
     search: string
   }
 
-  export type BlogCommentCountOrderByAggregateInput = {
+  export interface BlogCommentCountOrderByAggregateInput {
     id?: SortOrder
     content?: SortOrder
     create_ts?: SortOrder
@@ -17433,7 +17217,7 @@ export namespace Prisma {
     memo_id?: SortOrder
   }
 
-  export type BlogCommentMaxOrderByAggregateInput = {
+  export interface BlogCommentMaxOrderByAggregateInput {
     id?: SortOrder
     content?: SortOrder
     create_ts?: SortOrder
@@ -17446,7 +17230,7 @@ export namespace Prisma {
     memo_id?: SortOrder
   }
 
-  export type BlogCommentMinOrderByAggregateInput = {
+  export interface BlogCommentMinOrderByAggregateInput {
     id?: SortOrder
     content?: SortOrder
     create_ts?: SortOrder
@@ -17459,13 +17243,13 @@ export namespace Prisma {
     memo_id?: SortOrder
   }
 
-  export type BlogExplainOrderByRelevanceInput = {
+  export interface BlogExplainOrderByRelevanceInput {
     fields: BlogExplainOrderByRelevanceFieldEnum | BlogExplainOrderByRelevanceFieldEnum[]
     sort: SortOrder
     search: string
   }
 
-  export type BlogExplainCountOrderByAggregateInput = {
+  export interface BlogExplainCountOrderByAggregateInput {
     id?: SortOrder
     create_ts?: SortOrder
     updated_ts?: SortOrder
@@ -17474,7 +17258,7 @@ export namespace Prisma {
     article_id?: SortOrder
   }
 
-  export type BlogExplainMaxOrderByAggregateInput = {
+  export interface BlogExplainMaxOrderByAggregateInput {
     id?: SortOrder
     create_ts?: SortOrder
     updated_ts?: SortOrder
@@ -17483,7 +17267,7 @@ export namespace Prisma {
     article_id?: SortOrder
   }
 
-  export type BlogExplainMinOrderByAggregateInput = {
+  export interface BlogExplainMinOrderByAggregateInput {
     id?: SortOrder
     create_ts?: SortOrder
     updated_ts?: SortOrder
@@ -17492,18 +17276,18 @@ export namespace Prisma {
     article_id?: SortOrder
   }
 
-  export type BlogCommentScalarRelationFilter = {
+  export interface BlogCommentScalarRelationFilter {
     is?: BlogCommentWhereInput
     isNot?: BlogCommentWhereInput
   }
 
-  export type BlogSubCommentOrderByRelevanceInput = {
+  export interface BlogSubCommentOrderByRelevanceInput {
     fields: BlogSubCommentOrderByRelevanceFieldEnum | BlogSubCommentOrderByRelevanceFieldEnum[]
     sort: SortOrder
     search: string
   }
 
-  export type BlogSubCommentCountOrderByAggregateInput = {
+  export interface BlogSubCommentCountOrderByAggregateInput {
     id?: SortOrder
     content?: SortOrder
     create_ts?: SortOrder
@@ -17513,7 +17297,7 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
-  export type BlogSubCommentMaxOrderByAggregateInput = {
+  export interface BlogSubCommentMaxOrderByAggregateInput {
     id?: SortOrder
     content?: SortOrder
     create_ts?: SortOrder
@@ -17523,7 +17307,7 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
-  export type BlogSubCommentMinOrderByAggregateInput = {
+  export interface BlogSubCommentMinOrderByAggregateInput {
     id?: SortOrder
     content?: SortOrder
     create_ts?: SortOrder
@@ -17533,23 +17317,23 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
-  export type BlogSubCommentNullableScalarRelationFilter = {
+  export interface BlogSubCommentNullableScalarRelationFilter {
     is?: BlogSubCommentWhereInput | null
     isNot?: BlogSubCommentWhereInput | null
   }
 
-  export type BlogCommentNullableScalarRelationFilter = {
+  export interface BlogCommentNullableScalarRelationFilter {
     is?: BlogCommentWhereInput | null
     isNot?: BlogCommentWhereInput | null
   }
 
-  export type BlogLikeOrderByRelevanceInput = {
+  export interface BlogLikeOrderByRelevanceInput {
     fields: BlogLikeOrderByRelevanceFieldEnum | BlogLikeOrderByRelevanceFieldEnum[]
     sort: SortOrder
     search: string
   }
 
-  export type BlogLikeCountOrderByAggregateInput = {
+  export interface BlogLikeCountOrderByAggregateInput {
     id?: SortOrder
     create_ts?: SortOrder
     updated_ts?: SortOrder
@@ -17561,23 +17345,11 @@ export namespace Prisma {
     blogMemoId?: SortOrder
   }
 
-  export type BlogLikeAvgOrderByAggregateInput = {
+  export interface BlogLikeAvgOrderByAggregateInput {
     id?: SortOrder
   }
 
-  export type BlogLikeMaxOrderByAggregateInput = {
-    id?: SortOrder
-    create_ts?: SortOrder
-    updated_ts?: SortOrder
-    target?: SortOrder
-    article_id?: SortOrder
-    sub_comment_id?: SortOrder
-    comment_id?: SortOrder
-    user_id?: SortOrder
-    blogMemoId?: SortOrder
-  }
-
-  export type BlogLikeMinOrderByAggregateInput = {
+  export interface BlogLikeMaxOrderByAggregateInput {
     id?: SortOrder
     create_ts?: SortOrder
     updated_ts?: SortOrder
@@ -17589,27 +17361,39 @@ export namespace Prisma {
     blogMemoId?: SortOrder
   }
 
-  export type BlogLikeSumOrderByAggregateInput = {
+  export interface BlogLikeMinOrderByAggregateInput {
+    id?: SortOrder
+    create_ts?: SortOrder
+    updated_ts?: SortOrder
+    target?: SortOrder
+    article_id?: SortOrder
+    sub_comment_id?: SortOrder
+    comment_id?: SortOrder
+    user_id?: SortOrder
+    blogMemoId?: SortOrder
+  }
+
+  export interface BlogLikeSumOrderByAggregateInput {
     id?: SortOrder
   }
 
-  export type MemoTagRelationsListRelationFilter = {
+  export interface MemoTagRelationsListRelationFilter {
     every?: MemoTagRelationsWhereInput
     some?: MemoTagRelationsWhereInput
     none?: MemoTagRelationsWhereInput
   }
 
-  export type MemoTagRelationsOrderByRelationAggregateInput = {
+  export interface MemoTagRelationsOrderByRelationAggregateInput {
     _count?: SortOrder
   }
 
-  export type BlogMemoOrderByRelevanceInput = {
+  export interface BlogMemoOrderByRelevanceInput {
     fields: BlogMemoOrderByRelevanceFieldEnum | BlogMemoOrderByRelevanceFieldEnum[]
     sort: SortOrder
     search: string
   }
 
-  export type BlogMemoCountOrderByAggregateInput = {
+  export interface BlogMemoCountOrderByAggregateInput {
     id?: SortOrder
     content?: SortOrder
     create_ts?: SortOrder
@@ -17622,7 +17406,7 @@ export namespace Prisma {
     courier?: SortOrder
   }
 
-  export type BlogMemoMaxOrderByAggregateInput = {
+  export interface BlogMemoMaxOrderByAggregateInput {
     id?: SortOrder
     content?: SortOrder
     create_ts?: SortOrder
@@ -17635,7 +17419,7 @@ export namespace Prisma {
     courier?: SortOrder
   }
 
-  export type BlogMemoMinOrderByAggregateInput = {
+  export interface BlogMemoMinOrderByAggregateInput {
     id?: SortOrder
     content?: SortOrder
     create_ts?: SortOrder
@@ -17648,13 +17432,13 @@ export namespace Prisma {
     courier?: SortOrder
   }
 
-  export type MemoTagOrderByRelevanceInput = {
+  export interface MemoTagOrderByRelevanceInput {
     fields: MemoTagOrderByRelevanceFieldEnum | MemoTagOrderByRelevanceFieldEnum[]
     sort: SortOrder
     search: string
   }
 
-  export type MemoTagCountOrderByAggregateInput = {
+  export interface MemoTagCountOrderByAggregateInput {
     id?: SortOrder
     tag_name?: SortOrder
     create_ts?: SortOrder
@@ -17662,7 +17446,7 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
-  export type MemoTagMaxOrderByAggregateInput = {
+  export interface MemoTagMaxOrderByAggregateInput {
     id?: SortOrder
     tag_name?: SortOrder
     create_ts?: SortOrder
@@ -17670,7 +17454,7 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
-  export type MemoTagMinOrderByAggregateInput = {
+  export interface MemoTagMinOrderByAggregateInput {
     id?: SortOrder
     tag_name?: SortOrder
     create_ts?: SortOrder
@@ -17678,49 +17462,49 @@ export namespace Prisma {
     user_id?: SortOrder
   }
 
-  export type MemoTagScalarRelationFilter = {
+  export interface MemoTagScalarRelationFilter {
     is?: MemoTagWhereInput
     isNot?: MemoTagWhereInput
   }
 
-  export type BlogMemoScalarRelationFilter = {
+  export interface BlogMemoScalarRelationFilter {
     is?: BlogMemoWhereInput
     isNot?: BlogMemoWhereInput
   }
 
-  export type MemoTagRelationsOrderByRelevanceInput = {
+  export interface MemoTagRelationsOrderByRelevanceInput {
     fields: MemoTagRelationsOrderByRelevanceFieldEnum | MemoTagRelationsOrderByRelevanceFieldEnum[]
     sort: SortOrder
     search: string
   }
 
-  export type MemoTagRelationsTagIdMemoIdCompoundUniqueInput = {
+  export interface MemoTagRelationsTagIdMemoIdCompoundUniqueInput {
     tagId: string
     memoId: string
   }
 
-  export type MemoTagRelationsCountOrderByAggregateInput = {
+  export interface MemoTagRelationsCountOrderByAggregateInput {
     tagId?: SortOrder
     memoId?: SortOrder
     create_ts?: SortOrder
     updated_ts?: SortOrder
   }
 
-  export type MemoTagRelationsMaxOrderByAggregateInput = {
+  export interface MemoTagRelationsMaxOrderByAggregateInput {
     tagId?: SortOrder
     memoId?: SortOrder
     create_ts?: SortOrder
     updated_ts?: SortOrder
   }
 
-  export type MemoTagRelationsMinOrderByAggregateInput = {
+  export interface MemoTagRelationsMinOrderByAggregateInput {
     tagId?: SortOrder
     memoId?: SortOrder
     create_ts?: SortOrder
     updated_ts?: SortOrder
   }
 
-  export type DecimalNullableFilter<$PrismaModel = never> = {
+  export interface DecimalNullableFilter<$PrismaModel = never> {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
     notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
@@ -17731,7 +17515,7 @@ export namespace Prisma {
     not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
   }
 
-  export type DecimalFilter<$PrismaModel = never> = {
+  export interface DecimalFilter<$PrismaModel = never> {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[]
     notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
@@ -17742,23 +17526,23 @@ export namespace Prisma {
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
-  export type BoolNullableFilter<$PrismaModel = never> = {
+  export interface BoolNullableFilter<$PrismaModel = never> {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
   }
 
-  export type GarminActivityOrderByRelevanceInput = {
+  export interface GarminActivityOrderByRelevanceInput {
     fields: GarminActivityOrderByRelevanceFieldEnum | GarminActivityOrderByRelevanceFieldEnum[]
     sort: SortOrder
     search: string
   }
 
-  export type GarminActivityDateActivityTypeCompoundUniqueInput = {
+  export interface GarminActivityDateActivityTypeCompoundUniqueInput {
     date: Date | string
     activityType: string
   }
 
-  export type GarminActivityCountOrderByAggregateInput = {
+  export interface GarminActivityCountOrderByAggregateInput {
     id?: SortOrder
     activityType?: SortOrder
     date?: SortOrder
@@ -17788,7 +17572,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type GarminActivityAvgOrderByAggregateInput = {
+  export interface GarminActivityAvgOrderByAggregateInput {
     distance?: SortOrder
     calories?: SortOrder
     duration?: SortOrder
@@ -17810,7 +17594,7 @@ export namespace Prisma {
     lapCount?: SortOrder
   }
 
-  export type GarminActivityMaxOrderByAggregateInput = {
+  export interface GarminActivityMaxOrderByAggregateInput {
     id?: SortOrder
     activityType?: SortOrder
     date?: SortOrder
@@ -17840,7 +17624,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type GarminActivityMinOrderByAggregateInput = {
+  export interface GarminActivityMinOrderByAggregateInput {
     id?: SortOrder
     activityType?: SortOrder
     date?: SortOrder
@@ -17870,7 +17654,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type GarminActivitySumOrderByAggregateInput = {
+  export interface GarminActivitySumOrderByAggregateInput {
     distance?: SortOrder
     calories?: SortOrder
     duration?: SortOrder
@@ -17892,7 +17676,7 @@ export namespace Prisma {
     lapCount?: SortOrder
   }
 
-  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+  export interface DecimalNullableWithAggregatesFilter<$PrismaModel = never> {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
     notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
@@ -17908,7 +17692,7 @@ export namespace Prisma {
     _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
-  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
+  export interface DecimalWithAggregatesFilter<$PrismaModel = never> {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[]
     notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
@@ -17924,7 +17708,7 @@ export namespace Prisma {
     _max?: NestedDecimalFilter<$PrismaModel>
   }
 
-  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+  export interface BoolNullableWithAggregatesFilter<$PrismaModel = never> {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
     _count?: NestedIntNullableFilter<$PrismaModel>
@@ -17932,125 +17716,125 @@ export namespace Prisma {
     _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
-  export type BlogCommentCreateNestedManyWithoutUser_infoInput = {
+  export interface BlogCommentCreateNestedManyWithoutUser_infoInput {
     create?: XOR<BlogCommentCreateWithoutUser_infoInput, BlogCommentUncheckedCreateWithoutUser_infoInput> | BlogCommentCreateWithoutUser_infoInput[] | BlogCommentUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogCommentCreateOrConnectWithoutUser_infoInput | BlogCommentCreateOrConnectWithoutUser_infoInput[]
     createMany?: BlogCommentCreateManyUser_infoInputEnvelope
     connect?: BlogCommentWhereUniqueInput | BlogCommentWhereUniqueInput[]
   }
 
-  export type BlogSubCommentCreateNestedManyWithoutUser_infoInput = {
+  export interface BlogSubCommentCreateNestedManyWithoutUser_infoInput {
     create?: XOR<BlogSubCommentCreateWithoutUser_infoInput, BlogSubCommentUncheckedCreateWithoutUser_infoInput> | BlogSubCommentCreateWithoutUser_infoInput[] | BlogSubCommentUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogSubCommentCreateOrConnectWithoutUser_infoInput | BlogSubCommentCreateOrConnectWithoutUser_infoInput[]
     createMany?: BlogSubCommentCreateManyUser_infoInputEnvelope
     connect?: BlogSubCommentWhereUniqueInput | BlogSubCommentWhereUniqueInput[]
   }
 
-  export type BlogLikeCreateNestedManyWithoutUser_infoInput = {
+  export interface BlogLikeCreateNestedManyWithoutUser_infoInput {
     create?: XOR<BlogLikeCreateWithoutUser_infoInput, BlogLikeUncheckedCreateWithoutUser_infoInput> | BlogLikeCreateWithoutUser_infoInput[] | BlogLikeUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutUser_infoInput | BlogLikeCreateOrConnectWithoutUser_infoInput[]
     createMany?: BlogLikeCreateManyUser_infoInputEnvelope
     connect?: BlogLikeWhereUniqueInput | BlogLikeWhereUniqueInput[]
   }
 
-  export type OAuthCreateNestedManyWithoutUserInput = {
+  export interface OAuthCreateNestedManyWithoutUserInput {
     create?: XOR<OAuthCreateWithoutUserInput, OAuthUncheckedCreateWithoutUserInput> | OAuthCreateWithoutUserInput[] | OAuthUncheckedCreateWithoutUserInput[]
     connectOrCreate?: OAuthCreateOrConnectWithoutUserInput | OAuthCreateOrConnectWithoutUserInput[]
     createMany?: OAuthCreateManyUserInputEnvelope
     connect?: OAuthWhereUniqueInput | OAuthWhereUniqueInput[]
   }
 
-  export type AccessTokenCreateNestedManyWithoutUserInfoInput = {
+  export interface AccessTokenCreateNestedManyWithoutUserInfoInput {
     create?: XOR<AccessTokenCreateWithoutUserInfoInput, AccessTokenUncheckedCreateWithoutUserInfoInput> | AccessTokenCreateWithoutUserInfoInput[] | AccessTokenUncheckedCreateWithoutUserInfoInput[]
     connectOrCreate?: AccessTokenCreateOrConnectWithoutUserInfoInput | AccessTokenCreateOrConnectWithoutUserInfoInput[]
     createMany?: AccessTokenCreateManyUserInfoInputEnvelope
     connect?: AccessTokenWhereUniqueInput | AccessTokenWhereUniqueInput[]
   }
 
-  export type UserConfigCreateNestedOneWithoutUserInfoInput = {
+  export interface UserConfigCreateNestedOneWithoutUserInfoInput {
     create?: XOR<UserConfigCreateWithoutUserInfoInput, UserConfigUncheckedCreateWithoutUserInfoInput>
     connectOrCreate?: UserConfigCreateOrConnectWithoutUserInfoInput
     connect?: UserConfigWhereUniqueInput
   }
 
-  export type BlogMemoCreateNestedManyWithoutUser_infoInput = {
+  export interface BlogMemoCreateNestedManyWithoutUser_infoInput {
     create?: XOR<BlogMemoCreateWithoutUser_infoInput, BlogMemoUncheckedCreateWithoutUser_infoInput> | BlogMemoCreateWithoutUser_infoInput[] | BlogMemoUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogMemoCreateOrConnectWithoutUser_infoInput | BlogMemoCreateOrConnectWithoutUser_infoInput[]
     createMany?: BlogMemoCreateManyUser_infoInputEnvelope
     connect?: BlogMemoWhereUniqueInput | BlogMemoWhereUniqueInput[]
   }
 
-  export type MemoTagCreateNestedManyWithoutUser_infoInput = {
+  export interface MemoTagCreateNestedManyWithoutUser_infoInput {
     create?: XOR<MemoTagCreateWithoutUser_infoInput, MemoTagUncheckedCreateWithoutUser_infoInput> | MemoTagCreateWithoutUser_infoInput[] | MemoTagUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: MemoTagCreateOrConnectWithoutUser_infoInput | MemoTagCreateOrConnectWithoutUser_infoInput[]
     createMany?: MemoTagCreateManyUser_infoInputEnvelope
     connect?: MemoTagWhereUniqueInput | MemoTagWhereUniqueInput[]
   }
 
-  export type BlogCommentUncheckedCreateNestedManyWithoutUser_infoInput = {
+  export interface BlogCommentUncheckedCreateNestedManyWithoutUser_infoInput {
     create?: XOR<BlogCommentCreateWithoutUser_infoInput, BlogCommentUncheckedCreateWithoutUser_infoInput> | BlogCommentCreateWithoutUser_infoInput[] | BlogCommentUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogCommentCreateOrConnectWithoutUser_infoInput | BlogCommentCreateOrConnectWithoutUser_infoInput[]
     createMany?: BlogCommentCreateManyUser_infoInputEnvelope
     connect?: BlogCommentWhereUniqueInput | BlogCommentWhereUniqueInput[]
   }
 
-  export type BlogSubCommentUncheckedCreateNestedManyWithoutUser_infoInput = {
+  export interface BlogSubCommentUncheckedCreateNestedManyWithoutUser_infoInput {
     create?: XOR<BlogSubCommentCreateWithoutUser_infoInput, BlogSubCommentUncheckedCreateWithoutUser_infoInput> | BlogSubCommentCreateWithoutUser_infoInput[] | BlogSubCommentUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogSubCommentCreateOrConnectWithoutUser_infoInput | BlogSubCommentCreateOrConnectWithoutUser_infoInput[]
     createMany?: BlogSubCommentCreateManyUser_infoInputEnvelope
     connect?: BlogSubCommentWhereUniqueInput | BlogSubCommentWhereUniqueInput[]
   }
 
-  export type BlogLikeUncheckedCreateNestedManyWithoutUser_infoInput = {
+  export interface BlogLikeUncheckedCreateNestedManyWithoutUser_infoInput {
     create?: XOR<BlogLikeCreateWithoutUser_infoInput, BlogLikeUncheckedCreateWithoutUser_infoInput> | BlogLikeCreateWithoutUser_infoInput[] | BlogLikeUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutUser_infoInput | BlogLikeCreateOrConnectWithoutUser_infoInput[]
     createMany?: BlogLikeCreateManyUser_infoInputEnvelope
     connect?: BlogLikeWhereUniqueInput | BlogLikeWhereUniqueInput[]
   }
 
-  export type OAuthUncheckedCreateNestedManyWithoutUserInput = {
+  export interface OAuthUncheckedCreateNestedManyWithoutUserInput {
     create?: XOR<OAuthCreateWithoutUserInput, OAuthUncheckedCreateWithoutUserInput> | OAuthCreateWithoutUserInput[] | OAuthUncheckedCreateWithoutUserInput[]
     connectOrCreate?: OAuthCreateOrConnectWithoutUserInput | OAuthCreateOrConnectWithoutUserInput[]
     createMany?: OAuthCreateManyUserInputEnvelope
     connect?: OAuthWhereUniqueInput | OAuthWhereUniqueInput[]
   }
 
-  export type AccessTokenUncheckedCreateNestedManyWithoutUserInfoInput = {
+  export interface AccessTokenUncheckedCreateNestedManyWithoutUserInfoInput {
     create?: XOR<AccessTokenCreateWithoutUserInfoInput, AccessTokenUncheckedCreateWithoutUserInfoInput> | AccessTokenCreateWithoutUserInfoInput[] | AccessTokenUncheckedCreateWithoutUserInfoInput[]
     connectOrCreate?: AccessTokenCreateOrConnectWithoutUserInfoInput | AccessTokenCreateOrConnectWithoutUserInfoInput[]
     createMany?: AccessTokenCreateManyUserInfoInputEnvelope
     connect?: AccessTokenWhereUniqueInput | AccessTokenWhereUniqueInput[]
   }
 
-  export type UserConfigUncheckedCreateNestedOneWithoutUserInfoInput = {
+  export interface UserConfigUncheckedCreateNestedOneWithoutUserInfoInput {
     create?: XOR<UserConfigCreateWithoutUserInfoInput, UserConfigUncheckedCreateWithoutUserInfoInput>
     connectOrCreate?: UserConfigCreateOrConnectWithoutUserInfoInput
     connect?: UserConfigWhereUniqueInput
   }
 
-  export type BlogMemoUncheckedCreateNestedManyWithoutUser_infoInput = {
+  export interface BlogMemoUncheckedCreateNestedManyWithoutUser_infoInput {
     create?: XOR<BlogMemoCreateWithoutUser_infoInput, BlogMemoUncheckedCreateWithoutUser_infoInput> | BlogMemoCreateWithoutUser_infoInput[] | BlogMemoUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogMemoCreateOrConnectWithoutUser_infoInput | BlogMemoCreateOrConnectWithoutUser_infoInput[]
     createMany?: BlogMemoCreateManyUser_infoInputEnvelope
     connect?: BlogMemoWhereUniqueInput | BlogMemoWhereUniqueInput[]
   }
 
-  export type MemoTagUncheckedCreateNestedManyWithoutUser_infoInput = {
+  export interface MemoTagUncheckedCreateNestedManyWithoutUser_infoInput {
     create?: XOR<MemoTagCreateWithoutUser_infoInput, MemoTagUncheckedCreateWithoutUser_infoInput> | MemoTagCreateWithoutUser_infoInput[] | MemoTagUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: MemoTagCreateOrConnectWithoutUser_infoInput | MemoTagCreateOrConnectWithoutUser_infoInput[]
     createMany?: MemoTagCreateManyUser_infoInputEnvelope
     connect?: MemoTagWhereUniqueInput | MemoTagWhereUniqueInput[]
   }
 
-  export type StringFieldUpdateOperationsInput = {
+  export interface StringFieldUpdateOperationsInput {
     set?: string
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
+  export interface NullableStringFieldUpdateOperationsInput {
     set?: string | null
   }
 
-  export type IntFieldUpdateOperationsInput = {
+  export interface IntFieldUpdateOperationsInput {
     set?: number
     increment?: number
     decrement?: number
@@ -18058,7 +17842,7 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type BlogCommentUpdateManyWithoutUser_infoNestedInput = {
+  export interface BlogCommentUpdateManyWithoutUser_infoNestedInput {
     create?: XOR<BlogCommentCreateWithoutUser_infoInput, BlogCommentUncheckedCreateWithoutUser_infoInput> | BlogCommentCreateWithoutUser_infoInput[] | BlogCommentUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogCommentCreateOrConnectWithoutUser_infoInput | BlogCommentCreateOrConnectWithoutUser_infoInput[]
     upsert?: BlogCommentUpsertWithWhereUniqueWithoutUser_infoInput | BlogCommentUpsertWithWhereUniqueWithoutUser_infoInput[]
@@ -18072,7 +17856,7 @@ export namespace Prisma {
     deleteMany?: BlogCommentScalarWhereInput | BlogCommentScalarWhereInput[]
   }
 
-  export type BlogSubCommentUpdateManyWithoutUser_infoNestedInput = {
+  export interface BlogSubCommentUpdateManyWithoutUser_infoNestedInput {
     create?: XOR<BlogSubCommentCreateWithoutUser_infoInput, BlogSubCommentUncheckedCreateWithoutUser_infoInput> | BlogSubCommentCreateWithoutUser_infoInput[] | BlogSubCommentUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogSubCommentCreateOrConnectWithoutUser_infoInput | BlogSubCommentCreateOrConnectWithoutUser_infoInput[]
     upsert?: BlogSubCommentUpsertWithWhereUniqueWithoutUser_infoInput | BlogSubCommentUpsertWithWhereUniqueWithoutUser_infoInput[]
@@ -18086,7 +17870,7 @@ export namespace Prisma {
     deleteMany?: BlogSubCommentScalarWhereInput | BlogSubCommentScalarWhereInput[]
   }
 
-  export type BlogLikeUpdateManyWithoutUser_infoNestedInput = {
+  export interface BlogLikeUpdateManyWithoutUser_infoNestedInput {
     create?: XOR<BlogLikeCreateWithoutUser_infoInput, BlogLikeUncheckedCreateWithoutUser_infoInput> | BlogLikeCreateWithoutUser_infoInput[] | BlogLikeUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutUser_infoInput | BlogLikeCreateOrConnectWithoutUser_infoInput[]
     upsert?: BlogLikeUpsertWithWhereUniqueWithoutUser_infoInput | BlogLikeUpsertWithWhereUniqueWithoutUser_infoInput[]
@@ -18100,7 +17884,7 @@ export namespace Prisma {
     deleteMany?: BlogLikeScalarWhereInput | BlogLikeScalarWhereInput[]
   }
 
-  export type OAuthUpdateManyWithoutUserNestedInput = {
+  export interface OAuthUpdateManyWithoutUserNestedInput {
     create?: XOR<OAuthCreateWithoutUserInput, OAuthUncheckedCreateWithoutUserInput> | OAuthCreateWithoutUserInput[] | OAuthUncheckedCreateWithoutUserInput[]
     connectOrCreate?: OAuthCreateOrConnectWithoutUserInput | OAuthCreateOrConnectWithoutUserInput[]
     upsert?: OAuthUpsertWithWhereUniqueWithoutUserInput | OAuthUpsertWithWhereUniqueWithoutUserInput[]
@@ -18114,7 +17898,7 @@ export namespace Prisma {
     deleteMany?: OAuthScalarWhereInput | OAuthScalarWhereInput[]
   }
 
-  export type AccessTokenUpdateManyWithoutUserInfoNestedInput = {
+  export interface AccessTokenUpdateManyWithoutUserInfoNestedInput {
     create?: XOR<AccessTokenCreateWithoutUserInfoInput, AccessTokenUncheckedCreateWithoutUserInfoInput> | AccessTokenCreateWithoutUserInfoInput[] | AccessTokenUncheckedCreateWithoutUserInfoInput[]
     connectOrCreate?: AccessTokenCreateOrConnectWithoutUserInfoInput | AccessTokenCreateOrConnectWithoutUserInfoInput[]
     upsert?: AccessTokenUpsertWithWhereUniqueWithoutUserInfoInput | AccessTokenUpsertWithWhereUniqueWithoutUserInfoInput[]
@@ -18128,7 +17912,7 @@ export namespace Prisma {
     deleteMany?: AccessTokenScalarWhereInput | AccessTokenScalarWhereInput[]
   }
 
-  export type UserConfigUpdateOneWithoutUserInfoNestedInput = {
+  export interface UserConfigUpdateOneWithoutUserInfoNestedInput {
     create?: XOR<UserConfigCreateWithoutUserInfoInput, UserConfigUncheckedCreateWithoutUserInfoInput>
     connectOrCreate?: UserConfigCreateOrConnectWithoutUserInfoInput
     upsert?: UserConfigUpsertWithoutUserInfoInput
@@ -18138,7 +17922,7 @@ export namespace Prisma {
     update?: XOR<XOR<UserConfigUpdateToOneWithWhereWithoutUserInfoInput, UserConfigUpdateWithoutUserInfoInput>, UserConfigUncheckedUpdateWithoutUserInfoInput>
   }
 
-  export type BlogMemoUpdateManyWithoutUser_infoNestedInput = {
+  export interface BlogMemoUpdateManyWithoutUser_infoNestedInput {
     create?: XOR<BlogMemoCreateWithoutUser_infoInput, BlogMemoUncheckedCreateWithoutUser_infoInput> | BlogMemoCreateWithoutUser_infoInput[] | BlogMemoUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogMemoCreateOrConnectWithoutUser_infoInput | BlogMemoCreateOrConnectWithoutUser_infoInput[]
     upsert?: BlogMemoUpsertWithWhereUniqueWithoutUser_infoInput | BlogMemoUpsertWithWhereUniqueWithoutUser_infoInput[]
@@ -18152,7 +17936,7 @@ export namespace Prisma {
     deleteMany?: BlogMemoScalarWhereInput | BlogMemoScalarWhereInput[]
   }
 
-  export type MemoTagUpdateManyWithoutUser_infoNestedInput = {
+  export interface MemoTagUpdateManyWithoutUser_infoNestedInput {
     create?: XOR<MemoTagCreateWithoutUser_infoInput, MemoTagUncheckedCreateWithoutUser_infoInput> | MemoTagCreateWithoutUser_infoInput[] | MemoTagUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: MemoTagCreateOrConnectWithoutUser_infoInput | MemoTagCreateOrConnectWithoutUser_infoInput[]
     upsert?: MemoTagUpsertWithWhereUniqueWithoutUser_infoInput | MemoTagUpsertWithWhereUniqueWithoutUser_infoInput[]
@@ -18166,7 +17950,7 @@ export namespace Prisma {
     deleteMany?: MemoTagScalarWhereInput | MemoTagScalarWhereInput[]
   }
 
-  export type BlogCommentUncheckedUpdateManyWithoutUser_infoNestedInput = {
+  export interface BlogCommentUncheckedUpdateManyWithoutUser_infoNestedInput {
     create?: XOR<BlogCommentCreateWithoutUser_infoInput, BlogCommentUncheckedCreateWithoutUser_infoInput> | BlogCommentCreateWithoutUser_infoInput[] | BlogCommentUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogCommentCreateOrConnectWithoutUser_infoInput | BlogCommentCreateOrConnectWithoutUser_infoInput[]
     upsert?: BlogCommentUpsertWithWhereUniqueWithoutUser_infoInput | BlogCommentUpsertWithWhereUniqueWithoutUser_infoInput[]
@@ -18180,7 +17964,7 @@ export namespace Prisma {
     deleteMany?: BlogCommentScalarWhereInput | BlogCommentScalarWhereInput[]
   }
 
-  export type BlogSubCommentUncheckedUpdateManyWithoutUser_infoNestedInput = {
+  export interface BlogSubCommentUncheckedUpdateManyWithoutUser_infoNestedInput {
     create?: XOR<BlogSubCommentCreateWithoutUser_infoInput, BlogSubCommentUncheckedCreateWithoutUser_infoInput> | BlogSubCommentCreateWithoutUser_infoInput[] | BlogSubCommentUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogSubCommentCreateOrConnectWithoutUser_infoInput | BlogSubCommentCreateOrConnectWithoutUser_infoInput[]
     upsert?: BlogSubCommentUpsertWithWhereUniqueWithoutUser_infoInput | BlogSubCommentUpsertWithWhereUniqueWithoutUser_infoInput[]
@@ -18194,7 +17978,7 @@ export namespace Prisma {
     deleteMany?: BlogSubCommentScalarWhereInput | BlogSubCommentScalarWhereInput[]
   }
 
-  export type BlogLikeUncheckedUpdateManyWithoutUser_infoNestedInput = {
+  export interface BlogLikeUncheckedUpdateManyWithoutUser_infoNestedInput {
     create?: XOR<BlogLikeCreateWithoutUser_infoInput, BlogLikeUncheckedCreateWithoutUser_infoInput> | BlogLikeCreateWithoutUser_infoInput[] | BlogLikeUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutUser_infoInput | BlogLikeCreateOrConnectWithoutUser_infoInput[]
     upsert?: BlogLikeUpsertWithWhereUniqueWithoutUser_infoInput | BlogLikeUpsertWithWhereUniqueWithoutUser_infoInput[]
@@ -18208,7 +17992,7 @@ export namespace Prisma {
     deleteMany?: BlogLikeScalarWhereInput | BlogLikeScalarWhereInput[]
   }
 
-  export type OAuthUncheckedUpdateManyWithoutUserNestedInput = {
+  export interface OAuthUncheckedUpdateManyWithoutUserNestedInput {
     create?: XOR<OAuthCreateWithoutUserInput, OAuthUncheckedCreateWithoutUserInput> | OAuthCreateWithoutUserInput[] | OAuthUncheckedCreateWithoutUserInput[]
     connectOrCreate?: OAuthCreateOrConnectWithoutUserInput | OAuthCreateOrConnectWithoutUserInput[]
     upsert?: OAuthUpsertWithWhereUniqueWithoutUserInput | OAuthUpsertWithWhereUniqueWithoutUserInput[]
@@ -18222,7 +18006,7 @@ export namespace Prisma {
     deleteMany?: OAuthScalarWhereInput | OAuthScalarWhereInput[]
   }
 
-  export type AccessTokenUncheckedUpdateManyWithoutUserInfoNestedInput = {
+  export interface AccessTokenUncheckedUpdateManyWithoutUserInfoNestedInput {
     create?: XOR<AccessTokenCreateWithoutUserInfoInput, AccessTokenUncheckedCreateWithoutUserInfoInput> | AccessTokenCreateWithoutUserInfoInput[] | AccessTokenUncheckedCreateWithoutUserInfoInput[]
     connectOrCreate?: AccessTokenCreateOrConnectWithoutUserInfoInput | AccessTokenCreateOrConnectWithoutUserInfoInput[]
     upsert?: AccessTokenUpsertWithWhereUniqueWithoutUserInfoInput | AccessTokenUpsertWithWhereUniqueWithoutUserInfoInput[]
@@ -18236,7 +18020,7 @@ export namespace Prisma {
     deleteMany?: AccessTokenScalarWhereInput | AccessTokenScalarWhereInput[]
   }
 
-  export type UserConfigUncheckedUpdateOneWithoutUserInfoNestedInput = {
+  export interface UserConfigUncheckedUpdateOneWithoutUserInfoNestedInput {
     create?: XOR<UserConfigCreateWithoutUserInfoInput, UserConfigUncheckedCreateWithoutUserInfoInput>
     connectOrCreate?: UserConfigCreateOrConnectWithoutUserInfoInput
     upsert?: UserConfigUpsertWithoutUserInfoInput
@@ -18246,7 +18030,7 @@ export namespace Prisma {
     update?: XOR<XOR<UserConfigUpdateToOneWithWhereWithoutUserInfoInput, UserConfigUpdateWithoutUserInfoInput>, UserConfigUncheckedUpdateWithoutUserInfoInput>
   }
 
-  export type BlogMemoUncheckedUpdateManyWithoutUser_infoNestedInput = {
+  export interface BlogMemoUncheckedUpdateManyWithoutUser_infoNestedInput {
     create?: XOR<BlogMemoCreateWithoutUser_infoInput, BlogMemoUncheckedCreateWithoutUser_infoInput> | BlogMemoCreateWithoutUser_infoInput[] | BlogMemoUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: BlogMemoCreateOrConnectWithoutUser_infoInput | BlogMemoCreateOrConnectWithoutUser_infoInput[]
     upsert?: BlogMemoUpsertWithWhereUniqueWithoutUser_infoInput | BlogMemoUpsertWithWhereUniqueWithoutUser_infoInput[]
@@ -18260,7 +18044,7 @@ export namespace Prisma {
     deleteMany?: BlogMemoScalarWhereInput | BlogMemoScalarWhereInput[]
   }
 
-  export type MemoTagUncheckedUpdateManyWithoutUser_infoNestedInput = {
+  export interface MemoTagUncheckedUpdateManyWithoutUser_infoNestedInput {
     create?: XOR<MemoTagCreateWithoutUser_infoInput, MemoTagUncheckedCreateWithoutUser_infoInput> | MemoTagCreateWithoutUser_infoInput[] | MemoTagUncheckedCreateWithoutUser_infoInput[]
     connectOrCreate?: MemoTagCreateOrConnectWithoutUser_infoInput | MemoTagCreateOrConnectWithoutUser_infoInput[]
     upsert?: MemoTagUpsertWithWhereUniqueWithoutUser_infoInput | MemoTagUpsertWithWhereUniqueWithoutUser_infoInput[]
@@ -18274,13 +18058,13 @@ export namespace Prisma {
     deleteMany?: MemoTagScalarWhereInput | MemoTagScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutUser_configInput = {
+  export interface UserCreateNestedOneWithoutUser_configInput {
     create?: XOR<UserCreateWithoutUser_configInput, UserUncheckedCreateWithoutUser_configInput>
     connectOrCreate?: UserCreateOrConnectWithoutUser_configInput
     connect?: UserWhereUniqueInput
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
+  export interface NullableIntFieldUpdateOperationsInput {
     set?: number | null
     increment?: number
     decrement?: number
@@ -18288,11 +18072,11 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
+  export interface DateTimeFieldUpdateOperationsInput {
     set?: Date | string
   }
 
-  export type UserUpdateOneRequiredWithoutUser_configNestedInput = {
+  export interface UserUpdateOneRequiredWithoutUser_configNestedInput {
     create?: XOR<UserCreateWithoutUser_configInput, UserUncheckedCreateWithoutUser_configInput>
     connectOrCreate?: UserCreateOrConnectWithoutUser_configInput
     upsert?: UserUpsertWithoutUser_configInput
@@ -18300,17 +18084,17 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUser_configInput, UserUpdateWithoutUser_configInput>, UserUncheckedUpdateWithoutUser_configInput>
   }
 
-  export type UserCreateNestedOneWithoutTokensInput = {
+  export interface UserCreateNestedOneWithoutTokensInput {
     create?: XOR<UserCreateWithoutTokensInput, UserUncheckedCreateWithoutTokensInput>
     connectOrCreate?: UserCreateOrConnectWithoutTokensInput
     connect?: UserWhereUniqueInput
   }
 
-  export type BoolFieldUpdateOperationsInput = {
+  export interface BoolFieldUpdateOperationsInput {
     set?: boolean
   }
 
-  export type UserUpdateOneRequiredWithoutTokensNestedInput = {
+  export interface UserUpdateOneRequiredWithoutTokensNestedInput {
     create?: XOR<UserCreateWithoutTokensInput, UserUncheckedCreateWithoutTokensInput>
     connectOrCreate?: UserCreateOrConnectWithoutTokensInput
     upsert?: UserUpsertWithoutTokensInput
@@ -18318,13 +18102,13 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTokensInput, UserUpdateWithoutTokensInput>, UserUncheckedUpdateWithoutTokensInput>
   }
 
-  export type UserCreateNestedOneWithoutOauthInput = {
+  export interface UserCreateNestedOneWithoutOauthInput {
     create?: XOR<UserCreateWithoutOauthInput, UserUncheckedCreateWithoutOauthInput>
     connectOrCreate?: UserCreateOrConnectWithoutOauthInput
     connect?: UserWhereUniqueInput
   }
 
-  export type UserUpdateOneWithoutOauthNestedInput = {
+  export interface UserUpdateOneWithoutOauthNestedInput {
     create?: XOR<UserCreateWithoutOauthInput, UserUncheckedCreateWithoutOauthInput>
     connectOrCreate?: UserCreateOrConnectWithoutOauthInput
     upsert?: UserUpsertWithoutOauthInput
@@ -18334,47 +18118,47 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOauthInput, UserUpdateWithoutOauthInput>, UserUncheckedUpdateWithoutOauthInput>
   }
 
-  export type UserCreateNestedOneWithoutCommentsInput = {
+  export interface UserCreateNestedOneWithoutCommentsInput {
     create?: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
     connectOrCreate?: UserCreateOrConnectWithoutCommentsInput
     connect?: UserWhereUniqueInput
   }
 
-  export type BlogSubCommentCreateNestedManyWithoutComment_infoInput = {
+  export interface BlogSubCommentCreateNestedManyWithoutComment_infoInput {
     create?: XOR<BlogSubCommentCreateWithoutComment_infoInput, BlogSubCommentUncheckedCreateWithoutComment_infoInput> | BlogSubCommentCreateWithoutComment_infoInput[] | BlogSubCommentUncheckedCreateWithoutComment_infoInput[]
     connectOrCreate?: BlogSubCommentCreateOrConnectWithoutComment_infoInput | BlogSubCommentCreateOrConnectWithoutComment_infoInput[]
     createMany?: BlogSubCommentCreateManyComment_infoInputEnvelope
     connect?: BlogSubCommentWhereUniqueInput | BlogSubCommentWhereUniqueInput[]
   }
 
-  export type BlogLikeCreateNestedManyWithoutComment_infoInput = {
+  export interface BlogLikeCreateNestedManyWithoutComment_infoInput {
     create?: XOR<BlogLikeCreateWithoutComment_infoInput, BlogLikeUncheckedCreateWithoutComment_infoInput> | BlogLikeCreateWithoutComment_infoInput[] | BlogLikeUncheckedCreateWithoutComment_infoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutComment_infoInput | BlogLikeCreateOrConnectWithoutComment_infoInput[]
     createMany?: BlogLikeCreateManyComment_infoInputEnvelope
     connect?: BlogLikeWhereUniqueInput | BlogLikeWhereUniqueInput[]
   }
 
-  export type BlogMemoCreateNestedOneWithoutCommentsInput = {
+  export interface BlogMemoCreateNestedOneWithoutCommentsInput {
     create?: XOR<BlogMemoCreateWithoutCommentsInput, BlogMemoUncheckedCreateWithoutCommentsInput>
     connectOrCreate?: BlogMemoCreateOrConnectWithoutCommentsInput
     connect?: BlogMemoWhereUniqueInput
   }
 
-  export type BlogSubCommentUncheckedCreateNestedManyWithoutComment_infoInput = {
+  export interface BlogSubCommentUncheckedCreateNestedManyWithoutComment_infoInput {
     create?: XOR<BlogSubCommentCreateWithoutComment_infoInput, BlogSubCommentUncheckedCreateWithoutComment_infoInput> | BlogSubCommentCreateWithoutComment_infoInput[] | BlogSubCommentUncheckedCreateWithoutComment_infoInput[]
     connectOrCreate?: BlogSubCommentCreateOrConnectWithoutComment_infoInput | BlogSubCommentCreateOrConnectWithoutComment_infoInput[]
     createMany?: BlogSubCommentCreateManyComment_infoInputEnvelope
     connect?: BlogSubCommentWhereUniqueInput | BlogSubCommentWhereUniqueInput[]
   }
 
-  export type BlogLikeUncheckedCreateNestedManyWithoutComment_infoInput = {
+  export interface BlogLikeUncheckedCreateNestedManyWithoutComment_infoInput {
     create?: XOR<BlogLikeCreateWithoutComment_infoInput, BlogLikeUncheckedCreateWithoutComment_infoInput> | BlogLikeCreateWithoutComment_infoInput[] | BlogLikeUncheckedCreateWithoutComment_infoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutComment_infoInput | BlogLikeCreateOrConnectWithoutComment_infoInput[]
     createMany?: BlogLikeCreateManyComment_infoInputEnvelope
     connect?: BlogLikeWhereUniqueInput | BlogLikeWhereUniqueInput[]
   }
 
-  export type UserUpdateOneWithoutCommentsNestedInput = {
+  export interface UserUpdateOneWithoutCommentsNestedInput {
     create?: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
     connectOrCreate?: UserCreateOrConnectWithoutCommentsInput
     upsert?: UserUpsertWithoutCommentsInput
@@ -18384,7 +18168,7 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCommentsInput, UserUpdateWithoutCommentsInput>, UserUncheckedUpdateWithoutCommentsInput>
   }
 
-  export type BlogSubCommentUpdateManyWithoutComment_infoNestedInput = {
+  export interface BlogSubCommentUpdateManyWithoutComment_infoNestedInput {
     create?: XOR<BlogSubCommentCreateWithoutComment_infoInput, BlogSubCommentUncheckedCreateWithoutComment_infoInput> | BlogSubCommentCreateWithoutComment_infoInput[] | BlogSubCommentUncheckedCreateWithoutComment_infoInput[]
     connectOrCreate?: BlogSubCommentCreateOrConnectWithoutComment_infoInput | BlogSubCommentCreateOrConnectWithoutComment_infoInput[]
     upsert?: BlogSubCommentUpsertWithWhereUniqueWithoutComment_infoInput | BlogSubCommentUpsertWithWhereUniqueWithoutComment_infoInput[]
@@ -18398,7 +18182,7 @@ export namespace Prisma {
     deleteMany?: BlogSubCommentScalarWhereInput | BlogSubCommentScalarWhereInput[]
   }
 
-  export type BlogLikeUpdateManyWithoutComment_infoNestedInput = {
+  export interface BlogLikeUpdateManyWithoutComment_infoNestedInput {
     create?: XOR<BlogLikeCreateWithoutComment_infoInput, BlogLikeUncheckedCreateWithoutComment_infoInput> | BlogLikeCreateWithoutComment_infoInput[] | BlogLikeUncheckedCreateWithoutComment_infoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutComment_infoInput | BlogLikeCreateOrConnectWithoutComment_infoInput[]
     upsert?: BlogLikeUpsertWithWhereUniqueWithoutComment_infoInput | BlogLikeUpsertWithWhereUniqueWithoutComment_infoInput[]
@@ -18412,7 +18196,7 @@ export namespace Prisma {
     deleteMany?: BlogLikeScalarWhereInput | BlogLikeScalarWhereInput[]
   }
 
-  export type BlogMemoUpdateOneWithoutCommentsNestedInput = {
+  export interface BlogMemoUpdateOneWithoutCommentsNestedInput {
     create?: XOR<BlogMemoCreateWithoutCommentsInput, BlogMemoUncheckedCreateWithoutCommentsInput>
     connectOrCreate?: BlogMemoCreateOrConnectWithoutCommentsInput
     upsert?: BlogMemoUpsertWithoutCommentsInput
@@ -18422,7 +18206,7 @@ export namespace Prisma {
     update?: XOR<XOR<BlogMemoUpdateToOneWithWhereWithoutCommentsInput, BlogMemoUpdateWithoutCommentsInput>, BlogMemoUncheckedUpdateWithoutCommentsInput>
   }
 
-  export type BlogSubCommentUncheckedUpdateManyWithoutComment_infoNestedInput = {
+  export interface BlogSubCommentUncheckedUpdateManyWithoutComment_infoNestedInput {
     create?: XOR<BlogSubCommentCreateWithoutComment_infoInput, BlogSubCommentUncheckedCreateWithoutComment_infoInput> | BlogSubCommentCreateWithoutComment_infoInput[] | BlogSubCommentUncheckedCreateWithoutComment_infoInput[]
     connectOrCreate?: BlogSubCommentCreateOrConnectWithoutComment_infoInput | BlogSubCommentCreateOrConnectWithoutComment_infoInput[]
     upsert?: BlogSubCommentUpsertWithWhereUniqueWithoutComment_infoInput | BlogSubCommentUpsertWithWhereUniqueWithoutComment_infoInput[]
@@ -18436,7 +18220,7 @@ export namespace Prisma {
     deleteMany?: BlogSubCommentScalarWhereInput | BlogSubCommentScalarWhereInput[]
   }
 
-  export type BlogLikeUncheckedUpdateManyWithoutComment_infoNestedInput = {
+  export interface BlogLikeUncheckedUpdateManyWithoutComment_infoNestedInput {
     create?: XOR<BlogLikeCreateWithoutComment_infoInput, BlogLikeUncheckedCreateWithoutComment_infoInput> | BlogLikeCreateWithoutComment_infoInput[] | BlogLikeUncheckedCreateWithoutComment_infoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutComment_infoInput | BlogLikeCreateOrConnectWithoutComment_infoInput[]
     upsert?: BlogLikeUpsertWithWhereUniqueWithoutComment_infoInput | BlogLikeUpsertWithWhereUniqueWithoutComment_infoInput[]
@@ -18450,33 +18234,33 @@ export namespace Prisma {
     deleteMany?: BlogLikeScalarWhereInput | BlogLikeScalarWhereInput[]
   }
 
-  export type BlogCommentCreateNestedOneWithoutSub_commentsInput = {
+  export interface BlogCommentCreateNestedOneWithoutSub_commentsInput {
     create?: XOR<BlogCommentCreateWithoutSub_commentsInput, BlogCommentUncheckedCreateWithoutSub_commentsInput>
     connectOrCreate?: BlogCommentCreateOrConnectWithoutSub_commentsInput
     connect?: BlogCommentWhereUniqueInput
   }
 
-  export type UserCreateNestedOneWithoutSub_commentsInput = {
+  export interface UserCreateNestedOneWithoutSub_commentsInput {
     create?: XOR<UserCreateWithoutSub_commentsInput, UserUncheckedCreateWithoutSub_commentsInput>
     connectOrCreate?: UserCreateOrConnectWithoutSub_commentsInput
     connect?: UserWhereUniqueInput
   }
 
-  export type BlogLikeCreateNestedManyWithoutSub_comment_infoInput = {
+  export interface BlogLikeCreateNestedManyWithoutSub_comment_infoInput {
     create?: XOR<BlogLikeCreateWithoutSub_comment_infoInput, BlogLikeUncheckedCreateWithoutSub_comment_infoInput> | BlogLikeCreateWithoutSub_comment_infoInput[] | BlogLikeUncheckedCreateWithoutSub_comment_infoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutSub_comment_infoInput | BlogLikeCreateOrConnectWithoutSub_comment_infoInput[]
     createMany?: BlogLikeCreateManySub_comment_infoInputEnvelope
     connect?: BlogLikeWhereUniqueInput | BlogLikeWhereUniqueInput[]
   }
 
-  export type BlogLikeUncheckedCreateNestedManyWithoutSub_comment_infoInput = {
+  export interface BlogLikeUncheckedCreateNestedManyWithoutSub_comment_infoInput {
     create?: XOR<BlogLikeCreateWithoutSub_comment_infoInput, BlogLikeUncheckedCreateWithoutSub_comment_infoInput> | BlogLikeCreateWithoutSub_comment_infoInput[] | BlogLikeUncheckedCreateWithoutSub_comment_infoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutSub_comment_infoInput | BlogLikeCreateOrConnectWithoutSub_comment_infoInput[]
     createMany?: BlogLikeCreateManySub_comment_infoInputEnvelope
     connect?: BlogLikeWhereUniqueInput | BlogLikeWhereUniqueInput[]
   }
 
-  export type BlogCommentUpdateOneRequiredWithoutSub_commentsNestedInput = {
+  export interface BlogCommentUpdateOneRequiredWithoutSub_commentsNestedInput {
     create?: XOR<BlogCommentCreateWithoutSub_commentsInput, BlogCommentUncheckedCreateWithoutSub_commentsInput>
     connectOrCreate?: BlogCommentCreateOrConnectWithoutSub_commentsInput
     upsert?: BlogCommentUpsertWithoutSub_commentsInput
@@ -18484,7 +18268,7 @@ export namespace Prisma {
     update?: XOR<XOR<BlogCommentUpdateToOneWithWhereWithoutSub_commentsInput, BlogCommentUpdateWithoutSub_commentsInput>, BlogCommentUncheckedUpdateWithoutSub_commentsInput>
   }
 
-  export type UserUpdateOneWithoutSub_commentsNestedInput = {
+  export interface UserUpdateOneWithoutSub_commentsNestedInput {
     create?: XOR<UserCreateWithoutSub_commentsInput, UserUncheckedCreateWithoutSub_commentsInput>
     connectOrCreate?: UserCreateOrConnectWithoutSub_commentsInput
     upsert?: UserUpsertWithoutSub_commentsInput
@@ -18494,7 +18278,7 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSub_commentsInput, UserUpdateWithoutSub_commentsInput>, UserUncheckedUpdateWithoutSub_commentsInput>
   }
 
-  export type BlogLikeUpdateManyWithoutSub_comment_infoNestedInput = {
+  export interface BlogLikeUpdateManyWithoutSub_comment_infoNestedInput {
     create?: XOR<BlogLikeCreateWithoutSub_comment_infoInput, BlogLikeUncheckedCreateWithoutSub_comment_infoInput> | BlogLikeCreateWithoutSub_comment_infoInput[] | BlogLikeUncheckedCreateWithoutSub_comment_infoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutSub_comment_infoInput | BlogLikeCreateOrConnectWithoutSub_comment_infoInput[]
     upsert?: BlogLikeUpsertWithWhereUniqueWithoutSub_comment_infoInput | BlogLikeUpsertWithWhereUniqueWithoutSub_comment_infoInput[]
@@ -18508,7 +18292,7 @@ export namespace Prisma {
     deleteMany?: BlogLikeScalarWhereInput | BlogLikeScalarWhereInput[]
   }
 
-  export type BlogLikeUncheckedUpdateManyWithoutSub_comment_infoNestedInput = {
+  export interface BlogLikeUncheckedUpdateManyWithoutSub_comment_infoNestedInput {
     create?: XOR<BlogLikeCreateWithoutSub_comment_infoInput, BlogLikeUncheckedCreateWithoutSub_comment_infoInput> | BlogLikeCreateWithoutSub_comment_infoInput[] | BlogLikeUncheckedCreateWithoutSub_comment_infoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutSub_comment_infoInput | BlogLikeCreateOrConnectWithoutSub_comment_infoInput[]
     upsert?: BlogLikeUpsertWithWhereUniqueWithoutSub_comment_infoInput | BlogLikeUpsertWithWhereUniqueWithoutSub_comment_infoInput[]
@@ -18522,31 +18306,31 @@ export namespace Prisma {
     deleteMany?: BlogLikeScalarWhereInput | BlogLikeScalarWhereInput[]
   }
 
-  export type BlogSubCommentCreateNestedOneWithoutLikesInput = {
+  export interface BlogSubCommentCreateNestedOneWithoutLikesInput {
     create?: XOR<BlogSubCommentCreateWithoutLikesInput, BlogSubCommentUncheckedCreateWithoutLikesInput>
     connectOrCreate?: BlogSubCommentCreateOrConnectWithoutLikesInput
     connect?: BlogSubCommentWhereUniqueInput
   }
 
-  export type BlogCommentCreateNestedOneWithoutLikesInput = {
+  export interface BlogCommentCreateNestedOneWithoutLikesInput {
     create?: XOR<BlogCommentCreateWithoutLikesInput, BlogCommentUncheckedCreateWithoutLikesInput>
     connectOrCreate?: BlogCommentCreateOrConnectWithoutLikesInput
     connect?: BlogCommentWhereUniqueInput
   }
 
-  export type UserCreateNestedOneWithoutLikesInput = {
+  export interface UserCreateNestedOneWithoutLikesInput {
     create?: XOR<UserCreateWithoutLikesInput, UserUncheckedCreateWithoutLikesInput>
     connectOrCreate?: UserCreateOrConnectWithoutLikesInput
     connect?: UserWhereUniqueInput
   }
 
-  export type BlogMemoCreateNestedOneWithoutLikesInput = {
+  export interface BlogMemoCreateNestedOneWithoutLikesInput {
     create?: XOR<BlogMemoCreateWithoutLikesInput, BlogMemoUncheckedCreateWithoutLikesInput>
     connectOrCreate?: BlogMemoCreateOrConnectWithoutLikesInput
     connect?: BlogMemoWhereUniqueInput
   }
 
-  export type BlogSubCommentUpdateOneWithoutLikesNestedInput = {
+  export interface BlogSubCommentUpdateOneWithoutLikesNestedInput {
     create?: XOR<BlogSubCommentCreateWithoutLikesInput, BlogSubCommentUncheckedCreateWithoutLikesInput>
     connectOrCreate?: BlogSubCommentCreateOrConnectWithoutLikesInput
     upsert?: BlogSubCommentUpsertWithoutLikesInput
@@ -18556,7 +18340,7 @@ export namespace Prisma {
     update?: XOR<XOR<BlogSubCommentUpdateToOneWithWhereWithoutLikesInput, BlogSubCommentUpdateWithoutLikesInput>, BlogSubCommentUncheckedUpdateWithoutLikesInput>
   }
 
-  export type BlogCommentUpdateOneWithoutLikesNestedInput = {
+  export interface BlogCommentUpdateOneWithoutLikesNestedInput {
     create?: XOR<BlogCommentCreateWithoutLikesInput, BlogCommentUncheckedCreateWithoutLikesInput>
     connectOrCreate?: BlogCommentCreateOrConnectWithoutLikesInput
     upsert?: BlogCommentUpsertWithoutLikesInput
@@ -18566,7 +18350,7 @@ export namespace Prisma {
     update?: XOR<XOR<BlogCommentUpdateToOneWithWhereWithoutLikesInput, BlogCommentUpdateWithoutLikesInput>, BlogCommentUncheckedUpdateWithoutLikesInput>
   }
 
-  export type UserUpdateOneRequiredWithoutLikesNestedInput = {
+  export interface UserUpdateOneRequiredWithoutLikesNestedInput {
     create?: XOR<UserCreateWithoutLikesInput, UserUncheckedCreateWithoutLikesInput>
     connectOrCreate?: UserCreateOrConnectWithoutLikesInput
     upsert?: UserUpsertWithoutLikesInput
@@ -18574,7 +18358,7 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLikesInput, UserUpdateWithoutLikesInput>, UserUncheckedUpdateWithoutLikesInput>
   }
 
-  export type BlogMemoUpdateOneWithoutLikesNestedInput = {
+  export interface BlogMemoUpdateOneWithoutLikesNestedInput {
     create?: XOR<BlogMemoCreateWithoutLikesInput, BlogMemoUncheckedCreateWithoutLikesInput>
     connectOrCreate?: BlogMemoCreateOrConnectWithoutLikesInput
     upsert?: BlogMemoUpsertWithoutLikesInput
@@ -18584,55 +18368,55 @@ export namespace Prisma {
     update?: XOR<XOR<BlogMemoUpdateToOneWithWhereWithoutLikesInput, BlogMemoUpdateWithoutLikesInput>, BlogMemoUncheckedUpdateWithoutLikesInput>
   }
 
-  export type UserCreateNestedOneWithoutMemosInput = {
+  export interface UserCreateNestedOneWithoutMemosInput {
     create?: XOR<UserCreateWithoutMemosInput, UserUncheckedCreateWithoutMemosInput>
     connectOrCreate?: UserCreateOrConnectWithoutMemosInput
     connect?: UserWhereUniqueInput
   }
 
-  export type MemoTagRelationsCreateNestedManyWithoutMemoInput = {
+  export interface MemoTagRelationsCreateNestedManyWithoutMemoInput {
     create?: XOR<MemoTagRelationsCreateWithoutMemoInput, MemoTagRelationsUncheckedCreateWithoutMemoInput> | MemoTagRelationsCreateWithoutMemoInput[] | MemoTagRelationsUncheckedCreateWithoutMemoInput[]
     connectOrCreate?: MemoTagRelationsCreateOrConnectWithoutMemoInput | MemoTagRelationsCreateOrConnectWithoutMemoInput[]
     createMany?: MemoTagRelationsCreateManyMemoInputEnvelope
     connect?: MemoTagRelationsWhereUniqueInput | MemoTagRelationsWhereUniqueInput[]
   }
 
-  export type BlogCommentCreateNestedManyWithoutMemo_infoInput = {
+  export interface BlogCommentCreateNestedManyWithoutMemo_infoInput {
     create?: XOR<BlogCommentCreateWithoutMemo_infoInput, BlogCommentUncheckedCreateWithoutMemo_infoInput> | BlogCommentCreateWithoutMemo_infoInput[] | BlogCommentUncheckedCreateWithoutMemo_infoInput[]
     connectOrCreate?: BlogCommentCreateOrConnectWithoutMemo_infoInput | BlogCommentCreateOrConnectWithoutMemo_infoInput[]
     createMany?: BlogCommentCreateManyMemo_infoInputEnvelope
     connect?: BlogCommentWhereUniqueInput | BlogCommentWhereUniqueInput[]
   }
 
-  export type BlogLikeCreateNestedManyWithoutBlogMemoInfoInput = {
+  export interface BlogLikeCreateNestedManyWithoutBlogMemoInfoInput {
     create?: XOR<BlogLikeCreateWithoutBlogMemoInfoInput, BlogLikeUncheckedCreateWithoutBlogMemoInfoInput> | BlogLikeCreateWithoutBlogMemoInfoInput[] | BlogLikeUncheckedCreateWithoutBlogMemoInfoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutBlogMemoInfoInput | BlogLikeCreateOrConnectWithoutBlogMemoInfoInput[]
     createMany?: BlogLikeCreateManyBlogMemoInfoInputEnvelope
     connect?: BlogLikeWhereUniqueInput | BlogLikeWhereUniqueInput[]
   }
 
-  export type MemoTagRelationsUncheckedCreateNestedManyWithoutMemoInput = {
+  export interface MemoTagRelationsUncheckedCreateNestedManyWithoutMemoInput {
     create?: XOR<MemoTagRelationsCreateWithoutMemoInput, MemoTagRelationsUncheckedCreateWithoutMemoInput> | MemoTagRelationsCreateWithoutMemoInput[] | MemoTagRelationsUncheckedCreateWithoutMemoInput[]
     connectOrCreate?: MemoTagRelationsCreateOrConnectWithoutMemoInput | MemoTagRelationsCreateOrConnectWithoutMemoInput[]
     createMany?: MemoTagRelationsCreateManyMemoInputEnvelope
     connect?: MemoTagRelationsWhereUniqueInput | MemoTagRelationsWhereUniqueInput[]
   }
 
-  export type BlogCommentUncheckedCreateNestedManyWithoutMemo_infoInput = {
+  export interface BlogCommentUncheckedCreateNestedManyWithoutMemo_infoInput {
     create?: XOR<BlogCommentCreateWithoutMemo_infoInput, BlogCommentUncheckedCreateWithoutMemo_infoInput> | BlogCommentCreateWithoutMemo_infoInput[] | BlogCommentUncheckedCreateWithoutMemo_infoInput[]
     connectOrCreate?: BlogCommentCreateOrConnectWithoutMemo_infoInput | BlogCommentCreateOrConnectWithoutMemo_infoInput[]
     createMany?: BlogCommentCreateManyMemo_infoInputEnvelope
     connect?: BlogCommentWhereUniqueInput | BlogCommentWhereUniqueInput[]
   }
 
-  export type BlogLikeUncheckedCreateNestedManyWithoutBlogMemoInfoInput = {
+  export interface BlogLikeUncheckedCreateNestedManyWithoutBlogMemoInfoInput {
     create?: XOR<BlogLikeCreateWithoutBlogMemoInfoInput, BlogLikeUncheckedCreateWithoutBlogMemoInfoInput> | BlogLikeCreateWithoutBlogMemoInfoInput[] | BlogLikeUncheckedCreateWithoutBlogMemoInfoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutBlogMemoInfoInput | BlogLikeCreateOrConnectWithoutBlogMemoInfoInput[]
     createMany?: BlogLikeCreateManyBlogMemoInfoInputEnvelope
     connect?: BlogLikeWhereUniqueInput | BlogLikeWhereUniqueInput[]
   }
 
-  export type UserUpdateOneRequiredWithoutMemosNestedInput = {
+  export interface UserUpdateOneRequiredWithoutMemosNestedInput {
     create?: XOR<UserCreateWithoutMemosInput, UserUncheckedCreateWithoutMemosInput>
     connectOrCreate?: UserCreateOrConnectWithoutMemosInput
     upsert?: UserUpsertWithoutMemosInput
@@ -18640,7 +18424,7 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMemosInput, UserUpdateWithoutMemosInput>, UserUncheckedUpdateWithoutMemosInput>
   }
 
-  export type MemoTagRelationsUpdateManyWithoutMemoNestedInput = {
+  export interface MemoTagRelationsUpdateManyWithoutMemoNestedInput {
     create?: XOR<MemoTagRelationsCreateWithoutMemoInput, MemoTagRelationsUncheckedCreateWithoutMemoInput> | MemoTagRelationsCreateWithoutMemoInput[] | MemoTagRelationsUncheckedCreateWithoutMemoInput[]
     connectOrCreate?: MemoTagRelationsCreateOrConnectWithoutMemoInput | MemoTagRelationsCreateOrConnectWithoutMemoInput[]
     upsert?: MemoTagRelationsUpsertWithWhereUniqueWithoutMemoInput | MemoTagRelationsUpsertWithWhereUniqueWithoutMemoInput[]
@@ -18654,7 +18438,7 @@ export namespace Prisma {
     deleteMany?: MemoTagRelationsScalarWhereInput | MemoTagRelationsScalarWhereInput[]
   }
 
-  export type BlogCommentUpdateManyWithoutMemo_infoNestedInput = {
+  export interface BlogCommentUpdateManyWithoutMemo_infoNestedInput {
     create?: XOR<BlogCommentCreateWithoutMemo_infoInput, BlogCommentUncheckedCreateWithoutMemo_infoInput> | BlogCommentCreateWithoutMemo_infoInput[] | BlogCommentUncheckedCreateWithoutMemo_infoInput[]
     connectOrCreate?: BlogCommentCreateOrConnectWithoutMemo_infoInput | BlogCommentCreateOrConnectWithoutMemo_infoInput[]
     upsert?: BlogCommentUpsertWithWhereUniqueWithoutMemo_infoInput | BlogCommentUpsertWithWhereUniqueWithoutMemo_infoInput[]
@@ -18668,7 +18452,7 @@ export namespace Prisma {
     deleteMany?: BlogCommentScalarWhereInput | BlogCommentScalarWhereInput[]
   }
 
-  export type BlogLikeUpdateManyWithoutBlogMemoInfoNestedInput = {
+  export interface BlogLikeUpdateManyWithoutBlogMemoInfoNestedInput {
     create?: XOR<BlogLikeCreateWithoutBlogMemoInfoInput, BlogLikeUncheckedCreateWithoutBlogMemoInfoInput> | BlogLikeCreateWithoutBlogMemoInfoInput[] | BlogLikeUncheckedCreateWithoutBlogMemoInfoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutBlogMemoInfoInput | BlogLikeCreateOrConnectWithoutBlogMemoInfoInput[]
     upsert?: BlogLikeUpsertWithWhereUniqueWithoutBlogMemoInfoInput | BlogLikeUpsertWithWhereUniqueWithoutBlogMemoInfoInput[]
@@ -18682,7 +18466,7 @@ export namespace Prisma {
     deleteMany?: BlogLikeScalarWhereInput | BlogLikeScalarWhereInput[]
   }
 
-  export type MemoTagRelationsUncheckedUpdateManyWithoutMemoNestedInput = {
+  export interface MemoTagRelationsUncheckedUpdateManyWithoutMemoNestedInput {
     create?: XOR<MemoTagRelationsCreateWithoutMemoInput, MemoTagRelationsUncheckedCreateWithoutMemoInput> | MemoTagRelationsCreateWithoutMemoInput[] | MemoTagRelationsUncheckedCreateWithoutMemoInput[]
     connectOrCreate?: MemoTagRelationsCreateOrConnectWithoutMemoInput | MemoTagRelationsCreateOrConnectWithoutMemoInput[]
     upsert?: MemoTagRelationsUpsertWithWhereUniqueWithoutMemoInput | MemoTagRelationsUpsertWithWhereUniqueWithoutMemoInput[]
@@ -18696,7 +18480,7 @@ export namespace Prisma {
     deleteMany?: MemoTagRelationsScalarWhereInput | MemoTagRelationsScalarWhereInput[]
   }
 
-  export type BlogCommentUncheckedUpdateManyWithoutMemo_infoNestedInput = {
+  export interface BlogCommentUncheckedUpdateManyWithoutMemo_infoNestedInput {
     create?: XOR<BlogCommentCreateWithoutMemo_infoInput, BlogCommentUncheckedCreateWithoutMemo_infoInput> | BlogCommentCreateWithoutMemo_infoInput[] | BlogCommentUncheckedCreateWithoutMemo_infoInput[]
     connectOrCreate?: BlogCommentCreateOrConnectWithoutMemo_infoInput | BlogCommentCreateOrConnectWithoutMemo_infoInput[]
     upsert?: BlogCommentUpsertWithWhereUniqueWithoutMemo_infoInput | BlogCommentUpsertWithWhereUniqueWithoutMemo_infoInput[]
@@ -18710,7 +18494,7 @@ export namespace Prisma {
     deleteMany?: BlogCommentScalarWhereInput | BlogCommentScalarWhereInput[]
   }
 
-  export type BlogLikeUncheckedUpdateManyWithoutBlogMemoInfoNestedInput = {
+  export interface BlogLikeUncheckedUpdateManyWithoutBlogMemoInfoNestedInput {
     create?: XOR<BlogLikeCreateWithoutBlogMemoInfoInput, BlogLikeUncheckedCreateWithoutBlogMemoInfoInput> | BlogLikeCreateWithoutBlogMemoInfoInput[] | BlogLikeUncheckedCreateWithoutBlogMemoInfoInput[]
     connectOrCreate?: BlogLikeCreateOrConnectWithoutBlogMemoInfoInput | BlogLikeCreateOrConnectWithoutBlogMemoInfoInput[]
     upsert?: BlogLikeUpsertWithWhereUniqueWithoutBlogMemoInfoInput | BlogLikeUpsertWithWhereUniqueWithoutBlogMemoInfoInput[]
@@ -18724,27 +18508,27 @@ export namespace Prisma {
     deleteMany?: BlogLikeScalarWhereInput | BlogLikeScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutTagsInput = {
+  export interface UserCreateNestedOneWithoutTagsInput {
     create?: XOR<UserCreateWithoutTagsInput, UserUncheckedCreateWithoutTagsInput>
     connectOrCreate?: UserCreateOrConnectWithoutTagsInput
     connect?: UserWhereUniqueInput
   }
 
-  export type MemoTagRelationsCreateNestedManyWithoutTagInput = {
+  export interface MemoTagRelationsCreateNestedManyWithoutTagInput {
     create?: XOR<MemoTagRelationsCreateWithoutTagInput, MemoTagRelationsUncheckedCreateWithoutTagInput> | MemoTagRelationsCreateWithoutTagInput[] | MemoTagRelationsUncheckedCreateWithoutTagInput[]
     connectOrCreate?: MemoTagRelationsCreateOrConnectWithoutTagInput | MemoTagRelationsCreateOrConnectWithoutTagInput[]
     createMany?: MemoTagRelationsCreateManyTagInputEnvelope
     connect?: MemoTagRelationsWhereUniqueInput | MemoTagRelationsWhereUniqueInput[]
   }
 
-  export type MemoTagRelationsUncheckedCreateNestedManyWithoutTagInput = {
+  export interface MemoTagRelationsUncheckedCreateNestedManyWithoutTagInput {
     create?: XOR<MemoTagRelationsCreateWithoutTagInput, MemoTagRelationsUncheckedCreateWithoutTagInput> | MemoTagRelationsCreateWithoutTagInput[] | MemoTagRelationsUncheckedCreateWithoutTagInput[]
     connectOrCreate?: MemoTagRelationsCreateOrConnectWithoutTagInput | MemoTagRelationsCreateOrConnectWithoutTagInput[]
     createMany?: MemoTagRelationsCreateManyTagInputEnvelope
     connect?: MemoTagRelationsWhereUniqueInput | MemoTagRelationsWhereUniqueInput[]
   }
 
-  export type UserUpdateOneRequiredWithoutTagsNestedInput = {
+  export interface UserUpdateOneRequiredWithoutTagsNestedInput {
     create?: XOR<UserCreateWithoutTagsInput, UserUncheckedCreateWithoutTagsInput>
     connectOrCreate?: UserCreateOrConnectWithoutTagsInput
     upsert?: UserUpsertWithoutTagsInput
@@ -18752,7 +18536,7 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTagsInput, UserUpdateWithoutTagsInput>, UserUncheckedUpdateWithoutTagsInput>
   }
 
-  export type MemoTagRelationsUpdateManyWithoutTagNestedInput = {
+  export interface MemoTagRelationsUpdateManyWithoutTagNestedInput {
     create?: XOR<MemoTagRelationsCreateWithoutTagInput, MemoTagRelationsUncheckedCreateWithoutTagInput> | MemoTagRelationsCreateWithoutTagInput[] | MemoTagRelationsUncheckedCreateWithoutTagInput[]
     connectOrCreate?: MemoTagRelationsCreateOrConnectWithoutTagInput | MemoTagRelationsCreateOrConnectWithoutTagInput[]
     upsert?: MemoTagRelationsUpsertWithWhereUniqueWithoutTagInput | MemoTagRelationsUpsertWithWhereUniqueWithoutTagInput[]
@@ -18766,7 +18550,7 @@ export namespace Prisma {
     deleteMany?: MemoTagRelationsScalarWhereInput | MemoTagRelationsScalarWhereInput[]
   }
 
-  export type MemoTagRelationsUncheckedUpdateManyWithoutTagNestedInput = {
+  export interface MemoTagRelationsUncheckedUpdateManyWithoutTagNestedInput {
     create?: XOR<MemoTagRelationsCreateWithoutTagInput, MemoTagRelationsUncheckedCreateWithoutTagInput> | MemoTagRelationsCreateWithoutTagInput[] | MemoTagRelationsUncheckedCreateWithoutTagInput[]
     connectOrCreate?: MemoTagRelationsCreateOrConnectWithoutTagInput | MemoTagRelationsCreateOrConnectWithoutTagInput[]
     upsert?: MemoTagRelationsUpsertWithWhereUniqueWithoutTagInput | MemoTagRelationsUpsertWithWhereUniqueWithoutTagInput[]
@@ -18780,19 +18564,19 @@ export namespace Prisma {
     deleteMany?: MemoTagRelationsScalarWhereInput | MemoTagRelationsScalarWhereInput[]
   }
 
-  export type MemoTagCreateNestedOneWithoutMemosInput = {
+  export interface MemoTagCreateNestedOneWithoutMemosInput {
     create?: XOR<MemoTagCreateWithoutMemosInput, MemoTagUncheckedCreateWithoutMemosInput>
     connectOrCreate?: MemoTagCreateOrConnectWithoutMemosInput
     connect?: MemoTagWhereUniqueInput
   }
 
-  export type BlogMemoCreateNestedOneWithoutTagsInput = {
+  export interface BlogMemoCreateNestedOneWithoutTagsInput {
     create?: XOR<BlogMemoCreateWithoutTagsInput, BlogMemoUncheckedCreateWithoutTagsInput>
     connectOrCreate?: BlogMemoCreateOrConnectWithoutTagsInput
     connect?: BlogMemoWhereUniqueInput
   }
 
-  export type MemoTagUpdateOneRequiredWithoutMemosNestedInput = {
+  export interface MemoTagUpdateOneRequiredWithoutMemosNestedInput {
     create?: XOR<MemoTagCreateWithoutMemosInput, MemoTagUncheckedCreateWithoutMemosInput>
     connectOrCreate?: MemoTagCreateOrConnectWithoutMemosInput
     upsert?: MemoTagUpsertWithoutMemosInput
@@ -18800,7 +18584,7 @@ export namespace Prisma {
     update?: XOR<XOR<MemoTagUpdateToOneWithWhereWithoutMemosInput, MemoTagUpdateWithoutMemosInput>, MemoTagUncheckedUpdateWithoutMemosInput>
   }
 
-  export type BlogMemoUpdateOneRequiredWithoutTagsNestedInput = {
+  export interface BlogMemoUpdateOneRequiredWithoutTagsNestedInput {
     create?: XOR<BlogMemoCreateWithoutTagsInput, BlogMemoUncheckedCreateWithoutTagsInput>
     connectOrCreate?: BlogMemoCreateOrConnectWithoutTagsInput
     upsert?: BlogMemoUpsertWithoutTagsInput
@@ -18808,7 +18592,7 @@ export namespace Prisma {
     update?: XOR<XOR<BlogMemoUpdateToOneWithWhereWithoutTagsInput, BlogMemoUpdateWithoutTagsInput>, BlogMemoUncheckedUpdateWithoutTagsInput>
   }
 
-  export type NullableDecimalFieldUpdateOperationsInput = {
+  export interface NullableDecimalFieldUpdateOperationsInput {
     set?: Decimal | DecimalJsLike | number | string | null
     increment?: Decimal | DecimalJsLike | number | string
     decrement?: Decimal | DecimalJsLike | number | string
@@ -18816,7 +18600,7 @@ export namespace Prisma {
     divide?: Decimal | DecimalJsLike | number | string
   }
 
-  export type DecimalFieldUpdateOperationsInput = {
+  export interface DecimalFieldUpdateOperationsInput {
     set?: Decimal | DecimalJsLike | number | string
     increment?: Decimal | DecimalJsLike | number | string
     decrement?: Decimal | DecimalJsLike | number | string
@@ -18824,11 +18608,11 @@ export namespace Prisma {
     divide?: Decimal | DecimalJsLike | number | string
   }
 
-  export type NullableBoolFieldUpdateOperationsInput = {
+  export interface NullableBoolFieldUpdateOperationsInput {
     set?: boolean | null
   }
 
-  export type NestedStringFilter<$PrismaModel = never> = {
+  export interface NestedStringFilter<$PrismaModel = never> {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
     notIn?: string[]
@@ -18843,7 +18627,7 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
+  export interface NestedStringNullableFilter<$PrismaModel = never> {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
     notIn?: string[] | null
@@ -18858,7 +18642,7 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
+  export interface NestedIntFilter<$PrismaModel = never> {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
     notIn?: number[]
@@ -18869,7 +18653,7 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+  export interface NestedStringWithAggregatesFilter<$PrismaModel = never> {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
     notIn?: string[]
@@ -18887,7 +18671,7 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+  export interface NestedStringNullableWithAggregatesFilter<$PrismaModel = never> {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | null
     notIn?: string[] | null
@@ -18905,7 +18689,7 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
+  export interface NestedIntNullableFilter<$PrismaModel = never> {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
     notIn?: number[] | null
@@ -18916,7 +18700,7 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+  export interface NestedIntWithAggregatesFilter<$PrismaModel = never> {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
     notIn?: number[]
@@ -18932,7 +18716,7 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
+  export interface NestedFloatFilter<$PrismaModel = never> {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[]
     notIn?: number[]
@@ -18943,7 +18727,7 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
+  export interface NestedDateTimeFilter<$PrismaModel = never> {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
     notIn?: Date[] | string[]
@@ -18954,7 +18738,7 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+  export interface NestedIntNullableWithAggregatesFilter<$PrismaModel = never> {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
     notIn?: number[] | null
@@ -18970,7 +18754,7 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+  export interface NestedFloatNullableFilter<$PrismaModel = never> {
     equals?: number | FloatFieldRefInput<$PrismaModel> | null
     in?: number[] | null
     notIn?: number[] | null
@@ -18981,7 +18765,7 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+  export interface NestedDateTimeWithAggregatesFilter<$PrismaModel = never> {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
     notIn?: Date[] | string[]
@@ -18995,12 +18779,12 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
+  export interface NestedBoolFilter<$PrismaModel = never> {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+  export interface NestedBoolWithAggregatesFilter<$PrismaModel = never> {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
     _count?: NestedIntFilter<$PrismaModel>
@@ -19008,7 +18792,7 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+  export interface NestedDecimalNullableFilter<$PrismaModel = never> {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
     notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
@@ -19019,7 +18803,7 @@ export namespace Prisma {
     not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
   }
 
-  export type NestedDecimalFilter<$PrismaModel = never> = {
+  export interface NestedDecimalFilter<$PrismaModel = never> {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[]
     notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
@@ -19030,12 +18814,12 @@ export namespace Prisma {
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
-  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+  export interface NestedBoolNullableFilter<$PrismaModel = never> {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
   }
 
-  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+  export interface NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
     notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
@@ -19051,7 +18835,7 @@ export namespace Prisma {
     _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
-  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
+  export interface NestedDecimalWithAggregatesFilter<$PrismaModel = never> {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[]
     notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
@@ -19067,7 +18851,7 @@ export namespace Prisma {
     _max?: NestedDecimalFilter<$PrismaModel>
   }
 
-  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+  export interface NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
     _count?: NestedIntNullableFilter<$PrismaModel>
@@ -19075,7 +18859,7 @@ export namespace Prisma {
     _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
-  export type BlogCommentCreateWithoutUser_infoInput = {
+  export interface BlogCommentCreateWithoutUser_infoInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -19089,7 +18873,7 @@ export namespace Prisma {
     memo_info?: BlogMemoCreateNestedOneWithoutCommentsInput
   }
 
-  export type BlogCommentUncheckedCreateWithoutUser_infoInput = {
+  export interface BlogCommentUncheckedCreateWithoutUser_infoInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -19103,17 +18887,17 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedCreateNestedManyWithoutComment_infoInput
   }
 
-  export type BlogCommentCreateOrConnectWithoutUser_infoInput = {
+  export interface BlogCommentCreateOrConnectWithoutUser_infoInput {
     where: BlogCommentWhereUniqueInput
     create: XOR<BlogCommentCreateWithoutUser_infoInput, BlogCommentUncheckedCreateWithoutUser_infoInput>
   }
 
-  export type BlogCommentCreateManyUser_infoInputEnvelope = {
+  export interface BlogCommentCreateManyUser_infoInputEnvelope {
     data: BlogCommentCreateManyUser_infoInput | BlogCommentCreateManyUser_infoInput[]
     skipDuplicates?: boolean
   }
 
-  export type BlogSubCommentCreateWithoutUser_infoInput = {
+  export interface BlogSubCommentCreateWithoutUser_infoInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -19123,7 +18907,7 @@ export namespace Prisma {
     likes?: BlogLikeCreateNestedManyWithoutSub_comment_infoInput
   }
 
-  export type BlogSubCommentUncheckedCreateWithoutUser_infoInput = {
+  export interface BlogSubCommentUncheckedCreateWithoutUser_infoInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -19133,17 +18917,17 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedCreateNestedManyWithoutSub_comment_infoInput
   }
 
-  export type BlogSubCommentCreateOrConnectWithoutUser_infoInput = {
+  export interface BlogSubCommentCreateOrConnectWithoutUser_infoInput {
     where: BlogSubCommentWhereUniqueInput
     create: XOR<BlogSubCommentCreateWithoutUser_infoInput, BlogSubCommentUncheckedCreateWithoutUser_infoInput>
   }
 
-  export type BlogSubCommentCreateManyUser_infoInputEnvelope = {
+  export interface BlogSubCommentCreateManyUser_infoInputEnvelope {
     data: BlogSubCommentCreateManyUser_infoInput | BlogSubCommentCreateManyUser_infoInput[]
     skipDuplicates?: boolean
   }
 
-  export type BlogLikeCreateWithoutUser_infoInput = {
+  export interface BlogLikeCreateWithoutUser_infoInput {
     create_ts?: Date | string
     updated_ts?: Date | string
     target?: string
@@ -19153,7 +18937,7 @@ export namespace Prisma {
     blogMemoInfo?: BlogMemoCreateNestedOneWithoutLikesInput
   }
 
-  export type BlogLikeUncheckedCreateWithoutUser_infoInput = {
+  export interface BlogLikeUncheckedCreateWithoutUser_infoInput {
     id?: number
     create_ts?: Date | string
     updated_ts?: Date | string
@@ -19164,17 +18948,17 @@ export namespace Prisma {
     blogMemoId?: string | null
   }
 
-  export type BlogLikeCreateOrConnectWithoutUser_infoInput = {
+  export interface BlogLikeCreateOrConnectWithoutUser_infoInput {
     where: BlogLikeWhereUniqueInput
     create: XOR<BlogLikeCreateWithoutUser_infoInput, BlogLikeUncheckedCreateWithoutUser_infoInput>
   }
 
-  export type BlogLikeCreateManyUser_infoInputEnvelope = {
+  export interface BlogLikeCreateManyUser_infoInputEnvelope {
     data: BlogLikeCreateManyUser_infoInput | BlogLikeCreateManyUser_infoInput[]
     skipDuplicates?: boolean
   }
 
-  export type OAuthCreateWithoutUserInput = {
+  export interface OAuthCreateWithoutUserInput {
     id?: string
     provider: string
     providerId: string
@@ -19185,7 +18969,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type OAuthUncheckedCreateWithoutUserInput = {
+  export interface OAuthUncheckedCreateWithoutUserInput {
     id?: string
     provider: string
     providerId: string
@@ -19196,17 +18980,17 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type OAuthCreateOrConnectWithoutUserInput = {
+  export interface OAuthCreateOrConnectWithoutUserInput {
     where: OAuthWhereUniqueInput
     create: XOR<OAuthCreateWithoutUserInput, OAuthUncheckedCreateWithoutUserInput>
   }
 
-  export type OAuthCreateManyUserInputEnvelope = {
+  export interface OAuthCreateManyUserInputEnvelope {
     data: OAuthCreateManyUserInput | OAuthCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
-  export type AccessTokenCreateWithoutUserInfoInput = {
+  export interface AccessTokenCreateWithoutUserInfoInput {
     id?: string
     token: string
     roles?: string
@@ -19219,7 +19003,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type AccessTokenUncheckedCreateWithoutUserInfoInput = {
+  export interface AccessTokenUncheckedCreateWithoutUserInfoInput {
     id?: string
     token: string
     roles?: string
@@ -19232,36 +19016,36 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type AccessTokenCreateOrConnectWithoutUserInfoInput = {
+  export interface AccessTokenCreateOrConnectWithoutUserInfoInput {
     where: AccessTokenWhereUniqueInput
     create: XOR<AccessTokenCreateWithoutUserInfoInput, AccessTokenUncheckedCreateWithoutUserInfoInput>
   }
 
-  export type AccessTokenCreateManyUserInfoInputEnvelope = {
+  export interface AccessTokenCreateManyUserInfoInputEnvelope {
     data: AccessTokenCreateManyUserInfoInput | AccessTokenCreateManyUserInfoInput[]
     skipDuplicates?: boolean
   }
 
-  export type UserConfigCreateWithoutUserInfoInput = {
+  export interface UserConfigCreateWithoutUserInfoInput {
     id?: string
     allowEmailNotify?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type UserConfigUncheckedCreateWithoutUserInfoInput = {
+  export interface UserConfigUncheckedCreateWithoutUserInfoInput {
     id?: string
     allowEmailNotify?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type UserConfigCreateOrConnectWithoutUserInfoInput = {
+  export interface UserConfigCreateOrConnectWithoutUserInfoInput {
     where: UserConfigWhereUniqueInput
     create: XOR<UserConfigCreateWithoutUserInfoInput, UserConfigUncheckedCreateWithoutUserInfoInput>
   }
 
-  export type BlogMemoCreateWithoutUser_infoInput = {
+  export interface BlogMemoCreateWithoutUser_infoInput {
     id?: string
     content?: string | null
     create_ts?: Date | string
@@ -19276,7 +19060,7 @@ export namespace Prisma {
     likes?: BlogLikeCreateNestedManyWithoutBlogMemoInfoInput
   }
 
-  export type BlogMemoUncheckedCreateWithoutUser_infoInput = {
+  export interface BlogMemoUncheckedCreateWithoutUser_infoInput {
     id?: string
     content?: string | null
     create_ts?: Date | string
@@ -19291,17 +19075,17 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedCreateNestedManyWithoutBlogMemoInfoInput
   }
 
-  export type BlogMemoCreateOrConnectWithoutUser_infoInput = {
+  export interface BlogMemoCreateOrConnectWithoutUser_infoInput {
     where: BlogMemoWhereUniqueInput
     create: XOR<BlogMemoCreateWithoutUser_infoInput, BlogMemoUncheckedCreateWithoutUser_infoInput>
   }
 
-  export type BlogMemoCreateManyUser_infoInputEnvelope = {
+  export interface BlogMemoCreateManyUser_infoInputEnvelope {
     data: BlogMemoCreateManyUser_infoInput | BlogMemoCreateManyUser_infoInput[]
     skipDuplicates?: boolean
   }
 
-  export type MemoTagCreateWithoutUser_infoInput = {
+  export interface MemoTagCreateWithoutUser_infoInput {
     id?: string
     tag_name: string
     create_ts?: Date | string
@@ -19309,7 +19093,7 @@ export namespace Prisma {
     memos?: MemoTagRelationsCreateNestedManyWithoutTagInput
   }
 
-  export type MemoTagUncheckedCreateWithoutUser_infoInput = {
+  export interface MemoTagUncheckedCreateWithoutUser_infoInput {
     id?: string
     tag_name: string
     create_ts?: Date | string
@@ -19317,257 +19101,257 @@ export namespace Prisma {
     memos?: MemoTagRelationsUncheckedCreateNestedManyWithoutTagInput
   }
 
-  export type MemoTagCreateOrConnectWithoutUser_infoInput = {
+  export interface MemoTagCreateOrConnectWithoutUser_infoInput {
     where: MemoTagWhereUniqueInput
     create: XOR<MemoTagCreateWithoutUser_infoInput, MemoTagUncheckedCreateWithoutUser_infoInput>
   }
 
-  export type MemoTagCreateManyUser_infoInputEnvelope = {
+  export interface MemoTagCreateManyUser_infoInputEnvelope {
     data: MemoTagCreateManyUser_infoInput | MemoTagCreateManyUser_infoInput[]
     skipDuplicates?: boolean
   }
 
-  export type BlogCommentUpsertWithWhereUniqueWithoutUser_infoInput = {
+  export interface BlogCommentUpsertWithWhereUniqueWithoutUser_infoInput {
     where: BlogCommentWhereUniqueInput
     update: XOR<BlogCommentUpdateWithoutUser_infoInput, BlogCommentUncheckedUpdateWithoutUser_infoInput>
     create: XOR<BlogCommentCreateWithoutUser_infoInput, BlogCommentUncheckedCreateWithoutUser_infoInput>
   }
 
-  export type BlogCommentUpdateWithWhereUniqueWithoutUser_infoInput = {
+  export interface BlogCommentUpdateWithWhereUniqueWithoutUser_infoInput {
     where: BlogCommentWhereUniqueInput
     data: XOR<BlogCommentUpdateWithoutUser_infoInput, BlogCommentUncheckedUpdateWithoutUser_infoInput>
   }
 
-  export type BlogCommentUpdateManyWithWhereWithoutUser_infoInput = {
+  export interface BlogCommentUpdateManyWithWhereWithoutUser_infoInput {
     where: BlogCommentScalarWhereInput
     data: XOR<BlogCommentUpdateManyMutationInput, BlogCommentUncheckedUpdateManyWithoutUser_infoInput>
   }
 
-  export type BlogCommentScalarWhereInput = {
+  export interface BlogCommentScalarWhereInput {
     AND?: BlogCommentScalarWhereInput | BlogCommentScalarWhereInput[]
     OR?: BlogCommentScalarWhereInput[]
     NOT?: BlogCommentScalarWhereInput | BlogCommentScalarWhereInput[]
-    id?: StringFilter<"BlogComment"> | string
-    content?: StringFilter<"BlogComment"> | string
-    create_ts?: DateTimeFilter<"BlogComment"> | Date | string
-    updated_ts?: DateTimeFilter<"BlogComment"> | Date | string
-    type?: StringFilter<"BlogComment"> | string
-    quoteContent?: StringNullableFilter<"BlogComment"> | string | null
-    article_id?: StringNullableFilter<"BlogComment"> | string | null
-    user_id?: StringNullableFilter<"BlogComment"> | string | null
-    visitorName?: StringNullableFilter<"BlogComment"> | string | null
-    memo_id?: StringNullableFilter<"BlogComment"> | string | null
+    id?: StringFilter<'BlogComment'> | string
+    content?: StringFilter<'BlogComment'> | string
+    create_ts?: DateTimeFilter<'BlogComment'> | Date | string
+    updated_ts?: DateTimeFilter<'BlogComment'> | Date | string
+    type?: StringFilter<'BlogComment'> | string
+    quoteContent?: StringNullableFilter<'BlogComment'> | string | null
+    article_id?: StringNullableFilter<'BlogComment'> | string | null
+    user_id?: StringNullableFilter<'BlogComment'> | string | null
+    visitorName?: StringNullableFilter<'BlogComment'> | string | null
+    memo_id?: StringNullableFilter<'BlogComment'> | string | null
   }
 
-  export type BlogSubCommentUpsertWithWhereUniqueWithoutUser_infoInput = {
+  export interface BlogSubCommentUpsertWithWhereUniqueWithoutUser_infoInput {
     where: BlogSubCommentWhereUniqueInput
     update: XOR<BlogSubCommentUpdateWithoutUser_infoInput, BlogSubCommentUncheckedUpdateWithoutUser_infoInput>
     create: XOR<BlogSubCommentCreateWithoutUser_infoInput, BlogSubCommentUncheckedCreateWithoutUser_infoInput>
   }
 
-  export type BlogSubCommentUpdateWithWhereUniqueWithoutUser_infoInput = {
+  export interface BlogSubCommentUpdateWithWhereUniqueWithoutUser_infoInput {
     where: BlogSubCommentWhereUniqueInput
     data: XOR<BlogSubCommentUpdateWithoutUser_infoInput, BlogSubCommentUncheckedUpdateWithoutUser_infoInput>
   }
 
-  export type BlogSubCommentUpdateManyWithWhereWithoutUser_infoInput = {
+  export interface BlogSubCommentUpdateManyWithWhereWithoutUser_infoInput {
     where: BlogSubCommentScalarWhereInput
     data: XOR<BlogSubCommentUpdateManyMutationInput, BlogSubCommentUncheckedUpdateManyWithoutUser_infoInput>
   }
 
-  export type BlogSubCommentScalarWhereInput = {
+  export interface BlogSubCommentScalarWhereInput {
     AND?: BlogSubCommentScalarWhereInput | BlogSubCommentScalarWhereInput[]
     OR?: BlogSubCommentScalarWhereInput[]
     NOT?: BlogSubCommentScalarWhereInput | BlogSubCommentScalarWhereInput[]
-    id?: StringFilter<"BlogSubComment"> | string
-    content?: StringFilter<"BlogSubComment"> | string
-    create_ts?: DateTimeFilter<"BlogSubComment"> | Date | string
-    updated_ts?: DateTimeFilter<"BlogSubComment"> | Date | string
-    comment_id?: StringFilter<"BlogSubComment"> | string
-    reply_sub_comment_id?: StringNullableFilter<"BlogSubComment"> | string | null
-    user_id?: StringNullableFilter<"BlogSubComment"> | string | null
+    id?: StringFilter<'BlogSubComment'> | string
+    content?: StringFilter<'BlogSubComment'> | string
+    create_ts?: DateTimeFilter<'BlogSubComment'> | Date | string
+    updated_ts?: DateTimeFilter<'BlogSubComment'> | Date | string
+    comment_id?: StringFilter<'BlogSubComment'> | string
+    reply_sub_comment_id?: StringNullableFilter<'BlogSubComment'> | string | null
+    user_id?: StringNullableFilter<'BlogSubComment'> | string | null
   }
 
-  export type BlogLikeUpsertWithWhereUniqueWithoutUser_infoInput = {
+  export interface BlogLikeUpsertWithWhereUniqueWithoutUser_infoInput {
     where: BlogLikeWhereUniqueInput
     update: XOR<BlogLikeUpdateWithoutUser_infoInput, BlogLikeUncheckedUpdateWithoutUser_infoInput>
     create: XOR<BlogLikeCreateWithoutUser_infoInput, BlogLikeUncheckedCreateWithoutUser_infoInput>
   }
 
-  export type BlogLikeUpdateWithWhereUniqueWithoutUser_infoInput = {
+  export interface BlogLikeUpdateWithWhereUniqueWithoutUser_infoInput {
     where: BlogLikeWhereUniqueInput
     data: XOR<BlogLikeUpdateWithoutUser_infoInput, BlogLikeUncheckedUpdateWithoutUser_infoInput>
   }
 
-  export type BlogLikeUpdateManyWithWhereWithoutUser_infoInput = {
+  export interface BlogLikeUpdateManyWithWhereWithoutUser_infoInput {
     where: BlogLikeScalarWhereInput
     data: XOR<BlogLikeUpdateManyMutationInput, BlogLikeUncheckedUpdateManyWithoutUser_infoInput>
   }
 
-  export type BlogLikeScalarWhereInput = {
+  export interface BlogLikeScalarWhereInput {
     AND?: BlogLikeScalarWhereInput | BlogLikeScalarWhereInput[]
     OR?: BlogLikeScalarWhereInput[]
     NOT?: BlogLikeScalarWhereInput | BlogLikeScalarWhereInput[]
-    id?: IntFilter<"BlogLike"> | number
-    create_ts?: DateTimeFilter<"BlogLike"> | Date | string
-    updated_ts?: DateTimeFilter<"BlogLike"> | Date | string
-    target?: StringFilter<"BlogLike"> | string
-    article_id?: StringNullableFilter<"BlogLike"> | string | null
-    sub_comment_id?: StringNullableFilter<"BlogLike"> | string | null
-    comment_id?: StringNullableFilter<"BlogLike"> | string | null
-    user_id?: StringFilter<"BlogLike"> | string
-    blogMemoId?: StringNullableFilter<"BlogLike"> | string | null
+    id?: IntFilter<'BlogLike'> | number
+    create_ts?: DateTimeFilter<'BlogLike'> | Date | string
+    updated_ts?: DateTimeFilter<'BlogLike'> | Date | string
+    target?: StringFilter<'BlogLike'> | string
+    article_id?: StringNullableFilter<'BlogLike'> | string | null
+    sub_comment_id?: StringNullableFilter<'BlogLike'> | string | null
+    comment_id?: StringNullableFilter<'BlogLike'> | string | null
+    user_id?: StringFilter<'BlogLike'> | string
+    blogMemoId?: StringNullableFilter<'BlogLike'> | string | null
   }
 
-  export type OAuthUpsertWithWhereUniqueWithoutUserInput = {
+  export interface OAuthUpsertWithWhereUniqueWithoutUserInput {
     where: OAuthWhereUniqueInput
     update: XOR<OAuthUpdateWithoutUserInput, OAuthUncheckedUpdateWithoutUserInput>
     create: XOR<OAuthCreateWithoutUserInput, OAuthUncheckedCreateWithoutUserInput>
   }
 
-  export type OAuthUpdateWithWhereUniqueWithoutUserInput = {
+  export interface OAuthUpdateWithWhereUniqueWithoutUserInput {
     where: OAuthWhereUniqueInput
     data: XOR<OAuthUpdateWithoutUserInput, OAuthUncheckedUpdateWithoutUserInput>
   }
 
-  export type OAuthUpdateManyWithWhereWithoutUserInput = {
+  export interface OAuthUpdateManyWithWhereWithoutUserInput {
     where: OAuthScalarWhereInput
     data: XOR<OAuthUpdateManyMutationInput, OAuthUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type OAuthScalarWhereInput = {
+  export interface OAuthScalarWhereInput {
     AND?: OAuthScalarWhereInput | OAuthScalarWhereInput[]
     OR?: OAuthScalarWhereInput[]
     NOT?: OAuthScalarWhereInput | OAuthScalarWhereInput[]
-    id?: StringFilter<"OAuth"> | string
-    userId?: StringNullableFilter<"OAuth"> | string | null
-    provider?: StringFilter<"OAuth"> | string
-    providerId?: StringFilter<"OAuth"> | string
-    providerUnionId?: StringNullableFilter<"OAuth"> | string | null
-    providerToken?: StringNullableFilter<"OAuth"> | string | null
-    providerRefreshToken?: StringNullableFilter<"OAuth"> | string | null
-    createdAt?: DateTimeFilter<"OAuth"> | Date | string
-    updatedAt?: DateTimeFilter<"OAuth"> | Date | string
+    id?: StringFilter<'OAuth'> | string
+    userId?: StringNullableFilter<'OAuth'> | string | null
+    provider?: StringFilter<'OAuth'> | string
+    providerId?: StringFilter<'OAuth'> | string
+    providerUnionId?: StringNullableFilter<'OAuth'> | string | null
+    providerToken?: StringNullableFilter<'OAuth'> | string | null
+    providerRefreshToken?: StringNullableFilter<'OAuth'> | string | null
+    createdAt?: DateTimeFilter<'OAuth'> | Date | string
+    updatedAt?: DateTimeFilter<'OAuth'> | Date | string
   }
 
-  export type AccessTokenUpsertWithWhereUniqueWithoutUserInfoInput = {
+  export interface AccessTokenUpsertWithWhereUniqueWithoutUserInfoInput {
     where: AccessTokenWhereUniqueInput
     update: XOR<AccessTokenUpdateWithoutUserInfoInput, AccessTokenUncheckedUpdateWithoutUserInfoInput>
     create: XOR<AccessTokenCreateWithoutUserInfoInput, AccessTokenUncheckedCreateWithoutUserInfoInput>
   }
 
-  export type AccessTokenUpdateWithWhereUniqueWithoutUserInfoInput = {
+  export interface AccessTokenUpdateWithWhereUniqueWithoutUserInfoInput {
     where: AccessTokenWhereUniqueInput
     data: XOR<AccessTokenUpdateWithoutUserInfoInput, AccessTokenUncheckedUpdateWithoutUserInfoInput>
   }
 
-  export type AccessTokenUpdateManyWithWhereWithoutUserInfoInput = {
+  export interface AccessTokenUpdateManyWithWhereWithoutUserInfoInput {
     where: AccessTokenScalarWhereInput
     data: XOR<AccessTokenUpdateManyMutationInput, AccessTokenUncheckedUpdateManyWithoutUserInfoInput>
   }
 
-  export type AccessTokenScalarWhereInput = {
+  export interface AccessTokenScalarWhereInput {
     AND?: AccessTokenScalarWhereInput | AccessTokenScalarWhereInput[]
     OR?: AccessTokenScalarWhereInput[]
     NOT?: AccessTokenScalarWhereInput | AccessTokenScalarWhereInput[]
-    id?: StringFilter<"AccessToken"> | string
-    userId?: StringFilter<"AccessToken"> | string
-    token?: StringFilter<"AccessToken"> | string
-    roles?: StringFilter<"AccessToken"> | string
-    status?: IntFilter<"AccessToken"> | number
-    scope?: StringFilter<"AccessToken"> | string
-    isRevoked?: BoolFilter<"AccessToken"> | boolean
-    ip?: StringNullableFilter<"AccessToken"> | string | null
-    expiresAt?: DateTimeFilter<"AccessToken"> | Date | string
-    createdAt?: DateTimeFilter<"AccessToken"> | Date | string
-    updatedAt?: DateTimeFilter<"AccessToken"> | Date | string
+    id?: StringFilter<'AccessToken'> | string
+    userId?: StringFilter<'AccessToken'> | string
+    token?: StringFilter<'AccessToken'> | string
+    roles?: StringFilter<'AccessToken'> | string
+    status?: IntFilter<'AccessToken'> | number
+    scope?: StringFilter<'AccessToken'> | string
+    isRevoked?: BoolFilter<'AccessToken'> | boolean
+    ip?: StringNullableFilter<'AccessToken'> | string | null
+    expiresAt?: DateTimeFilter<'AccessToken'> | Date | string
+    createdAt?: DateTimeFilter<'AccessToken'> | Date | string
+    updatedAt?: DateTimeFilter<'AccessToken'> | Date | string
   }
 
-  export type UserConfigUpsertWithoutUserInfoInput = {
+  export interface UserConfigUpsertWithoutUserInfoInput {
     update: XOR<UserConfigUpdateWithoutUserInfoInput, UserConfigUncheckedUpdateWithoutUserInfoInput>
     create: XOR<UserConfigCreateWithoutUserInfoInput, UserConfigUncheckedCreateWithoutUserInfoInput>
     where?: UserConfigWhereInput
   }
 
-  export type UserConfigUpdateToOneWithWhereWithoutUserInfoInput = {
+  export interface UserConfigUpdateToOneWithWhereWithoutUserInfoInput {
     where?: UserConfigWhereInput
     data: XOR<UserConfigUpdateWithoutUserInfoInput, UserConfigUncheckedUpdateWithoutUserInfoInput>
   }
 
-  export type UserConfigUpdateWithoutUserInfoInput = {
+  export interface UserConfigUpdateWithoutUserInfoInput {
     id?: StringFieldUpdateOperationsInput | string
     allowEmailNotify?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserConfigUncheckedUpdateWithoutUserInfoInput = {
+  export interface UserConfigUncheckedUpdateWithoutUserInfoInput {
     id?: StringFieldUpdateOperationsInput | string
     allowEmailNotify?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type BlogMemoUpsertWithWhereUniqueWithoutUser_infoInput = {
+  export interface BlogMemoUpsertWithWhereUniqueWithoutUser_infoInput {
     where: BlogMemoWhereUniqueInput
     update: XOR<BlogMemoUpdateWithoutUser_infoInput, BlogMemoUncheckedUpdateWithoutUser_infoInput>
     create: XOR<BlogMemoCreateWithoutUser_infoInput, BlogMemoUncheckedCreateWithoutUser_infoInput>
   }
 
-  export type BlogMemoUpdateWithWhereUniqueWithoutUser_infoInput = {
+  export interface BlogMemoUpdateWithWhereUniqueWithoutUser_infoInput {
     where: BlogMemoWhereUniqueInput
     data: XOR<BlogMemoUpdateWithoutUser_infoInput, BlogMemoUncheckedUpdateWithoutUser_infoInput>
   }
 
-  export type BlogMemoUpdateManyWithWhereWithoutUser_infoInput = {
+  export interface BlogMemoUpdateManyWithWhereWithoutUser_infoInput {
     where: BlogMemoScalarWhereInput
     data: XOR<BlogMemoUpdateManyMutationInput, BlogMemoUncheckedUpdateManyWithoutUser_infoInput>
   }
 
-  export type BlogMemoScalarWhereInput = {
+  export interface BlogMemoScalarWhereInput {
     AND?: BlogMemoScalarWhereInput | BlogMemoScalarWhereInput[]
     OR?: BlogMemoScalarWhereInput[]
     NOT?: BlogMemoScalarWhereInput | BlogMemoScalarWhereInput[]
-    id?: StringFilter<"BlogMemo"> | string
-    content?: StringNullableFilter<"BlogMemo"> | string | null
-    create_ts?: DateTimeFilter<"BlogMemo"> | Date | string
-    updated_ts?: DateTimeFilter<"BlogMemo"> | Date | string
-    visible?: StringFilter<"BlogMemo"> | string
-    defalt_floded?: BoolFilter<"BlogMemo"> | boolean
-    flod_tip?: StringNullableFilter<"BlogMemo"> | string | null
-    user_id?: StringFilter<"BlogMemo"> | string
-    from?: StringNullableFilter<"BlogMemo"> | string | null
-    courier?: StringNullableFilter<"BlogMemo"> | string | null
+    id?: StringFilter<'BlogMemo'> | string
+    content?: StringNullableFilter<'BlogMemo'> | string | null
+    create_ts?: DateTimeFilter<'BlogMemo'> | Date | string
+    updated_ts?: DateTimeFilter<'BlogMemo'> | Date | string
+    visible?: StringFilter<'BlogMemo'> | string
+    defalt_floded?: BoolFilter<'BlogMemo'> | boolean
+    flod_tip?: StringNullableFilter<'BlogMemo'> | string | null
+    user_id?: StringFilter<'BlogMemo'> | string
+    from?: StringNullableFilter<'BlogMemo'> | string | null
+    courier?: StringNullableFilter<'BlogMemo'> | string | null
   }
 
-  export type MemoTagUpsertWithWhereUniqueWithoutUser_infoInput = {
+  export interface MemoTagUpsertWithWhereUniqueWithoutUser_infoInput {
     where: MemoTagWhereUniqueInput
     update: XOR<MemoTagUpdateWithoutUser_infoInput, MemoTagUncheckedUpdateWithoutUser_infoInput>
     create: XOR<MemoTagCreateWithoutUser_infoInput, MemoTagUncheckedCreateWithoutUser_infoInput>
   }
 
-  export type MemoTagUpdateWithWhereUniqueWithoutUser_infoInput = {
+  export interface MemoTagUpdateWithWhereUniqueWithoutUser_infoInput {
     where: MemoTagWhereUniqueInput
     data: XOR<MemoTagUpdateWithoutUser_infoInput, MemoTagUncheckedUpdateWithoutUser_infoInput>
   }
 
-  export type MemoTagUpdateManyWithWhereWithoutUser_infoInput = {
+  export interface MemoTagUpdateManyWithWhereWithoutUser_infoInput {
     where: MemoTagScalarWhereInput
     data: XOR<MemoTagUpdateManyMutationInput, MemoTagUncheckedUpdateManyWithoutUser_infoInput>
   }
 
-  export type MemoTagScalarWhereInput = {
+  export interface MemoTagScalarWhereInput {
     AND?: MemoTagScalarWhereInput | MemoTagScalarWhereInput[]
     OR?: MemoTagScalarWhereInput[]
     NOT?: MemoTagScalarWhereInput | MemoTagScalarWhereInput[]
-    id?: StringFilter<"MemoTag"> | string
-    tag_name?: StringFilter<"MemoTag"> | string
-    create_ts?: DateTimeFilter<"MemoTag"> | Date | string
-    updated_ts?: DateTimeFilter<"MemoTag"> | Date | string
-    user_id?: StringFilter<"MemoTag"> | string
+    id?: StringFilter<'MemoTag'> | string
+    tag_name?: StringFilter<'MemoTag'> | string
+    create_ts?: DateTimeFilter<'MemoTag'> | Date | string
+    updated_ts?: DateTimeFilter<'MemoTag'> | Date | string
+    user_id?: StringFilter<'MemoTag'> | string
   }
 
-  export type UserCreateWithoutUser_configInput = {
+  export interface UserCreateWithoutUser_configInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -19587,7 +19371,7 @@ export namespace Prisma {
     tags?: MemoTagCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserUncheckedCreateWithoutUser_configInput = {
+  export interface UserUncheckedCreateWithoutUser_configInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -19607,23 +19391,23 @@ export namespace Prisma {
     tags?: MemoTagUncheckedCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserCreateOrConnectWithoutUser_configInput = {
+  export interface UserCreateOrConnectWithoutUser_configInput {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutUser_configInput, UserUncheckedCreateWithoutUser_configInput>
   }
 
-  export type UserUpsertWithoutUser_configInput = {
+  export interface UserUpsertWithoutUser_configInput {
     update: XOR<UserUpdateWithoutUser_configInput, UserUncheckedUpdateWithoutUser_configInput>
     create: XOR<UserCreateWithoutUser_configInput, UserUncheckedCreateWithoutUser_configInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutUser_configInput = {
+  export interface UserUpdateToOneWithWhereWithoutUser_configInput {
     where?: UserWhereInput
     data: XOR<UserUpdateWithoutUser_configInput, UserUncheckedUpdateWithoutUser_configInput>
   }
 
-  export type UserUpdateWithoutUser_configInput = {
+  export interface UserUpdateWithoutUser_configInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19643,7 +19427,7 @@ export namespace Prisma {
     tags?: MemoTagUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutUser_configInput = {
+  export interface UserUncheckedUpdateWithoutUser_configInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19663,7 +19447,7 @@ export namespace Prisma {
     tags?: MemoTagUncheckedUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type UserCreateWithoutTokensInput = {
+  export interface UserCreateWithoutTokensInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -19683,7 +19467,7 @@ export namespace Prisma {
     tags?: MemoTagCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserUncheckedCreateWithoutTokensInput = {
+  export interface UserUncheckedCreateWithoutTokensInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -19703,23 +19487,23 @@ export namespace Prisma {
     tags?: MemoTagUncheckedCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserCreateOrConnectWithoutTokensInput = {
+  export interface UserCreateOrConnectWithoutTokensInput {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutTokensInput, UserUncheckedCreateWithoutTokensInput>
   }
 
-  export type UserUpsertWithoutTokensInput = {
+  export interface UserUpsertWithoutTokensInput {
     update: XOR<UserUpdateWithoutTokensInput, UserUncheckedUpdateWithoutTokensInput>
     create: XOR<UserCreateWithoutTokensInput, UserUncheckedCreateWithoutTokensInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutTokensInput = {
+  export interface UserUpdateToOneWithWhereWithoutTokensInput {
     where?: UserWhereInput
     data: XOR<UserUpdateWithoutTokensInput, UserUncheckedUpdateWithoutTokensInput>
   }
 
-  export type UserUpdateWithoutTokensInput = {
+  export interface UserUpdateWithoutTokensInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19739,7 +19523,7 @@ export namespace Prisma {
     tags?: MemoTagUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutTokensInput = {
+  export interface UserUncheckedUpdateWithoutTokensInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19759,7 +19543,7 @@ export namespace Prisma {
     tags?: MemoTagUncheckedUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type UserCreateWithoutOauthInput = {
+  export interface UserCreateWithoutOauthInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -19779,7 +19563,7 @@ export namespace Prisma {
     tags?: MemoTagCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserUncheckedCreateWithoutOauthInput = {
+  export interface UserUncheckedCreateWithoutOauthInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -19799,23 +19583,23 @@ export namespace Prisma {
     tags?: MemoTagUncheckedCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserCreateOrConnectWithoutOauthInput = {
+  export interface UserCreateOrConnectWithoutOauthInput {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutOauthInput, UserUncheckedCreateWithoutOauthInput>
   }
 
-  export type UserUpsertWithoutOauthInput = {
+  export interface UserUpsertWithoutOauthInput {
     update: XOR<UserUpdateWithoutOauthInput, UserUncheckedUpdateWithoutOauthInput>
     create: XOR<UserCreateWithoutOauthInput, UserUncheckedCreateWithoutOauthInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutOauthInput = {
+  export interface UserUpdateToOneWithWhereWithoutOauthInput {
     where?: UserWhereInput
     data: XOR<UserUpdateWithoutOauthInput, UserUncheckedUpdateWithoutOauthInput>
   }
 
-  export type UserUpdateWithoutOauthInput = {
+  export interface UserUpdateWithoutOauthInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19835,7 +19619,7 @@ export namespace Prisma {
     tags?: MemoTagUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutOauthInput = {
+  export interface UserUncheckedUpdateWithoutOauthInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19855,7 +19639,7 @@ export namespace Prisma {
     tags?: MemoTagUncheckedUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type UserCreateWithoutCommentsInput = {
+  export interface UserCreateWithoutCommentsInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -19875,7 +19659,7 @@ export namespace Prisma {
     tags?: MemoTagCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserUncheckedCreateWithoutCommentsInput = {
+  export interface UserUncheckedCreateWithoutCommentsInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -19895,12 +19679,12 @@ export namespace Prisma {
     tags?: MemoTagUncheckedCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserCreateOrConnectWithoutCommentsInput = {
+  export interface UserCreateOrConnectWithoutCommentsInput {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
   }
 
-  export type BlogSubCommentCreateWithoutComment_infoInput = {
+  export interface BlogSubCommentCreateWithoutComment_infoInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -19910,7 +19694,7 @@ export namespace Prisma {
     likes?: BlogLikeCreateNestedManyWithoutSub_comment_infoInput
   }
 
-  export type BlogSubCommentUncheckedCreateWithoutComment_infoInput = {
+  export interface BlogSubCommentUncheckedCreateWithoutComment_infoInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -19920,17 +19704,17 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedCreateNestedManyWithoutSub_comment_infoInput
   }
 
-  export type BlogSubCommentCreateOrConnectWithoutComment_infoInput = {
+  export interface BlogSubCommentCreateOrConnectWithoutComment_infoInput {
     where: BlogSubCommentWhereUniqueInput
     create: XOR<BlogSubCommentCreateWithoutComment_infoInput, BlogSubCommentUncheckedCreateWithoutComment_infoInput>
   }
 
-  export type BlogSubCommentCreateManyComment_infoInputEnvelope = {
+  export interface BlogSubCommentCreateManyComment_infoInputEnvelope {
     data: BlogSubCommentCreateManyComment_infoInput | BlogSubCommentCreateManyComment_infoInput[]
     skipDuplicates?: boolean
   }
 
-  export type BlogLikeCreateWithoutComment_infoInput = {
+  export interface BlogLikeCreateWithoutComment_infoInput {
     create_ts?: Date | string
     updated_ts?: Date | string
     target?: string
@@ -19940,7 +19724,7 @@ export namespace Prisma {
     blogMemoInfo?: BlogMemoCreateNestedOneWithoutLikesInput
   }
 
-  export type BlogLikeUncheckedCreateWithoutComment_infoInput = {
+  export interface BlogLikeUncheckedCreateWithoutComment_infoInput {
     id?: number
     create_ts?: Date | string
     updated_ts?: Date | string
@@ -19951,17 +19735,17 @@ export namespace Prisma {
     blogMemoId?: string | null
   }
 
-  export type BlogLikeCreateOrConnectWithoutComment_infoInput = {
+  export interface BlogLikeCreateOrConnectWithoutComment_infoInput {
     where: BlogLikeWhereUniqueInput
     create: XOR<BlogLikeCreateWithoutComment_infoInput, BlogLikeUncheckedCreateWithoutComment_infoInput>
   }
 
-  export type BlogLikeCreateManyComment_infoInputEnvelope = {
+  export interface BlogLikeCreateManyComment_infoInputEnvelope {
     data: BlogLikeCreateManyComment_infoInput | BlogLikeCreateManyComment_infoInput[]
     skipDuplicates?: boolean
   }
 
-  export type BlogMemoCreateWithoutCommentsInput = {
+  export interface BlogMemoCreateWithoutCommentsInput {
     id?: string
     content?: string | null
     create_ts?: Date | string
@@ -19976,7 +19760,7 @@ export namespace Prisma {
     likes?: BlogLikeCreateNestedManyWithoutBlogMemoInfoInput
   }
 
-  export type BlogMemoUncheckedCreateWithoutCommentsInput = {
+  export interface BlogMemoUncheckedCreateWithoutCommentsInput {
     id?: string
     content?: string | null
     create_ts?: Date | string
@@ -19991,23 +19775,23 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedCreateNestedManyWithoutBlogMemoInfoInput
   }
 
-  export type BlogMemoCreateOrConnectWithoutCommentsInput = {
+  export interface BlogMemoCreateOrConnectWithoutCommentsInput {
     where: BlogMemoWhereUniqueInput
     create: XOR<BlogMemoCreateWithoutCommentsInput, BlogMemoUncheckedCreateWithoutCommentsInput>
   }
 
-  export type UserUpsertWithoutCommentsInput = {
+  export interface UserUpsertWithoutCommentsInput {
     update: XOR<UserUpdateWithoutCommentsInput, UserUncheckedUpdateWithoutCommentsInput>
     create: XOR<UserCreateWithoutCommentsInput, UserUncheckedCreateWithoutCommentsInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutCommentsInput = {
+  export interface UserUpdateToOneWithWhereWithoutCommentsInput {
     where?: UserWhereInput
     data: XOR<UserUpdateWithoutCommentsInput, UserUncheckedUpdateWithoutCommentsInput>
   }
 
-  export type UserUpdateWithoutCommentsInput = {
+  export interface UserUpdateWithoutCommentsInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20027,7 +19811,7 @@ export namespace Prisma {
     tags?: MemoTagUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutCommentsInput = {
+  export interface UserUncheckedUpdateWithoutCommentsInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20047,50 +19831,50 @@ export namespace Prisma {
     tags?: MemoTagUncheckedUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type BlogSubCommentUpsertWithWhereUniqueWithoutComment_infoInput = {
+  export interface BlogSubCommentUpsertWithWhereUniqueWithoutComment_infoInput {
     where: BlogSubCommentWhereUniqueInput
     update: XOR<BlogSubCommentUpdateWithoutComment_infoInput, BlogSubCommentUncheckedUpdateWithoutComment_infoInput>
     create: XOR<BlogSubCommentCreateWithoutComment_infoInput, BlogSubCommentUncheckedCreateWithoutComment_infoInput>
   }
 
-  export type BlogSubCommentUpdateWithWhereUniqueWithoutComment_infoInput = {
+  export interface BlogSubCommentUpdateWithWhereUniqueWithoutComment_infoInput {
     where: BlogSubCommentWhereUniqueInput
     data: XOR<BlogSubCommentUpdateWithoutComment_infoInput, BlogSubCommentUncheckedUpdateWithoutComment_infoInput>
   }
 
-  export type BlogSubCommentUpdateManyWithWhereWithoutComment_infoInput = {
+  export interface BlogSubCommentUpdateManyWithWhereWithoutComment_infoInput {
     where: BlogSubCommentScalarWhereInput
     data: XOR<BlogSubCommentUpdateManyMutationInput, BlogSubCommentUncheckedUpdateManyWithoutComment_infoInput>
   }
 
-  export type BlogLikeUpsertWithWhereUniqueWithoutComment_infoInput = {
+  export interface BlogLikeUpsertWithWhereUniqueWithoutComment_infoInput {
     where: BlogLikeWhereUniqueInput
     update: XOR<BlogLikeUpdateWithoutComment_infoInput, BlogLikeUncheckedUpdateWithoutComment_infoInput>
     create: XOR<BlogLikeCreateWithoutComment_infoInput, BlogLikeUncheckedCreateWithoutComment_infoInput>
   }
 
-  export type BlogLikeUpdateWithWhereUniqueWithoutComment_infoInput = {
+  export interface BlogLikeUpdateWithWhereUniqueWithoutComment_infoInput {
     where: BlogLikeWhereUniqueInput
     data: XOR<BlogLikeUpdateWithoutComment_infoInput, BlogLikeUncheckedUpdateWithoutComment_infoInput>
   }
 
-  export type BlogLikeUpdateManyWithWhereWithoutComment_infoInput = {
+  export interface BlogLikeUpdateManyWithWhereWithoutComment_infoInput {
     where: BlogLikeScalarWhereInput
     data: XOR<BlogLikeUpdateManyMutationInput, BlogLikeUncheckedUpdateManyWithoutComment_infoInput>
   }
 
-  export type BlogMemoUpsertWithoutCommentsInput = {
+  export interface BlogMemoUpsertWithoutCommentsInput {
     update: XOR<BlogMemoUpdateWithoutCommentsInput, BlogMemoUncheckedUpdateWithoutCommentsInput>
     create: XOR<BlogMemoCreateWithoutCommentsInput, BlogMemoUncheckedCreateWithoutCommentsInput>
     where?: BlogMemoWhereInput
   }
 
-  export type BlogMemoUpdateToOneWithWhereWithoutCommentsInput = {
+  export interface BlogMemoUpdateToOneWithWhereWithoutCommentsInput {
     where?: BlogMemoWhereInput
     data: XOR<BlogMemoUpdateWithoutCommentsInput, BlogMemoUncheckedUpdateWithoutCommentsInput>
   }
 
-  export type BlogMemoUpdateWithoutCommentsInput = {
+  export interface BlogMemoUpdateWithoutCommentsInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20105,7 +19889,7 @@ export namespace Prisma {
     likes?: BlogLikeUpdateManyWithoutBlogMemoInfoNestedInput
   }
 
-  export type BlogMemoUncheckedUpdateWithoutCommentsInput = {
+  export interface BlogMemoUncheckedUpdateWithoutCommentsInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20120,7 +19904,7 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedUpdateManyWithoutBlogMemoInfoNestedInput
   }
 
-  export type BlogCommentCreateWithoutSub_commentsInput = {
+  export interface BlogCommentCreateWithoutSub_commentsInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -20134,7 +19918,7 @@ export namespace Prisma {
     memo_info?: BlogMemoCreateNestedOneWithoutCommentsInput
   }
 
-  export type BlogCommentUncheckedCreateWithoutSub_commentsInput = {
+  export interface BlogCommentUncheckedCreateWithoutSub_commentsInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -20148,12 +19932,12 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedCreateNestedManyWithoutComment_infoInput
   }
 
-  export type BlogCommentCreateOrConnectWithoutSub_commentsInput = {
+  export interface BlogCommentCreateOrConnectWithoutSub_commentsInput {
     where: BlogCommentWhereUniqueInput
     create: XOR<BlogCommentCreateWithoutSub_commentsInput, BlogCommentUncheckedCreateWithoutSub_commentsInput>
   }
 
-  export type UserCreateWithoutSub_commentsInput = {
+  export interface UserCreateWithoutSub_commentsInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -20173,7 +19957,7 @@ export namespace Prisma {
     tags?: MemoTagCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserUncheckedCreateWithoutSub_commentsInput = {
+  export interface UserUncheckedCreateWithoutSub_commentsInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -20193,12 +19977,12 @@ export namespace Prisma {
     tags?: MemoTagUncheckedCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserCreateOrConnectWithoutSub_commentsInput = {
+  export interface UserCreateOrConnectWithoutSub_commentsInput {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutSub_commentsInput, UserUncheckedCreateWithoutSub_commentsInput>
   }
 
-  export type BlogLikeCreateWithoutSub_comment_infoInput = {
+  export interface BlogLikeCreateWithoutSub_comment_infoInput {
     create_ts?: Date | string
     updated_ts?: Date | string
     target?: string
@@ -20208,7 +19992,7 @@ export namespace Prisma {
     blogMemoInfo?: BlogMemoCreateNestedOneWithoutLikesInput
   }
 
-  export type BlogLikeUncheckedCreateWithoutSub_comment_infoInput = {
+  export interface BlogLikeUncheckedCreateWithoutSub_comment_infoInput {
     id?: number
     create_ts?: Date | string
     updated_ts?: Date | string
@@ -20219,28 +20003,28 @@ export namespace Prisma {
     blogMemoId?: string | null
   }
 
-  export type BlogLikeCreateOrConnectWithoutSub_comment_infoInput = {
+  export interface BlogLikeCreateOrConnectWithoutSub_comment_infoInput {
     where: BlogLikeWhereUniqueInput
     create: XOR<BlogLikeCreateWithoutSub_comment_infoInput, BlogLikeUncheckedCreateWithoutSub_comment_infoInput>
   }
 
-  export type BlogLikeCreateManySub_comment_infoInputEnvelope = {
+  export interface BlogLikeCreateManySub_comment_infoInputEnvelope {
     data: BlogLikeCreateManySub_comment_infoInput | BlogLikeCreateManySub_comment_infoInput[]
     skipDuplicates?: boolean
   }
 
-  export type BlogCommentUpsertWithoutSub_commentsInput = {
+  export interface BlogCommentUpsertWithoutSub_commentsInput {
     update: XOR<BlogCommentUpdateWithoutSub_commentsInput, BlogCommentUncheckedUpdateWithoutSub_commentsInput>
     create: XOR<BlogCommentCreateWithoutSub_commentsInput, BlogCommentUncheckedCreateWithoutSub_commentsInput>
     where?: BlogCommentWhereInput
   }
 
-  export type BlogCommentUpdateToOneWithWhereWithoutSub_commentsInput = {
+  export interface BlogCommentUpdateToOneWithWhereWithoutSub_commentsInput {
     where?: BlogCommentWhereInput
     data: XOR<BlogCommentUpdateWithoutSub_commentsInput, BlogCommentUncheckedUpdateWithoutSub_commentsInput>
   }
 
-  export type BlogCommentUpdateWithoutSub_commentsInput = {
+  export interface BlogCommentUpdateWithoutSub_commentsInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20254,7 +20038,7 @@ export namespace Prisma {
     memo_info?: BlogMemoUpdateOneWithoutCommentsNestedInput
   }
 
-  export type BlogCommentUncheckedUpdateWithoutSub_commentsInput = {
+  export interface BlogCommentUncheckedUpdateWithoutSub_commentsInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20268,18 +20052,18 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedUpdateManyWithoutComment_infoNestedInput
   }
 
-  export type UserUpsertWithoutSub_commentsInput = {
+  export interface UserUpsertWithoutSub_commentsInput {
     update: XOR<UserUpdateWithoutSub_commentsInput, UserUncheckedUpdateWithoutSub_commentsInput>
     create: XOR<UserCreateWithoutSub_commentsInput, UserUncheckedCreateWithoutSub_commentsInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutSub_commentsInput = {
+  export interface UserUpdateToOneWithWhereWithoutSub_commentsInput {
     where?: UserWhereInput
     data: XOR<UserUpdateWithoutSub_commentsInput, UserUncheckedUpdateWithoutSub_commentsInput>
   }
 
-  export type UserUpdateWithoutSub_commentsInput = {
+  export interface UserUpdateWithoutSub_commentsInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20299,7 +20083,7 @@ export namespace Prisma {
     tags?: MemoTagUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutSub_commentsInput = {
+  export interface UserUncheckedUpdateWithoutSub_commentsInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20319,23 +20103,23 @@ export namespace Prisma {
     tags?: MemoTagUncheckedUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type BlogLikeUpsertWithWhereUniqueWithoutSub_comment_infoInput = {
+  export interface BlogLikeUpsertWithWhereUniqueWithoutSub_comment_infoInput {
     where: BlogLikeWhereUniqueInput
     update: XOR<BlogLikeUpdateWithoutSub_comment_infoInput, BlogLikeUncheckedUpdateWithoutSub_comment_infoInput>
     create: XOR<BlogLikeCreateWithoutSub_comment_infoInput, BlogLikeUncheckedCreateWithoutSub_comment_infoInput>
   }
 
-  export type BlogLikeUpdateWithWhereUniqueWithoutSub_comment_infoInput = {
+  export interface BlogLikeUpdateWithWhereUniqueWithoutSub_comment_infoInput {
     where: BlogLikeWhereUniqueInput
     data: XOR<BlogLikeUpdateWithoutSub_comment_infoInput, BlogLikeUncheckedUpdateWithoutSub_comment_infoInput>
   }
 
-  export type BlogLikeUpdateManyWithWhereWithoutSub_comment_infoInput = {
+  export interface BlogLikeUpdateManyWithWhereWithoutSub_comment_infoInput {
     where: BlogLikeScalarWhereInput
     data: XOR<BlogLikeUpdateManyMutationInput, BlogLikeUncheckedUpdateManyWithoutSub_comment_infoInput>
   }
 
-  export type BlogSubCommentCreateWithoutLikesInput = {
+  export interface BlogSubCommentCreateWithoutLikesInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -20345,7 +20129,7 @@ export namespace Prisma {
     user_info?: UserCreateNestedOneWithoutSub_commentsInput
   }
 
-  export type BlogSubCommentUncheckedCreateWithoutLikesInput = {
+  export interface BlogSubCommentUncheckedCreateWithoutLikesInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -20355,12 +20139,12 @@ export namespace Prisma {
     user_id?: string | null
   }
 
-  export type BlogSubCommentCreateOrConnectWithoutLikesInput = {
+  export interface BlogSubCommentCreateOrConnectWithoutLikesInput {
     where: BlogSubCommentWhereUniqueInput
     create: XOR<BlogSubCommentCreateWithoutLikesInput, BlogSubCommentUncheckedCreateWithoutLikesInput>
   }
 
-  export type BlogCommentCreateWithoutLikesInput = {
+  export interface BlogCommentCreateWithoutLikesInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -20374,7 +20158,7 @@ export namespace Prisma {
     memo_info?: BlogMemoCreateNestedOneWithoutCommentsInput
   }
 
-  export type BlogCommentUncheckedCreateWithoutLikesInput = {
+  export interface BlogCommentUncheckedCreateWithoutLikesInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -20388,12 +20172,12 @@ export namespace Prisma {
     sub_comments?: BlogSubCommentUncheckedCreateNestedManyWithoutComment_infoInput
   }
 
-  export type BlogCommentCreateOrConnectWithoutLikesInput = {
+  export interface BlogCommentCreateOrConnectWithoutLikesInput {
     where: BlogCommentWhereUniqueInput
     create: XOR<BlogCommentCreateWithoutLikesInput, BlogCommentUncheckedCreateWithoutLikesInput>
   }
 
-  export type UserCreateWithoutLikesInput = {
+  export interface UserCreateWithoutLikesInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -20413,7 +20197,7 @@ export namespace Prisma {
     tags?: MemoTagCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserUncheckedCreateWithoutLikesInput = {
+  export interface UserUncheckedCreateWithoutLikesInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -20433,12 +20217,12 @@ export namespace Prisma {
     tags?: MemoTagUncheckedCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserCreateOrConnectWithoutLikesInput = {
+  export interface UserCreateOrConnectWithoutLikesInput {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutLikesInput, UserUncheckedCreateWithoutLikesInput>
   }
 
-  export type BlogMemoCreateWithoutLikesInput = {
+  export interface BlogMemoCreateWithoutLikesInput {
     id?: string
     content?: string | null
     create_ts?: Date | string
@@ -20453,7 +20237,7 @@ export namespace Prisma {
     comments?: BlogCommentCreateNestedManyWithoutMemo_infoInput
   }
 
-  export type BlogMemoUncheckedCreateWithoutLikesInput = {
+  export interface BlogMemoUncheckedCreateWithoutLikesInput {
     id?: string
     content?: string | null
     create_ts?: Date | string
@@ -20468,23 +20252,23 @@ export namespace Prisma {
     comments?: BlogCommentUncheckedCreateNestedManyWithoutMemo_infoInput
   }
 
-  export type BlogMemoCreateOrConnectWithoutLikesInput = {
+  export interface BlogMemoCreateOrConnectWithoutLikesInput {
     where: BlogMemoWhereUniqueInput
     create: XOR<BlogMemoCreateWithoutLikesInput, BlogMemoUncheckedCreateWithoutLikesInput>
   }
 
-  export type BlogSubCommentUpsertWithoutLikesInput = {
+  export interface BlogSubCommentUpsertWithoutLikesInput {
     update: XOR<BlogSubCommentUpdateWithoutLikesInput, BlogSubCommentUncheckedUpdateWithoutLikesInput>
     create: XOR<BlogSubCommentCreateWithoutLikesInput, BlogSubCommentUncheckedCreateWithoutLikesInput>
     where?: BlogSubCommentWhereInput
   }
 
-  export type BlogSubCommentUpdateToOneWithWhereWithoutLikesInput = {
+  export interface BlogSubCommentUpdateToOneWithWhereWithoutLikesInput {
     where?: BlogSubCommentWhereInput
     data: XOR<BlogSubCommentUpdateWithoutLikesInput, BlogSubCommentUncheckedUpdateWithoutLikesInput>
   }
 
-  export type BlogSubCommentUpdateWithoutLikesInput = {
+  export interface BlogSubCommentUpdateWithoutLikesInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20494,7 +20278,7 @@ export namespace Prisma {
     user_info?: UserUpdateOneWithoutSub_commentsNestedInput
   }
 
-  export type BlogSubCommentUncheckedUpdateWithoutLikesInput = {
+  export interface BlogSubCommentUncheckedUpdateWithoutLikesInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20504,18 +20288,18 @@ export namespace Prisma {
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogCommentUpsertWithoutLikesInput = {
+  export interface BlogCommentUpsertWithoutLikesInput {
     update: XOR<BlogCommentUpdateWithoutLikesInput, BlogCommentUncheckedUpdateWithoutLikesInput>
     create: XOR<BlogCommentCreateWithoutLikesInput, BlogCommentUncheckedCreateWithoutLikesInput>
     where?: BlogCommentWhereInput
   }
 
-  export type BlogCommentUpdateToOneWithWhereWithoutLikesInput = {
+  export interface BlogCommentUpdateToOneWithWhereWithoutLikesInput {
     where?: BlogCommentWhereInput
     data: XOR<BlogCommentUpdateWithoutLikesInput, BlogCommentUncheckedUpdateWithoutLikesInput>
   }
 
-  export type BlogCommentUpdateWithoutLikesInput = {
+  export interface BlogCommentUpdateWithoutLikesInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20529,7 +20313,7 @@ export namespace Prisma {
     memo_info?: BlogMemoUpdateOneWithoutCommentsNestedInput
   }
 
-  export type BlogCommentUncheckedUpdateWithoutLikesInput = {
+  export interface BlogCommentUncheckedUpdateWithoutLikesInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20543,18 +20327,18 @@ export namespace Prisma {
     sub_comments?: BlogSubCommentUncheckedUpdateManyWithoutComment_infoNestedInput
   }
 
-  export type UserUpsertWithoutLikesInput = {
+  export interface UserUpsertWithoutLikesInput {
     update: XOR<UserUpdateWithoutLikesInput, UserUncheckedUpdateWithoutLikesInput>
     create: XOR<UserCreateWithoutLikesInput, UserUncheckedCreateWithoutLikesInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutLikesInput = {
+  export interface UserUpdateToOneWithWhereWithoutLikesInput {
     where?: UserWhereInput
     data: XOR<UserUpdateWithoutLikesInput, UserUncheckedUpdateWithoutLikesInput>
   }
 
-  export type UserUpdateWithoutLikesInput = {
+  export interface UserUpdateWithoutLikesInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20574,7 +20358,7 @@ export namespace Prisma {
     tags?: MemoTagUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutLikesInput = {
+  export interface UserUncheckedUpdateWithoutLikesInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20594,18 +20378,18 @@ export namespace Prisma {
     tags?: MemoTagUncheckedUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type BlogMemoUpsertWithoutLikesInput = {
+  export interface BlogMemoUpsertWithoutLikesInput {
     update: XOR<BlogMemoUpdateWithoutLikesInput, BlogMemoUncheckedUpdateWithoutLikesInput>
     create: XOR<BlogMemoCreateWithoutLikesInput, BlogMemoUncheckedCreateWithoutLikesInput>
     where?: BlogMemoWhereInput
   }
 
-  export type BlogMemoUpdateToOneWithWhereWithoutLikesInput = {
+  export interface BlogMemoUpdateToOneWithWhereWithoutLikesInput {
     where?: BlogMemoWhereInput
     data: XOR<BlogMemoUpdateWithoutLikesInput, BlogMemoUncheckedUpdateWithoutLikesInput>
   }
 
-  export type BlogMemoUpdateWithoutLikesInput = {
+  export interface BlogMemoUpdateWithoutLikesInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20620,7 +20404,7 @@ export namespace Prisma {
     comments?: BlogCommentUpdateManyWithoutMemo_infoNestedInput
   }
 
-  export type BlogMemoUncheckedUpdateWithoutLikesInput = {
+  export interface BlogMemoUncheckedUpdateWithoutLikesInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20635,7 +20419,7 @@ export namespace Prisma {
     comments?: BlogCommentUncheckedUpdateManyWithoutMemo_infoNestedInput
   }
 
-  export type UserCreateWithoutMemosInput = {
+  export interface UserCreateWithoutMemosInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -20655,7 +20439,7 @@ export namespace Prisma {
     tags?: MemoTagCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserUncheckedCreateWithoutMemosInput = {
+  export interface UserUncheckedCreateWithoutMemosInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -20675,34 +20459,34 @@ export namespace Prisma {
     tags?: MemoTagUncheckedCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserCreateOrConnectWithoutMemosInput = {
+  export interface UserCreateOrConnectWithoutMemosInput {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutMemosInput, UserUncheckedCreateWithoutMemosInput>
   }
 
-  export type MemoTagRelationsCreateWithoutMemoInput = {
+  export interface MemoTagRelationsCreateWithoutMemoInput {
     create_ts?: Date | string
     updated_ts?: Date | string
     tag: MemoTagCreateNestedOneWithoutMemosInput
   }
 
-  export type MemoTagRelationsUncheckedCreateWithoutMemoInput = {
+  export interface MemoTagRelationsUncheckedCreateWithoutMemoInput {
     tagId: string
     create_ts?: Date | string
     updated_ts?: Date | string
   }
 
-  export type MemoTagRelationsCreateOrConnectWithoutMemoInput = {
+  export interface MemoTagRelationsCreateOrConnectWithoutMemoInput {
     where: MemoTagRelationsWhereUniqueInput
     create: XOR<MemoTagRelationsCreateWithoutMemoInput, MemoTagRelationsUncheckedCreateWithoutMemoInput>
   }
 
-  export type MemoTagRelationsCreateManyMemoInputEnvelope = {
+  export interface MemoTagRelationsCreateManyMemoInputEnvelope {
     data: MemoTagRelationsCreateManyMemoInput | MemoTagRelationsCreateManyMemoInput[]
     skipDuplicates?: boolean
   }
 
-  export type BlogCommentCreateWithoutMemo_infoInput = {
+  export interface BlogCommentCreateWithoutMemo_infoInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -20716,7 +20500,7 @@ export namespace Prisma {
     likes?: BlogLikeCreateNestedManyWithoutComment_infoInput
   }
 
-  export type BlogCommentUncheckedCreateWithoutMemo_infoInput = {
+  export interface BlogCommentUncheckedCreateWithoutMemo_infoInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -20730,17 +20514,17 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedCreateNestedManyWithoutComment_infoInput
   }
 
-  export type BlogCommentCreateOrConnectWithoutMemo_infoInput = {
+  export interface BlogCommentCreateOrConnectWithoutMemo_infoInput {
     where: BlogCommentWhereUniqueInput
     create: XOR<BlogCommentCreateWithoutMemo_infoInput, BlogCommentUncheckedCreateWithoutMemo_infoInput>
   }
 
-  export type BlogCommentCreateManyMemo_infoInputEnvelope = {
+  export interface BlogCommentCreateManyMemo_infoInputEnvelope {
     data: BlogCommentCreateManyMemo_infoInput | BlogCommentCreateManyMemo_infoInput[]
     skipDuplicates?: boolean
   }
 
-  export type BlogLikeCreateWithoutBlogMemoInfoInput = {
+  export interface BlogLikeCreateWithoutBlogMemoInfoInput {
     create_ts?: Date | string
     updated_ts?: Date | string
     target?: string
@@ -20750,7 +20534,7 @@ export namespace Prisma {
     user_info: UserCreateNestedOneWithoutLikesInput
   }
 
-  export type BlogLikeUncheckedCreateWithoutBlogMemoInfoInput = {
+  export interface BlogLikeUncheckedCreateWithoutBlogMemoInfoInput {
     id?: number
     create_ts?: Date | string
     updated_ts?: Date | string
@@ -20761,28 +20545,28 @@ export namespace Prisma {
     user_id: string
   }
 
-  export type BlogLikeCreateOrConnectWithoutBlogMemoInfoInput = {
+  export interface BlogLikeCreateOrConnectWithoutBlogMemoInfoInput {
     where: BlogLikeWhereUniqueInput
     create: XOR<BlogLikeCreateWithoutBlogMemoInfoInput, BlogLikeUncheckedCreateWithoutBlogMemoInfoInput>
   }
 
-  export type BlogLikeCreateManyBlogMemoInfoInputEnvelope = {
+  export interface BlogLikeCreateManyBlogMemoInfoInputEnvelope {
     data: BlogLikeCreateManyBlogMemoInfoInput | BlogLikeCreateManyBlogMemoInfoInput[]
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithoutMemosInput = {
+  export interface UserUpsertWithoutMemosInput {
     update: XOR<UserUpdateWithoutMemosInput, UserUncheckedUpdateWithoutMemosInput>
     create: XOR<UserCreateWithoutMemosInput, UserUncheckedCreateWithoutMemosInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutMemosInput = {
+  export interface UserUpdateToOneWithWhereWithoutMemosInput {
     where?: UserWhereInput
     data: XOR<UserUpdateWithoutMemosInput, UserUncheckedUpdateWithoutMemosInput>
   }
 
-  export type UserUpdateWithoutMemosInput = {
+  export interface UserUpdateWithoutMemosInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20802,7 +20586,7 @@ export namespace Prisma {
     tags?: MemoTagUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutMemosInput = {
+  export interface UserUncheckedUpdateWithoutMemosInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20822,65 +20606,65 @@ export namespace Prisma {
     tags?: MemoTagUncheckedUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type MemoTagRelationsUpsertWithWhereUniqueWithoutMemoInput = {
+  export interface MemoTagRelationsUpsertWithWhereUniqueWithoutMemoInput {
     where: MemoTagRelationsWhereUniqueInput
     update: XOR<MemoTagRelationsUpdateWithoutMemoInput, MemoTagRelationsUncheckedUpdateWithoutMemoInput>
     create: XOR<MemoTagRelationsCreateWithoutMemoInput, MemoTagRelationsUncheckedCreateWithoutMemoInput>
   }
 
-  export type MemoTagRelationsUpdateWithWhereUniqueWithoutMemoInput = {
+  export interface MemoTagRelationsUpdateWithWhereUniqueWithoutMemoInput {
     where: MemoTagRelationsWhereUniqueInput
     data: XOR<MemoTagRelationsUpdateWithoutMemoInput, MemoTagRelationsUncheckedUpdateWithoutMemoInput>
   }
 
-  export type MemoTagRelationsUpdateManyWithWhereWithoutMemoInput = {
+  export interface MemoTagRelationsUpdateManyWithWhereWithoutMemoInput {
     where: MemoTagRelationsScalarWhereInput
     data: XOR<MemoTagRelationsUpdateManyMutationInput, MemoTagRelationsUncheckedUpdateManyWithoutMemoInput>
   }
 
-  export type MemoTagRelationsScalarWhereInput = {
+  export interface MemoTagRelationsScalarWhereInput {
     AND?: MemoTagRelationsScalarWhereInput | MemoTagRelationsScalarWhereInput[]
     OR?: MemoTagRelationsScalarWhereInput[]
     NOT?: MemoTagRelationsScalarWhereInput | MemoTagRelationsScalarWhereInput[]
-    tagId?: StringFilter<"MemoTagRelations"> | string
-    memoId?: StringFilter<"MemoTagRelations"> | string
-    create_ts?: DateTimeFilter<"MemoTagRelations"> | Date | string
-    updated_ts?: DateTimeFilter<"MemoTagRelations"> | Date | string
+    tagId?: StringFilter<'MemoTagRelations'> | string
+    memoId?: StringFilter<'MemoTagRelations'> | string
+    create_ts?: DateTimeFilter<'MemoTagRelations'> | Date | string
+    updated_ts?: DateTimeFilter<'MemoTagRelations'> | Date | string
   }
 
-  export type BlogCommentUpsertWithWhereUniqueWithoutMemo_infoInput = {
+  export interface BlogCommentUpsertWithWhereUniqueWithoutMemo_infoInput {
     where: BlogCommentWhereUniqueInput
     update: XOR<BlogCommentUpdateWithoutMemo_infoInput, BlogCommentUncheckedUpdateWithoutMemo_infoInput>
     create: XOR<BlogCommentCreateWithoutMemo_infoInput, BlogCommentUncheckedCreateWithoutMemo_infoInput>
   }
 
-  export type BlogCommentUpdateWithWhereUniqueWithoutMemo_infoInput = {
+  export interface BlogCommentUpdateWithWhereUniqueWithoutMemo_infoInput {
     where: BlogCommentWhereUniqueInput
     data: XOR<BlogCommentUpdateWithoutMemo_infoInput, BlogCommentUncheckedUpdateWithoutMemo_infoInput>
   }
 
-  export type BlogCommentUpdateManyWithWhereWithoutMemo_infoInput = {
+  export interface BlogCommentUpdateManyWithWhereWithoutMemo_infoInput {
     where: BlogCommentScalarWhereInput
     data: XOR<BlogCommentUpdateManyMutationInput, BlogCommentUncheckedUpdateManyWithoutMemo_infoInput>
   }
 
-  export type BlogLikeUpsertWithWhereUniqueWithoutBlogMemoInfoInput = {
+  export interface BlogLikeUpsertWithWhereUniqueWithoutBlogMemoInfoInput {
     where: BlogLikeWhereUniqueInput
     update: XOR<BlogLikeUpdateWithoutBlogMemoInfoInput, BlogLikeUncheckedUpdateWithoutBlogMemoInfoInput>
     create: XOR<BlogLikeCreateWithoutBlogMemoInfoInput, BlogLikeUncheckedCreateWithoutBlogMemoInfoInput>
   }
 
-  export type BlogLikeUpdateWithWhereUniqueWithoutBlogMemoInfoInput = {
+  export interface BlogLikeUpdateWithWhereUniqueWithoutBlogMemoInfoInput {
     where: BlogLikeWhereUniqueInput
     data: XOR<BlogLikeUpdateWithoutBlogMemoInfoInput, BlogLikeUncheckedUpdateWithoutBlogMemoInfoInput>
   }
 
-  export type BlogLikeUpdateManyWithWhereWithoutBlogMemoInfoInput = {
+  export interface BlogLikeUpdateManyWithWhereWithoutBlogMemoInfoInput {
     where: BlogLikeScalarWhereInput
     data: XOR<BlogLikeUpdateManyMutationInput, BlogLikeUncheckedUpdateManyWithoutBlogMemoInfoInput>
   }
 
-  export type UserCreateWithoutTagsInput = {
+  export interface UserCreateWithoutTagsInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -20900,7 +20684,7 @@ export namespace Prisma {
     memos?: BlogMemoCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserUncheckedCreateWithoutTagsInput = {
+  export interface UserUncheckedCreateWithoutTagsInput {
     id?: string
     email?: string | null
     phone?: string | null
@@ -20920,45 +20704,45 @@ export namespace Prisma {
     memos?: BlogMemoUncheckedCreateNestedManyWithoutUser_infoInput
   }
 
-  export type UserCreateOrConnectWithoutTagsInput = {
+  export interface UserCreateOrConnectWithoutTagsInput {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutTagsInput, UserUncheckedCreateWithoutTagsInput>
   }
 
-  export type MemoTagRelationsCreateWithoutTagInput = {
+  export interface MemoTagRelationsCreateWithoutTagInput {
     create_ts?: Date | string
     updated_ts?: Date | string
     memo: BlogMemoCreateNestedOneWithoutTagsInput
   }
 
-  export type MemoTagRelationsUncheckedCreateWithoutTagInput = {
+  export interface MemoTagRelationsUncheckedCreateWithoutTagInput {
     memoId: string
     create_ts?: Date | string
     updated_ts?: Date | string
   }
 
-  export type MemoTagRelationsCreateOrConnectWithoutTagInput = {
+  export interface MemoTagRelationsCreateOrConnectWithoutTagInput {
     where: MemoTagRelationsWhereUniqueInput
     create: XOR<MemoTagRelationsCreateWithoutTagInput, MemoTagRelationsUncheckedCreateWithoutTagInput>
   }
 
-  export type MemoTagRelationsCreateManyTagInputEnvelope = {
+  export interface MemoTagRelationsCreateManyTagInputEnvelope {
     data: MemoTagRelationsCreateManyTagInput | MemoTagRelationsCreateManyTagInput[]
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithoutTagsInput = {
+  export interface UserUpsertWithoutTagsInput {
     update: XOR<UserUpdateWithoutTagsInput, UserUncheckedUpdateWithoutTagsInput>
     create: XOR<UserCreateWithoutTagsInput, UserUncheckedCreateWithoutTagsInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutTagsInput = {
+  export interface UserUpdateToOneWithWhereWithoutTagsInput {
     where?: UserWhereInput
     data: XOR<UserUpdateWithoutTagsInput, UserUncheckedUpdateWithoutTagsInput>
   }
 
-  export type UserUpdateWithoutTagsInput = {
+  export interface UserUpdateWithoutTagsInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20978,7 +20762,7 @@ export namespace Prisma {
     memos?: BlogMemoUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutTagsInput = {
+  export interface UserUncheckedUpdateWithoutTagsInput {
     id?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20998,23 +20782,23 @@ export namespace Prisma {
     memos?: BlogMemoUncheckedUpdateManyWithoutUser_infoNestedInput
   }
 
-  export type MemoTagRelationsUpsertWithWhereUniqueWithoutTagInput = {
+  export interface MemoTagRelationsUpsertWithWhereUniqueWithoutTagInput {
     where: MemoTagRelationsWhereUniqueInput
     update: XOR<MemoTagRelationsUpdateWithoutTagInput, MemoTagRelationsUncheckedUpdateWithoutTagInput>
     create: XOR<MemoTagRelationsCreateWithoutTagInput, MemoTagRelationsUncheckedCreateWithoutTagInput>
   }
 
-  export type MemoTagRelationsUpdateWithWhereUniqueWithoutTagInput = {
+  export interface MemoTagRelationsUpdateWithWhereUniqueWithoutTagInput {
     where: MemoTagRelationsWhereUniqueInput
     data: XOR<MemoTagRelationsUpdateWithoutTagInput, MemoTagRelationsUncheckedUpdateWithoutTagInput>
   }
 
-  export type MemoTagRelationsUpdateManyWithWhereWithoutTagInput = {
+  export interface MemoTagRelationsUpdateManyWithWhereWithoutTagInput {
     where: MemoTagRelationsScalarWhereInput
     data: XOR<MemoTagRelationsUpdateManyMutationInput, MemoTagRelationsUncheckedUpdateManyWithoutTagInput>
   }
 
-  export type MemoTagCreateWithoutMemosInput = {
+  export interface MemoTagCreateWithoutMemosInput {
     id?: string
     tag_name: string
     create_ts?: Date | string
@@ -21022,7 +20806,7 @@ export namespace Prisma {
     user_info: UserCreateNestedOneWithoutTagsInput
   }
 
-  export type MemoTagUncheckedCreateWithoutMemosInput = {
+  export interface MemoTagUncheckedCreateWithoutMemosInput {
     id?: string
     tag_name: string
     create_ts?: Date | string
@@ -21030,12 +20814,12 @@ export namespace Prisma {
     user_id: string
   }
 
-  export type MemoTagCreateOrConnectWithoutMemosInput = {
+  export interface MemoTagCreateOrConnectWithoutMemosInput {
     where: MemoTagWhereUniqueInput
     create: XOR<MemoTagCreateWithoutMemosInput, MemoTagUncheckedCreateWithoutMemosInput>
   }
 
-  export type BlogMemoCreateWithoutTagsInput = {
+  export interface BlogMemoCreateWithoutTagsInput {
     id?: string
     content?: string | null
     create_ts?: Date | string
@@ -21050,7 +20834,7 @@ export namespace Prisma {
     likes?: BlogLikeCreateNestedManyWithoutBlogMemoInfoInput
   }
 
-  export type BlogMemoUncheckedCreateWithoutTagsInput = {
+  export interface BlogMemoUncheckedCreateWithoutTagsInput {
     id?: string
     content?: string | null
     create_ts?: Date | string
@@ -21065,23 +20849,23 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedCreateNestedManyWithoutBlogMemoInfoInput
   }
 
-  export type BlogMemoCreateOrConnectWithoutTagsInput = {
+  export interface BlogMemoCreateOrConnectWithoutTagsInput {
     where: BlogMemoWhereUniqueInput
     create: XOR<BlogMemoCreateWithoutTagsInput, BlogMemoUncheckedCreateWithoutTagsInput>
   }
 
-  export type MemoTagUpsertWithoutMemosInput = {
+  export interface MemoTagUpsertWithoutMemosInput {
     update: XOR<MemoTagUpdateWithoutMemosInput, MemoTagUncheckedUpdateWithoutMemosInput>
     create: XOR<MemoTagCreateWithoutMemosInput, MemoTagUncheckedCreateWithoutMemosInput>
     where?: MemoTagWhereInput
   }
 
-  export type MemoTagUpdateToOneWithWhereWithoutMemosInput = {
+  export interface MemoTagUpdateToOneWithWhereWithoutMemosInput {
     where?: MemoTagWhereInput
     data: XOR<MemoTagUpdateWithoutMemosInput, MemoTagUncheckedUpdateWithoutMemosInput>
   }
 
-  export type MemoTagUpdateWithoutMemosInput = {
+  export interface MemoTagUpdateWithoutMemosInput {
     id?: StringFieldUpdateOperationsInput | string
     tag_name?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21089,7 +20873,7 @@ export namespace Prisma {
     user_info?: UserUpdateOneRequiredWithoutTagsNestedInput
   }
 
-  export type MemoTagUncheckedUpdateWithoutMemosInput = {
+  export interface MemoTagUncheckedUpdateWithoutMemosInput {
     id?: StringFieldUpdateOperationsInput | string
     tag_name?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21097,18 +20881,18 @@ export namespace Prisma {
     user_id?: StringFieldUpdateOperationsInput | string
   }
 
-  export type BlogMemoUpsertWithoutTagsInput = {
+  export interface BlogMemoUpsertWithoutTagsInput {
     update: XOR<BlogMemoUpdateWithoutTagsInput, BlogMemoUncheckedUpdateWithoutTagsInput>
     create: XOR<BlogMemoCreateWithoutTagsInput, BlogMemoUncheckedCreateWithoutTagsInput>
     where?: BlogMemoWhereInput
   }
 
-  export type BlogMemoUpdateToOneWithWhereWithoutTagsInput = {
+  export interface BlogMemoUpdateToOneWithWhereWithoutTagsInput {
     where?: BlogMemoWhereInput
     data: XOR<BlogMemoUpdateWithoutTagsInput, BlogMemoUncheckedUpdateWithoutTagsInput>
   }
 
-  export type BlogMemoUpdateWithoutTagsInput = {
+  export interface BlogMemoUpdateWithoutTagsInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21123,7 +20907,7 @@ export namespace Prisma {
     likes?: BlogLikeUpdateManyWithoutBlogMemoInfoNestedInput
   }
 
-  export type BlogMemoUncheckedUpdateWithoutTagsInput = {
+  export interface BlogMemoUncheckedUpdateWithoutTagsInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21138,7 +20922,7 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedUpdateManyWithoutBlogMemoInfoNestedInput
   }
 
-  export type BlogCommentCreateManyUser_infoInput = {
+  export interface BlogCommentCreateManyUser_infoInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -21150,7 +20934,7 @@ export namespace Prisma {
     memo_id?: string | null
   }
 
-  export type BlogSubCommentCreateManyUser_infoInput = {
+  export interface BlogSubCommentCreateManyUser_infoInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -21159,7 +20943,7 @@ export namespace Prisma {
     reply_sub_comment_id?: string | null
   }
 
-  export type BlogLikeCreateManyUser_infoInput = {
+  export interface BlogLikeCreateManyUser_infoInput {
     id?: number
     create_ts?: Date | string
     updated_ts?: Date | string
@@ -21170,7 +20954,7 @@ export namespace Prisma {
     blogMemoId?: string | null
   }
 
-  export type OAuthCreateManyUserInput = {
+  export interface OAuthCreateManyUserInput {
     id?: string
     provider: string
     providerId: string
@@ -21181,7 +20965,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type AccessTokenCreateManyUserInfoInput = {
+  export interface AccessTokenCreateManyUserInfoInput {
     id?: string
     token: string
     roles?: string
@@ -21194,7 +20978,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type BlogMemoCreateManyUser_infoInput = {
+  export interface BlogMemoCreateManyUser_infoInput {
     id?: string
     content?: string | null
     create_ts?: Date | string
@@ -21206,14 +20990,14 @@ export namespace Prisma {
     courier?: string | null
   }
 
-  export type MemoTagCreateManyUser_infoInput = {
+  export interface MemoTagCreateManyUser_infoInput {
     id?: string
     tag_name: string
     create_ts?: Date | string
     updated_ts?: Date | string
   }
 
-  export type BlogCommentUpdateWithoutUser_infoInput = {
+  export interface BlogCommentUpdateWithoutUser_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21227,7 +21011,7 @@ export namespace Prisma {
     memo_info?: BlogMemoUpdateOneWithoutCommentsNestedInput
   }
 
-  export type BlogCommentUncheckedUpdateWithoutUser_infoInput = {
+  export interface BlogCommentUncheckedUpdateWithoutUser_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21241,7 +21025,7 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedUpdateManyWithoutComment_infoNestedInput
   }
 
-  export type BlogCommentUncheckedUpdateManyWithoutUser_infoInput = {
+  export interface BlogCommentUncheckedUpdateManyWithoutUser_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21253,7 +21037,7 @@ export namespace Prisma {
     memo_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogSubCommentUpdateWithoutUser_infoInput = {
+  export interface BlogSubCommentUpdateWithoutUser_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21263,7 +21047,7 @@ export namespace Prisma {
     likes?: BlogLikeUpdateManyWithoutSub_comment_infoNestedInput
   }
 
-  export type BlogSubCommentUncheckedUpdateWithoutUser_infoInput = {
+  export interface BlogSubCommentUncheckedUpdateWithoutUser_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21273,7 +21057,7 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedUpdateManyWithoutSub_comment_infoNestedInput
   }
 
-  export type BlogSubCommentUncheckedUpdateManyWithoutUser_infoInput = {
+  export interface BlogSubCommentUncheckedUpdateManyWithoutUser_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21282,7 +21066,7 @@ export namespace Prisma {
     reply_sub_comment_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogLikeUpdateWithoutUser_infoInput = {
+  export interface BlogLikeUpdateWithoutUser_infoInput {
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     target?: StringFieldUpdateOperationsInput | string
@@ -21292,7 +21076,7 @@ export namespace Prisma {
     blogMemoInfo?: BlogMemoUpdateOneWithoutLikesNestedInput
   }
 
-  export type BlogLikeUncheckedUpdateWithoutUser_infoInput = {
+  export interface BlogLikeUncheckedUpdateWithoutUser_infoInput {
     id?: IntFieldUpdateOperationsInput | number
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21303,7 +21087,7 @@ export namespace Prisma {
     blogMemoId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogLikeUncheckedUpdateManyWithoutUser_infoInput = {
+  export interface BlogLikeUncheckedUpdateManyWithoutUser_infoInput {
     id?: IntFieldUpdateOperationsInput | number
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21314,7 +21098,7 @@ export namespace Prisma {
     blogMemoId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type OAuthUpdateWithoutUserInput = {
+  export interface OAuthUpdateWithoutUserInput {
     id?: StringFieldUpdateOperationsInput | string
     provider?: StringFieldUpdateOperationsInput | string
     providerId?: StringFieldUpdateOperationsInput | string
@@ -21325,7 +21109,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type OAuthUncheckedUpdateWithoutUserInput = {
+  export interface OAuthUncheckedUpdateWithoutUserInput {
     id?: StringFieldUpdateOperationsInput | string
     provider?: StringFieldUpdateOperationsInput | string
     providerId?: StringFieldUpdateOperationsInput | string
@@ -21336,7 +21120,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type OAuthUncheckedUpdateManyWithoutUserInput = {
+  export interface OAuthUncheckedUpdateManyWithoutUserInput {
     id?: StringFieldUpdateOperationsInput | string
     provider?: StringFieldUpdateOperationsInput | string
     providerId?: StringFieldUpdateOperationsInput | string
@@ -21347,7 +21131,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AccessTokenUpdateWithoutUserInfoInput = {
+  export interface AccessTokenUpdateWithoutUserInfoInput {
     id?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
     roles?: StringFieldUpdateOperationsInput | string
@@ -21360,7 +21144,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AccessTokenUncheckedUpdateWithoutUserInfoInput = {
+  export interface AccessTokenUncheckedUpdateWithoutUserInfoInput {
     id?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
     roles?: StringFieldUpdateOperationsInput | string
@@ -21373,7 +21157,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AccessTokenUncheckedUpdateManyWithoutUserInfoInput = {
+  export interface AccessTokenUncheckedUpdateManyWithoutUserInfoInput {
     id?: StringFieldUpdateOperationsInput | string
     token?: StringFieldUpdateOperationsInput | string
     roles?: StringFieldUpdateOperationsInput | string
@@ -21386,7 +21170,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type BlogMemoUpdateWithoutUser_infoInput = {
+  export interface BlogMemoUpdateWithoutUser_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21401,7 +21185,7 @@ export namespace Prisma {
     likes?: BlogLikeUpdateManyWithoutBlogMemoInfoNestedInput
   }
 
-  export type BlogMemoUncheckedUpdateWithoutUser_infoInput = {
+  export interface BlogMemoUncheckedUpdateWithoutUser_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21416,7 +21200,7 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedUpdateManyWithoutBlogMemoInfoNestedInput
   }
 
-  export type BlogMemoUncheckedUpdateManyWithoutUser_infoInput = {
+  export interface BlogMemoUncheckedUpdateManyWithoutUser_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21428,7 +21212,7 @@ export namespace Prisma {
     courier?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type MemoTagUpdateWithoutUser_infoInput = {
+  export interface MemoTagUpdateWithoutUser_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     tag_name?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21436,7 +21220,7 @@ export namespace Prisma {
     memos?: MemoTagRelationsUpdateManyWithoutTagNestedInput
   }
 
-  export type MemoTagUncheckedUpdateWithoutUser_infoInput = {
+  export interface MemoTagUncheckedUpdateWithoutUser_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     tag_name?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21444,14 +21228,14 @@ export namespace Prisma {
     memos?: MemoTagRelationsUncheckedUpdateManyWithoutTagNestedInput
   }
 
-  export type MemoTagUncheckedUpdateManyWithoutUser_infoInput = {
+  export interface MemoTagUncheckedUpdateManyWithoutUser_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     tag_name?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type BlogSubCommentCreateManyComment_infoInput = {
+  export interface BlogSubCommentCreateManyComment_infoInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -21460,7 +21244,7 @@ export namespace Prisma {
     user_id?: string | null
   }
 
-  export type BlogLikeCreateManyComment_infoInput = {
+  export interface BlogLikeCreateManyComment_infoInput {
     id?: number
     create_ts?: Date | string
     updated_ts?: Date | string
@@ -21471,7 +21255,7 @@ export namespace Prisma {
     blogMemoId?: string | null
   }
 
-  export type BlogSubCommentUpdateWithoutComment_infoInput = {
+  export interface BlogSubCommentUpdateWithoutComment_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21481,7 +21265,7 @@ export namespace Prisma {
     likes?: BlogLikeUpdateManyWithoutSub_comment_infoNestedInput
   }
 
-  export type BlogSubCommentUncheckedUpdateWithoutComment_infoInput = {
+  export interface BlogSubCommentUncheckedUpdateWithoutComment_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21491,7 +21275,7 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedUpdateManyWithoutSub_comment_infoNestedInput
   }
 
-  export type BlogSubCommentUncheckedUpdateManyWithoutComment_infoInput = {
+  export interface BlogSubCommentUncheckedUpdateManyWithoutComment_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21500,7 +21284,7 @@ export namespace Prisma {
     user_id?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogLikeUpdateWithoutComment_infoInput = {
+  export interface BlogLikeUpdateWithoutComment_infoInput {
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     target?: StringFieldUpdateOperationsInput | string
@@ -21510,7 +21294,7 @@ export namespace Prisma {
     blogMemoInfo?: BlogMemoUpdateOneWithoutLikesNestedInput
   }
 
-  export type BlogLikeUncheckedUpdateWithoutComment_infoInput = {
+  export interface BlogLikeUncheckedUpdateWithoutComment_infoInput {
     id?: IntFieldUpdateOperationsInput | number
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21521,7 +21305,7 @@ export namespace Prisma {
     blogMemoId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogLikeUncheckedUpdateManyWithoutComment_infoInput = {
+  export interface BlogLikeUncheckedUpdateManyWithoutComment_infoInput {
     id?: IntFieldUpdateOperationsInput | number
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21532,7 +21316,7 @@ export namespace Prisma {
     blogMemoId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogLikeCreateManySub_comment_infoInput = {
+  export interface BlogLikeCreateManySub_comment_infoInput {
     id?: number
     create_ts?: Date | string
     updated_ts?: Date | string
@@ -21543,7 +21327,7 @@ export namespace Prisma {
     blogMemoId?: string | null
   }
 
-  export type BlogLikeUpdateWithoutSub_comment_infoInput = {
+  export interface BlogLikeUpdateWithoutSub_comment_infoInput {
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     target?: StringFieldUpdateOperationsInput | string
@@ -21553,7 +21337,7 @@ export namespace Prisma {
     blogMemoInfo?: BlogMemoUpdateOneWithoutLikesNestedInput
   }
 
-  export type BlogLikeUncheckedUpdateWithoutSub_comment_infoInput = {
+  export interface BlogLikeUncheckedUpdateWithoutSub_comment_infoInput {
     id?: IntFieldUpdateOperationsInput | number
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21564,7 +21348,7 @@ export namespace Prisma {
     blogMemoId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogLikeUncheckedUpdateManyWithoutSub_comment_infoInput = {
+  export interface BlogLikeUncheckedUpdateManyWithoutSub_comment_infoInput {
     id?: IntFieldUpdateOperationsInput | number
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21575,13 +21359,13 @@ export namespace Prisma {
     blogMemoId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type MemoTagRelationsCreateManyMemoInput = {
+  export interface MemoTagRelationsCreateManyMemoInput {
     tagId: string
     create_ts?: Date | string
     updated_ts?: Date | string
   }
 
-  export type BlogCommentCreateManyMemo_infoInput = {
+  export interface BlogCommentCreateManyMemo_infoInput {
     id?: string
     content: string
     create_ts?: Date | string
@@ -21593,7 +21377,7 @@ export namespace Prisma {
     visitorName?: string | null
   }
 
-  export type BlogLikeCreateManyBlogMemoInfoInput = {
+  export interface BlogLikeCreateManyBlogMemoInfoInput {
     id?: number
     create_ts?: Date | string
     updated_ts?: Date | string
@@ -21604,25 +21388,25 @@ export namespace Prisma {
     user_id: string
   }
 
-  export type MemoTagRelationsUpdateWithoutMemoInput = {
+  export interface MemoTagRelationsUpdateWithoutMemoInput {
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     tag?: MemoTagUpdateOneRequiredWithoutMemosNestedInput
   }
 
-  export type MemoTagRelationsUncheckedUpdateWithoutMemoInput = {
+  export interface MemoTagRelationsUncheckedUpdateWithoutMemoInput {
     tagId?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MemoTagRelationsUncheckedUpdateManyWithoutMemoInput = {
+  export interface MemoTagRelationsUncheckedUpdateManyWithoutMemoInput {
     tagId?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type BlogCommentUpdateWithoutMemo_infoInput = {
+  export interface BlogCommentUpdateWithoutMemo_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21636,7 +21420,7 @@ export namespace Prisma {
     likes?: BlogLikeUpdateManyWithoutComment_infoNestedInput
   }
 
-  export type BlogCommentUncheckedUpdateWithoutMemo_infoInput = {
+  export interface BlogCommentUncheckedUpdateWithoutMemo_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21650,7 +21434,7 @@ export namespace Prisma {
     likes?: BlogLikeUncheckedUpdateManyWithoutComment_infoNestedInput
   }
 
-  export type BlogCommentUncheckedUpdateManyWithoutMemo_infoInput = {
+  export interface BlogCommentUncheckedUpdateManyWithoutMemo_infoInput {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21662,7 +21446,7 @@ export namespace Prisma {
     visitorName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type BlogLikeUpdateWithoutBlogMemoInfoInput = {
+  export interface BlogLikeUpdateWithoutBlogMemoInfoInput {
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     target?: StringFieldUpdateOperationsInput | string
@@ -21672,7 +21456,7 @@ export namespace Prisma {
     user_info?: UserUpdateOneRequiredWithoutLikesNestedInput
   }
 
-  export type BlogLikeUncheckedUpdateWithoutBlogMemoInfoInput = {
+  export interface BlogLikeUncheckedUpdateWithoutBlogMemoInfoInput {
     id?: IntFieldUpdateOperationsInput | number
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21683,7 +21467,7 @@ export namespace Prisma {
     user_id?: StringFieldUpdateOperationsInput | string
   }
 
-  export type BlogLikeUncheckedUpdateManyWithoutBlogMemoInfoInput = {
+  export interface BlogLikeUncheckedUpdateManyWithoutBlogMemoInfoInput {
     id?: IntFieldUpdateOperationsInput | number
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21694,37 +21478,35 @@ export namespace Prisma {
     user_id?: StringFieldUpdateOperationsInput | string
   }
 
-  export type MemoTagRelationsCreateManyTagInput = {
+  export interface MemoTagRelationsCreateManyTagInput {
     memoId: string
     create_ts?: Date | string
     updated_ts?: Date | string
   }
 
-  export type MemoTagRelationsUpdateWithoutTagInput = {
+  export interface MemoTagRelationsUpdateWithoutTagInput {
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     memo?: BlogMemoUpdateOneRequiredWithoutTagsNestedInput
   }
 
-  export type MemoTagRelationsUncheckedUpdateWithoutTagInput = {
+  export interface MemoTagRelationsUncheckedUpdateWithoutTagInput {
     memoId?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MemoTagRelationsUncheckedUpdateManyWithoutTagInput = {
+  export interface MemoTagRelationsUncheckedUpdateManyWithoutTagInput {
     memoId?: StringFieldUpdateOperationsInput | string
     create_ts?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_ts?: DateTimeFieldUpdateOperationsInput | Date | string
   }
-
-
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany
    */
 
-  export type BatchPayload = {
+  export interface BatchPayload {
     count: number
   }
 

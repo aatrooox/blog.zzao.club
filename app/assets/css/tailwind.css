@@ -117,64 +117,64 @@
 
   /* 像素风格主题色彩系统 */
   /* 背景色系 */
-  --pixel-bg-primary: oklch(25% 0.05 250);     /* 主背景 - 深灰色 */
-  --pixel-bg-secondary: oklch(30% 0.05 250);   /* 次要背景 - 中灰色 */
-  --pixel-bg-tertiary: oklch(35% 0.05 250);    /* 第三级背景 */
-  --pixel-bg-quaternary: oklch(40% 0.05 250);  /* 第四级背景 */
-  --pixel-bg-card: oklch(28% 0.05 250);        /* 卡片背景 */
-  --pixel-bg-input: oklch(20% 0.05 250);       /* 输入框背景 */
-  --pixel-bg-code: oklch(32% 0.05 250);        /* 代码块背景 */
+  --pixel-bg-primary: oklch(25% 0.05 250); /* 主背景 - 深灰色 */
+  --pixel-bg-secondary: oklch(30% 0.05 250); /* 次要背景 - 中灰色 */
+  --pixel-bg-tertiary: oklch(35% 0.05 250); /* 第三级背景 */
+  --pixel-bg-quaternary: oklch(40% 0.05 250); /* 第四级背景 */
+  --pixel-bg-card: oklch(28% 0.05 250); /* 卡片背景 */
+  --pixel-bg-input: oklch(20% 0.05 250); /* 输入框背景 */
+  --pixel-bg-code: oklch(32% 0.05 250); /* 代码块背景 */
 
   /* 文字色系 */
-  --pixel-text-primary: oklch(90% 0.02 250);   /* 主要文字 - 亮白色 */
+  --pixel-text-primary: oklch(90% 0.02 250); /* 主要文字 - 亮白色 */
   --pixel-text-secondary: oklch(85% 0.02 250); /* 次要文字 */
-  --pixel-text-tertiary: oklch(80% 0.03 250);  /* 第三级文字 */
-  --pixel-text-muted: oklch(75% 0.03 250);     /* 弱化文字 */
-  --pixel-text-disabled: oklch(50% 0.03 250);  /* 禁用文字 */
-  --pixel-text-code: oklch(70% 0.03 250);      /* 代码文字 */
+  --pixel-text-tertiary: oklch(80% 0.03 250); /* 第三级文字 */
+  --pixel-text-muted: oklch(75% 0.03 250); /* 弱化文字 */
+  --pixel-text-disabled: oklch(50% 0.03 250); /* 禁用文字 */
+  --pixel-text-code: oklch(70% 0.03 250); /* 代码文字 */
 
   /* 边框色系 */
   --pixel-border-primary: oklch(40% 0.05 250); /* 主要边框 */
   --pixel-border-secondary: oklch(45% 0.05 250); /* 次要边框 */
-  --pixel-border-input: oklch(35% 0.08 250);   /* 输入框边框 */
-  --pixel-border-focus: oklch(75% 0.15 195);   /* 焦点边框 */
+  --pixel-border-input: oklch(35% 0.08 250); /* 输入框边框 */
+  --pixel-border-focus: oklch(75% 0.15 195); /* 焦点边框 */
 
   /* 阴影色系 */
   --pixel-shadow-primary: oklch(25% 0.05 250); /* 主要阴影 */
   --pixel-shadow-secondary: oklch(20% 0.05 250); /* 次要阴影 */
-  --pixel-shadow-deep: oklch(15% 0.05 250);    /* 深层阴影 */
-  --pixel-shadow-light: oklch(50% 0.03 250);   /* 浅色阴影 */
+  --pixel-shadow-deep: oklch(15% 0.05 250); /* 深层阴影 */
+  --pixel-shadow-light: oklch(50% 0.03 250); /* 浅色阴影 */
 
   /* 强调色系 */
-  --pixel-accent-cyan: oklch(70% 0.15 195);    /* 青色强调 - 主要按钮 */
+  --pixel-accent-cyan: oklch(70% 0.15 195); /* 青色强调 - 主要按钮 */
   --pixel-accent-cyan-hover: oklch(75% 0.15 195); /* 青色悬停 */
-  --pixel-accent-cyan-light: oklch(80% 0.1 195);  /* 淡青色 */
+  --pixel-accent-cyan-light: oklch(80% 0.1 195); /* 淡青色 */
   --pixel-accent-cyan-border: oklch(60% 0.15 195); /* 青色边框 */
-  --pixel-accent-cyan-shadow: oklch(60% 0.2 195);  /* 青色阴影 */
+  --pixel-accent-cyan-shadow: oklch(60% 0.2 195); /* 青色阴影 */
 
   /* 状态色系 */
-  --pixel-status-success: oklch(70% 0.15 145);  /* 成功状态 - 绿色 */
+  --pixel-status-success: oklch(70% 0.15 145); /* 成功状态 - 绿色 */
   --pixel-status-success-border: oklch(60% 0.2 145); /* 成功边框 */
-  --pixel-status-warning: oklch(75% 0.15 85);   /* 警告状态 - 黄色 */
-  --pixel-status-warning-border: oklch(65% 0.2 85);  /* 警告边框 */
-  --pixel-status-error: oklch(65% 0.15 25);     /* 错误状态 - 红色 */
-  --pixel-status-error-border: oklch(55% 0.2 25);    /* 错误边框 */
-  --pixel-status-info: oklch(50% 0.2 15);       /* 信息状态 - 橙色 */
-  --pixel-status-info-border: oklch(60% 0.2 15);     /* 信息边框 */
+  --pixel-status-warning: oklch(75% 0.15 85); /* 警告状态 - 黄色 */
+  --pixel-status-warning-border: oklch(65% 0.2 85); /* 警告边框 */
+  --pixel-status-error: oklch(65% 0.15 25); /* 错误状态 - 红色 */
+  --pixel-status-error-border: oklch(55% 0.2 25); /* 错误边框 */
+  --pixel-status-info: oklch(50% 0.2 15); /* 信息状态 - 橙色 */
+  --pixel-status-info-border: oklch(60% 0.2 15); /* 信息边框 */
 
   /* 特殊强调色 */
   --pixel-highlight-yellow: oklch(84% 0.15 85); /* 黄色高亮 - 标题强调 */
   --pixel-highlight-green: oklch(45% 0.15 120); /* 绿色高亮 */
   --pixel-highlight-green-text: oklch(95% 0.02 120); /* 绿色高亮文字 */
   --pixel-highlight-green-border: oklch(35% 0.15 120); /* 绿色高亮边框 */
-  --pixel-highlight-teal: oklch(50% 0.2 180);   /* 青绿色高亮 */
-  --pixel-highlight-teal-text: oklch(95% 0.02 180);  /* 青绿色高亮文字 */
+  --pixel-highlight-teal: oklch(50% 0.2 180); /* 青绿色高亮 */
+  --pixel-highlight-teal-text: oklch(95% 0.02 180); /* 青绿色高亮文字 */
   --pixel-highlight-teal-border: oklch(40% 0.2 180); /* 青绿色高亮边框 */
 
   /* 渐变色系 */
-  --pixel-gradient-start: oklch(65% 0.15 200);  /* 渐变起始色 */
-  --pixel-gradient-mid: oklch(70% 0.12 160);    /* 渐变中间色 */
-  --pixel-gradient-end: oklch(75% 0.1 120);     /* 渐变结束色 */
+  --pixel-gradient-start: oklch(65% 0.15 200); /* 渐变起始色 */
+  --pixel-gradient-mid: oklch(70% 0.12 160); /* 渐变中间色 */
+  --pixel-gradient-end: oklch(75% 0.1 120); /* 渐变结束色 */
 }
 
 .dark {
@@ -213,64 +213,64 @@
 
   /* 暗色主题下的像素风格色彩系统 */
   /* 背景色系 */
-  --pixel-bg-primary: oklch(25% 0.05 250);     /* 主背景 - 深灰色 */
-  --pixel-bg-secondary: oklch(30% 0.05 250);   /* 次要背景 - 中灰色 */
-  --pixel-bg-tertiary: oklch(35% 0.05 250);    /* 第三级背景 */
-  --pixel-bg-quaternary: oklch(40% 0.05 250);  /* 第四级背景 */
-  --pixel-bg-card: oklch(28% 0.05 250);        /* 卡片背景 */
-  --pixel-bg-input: oklch(20% 0.05 250);       /* 输入框背景 */
-  --pixel-bg-code: oklch(32% 0.05 250);        /* 代码块背景 */
+  --pixel-bg-primary: oklch(25% 0.05 250); /* 主背景 - 深灰色 */
+  --pixel-bg-secondary: oklch(30% 0.05 250); /* 次要背景 - 中灰色 */
+  --pixel-bg-tertiary: oklch(35% 0.05 250); /* 第三级背景 */
+  --pixel-bg-quaternary: oklch(40% 0.05 250); /* 第四级背景 */
+  --pixel-bg-card: oklch(28% 0.05 250); /* 卡片背景 */
+  --pixel-bg-input: oklch(20% 0.05 250); /* 输入框背景 */
+  --pixel-bg-code: oklch(32% 0.05 250); /* 代码块背景 */
 
   /* 文字色系 */
-  --pixel-text-primary: oklch(90% 0.02 250);   /* 主要文字 - 亮白色 */
+  --pixel-text-primary: oklch(90% 0.02 250); /* 主要文字 - 亮白色 */
   --pixel-text-secondary: oklch(85% 0.02 250); /* 次要文字 */
-  --pixel-text-tertiary: oklch(80% 0.03 250);  /* 第三级文字 */
-  --pixel-text-muted: oklch(75% 0.03 250);     /* 弱化文字 */
-  --pixel-text-disabled: oklch(50% 0.03 250);  /* 禁用文字 */
-  --pixel-text-code: oklch(70% 0.03 250);      /* 代码文字 */
+  --pixel-text-tertiary: oklch(80% 0.03 250); /* 第三级文字 */
+  --pixel-text-muted: oklch(75% 0.03 250); /* 弱化文字 */
+  --pixel-text-disabled: oklch(50% 0.03 250); /* 禁用文字 */
+  --pixel-text-code: oklch(70% 0.03 250); /* 代码文字 */
 
   /* 边框色系 */
   --pixel-border-primary: oklch(40% 0.05 250); /* 主要边框 */
   --pixel-border-secondary: oklch(45% 0.05 250); /* 次要边框 */
-  --pixel-border-input: oklch(35% 0.08 250);   /* 输入框边框 */
-  --pixel-border-focus: oklch(75% 0.15 195);   /* 焦点边框 */
+  --pixel-border-input: oklch(35% 0.08 250); /* 输入框边框 */
+  --pixel-border-focus: oklch(75% 0.15 195); /* 焦点边框 */
 
   /* 阴影色系 */
   --pixel-shadow-primary: oklch(25% 0.05 250); /* 主要阴影 */
   --pixel-shadow-secondary: oklch(20% 0.05 250); /* 次要阴影 */
-  --pixel-shadow-deep: oklch(15% 0.05 250);    /* 深层阴影 */
-  --pixel-shadow-light: oklch(50% 0.03 250);   /* 浅色阴影 */
+  --pixel-shadow-deep: oklch(15% 0.05 250); /* 深层阴影 */
+  --pixel-shadow-light: oklch(50% 0.03 250); /* 浅色阴影 */
 
   /* 强调色系 */
-  --pixel-accent-cyan: oklch(70% 0.15 195);    /* 青色强调 - 主要按钮 */
+  --pixel-accent-cyan: oklch(70% 0.15 195); /* 青色强调 - 主要按钮 */
   --pixel-accent-cyan-hover: oklch(75% 0.15 195); /* 青色悬停 */
-  --pixel-accent-cyan-light: oklch(80% 0.1 195);  /* 淡青色 */
+  --pixel-accent-cyan-light: oklch(80% 0.1 195); /* 淡青色 */
   --pixel-accent-cyan-border: oklch(60% 0.15 195); /* 青色边框 */
-  --pixel-accent-cyan-shadow: oklch(60% 0.2 195);  /* 青色阴影 */
+  --pixel-accent-cyan-shadow: oklch(60% 0.2 195); /* 青色阴影 */
 
   /* 状态色系 */
-  --pixel-status-success: oklch(70% 0.15 145);  /* 成功状态 - 绿色 */
+  --pixel-status-success: oklch(70% 0.15 145); /* 成功状态 - 绿色 */
   --pixel-status-success-border: oklch(60% 0.2 145); /* 成功边框 */
-  --pixel-status-warning: oklch(75% 0.15 85);   /* 警告状态 - 黄色 */
-  --pixel-status-warning-border: oklch(65% 0.2 85);  /* 警告边框 */
-  --pixel-status-error: oklch(65% 0.15 25);     /* 错误状态 - 红色 */
-  --pixel-status-error-border: oklch(55% 0.2 25);    /* 错误边框 */
-  --pixel-status-info: oklch(50% 0.2 15);       /* 信息状态 - 橙色 */
-  --pixel-status-info-border: oklch(60% 0.2 15);     /* 信息边框 */
+  --pixel-status-warning: oklch(75% 0.15 85); /* 警告状态 - 黄色 */
+  --pixel-status-warning-border: oklch(65% 0.2 85); /* 警告边框 */
+  --pixel-status-error: oklch(65% 0.15 25); /* 错误状态 - 红色 */
+  --pixel-status-error-border: oklch(55% 0.2 25); /* 错误边框 */
+  --pixel-status-info: oklch(50% 0.2 15); /* 信息状态 - 橙色 */
+  --pixel-status-info-border: oklch(60% 0.2 15); /* 信息边框 */
 
   /* 特殊强调色 */
   --pixel-highlight-yellow: oklch(84% 0.15 85); /* 黄色高亮 - 标题强调 */
   --pixel-highlight-green: oklch(45% 0.15 120); /* 绿色高亮 */
   --pixel-highlight-green-text: oklch(95% 0.02 120); /* 绿色高亮文字 */
   --pixel-highlight-green-border: oklch(35% 0.15 120); /* 绿色高亮边框 */
-  --pixel-highlight-teal: oklch(50% 0.2 180);   /* 青绿色高亮 */
-  --pixel-highlight-teal-text: oklch(95% 0.02 180);  /* 青绿色高亮文字 */
+  --pixel-highlight-teal: oklch(50% 0.2 180); /* 青绿色高亮 */
+  --pixel-highlight-teal-text: oklch(95% 0.02 180); /* 青绿色高亮文字 */
   --pixel-highlight-teal-border: oklch(40% 0.2 180); /* 青绿色高亮边框 */
 
   /* 渐变色系 */
-  --pixel-gradient-start: oklch(65% 0.15 200);  /* 渐变起始色 */
-  --pixel-gradient-mid: oklch(70% 0.12 160);    /* 渐变中间色 */
-  --pixel-gradient-end: oklch(75% 0.1 120);     /* 渐变结束色 */
+  --pixel-gradient-start: oklch(65% 0.15 200); /* 渐变起始色 */
+  --pixel-gradient-mid: oklch(70% 0.12 160); /* 渐变中间色 */
+  --pixel-gradient-end: oklch(75% 0.1 120); /* 渐变结束色 */
 }
 
 @layer base {
@@ -620,8 +620,20 @@ body {
 /* 像素网格背景 */
 .pixel-grid-bg {
   background-image:
-    repeating-linear-gradient(0deg, var(--pixel-accent-cyan) 0px, var(--pixel-accent-cyan) 1px, transparent 1px, transparent 8px),
-    repeating-linear-gradient(90deg, var(--pixel-accent-cyan) 0px, var(--pixel-accent-cyan) 1px, transparent 1px, transparent 8px);
+    repeating-linear-gradient(
+      0deg,
+      var(--pixel-accent-cyan) 0px,
+      var(--pixel-accent-cyan) 1px,
+      transparent 1px,
+      transparent 8px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      var(--pixel-accent-cyan) 0px,
+      var(--pixel-accent-cyan) 1px,
+      transparent 1px,
+      transparent 8px
+    );
   opacity: 0.05;
 }
 
