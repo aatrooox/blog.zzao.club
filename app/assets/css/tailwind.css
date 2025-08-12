@@ -155,9 +155,6 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
 }
 
 @font-face {
@@ -315,6 +312,205 @@ body {
         350% 50%;
     }
   }
+}
+
+/* 像素风格公共类 */
+
+/* 像素按钮 */
+.pixel-btn {
+  background: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  color: oklch(90% 0.02 250);
+  font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
+  padding: 8px 16px;
+  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+  transition: all 0.15s ease;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.pixel-btn:hover {
+  background: oklch(35% 0.05 250);
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 oklch(40% 0.05 250);
+}
+.pixel-btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+}
+
+/* 像素按钮 - 主要强调色 */
+.pixel-btn-primary {
+  background: oklch(70% 0.15 195);
+  border: 2px solid oklch(60% 0.2 195);
+  color: oklch(90% 0.02 250);
+  font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
+  padding: 8px 16px;
+  box-shadow: 2px 2px 0 oklch(60% 0.2 195);
+  transition: all 0.15s ease;
+  image-rendering: pixelated;
+}
+.pixel-btn-primary:hover {
+  background: oklch(80% 0.1 195);
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 oklch(60% 0.2 195);
+}
+.pixel-btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0 oklch(60% 0.2 195);
+}
+
+/* 像素卡片 */
+.pixel-card {
+  background: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  box-shadow: 
+    2px 2px 0 oklch(40% 0.05 250),
+    4px 4px 0 oklch(35% 0.05 250);
+  padding: 16px;
+  margin: 8px;
+  image-rendering: pixelated;
+  transition: all 0.2s ease;
+}
+.pixel-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    2px 2px 0 oklch(40% 0.05 250),
+    4px 4px 0 oklch(35% 0.05 250),
+    6px 6px 0 oklch(25% 0.05 250);
+}
+
+/* 像素卡片 - 高级阴影 */
+.pixel-card-elevated {
+  background: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  box-shadow: 
+    2px 2px 0 oklch(40% 0.05 250),
+    4px 4px 0 oklch(35% 0.05 250),
+    6px 6px 0 oklch(25% 0.05 250);
+  padding: 16px;
+  margin: 8px;
+  image-rendering: pixelated;
+  transition: all 0.2s ease;
+}
+.pixel-card-elevated:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    3px 3px 0 oklch(40% 0.05 250),
+    6px 6px 0 oklch(35% 0.05 250),
+    9px 9px 0 oklch(25% 0.05 250);
+}
+
+/* 像素边框 */
+.pixel-border {
+  border: 2px solid oklch(40% 0.05 250);
+  box-shadow: 
+    0 0 0 2px oklch(25% 0.05 250),
+    2px 2px 0 0 oklch(50% 0.03 250);
+}
+
+/* 像素阴影层级 */
+.pixel-shadow-sm {
+  box-shadow: 2px 2px 0 0 oklch(50% 0.03 250);
+}
+.pixel-shadow-md {
+  box-shadow: 
+    2px 2px 0 0 oklch(50% 0.03 250),
+    4px 4px 0 0 oklch(40% 0.05 250);
+}
+.pixel-shadow-lg {
+  box-shadow: 
+    2px 2px 0 0 oklch(50% 0.03 250),
+    4px 4px 0 0 oklch(40% 0.05 250),
+    6px 6px 0 0 oklch(25% 0.05 250);
+}
+
+/* 像素状态指示器 */
+.pixel-status-online {
+  background: oklch(70% 0.15 145);
+  width: 8px;
+  height: 8px;
+  border: 1px solid oklch(60% 0.2 145);
+}
+.pixel-status-offline {
+  background: oklch(65% 0.15 25);
+  width: 8px;
+  height: 8px;
+  border: 1px solid oklch(55% 0.2 25);
+}
+.pixel-status-warning {
+  background: oklch(75% 0.15 85);
+  width: 8px;
+  height: 8px;
+  border: 1px solid oklch(65% 0.2 85);
+}
+.pixel-status-unknown {
+  background: oklch(50% 0.05 250);
+  width: 8px;
+  height: 8px;
+  border: 1px solid oklch(40% 0.05 250);
+}
+
+/* 像素字体 */
+.pixel-font {
+  font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* 像素标题 */
+.pixel-title {
+  font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
+  font-weight: 700;
+  color: oklch(90% 0.02 250);
+  image-rendering: pixelated;
+}
+
+/* 像素文本 */
+.pixel-text {
+  font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
+  color: oklch(75% 0.03 250);
+  image-rendering: pixelated;
+}
+
+/* 像素文本 - 次要 */
+.pixel-text-muted {
+  font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
+  color: oklch(50% 0.03 250);
+  image-rendering: pixelated;
+}
+
+/* 像素进度条 */
+.pixel-progress-bar {
+  background: oklch(25% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  height: 16px;
+  position: relative;
+  image-rendering: pixelated;
+}
+.pixel-progress-fill {
+  background: oklch(70% 0.15 195);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* 像素网格背景 */
+.pixel-grid-bg {
+  background-image: 
+    repeating-linear-gradient(0deg, oklch(70% 0.15 195) 0px, oklch(70% 0.15 195) 1px, transparent 1px, transparent 8px),
+    repeating-linear-gradient(90deg, oklch(70% 0.15 195) 0px, oklch(70% 0.15 195) 1px, transparent 1px, transparent 8px);
+  opacity: 0.05;
+}
+
+/* 像素噪点背景 */
+.pixel-noise-bg {
+  background-image: 
+    radial-gradient(circle at 25% 25%, oklch(70% 0.15 195) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, oklch(70% 0.15 145) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-position: 0 0, 8px 8px;
+  opacity: 0.03;
 }
 
 /* 下划线动画 hover 效果全局复用 */

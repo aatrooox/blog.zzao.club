@@ -17,7 +17,10 @@ const props = defineProps({
 <template>
   <NuxtLink
     :href="props.href" :target="props.target"
-    class="font-bold border-b-2 border-dashed border-zinc-600 hover:border-solid hover:border-zinc-900 dark:border-zinc-300 dark:hover:border-zinc-100 dark:text-zinc-200"
+    class="font-bold font-mono border-b-2 border-dashed transition-all duration-200"
+    style="color: oklch(70% 0.15 195); border-color: oklch(60% 0.15 195);"
+    @mouseover="$event.target.style.color = 'oklch(75% 0.15 195)'; $event.target.style.borderColor = 'oklch(65% 0.15 195)'; $event.target.style.borderStyle = 'solid';"
+    @mouseleave="$event.target.style.color = 'oklch(70% 0.15 195)'; $event.target.style.borderColor = 'oklch(60% 0.15 195)'; $event.target.style.borderStyle = 'dashed';"
   >
     <slot />
   </NuxtLink>

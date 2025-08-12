@@ -166,43 +166,191 @@ defineExpose({ clear })
 
 <template>
   <ClientOnly>
-    <div class="transition-all duration-300 ease-in-out">
-      <div v-if="!userStore.isLogin" class="comment-visitor-form flex gap-2 mb-2">
-        <Input v-model="visitorName" placeholder="名字" :disabled="userStore.isVisitor" />
-        <Input v-model="visitorEmail" placeholder="邮箱" type="email" />
-        <Input v-model="visitorWebsite" placeholder="你的主页" />
+    <div class="pixel-comment-input">
+      <div v-if="!userStore.isLogin" class="pixel-visitor-form">
+        <Input v-model="visitorName" placeholder="名字" :disabled="userStore.isVisitor" class="pixel-input-field" />
+        <Input v-model="visitorEmail" placeholder="邮箱" type="email" class="pixel-input-field" />
+        <Input v-model="visitorWebsite" placeholder="你的主页" class="pixel-input-field" />
       </div>
-      <div v-else-if="showHello" class="text-sm pb-2">
+      <div v-else-if="showHello" class="pixel-hello">
         Hi，{{ userStore.user.nickname || userStore.user.username }}。欢迎评论👏
       </div>
-      <div v-show="!userStore.isLogin && visitorEmail" class="visitor-quick-btns flex gap-2 py-2">
-        <div class="items-top flex space-x-2">
-          <Checkbox id="terms2" v-model="allowEmailNotify" disabled />
-          <label for="terms2" class="text-sm leading-none peer-disabled:cursosr-not-allowed peer-disabled:opacity-70">
+      <div v-show="!userStore.isLogin && visitorEmail" class="pixel-checkbox-container">
+        <div class="flex items-center space-x-2">
+          <Checkbox id="terms2" v-model="allowEmailNotify" disabled class="pixel-checkbox" />
+          <label for="terms2" class="pixel-label">
             收到回复时邮件通知我
           </label>
         </div>
       </div>
       <Textarea
         id="over_label"
-        ref="commentInputRef" v-model="comment" class="w-full" auto-resize :rows="rows"
+        ref="commentInputRef" v-model="comment" class="pixel-textarea" auto-resize :rows="rows"
         maxlength="512" :placeholder="placeholder" @value-change="emit('valueChange', comment)" @click.stop
       />
-      <div class="btns flex justify-between items-center pt-2">
-        <div class="left flex items-center gap-2">
-          <span class="text-xs text-zinc-400">{{ inputTip }}</span>
+      <div class="pixel-buttons">
+        <div class="pixel-tip">
+          <span class="pixel-text">{{ inputTip }}</span>
         </div>
-        <div class="right flex gap-2">
-          <Button size="sm" variant="outline" @click="cancelSend">
+        <div class="pixel-button-group">
+          <button class="pixel-button pixel-button-secondary" @click="cancelSend">
             <Icon name="icon-park-outline:close-one" /><span>{{ cancelBtnText }}</span>
-          </Button>
-          <Button size="sm" variant="secondary" @click="sendComment">
+          </button>
+          <button class="pixel-button pixel-button-primary" @click="sendComment">
             <Icon name="icon-park-outline:send" /><span>{{ submitBtnText }}</span>
-          </Button>
+          </button>
         </div>
       </div>
     </div>
   </ClientOnly>
 </template>
 
-<style lang="less" scoped></style>
+<style scoped>
+/* Pixel style comment input */
+.pixel-comment-input {
+  transition: all 0.3s ease-in-out;
+  font-family: ui-monospace, monospace;
+}
+
+.pixel-visitor-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.pixel-input-field {
+  background-color: oklch(28% 0.05 250);
+  border: 2px solid oklch(35% 0.08 250);
+  color: oklch(90% 0.02 250);
+  font-family: ui-monospace, monospace;
+  padding: 0.5rem;
+  flex: 1;
+  min-width: 120px;
+}
+
+.pixel-hello {
+  font-size: 0.875rem;
+  padding-bottom: 0.5rem;
+  color: oklch(85% 0.15 180);
+  font-family: ui-monospace, monospace;
+  font-weight: bold;
+}
+
+.pixel-checkbox-container {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+.pixel-checkbox {
+  border: 2px solid oklch(40% 0.1 250);
+}
+
+.pixel-label {
+  font-size: 0.875rem;
+  line-height: 1;
+  color: oklch(90% 0.02 250);
+  font-family: ui-monospace, monospace;
+}
+
+.pixel-textarea {
+  width: 100%;
+  background-color: oklch(28% 0.05 250);
+  border: 2px solid oklch(35% 0.08 250);
+  color: oklch(90% 0.02 250);
+  font-family: ui-monospace, monospace;
+  padding: 0.75rem;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.pixel-textarea:focus {
+  outline: none;
+  border-color: oklch(50% 0.2 180);
+  box-shadow: 0 0 0 2px oklch(50% 0.2 180 / 0.3);
+}
+
+.pixel-textarea::placeholder {
+  color: oklch(60% 0.02 250);
+}
+
+.pixel-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+}
+
+.pixel-tip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pixel-text {
+  font-size: 0.75rem;
+  color: oklch(70% 0.02 250);
+  font-family: ui-monospace, monospace;
+}
+
+.pixel-button-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pixel-button {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  font-family: ui-monospace, monospace;
+  font-weight: bold;
+  font-size: 0.875rem;
+  border: 2px solid;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: none;
+}
+
+.pixel-button-primary {
+  background-color: oklch(70% 0.15 195);
+  color: oklch(95% 0.02 195);
+  border-color: oklch(60% 0.15 195);
+}
+
+.pixel-button-primary:hover {
+  background-color: oklch(75% 0.15 195);
+  border-color: oklch(65% 0.15 195);
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 oklch(60% 0.15 195);
+}
+
+.pixel-button-secondary {
+  background-color: oklch(35% 0.08 250);
+  color: oklch(90% 0.02 250);
+  border-color: oklch(25% 0.08 250);
+}
+
+.pixel-button-secondary:hover {
+  background-color: oklch(40% 0.1 250);
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 oklch(20% 0.05 250);
+}
+
+@media (max-width: 768px) {
+  .pixel-visitor-form {
+    flex-direction: column;
+  }
+
+  .pixel-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+
+  .pixel-button-group {
+    justify-content: center;
+  }
+}
+</style>

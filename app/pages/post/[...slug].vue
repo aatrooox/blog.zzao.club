@@ -534,78 +534,78 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <div class="pb-10 m-auto mb-4 bg-bg-paper font-cartoon">
+  <div class="pb-10 m-auto mb-4 font-mono pixel-layout">
     <div class="relative w-full max-w-full">
       <!-- 底部固定的操作栏 -->
       <ClientOnly>
         <div
-          class="md:hidden page-fixed-footer fixed left-0 right-0 bottom-0 bg-base/90 border-t-2 border-bg-base py-3 px-4 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-pixel transition-all duration-300 z-[49] backdrop-blur-sm"
+          class="md:hidden page-fixed-footer fixed left-0 right-0 bottom-0 bg-gray-900/90 border-t-2 border-gray-800 py-3 px-4 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-pixel transition-all duration-300 z-[49] backdrop-blur-sm"
         >
           <div class="left flex gap-2">
-            <Button variant="ghost" text size="sm" class="bg-secondary-500 text-white font-cartoon font-bold px-3 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-600 hover:scale-105 transition-all duration-200">
+            <Button variant="ghost" text size="sm" class="pixel-btn pixel-btn-sm">
               <Icon name="icon-park-outline:thumbs-up" @click="likePage" />
               <span>{{ likeCount }}</span>
             </Button>
-            <Button variant="ghost" text size="sm" class="bg-secondary-500 text-white font-cartoon font-bold px-3 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-600 hover:scale-105 transition-all duration-200" @click="navigateTo('#评论区')">
+            <Button variant="ghost" text size="sm" class="pixel-btn pixel-btn-sm" @click="navigateTo('#评论区')">
               <Icon name="icon-park-outline:comments" />
               <span>{{ formatCommentCount }}</span>
             </Button>
-            <Button variant="ghost" text size="sm" class="bg-secondary-500 text-white font-cartoon font-bold px-3 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-600 hover:scale-105 transition-all duration-200" @click="copyLink">
+            <Button variant="ghost" text size="sm" class="pixel-btn pixel-btn-sm" @click="copyLink">
               <Icon name="material-symbols:share-reviews-outline-rounded" />
             </Button>
-            <Button variant="ghost" text size="sm" class="bg-secondary-500 text-white font-cartoon font-bold px-3 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-600 hover:scale-105 transition-all duration-200" @click="getInnerHTML">
+            <Button variant="ghost" text size="sm" class="pixel-btn pixel-btn-sm" @click="getInnerHTML">
               <Icon name="icon-park-outline:wechat" />
             </Button>
           </div>
           <div class="right pr-6 md:pr-0">
-            <Button label="返回" variant="secondary" class="bg-accent-400 text-white font-cartoon font-bold px-4 py-2 border-2 border-bg-base rounded-lg hover:bg-accent-500 hover:scale-105 transition-all duration-200" @click="navigateTo('/article')">
+            <Button label="返回" variant="secondary" class="pixel-btn pixel-btn-primary" @click="navigateTo('/article')">
               <Icon name="icon-park-outline:back" />
             </Button>
           </div>
         </div>
       </ClientOnly>
 
-      <div v-if="page" class="mdc-prose flex w-full">
+      <div v-if="page" class="flex w-full">
         <!-- 左侧点赞评论操作栏 -->
-        <ClientOnly>
+        <!-- <ClientOnly>
           <div class="flex-col gap-4 h-80 hidden md:flex top-28 sticky">
-            <div class="flex flex-col items-center cursor-pointer bg-base border-2 border-bg-base rounded-lg shadow-pixel p-3 hover:scale-105 transition-all duration-200">
-              <Icon name="icon-park-outline:thumbs-up" size="1.5em" class="text-bg-base mb-1" @click="likePage" />
-              <span class="text-xs font-cartoon font-bold text-bg-base">{{ likeCount }}</span>
+            <div class="pixel-card-action flex flex-col items-center cursor-pointer">
+              <Icon name="icon-park-outline:thumbs-up" size="1.5em" class="text-gray-100 mb-1" @click="likePage" />
+              <span class="text-xs font-mono font-bold text-gray-100">{{ likeCount }}</span>
             </div>
-            <div class="cursor-pointer bg-base border-2 border-bg-base rounded-lg shadow-pixel p-3 hover:scale-105 transition-all duration-200">
+            <div class="pixel-card-action cursor-pointer">
               <NuxtLink href="#评论区" class="flex flex-col items-center">
-                <Icon name="icon-park-outline:comments" size="1.5em" class="text-bg-base mb-1" />
-                <span class="text-xs font-cartoon font-bold text-bg-base">{{ formatCommentCount }}</span>
+                <Icon name="icon-park-outline:comments" size="1.5em" class="text-gray-100 mb-1" />
+                <span class="text-xs font-mono font-bold text-gray-100">{{ formatCommentCount }}</span>
               </NuxtLink>
             </div>
-            <div class="flex flex-col items-center cursor-pointer bg-base border-2 border-bg-base rounded-lg shadow-pixel p-3 hover:scale-105 transition-all duration-200" @click="copyLink">
-              <Icon name="material-symbols:share-reviews-outline-rounded" size="1.5em" class="text-bg-base" />
+            <div class="pixel-card-action flex flex-col items-center cursor-pointer" @click="copyLink">
+              <Icon name="material-symbols:share-reviews-outline-rounded" size="1.5em" class="text-gray-100" />
             </div>
-            <div class="flex flex-col items-center cursor-pointer bg-base border-2 border-bg-base rounded-lg shadow-pixel p-3 hover:scale-105 transition-all duration-200" data-umami-event="wx-copy-btn" @click="getInnerHTML">
-              <Icon name="icon-park-outline:wechat" size="1.5em" class="text-bg-base" />
+            <div class="pixel-card-action flex flex-col items-center cursor-pointer" data-umami-event="wx-copy-btn" @click="getInnerHTML">
+              <Icon name="icon-park-outline:wechat" size="1.5em" class="text-gray-100" />
             </div>
           </div>
-        </ClientOnly>
-        <div ref="articleWrap" class="article-wrap relative flex flex-col  flex-1 px-6 box-border overflow-x-auto">
+        </ClientOnly> -->
+        <div ref="articleWrap" class="article-wrap relative flex flex-col flex-1 px-6 box-border overflow-x-auto shadow-pixel mx-4 my-6">
           <!-- 选中文字的悬浮气泡 -->
           <ClientOnly>
             <transition appear @enter="commentEnter" @before-enter="commentBeforeEnter" @leave="commentLeave">
               <div
                 v-if="commentIconPosition.top !== 0 || commentIconPosition.left !== 0"
-                class="page-btns absolute opacity-0 bg-base border-2 border-bg-base rounded-lg shadow-pixel px-3 py-2 flex items-center gap-2"
+                class="page-btns absolute opacity-0 bg-gray-900 border-2 border-gray-800 rounded-lg shadow-pixel px-3 py-2 flex items-center gap-2"
                 :style="{ top: `${commentIconPosition.top}px`, left: `${commentIconPosition.left}px` }"
               >
                 <Icon
-                  class="cursor-pointer page-operation-btn text-bg-base hover:text-primary-600 transition-colors duration-200" name="icon-park-outline:comments" size="1.5em"
+                  class="cursor-pointer page-operation-btn text-gray-100 hover:text-cyan-400 transition-colors duration-200" name="icon-park-outline:comments" size="1.5em"
                   @click.stop="handleCommentPragph"
                 />
                 <Icon
-                  class="cursor-pointer page-operation-btn text-bg-base hover:text-primary-600 transition-colors duration-200" name="material-symbols:image-arrow-up-rounded"
+                  class="cursor-pointer page-operation-btn text-gray-100 hover:text-cyan-400 transition-colors duration-200" name="material-symbols:image-arrow-up-rounded"
                   size="1.5em" @click.stop="handleCommentPragph"
                 />
                 <Icon
-                  class="cursor-pointer page-operation-btn text-bg-base hover:text-primary-600 transition-colors duration-200"
+                  class="cursor-pointer page-operation-btn text-gray-100 hover:text-cyan-400 transition-colors duration-200"
                   name="material-symbols:stylus-fountain-pen-outline-rounded" size="1.5em"
                   @click="isOpenDrawer = true"
                 />
@@ -615,35 +615,35 @@ watchEffect(async () => {
           <!-- 悬浮标题栏 -->
           <div
             v-if="!navBarStore.navBar?.isHidden"
-            class="fixed-title text-lg md:text-xl font-pixel font-bold text-center overflow-hidden text-ellipsis h-12 leading-12 fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-base/90 border-b-2 border-bg-base backdrop-blur-sm text-bg-base"
+            class="fixed-title text-lg md:text-xl font-mono font-bold text-center overflow-hidden text-ellipsis h-12 leading-12 fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-gray-900/90 border-b-2 border-gray-800 backdrop-blur-sm text-gray-100"
           >
             {{ page?.title }}
           </div>
 
           <!-- 文章内容 markdown -->
-          <article ref="curMdContentRef" class="content-wrap">
+          <article ref="curMdContentRef" class="content-wrap pixel-content prose-invert p-6 w-full">
             <ContentRenderer :value="page?.body" />
           </article>
           <!-- 相邻的文章 -->
           <ClientOnly>
             <div v-if="adjacentPages.length">
               <Separator class="my-4" label="END" />
-              <div class="bg-base border-2 border-bg-base rounded-lg shadow-pixel p-4 md:p-6">
-                <div class="flex justify-between text-sm md:text-base font-cartoon">
+              <div class="pixel-card p-4 md:p-6">
+                <div class="flex justify-between text-sm md:text-base font-mono">
                   <div class="flex-1 flex items-center gap-2">
                     <template v-if="adjacentPages[0]">
-                      <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em" class="text-bg-base" />
-                      <NuxtLink class="text-bg-base hover:text-primary-600 font-bold transition-colors duration-200" :href="adjacentPages[0].path">
+                      <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em" class="text-gray-100" />
+                      <NuxtLink class="text-gray-100 hover:text-cyan-400 font-bold transition-colors duration-200" :href="adjacentPages[0].path">
                         {{ adjacentPages[0].title }}
                       </NuxtLink>
                     </template>
                   </div>
                   <div class="flex-1 text-right flex items-center justify-end gap-2">
                     <template v-if="adjacentPages[1]">
-                      <NuxtLink class="text-bg-base hover:text-primary-600 font-bold transition-colors duration-200" :href="adjacentPages[1].path">
+                      <NuxtLink class="text-gray-100 hover:text-cyan-400 font-bold transition-colors duration-200" :href="adjacentPages[1].path">
                         {{ adjacentPages[1].title }}
                       </NuxtLink>
-                      <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em" class="text-bg-base" />
+                      <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em" class="text-gray-100" />
                     </template>
                   </div>
                 </div>
@@ -652,10 +652,10 @@ watchEffect(async () => {
           </ClientOnly>
           <!-- 评论区 -->
           <ClientOnly>
-            <div class="comment-area bg-base border-2 border-bg-base rounded-lg shadow-pixel p-4 md:p-6 mt-6">
+            <div class="comment-area pixel-card p-4 md:p-6 mt-6">
               <template v-if="page?.body && !isDefer">
                 <Separator class="my-4" label="评论" />
-                <div id="评论区" class="text-xl py-4">
+                <div id="评论区" class="text-xl py-4 font-mono text-gray-100">
                   评论区
                 </div>
                 <AppCommentInput @send="createComment" />
@@ -671,9 +671,9 @@ watchEffect(async () => {
 
           <!-- 作者添加注解 v-model:open="isOpen" -->
           <Drawer v-model:open="isOpenDrawer" :dismissible="true">
-            <DrawerContent class="bg-base border-t-2 border-bg-base">
+            <DrawerContent class="bg-gray-900 border-t-2 border-gray-800">
               <DrawerHeader>
-                <DrawerTitle />
+                <DrawerTitle class="font-mono text-gray-100" />
               </DrawerHeader>
               <div class="border-box px-4 pb-8 md:px-20">
                 <QuoteComment
@@ -687,10 +687,310 @@ watchEffect(async () => {
 
         <ClientOnly>
           <div class="sticky top-28 hidden lg:block h-[500px]">
-            <AppToc v-if="tocData && tocData.length" :toc-data="tocData" :active-id="activeTocId" class="bg-base border-2 border-bg-base rounded-lg shadow-pixel" />
+            <AppToc v-if="tocData && tocData.length" :toc-data="tocData" :active-id="activeTocId" class="pixel-card" />
           </div>
         </ClientOnly>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+/* 像素风格布局 */
+.pixel-layout {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* 像素风格卡片 */
+.pixel-card {
+  background: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  border-radius: 8px;
+  box-shadow:
+    2px 2px 0 oklch(40% 0.05 250),
+    4px 4px 0 oklch(35% 0.05 250);
+  transition: all 0.2s ease;
+}
+
+.pixel-card:hover {
+  background: oklch(35% 0.05 250);
+  transform: translateY(-2px);
+  box-shadow:
+    3px 3px 0 oklch(40% 0.05 250),
+    6px 6px 0 oklch(35% 0.05 250),
+    9px 9px 0 oklch(30% 0.05 250);
+}
+
+/* 像素风格按钮 */
+.pixel-btn {
+  background: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  color: oklch(90% 0.02 250);
+  font-family: ui-monospace, monospace;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+  transition: all 0.15s ease;
+  font-weight: bold;
+}
+
+.pixel-btn:hover {
+  background: oklch(35% 0.05 250);
+  color: oklch(70% 0.15 195);
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 oklch(40% 0.05 250);
+}
+
+.pixel-btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+}
+
+.pixel-btn-sm {
+  padding: 6px 12px;
+  font-size: 0.875rem;
+}
+
+.pixel-btn-primary {
+  background: oklch(70% 0.15 195);
+  color: oklch(25% 0.05 250);
+  border-color: oklch(75% 0.15 195);
+}
+
+.pixel-btn-primary:hover {
+  background: oklch(75% 0.15 195);
+  color: oklch(25% 0.05 250);
+}
+
+/* 像素风格操作卡片 */
+.pixel-card-action {
+  background: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  border-radius: 8px;
+  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+  padding: 12px;
+  transition: all 0.2s ease;
+}
+
+.pixel-card-action:hover {
+  background: oklch(35% 0.05 250);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 3px 3px 0 oklch(40% 0.05 250);
+}
+
+.pixel-card-action:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+}
+
+/* 像素风格内容区域 */
+.pixel-content {
+  background: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  border-radius: 8px;
+  box-shadow:
+    2px 2px 0 oklch(40% 0.05 250),
+    4px 4px 0 oklch(35% 0.05 250);
+  color: oklch(85% 0.02 250);
+  font-family: ui-monospace, monospace;
+  padding: 24px;
+  line-height: 1.8;
+}
+
+/* 为 ContentRenderer 内容添加像素风格 */
+.pixel-content :deep(p) {
+  color: oklch(85% 0.02 250);
+  font-family: ui-monospace, monospace;
+  line-height: 1.6;
+  margin: 16px 0;
+}
+
+.pixel-content :deep(ul),
+.pixel-content :deep(ol) {
+  color: oklch(85% 0.02 250);
+  font-family: ui-monospace, monospace;
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+.pixel-content :deep(li) {
+  margin: 8px 0;
+}
+
+.pixel-content :deep(blockquote) {
+  background: oklch(28% 0.05 250);
+  border-left: 4px solid oklch(70% 0.15 195);
+  color: oklch(80% 0.03 250);
+  font-family: ui-monospace, monospace;
+  margin: 16px 0;
+  padding: 16px;
+  border-radius: 4px;
+}
+
+.pixel-content :deep(code:not(pre code)) {
+  background: oklch(35% 0.05 250);
+  color: oklch(70% 0.15 195);
+  font-family: ui-monospace, monospace;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid oklch(45% 0.05 250);
+}
+
+.pixel-content :deep(table) {
+  background: oklch(28% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  border-radius: 8px;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 16px 0;
+  overflow: hidden;
+}
+
+.pixel-content :deep(th),
+.pixel-content :deep(td) {
+  border-bottom: 1px solid oklch(40% 0.05 250);
+  border-right: 1px solid oklch(40% 0.05 250);
+  color: oklch(85% 0.02 250);
+  font-family: ui-monospace, monospace;
+  padding: 12px;
+}
+
+.pixel-content :deep(th) {
+  background: oklch(32% 0.05 250);
+  font-weight: bold;
+}
+
+.pixel-content :deep(hr) {
+  border: none;
+  border-top: 2px solid oklch(40% 0.05 250);
+  margin: 24px 0;
+}
+
+.pixel-content :deep(h1),
+.pixel-content :deep(h2),
+.pixel-content :deep(h3),
+.pixel-content :deep(h4),
+.pixel-content :deep(h5),
+.pixel-content :deep(h6) {
+  color: oklch(84% 0.15 85);
+  font-family: ui-monospace, monospace;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 oklch(25% 0.05 250);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.pixel-content :deep(p) {
+  color: oklch(90% 0.02 250);
+  font-family: ui-monospace, monospace;
+  margin-bottom: 1rem;
+}
+
+.pixel-content :deep(a) {
+  color: oklch(70% 0.15 195);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.pixel-content :deep(a:hover) {
+  color: oklch(75% 0.15 195);
+}
+
+.pixel-content :deep(code) {
+  background: oklch(25% 0.05 250);
+  color: oklch(70% 0.15 195);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid oklch(40% 0.05 250);
+  font-family: ui-monospace, monospace;
+}
+
+.pixel-content :deep(pre) {
+  background: oklch(25% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  margin: 1rem 0;
+  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+}
+
+.pixel-content :deep(blockquote) {
+  background: oklch(28% 0.05 250);
+  border-left: 4px solid oklch(70% 0.15 195);
+  padding: 16px;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+  color: oklch(85% 0.03 250);
+  font-style: italic;
+}
+
+.pixel-content :deep(ul),
+.pixel-content :deep(ol) {
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.pixel-content :deep(li) {
+  color: oklch(90% 0.02 250);
+  margin-bottom: 0.5rem;
+}
+
+.pixel-content :deep(table) {
+  border: 2px solid oklch(40% 0.05 250);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.pixel-content :deep(th),
+.pixel-content :deep(td) {
+  border: 1px solid oklch(40% 0.05 250);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.pixel-content :deep(th) {
+  background: oklch(35% 0.05 250);
+  color: oklch(84% 0.15 85);
+  font-weight: bold;
+}
+
+.pixel-content :deep(td) {
+  background: oklch(30% 0.05 250);
+  color: oklch(90% 0.02 250);
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .pixel-card {
+    border-width: 1px;
+    box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+  }
+
+  .pixel-card:hover {
+    box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+  }
+
+  .pixel-btn {
+    border-width: 1px;
+    box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+  }
+
+  .pixel-btn:hover {
+    box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+  }
+
+  .pixel-card-action {
+    border-width: 1px;
+    box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+  }
+
+  .pixel-card-action:hover {
+    box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+  }
+}
+</style>

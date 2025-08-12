@@ -42,26 +42,26 @@ onUnmounted(() => observer.value?.disconnect())
 
 <template>
   <div
-    class="toc h-[500px] overflow-y-auto box-border dark:text-zinc-500"
+    class="pixel-toc"
     :style="{ width: tocData.length ? '200px' : '0' }"
   >
     <transition-group tag="ul" appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
       <template v-for="link in tocData" :key="link.id">
         <li
-          class="toc-item text-sm truncate py-1 pl-4" :class="[{ 'active dark:text-zinc-300': link.id === activeId }]"
+          class="pixel-toc-item" :class="[{ 'pixel-toc-active': link.id === activeId }]"
         >
-          <!-- <span v-if="link.id === activeId" class="absolute -left-2 text-zinc-300 dark:text-zinc-500">#  </span> -->
-          <NuxtLink :href="`#${link.id}`" class="transition-all" :class="[link.id === activeId && '!text-cyan-600 !font-bold !underline underline-cyan-600 underline-offset-4']">
+          <span v-if="link.id === activeId" class="pixel-toc-indicator">#</span>
+          <NuxtLink :href="`#${link.id}`" class="pixel-toc-link" :class="[link.id === activeId && 'pixel-toc-link-active']">
             {{ link.text }}
           </NuxtLink>
         </li>
         <template v-if="link.children">
           <template v-for="child in link.children" :key="child.id">
             <li
-              class="toc-item text-sm truncate py-1 !pl-6 transition-all" :class="[{ 'text-cyan-600 active dark:text-zinc-300': child.id === activeId }]"
+              class="pixel-toc-item pixel-toc-child" :class="[{ 'pixel-toc-active': child.id === activeId }]"
             >
-              <!-- <span v-if="child.id === activeId" class="absolute -left-2 text-zinc-300 dark:text-zinc-500">#</span> -->
-              <NuxtLink :href="`#${child.id}`" :class="[child.id === activeId && '!text-cyan-600 !font-bold !underline underline-cyan-600 underline-offset-4']">
+              <span v-if="child.id === activeId" class="pixel-toc-indicator">#</span>
+              <NuxtLink :href="`#${child.id}`" class="pixel-toc-link" :class="[child.id === activeId && 'pixel-toc-link-active']">
                 {{ child.text }}
               </NuxtLink>
             </li>
@@ -73,4 +73,134 @@ onUnmounted(() => observer.value?.disconnect())
 </template>
 
 <style scoped>
+/* 像素风格目录容器 */
+.pixel-toc {
+  height: 500px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  background: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  border-radius: 4px;
+  padding: 8px;
+  font-family: ui-monospace, monospace;
+  box-shadow:
+    2px 2px 0 oklch(40% 0.05 250),
+    4px 4px 0 oklch(35% 0.05 250);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* 目录项基础样式 */
+.pixel-toc-item {
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 4px 8px;
+  margin: 2px 0;
+  position: relative;
+  border-radius: 2px;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 子级目录项缩进 */
+.pixel-toc-child {
+  padding-left: 24px;
+}
+
+/* 目录项悬停效果 */
+.pixel-toc-item:hover {
+  background: oklch(35% 0.05 250);
+  border: 1px solid oklch(45% 0.05 250);
+  box-shadow: 1px 1px 0 oklch(45% 0.05 250);
+}
+
+/* 激活状态的目录项 */
+.pixel-toc-active {
+  background: oklch(40% 0.05 250);
+  border: 1px solid oklch(70% 0.15 195);
+  box-shadow: 1px 1px 0 oklch(70% 0.15 195);
+}
+
+/* 激活指示器 */
+.pixel-toc-indicator {
+  color: oklch(70% 0.15 195);
+  font-weight: bold;
+  font-size: 12px;
+  text-shadow: 1px 1px 0 oklch(25% 0.05 250);
+  flex-shrink: 0;
+}
+
+/* 目录链接基础样式 */
+.pixel-toc-link {
+  color: oklch(90% 0.02 250);
+  text-decoration: none;
+  font-weight: 400;
+  transition: all 0.15s ease;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 1px 1px 0 oklch(10% 0.05 250);
+}
+
+/* 目录链接悬停效果 */
+.pixel-toc-link:hover {
+  color: oklch(95% 0.02 250);
+  text-shadow:
+    1px 1px 0 oklch(10% 0.05 250),
+    0 0 4px oklch(70% 0.15 195);
+}
+
+/* 激活状态的目录链接 */
+.pixel-toc-link-active {
+  color: oklch(84% 0.15 85) !important;
+  font-weight: bold !important;
+  text-shadow:
+    1px 1px 0 oklch(10% 0.05 250),
+    0 0 6px oklch(84% 0.15 85),
+    0 0 12px oklch(84% 0.15 85);
+}
+
+/* 滚动条样式 */
+.pixel-toc::-webkit-scrollbar {
+  width: 8px;
+}
+
+.pixel-toc::-webkit-scrollbar-track {
+  background: oklch(25% 0.05 250);
+  border-radius: 2px;
+}
+
+.pixel-toc::-webkit-scrollbar-thumb {
+  background: oklch(40% 0.05 250);
+  border-radius: 2px;
+  border: 1px solid oklch(45% 0.05 250);
+}
+
+.pixel-toc::-webkit-scrollbar-thumb:hover {
+  background: oklch(50% 0.05 250);
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .pixel-toc {
+    border-width: 1px;
+    box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+  }
+
+  .pixel-toc-item {
+    font-size: 13px;
+    padding: 3px 6px;
+  }
+
+  .pixel-toc-child {
+    padding-left: 18px;
+  }
+}
 </style>

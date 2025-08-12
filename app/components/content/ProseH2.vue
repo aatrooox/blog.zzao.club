@@ -9,8 +9,8 @@ const generate = computed(() => props.id && ((typeof headings?.anchorLinks === '
 
 <template>
   <div :id="props.id" class="heading mt-16 mb-6 cursor-pointer scroll-mt-20">
-    <span class="text-xl">
-      <a v-if="props.id && generate" :href="`#${props.id}`" class="!font-bold !text-zinc-800 dark:!text-zinc-200">
+    <span class="text-xl font-mono font-bold" style="color: oklch(90% 0.03 250); text-shadow: 1px 1px 0 oklch(25% 0.05 250);">
+      <a v-if="props.id && generate" :href="`#${props.id}`" class="!font-bold font-mono" style="color: oklch(90% 0.03 250); text-shadow: 1px 1px 0 oklch(25% 0.05 250);">
         <slot />
       </a>
       <slot v-else />

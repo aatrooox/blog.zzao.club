@@ -9,7 +9,7 @@ type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{
 }>
 
 definePageMeta({
-  layout: 'memo',
+  layout: 'default',
 })
 
 const route = useRoute()
@@ -182,7 +182,7 @@ function handleTagClick(tagName: string) {
 </script>
 
 <template>
-  <div class="min-h-screen bg-bg-paper font-cartoon">
+  <div class="pixel-layout min-h-screen bg-bg-paper font-cartoon">
     <div class="max-w-4xl mx-auto px-4 md:px-6 py-6 md:py-8">
       <!-- Memo不存在 -->
       <div v-if="!memo" class="text-center py-20">
@@ -206,17 +206,17 @@ function handleTagClick(tagName: string) {
           <Button
             variant="ghost"
             size="sm"
-            class="flex items-center gap-2 bg-secondary-500 text-white font-cartoon font-bold px-4 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-600 hover:scale-105 transition-all duration-200"
+            class="pixel-btn-nav flex items-center gap-2 bg-secondary-500 text-white font-cartoon font-bold px-4 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-600 hover:scale-105 transition-all duration-200"
             @click="router.push('/memo')"
           >
             <Icon name="material-symbols:arrow-back" class="w-4 h-4" />
-            返回 Memo 列表
+            <span class="font-mono font-medium">返回 Memo 列表</span>
           </Button>
         </div>
 
         <!-- 交互按钮区域 -->
         <ClientOnly>
-          <div class="bg-base border-2 md:border-4 border-bg-base rounded-t-lg md:rounded-t-xl shadow-pixel p-4 md:p-6">
+          <div class="pixel-card bg-base border-2 md:border-4 border-bg-base rounded-t-lg md:rounded-t-xl shadow-pixel p-4 md:p-6">
             <div class="flex items-center justify-between">
               <!-- 左侧用户信息 -->
               <div class="flex items-center space-x-3">
@@ -292,19 +292,19 @@ function handleTagClick(tagName: string) {
           </div>
         </ClientOnly>
         <!-- Memo面板 -->
-        <div class="bg-base border-x-2 md:border-x-4 border-bg-base shadow-pixel p-4 md:p-6 overflow-hidden">
+        <div class="pixel-content bg-base border-x-2 md:border-x-4 border-bg-base shadow-pixel p-4 md:p-6 overflow-hidden">
           <MemoPanel :memo="memo" :show-all="true" :hide-btns="true" />
         </div>
 
         <!-- Tags显示 -->
-        <div v-if="memo.tags && memo.tags.length > 0" class="bg-base border-2 md:border-4 border-bg-base rounded-b-lg md:rounded-b-xl shadow-pixel p-4 md:p-6">
+        <div v-if="memo.tags && memo.tags.length > 0" class="pixel-card bg-base border-2 md:border-4 border-bg-base rounded-b-lg md:rounded-b-xl shadow-pixel p-4 md:p-6">
           <div class="flex flex-wrap gap-2 items-center">
             <div class="w-3 h-3 bg-primary-600 rounded-sm mr-2" />
             <Icon name="material-symbols:tag" class="w-4 h-4 text-bg-base" />
             <span
               v-for="tagRelation in memo.tags"
               :key="tagRelation.tag.id"
-              class="text-xs cursor-pointer bg-secondary-500 text-white font-cartoon font-bold border-2 border-bg-base rounded-lg px-3 py-1 hover:bg-primary-600 hover:scale-105 transition-all duration-200"
+              class="pixel-tag text-xs cursor-pointer bg-base text-primary-600 font-cartoon font-bold border-2 border-bg-base rounded-lg px-3 py-1 hover:bg-bg-base hover:text-primary-700 hover:scale-105 transition-all duration-200"
               @click="handleTagClick(tagRelation.tag.tag_name)"
             >
               {{ tagRelation.tag.tag_name }}
@@ -312,17 +312,17 @@ function handleTagClick(tagName: string) {
           </div>
         </div>
         <!-- 评论区 -->
-        <div class="bg-base border-2 md:border-4 border-bg-base rounded-lg md:rounded-xl shadow-pixel p-4 md:p-6">
-          <div class="text-xl md:text-2xl font-pixel font-bold mb-4 md:mb-6 flex items-center gap-2">
+        <div class="pixel-card bg-base border-2 md:border-4 border-bg-base rounded-lg md:rounded-xl shadow-pixel p-4 md:p-6">
+          <div class="pixel-title text-xl md:text-2xl font-pixel font-bold mb-4 md:mb-6 flex items-center gap-2">
             <div class="w-3 h-3 bg-accent-400 rounded-sm" />
             <Icon name="icon-park-outline:comments" class="w-5 h-5 text-bg-base" />
-            <span class="text-bg-base">评论区</span>
+            <span class="text-bg-base font-mono">💬 评论区</span>
             <ClientOnly>
-              <span class="text-sm font-cartoon font-normal text-bg-base/70">
+              <span class="text-sm font-cartoon font-normal text-bg-base/70 font-mono">
                 ({{ formatCommentCount }})
               </span>
               <template #fallback>
-                <span class="text-sm font-cartoon font-normal text-bg-base/70">
+                <span class="text-sm font-cartoon font-normal text-bg-base/70 font-mono">
                   (0)
                 </span>
               </template>
@@ -380,4 +380,188 @@ function handleTagClick(tagName: string) {
   />
 </template>
 
-<style lang="less" scoped></style>
+<style scoped>
+/* 像素风格布局 */
+.pixel-layout {
+  font-family: ui-monospace, monospace;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* 像素风格导航栏 */
+.pixel-nav {
+  background: oklch(30% 0.05 250);
+  border-bottom: 2px solid oklch(40% 0.05 250);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 0 oklch(25% 0.05 250);
+}
+
+/* 像素风格按钮 */
+.pixel-btn-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: oklch(35% 0.05 250);
+  color: oklch(85% 0.05 250);
+  border: 2px solid oklch(45% 0.05 250);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 0 oklch(25% 0.05 250);
+}
+
+.pixel-btn-nav:hover {
+  background: oklch(40% 0.05 250);
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 oklch(25% 0.05 250);
+}
+
+.pixel-btn-icon {
+  padding: 8px;
+  background: oklch(35% 0.05 250);
+  color: oklch(85% 0.05 250);
+  border: 2px solid oklch(45% 0.05 250);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 0 oklch(25% 0.05 250);
+}
+
+.pixel-btn-icon:hover {
+  background: oklch(40% 0.05 250);
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 oklch(25% 0.05 250);
+}
+
+/* 像素风格卡片 */
+.pixel-card {
+  background: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 4px 4px 0 oklch(25% 0.05 250);
+  transition: all 0.2s ease;
+}
+
+/* 像素风格标题 */
+.pixel-title {
+  color: oklch(84% 0.15 85);
+  text-shadow: 2px 2px 0 oklch(25% 0.05 250);
+}
+
+/* 像素风格文本 */
+.pixel-text {
+  color: oklch(75% 0.05 250);
+}
+
+/* 像素风格元数据 */
+.pixel-meta {
+  color: oklch(65% 0.05 250);
+}
+
+/* 像素风格标签 */
+.pixel-tag {
+  background: oklch(70% 0.15 195);
+  color: oklch(25% 0.05 250);
+  border: 1px solid oklch(60% 0.15 195);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: ui-monospace, monospace;
+  box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+  transition: all 0.2s ease;
+}
+
+.pixel-tag:hover {
+  background: oklch(75% 0.15 195);
+  transform: translateY(-1px);
+  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+}
+
+.pixel-tag:active {
+  transform: translateY(0);
+  box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+}
+
+/* 像素风格内容区域 */
+.pixel-content {
+  background: oklch(28% 0.05 250);
+  border: 2px solid oklch(38% 0.05 250);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 4px 4px 0 oklch(23% 0.05 250);
+  color: oklch(85% 0.05 250);
+  line-height: 1.7;
+}
+
+/* 像素风格底部操作栏 */
+.pixel-bottom-bar {
+  background: oklch(30% 0.05 250);
+  border-top: 2px solid oklch(40% 0.05 250);
+  backdrop-filter: blur(8px);
+  padding: 16px;
+  box-shadow: 0 -2px 0 oklch(25% 0.05 250);
+}
+
+.pixel-btn-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: oklch(35% 0.05 250);
+  color: oklch(85% 0.05 250);
+  border: 2px solid oklch(45% 0.05 250);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 0 oklch(25% 0.05 250);
+}
+
+.pixel-btn-action:hover {
+  background: oklch(40% 0.05 250);
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 oklch(25% 0.05 250);
+}
+
+.pixel-btn-liked {
+  background: oklch(50% 0.2 15) !important;
+  border-color: oklch(60% 0.2 15) !important;
+  color: oklch(95% 0.1 15) !important;
+}
+
+/* 像素风格抽屉 */
+.pixel-drawer {
+  background: oklch(30% 0.05 250);
+  border-left: 2px solid oklch(40% 0.05 250);
+  padding: 16px;
+  box-shadow: -4px 0 0 oklch(25% 0.05 250);
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .pixel-card {
+    padding: 12px;
+    box-shadow: 2px 2px 0 oklch(25% 0.05 250);
+  }
+
+  .pixel-content {
+    padding: 16px;
+    box-shadow: 2px 2px 0 oklch(23% 0.05 250);
+  }
+
+  .pixel-btn-nav {
+    padding: 6px 10px;
+    box-shadow: 1px 1px 0 oklch(25% 0.05 250);
+  }
+
+  .pixel-btn-icon {
+    padding: 6px;
+    box-shadow: 1px 1px 0 oklch(25% 0.05 250);
+  }
+
+  .pixel-btn-action {
+    padding: 8px 12px;
+    box-shadow: 1px 1px 0 oklch(25% 0.05 250);
+  }
+}
+</style>

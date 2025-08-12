@@ -34,13 +34,39 @@ const refinedSrc = computed(() => {
 
 <template>
   <ClientOnly>
-    <div v-viewer class="blog-zzao-club-img-component card inline">
+    <div v-viewer class="blog-zzao-club-img-component pixel-img-container">
       <NuxtImg
         :src="refinedSrc" loading="lazy" alt="image" :width="width" :height="height"
         placeholder
+        class="pixel-img"
       />
     </div>
   </ClientOnly>
 </template>
 
-<style lang="less" scoped></style>
+<style scoped>
+.pixel-img-container {
+  display: inline-block;
+  margin: 16px 0;
+  background: oklch(28% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  border-radius: 8px;
+  box-shadow:
+    2px 2px 0 oklch(40% 0.05 250),
+    4px 4px 0 oklch(35% 0.05 250);
+  padding: 8px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.pixel-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+</style>

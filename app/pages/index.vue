@@ -134,41 +134,42 @@ function onMouseLeave(event) {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 md:gap-8 max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-8">
+  <div class="space-y-8 pixel-font">
     <!-- 最近动态区域 -->
-    <div v-if="recentMemos.length > 0" class="space-y-4 md:space-y-6">
+    <div v-if="recentMemos.length > 0" class="space-y-6">
       <div class="flex items-center justify-between">
-        <h2 class="text-lg md:text-2xl font-pixel text-bg-base">
+        <h2 class="text-xl md:text-3xl pixel-title flex items-center gap-3">
+          <div class="pixel-status-online" />
           最近动态
         </h2>
         <NuxtLink
           to="/memo"
-          class="bg-secondary-500 hover:bg-primary-600 text-bg-base font-cartoon font-bold px-3 md:px-6 py-2 md:py-3 rounded-lg border-2 md:border-4 border-bg-base shadow-pixel cursor-pointer transition-all duration-200 hover:scale-105"
+          class="pixel-btn-primary cursor-pointer flex items-center gap-2"
         >
           <span class="text-sm md:text-base">更多动态</span>
-          <Icon name="icon-park-outline:right" class="ml-1 md:ml-2 text-sm md:text-base" />
+          <Icon name="icon-park-outline:right" class="text-sm md:text-base" />
         </NuxtLink>
       </div>
 
       <!-- 横向滚动动态卡片 -->
-      <div class="overflow-x-auto pb-2">
-        <div class="flex gap-3 md:gap-4 p-4 w-max">
+      <div class="overflow-x-auto pb-4">
+        <div class="flex gap-6 p-4 w-max">
           <div
             v-for="memo in recentMemos"
             :key="memo.id"
-            class="bg-bg-paper rounded-lg md:rounded-xl border-2 md:border-4 border-bg-base shadow-pixel p-4 md:p-6 hover:shadow-[6px_6px_0_0_#000000] transition-all duration-200 hover:scale-[1.02] cursor-pointer flex-shrink-0"
-            style="width: 280px; height: 160px;"
+            class="pixel-card cursor-pointer flex-shrink-0"
+            style="width: 300px; height: 180px;"
             @click="navigateTo(`/m/${memo.id}`)"
           >
             <div class="flex flex-col h-full">
               <!-- 标签 -->
               <div v-if="memo.tags && memo.tags.length > 0" class="mb-3">
-                <div class="flex gap-1 flex-wrap">
+                <div class="flex gap-2 flex-wrap">
                   <Badge
                     v-for="tagRelation in memo.tags.slice(0, 2)"
                     :key="tagRelation.tag.id"
                     variant="secondary"
-                    class="text-xs bg-accent-400 text-bg-base font-cartoon font-bold px-1.5 py-0.5 rounded border border-bg-base text-xs"
+                    class="pixel-btn text-xs"
                   >
                     {{ tagRelation.tag.tag_name }}
                   </Badge>
@@ -177,14 +178,14 @@ function onMouseLeave(event) {
 
               <!-- 动态内容 -->
               <div class="flex-1 overflow-hidden">
-                <div class="text-sm font-cartoon text-bg-base leading-relaxed" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                <div class="text-sm pixel-text leading-relaxed" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
                   <MemoPanel :memo="memo" />
                 </div>
               </div>
 
               <!-- 底部时间 -->
               <div class="flex justify-end mt-2">
-                <NuxtTime :datetime="memo.create_ts" class="text-xs text-gray-500" />
+                <NuxtTime :datetime="memo.create_ts" class="text-xs pixel-text-muted" />
               </div>
             </div>
           </div>
@@ -193,50 +194,49 @@ function onMouseLeave(event) {
     </div>
 
     <!-- 最近文章区域 -->
-    <div class="flex-1 space-y-4 md:space-y-6">
+    <div class="flex-1 space-y-6">
       <div class="flex items-center justify-between">
-        <h2 class="text-lg md:text-2xl font-pixel text-bg-base">
+        <h2 class="text-xl md:text-3xl pixel-title flex items-center gap-3">
+          <div class="pixel-status-online" />
           最近文章
         </h2>
         <NuxtLink
           to="/article"
-          class="bg-secondary-500 hover:bg-primary-600 text-bg-base font-cartoon font-bold px-3 md:px-6 py-2 md:py-3 rounded-lg border-2 md:border-4 border-bg-base shadow-pixel cursor-pointer transition-all duration-200 hover:scale-105"
+          class="pixel-btn-primary cursor-pointer flex items-center gap-2"
         >
           <span class="text-sm md:text-base">更多文章</span>
-          <Icon name="icon-park-outline:right" class="ml-1 md:ml-2 text-sm md:text-base" />
+          <Icon name="icon-park-outline:right" class="text-sm md:text-base" />
         </NuxtLink>
       </div>
 
-      <div class="space-y-3">
+      <div class="space-y-4">
         <transition-group name="page-transition" appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
           <template v-for="page of articles" :key="page.path">
             <div class="group home-post-item">
               <NuxtLink :to="page.path" class="block">
                 <div
-                  class="p-4 md:p-6 bg-bg-paper rounded-lg border-2 border-gray-200 hover:border-primary-400 hover:bg-orange-50/30 transition-all duration-200 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] hover:translate-x-[-2px] hover:translate-y-[-2px]"
+                  class="pixel-card-elevated"
                   @mouseenter="onMouseEnter" @mouseleave="onMouseLeave"
                 >
                   <div class="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
                     <div class="flex items-center gap-3 md:gap-4 flex-1">
-                      <div class="w-2 h-2 bg-primary-600 rounded-sm group-hover:bg-secondary-500 transition-all" />
-                      <div
-                        class="text-base md:text-lg font-cartoon font-medium text-bg-base group-hover:text-primary-600 transition-colors leading-tight"
-                      >
+                      <div class="pixel-status-online group-hover:pixel-status-warning transition-all" />
+                      <div class="text-base md:text-lg pixel-title group-hover:text-cyan-400 transition-colors leading-tight">
                         {{ page.title }}
                       </div>
                       <Icon
                         name="icon-park-outline:right"
-                        class="text-gray-400 page-arrow-icon transition-all text-xs md:text-sm group-hover:text-primary-600 opacity-0 group-hover:opacity-100"
+                        class="pixel-text-muted page-arrow-icon transition-all text-xs md:text-sm group-hover:text-cyan-400 opacity-0 group-hover:opacity-100"
                       />
                     </div>
-                    <div class="flex flex-wrap gap-1 md:gap-2">
+                    <div class="flex flex-wrap gap-2">
                       <template v-if="page.versions">
-                        <div v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v" class="text-xs bg-accent-400 text-bg-base font-cartoon font-bold px-1.5 py-0.5 rounded border border-bg-base">
+                        <div v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v" class="text-xs pixel-btn">
                           {{ v }}
                         </div>
                       </template>
                       <template v-else>
-                        <div v-for="tag of page.tags" :key="tag" class="text-xs bg-accent-400 text-bg-base font-cartoon font-bold px-1.5 py-0.5 rounded border border-bg-base">
+                        <div v-for="tag of page.tags" :key="tag" class="text-xs pixel-btn">
                           {{ tag }}
                         </div>
                       </template>

@@ -15,7 +15,7 @@ const props = defineProps({
 })
 
 definePageMeta({
-  layout: 'memo',
+  layout: 'default',
 })
 
 useSeoMeta({
@@ -100,10 +100,10 @@ function handleEdit(memo: any) {
   isEditDrawerOpen.value = true
 }
 
-async function handleMemoUpdated() {
-  editingMemo.value = null
-  await getMemos()
-  await getTags()
+function handleMemoUpdated() {
+  // 重新获取数据以确保同步
+  getMemos()
+  getTags()
 }
 
 async function handleSendMemo(commentData) {
@@ -132,9 +132,9 @@ function onMemoTagClick(tagName: string) {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 md:gap-8 max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-8 font-cartoon">
+  <div class="pixel-layout">
     <!-- 编辑器卡片 -->
-    <div class="bg-base rounded-lg shadow-pixel border-2 border-bg-base p-4 md:p-6">
+    <div class="pixel-card pixel-card-inner">
       <AppTagInput v-model="tags" />
       <AppCommentInput
         ref="commentInputRef"
@@ -160,50 +160,51 @@ function onMemoTagClick(tagName: string) {
         <div
           v-for="memo in filteredMemos"
           :key="memo.id"
-          class="flex items-start bg-base rounded-lg shadow-pixel border-2 border-bg-base p-4 md:p-6 gap-4 relative group cursor-pointer hover:shadow-[6px_6px_0_0_#000000] hover:scale-105 transition-all duration-300"
+          class="pixel-card pixel-card-hover cursor-pointer"
           @click="handleComment(memo)"
         >
-          <div class="flex-shrink-0">
-            <UserAvatar :user-info="memo.user_info" size="md" class="border-2 border-bg-base rounded-lg" />
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="font-pixel text-sm md:text-base text-bg-base font-bold">{{ memo.user_info?.nickname || memo.user_info?.username || '匿名' }}</span>
-              <span class="text-xs md:text-sm text-bg-base/70 font-cartoon">·</span>
-              <NuxtTime :datetime="memo.create_ts" class="text-xs md:text-sm text-bg-base/70 font-cartoon" />
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+              <UserAvatar :user-info="memo.user_info" size="md" class="pixel-avatar" />
             </div>
-            <div v-if="memo.tags && memo.tags.length > 0" class="mb-2 h-8 overflow-x-auto overflow-y-hidden flex items-center gap-1.5 pb-1">
-              <Badge
-                v-for="tagRelation in memo.tags"
-                :key="tagRelation.tag.id"
-                variant="secondary"
-                class="text-xs md:text-sm cursor-pointer bg-secondary-500 text-bg-base border-2 border-bg-base font-cartoon font-bold hover:bg-primary-600 hover:scale-105 transition-all duration-200 group flex-shrink-0 rounded-lg"
-                @click.stop="onMemoTagClick(tagRelation.tag.tag_name)"
-              >
-                {{ tagRelation.tag.tag_name }}
-              </Badge>
-            </div>
-            <div class="mb-2">
-              <MemoPanel :memo="memo" />
-            </div>
-            <div class="flex items-center gap-4 mt-3 text-xs md:text-sm text-bg-base">
-              <div class="flex items-center gap-1 md:gap-2 cursor-pointer hover:text-primary-600 transition-colors font-cartoon font-bold" @click.stop="handleComment(memo)">
-                <Icon name="icon-park-outline:comments" class="w-4 h-4 md:w-5 md:h-5" />
-                <span>{{ memo._count?.comments || 0 }}</span>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="pixel-title text-sm md:text-base">{{ memo.user_info?.nickname || memo.user_info?.username || '匿名' }}</span>
+                <span class="pixel-text text-xs md:text-sm opacity-70">·</span>
+                <NuxtTime :datetime="memo.create_ts" class="pixel-text text-xs md:text-sm opacity-70" />
               </div>
-              <div class="flex items-center gap-1 md:gap-2 cursor-pointer hover:text-accent-400 transition-colors font-cartoon font-bold" @click.stop="handleLike(memo.id)">
-                <Icon name="icon-park-outline:thumbs-up" class="w-4 h-4 md:w-5 md:h-5" />
-                <span>{{ memo._count?.likes || 0 }}</span>
+              <div v-if="memo.tags && memo.tags.length > 0" class="mb-2 h-8 overflow-x-auto overflow-y-hidden flex items-center gap-1.5 pb-1">
+                <span
+                  v-for="tagRelation in memo.tags"
+                  :key="tagRelation.tag.id"
+                  class="pixel-tag cursor-pointer"
+                  @click.stop="onMemoTagClick(tagRelation.tag.tag_name)"
+                >
+                  {{ tagRelation.tag.tag_name }}
+                </span>
               </div>
-              <template v-if="userStore.isSuperAdmin">
-                <span class="mx-1 text-bg-base/50">|</span>
-                <span class="cursor-pointer hover:text-primary-600 transition-colors font-cartoon font-bold" @click.stop="handleEdit(memo)">
-                  <Icon name="material-symbols:edit-outline" class="w-4 h-4 md:w-5 md:h-5" /> 编辑
-                </span>
-                <span class="cursor-pointer hover:text-red-500 transition-colors font-cartoon font-bold" @click.stop="handleDelete(memo.id)">
-                  <Icon name="icon-park-outline:delete" class="w-4 h-4 md:w-5 md:h-5" /> 删除
-                </span>
-              </template>
+              <div class="mb-2">
+                <MemoPanel :memo="memo" />
+              </div>
+              <div class="flex items-center gap-4 mt-3 pixel-text text-xs md:text-sm">
+                <div class="flex items-center gap-1 md:gap-2 cursor-pointer hover:opacity-80 transition-opacity" @click.stop="handleComment(memo)">
+                  <Icon name="icon-park-outline:comments" class="w-4 h-4 md:w-5 md:h-5" />
+                  <span>{{ memo._count?.comments || 0 }}</span>
+                </div>
+                <div class="flex items-center gap-1 md:gap-2 cursor-pointer hover:opacity-80 transition-opacity" @click.stop="handleLike(memo.id)">
+                  <Icon name="icon-park-outline:thumbs-up" class="w-4 h-4 md:w-5 md:h-5" />
+                  <span>{{ memo._count?.likes || 0 }}</span>
+                </div>
+                <template v-if="userStore.isSuperAdmin">
+                  <span class="mx-1 opacity-50">|</span>
+                  <span class="cursor-pointer hover:opacity-80 transition-opacity" @click.stop="handleEdit(memo)">
+                    <Icon name="material-symbols:edit-outline" class="w-4 h-4 md:w-5 md:h-5" /> 编辑
+                  </span>
+                  <span class="cursor-pointer hover:opacity-80 transition-opacity" @click.stop="handleDelete(memo.id)">
+                    <Icon name="icon-park-outline:delete" class="w-4 h-4 md:w-5 md:h-5" /> 删除
+                  </span>
+                </template>
+              </div>
             </div>
           </div>
         </div>
@@ -211,6 +212,7 @@ function onMemoTagClick(tagName: string) {
     </div>
   </div>
 
+  <!-- MemoEditDrawer component -->
   <MemoEditDrawer
     v-model:open="isEditDrawerOpen"
     :memo="editingMemo"
@@ -219,40 +221,101 @@ function onMemoTagClick(tagName: string) {
 </template>
 
 <style scoped>
-.memos-waterfall-container {
+/* Pixel style layout */
+.pixel-layout {
+  background-color: oklch(25% 0.05 250);
+  color: oklch(90% 0.02 250);
+  font-family: ui-monospace, monospace;
+  image-rendering: pixelated;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Pixel style cards */
+.pixel-card {
+  background-color: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.1 250);
+  box-shadow:
+    4px 4px 0 oklch(20% 0.05 250),
+    8px 8px 0 oklch(15% 0.05 250);
+  padding: 1.5rem;
   position: relative;
-  width: 100%;
-  min-height: 200px;
 }
 
-.memo-item {
-  box-sizing: border-box;
-  overflow: hidden;
+.pixel-card-inner {
+  background-color: oklch(28% 0.05 250);
+  border: 2px solid oklch(35% 0.08 250);
+  padding: 1rem;
 }
 
-.memo-item:hover {
-  z-index: 50 !important;
+.pixel-card-hover {
+  transition: all 0.2s ease;
 }
 
-.overflow-x-auto::-webkit-scrollbar {
-  height: 4px;
-}
-.overflow-x-auto::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 2px;
-}
-.dark .overflow-x-auto::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+.pixel-card-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow:
+    6px 6px 0 oklch(20% 0.05 250),
+    10px 10px 0 oklch(15% 0.05 250);
 }
 
+/* Pixel style text */
+.pixel-title {
+  font-family: ui-monospace, monospace;
+  font-weight: bold;
+  color: oklch(84% 0.15 85);
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.pixel-text {
+  font-family: ui-monospace, monospace;
+  color: oklch(90% 0.02 250);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+/* Pixel style avatar */
+.pixel-avatar {
+  border: 2px solid oklch(40% 0.1 250);
+  image-rendering: pixelated;
+}
+
+/* Pixel style tags */
+.pixel-tag {
+  background-color: oklch(28% 0.05 250);
+  color: oklch(70% 0.15 195);
+  border: 2px solid oklch(35% 0.08 250);
+  padding: 0.25rem 0.5rem;
+  font-family: ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: bold;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.pixel-tag:hover {
+  background-color: oklch(35% 0.08 250);
+  color: oklch(80% 0.15 195);
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 oklch(20% 0.05 250);
+}
+
+/* Animation styles */
 .memo-fade-enter-active,
 .memo-fade-leave-active {
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .memo-fade-enter-from {
   opacity: 0;
   transform: translateY(24px) scale(0.98);
 }
+
 .memo-fade-leave-to {
   opacity: 0;
   transform: translateY(-24px) scale(0.98);
@@ -262,15 +325,36 @@ function onMemoTagClick(tagName: string) {
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.memo-card-hover {
-  transition:
-    box-shadow 0.2s,
-    background 0.2s;
+/* Scrollbar styles */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 4px;
 }
-.memo-card-hover:hover {
-  box-shadow:
-    0 2px 8px 0 rgba(24, 182, 255, 0.04),
-    0 1px 3px 0 rgba(0, 0, 0, 0.02);
-  background: rgba(237, 243, 245, 0.969);
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: oklch(40% 0.1 250);
+  border-radius: 0;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: oklch(25% 0.05 250);
+}
+
+@media (min-width: 768px) {
+  .pixel-layout {
+    padding: 2rem;
+    gap: 2rem;
+  }
+
+  .pixel-card {
+    padding: 2rem;
+  }
+
+  .pixel-title {
+    font-size: 1.125rem;
+  }
+
+  .pixel-text {
+    font-size: 1rem;
+  }
 }
 </style>

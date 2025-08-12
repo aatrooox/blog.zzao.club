@@ -165,14 +165,14 @@ function focusActualInput(): void {
 
 <template>
   <div
-    class="relative p-2 cursor-text bg-white dark:bg-zinc-800 w-full box-border"
+    class="pixel-tag-input"
     @click="focusActualInput"
   >
     <div class="flex flex-wrap items-center gap-1.5">
       <span
         v-for="(tag, index) in myTags"
         :key="index"
-        class="inline-flex items-center bg-zinc-200 dark:bg-zinc-200 text-zinc-800 dark:text-zinc-800 px-2 text-sm leading-5 whitespace-nowrap"
+        class="pixel-tag-item"
       >
         #{{ tag }}
       </span>
@@ -180,7 +180,7 @@ function focusActualInput(): void {
         ref="inputElement"
         v-model="currentInput"
         type="text"
-        class="flex-grow border-none outline-none py-1 px-0.5 text-base min-w-[100px] bg-transparent text-zinc-800 dark:text-zinc-200  placeholder-gray-400"
+        class="pixel-input"
         placeholder="输入标签..."
         @input="handleInput"
         @focus="handleFocus"
@@ -198,16 +198,16 @@ function focusActualInput(): void {
     >
       <div
         v-if="showSuggestions && suggestions.length > 0"
-        class="absolute z-10 w-full mt-1 p-2 bg-white dark:bg-zinc-800 border border-gray-200 rounded shadow-md text-sm"
+        class="pixel-suggestions"
       >
         <ul class="flex flex-wrap gap-1.5">
           <li
             v-for="(suggestion, index) in suggestions"
             :key="suggestion"
-            class="px-2 py-1 rounded cursor-pointer text-zinc-800 dark:text-zinc-200"
+            class="pixel-suggestion-item"
             :class="{
-              'bg-cyan-600 !text-zinc-100': index === activeSuggestionIndex,
-              'bg-gray-100 hover:bg-gray-200 dark:text-zinc-800 dark:bg-zinc-200': index !== activeSuggestionIndex,
+              'pixel-suggestion-active': index === activeSuggestionIndex,
+              'pixel-suggestion-normal': index !== activeSuggestionIndex,
             }"
             @mousedown.prevent="selectTag(suggestion)"
           >
@@ -220,4 +220,84 @@ function focusActualInput(): void {
 </template>
 
 <style scoped>
+/* Pixel style tag input */
+.pixel-tag-input {
+  position: relative;
+  padding: 0.5rem;
+  cursor: text;
+  background-color: oklch(28% 0.05 250);
+  border: 2px solid oklch(35% 0.08 250);
+  width: 100%;
+  box-sizing: border-box;
+  font-family: ui-monospace, monospace;
+  margin-bottom: 0.5rem;
+}
+
+.pixel-tag-item {
+  display: inline-flex;
+  align-items: center;
+  background-color: oklch(45% 0.15 120);
+  color: oklch(95% 0.02 120);
+  border: 2px solid oklch(35% 0.15 120);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  white-space: nowrap;
+  font-family: ui-monospace, monospace;
+  font-weight: bold;
+}
+
+.pixel-input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  padding: 0.25rem 0.125rem;
+  font-size: 1rem;
+  min-width: 100px;
+  background: transparent;
+  color: oklch(90% 0.02 250);
+  font-family: ui-monospace, monospace;
+}
+
+.pixel-input::placeholder {
+  color: oklch(60% 0.02 250);
+}
+
+.pixel-suggestions {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.5rem;
+  background-color: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.1 250);
+  box-shadow: 4px 4px 0 oklch(20% 0.05 250);
+  font-size: 0.875rem;
+}
+
+.pixel-suggestion-item {
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  font-family: ui-monospace, monospace;
+  font-weight: bold;
+  transition: all 0.1s ease;
+}
+
+.pixel-suggestion-active {
+  background-color: oklch(50% 0.2 180);
+  color: oklch(95% 0.02 180);
+  border: 2px solid oklch(40% 0.2 180);
+}
+
+.pixel-suggestion-normal {
+  background-color: oklch(35% 0.08 250);
+  color: oklch(90% 0.02 250);
+  border: 2px solid oklch(25% 0.08 250);
+}
+
+.pixel-suggestion-normal:hover {
+  background-color: oklch(40% 0.1 250);
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 oklch(20% 0.05 250);
+}
 </style>

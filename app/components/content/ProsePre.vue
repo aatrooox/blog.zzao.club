@@ -58,15 +58,15 @@ const copyCode = async () => {
 </script>
 
 <template>
-  <div>
-    <div class="flex items-center justify-between gap-1.5 border border-muted bg-default border-b-0 relative rounded-t-md px-4 py-3">
-      <div class="flex items-center gap-1.5">
+  <div class="pixel-code-block">
+    <div class="pixel-code-header">
+      <div class="flex items-center gap-1.5 font-mono text-sm">
         <Icon :name="`vscode-icons:file-type-${language}`" />{{ filename }}
       </div>
       <ClientOnly>
         <button
           v-if="isSupported"
-          class="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors rounded border border-transparent hover:border-muted"
+          class="pixel-btn-copy"
           title="复制代码"
           @click="copyCode"
         >
@@ -74,7 +74,7 @@ const copyCode = async () => {
         </button>
       </ClientOnly>
     </div>
-    <pre ref="preRef" :class="$props.class">
+    <pre ref="preRef" class="pixel-code-content" :class="$props.class">
       <slot />
     </pre>
   </div>
@@ -83,5 +83,68 @@ const copyCode = async () => {
 <style>
 pre code .line {
   display: block;
+}
+
+.pixel-code-block {
+  background: oklch(28% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  border-radius: 8px;
+  box-shadow:
+    2px 2px 0 oklch(40% 0.05 250),
+    4px 4px 0 oklch(35% 0.05 250);
+  margin: 16px 0;
+  overflow: hidden;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.pixel-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: oklch(32% 0.05 250);
+  border-bottom: 2px solid oklch(40% 0.05 250);
+  color: oklch(75% 0.03 250);
+  font-family: ui-monospace, monospace;
+}
+
+.pixel-btn-copy {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: oklch(35% 0.05 250);
+  color: oklch(70% 0.03 250);
+  border: 2px solid oklch(45% 0.05 250);
+  border-radius: 4px;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pixel-btn-copy:hover {
+  background: oklch(40% 0.05 250);
+  color: oklch(75% 0.03 250);
+  transform: translateY(-1px);
+  box-shadow: 1px 1px 0 oklch(45% 0.05 250);
+}
+
+.pixel-btn-copy:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.pixel-code-content {
+  padding: 16px;
+  margin: 0;
+  background: transparent;
+  color: oklch(85% 0.02 250);
+  font-family: ui-monospace, monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-x: auto;
 }
 </style>

@@ -162,19 +162,110 @@ const parsedContent = computed(() => {
 </script>
 
 <template>
-  <div ref="memoWrap" class="min-h-[30px] flex flex-col">
-    <!-- <AppOverflowContent :show-all="!!showAll">
-
-      </AppOverflowContent> -->
-    <MDC ref="contentRef" :value="parsedContent" tag="section" class="mdc-memo-prose prose flex-1" />
-    <!-- <transition enter-active-class="transition-all transform ease-in-out duration-300 delay-900"
-        enter-from-class="opacity-0 scale-90" enter-to-class="opacity-100 scale-100"
-        leave-active-class="transition-all transform ease-in-out duration-300 delay-400"
-        leave-from-class="opacity-100 scale-100" leave-to-class="opacity-0 scale-90">
-        <div class="memo-active-info w-22 absolute -left-20 top-2 hidden sm:block" v-if="showInfo">
-          <div class="" :style="{ color: textColor, fontSize: textFontSize }">{{ formatDate(props.memo.create_ts, '/',
-            true) }}</div>
-        </div>
-      </transition> -->
+  <div ref="memoWrap" class="pixel-memo-panel">
+    <MDC ref="contentRef" :value="parsedContent" tag="section" class="pixel-memo-content" />
   </div>
 </template>
+
+<style scoped>
+/* Pixel style memo panel */
+.pixel-memo-panel {
+  min-height: 30px;
+  display: flex;
+  flex-direction: column;
+  font-family: ui-monospace, monospace;
+}
+
+.pixel-memo-content {
+  flex: 1;
+  color: oklch(90% 0.02 250);
+  font-family: ui-monospace, monospace;
+  line-height: 1.6;
+  font-size: 0.875rem;
+}
+
+/* Override MDC prose styles for pixel theme */
+.pixel-memo-content :deep(p) {
+  margin: 0.5rem 0;
+  color: oklch(90% 0.02 250);
+  font-family: ui-monospace, monospace;
+}
+
+.pixel-memo-content :deep(h1),
+.pixel-memo-content :deep(h2),
+.pixel-memo-content :deep(h3),
+.pixel-memo-content :deep(h4),
+.pixel-memo-content :deep(h5),
+.pixel-memo-content :deep(h6) {
+  color: oklch(85% 0.15 180);
+  font-family: ui-monospace, monospace;
+  font-weight: bold;
+  margin: 1rem 0 0.5rem 0;
+}
+
+.pixel-memo-content :deep(a) {
+  color: oklch(70% 0.2 200);
+  text-decoration: underline;
+  font-family: ui-monospace, monospace;
+}
+
+.pixel-memo-content :deep(a:hover) {
+  color: oklch(80% 0.25 200);
+}
+
+.pixel-memo-content :deep(code) {
+  background-color: oklch(35% 0.08 250);
+  color: oklch(85% 0.15 120);
+  padding: 0.125rem 0.25rem;
+  border: 1px solid oklch(40% 0.1 250);
+  font-family: ui-monospace, monospace;
+  font-size: 0.8rem;
+}
+
+.pixel-memo-content :deep(pre) {
+  background-color: oklch(20% 0.05 250);
+  border: 2px solid oklch(30% 0.08 250);
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.pixel-memo-content :deep(pre code) {
+  background: none;
+  border: none;
+  padding: 0;
+  color: oklch(90% 0.02 250);
+}
+
+.pixel-memo-content :deep(blockquote) {
+  border-left: 4px solid oklch(50% 0.2 180);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: oklch(80% 0.02 250);
+  font-style: italic;
+}
+
+.pixel-memo-content :deep(ul),
+.pixel-memo-content :deep(ol) {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.pixel-memo-content :deep(li) {
+  margin: 0.25rem 0;
+  color: oklch(90% 0.02 250);
+}
+
+.pixel-memo-content :deep(img) {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid oklch(40% 0.1 250);
+  image-rendering: pixelated;
+}
+
+@media (min-width: 768px) {
+  .pixel-memo-content {
+    font-size: 1rem;
+  }
+}
+</style>

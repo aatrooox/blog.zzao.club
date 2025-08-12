@@ -101,23 +101,63 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 md:gap-8 max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-8 bg-bg-paper font-cartoon">
-    <div v-if="data" class="flex flex-col gap-4 md:gap-6">
-      <transition-group
-        tag="div" class="w-full flex flex-col gap-3 md:gap-4" appear @enter="onEnter"
-        @leave="onLeave" @before-enter="onBeforeEnter"
-      >
-        <template v-for="page of data" :key="page.path">
-          <div class="group article-post-item">
-            <div class="bg-white rounded-lg md:rounded-xl border-2 md:border-4 border-bg-base shadow-pixel hover:shadow-[6px_6px_0_0_#000000] transition-all duration-200 hover:scale-[1.02]">
-              <PagePanel
-                :page="page as Page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0"
-                :view="postViewsMap[page.path] || 0"
-              />
+  <div class="pixel-layout min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-8">
+      <div v-if="data" class="flex flex-col gap-4 md:gap-6">
+        <transition-group
+          tag="div" class="w-full flex flex-col gap-3 md:gap-4" appear @enter="onEnter"
+          @leave="onLeave" @before-enter="onBeforeEnter"
+        >
+          <template v-for="page of data" :key="page.path">
+            <div class="group article-post-item">
+              <div>
+                <PagePanel
+                  :page="page as Page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0"
+                  :view="postViewsMap[page.path] || 0"
+                />
+              </div>
             </div>
-          </div>
-        </template>
-      </transition-group>
+          </template>
+        </transition-group>
+      </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+@reference 'tailwindcss';
+
+.pixel-layout {
+  @apply font-mono;
+  background: oklch(25% 0.05 250);
+  color: oklch(90% 0.02 250);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.pixel-card {
+  background: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  border-radius: 8px;
+  box-shadow:
+    2px 2px 0 oklch(40% 0.05 250),
+    4px 4px 0 oklch(35% 0.05 250);
+  padding: 16px;
+  margin: 8px 0;
+  transition: all 0.2s ease;
+}
+
+.pixel-card-hover:hover {
+  background: oklch(35% 0.05 250);
+  transform: translateY(-2px);
+  box-shadow:
+    3px 3px 0 oklch(40% 0.05 250),
+    6px 6px 0 oklch(35% 0.05 250),
+    9px 9px 0 oklch(30% 0.05 250);
+}
+
+.article-post-item {
+  transition: all 0.2s ease;
+}
+</style>

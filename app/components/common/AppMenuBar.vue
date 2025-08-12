@@ -110,16 +110,16 @@ function showRegisterDialog() {
     }"
   >
     <!-- 主导航容器 -->
-    <div class="bg-white border-b-4 border-bg-base shadow-pixel font-cartoon">
+    <div class="pixel-bg pixel-border-bottom pixel-shadow-md pixel-font">
       <div class="max-w-7xl mx-auto px-4 md:px-8 py-3 md:py-4">
         <div class="flex justify-between items-center">
           <!-- Logo/品牌区域 -->
           <div class="flex items-center gap-3 md:gap-4">
             <NuxtLink to="/" class="flex items-center gap-2 md:gap-3 group">
-              <div class="w-8 h-8 md:w-10 md:h-10 bg-primary-600 rounded-lg border-2 md:border-4 border-bg-base shadow-pixel flex items-center justify-center group-hover:bg-secondary-500 transition-all duration-200">
+              <div class="w-8 h-8 md:w-10 md:h-10 pixel-btn-primary flex items-center justify-center group-hover:pixel-btn-secondary transition-all duration-200">
                 <Icon name="twemoji:wedding" class="text-white text-sm md:text-lg" />
               </div>
-              <span class="text-lg md:text-xl font-pixel text-bg-base hidden sm:block group-hover:text-primary-600 transition-colors duration-200">早早集市</span>
+              <span class="text-lg md:text-xl pixel-title pixel-text hidden sm:block group-hover:text-[oklch(65%_0.15_200)] transition-colors duration-200">早早集市</span>
             </NuxtLink>
           </div>
 
@@ -133,16 +133,15 @@ function showRegisterDialog() {
                 class="cursor-pointer"
               >
                 <button
-                  class="px-4 py-2 rounded-lg border-2 border-bg-base font-cartoon font-bold text-sm transition-all duration-200 hover:scale-105"
+                  class="px-4 py-2 pixel-border pixel-font font-bold text-sm transition-all duration-200 hover:scale-105"
                   :class="[
                     isActive
-                      ? 'bg-primary-600 text-white shadow-pixel'
-                      : 'bg-white text-bg-base hover:bg-secondary-500 hover:text-bg-base shadow-pixel',
+                      ? 'pixel-btn-primary'
+                      : 'pixel-btn-secondary hover:pixel-btn-primary',
                   ]"
                   @click="navigate"
                 >
                   <div class="flex items-center gap-2">
-                    <!-- <Icon :name="menu.icon" class="text-sm" /> -->
                     <span>{{ menu.label }}</span>
                   </div>
                 </button>
@@ -174,7 +173,7 @@ function showRegisterDialog() {
     </div>
 
     <!-- 装饰性像素边框 -->
-    <div class="h-1 bg-gradient-to-r from-primary-600 via-secondary-500 to-accent-400">
+    <div class="h-1 bg-gradient-to-r from-[oklch(65%_0.15_200)] via-[oklch(70%_0.12_160)] to-[oklch(75%_0.1_120)]">
       <div class="max-w-7xl mx-auto px-4 md:px-8 h-full" />
     </div>
   </div>

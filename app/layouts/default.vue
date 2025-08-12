@@ -13,6 +13,39 @@ const showScrollTopBtn = ref(false)
 const { showSearchDialog } = useSearch()
 // const { x, y } = useWindowScroll()
 
+const appNavBar = [
+  {
+    name: '首页',
+    path: '/',
+    icon: 'twemoji:wedding',
+  },
+  {
+    name: '文章',
+    path: '/article',
+    icon: 'twemoji:page-facing-up',
+  },
+  {
+    name: '动态',
+    path: '/memo',
+    icon: 'twemoji:memo',
+  },
+  {
+    name: 'IMGX',
+    path: '/imgx',
+    icon: 'twemoji:framed-picture',
+  },
+  {
+    name: '友链',
+    path: '/links',
+    icon: 'twemoji:clinking-beer-mugs',
+  },
+  {
+    name: '关于',
+    path: '/about',
+    icon: 'twemoji:information',
+  },
+]
+
 const isPostPage = computed(() => {
   return route.path.startsWith('/post')
 })
@@ -101,26 +134,265 @@ function scrollToTop() {
 </script>
 
 <template>
-  <div
-    ref="scrollWrap"
-    v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]" class="app-layout h-full box-border max-w-7xl lg:w-5xl md:w-3xl m-auto bg-bg-paper overflow-y-auto font-cartoon"
-  >
+  <div class="pixel-layout">
+    <!-- Toast 通知 -->
     <Toaster position="top-right" rich-colors />
+
+    <!-- PC端布局：左侧导航 + 右侧内容 -->
+    <div class="hidden lg:flex min-h-screen w-full relative">
+      <!-- PC端悬浮左侧导航 -->
+      <aside class="pixel-sidebar-floating">
+        <div class="pixel-sidebar-header">
+          <Icon name="twemoji:wedding" class="pixel-sidebar-logo" />
+        </div>
+        <nav class="pixel-sidebar-nav">
+          <NuxtLink
+            v-for="nav in appNavBar"
+            :key="nav.path"
+            :to="nav.path"
+            class="pixel-sidebar-item"
+            :class="{ active: $route.path === nav.path }"
+          >
+            <Icon :name="nav.icon" class="pixel-sidebar-icon" />
+            <span class="pixel-sidebar-text">{{ nav.name }}</span>
+          </NuxtLink>
+        </nav>
+      </aside>
+
+      <!-- PC端内容区域 -->
+      <main
+        ref="scrollWrap"
+        v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]"
+        class="pixel-desktop-main-floating"
+      >
+        <slot />
+      </main>
+    </div>
+
+    <!-- 移动端布局：内容 + 底部导航 -->
+    <div class="lg:hidden flex flex-col min-h-screen relative">
+      <!-- 移动端内容区域 -->
+      <main
+        ref="scrollWrap"
+        v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]"
+        class="pixel-main"
+      >
+        <slot />
+      </main>
+
+      <!-- 移动端悬浮底部导航 -->
+      <nav class="pixel-nav-floating">
+        <div class="pixel-nav-container">
+          <NuxtLink
+            v-for="nav in appNavBar"
+            :key="nav.path"
+            :to="nav.path"
+            class="pixel-nav-item"
+            :class="{ active: $route.path === nav.path }"
+          >
+            <Icon :name="nav.icon" class="pixel-nav-icon" />
+            <span class="pixel-nav-text">{{ nav.name }}</span>
+          </NuxtLink>
+        </div>
+      </nav>
+    </div>
+
+    <!-- 悬浮回到顶部按钮 -->
     <div
       v-if="showScrollTopBtn"
-      class="fixed right-8 bottom-8 z-[50] w-16 h-16 bg-primary-600 hover:bg-secondary-500 rounded-xl shadow-pixel cursor-pointer flex items-center justify-center transition-all duration-200 hover:scale-105"
+      class="fixed right-6 bottom-6 z-[50] pixel-btn-primary cursor-pointer flex items-center justify-center w-12 h-12 md:w-14 md:h-14"
       @click="scrollToTop"
     >
-      <Icon name="twemoji:up-arrow" size="1.5em" class="text-white" />
+      <Icon name="twemoji:up-arrow" size="1.2em" class="pixel-text" />
     </div>
-    <div class="w-full box-border min-h-screen">
-      <AppMenuBar />
-      <slot />
-    </div>
+
+    <!-- 搜索对话框 -->
     <ResourceSearchDialog v-model="showSearchDialog" />
-    <!-- Pixel Grid Background -->
-    <div class="fixed inset-0 -z-10 opacity-10">
-      <div class="w-full h-full" style="background-image: repeating-linear-gradient(0deg, #FF5C39 0px, #FF5C39 1px, transparent 1px, transparent 8px), repeating-linear-gradient(90deg, #FF5C39 0px, #FF5C39 1px, transparent 1px, transparent 8px);" />
-    </div>
+
+    <!-- 像素网格背景 -->
+    <div class="fixed inset-0 -z-10 pixel-grid-bg" />
+
+    <!-- 像素噪点背景 -->
+    <div class="fixed inset-0 -z-10 pixel-noise-bg" />
   </div>
 </template>
+
+<style scoped>
+@reference 'tailwindcss';
+
+/* 使用公共像素风格变量和类 */
+.pixel-layout {
+  @apply min-h-screen;
+  background: oklch(25% 0.05 250);
+  font-family:
+    ui-monospace, SFMono-Regular, 'Cascadia Code', 'Segoe UI Mono', 'Liberation Mono', Menlo, Monaco, Consolas,
+    'Courier New', monospace;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.pixel-main {
+  @apply overflow-y-auto pb-24 min-h-[calc(100vh-80px)] p-4;
+}
+
+/* 移动端悬浮底部导航栏样式 */
+.pixel-nav-floating {
+  @apply fixed bottom-6 left-6 right-6 z-50 h-16;
+  background: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  box-shadow:
+    2px 2px 0 oklch(40% 0.05 250),
+    4px 4px 0 oklch(40% 0.05 250);
+  border-radius: 0;
+}
+
+.pixel-nav-container {
+  @apply flex justify-around items-center h-full px-4;
+}
+
+.pixel-nav-item {
+  @apply flex flex-col items-center justify-center gap-1 px-3 py-2 no-underline transition-all duration-150 border-2 border-transparent rounded-none min-w-[64px] relative;
+  color: oklch(70% 0.05 250);
+}
+
+.pixel-nav-item:hover {
+  @apply -translate-y-px;
+  color: oklch(65% 0.15 200);
+  background: oklch(35% 0.05 250);
+  border-color: oklch(40% 0.05 250);
+  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+}
+
+.pixel-nav-item.active {
+  color: oklch(65% 0.15 200);
+  background: oklch(35% 0.05 250);
+  border-color: oklch(65% 0.15 200);
+  box-shadow:
+    2px 2px 0 oklch(40% 0.05 250),
+    4px 4px 0 oklch(40% 0.05 250);
+}
+
+.pixel-nav-item:active {
+  @apply translate-y-px;
+  box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+}
+
+.pixel-nav-icon {
+  @apply w-5 h-5;
+  image-rendering: pixelated;
+}
+
+.pixel-nav-text {
+  @apply text-[10px] font-bold uppercase tracking-wide leading-none;
+}
+
+/* PC端悬浮侧边导航栏样式 */
+.pixel-sidebar-floating {
+  @apply fixed left-6 top-6 bottom-6 w-36 z-50;
+  background: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  box-shadow:
+    2px 2px 0 oklch(40% 0.05 250),
+    4px 4px 0 oklch(40% 0.05 250);
+  border-radius: 0;
+}
+
+.pixel-sidebar-header {
+  @apply flex items-center justify-center p-6 border-b-2;
+  border-color: oklch(40% 0.05 250);
+  background: oklch(35% 0.05 250);
+}
+
+.pixel-sidebar-logo {
+  @apply w-8 h-8;
+  color: oklch(65% 0.15 200);
+  image-rendering: pixelated;
+}
+
+.pixel-sidebar-nav {
+  @apply p-4 space-y-2 flex-1 overflow-y-auto;
+}
+
+.pixel-sidebar-item {
+  @apply flex items-center gap-3 px-4 py-3 no-underline transition-all duration-150 border-2 border-transparent rounded-none;
+  color: oklch(70% 0.05 250);
+}
+
+.pixel-sidebar-item:hover {
+  @apply -translate-x-px;
+  color: oklch(65% 0.15 200);
+  background: oklch(35% 0.05 250);
+  border-color: oklch(40% 0.05 250);
+  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+}
+
+.pixel-sidebar-item.active {
+  color: oklch(65% 0.15 200);
+  background: oklch(35% 0.05 250);
+  border-color: oklch(65% 0.15 200);
+  box-shadow:
+    2px 2px 0 oklch(40% 0.05 250),
+    4px 4px 0 oklch(40% 0.05 250);
+}
+
+.pixel-sidebar-item:active {
+  @apply translate-x-px;
+  box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+}
+
+.pixel-sidebar-icon {
+  @apply w-5 h-5;
+  image-rendering: pixelated;
+}
+
+.pixel-sidebar-text {
+  @apply font-bold text-sm;
+}
+
+.pixel-desktop-main-floating {
+  @apply flex-1 overflow-auto p-6;
+  background: oklch(25% 0.05 250);
+  margin-left: 192px;
+  margin-right: 24px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  border: 2px solid oklch(40% 0.05 250);
+  box-shadow:
+    inset 0 2px 8px 0 oklch(40% 0.05 250),
+    2px 2px 0 oklch(40% 0.05 250);
+}
+
+/* 响应式设计 */
+@media (max-width: 640px) {
+  .pixel-nav-floating {
+    @apply left-4 right-4 bottom-4;
+  }
+
+  .pixel-nav-container {
+    @apply px-2;
+  }
+
+  .pixel-nav-item {
+    @apply min-w-[60px] px-2 py-1;
+  }
+
+  .pixel-nav-text {
+    @apply text-[9px];
+  }
+
+  .pixel-main {
+    @apply pb-28;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pixel-main {
+    @apply pb-0 mb-0;
+  }
+
+  .pixel-nav-floating {
+    @apply hidden;
+  }
+}
+</style>

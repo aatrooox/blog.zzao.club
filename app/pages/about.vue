@@ -11,67 +11,69 @@ useHead({
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 md:gap-8 max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-8 bg-bg-paper font-cartoon">
-    <div class="flex flex-col gap-4 md:gap-8">
-      <!-- 内容卡片 -->
-      <div class="bg-white rounded-lg md:rounded-xl shadow-pixel border-2 md:border-4 border-bg-base p-4 md:p-8">
-        <div class="w-full flex flex-col gap-4 md:gap-6 leading-7">
-          <div class="space-y-3 md:space-y-4">
-            <h2 class="text-base md:text-lg font-pixel text-bg-base flex items-center gap-2">
-              <div class="w-2 h-2 bg-primary-600 rounded-sm" />
-              为什么需要登录
-            </h2>
-            <div class="space-y-2 md:space-y-3 text-sm md:text-base font-cartoon text-bg-base">
-              <p><strong>仅仅作为限流的手段，就算被人拿到也没有什么用处，我不会存储任何敏感信息。</strong></p>
-              <p>用户名和密码完全是自定义的，头像我都不想存。</p>
-              <p>邮箱仅用来通知，这应该不是啥敏感信息</p>
-              <p>网站地址也属于公开信息</p>
-              <p>没有支付/付费、没有手机号</p>
-              <p>没有用户信息，会限制后面很多功能的实现。万一网站壮大了！还是希望能产生更多简易的交互的🤪</p>
+  <div class="pixel-layout min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-8">
+      <div class="flex flex-col gap-4 md:gap-8">
+        <!-- 内容卡片 -->
+        <div class="pixel-card">
+          <div class="w-full flex flex-col gap-4 md:gap-6 leading-7">
+            <div class="space-y-3 md:space-y-4">
+              <h2 class="pixel-title flex items-center gap-2">
+                <div class="pixel-indicator pixel-indicator-primary" />
+                为什么需要登录
+              </h2>
+              <div class="space-y-2 md:space-y-3 pixel-text">
+                <p><strong>仅仅作为限流的手段，就算被人拿到也没有什么用处，我不会存储任何敏感信息。</strong></p>
+                <p>用户名和密码完全是自定义的，头像我都不想存。</p>
+                <p>邮箱仅用来通知，这应该不是啥敏感信息</p>
+                <p>网站地址也属于公开信息</p>
+                <p>没有支付/付费、没有手机号</p>
+                <p>没有用户信息，会限制后面很多功能的实现。万一网站壮大了！还是希望能产生更多简易的交互的🤪</p>
+              </div>
             </div>
-          </div>
 
-          <div class="space-y-3 md:space-y-4">
-            <h2 class="text-base md:text-lg font-pixel text-bg-base flex items-center gap-2">
-              <div class="w-2 h-2 bg-secondary-500 rounded-sm" />
-              内容
-            </h2>
-            <div class="space-y-2 md:space-y-3 text-sm md:text-base font-cartoon text-bg-base">
-              <p>本站内容为鄙人生活经验的一部分<strong>映射</strong>，体现在文字内容上，也体现在网站本身。</p>
-              <p>文章多为全栈(前端)技术实战教程、日常所思所想，没什么深度，只是为了体现出站点的属性。</p>
-              <p>技术文章几乎都携带对应的技术栈版本，这也是建站的初衷之一，同一个框架的两个版本甚至有可能就是两个框架，我实在不想你等看完文章之后才能发现和自己想要的不是一个东西</p>
-              <p>由于是自建博客，在标签、分类、筛选等功能上还有待开发，因为并没觉得现有的其他博客框架上对于这些功能的实现有多好用，但我也暂时没有更好的方式。</p>
-              <p>所以，先空着</p>
+            <div class="space-y-3 md:space-y-4">
+              <h2 class="pixel-title flex items-center gap-2">
+                <div class="pixel-indicator pixel-indicator-secondary" />
+                内容
+              </h2>
+              <div class="space-y-2 md:space-y-3 pixel-text">
+                <p>本站内容为鄙人生活经验的一部分<strong>映射</strong>，体现在文字内容上，也体现在网站本身。</p>
+                <p>文章多为全栈(前端)技术实战教程、日常所思所想，没什么深度，只是为了体现出站点的属性。</p>
+                <p>技术文章几乎都携带对应的技术栈版本，这也是建站的初衷之一，同一个框架的两个版本甚至有可能就是两个框架，我实在不想你等看完文章之后才能发现和自己想要的不是一个东西</p>
+                <p>由于是自建博客，在标签、分类、筛选等功能上还有待开发，因为并没觉得现有的其他博客框架上对于这些功能的实现有多好用，但我也暂时没有更好的方式。</p>
+                <p>所以，先空着</p>
+              </div>
             </div>
-          </div>
 
-          <div class="space-y-3 md:space-y-4">
-            <h2 class="text-base md:text-lg font-pixel text-bg-base flex items-center gap-2">
-              <div class="w-2 h-2 bg-accent-400 rounded-sm" />
-              早早集市
-            </h2>
-            <div class="space-y-2 md:space-y-3 text-sm md:text-base font-cartoon text-bg-base">
-              <p>生活就像是一场游戏，我主观的归结为六个大方向： <strong>记录、分享、连接、通知、获取、成就</strong>。</p>
-              <p>早早集市就像是游戏的一个 <strong>DLC</strong>，把生活中的事物和关系用<strong>技术和数据</strong>表达出来，也算是增加了一种新的玩法，也许本身也是成就的体现</p>
-              <p>网站建设的方向/功能未来也会围绕这几大方向展开</p>
-              <p>......</p>
+            <div class="space-y-3 md:space-y-4">
+              <h2 class="pixel-title flex items-center gap-2">
+                <div class="pixel-indicator pixel-indicator-accent" />
+                早早集市
+              </h2>
+              <div class="space-y-2 md:space-y-3 pixel-text">
+                <p>生活就像是一场游戏，我主观的归结为六个大方向： <strong>记录、分享、连接、通知、获取、成就</strong>。</p>
+                <p>早早集市就像是游戏的一个 <strong>DLC</strong>，把生活中的事物和关系用<strong>技术和数据</strong>表达出来，也算是增加了一种新的玩法，也许本身也是成就的体现</p>
+                <p>网站建设的方向/功能未来也会围绕这几大方向展开</p>
+                <p>......</p>
+              </div>
             </div>
-          </div>
 
-          <div class="space-y-3 md:space-y-4">
-            <h2 class="text-base md:text-lg font-pixel text-bg-base flex items-center gap-2">
-              <div class="w-2 h-2 bg-primary-600 rounded-sm" />
-              技术
-            </h2>
-            <div class="space-y-2 md:space-y-3 text-sm md:text-base font-cartoon text-bg-base">
-              <p>技术层面: 完全基于 Nuxt、Nitro、NuxtContent 自建，古法手工敲制。</p>
-              <p>部署 在<strong>海外[新加坡]轻量服务器[2C 8G Debian12]</strong>上</p>
-              <p>图片 目前用的是腾讯云对象存储+CDN</p>
-              <p>文章 源于 Obsidian 的 Github 仓库，自动同步文章</p>
-              <p>自动更新 基于 Gitea 的 workflow，定时更新文章</p>
-              <p><strong>为什么不选 NextJS xxx ...?</strong></p>
-              <p>目前大部分工作量其实都是在写后端逻辑，前端框架的选择实在不值得考量，因为不是受雇于人，所以我选择了上手最快的全栈框架</p>
-              <p>实际使用下来，Nuxt为中小型项目服务，够用且好用</p>
+            <div class="space-y-3 md:space-y-4">
+              <h2 class="pixel-title flex items-center gap-2">
+                <div class="pixel-indicator pixel-indicator-primary" />
+                技术
+              </h2>
+              <div class="space-y-2 md:space-y-3 pixel-text">
+                <p>技术层面: 完全基于 Nuxt、Nitro、NuxtContent 自建，古法手工敲制。</p>
+                <p>部署 在<strong>海外[新加坡]轻量服务器[2C 8G Debian12]</strong>上</p>
+                <p>图片 目前用的是腾讯云对象存储+CDN</p>
+                <p>文章 源于 Obsidian 的 Github 仓库，自动同步文章</p>
+                <p>自动更新 基于 Gitea 的 workflow，定时更新文章</p>
+                <p><strong>为什么不选 NextJS xxx ...?</strong></p>
+                <p>目前大部分工作量其实都是在写后端逻辑，前端框架的选择实在不值得考量，因为不是受雇于人，所以我选择了上手最快的全栈框架</p>
+                <p>实际使用下来，Nuxt为中小型项目服务，够用且好用</p>
+              </div>
             </div>
           </div>
         </div>
@@ -79,3 +81,58 @@ useHead({
     </div>
   </div>
 </template>
+
+<style scoped>
+@reference 'tailwindcss';
+
+.pixel-layout {
+  @apply font-mono;
+  background: oklch(25% 0.05 250);
+  color: oklch(90% 0.02 250);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.pixel-card {
+  background: oklch(30% 0.05 250);
+  border: 2px solid oklch(40% 0.05 250);
+  border-radius: 8px;
+  box-shadow:
+    2px 2px 0 oklch(40% 0.05 250),
+    4px 4px 0 oklch(35% 0.05 250);
+  padding: 24px;
+  margin: 8px 0;
+}
+
+.pixel-title {
+  @apply text-base md:text-lg font-bold;
+  color: oklch(90% 0.02 250);
+  font-family: ui-monospace, monospace;
+}
+
+.pixel-text {
+  @apply text-sm md:text-base;
+  color: oklch(75% 0.03 250);
+  font-family: ui-monospace, monospace;
+  line-height: 1.6;
+}
+
+.pixel-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.pixel-indicator-primary {
+  background: oklch(70% 0.15 195);
+}
+
+.pixel-indicator-secondary {
+  background: oklch(70% 0.15 145);
+}
+
+.pixel-indicator-accent {
+  background: oklch(75% 0.15 85);
+}
+</style>
