@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v1.15.2
+
+[compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v1.15.1...v1.15.2)
+
 ## v1.15.1
 
 [compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v1.15.0...v1.15.1)
