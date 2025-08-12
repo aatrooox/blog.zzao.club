@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.14.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.13.4...v1.14.0)
+
+### 🚀 Enhancements
+
+- 使用AI 重构所有样式 ([25f57c2](https://github.com/aatrooox/blog.zzao.club/commit/25f57c2))
+
+### 🏡 Chore
+
+- 忘了写的什么 ([f319ae6](https://github.com/aatrooox/blog.zzao.club/commit/f319ae6))
+- Eslint ([6f1583e](https://github.com/aatrooox/blog.zzao.club/commit/6f1583e))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.13.4
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.13.3...v1.13.4)
