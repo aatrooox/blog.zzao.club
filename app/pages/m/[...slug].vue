@@ -299,7 +299,7 @@ function handleTagClick(tagName: string) {
         <!-- Tags显示 -->
         <div v-if="memo.tags && memo.tags.length > 0" class="bg-base border-2 md:border-4 border-bg-base rounded-b-lg md:rounded-b-xl shadow-pixel p-4 md:p-6">
           <div class="flex flex-wrap gap-2 items-center">
-            <div class="w-3 h-3 bg-primary-600 rounded-sm mr-2"></div>
+            <div class="w-3 h-3 bg-primary-600 rounded-sm mr-2" />
             <Icon name="material-symbols:tag" class="w-4 h-4 text-bg-base" />
             <span
               v-for="tagRelation in memo.tags"
@@ -314,7 +314,7 @@ function handleTagClick(tagName: string) {
         <!-- 评论区 -->
         <div class="bg-base border-2 md:border-4 border-bg-base rounded-lg md:rounded-xl shadow-pixel p-4 md:p-6">
           <div class="text-xl md:text-2xl font-pixel font-bold mb-4 md:mb-6 flex items-center gap-2">
-            <div class="w-3 h-3 bg-accent-400 rounded-sm"></div>
+            <div class="w-3 h-3 bg-accent-400 rounded-sm" />
             <Icon name="icon-park-outline:comments" class="w-5 h-5 text-bg-base" />
             <span class="text-bg-base">评论区</span>
             <ClientOnly>
@@ -346,8 +346,12 @@ function handleTagClick(tagName: string) {
               </template>
               <div v-else class="text-center py-8">
                 <div class="bg-secondary-500/20 border-2 border-bg-base rounded-lg p-6">
-                  <div class="text-bg-base font-cartoon font-bold text-lg mb-2">暂无评论</div>
-                  <div class="text-bg-base/70 font-cartoon">快来抢沙发吧！</div>
+                  <div class="text-bg-base font-cartoon font-bold text-lg mb-2">
+                    暂无评论
+                  </div>
+                  <div class="text-bg-base/70 font-cartoon">
+                    快来抢沙发吧！
+                  </div>
                 </div>
               </div>
             </div>

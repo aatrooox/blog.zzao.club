@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu'
-
 // const searchDialog = ref(null)
 const toast = useGlobalToast()
 const loginForm = ref(null)

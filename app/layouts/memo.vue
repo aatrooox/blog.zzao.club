@@ -135,7 +135,7 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
         <transition name="slide-down" appear>
           <div class="heatmap-container">
             <h3 class="text-lg font-pixel font-bold mb-3 text-bg-base flex items-center gap-2">
-              <div class="w-2 h-2 bg-accent-400 rounded-sm"></div>
+              <div class="w-2 h-2 bg-accent-400 rounded-sm" />
               贡献热力图
             </h3>
             <div class="heatmap bg-secondary-500/20 border-2 border-bg-base p-4 rounded-lg h-32 flex items-center justify-center text-bg-base/70 text-sm font-cartoon">
@@ -148,7 +148,7 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
         <transition name="slide-down" appear>
           <div class="tags-cloud">
             <h3 class="text-lg font-pixel font-bold mb-3 text-bg-base flex items-center gap-2">
-              <div class="w-2 h-2 bg-accent-400 rounded-sm"></div>
+              <div class="w-2 h-2 bg-accent-400 rounded-sm" />
               热门标签
             </h3>
             <div class="flex flex-wrap gap-2">
@@ -205,7 +205,7 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
     <aside class="w-1/4 lg:w-1/5 hidden lg:block p-4 md:p-6 bg-base border-2 border-bg-base rounded-lg shadow-pixel sticky top-4 self-start">
       <div class="heatmap-container mb-6">
         <h3 class="text-lg font-pixel font-bold mb-3 text-bg-base flex items-center gap-2">
-          <div class="w-2 h-2 bg-accent-400 rounded-sm"></div>
+          <div class="w-2 h-2 bg-accent-400 rounded-sm" />
           贡献热力图
         </h3>
         <div class="heatmap bg-secondary-500/20 border-2 border-bg-base p-4 rounded-lg h-40 flex items-center justify-center text-bg-base/70 font-cartoon">
@@ -216,7 +216,7 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
       </div>
       <div class="tags-cloud">
         <h3 class="text-lg font-pixel font-bold mb-3 text-bg-base flex items-center gap-2">
-          <div class="w-2 h-2 bg-accent-400 rounded-sm"></div>
+          <div class="w-2 h-2 bg-accent-400 rounded-sm" />
           全部标签
         </h3>
         <div class="flex flex-wrap gap-2">
