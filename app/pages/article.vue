@@ -101,15 +101,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-6 max-w-7xl box-border mx-auto sm:px-4">
-    <div v-if="data" class="flex flex-col gap-6">
+  <div class="flex flex-col gap-4 md:gap-8 max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-8 bg-bg-paper font-cartoon">
+    <div v-if="data" class="flex flex-col gap-4 md:gap-6">
       <transition-group
-        tag="div" class="w-full flex flex-col gap-6" appear @enter="onEnter"
+        tag="div" class="w-full flex flex-col gap-3 md:gap-4" appear @enter="onEnter"
         @leave="onLeave" @before-enter="onBeforeEnter"
       >
         <template v-for="page of data" :key="page.path">
           <div class="group article-post-item">
-            <div class="">
+            <div class="bg-white rounded-lg md:rounded-xl border-2 md:border-4 border-bg-base shadow-pixel hover:shadow-[6px_6px_0_0_#000000] transition-all duration-200 hover:scale-[1.02]">
               <PagePanel
                 :page="page as Page" :like="articleLikeMap[page.id] || 0" :comment="articleCommentMap[page.id] || 0"
                 :view="postViewsMap[page.path] || 0"

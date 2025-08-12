@@ -132,8 +132,9 @@ function onMemoTagClick(tagName: string) {
 </script>
 
 <template>
-  <div class="memo-editor-wrapper mb-6 z-10">
-    <div class="memo-editor mx-auto bg-white dark:bg-zinc-800 rounded-lg shadow p-4">
+  <div class="flex flex-col gap-4 md:gap-8 max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-8 font-cartoon">
+    <!-- 编辑器卡片 -->
+    <div class="bg-base rounded-lg shadow-pixel border-2 border-bg-base p-4 md:p-6">
       <AppTagInput v-model="tags" />
       <AppCommentInput
         ref="commentInputRef"
@@ -143,70 +144,71 @@ function onMemoTagClick(tagName: string) {
         @send="handleSendMemo"
       />
     </div>
-  </div>
 
-  <div class="mx-auto">
-    <transition-group
-      name="memo-fade"
-      tag="div"
-      appear
-      class="flex flex-col gap-4"
-      :css="true"
-      @before-leave="beforeLeave"
-      @leave="leave"
-      @after-leave="afterLeave"
-    >
-      <div
-        v-for="memo in filteredMemos"
-        :key="memo.id"
-        class="flex items-start bg-white dark:bg-zinc-900 rounded-lg shadow p-4 gap-4 relative group memo-card-hover cursor-pointer"
-        @click="handleComment(memo)"
+    <!-- 随想卡片列表 -->
+    <div class="flex flex-col gap-4 md:gap-6">
+      <transition-group
+        name="memo-fade"
+        tag="div"
+        appear
+        class="flex flex-col gap-4 md:gap-6"
+        :css="true"
+        @before-leave="beforeLeave"
+        @leave="leave"
+        @after-leave="afterLeave"
       >
-        <div class="flex-shrink-0">
-          <UserAvatar :user-info="memo.user_info" size="md" />
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2 mb-1">
-            <span class="font-bold text-base text-zinc-800 dark:text-zinc-100">{{ memo.user_info?.nickname || memo.user_info?.username || '匿名' }}</span>
-            <span class="text-xs text-zinc-400 dark:text-zinc-500">·</span>
-            <NuxtTime :datetime="memo.create_ts" class="text-xs text-zinc-400 dark:text-zinc-500" />
+        <div
+          v-for="memo in filteredMemos"
+          :key="memo.id"
+          class="flex items-start bg-base rounded-lg shadow-pixel border-2 border-bg-base p-4 md:p-6 gap-4 relative group cursor-pointer hover:shadow-[6px_6px_0_0_#000000] hover:scale-105 transition-all duration-300"
+          @click="handleComment(memo)"
+        >
+          <div class="flex-shrink-0">
+            <UserAvatar :user-info="memo.user_info" size="md" class="border-2 border-bg-base rounded-lg" />
           </div>
-          <div v-if="memo.tags && memo.tags.length > 0" class="mb-2 h-8 overflow-x-auto overflow-y-hidden flex items-center gap-1.5 pb-1">
-            <Badge
-              v-for="tagRelation in memo.tags"
-              :key="tagRelation.tag.id"
-              variant="secondary"
-              class="text-xs cursor-pointer hover:bg-cyan-100 dark:hover:bg-cyan-900/40 hover:text-cyan-700 dark:hover:text-cyan-300 transition-all duration-200 group flex-shrink-0 !rounded-none"
-              @click.stop="onMemoTagClick(tagRelation.tag.tag_name)"
-            >
-              {{ tagRelation.tag.tag_name }}
-            </Badge>
-          </div>
-          <div class="mb-2">
-            <MemoPanel :memo="memo" />
-          </div>
-          <div class="flex items-center gap-4 mt-2 text-xs text-zinc-500 dark:text-zinc-400">
-            <div class="flex items-center gap-1 cursor-pointer hover:text-cyan-600" @click.stop="handleComment(memo)">
-              <Icon name="icon-park-outline:comments" />
-              <span>{{ memo._count?.comments || 0 }}</span>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="font-pixel text-sm md:text-base text-bg-base font-bold">{{ memo.user_info?.nickname || memo.user_info?.username || '匿名' }}</span>
+              <span class="text-xs md:text-sm text-bg-base/70 font-cartoon">·</span>
+              <NuxtTime :datetime="memo.create_ts" class="text-xs md:text-sm text-bg-base/70 font-cartoon" />
             </div>
-            <div class="flex items-center gap-1 cursor-pointer hover:text-red-500" @click.stop="handleLike(memo.id)">
-              <Icon name="icon-park-outline:thumbs-up" />
-              <span>{{ memo._count?.likes || 0 }}</span>
+            <div v-if="memo.tags && memo.tags.length > 0" class="mb-2 h-8 overflow-x-auto overflow-y-hidden flex items-center gap-1.5 pb-1">
+              <Badge
+                v-for="tagRelation in memo.tags"
+                :key="tagRelation.tag.id"
+                variant="secondary"
+                class="text-xs md:text-sm cursor-pointer bg-secondary-500 text-bg-base border-2 border-bg-base font-cartoon font-bold hover:bg-primary-600 hover:scale-105 transition-all duration-200 group flex-shrink-0 rounded-lg"
+                @click.stop="onMemoTagClick(tagRelation.tag.tag_name)"
+              >
+                {{ tagRelation.tag.tag_name }}
+              </Badge>
             </div>
-            <template v-if="userStore.isSuperAdmin">
-              <span class="mx-1">|</span>
-              <span class="cursor-pointer hover:text-yellow-600" @click.stop="handleEdit(memo)">
-                <Icon name="material-symbols:edit-outline" /> 编辑
-              </span>
-              <span class="cursor-pointer hover:text-gray-600" @click.stop="handleDelete(memo.id)">
-                <Icon name="icon-park-outline:delete" /> 删除
-              </span>
-            </template>
+            <div class="mb-2">
+              <MemoPanel :memo="memo" />
+            </div>
+            <div class="flex items-center gap-4 mt-3 text-xs md:text-sm text-bg-base">
+              <div class="flex items-center gap-1 md:gap-2 cursor-pointer hover:text-primary-600 transition-colors font-cartoon font-bold" @click.stop="handleComment(memo)">
+                <Icon name="icon-park-outline:comments" class="w-4 h-4 md:w-5 md:h-5" />
+                <span>{{ memo._count?.comments || 0 }}</span>
+              </div>
+              <div class="flex items-center gap-1 md:gap-2 cursor-pointer hover:text-accent-400 transition-colors font-cartoon font-bold" @click.stop="handleLike(memo.id)">
+                <Icon name="icon-park-outline:thumbs-up" class="w-4 h-4 md:w-5 md:h-5" />
+                <span>{{ memo._count?.likes || 0 }}</span>
+              </div>
+              <template v-if="userStore.isSuperAdmin">
+                <span class="mx-1 text-bg-base/50">|</span>
+                <span class="cursor-pointer hover:text-primary-600 transition-colors font-cartoon font-bold" @click.stop="handleEdit(memo)">
+                  <Icon name="material-symbols:edit-outline" class="w-4 h-4 md:w-5 md:h-5" /> 编辑
+                </span>
+                <span class="cursor-pointer hover:text-red-500 transition-colors font-cartoon font-bold" @click.stop="handleDelete(memo.id)">
+                  <Icon name="icon-park-outline:delete" class="w-4 h-4 md:w-5 md:h-5" /> 删除
+                </span>
+              </template>
+            </div>
           </div>
         </div>
-      </div>
-    </transition-group>
+      </transition-group>
+    </div>
   </div>
 
   <MemoEditDrawer

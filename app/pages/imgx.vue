@@ -1435,28 +1435,29 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="h-screen bg-gray-50 p-3">
-    <div class="h-full grid grid-cols-5 gap-3">
+  <div class="h-screen bg-bg-paper font-cartoon p-4 md:p-6">
+    <div class="h-[calc(100vh-0px)] md:h-[calc(100vh-0px)] grid grid-cols-5 gap-4 md:gap-6">
       <!-- 左侧控制面板 -->
-      <div class="col-span-1 space-y-3 overflow-y-auto">
+      <div class="col-span-1 space-y-3 md:space-y-4 overflow-y-auto">
         <!-- 比例选择 -->
-        <div class="bg-white rounded-lg p-3 shadow-sm">
-          <h3 class="text-sm font-semibold mb-3">
+        <div class="bg-white rounded-lg md:rounded-xl shadow-pixel border-2 md:border-4 border-bg-base p-3 md:p-4">
+          <h3 class="text-xs md:text-sm font-pixel text-bg-base mb-2 md:mb-3 flex items-center gap-2">
+            <div class="w-2 h-2 bg-primary-600 rounded-sm" />
             {{ currentWorkMode === 'long' ? '格子比例' : '画布比例' }} （{{ canvasDimensions.width }}×{{ canvasDimensions.height }}px）
           </h3>
           <div class="grid grid-cols-2 gap-2">
             <button
               v-for="option in aspectRatioOptions"
               :key="option.name"
-              class="flex flex-col items-center p-2 text-xs rounded border transition-colors"
+              class="flex flex-col items-center p-2 text-xs font-cartoon font-bold rounded-lg border-2 transition-all duration-200"
               :class="[
                 selectedAspectRatio.name === option.name
-                  ? 'bg-blue-500 text-white border-blue-500'
-                  : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50',
+                  ? 'bg-primary-600 text-white border-bg-base shadow-pixel'
+                  : 'bg-white text-bg-base border-bg-base hover:bg-secondary-500 hover:text-bg-base hover:scale-105',
               ]"
               @click="handleAspectRatioClick(option)"
             >
-              <div class="font-medium">
+              <div class="font-bold">
                 {{ option.name }}
               </div>
             </button>
@@ -1464,23 +1465,24 @@ onUnmounted(() => {
         </div>
 
         <!-- 模板选择 -->
-        <div v-if="currentWorkMode !== 'long'" class="bg-white rounded-lg p-3 shadow-sm">
-          <!-- <h3 class="text-sm font-semibold mb-3">
-            模板
-          </h3> -->
+        <div v-if="currentWorkMode !== 'long'" class="bg-white rounded-lg md:rounded-xl shadow-pixel border-2 md:border-4 border-bg-base p-3 md:p-4">
+          <h3 class="text-xs md:text-sm font-pixel text-bg-base mb-2 md:mb-3 flex items-center gap-2">
+            <div class="w-2 h-2 bg-secondary-500 rounded-sm" />
+            模板选择
+          </h3>
           <div class="grid grid-cols-2 gap-2">
             <button
               v-for="template in templates"
               :key="template.name"
-              class="flex flex-col items-center p-2 text-xs rounded border hover:bg-gray-50 transition-colors group"
+              class="flex flex-col items-center p-2 text-xs font-cartoon rounded-lg border-2 border-bg-base hover:bg-secondary-500 hover:scale-105 transition-all duration-200 group bg-white"
               @click="handleTemplateClick(template)"
             >
               <!-- 模板图标 -->
-              <div class="w-12 h-12 mb-2 relative bg-gray-100 rounded border">
+              <div class="w-12 h-12 mb-2 relative bg-gray-100 rounded-lg border-2 border-bg-base">
                 <div
                   v-for="cell in template.cells"
                   :key="`${cell.x}-${cell.y}`"
-                  class="absolute bg-blue-200 group-hover:bg-blue-300 transition-colors rounded-sm"
+                  class="absolute bg-primary-600 group-hover:bg-accent-400 transition-colors rounded-sm"
                   :style="{
                     left: `${cell.x}%`,
                     top: `${cell.y}%`,
@@ -1491,38 +1493,35 @@ onUnmounted(() => {
                   }"
                 />
               </div>
-              <!-- 模板名称 -->
-              <!-- <div class="font-medium text-center leading-tight">
-                {{ template.name }}
-              </div> -->
             </button>
           </div>
         </div>
 
         <!-- 格子设置 -->
-        <div v-if="selectedCell" class="bg-white rounded-lg p-3 shadow-sm">
-          <!-- <h3 class="text-sm font-semibold mb-3">
+        <div v-if="selectedCell" class="bg-white rounded-lg md:rounded-xl shadow-pixel border-2 md:border-4 border-bg-base p-3 md:p-4">
+          <h3 class="text-xs md:text-sm font-pixel text-bg-base mb-2 md:mb-3 flex items-center gap-2">
+            <div class="w-2 h-2 bg-accent-400 rounded-sm" />
             格子设置
-          </h3> -->
+          </h3>
 
           <!-- 标题输入 -->
           <div class="mb-3">
-            <!-- <label class="block text-xs font-medium mb-1">标题</label> -->
+            <label class="block text-xs font-cartoon font-bold mb-1 text-bg-base">图片说明</label>
             <input
               :value="selectedCell.title"
               type="text"
-              placeholder="图片说明..."
-              class="w-full px-2 py-1 text-xs border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+              placeholder="输入图片说明..."
+              class="w-full px-2 py-1 text-xs font-cartoon border-2 border-bg-base rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-primary-600"
               @input="updateCellTitle(selectedCell.id, ($event.target as HTMLInputElement).value)"
             >
           </div>
 
           <!-- 图片适配模式 -->
           <div v-if="selectedCell.image" class="mb-3">
-            <label class="block text-xs font-medium mb-1">适配模式</label>
+            <label class="block text-xs font-cartoon font-bold mb-1 text-bg-base">适配模式</label>
             <select
               :value="selectedCell.imageFit"
-              class="w-full px-2 py-1 text-xs border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+              class="w-full px-2 py-1 text-xs font-cartoon border-2 border-bg-base rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-600 focus:border-primary-600"
               @change="updateImageFit(selectedCell.id, ($event.target as HTMLSelectElement).value as ImageFitMode)"
             >
               <option value="cover">
@@ -1539,25 +1538,26 @@ onUnmounted(() => {
 
           <!-- 图片上传 -->
           <div class="mb-3">
-            <label class="block text-xs font-medium mb-1">上传图片</label>
+            <label class="block text-xs font-cartoon font-bold mb-1 text-bg-base">上传图片</label>
             <input
               type="file"
               accept="image/*"
-              class="w-full text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:bg-blue-50 file:text-blue-700"
+              class="w-full text-xs text-gray-600 font-cartoon file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-2 file:border-bg-base file:text-xs file:bg-secondary-500 file:text-bg-base file:font-cartoon file:font-bold file:hover:bg-primary-600 file:transition-colors"
               @change="handleImageUpload(selectedCell.id, $event)"
             >
           </div>
         </div>
 
         <!-- 全局设置 -->
-        <div class="bg-white rounded-lg p-3 shadow-sm">
-          <!-- <h3 class="text-sm font-semibold mb-3">
+        <div class="bg-white rounded-lg md:rounded-xl shadow-pixel border-2 md:border-4 border-bg-base p-3 md:p-4">
+          <h3 class="text-xs md:text-sm font-pixel text-bg-base mb-2 md:mb-3 flex items-center gap-2">
+            <div class="w-2 h-2 bg-primary-600 rounded-sm" />
             全局设置
-          </h3> -->
+          </h3>
 
           <!-- 间距调整 -->
           <div class="mb-3">
-            <label class="block text-xs font-medium mb-1">
+            <label class="block text-xs font-cartoon font-bold mb-1 text-bg-base">
               格子间距: {{ globalGap }}px
             </label>
             <input
@@ -1566,7 +1566,7 @@ onUnmounted(() => {
               min="0"
               max="20"
               step="1"
-              class="w-full"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
             >
           </div>
 
@@ -1577,9 +1577,9 @@ onUnmounted(() => {
                 id="globalBorderRadius"
                 v-model="isGlobalBorderRadius"
                 type="checkbox"
-                class="mr-2"
+                class="mr-2 w-4 h-4 text-primary-600 bg-gray-100 border-2 border-bg-base rounded focus:ring-primary-600 focus:ring-2"
               >
-              <label for="globalBorderRadius" class="text-xs font-medium">
+              <label for="globalBorderRadius" class="text-xs font-cartoon font-bold text-bg-base">
                 全局圆角: {{ globalBorderRadius }}px
               </label>
             </div>
@@ -1589,10 +1589,10 @@ onUnmounted(() => {
               min="0"
               :max="maxBorderRadius"
               step="1"
-              class="w-full"
+              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
               @input="updateGlobalBorderRadius(Number(($event.target as HTMLInputElement).value))"
             >
-            <div class="text-xs text-gray-500 mt-1">
+            <div class="text-xs text-gray-600 mt-1 font-cartoon">
               {{ isGlobalBorderRadius ? '调整所有格子圆角' : '仅调整选中格子圆角' }}
             </div>
           </div>

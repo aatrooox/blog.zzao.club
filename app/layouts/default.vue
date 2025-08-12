@@ -103,21 +103,24 @@ function scrollToTop() {
 <template>
   <div
     ref="scrollWrap"
-    v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]" class="app-layout h-full box-border max-w-7xl px-4 lg:w-5xl md:w-3xl m-auto bg-grid-dashed overflow-y-auto"
+    v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]" class="app-layout h-full box-border max-w-7xl lg:w-5xl md:w-3xl m-auto bg-bg-paper overflow-y-auto font-cartoon"
   >
     <Toaster position="top-right" rich-colors />
-    <Icon
-      v-if="showScrollTopBtn" name="twemoji:up-arrow"
-      class="fixed right-2 bottom-2 z-[50] md:right-10 md:bottom-6 cursor-pointer" size="2em" @click="scrollToTop"
-    />
-    <div class="w-full box-border">
+    <div
+      v-if="showScrollTopBtn"
+      class="fixed right-8 bottom-8 z-[50] w-16 h-16 bg-primary-600 hover:bg-secondary-500 rounded-xl shadow-pixel cursor-pointer flex items-center justify-center transition-all duration-200 hover:scale-105"
+      @click="scrollToTop"
+    >
+      <Icon name="twemoji:up-arrow" size="1.5em" class="text-white" />
+    </div>
+    <div class="w-full box-border min-h-screen">
       <AppMenuBar />
       <slot />
     </div>
     <ResourceSearchDialog v-model="showSearchDialog" />
-    <!-- <ClientOnly>
-      <InteractiveGridPattern :class="'[mask-image:radial-gradient(350px_circle_at_center,white,transparent)] -z-10'"
-        :width="40" :height="40" :squares="[80, 80]" squares-class-name="hover:fill-blue-500" />
-    </ClientOnly> -->
+    <!-- Pixel Grid Background -->
+    <div class="fixed inset-0 -z-10 opacity-10">
+      <div class="w-full h-full" style="background-image: repeating-linear-gradient(0deg, #FF5C39 0px, #FF5C39 1px, transparent 1px, transparent 8px), repeating-linear-gradient(90deg, #FF5C39 0px, #FF5C39 1px, transparent 1px, transparent 8px);" />
+    </div>
   </div>
 </template>

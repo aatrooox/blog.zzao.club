@@ -104,79 +104,80 @@ function showRegisterDialog() {
 </script>
 
 <template>
+  <!-- 像素风格导航栏 -->
   <div
-    class="flex sticky justify-between items-center mb-4 h-12 top-0 w-full z-[49] bg-white dark:bg-zinc-950/80 transition-all duration-150 transition-discrete"
+    class="sticky top-0 w-full z-[49] mb-4 md:mb-8 transition-all duration-200"
     :style="{
       top: navBarStore.navBar?.isHidden ? '0px' : '-100px',
     }"
   >
-    <!-- <AppRegisterDialog :regist="userRegist" ref="registerForm"></AppRegisterDialog> -->
-    <!-- <AppUserSetting ref="userSetting"></AppUserSetting> -->
-    <!-- <AppSearchDialog ref="searchDialog"></AppSearchDialog> -->
-    <ClientOnly>
-      <nav class="block md:hidden">
-        <AppNavDrawer />
-      </nav>
-    </ClientOnly>
+    <!-- 主导航容器 -->
+    <div class="bg-white border-b-4 border-bg-base shadow-pixel font-cartoon">
+      <div class="max-w-7xl mx-auto px-4 md:px-8 py-3 md:py-4">
+        <div class="flex justify-between items-center">
+          <!-- Logo/品牌区域 -->
+          <div class="flex items-center gap-3 md:gap-4">
+            <NuxtLink to="/" class="flex items-center gap-2 md:gap-3 group">
+              <div class="w-8 h-8 md:w-10 md:h-10 bg-primary-600 rounded-lg border-2 md:border-4 border-bg-base shadow-pixel flex items-center justify-center group-hover:bg-secondary-500 transition-all duration-200">
+                <Icon name="twemoji:wedding" class="text-white text-sm md:text-lg" />
+              </div>
+              <span class="text-lg md:text-xl font-pixel text-bg-base hidden sm:block group-hover:text-primary-600 transition-colors duration-200">早早集市</span>
+            </NuxtLink>
+          </div>
 
-    <NavigationMenu class="hidden md:block">
-      <NavigationMenuList>
-        <NavigationMenuItem v-for="menu in items" :key="menu.label">
-          <template v-if="menu.children?.length">
-            <NavigationMenuTrigger class="text-md relative">
+          <!-- 桌面端导航菜单 -->
+          <nav class="hidden md:flex items-center gap-2">
+            <div v-for="menu in items" :key="menu.label" class="relative">
               <NuxtLink
-                v-if="menu.route" v-slot="{ isActive, href, navigate }" :to="menu.route || menu.href" custom
-                class="cursor-pointer text-md bg-transparent"
+                v-slot="{ isActive, navigate }"
+                :to="menu.route"
+                custom
+                class="cursor-pointer"
               >
-                <NavigationMenuLink :active="isActive" :href="href" :class="navigationMenuTriggerStyle()" @click="navigate">
-                  {{ menu.label }}
-                </NavigationMenuLink>
+                <button
+                  class="px-4 py-2 rounded-lg border-2 border-bg-base font-cartoon font-bold text-sm transition-all duration-200 hover:scale-105"
+                  :class="[
+                    isActive
+                      ? 'bg-primary-600 text-white shadow-pixel'
+                      : 'bg-white text-bg-base hover:bg-secondary-500 hover:text-bg-base shadow-pixel',
+                  ]"
+                  @click="navigate"
+                >
+                  <div class="flex items-center gap-2">
+                    <!-- <Icon :name="menu.icon" class="text-sm" /> -->
+                    <span>{{ menu.label }}</span>
+                  </div>
+                </button>
               </NuxtLink>
-              <span v-else> {{ menu.label }}</span>
-            </NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul class="w-[340px] flex flex-wrap gap-4 py-6">
-                <li v-for="subMenu in menu.children" :key="subMenu.label" class="w-[30%] text-center">
-                  <NuxtLink
-                    v-slot="{ isActive, href, navigate }" :to="subMenu.route || subMenu.href"
-                    :external="!!subMenu.href" custom
-                    class="cursor-pointer text-md underline underline-offset-2 decoration-4 decoration-cyan-600"
-                  >
-                    <NavigationMenuLink
-                      :active="isActive" :href="href" :class="navigationMenuTriggerStyle()"
-                      @click="navigate"
-                    >
-                      {{ subMenu.label }}
-                    </NavigationMenuLink>
-                  </NuxtLink>
-                </li>
-              </ul>
-            </NavigationMenuContent>
-          </template>
+            </div>
+          </nav>
 
-          <NuxtLink v-else v-slot="{ isActive, href, navigate }" :to="menu.route" custom class="cursor-pointer text-md">
-            <NavigationMenuLink :active="isActive" :href="href" :class="navigationMenuTriggerStyle()" @click="navigate">
-              {{ menu.label }}
-            </NavigationMenuLink>
-          </NuxtLink>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
-    <ClientOnly>
-      <div class="icons pr-4 flex gap-2">
-        <!-- <Button variant="ghost" size="icon" @click="openSearchDialog">
-          <Icon name="lucide:search" size="1.5em" />
-        </Button> -->
-        <AppLoginDialog
-          v-if="!userStore.isLogin" ref="loginForm" :login="loginBlog"
-          @show-register-dialog="showRegisterDialog"
-        />
-        <AppUserMenu v-else />
-        <!-- <Button variant="ghost" size="icon" @click="toggleDarkMode">
-          <Icon :name="modeIcon" size="1.5em" />
-        </Button> -->
+          <!-- 移动端菜单按钮 -->
+          <ClientOnly>
+            <nav class="block md:hidden">
+              <AppNavDrawer />
+            </nav>
+          </ClientOnly>
+
+          <!-- 用户操作区域 -->
+          <ClientOnly>
+            <div class="flex items-center gap-2 md:gap-3">
+              <AppLoginDialog
+                v-if="!userStore.isLogin"
+                ref="loginForm"
+                :login="loginBlog"
+                @show-register-dialog="showRegisterDialog"
+              />
+              <AppUserMenu v-else />
+            </div>
+          </ClientOnly>
+        </div>
       </div>
-    </ClientOnly>
-    <!-- <ResourceSearchDialog v-model="showSearchDialog" /> -->
+    </div>
+
+    <!-- 装饰性像素边框 -->
+    <div class="h-1 bg-gradient-to-r from-primary-600 via-secondary-500 to-accent-400">
+      <div class="max-w-7xl mx-auto px-4 md:px-8 h-full" />
+    </div>
   </div>
 </template>

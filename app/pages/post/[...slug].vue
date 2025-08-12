@@ -534,31 +534,31 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <div class="pb-10 m-auto mb-4 sm:rounded-lg">
+  <div class="pb-10 m-auto mb-4 bg-bg-paper font-cartoon">
     <div class="relative w-full max-w-full">
       <!-- 底部固定的操作栏 -->
       <ClientOnly>
         <div
-          class="md:hidden page-fixed-footer fixed left-0 right-0 bottom-0 bg-white/10 dark:bg-zinc-800/10 py-2 px-10 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-md transition-all duration-300 z-[49] !backdrop-blur-md !backdrop-opacity-90 "
+          class="md:hidden page-fixed-footer fixed left-0 right-0 bottom-0 bg-base/90 border-t-2 border-bg-base py-3 px-4 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-pixel transition-all duration-300 z-[49] backdrop-blur-sm"
         >
           <div class="left flex gap-2">
-            <Button variant="ghost" text size="sm">
+            <Button variant="ghost" text size="sm" class="bg-secondary-500 text-white font-cartoon font-bold px-3 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-600 hover:scale-105 transition-all duration-200">
               <Icon name="icon-park-outline:thumbs-up" @click="likePage" />
               <span>{{ likeCount }}</span>
             </Button>
-            <Button variant="ghost" text size="sm" @click="navigateTo('#评论区')">
+            <Button variant="ghost" text size="sm" class="bg-secondary-500 text-white font-cartoon font-bold px-3 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-600 hover:scale-105 transition-all duration-200" @click="navigateTo('#评论区')">
               <Icon name="icon-park-outline:comments" />
               <span>{{ formatCommentCount }}</span>
             </Button>
-            <Button variant="ghost" text size="sm" @click="copyLink">
+            <Button variant="ghost" text size="sm" class="bg-secondary-500 text-white font-cartoon font-bold px-3 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-600 hover:scale-105 transition-all duration-200" @click="copyLink">
               <Icon name="material-symbols:share-reviews-outline-rounded" />
             </Button>
-            <Button variant="ghost" text size="sm" @click="getInnerHTML">
+            <Button variant="ghost" text size="sm" class="bg-secondary-500 text-white font-cartoon font-bold px-3 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-600 hover:scale-105 transition-all duration-200" @click="getInnerHTML">
               <Icon name="icon-park-outline:wechat" />
             </Button>
           </div>
           <div class="right pr-6 md:pr-0">
-            <Button label="返回" variant="secondary" @click="navigateTo('/article')">
+            <Button label="返回" variant="secondary" class="bg-accent-400 text-white font-cartoon font-bold px-4 py-2 border-2 border-bg-base rounded-lg hover:bg-accent-500 hover:scale-105 transition-all duration-200" @click="navigateTo('/article')">
               <Icon name="icon-park-outline:back" />
             </Button>
           </div>
@@ -568,22 +568,22 @@ watchEffect(async () => {
       <div v-if="page" class="mdc-prose flex w-full">
         <!-- 左侧点赞评论操作栏 -->
         <ClientOnly>
-          <div class="flex-col gap-8 h-80 hidden md:flex top-28 sticky">
-            <div class="flex flex-col items-center cursor-pointer">
-              <Icon name="icon-park-outline:thumbs-up" size="1.5em" @click="likePage" />
-              <span>{{ likeCount }}</span>
+          <div class="flex-col gap-4 h-80 hidden md:flex top-28 sticky">
+            <div class="flex flex-col items-center cursor-pointer bg-base border-2 border-bg-base rounded-lg shadow-pixel p-3 hover:scale-105 transition-all duration-200">
+              <Icon name="icon-park-outline:thumbs-up" size="1.5em" class="text-bg-base mb-1" @click="likePage" />
+              <span class="text-xs font-cartoon font-bold text-bg-base">{{ likeCount }}</span>
             </div>
-            <div class=" cursor-pointer">
+            <div class="cursor-pointer bg-base border-2 border-bg-base rounded-lg shadow-pixel p-3 hover:scale-105 transition-all duration-200">
               <NuxtLink href="#评论区" class="flex flex-col items-center">
-                <Icon name="icon-park-outline:comments" size="1.5em" />
-                <span>{{ formatCommentCount }}</span>
+                <Icon name="icon-park-outline:comments" size="1.5em" class="text-bg-base mb-1" />
+                <span class="text-xs font-cartoon font-bold text-bg-base">{{ formatCommentCount }}</span>
               </NuxtLink>
             </div>
-            <div class="flex flex-col items-center cursor-pointer" @click="copyLink">
-              <Icon name="material-symbols:share-reviews-outline-rounded" size="1.5em" />
+            <div class="flex flex-col items-center cursor-pointer bg-base border-2 border-bg-base rounded-lg shadow-pixel p-3 hover:scale-105 transition-all duration-200" @click="copyLink">
+              <Icon name="material-symbols:share-reviews-outline-rounded" size="1.5em" class="text-bg-base" />
             </div>
-            <div class="flex flex-col items-center cursor-pointer" data-umami-event="wx-copy-btn" @click="getInnerHTML">
-              <Icon name="icon-park-outline:wechat" size="1.5em" />
+            <div class="flex flex-col items-center cursor-pointer bg-base border-2 border-bg-base rounded-lg shadow-pixel p-3 hover:scale-105 transition-all duration-200" data-umami-event="wx-copy-btn" @click="getInnerHTML">
+              <Icon name="icon-park-outline:wechat" size="1.5em" class="text-bg-base" />
             </div>
           </div>
         </ClientOnly>
@@ -593,19 +593,19 @@ watchEffect(async () => {
             <transition appear @enter="commentEnter" @before-enter="commentBeforeEnter" @leave="commentLeave">
               <div
                 v-if="commentIconPosition.top !== 0 || commentIconPosition.left !== 0"
-                class="page-btns absolute opacity-0 bg-zinc-800/90 text-zinc-100 dark:bg-zinc-200/90 dark:text-zinc-800 rounded-sm px-2 py-1 flex items-center gap-2"
+                class="page-btns absolute opacity-0 bg-base border-2 border-bg-base rounded-lg shadow-pixel px-3 py-2 flex items-center gap-2"
                 :style="{ top: `${commentIconPosition.top}px`, left: `${commentIconPosition.left}px` }"
               >
                 <Icon
-                  class="cursor-pointer page-operation-btn" name="icon-park-outline:comments" size="1.5em"
+                  class="cursor-pointer page-operation-btn text-bg-base hover:text-primary-600 transition-colors duration-200" name="icon-park-outline:comments" size="1.5em"
                   @click.stop="handleCommentPragph"
                 />
                 <Icon
-                  class="cursor-pointer page-operation-btn" name="material-symbols:image-arrow-up-rounded"
+                  class="cursor-pointer page-operation-btn text-bg-base hover:text-primary-600 transition-colors duration-200" name="material-symbols:image-arrow-up-rounded"
                   size="1.5em" @click.stop="handleCommentPragph"
                 />
                 <Icon
-                  class="cursor-pointer page-operation-btn"
+                  class="cursor-pointer page-operation-btn text-bg-base hover:text-primary-600 transition-colors duration-200"
                   name="material-symbols:stylus-fountain-pen-outline-rounded" size="1.5em"
                   @click="isOpenDrawer = true"
                 />
@@ -615,7 +615,7 @@ watchEffect(async () => {
           <!-- 悬浮标题栏 -->
           <div
             v-if="!navBarStore.navBar?.isHidden"
-            class="fixed-title text-lg font-bold text-center overflow-hidden text-ellipsis h-12 leading-12 fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-white/90 dark:bg-zinc-900/80 backdrop-blur-sm md:text-xl"
+            class="fixed-title text-lg md:text-xl font-pixel font-bold text-center overflow-hidden text-ellipsis h-12 leading-12 fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-base/90 border-b-2 border-bg-base backdrop-blur-sm text-bg-base"
           >
             {{ page?.title }}
           </div>
@@ -627,38 +627,40 @@ watchEffect(async () => {
           <!-- 相邻的文章 -->
           <ClientOnly>
             <div v-if="adjacentPages.length">
-              <Separator class="my-1" label="END" />
-              <div class="flex justify-between text-xs py-4">
-                <div class="flex-1 flex items-center gap-1">
-                  <template v-if="adjacentPages[0]">
-                    <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em" />
-                    <NuxtLink class="!underline" :href="adjacentPages[0].path">
-                      {{ adjacentPages[0].title }}
-                    </NuxtLink>
-                  </template>
-                </div>
-                <div class="flex-1 text-right flex items-center justify-end gap-1">
-                  <template v-if="adjacentPages[1]">
-                    <NuxtLink class="!underline" :href="adjacentPages[1].path">
-                      {{ adjacentPages[1].title }}
-                    </NuxtLink>
-                    <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em" />
-                  </template>
+              <Separator class="my-4" label="END" />
+              <div class="bg-base border-2 border-bg-base rounded-lg shadow-pixel p-4 md:p-6">
+                <div class="flex justify-between text-sm md:text-base font-cartoon">
+                  <div class="flex-1 flex items-center gap-2">
+                    <template v-if="adjacentPages[0]">
+                      <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em" class="text-bg-base" />
+                      <NuxtLink class="text-bg-base hover:text-primary-600 font-bold transition-colors duration-200" :href="adjacentPages[0].path">
+                        {{ adjacentPages[0].title }}
+                      </NuxtLink>
+                    </template>
+                  </div>
+                  <div class="flex-1 text-right flex items-center justify-end gap-2">
+                    <template v-if="adjacentPages[1]">
+                      <NuxtLink class="text-bg-base hover:text-primary-600 font-bold transition-colors duration-200" :href="adjacentPages[1].path">
+                        {{ adjacentPages[1].title }}
+                      </NuxtLink>
+                      <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em" class="text-bg-base" />
+                    </template>
+                  </div>
                 </div>
               </div>
             </div>
           </ClientOnly>
           <!-- 评论区 -->
           <ClientOnly>
-            <div>
+            <div class="comment-area bg-base border-2 border-bg-base rounded-lg shadow-pixel p-4 md:p-6 mt-6">
               <template v-if="page?.body && !isDefer">
-                <Separator label="END" />
+                <Separator class="my-4" label="评论" />
                 <div id="评论区" class="text-xl py-4">
                   评论区
                 </div>
                 <AppCommentInput @send="createComment" />
                 <div class="py-4" />
-                <transition-group appear @enter="commentEnter" @leave="commentLeave" @before-enter="commentBeforeEnter">
+                <transition-group appear name="comment" tag="div" class="comment-list mt-6 space-y-4" @enter="commentEnter" @leave="commentLeave" @before-enter="commentBeforeEnter">
                   <template v-for="comment in comments" :key="comment.id">
                     <CommentViewPanel :comment="comment" @refresh="initComment" />
                   </template>
@@ -669,7 +671,7 @@ watchEffect(async () => {
 
           <!-- 作者添加注解 v-model:open="isOpen" -->
           <Drawer v-model:open="isOpenDrawer" :dismissible="true">
-            <DrawerContent>
+            <DrawerContent class="bg-base border-t-2 border-bg-base">
               <DrawerHeader>
                 <DrawerTitle />
               </DrawerHeader>
@@ -685,7 +687,7 @@ watchEffect(async () => {
 
         <ClientOnly>
           <div class="sticky top-28 hidden lg:block h-[500px]">
-            <AppToc v-if="tocData && tocData.length" :toc-data="tocData" :active-id="activeTocId" />
+            <AppToc v-if="tocData && tocData.length" :toc-data="tocData" :active-id="activeTocId" class="bg-base border-2 border-bg-base rounded-lg shadow-pixel" />
           </div>
         </ClientOnly>
       </div>

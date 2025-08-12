@@ -19,11 +19,18 @@ const router = useRouter()
 const route = useRoute()
 const { loggedIn, user } = useUserSession()
 const userStore = useUserStore()
-const config = useAppConfig()
-const { public: runtimeConfig } = useRuntimeConfig()
+// const config = useAppConfig()
+// const { public: runtimeConfig } = useRuntimeConfig()
 const { $api } = useNuxtApp()
-const curSocial = ref()
+// const curSocial = ref()
 // const { formatDate } = useDayjs()
+
+// 获取动态数据
+const { getMemos, memos } = useMemos()
+await getMemos()
+
+// 获取最近7条动态
+const recentMemos = computed(() => memos.value.slice(0, 7))
 
 console.log(`loggedIn`, loggedIn.value)
 // 登录成功后，同步github信息
@@ -114,77 +121,70 @@ function onMouseLeave(event) {
     // ],
   })
 }
-function toggle(event, socail: any) {
-  curSocial.value = socail
-  if (socail.url) {
-    navigateTo(socail.url, { external: true, open: { target: '_blank' } })
-  }
-}
+// function toggle(event, socail: any) {
+//   curSocial.value = socail
+//   if (socail.url) {
+//     navigateTo(socail.url, { external: true, open: { target: '_blank' } })
+//   }
+// }
 
-function turnToPages() {
-  navigateTo('/article')
-}
+// function turnToPages() {
+//   navigateTo('/article')
+// }
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 max-w-7xl mx-auto px-4 py-4">
-    <!-- 个人介绍区域 -->
-    <div class="relative">
-      <div
-        class="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-primary-700/10 dark:from-primary-900/20 dark:to-primary-700/20 rounded-xl"
-      />
-      <div class="relative p-5 rounded-xl">
-        <div class="flex flex-col md:flex-row gap-5 items-center md:items-start">
-          <div class="relative">
-            <div class="w-28 h-28 rounded-full overflow-hidden ring-2 ring-white dark:ring-zinc-800 shadow-lg">
-              <img :src="config.avatar" alt="avatar" class="w-full h-full object-cover">
-            </div>
-            <div
-              class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-zinc-800"
-            />
-          </div>
-          <div class="flex-1 text-center md:text-left">
-            <div class="flex flex-col md:flex-row items-center md:items-baseline gap-2">
-              <h1 class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-                {{ config.author }}
-              </h1>
-              <Button
-                v-if="config.organization" class="text-sm text-zinc-500 dark:text-zinc-400 font-normal" as="a"
-                target="_blank" :href="config.organizationUrl" variant="link"
-              >
-                {{ `@${config.organization}` }}
-              </Button>
-              <span class="text-sm text-zinc-500 dark:text-zinc-400 font-normal">V{{ runtimeConfig.Z_BLOG_VERSION
-              }}</span>
-            </div>
-            <p class="mt-2 text-base text-zinc-600 dark:text-zinc-400">
-              {{ config.desciption }}
-            </p>
-            <div class="flex flex-wrap gap-2 justify-center md:justify-start mt-3">
-              <div v-for="item in config.social" :key="item.name" class="group">
-                <HoverCard v-if="item.popover">
-                  <HoverCardTrigger>
-                    <Button variant="secondary" class="transition-all duration-200 hover:scale-105">
-                      <Icon :name="item.icon" class="text-base" />
-                    </Button>
-                  </HoverCardTrigger>
-                  <HoverCardContent class="w-[260px]">
-                    <div class="flex flex-col gap-2 p-2">
-                      <div>
-                        <span class="font-medium block mb-1 text-sm">{{ item?.name }}</span>
-                      </div>
-                      <div>
-                        <AppImg :src="item?.popover" />
-                      </div>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
-                <Button
-                  v-else type="button" variant="secondary" class="transition-all duration-200 hover:scale-105"
-                  @click="(event) => toggle(event, item)"
-                >
-                  <Icon :name="item.icon" class="text-base" />
-                </Button>
+  <div class="flex flex-col gap-4 md:gap-8 max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-8">
+    <!-- 最近动态区域 -->
+    <div v-if="recentMemos.length > 0" class="space-y-4 md:space-y-6">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg md:text-2xl font-pixel text-bg-base">
+          最近动态
+        </h2>
+        <NuxtLink
+          to="/memo"
+          class="bg-secondary-500 hover:bg-primary-600 text-bg-base font-cartoon font-bold px-3 md:px-6 py-2 md:py-3 rounded-lg border-2 md:border-4 border-bg-base shadow-pixel cursor-pointer transition-all duration-200 hover:scale-105"
+        >
+          <span class="text-sm md:text-base">更多动态</span>
+          <Icon name="icon-park-outline:right" class="ml-1 md:ml-2 text-sm md:text-base" />
+        </NuxtLink>
+      </div>
+
+      <!-- 横向滚动动态卡片 -->
+      <div class="overflow-x-auto pb-2">
+        <div class="flex gap-3 md:gap-4 p-4 w-max">
+          <div
+            v-for="memo in recentMemos"
+            :key="memo.id"
+            class="bg-bg-paper rounded-lg md:rounded-xl border-2 md:border-4 border-bg-base shadow-pixel p-4 md:p-6 hover:shadow-[6px_6px_0_0_#000000] transition-all duration-200 hover:scale-[1.02] cursor-pointer flex-shrink-0"
+            style="width: 280px; height: 160px;"
+            @click="navigateTo(`/m/${memo.id}`)"
+          >
+            <div class="flex flex-col h-full">
+              <!-- 标签 -->
+              <div v-if="memo.tags && memo.tags.length > 0" class="mb-3">
+                <div class="flex gap-1 flex-wrap">
+                  <Badge
+                    v-for="tagRelation in memo.tags.slice(0, 2)"
+                    :key="tagRelation.tag.id"
+                    variant="secondary"
+                    class="text-xs bg-accent-400 text-bg-base font-cartoon font-bold px-1.5 py-0.5 rounded border border-bg-base text-xs"
+                  >
+                    {{ tagRelation.tag.tag_name }}
+                  </Badge>
+                </div>
+              </div>
+
+              <!-- 动态内容 -->
+              <div class="flex-1 overflow-hidden">
+                <div class="text-sm font-cartoon text-bg-base leading-relaxed" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                  <MemoPanel :memo="memo" />
+                </div>
+              </div>
+
+              <!-- 底部时间 -->
+              <div class="flex justify-end mt-2">
+                <NuxtTime :datetime="memo.create_ts" class="text-xs text-gray-500" />
               </div>
             </div>
           </div>
@@ -193,62 +193,57 @@ function turnToPages() {
     </div>
 
     <!-- 最近文章区域 -->
-    <div class="flex-1 space-y-3">
+    <div class="flex-1 space-y-4 md:space-y-6">
       <div class="flex items-center justify-between">
-        <h2 class="text-xl font-bold text-zinc-900 dark:text-zinc-100">
-          <span class="relative">
-            最近文章
-            <span class="absolute -bottom-0.5 left-0 w-full h-0.5 bg-primary-500" />
-          </span>
+        <h2 class="text-lg md:text-2xl font-pixel text-bg-base">
+          最近文章
         </h2>
-        <Button
-          as="a" variant="link" href="/article" class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300"
-          @click="turnToPages"
+        <NuxtLink
+          to="/article"
+          class="bg-secondary-500 hover:bg-primary-600 text-bg-base font-cartoon font-bold px-3 md:px-6 py-2 md:py-3 rounded-lg border-2 md:border-4 border-bg-base shadow-pixel cursor-pointer transition-all duration-200 hover:scale-105"
         >
-          <span>更多文章</span>
-          <Icon name="icon-park-outline:right" class="ml-1" />
-        </Button>
+          <span class="text-sm md:text-base">更多文章</span>
+          <Icon name="icon-park-outline:right" class="ml-1 md:ml-2 text-sm md:text-base" />
+        </NuxtLink>
       </div>
 
-      <div class="grid gap-1">
+      <div class="space-y-3">
         <transition-group name="page-transition" appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
           <template v-for="page of articles" :key="page.path">
             <div class="group home-post-item">
-              <div
-                class="p-1 rounded-lg bg-white/50 dark:bg-zinc-800/40 group-hover:border-zinc-100 dark:border-zinc-700 hover:shadow-md hover:shadow-zinc-200 dark:hover:shadow-zinc-600 transition-all duration-200"
-                @mouseenter="onMouseEnter" @mouseleave="onMouseLeave"
-              >
-                <div class="flex flex-col md:flex-row md:items-center gap-2">
-                  <div class="flex items-center gap-2 flex-1">
-                    <Icon
-                      name="icon-park-outline:right"
-                      class="text-zinc-400 group-hover:text-primary-500 transition-all page-arrow-icon"
-                    />
-                    <NuxtLink :to="page.path" class="flex-1 min-w-0">
+              <NuxtLink :to="page.path" class="block">
+                <div
+                  class="p-4 md:p-6 bg-bg-paper rounded-lg border-2 border-gray-200 hover:border-primary-400 hover:bg-orange-50/30 transition-all duration-200 hover:shadow-[4px_4px_0_0_rgba(0,0,0,0.1)] hover:translate-x-[-2px] hover:translate-y-[-2px]"
+                  @mouseenter="onMouseEnter" @mouseleave="onMouseLeave"
+                >
+                  <div class="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
+                    <div class="flex items-center gap-3 md:gap-4 flex-1">
+                      <div class="w-2 h-2 bg-primary-600 rounded-sm group-hover:bg-secondary-500 transition-all" />
                       <div
-                        class="text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors truncate"
+                        class="text-base md:text-lg font-cartoon font-medium text-bg-base group-hover:text-primary-600 transition-colors leading-tight"
                       >
                         {{ page.title }}
                       </div>
-                      <!-- <div class="text-sm text-zinc-500 dark:text-zinc-400">
-                        {{ formatDate(page.date, '/') }}
-                      </div> -->
-                    </NuxtLink>
-                  </div>
-                  <div class="flex flex-wrap gap-1.5">
-                    <template v-if="page.versions">
-                      <Badge v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v">
-                        {{ v }}
-                      </Badge>
-                    </template>
-                    <template v-else>
-                      <Badge v-for="tag of page.tags" :key="tag">
-                        {{ tag }}
-                      </Badge>
-                    </template>
+                      <Icon
+                        name="icon-park-outline:right"
+                        class="text-gray-400 page-arrow-icon transition-all text-xs md:text-sm group-hover:text-primary-600 opacity-0 group-hover:opacity-100"
+                      />
+                    </div>
+                    <div class="flex flex-wrap gap-1 md:gap-2">
+                      <template v-if="page.versions">
+                        <div v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v" class="text-xs bg-accent-400 text-bg-base font-cartoon font-bold px-1.5 py-0.5 rounded border border-bg-base">
+                          {{ v }}
+                        </div>
+                      </template>
+                      <template v-else>
+                        <div v-for="tag of page.tags" :key="tag" class="text-xs bg-accent-400 text-bg-base font-cartoon font-bold px-1.5 py-0.5 rounded border border-bg-base">
+                          {{ tag }}
+                        </div>
+                      </template>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </NuxtLink>
             </div>
           </template>
         </transition-group>

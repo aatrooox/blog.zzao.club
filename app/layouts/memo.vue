@@ -96,37 +96,37 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
 
 <template>
   <Toaster position="top-right" rich-colors />
-  <div class="memos-page-container min-h-screen bg-gray-100 dark:bg-zinc-900 p-4 flex flex-col md:flex-row gap-4">
+  <div class="memos-page-container min-h-screen bg-secondary-100 p-4 flex flex-col md:flex-row gap-4">
     <!-- Left Column: User Info & Stats -->
-    <aside class="w-1/4 lg:w-1/5 hidden md:block p-4 bg-white dark:bg-zinc-800 rounded-lg shadow sticky top-4 self-start">
+    <aside class="w-1/4 lg:w-1/5 hidden md:block p-4 md:p-6 bg-base border-2 border-bg-base rounded-lg shadow-pixel sticky top-4 self-start">
       <div class="user-info text-center">
         <ClientOnly>
           <NuxtLink to="/">
-            <UserAvatar :user-info="userStore.user" alt="User Avatar" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-zinc-300 dark:border-zinc-700" />
+            <UserAvatar :user-info="userStore.user" alt="User Avatar" class="w-24 h-24 rounded-lg mx-auto mb-4 border-2 border-bg-base hover:scale-105 transition-transform duration-200" />
           </NuxtLink>
-          <h2 class="text-xl font-semibold dark:text-white">
+          <h2 class="text-xl font-pixel font-bold text-bg-base">
             {{ userStore?.user?.nickname || '早早集市' }}
           </h2>
           <template #fallback>
-            <div class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-zinc-300 dark:border-zinc-700 bg-gray-200 dark:bg-zinc-700 flex items-center justify-center">
-              <Icon name="material-symbols:person" class="w-12 h-12 text-gray-400 dark:text-zinc-500" />
+            <div class="w-24 h-24 rounded-lg mx-auto mb-4 border-2 border-bg-base bg-secondary-500/20 flex items-center justify-center">
+              <Icon name="material-symbols:person" class="w-12 h-12 text-bg-base/70" />
             </div>
-            <h2 class="text-xl font-semibold dark:text-white">
+            <h2 class="text-xl font-pixel font-bold text-bg-base">
               早早集市
             </h2>
           </template>
         </ClientOnly>
       </div>
-      <div class="stats mt-6 space-y-2">
-        <div class="stat-item flex justify-between dark:text-gray-300">
-          <span>动态:</span>
+      <div class="stats mt-6 space-y-3">
+        <div class="stat-item flex justify-between font-cartoon text-bg-base">
+          <span class="font-bold">动态:</span>
           <ClientOnly>
-            <span class="font-semibold dark:text-white">{{ memoStats.count || 0 }} 条</span>
+            <span class="font-bold text-primary-600">{{ memoStats.count || 0 }} 条</span>
           </ClientOnly>
         </div>
-        <!-- <div class="stat-item flex justify-between dark:text-gray-300">
-          <span>活跃天数:</span>
-          <span class="font-semibold dark:text-white">{{ userInfo.activeDays }} 天</span>
+        <!-- <div class="stat-item flex justify-between font-cartoon text-bg-base">
+          <span class="font-bold">活跃天数:</span>
+          <span class="font-bold text-primary-600">{{ userInfo.activeDays }} 天</span>
         </div> -->
         <!-- Add more stats as needed -->
       </div>
@@ -134,10 +134,11 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
       <div class="md:block lg:hidden mt-6 space-y-6">
         <transition name="slide-down" appear>
           <div class="heatmap-container">
-            <h3 class="text-lg font-semibold mb-2 dark:text-white">
+            <h3 class="text-lg font-pixel font-bold mb-3 text-bg-base flex items-center gap-2">
+              <div class="w-2 h-2 bg-accent-400 rounded-sm"></div>
               贡献热力图
             </h3>
-            <div class="heatmap bg-gray-200 dark:bg-zinc-700 p-2 rounded h-32 flex items-center justify-center text-gray-500 dark:text-gray-400 text-sm">
+            <div class="heatmap bg-secondary-500/20 border-2 border-bg-base p-4 rounded-lg h-32 flex items-center justify-center text-bg-base/70 text-sm font-cartoon">
               <!-- Placeholder for Heatmap Component -->
               热力图占位
               <!-- Example: <GithubHeatmap :data="heatmapData" /> -->
@@ -146,18 +147,19 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
         </transition>
         <transition name="slide-down" appear>
           <div class="tags-cloud">
-            <h3 class="text-lg font-semibold mb-2 dark:text-white">
+            <h3 class="text-lg font-pixel font-bold mb-3 text-bg-base flex items-center gap-2">
+              <div class="w-2 h-2 bg-accent-400 rounded-sm"></div>
               热门标签
             </h3>
             <div class="flex flex-wrap gap-2">
               <span
                 v-for="tag in sortedTags"
                 :key="tag.id"
-                class="px-2 py-1 text-sm cursor-pointer rounded-none transition-all duration-200 group flex-shrink-0 hover:bg-cyan-100 dark:hover:bg-cyan-900/40 hover:text-cyan-700 dark:hover:text-cyan-300"
+                class="px-3 py-2 text-sm cursor-pointer rounded-lg border-2 transition-all duration-200 group flex-shrink-0 font-cartoon font-bold hover:scale-105"
                 :class="[
                   isTagSelected(tag.tag_name)
-                    ? 'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300 font-bold'
-                    : 'bg-zinc-200 text-zinc-800 dark:bg-zinc-200 dark:text-zinc-800',
+                    ? 'bg-primary-600 text-base border-bg-base'
+                    : 'bg-secondary-500 text-bg-base border-bg-base hover:bg-primary-600',
                 ]"
                 @click="toggleTag(tag.tag_name)"
               >
@@ -172,23 +174,23 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
     <!-- Middle Column: Slot for page content -->
     <main class="w-full md:flex-1 md:max-w-3xl md:mx-auto">
       <!-- Compact User Info for Mobile/Small Screens -->
-      <div class="compact-user-info md:hidden mb-6 bg-white dark:bg-zinc-800 rounded-lg shadow p-3">
+      <div class="compact-user-info md:hidden mb-6 bg-base border-2 border-bg-base rounded-lg shadow-pixel p-4">
         <div class="flex items-center space-x-3">
           <NuxtLink to="/">
-            <UserAvatar :user-info="userStore.user" alt="User Avatar" class="w-10 h-10 rounded-full mx-auto border-2 border-zinc-300 dark:border-zinc-700" />
+            <UserAvatar :user-info="userStore.user" alt="User Avatar" class="w-12 h-12 rounded-lg border-2 border-bg-base hover:scale-105 transition-transform duration-200" />
           </NuxtLink>
           <div class="flex-1 flex items-center space-x-4">
-            <h2 class="text-base font-semibold dark:text-white">
+            <h2 class="text-base font-pixel font-bold text-bg-base">
               {{ userStore?.user?.nickname || '早早集市' }}
             </h2>
-            <div class="flex space-x-3 text-sm text-gray-600 dark:text-gray-400">
+            <div class="flex space-x-3 text-sm font-cartoon text-bg-base">
               <span class="flex items-center space-x-1">
-                <Icon name="material-symbols:edit-note-outline" class="w-4 h-4" />
-                <span>{{ memoStats.count || 0 }} 条</span>
+                <Icon name="material-symbols:edit-note-outline" class="w-4 h-4 text-primary-600" />
+                <span class="font-bold">{{ memoStats.count || 0 }} 条</span>
               </span>
               <!-- <span class="flex items-center space-x-1">
-                <Icon name="material-symbols:calendar-today-outline" class="w-4 h-4" />
-                <span>{{ userInfo.activeDays }} 天</span>
+                <Icon name="material-symbols:calendar-today-outline" class="w-4 h-4 text-primary-600" />
+                <span class="font-bold">{{ userInfo.activeDays }} 天</span>
               </span> -->
             </div>
           </div>
@@ -200,30 +202,32 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
     </main>
 
     <!-- Right Column: Heatmap & Tags -->
-    <aside class="w-1/4 lg:w-1/5 hidden lg:block p-4 bg-white dark:bg-zinc-800 rounded-lg shadow sticky top-4 self-start">
+    <aside class="w-1/4 lg:w-1/5 hidden lg:block p-4 md:p-6 bg-base border-2 border-bg-base rounded-lg shadow-pixel sticky top-4 self-start">
       <div class="heatmap-container mb-6">
-        <h3 class="text-lg font-semibold mb-2 dark:text-white">
+        <h3 class="text-lg font-pixel font-bold mb-3 text-bg-base flex items-center gap-2">
+          <div class="w-2 h-2 bg-accent-400 rounded-sm"></div>
           贡献热力图
         </h3>
-        <div class="heatmap bg-gray-200 dark:bg-zinc-700 p-2 rounded h-40 flex items-center justify-center text-gray-500 dark:text-gray-400">
+        <div class="heatmap bg-secondary-500/20 border-2 border-bg-base p-4 rounded-lg h-40 flex items-center justify-center text-bg-base/70 font-cartoon">
           <!-- Placeholder for Heatmap Component -->
           热力图占位
           <!-- Example: <GithubHeatmap :data="heatmapData" /> -->
         </div>
       </div>
       <div class="tags-cloud">
-        <h3 class="text-lg font-semibold mb-2 dark:text-white">
+        <h3 class="text-lg font-pixel font-bold mb-3 text-bg-base flex items-center gap-2">
+          <div class="w-2 h-2 bg-accent-400 rounded-sm"></div>
           全部标签
         </h3>
         <div class="flex flex-wrap gap-2">
           <span
             v-for="tag in sortedTags"
             :key="tag.id"
-            class="px-2 py-1 text-sm cursor-pointer rounded-none transition-all duration-200 group flex-shrink-0 hover:text-cyan-700"
+            class="px-3 py-2 text-sm cursor-pointer rounded-lg border-2 transition-all duration-200 group flex-shrink-0 font-cartoon font-bold hover:scale-105"
             :class="[
               isTagSelected(tag.tag_name)
-                ? 'border-cyan-600 border-2 box-border rounded-sm bg-zinc-100 text-zinc-800 font-bold'
-                : 'bg-zinc-100 text-zinc-800 dark:bg-zinc-200 dark:text-zinc-800',
+                ? 'bg-primary-600 text-base border-bg-base'
+                : 'bg-secondary-500 text-bg-base border-bg-base hover:bg-primary-600',
             ]"
             @click="toggleTag(tag.tag_name)"
           >

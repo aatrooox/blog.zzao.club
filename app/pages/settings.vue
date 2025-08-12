@@ -158,55 +158,92 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto px-4 pb-8">
-    <h2 class="text-3xl font-bold mb-4">
-      基本信息
-    </h2>
-    <div class="flex flex-col gap-8 mb-4">
-      <AutoForm v-if="schema" class="space-y-6" :schema="schema" @submit="onSubmit">
-        <Button type="submit" class="mr-2">
-          保存
-        </Button>
-        <Button href="/api/v1/auth/github?setting=1" as="a">
-          关联 Github 头像
-        </Button>
-      </AutoForm>
-    </div>
-    <h2 class="text-3xl font-bold mb-4">
-      用户设置
-    </h2>
-    <div class="flex flex-col gap-8 mb-4">
-      <AutoForm
-        v-if="configSchema" class="space-y-6" :schema="configSchema" :field-config="{
-          allowEmailNotify: {
-            component: 'switch',
-          },
-        }" @submit="onSubmitConfig"
-      >
-        <Button type="submit">
-          保存设置
-        </Button>
-      </AutoForm>
+  <div class="flex flex-col gap-4 md:gap-8 max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-8 bg-bg-paper font-cartoon">
+    <!-- 页面标题卡片 -->
+    <div class="bg-white rounded-lg md:rounded-xl shadow-pixel border-2 md:border-4 border-bg-base p-4 md:p-8 text-center">
+      <h1 class="text-lg md:text-2xl font-pixel text-bg-base mb-2">
+        个人设置
+      </h1>
+      <p class="text-sm md:text-base font-cartoon text-gray-600">
+        管理您的个人信息和账户设置
+      </p>
     </div>
 
-    <h2 class="text-3xl font-bold mb-4">
-      修改密码
-    </h2>
-    <div class="flex flex-col gap-8">
-      <AutoForm
-        v-if="passwordSchema" class="space-y-6" :schema="passwordSchema" :field-config="{
-          password: {
-            inputProps: {
-              type: 'password',
-              placeholder: '••••••••',
+    <!-- 基本信息卡片 -->
+    <div class="bg-white rounded-lg md:rounded-xl shadow-pixel border-2 md:border-4 border-bg-base p-4 md:p-8">
+      <h2 class="text-base md:text-lg font-pixel text-bg-base mb-3 md:mb-4 flex items-center gap-2">
+        <div class="w-2 h-2 bg-primary-600 rounded-sm" />
+        基本信息
+      </h2>
+      <div class="flex flex-col gap-4 md:gap-6">
+        <AutoForm v-if="schema" class="space-y-4 md:space-y-6" :schema="schema" @submit="onSubmit">
+          <div class="flex flex-wrap gap-2 md:gap-3">
+            <button
+              type="submit"
+              class="bg-primary-600 hover:bg-secondary-500 text-white font-cartoon font-bold px-4 md:px-6 py-2 md:py-3 rounded-lg border-2 md:border-4 border-bg-base shadow-pixel hover:shadow-[6px_6px_0_0_#000000] transition-all duration-200 hover:scale-105"
+            >
+              <span class="text-sm md:text-base">保存信息</span>
+            </button>
+            <a
+              href="/api/v1/auth/github?setting=1"
+              class="bg-secondary-500 hover:bg-primary-600 text-bg-base font-cartoon font-bold px-4 md:px-6 py-2 md:py-3 rounded-lg border-2 md:border-4 border-bg-base shadow-pixel hover:shadow-[6px_6px_0_0_#000000] transition-all duration-200 hover:scale-105 inline-block"
+            >
+              <span class="text-sm md:text-base">关联 Github 头像</span>
+            </a>
+          </div>
+        </AutoForm>
+      </div>
+    </div>
+
+    <!-- 用户设置卡片 -->
+    <div class="bg-white rounded-lg md:rounded-xl shadow-pixel border-2 md:border-4 border-bg-base p-4 md:p-8">
+      <h2 class="text-base md:text-lg font-pixel text-bg-base mb-3 md:mb-4 flex items-center gap-2">
+        <div class="w-2 h-2 bg-secondary-500 rounded-sm" />
+        用户设置
+      </h2>
+      <div class="flex flex-col gap-4 md:gap-6">
+        <AutoForm
+          v-if="configSchema" class="space-y-4 md:space-y-6" :schema="configSchema" :field-config="{
+            allowEmailNotify: {
+              component: 'switch',
             },
-          },
-        }" @submit="onSubmitPassword"
-      >
-        <Button type="submit">
-          修改密码
-        </Button>
-      </AutoForm>
+          }" @submit="onSubmitConfig"
+        >
+          <button
+            type="submit"
+            class="bg-primary-600 hover:bg-secondary-500 text-white font-cartoon font-bold px-4 md:px-6 py-2 md:py-3 rounded-lg border-2 md:border-4 border-bg-base shadow-pixel hover:shadow-[6px_6px_0_0_#000000] transition-all duration-200 hover:scale-105"
+          >
+            <span class="text-sm md:text-base">保存设置</span>
+          </button>
+        </AutoForm>
+      </div>
+    </div>
+
+    <!-- 修改密码卡片 -->
+    <div class="bg-white rounded-lg md:rounded-xl shadow-pixel border-2 md:border-4 border-bg-base p-4 md:p-8">
+      <h2 class="text-base md:text-lg font-pixel text-bg-base mb-3 md:mb-4 flex items-center gap-2">
+        <div class="w-2 h-2 bg-accent-400 rounded-sm" />
+        修改密码
+      </h2>
+      <div class="flex flex-col gap-4 md:gap-6">
+        <AutoForm
+          v-if="passwordSchema" class="space-y-4 md:space-y-6" :schema="passwordSchema" :field-config="{
+            password: {
+              inputProps: {
+                type: 'password',
+                placeholder: '••••••••',
+              },
+            },
+          }" @submit="onSubmitPassword"
+        >
+          <button
+            type="submit"
+            class="bg-primary-600 hover:bg-secondary-500 text-white font-cartoon font-bold px-4 md:px-6 py-2 md:py-3 rounded-lg border-2 md:border-4 border-bg-base shadow-pixel hover:shadow-[6px_6px_0_0_#000000] transition-all duration-200 hover:scale-105"
+          >
+            <span class="text-sm md:text-base">修改密码</span>
+          </button>
+        </AutoForm>
+      </div>
     </div>
   </div>
 </template>

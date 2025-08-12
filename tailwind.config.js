@@ -7,8 +7,24 @@ export default {
     './app/**/*.{vue,js,ts}',
   ],
   plugins: [typography()],
+  corePlugins: {
+    // 确保 line-clamp 功能可用
+    lineClamp: true,
+  },
   theme: {
     extend: {
+      colors: {
+        primary: { 600: '#FF5C39' },
+        secondary: { 500: '#FFB547' },
+        accent: { 400: '#50C878' },
+        bg: { base: '#1E1E2A', paper: '#F5F1E9' },
+      },
+      boxShadow: {
+        pixel: '4px 4px 0 0 #000000',
+      },
+      spacing: {
+        18: '4.5rem', // 72px
+      },
       typography: {
         DEFAULT: {
           css: {
@@ -71,6 +87,8 @@ export default {
     fontFamily: {
       sans: ['LXGWS', 'sans-serif'],
       lxgws: ['LXGWS', 'sans-serif'],
+      pixel: ['"Press Start 2P"', 'monospace'],
+      cartoon: ['Nunito', 'sans-serif'],
       // douyin: ['DouYin', 'sans-serif'],
       // ipix: ['IPIX', 'sans-serif'],
       // silver: ['Silver', 'sans-serif'],
