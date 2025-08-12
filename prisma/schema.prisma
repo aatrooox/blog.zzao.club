@@ -188,3 +188,57 @@ model MemoTagRelations {
   @@id([tagId, memoId])
   @@map("blog_memo_tag_relations")
 }
+
+model GarminActivity {
+  id String @id @default(uuid(7))
+
+  // 活动基础信息
+  activityType String   @map("activity_type") // 活动类型
+  date         DateTime @map("date") // 开始时间
+  isFavorite   Boolean  @map("is_favorite") // 我的最爱
+  title        String?  @map("title") // 标题
+
+  // 距离 & 能耗
+  distance Decimal? @map("distance") @db.Decimal(8, 2) // km，可为空
+  calories Int      @map("calories") // 热量消耗 kcal
+
+  // 时长类
+  duration    Decimal  @map("duration") @db.Decimal(10, 2) // 秒或分，统一存秒
+  movingTime  Decimal? @map("moving_time") @db.Decimal(10, 2)
+  elapsedTime Decimal? @map("elapsed_time") @db.Decimal(10, 2)
+
+  // 心率
+  avgHr Int? @map("avg_hr") // 平均心率
+  maxHr Int? @map("max_hr") // 最大心率
+
+  // 训练负荷
+  aerobicEffect       Decimal? @map("aerobic_effect") @db.Decimal(3, 1)
+  trainingStressScore Decimal? @map("training_stress_score") @db.Decimal(5, 1)
+
+  // 配速（跑步/游泳）
+  avgPace  Decimal? @map("avg_pace") @db.Decimal(5, 2) // 秒/100m 或 min/km
+  bestPace Decimal? @map("best_pace") @db.Decimal(5, 2)
+
+  // 游泳专用
+  totalStrokes  Int? @map("total_strokes")
+  avgSwolf      Int? @map("avg_swolf")
+  avgStrokeRate Int? @map("avg_stroke_rate")
+
+  // 力量训练专用
+  steps     Int? @map("steps")
+  totalReps Int? @map("total_reps")
+  totalSets Int? @map("total_sets")
+
+  // 减压 & 圈数
+  isGrit      Boolean? @map("is_grit") // 减压 yes/no → true/false
+  bestLapTime Decimal? @map("best_lap_time") @db.Decimal(8, 2)
+  lapCount    Int?     @map("lap_count")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([date, activityType])
+  @@index([date])
+  @@index([activityType])
+  @@map("blog_garmin_activity")
+}

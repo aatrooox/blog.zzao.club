@@ -1412,9 +1412,6 @@ const maxBorderRadius = computed(() => {
   // 直接返回像素值，确保用户可以设置为完美圆形
   return Math.max(8, Math.floor(maxRadius))
 })
-
-// 间距功能已移除，保持简单稳定的布局
-
 // 页面加载时初始化
 onMounted(() => {
   if (templates.length > 0) {

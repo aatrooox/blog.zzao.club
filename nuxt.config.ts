@@ -51,6 +51,11 @@ export default defineNuxtConfig({
       prefix: 'Memo',
     },
     {
+      path: '~/components/vue-bits',
+      pathPrefix: false,
+      prefix: 'VB',
+    },
+    {
       path: '~/components/content',
       global: true,
     },
