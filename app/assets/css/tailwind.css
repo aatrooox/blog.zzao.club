@@ -364,7 +364,7 @@ body {
 .pixel-card {
   background: oklch(30% 0.05 250);
   border: 2px solid oklch(40% 0.05 250);
-  box-shadow: 
+  box-shadow:
     2px 2px 0 oklch(40% 0.05 250),
     4px 4px 0 oklch(35% 0.05 250);
   padding: 16px;
@@ -374,7 +374,7 @@ body {
 }
 .pixel-card:hover {
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     2px 2px 0 oklch(40% 0.05 250),
     4px 4px 0 oklch(35% 0.05 250),
     6px 6px 0 oklch(25% 0.05 250);
@@ -384,7 +384,7 @@ body {
 .pixel-card-elevated {
   background: oklch(30% 0.05 250);
   border: 2px solid oklch(40% 0.05 250);
-  box-shadow: 
+  box-shadow:
     2px 2px 0 oklch(40% 0.05 250),
     4px 4px 0 oklch(35% 0.05 250),
     6px 6px 0 oklch(25% 0.05 250);
@@ -395,7 +395,7 @@ body {
 }
 .pixel-card-elevated:hover {
   transform: translateY(-3px);
-  box-shadow: 
+  box-shadow:
     3px 3px 0 oklch(40% 0.05 250),
     6px 6px 0 oklch(35% 0.05 250),
     9px 9px 0 oklch(25% 0.05 250);
@@ -404,7 +404,7 @@ body {
 /* 像素边框 */
 .pixel-border {
   border: 2px solid oklch(40% 0.05 250);
-  box-shadow: 
+  box-shadow:
     0 0 0 2px oklch(25% 0.05 250),
     2px 2px 0 0 oklch(50% 0.03 250);
 }
@@ -414,12 +414,12 @@ body {
   box-shadow: 2px 2px 0 0 oklch(50% 0.03 250);
 }
 .pixel-shadow-md {
-  box-shadow: 
+  box-shadow:
     2px 2px 0 0 oklch(50% 0.03 250),
     4px 4px 0 0 oklch(40% 0.05 250);
 }
 .pixel-shadow-lg {
-  box-shadow: 
+  box-shadow:
     2px 2px 0 0 oklch(50% 0.03 250),
     4px 4px 0 0 oklch(40% 0.05 250),
     6px 6px 0 0 oklch(25% 0.05 250);
@@ -497,7 +497,7 @@ body {
 
 /* 像素网格背景 */
 .pixel-grid-bg {
-  background-image: 
+  background-image:
     repeating-linear-gradient(0deg, oklch(70% 0.15 195) 0px, oklch(70% 0.15 195) 1px, transparent 1px, transparent 8px),
     repeating-linear-gradient(90deg, oklch(70% 0.15 195) 0px, oklch(70% 0.15 195) 1px, transparent 1px, transparent 8px);
   opacity: 0.05;
@@ -505,11 +505,13 @@ body {
 
 /* 像素噪点背景 */
 .pixel-noise-bg {
-  background-image: 
+  background-image:
     radial-gradient(circle at 25% 25%, oklch(70% 0.15 195) 1px, transparent 1px),
     radial-gradient(circle at 75% 75%, oklch(70% 0.15 145) 1px, transparent 1px);
   background-size: 16px 16px;
-  background-position: 0 0, 8px 8px;
+  background-position:
+    0 0,
+    8px 8px;
   opacity: 0.03;
 }
 
