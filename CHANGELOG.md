@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.15.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.14.0...v1.15.0)
+
+### 🚀 Enhancements
+
+- 再次完全重构样式 ([d9d6e2d](https://github.com/aatrooox/blog.zzao.club/commit/d9d6e2d))
+
+### 🏡 Chore
+
+- Eslint ([661c62e](https://github.com/aatrooox/blog.zzao.club/commit/661c62e))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.14.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.13.4...v1.14.0)
