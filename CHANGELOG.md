@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.15.1
+
+[compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v1.15.0...v1.15.1)
+
+### 🚀 Enhancements
+
+- 优化样式 (79ad93d)
+
+### 🏡 Chore
+
+- Eslint (f7c0c86)
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.15.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.14.0...v1.15.0)
