@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CommentData } from '@nuxtjs/mdc'
-import type { Prisma, User } from '@prisma/client'
+import type { Prisma, User } from '~~/prisma/generated/prisma/client'
 import type { Visitor } from '~~/types/blog'
 import type { ApiResponse } from '~~/types/fetch'
 
@@ -182,17 +182,17 @@ function handleTagClick(tagName: string) {
 </script>
 
 <template>
-  <div class="pixel-layout min-h-screen bg-bg-paper font-cartoon">
+  <div class="pixel-layout min-h-screen font-mono">
     <div class="max-w-4xl mx-auto px-4 md:px-6 py-6 md:py-8">
       <!-- Memo不存在 -->
       <div v-if="!memo" class="text-center py-20">
         <div class="bg-base border-2 md:border-4 border-bg-base rounded-lg md:rounded-xl shadow-pixel p-6 md:p-8">
-          <h2 class="text-2xl md:text-3xl font-pixel font-bold text-bg-base mb-4">
+          <h2 class="text-2xl md:text-3xl font-mono font-bold text-bg-base mb-4">
             Memo 不存在
           </h2>
           <NuxtLink
             to="/memo"
-            class="inline-block bg-primary-600 text-white font-cartoon font-bold px-4 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-700 hover:scale-105 transition-all duration-200"
+            class="inline-block bg-primary-600 text-white font-mono font-bold px-4 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-700 hover:scale-105 transition-all duration-200"
           >
             返回 Memo 列表
           </NuxtLink>
@@ -206,7 +206,7 @@ function handleTagClick(tagName: string) {
           <Button
             variant="ghost"
             size="sm"
-            class="pixel-btn-nav flex items-center gap-2 bg-secondary-500 text-white font-cartoon font-bold px-4 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-600 hover:scale-105 transition-all duration-200"
+            class="pixel-btn-nav flex items-center gap-2 bg-secondary-500 text-white font-mono font-bold px-4 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-600 hover:scale-105 transition-all duration-200"
             @click="router.push('/memo')"
           >
             <Icon name="material-symbols:arrow-back" class="w-4 h-4" />
@@ -222,18 +222,18 @@ function handleTagClick(tagName: string) {
               <div class="flex items-center space-x-3">
                 <UserAvatar :user-info="memo.user_info" />
                 <div>
-                  <div class="text-bg-base font-cartoon font-bold">
+                  <div class="text-[var(--pixel-text-primary)] font-mono font-bold">
                     {{ memo.user_info?.username || '匿名用户' }}
                   </div>
                 </div>
-                <NuxtTime :datetime="memo.create_ts" class="text-xs text-bg-base/70 font-cartoon" />
+                <NuxtTime :datetime="memo.create_ts" class="text-xs text-[var(--pixel-text-secondary)] font-mono" />
               </div>
 
               <!-- 右侧操作按钮 -->
               <div class="flex items-center gap-2">
                 <ClientOnly>
                   <Button
-                    class="rounded-lg border-2 border-bg-base font-cartoon font-bold px-3 py-2 transition-all duration-200 flex items-center gap-1" :class="[
+                    class="rounded-lg border-2 border-bg-base font-mono font-bold px-3 py-2 transition-all duration-200 flex items-center gap-1" :class="[
                       isLiked
                         ? 'text-white bg-accent-400 hover:bg-accent-500 hover:scale-105'
                         : 'text-bg-base bg-secondary-500 hover:bg-accent-400 hover:text-white hover:scale-105',
@@ -247,7 +247,7 @@ function handleTagClick(tagName: string) {
                   </Button>
                   <template #fallback>
                     <Button
-                      class="rounded-lg border-2 border-bg-base font-cartoon font-bold px-3 py-2 text-bg-base bg-secondary-500 hover:bg-accent-400 hover:text-white hover:scale-105 transition-all duration-200"
+                      class="rounded-lg border-2 border-bg-base font-mono font-bold px-3 py-2 text-bg-base bg-secondary-500 hover:bg-accent-400 hover:text-white hover:scale-105 transition-all duration-200"
                       variant="ghost"
                       size="sm"
                     >
@@ -256,14 +256,14 @@ function handleTagClick(tagName: string) {
                   </template>
                 </ClientOnly>
                 <Button
-                  class="rounded-lg border-2 border-bg-base font-cartoon font-bold px-3 py-2 text-bg-base bg-secondary-500 hover:bg-primary-600 hover:text-white hover:scale-105 transition-all duration-200"
+                  class="rounded-lg border-2 border-bg-base font-mono font-bold px-3 py-2 text-bg-base bg-secondary-500 hover:bg-primary-600 hover:text-white hover:scale-105 transition-all duration-200"
                   variant="ghost"
                   size="sm"
                 >
                   <Icon name="material-symbols:share-reviews-outline-rounded" class="w-4 h-4" />
                 </Button>
                 <Button
-                  class="rounded-lg border-2 border-bg-base font-cartoon font-bold px-3 py-2 text-bg-base bg-secondary-500 hover:bg-primary-600 hover:text-white hover:scale-105 transition-all duration-200"
+                  class="rounded-lg border-2 border-bg-base font-mono font-bold px-3 py-2 text-bg-base bg-secondary-500 hover:bg-primary-600 hover:text-white hover:scale-105 transition-all duration-200"
                   variant="ghost"
                   size="sm"
                 >
@@ -271,7 +271,7 @@ function handleTagClick(tagName: string) {
                 </Button>
                 <template v-if="userStore.isSuperAdmin">
                   <Button
-                    class="rounded-lg border-2 border-bg-base font-cartoon font-bold px-3 py-2 text-bg-base bg-secondary-500 hover:bg-accent-400 hover:text-white hover:scale-105 transition-all duration-200"
+                    class="rounded-lg border-2 border-bg-base font-mono font-bold px-3 py-2 text-bg-base bg-secondary-500 hover:bg-accent-400 hover:text-white hover:scale-105 transition-all duration-200"
                     variant="ghost"
                     size="sm"
                     @click="handleEdit"
@@ -279,7 +279,7 @@ function handleTagClick(tagName: string) {
                     <Icon name="material-symbols:edit-outline" class="w-4 h-4" />
                   </Button>
                   <Button
-                    class="rounded-lg border-2 border-bg-base font-cartoon font-bold px-3 py-2 text-white bg-red-500 hover:bg-red-600 hover:scale-105 transition-all duration-200"
+                    class="rounded-lg border-2 border-bg-base font-mono font-bold px-3 py-2 text-white bg-red-500 hover:bg-red-600 hover:scale-105 transition-all duration-200"
                     variant="ghost"
                     size="sm"
                     @click="handleDelete"
@@ -304,7 +304,7 @@ function handleTagClick(tagName: string) {
             <span
               v-for="tagRelation in memo.tags"
               :key="tagRelation.tag.id"
-              class="pixel-tag text-xs cursor-pointer bg-base text-primary-600 font-cartoon font-bold border-2 border-bg-base rounded-lg px-3 py-1 hover:bg-bg-base hover:text-primary-700 hover:scale-105 transition-all duration-200"
+              class="pixel-tag text-xs cursor-pointer bg-base text-primary-600 font-mono font-bold border-2 border-bg-base rounded-lg px-3 py-1 hover:bg-bg-base hover:text-primary-700 hover:scale-105 transition-all duration-200"
               @click="handleTagClick(tagRelation.tag.tag_name)"
             >
               {{ tagRelation.tag.tag_name }}
@@ -313,16 +313,15 @@ function handleTagClick(tagName: string) {
         </div>
         <!-- 评论区 -->
         <div class="pixel-card bg-base border-2 md:border-4 border-bg-base rounded-lg md:rounded-xl shadow-pixel p-4 md:p-6">
-          <div class="pixel-title text-xl md:text-2xl font-pixel font-bold mb-4 md:mb-6 flex items-center gap-2">
-            <div class="w-3 h-3 bg-accent-400 rounded-sm" />
-            <Icon name="icon-park-outline:comments" class="w-5 h-5 text-bg-base" />
-            <span class="text-bg-base font-mono">💬 评论区</span>
+          <div class="pixel-title text-xl md:text-2xl font-mono font-bold mb-4 md:mb-6 flex items-center gap-2">
+            <Icon name="icon-park-outline:comments" class="w-5 h-5 text-[var(--pixel-text-primary)]" />
+            <span class="text-[var(--pixel-text-primary)] font-mono">评论区</span>
             <ClientOnly>
-              <span class="text-sm font-cartoon font-normal text-bg-base/70 font-mono">
+              <span class="text-sm font-mono font-normal text-[var(--pixel-text-secondary)]">
                 ({{ formatCommentCount }})
               </span>
               <template #fallback>
-                <span class="text-sm font-cartoon font-normal text-bg-base/70 font-mono">
+                <span class="text-sm font-mono font-normal text-[var(--pixel-text-secondary)]">
                   (0)
                 </span>
               </template>
@@ -346,10 +345,10 @@ function handleTagClick(tagName: string) {
               </template>
               <div v-else class="text-center py-8">
                 <div class="bg-secondary-500/20 border-2 border-bg-base rounded-lg p-6">
-                  <div class="text-bg-base font-cartoon font-bold text-lg mb-2">
+                  <div class="text-bg-base font-mono font-bold text-lg mb-2">
                     暂无评论
                   </div>
-                  <div class="text-bg-base/70 font-cartoon">
+                  <div class="text-bg-base/70 font-mono">
                     快来抢沙发吧！
                   </div>
                 </div>
@@ -391,10 +390,10 @@ function handleTagClick(tagName: string) {
 
 /* 像素风格导航栏 */
 .pixel-nav {
-  background: oklch(30% 0.05 250);
-  border-bottom: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border-bottom: 2px solid var(--pixel-border-primary);
   backdrop-filter: blur(8px);
-  box-shadow: 0 2px 0 oklch(25% 0.05 250);
+  box-shadow: 0 2px 0 var(--pixel-bg-primary);
 }
 
 /* 像素风格按钮 */
@@ -403,105 +402,137 @@ function handleTagClick(tagName: string) {
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  background: oklch(35% 0.05 250);
-  color: oklch(85% 0.05 250);
-  border: 2px solid oklch(45% 0.05 250);
+  background: var(--pixel-bg-tertiary);
+  color: var(--pixel-text-secondary);
+  border: 2px solid var(--pixel-border-secondary);
   border-radius: 6px;
+  font-family: ui-monospace, monospace;
   transition: all 0.2s ease;
-  box-shadow: 2px 2px 0 oklch(25% 0.05 250);
+  box-shadow: 2px 2px 0 var(--pixel-bg-primary);
 }
 
 .pixel-btn-nav:hover {
-  background: oklch(40% 0.05 250);
+  background: var(--pixel-bg-quaternary);
   transform: translateY(-1px);
-  box-shadow: 3px 3px 0 oklch(25% 0.05 250);
+  box-shadow: 3px 3px 0 var(--pixel-bg-primary);
 }
 
 .pixel-btn-icon {
   padding: 8px;
-  background: oklch(35% 0.05 250);
-  color: oklch(85% 0.05 250);
-  border: 2px solid oklch(45% 0.05 250);
+  background: var(--pixel-bg-tertiary);
+  color: var(--pixel-text-secondary);
+  border: 2px solid var(--pixel-border-secondary);
   border-radius: 6px;
+  font-family: ui-monospace, monospace;
   transition: all 0.2s ease;
-  box-shadow: 2px 2px 0 oklch(25% 0.05 250);
+  box-shadow: 2px 2px 0 var(--pixel-shadow-primary);
 }
 
 .pixel-btn-icon:hover {
-  background: oklch(40% 0.05 250);
+  background: var(--pixel-bg-quaternary);
   transform: translateY(-1px);
-  box-shadow: 3px 3px 0 oklch(25% 0.05 250);
+  box-shadow: 3px 3px 0 var(--pixel-shadow-primary);
 }
 
 /* 像素风格卡片 */
 .pixel-card {
-  background: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 8px;
+  box-shadow:
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
   padding: 16px;
-  box-shadow: 4px 4px 0 oklch(25% 0.05 250);
+  font-family: ui-monospace, monospace;
   transition: all 0.2s ease;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.pixel-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary),
+    6px 6px 0 var(--pixel-bg-secondary);
 }
 
 /* 像素风格标题 */
 .pixel-title {
-  color: oklch(84% 0.15 85);
-  text-shadow: 2px 2px 0 oklch(25% 0.05 250);
+  color: var(--pixel-text-primary);
+  font-family: ui-monospace, monospace;
+  text-shadow: 1px 1px 0 var(--pixel-shadow-primary);
+}
+
+.pixel-title:hover {
+  color: var(--pixel-highlight-yellow);
+  text-shadow: 2px 2px 0 var(--pixel-shadow-primary);
 }
 
 /* 像素风格文本 */
 .pixel-text {
-  color: oklch(75% 0.05 250);
+  color: var(--pixel-text-primary);
+  font-family: ui-monospace, monospace;
 }
 
 /* 像素风格元数据 */
 .pixel-meta {
-  color: oklch(65% 0.05 250);
+  color: var(--pixel-text-muted);
+  font-family: ui-monospace, monospace;
 }
 
 /* 像素风格标签 */
 .pixel-tag {
-  background: oklch(70% 0.15 195);
-  color: oklch(25% 0.05 250);
-  border: 1px solid oklch(60% 0.15 195);
-  padding: 4px 8px;
+  background: var(--pixel-bg-card);
+  color: var(--pixel-accent-cyan);
+  border: 2px solid var(--pixel-accent-cyan-border);
+  padding: 2px 8px;
   border-radius: 4px;
+  box-shadow: 1px 1px 0 var(--pixel-accent-cyan-border);
+  font-family: ui-monospace, monospace;
   font-size: 12px;
   font-weight: 600;
-  font-family: ui-monospace, monospace;
-  box-shadow: 1px 1px 0 oklch(40% 0.05 250);
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .pixel-tag:hover {
-  background: oklch(75% 0.15 195);
+  background: var(--pixel-bg-tertiary);
+  color: var(--pixel-accent-cyan-hover);
   transform: translateY(-1px);
-  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+  box-shadow: 2px 2px 0 var(--pixel-accent-cyan-border);
 }
 
 .pixel-tag:active {
-  transform: translateY(0);
-  box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+  transform: translateY(1px);
+  box-shadow: 0px 0px 0 var(--pixel-accent-cyan-border);
 }
 
 /* 像素风格内容区域 */
 .pixel-content {
-  background: oklch(28% 0.05 250);
-  border: 2px solid oklch(38% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 8px;
+  box-shadow:
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
   padding: 20px;
-  box-shadow: 4px 4px 0 oklch(23% 0.05 250);
-  color: oklch(85% 0.05 250);
+  color: var(--pixel-text-primary);
   line-height: 1.7;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
 /* 像素风格底部操作栏 */
 .pixel-bottom-bar {
-  background: oklch(30% 0.05 250);
-  border-top: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border-top: 2px solid var(--pixel-border-primary);
   backdrop-filter: blur(8px);
+  box-shadow:
+    0 -2px 0 var(--pixel-border-primary),
+    0 -4px 0 var(--pixel-bg-tertiary);
   padding: 16px;
-  box-shadow: 0 -2px 0 oklch(25% 0.05 250);
 }
 
 .pixel-btn-action {
@@ -509,59 +540,112 @@ function handleTagClick(tagName: string) {
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
-  background: oklch(35% 0.05 250);
-  color: oklch(85% 0.05 250);
-  border: 2px solid oklch(45% 0.05 250);
+  background: var(--pixel-accent-cyan);
+  color: var(--pixel-bg-primary);
+  border: 2px solid var(--pixel-accent-cyan-border);
   border-radius: 8px;
-  transition: all 0.2s ease;
-  box-shadow: 2px 2px 0 oklch(25% 0.05 250);
+  font-weight: 600;
+  font-family: ui-monospace, monospace;
+  transition: all 0.15s ease;
+  box-shadow:
+    2px 2px 0 var(--pixel-accent-cyan-border),
+    4px 4px 0 var(--pixel-bg-tertiary);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
 .pixel-btn-action:hover {
-  background: oklch(40% 0.05 250);
-  transform: translateY(-1px);
-  box-shadow: 3px 3px 0 oklch(25% 0.05 250);
+  background: var(--pixel-accent-cyan-hover);
+  transform: translateY(-2px);
+  box-shadow:
+    2px 2px 0 var(--pixel-accent-cyan-border),
+    4px 4px 0 var(--pixel-bg-tertiary),
+    6px 6px 0 var(--pixel-bg-secondary);
+}
+
+.pixel-btn-action:active {
+  transform: translateY(1px);
+  box-shadow:
+    1px 1px 0 var(--pixel-accent-cyan-border),
+    2px 2px 0 var(--pixel-bg-tertiary);
 }
 
 .pixel-btn-liked {
-  background: oklch(50% 0.2 15) !important;
-  border-color: oklch(60% 0.2 15) !important;
-  color: oklch(95% 0.1 15) !important;
+  background: var(--pixel-status-info) !important;
+  border-color: var(--pixel-status-info-border) !important;
+  color: var(--pixel-highlight-green-text) !important;
 }
 
 /* 像素风格抽屉 */
 .pixel-drawer {
-  background: oklch(30% 0.05 250);
-  border-left: 2px solid oklch(40% 0.05 250);
-  padding: 16px;
-  box-shadow: -4px 0 0 oklch(25% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
+  border-radius: 12px 12px 0 0;
+  font-family: ui-monospace, monospace;
+  box-shadow:
+    0 -2px 0 var(--pixel-border-primary),
+    0 -4px 0 var(--pixel-bg-tertiary);
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
 /* 响应式适配 */
 @media (max-width: 768px) {
   .pixel-card {
     padding: 12px;
-    box-shadow: 2px 2px 0 oklch(25% 0.05 250);
+    box-shadow:
+      1px 1px 0 var(--pixel-border-primary),
+      2px 2px 0 var(--pixel-bg-tertiary);
+  }
+
+  .pixel-card:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      1px 1px 0 var(--pixel-border-primary),
+      2px 2px 0 var(--pixel-bg-tertiary),
+      3px 3px 0 var(--pixel-bg-secondary);
   }
 
   .pixel-content {
     padding: 16px;
-    box-shadow: 2px 2px 0 oklch(23% 0.05 250);
+    box-shadow:
+      1px 1px 0 var(--pixel-border-primary),
+      2px 2px 0 var(--pixel-bg-tertiary);
   }
 
   .pixel-btn-nav {
     padding: 6px 10px;
-    box-shadow: 1px 1px 0 oklch(25% 0.05 250);
+    box-shadow: 1px 1px 0 var(--pixel-bg-primary);
+  }
+
+  .pixel-btn-nav:hover {
+    box-shadow: 2px 2px 0 var(--pixel-bg-primary);
   }
 
   .pixel-btn-icon {
     padding: 6px;
-    box-shadow: 1px 1px 0 oklch(25% 0.05 250);
+    box-shadow: 1px 1px 0 var(--pixel-shadow-primary);
+  }
+
+  .pixel-btn-icon:hover {
+    box-shadow: 2px 2px 0 var(--pixel-shadow-primary);
   }
 
   .pixel-btn-action {
     padding: 8px 12px;
-    box-shadow: 1px 1px 0 oklch(25% 0.05 250);
+    box-shadow:
+      1px 1px 0 var(--pixel-accent-cyan-border),
+      2px 2px 0 var(--pixel-bg-tertiary);
+  }
+
+  .pixel-btn-action:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      1px 1px 0 var(--pixel-accent-cyan-border),
+      2px 2px 0 var(--pixel-bg-tertiary),
+      3px 3px 0 var(--pixel-bg-secondary);
   }
 }
 </style>

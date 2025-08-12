@@ -124,20 +124,20 @@ async function addLink() {
 
 .pixel-layout {
   @apply font-mono;
-  background: oklch(25% 0.05 250);
-  color: oklch(90% 0.02 250);
+  background: var(--pixel-bg-primary);
+  color: var(--pixel-text-primary);
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
 }
 
 .pixel-card {
-  background: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 8px;
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(35% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
   padding: 24px;
   margin: 8px 0;
 }
@@ -149,19 +149,19 @@ async function addLink() {
 .pixel-card-hover:hover {
   transform: translateY(-2px);
   box-shadow:
-    4px 4px 0 oklch(40% 0.05 250),
-    6px 6px 0 oklch(35% 0.05 250);
+    4px 4px 0 var(--pixel-border-primary),
+    6px 6px 0 var(--pixel-bg-tertiary);
 }
 
 .pixel-title {
   @apply text-base md:text-lg font-bold;
-  color: oklch(90% 0.02 250);
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
 }
 
 .pixel-text {
   @apply text-sm md:text-base;
-  color: oklch(75% 0.03 250);
+  color: var(--pixel-text-muted);
   font-family: ui-monospace, monospace;
   line-height: 1.6;
 }
@@ -176,32 +176,32 @@ async function addLink() {
 }
 
 .pixel-button-primary {
-  background: oklch(70% 0.15 195);
-  border-color: oklch(60% 0.15 195);
-  color: oklch(20% 0.05 195);
+  background: var(--pixel-accent-cyan);
+  border-color: var(--pixel-accent-cyan-border);
+  color: var(--pixel-bg-primary);
 }
 
 .pixel-button-primary:hover {
-  background: oklch(75% 0.15 195);
+  background: var(--pixel-accent-cyan-hover);
   transform: translateY(-1px);
-  box-shadow: 2px 2px 0 oklch(60% 0.15 195);
+  box-shadow: 2px 2px 0 var(--pixel-accent-cyan-border);
 }
 
 .pixel-button-secondary {
-  background: oklch(50% 0.05 250);
-  border-color: oklch(40% 0.05 250);
-  color: oklch(90% 0.02 250);
+  background: var(--pixel-text-disabled);
+  border-color: var(--pixel-border-primary);
+  color: var(--pixel-text-primary);
 }
 
 .pixel-button-secondary:hover {
-  background: oklch(55% 0.05 250);
+  background: var(--pixel-text-disabled);
   transform: translateY(-1px);
-  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+  box-shadow: 2px 2px 0 var(--pixel-border-primary);
 }
 
 .pixel-card-inner {
-  background: oklch(28% 0.05 250);
-  border: 2px solid oklch(35% 0.05 250);
+  background: var(--pixel-bg-card);
+  border: 2px solid var(--pixel-bg-tertiary);
   border-radius: 6px;
   padding: 16px;
   margin: 8px 0;
@@ -209,9 +209,9 @@ async function addLink() {
 
 .pixel-textarea {
   @apply w-full h-32 md:h-40 p-3 rounded-lg;
-  background: oklch(25% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
-  color: oklch(90% 0.02 250);
+  background: var(--pixel-bg-primary);
+  border: 2px solid var(--pixel-border-primary);
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
   font-size: 14px;
   line-height: 1.5;
@@ -221,7 +221,7 @@ async function addLink() {
 
 .pixel-textarea:focus {
   outline: none;
-  border-color: oklch(70% 0.15 195);
-  box-shadow: 0 0 0 2px oklch(70% 0.15 195 / 0.3);
+  border-color: var(--pixel-accent-cyan);
+  box-shadow: 0 0 0 2px var(--pixel-accent-cyan-border);
 }
 </style>

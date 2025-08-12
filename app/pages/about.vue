@@ -87,33 +87,33 @@ useHead({
 
 .pixel-layout {
   @apply font-mono;
-  background: oklch(25% 0.05 250);
-  color: oklch(90% 0.02 250);
+  background: var(--pixel-bg-primary);
+  color: var(--pixel-text-primary);
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
 }
 
 .pixel-card {
-  background: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 8px;
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(35% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
   padding: 24px;
   margin: 8px 0;
 }
 
 .pixel-title {
   @apply text-base md:text-lg font-bold;
-  color: oklch(90% 0.02 250);
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
 }
 
 .pixel-text {
   @apply text-sm md:text-base;
-  color: oklch(75% 0.03 250);
+  color: var(--pixel-text-muted);
   font-family: ui-monospace, monospace;
   line-height: 1.6;
 }
@@ -125,14 +125,14 @@ useHead({
 }
 
 .pixel-indicator-primary {
-  background: oklch(70% 0.15 195);
+  background: var(--pixel-accent-cyan);
 }
 
 .pixel-indicator-secondary {
-  background: oklch(70% 0.15 145);
+  background: var(--pixel-status-success);
 }
 
 .pixel-indicator-accent {
-  background: oklch(75% 0.15 85);
+  background: var(--pixel-status-warning);
 }
 </style>

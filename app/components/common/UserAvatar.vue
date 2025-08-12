@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { User } from '@prisma/client'
+import type { User } from '~~/prisma/generated/prisma/client'
 
 const props = defineProps<{
   userInfo?: User | null

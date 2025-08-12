@@ -114,6 +114,67 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
+
+  /* 像素风格主题色彩系统 */
+  /* 背景色系 */
+  --pixel-bg-primary: oklch(25% 0.05 250);     /* 主背景 - 深灰色 */
+  --pixel-bg-secondary: oklch(30% 0.05 250);   /* 次要背景 - 中灰色 */
+  --pixel-bg-tertiary: oklch(35% 0.05 250);    /* 第三级背景 */
+  --pixel-bg-quaternary: oklch(40% 0.05 250);  /* 第四级背景 */
+  --pixel-bg-card: oklch(28% 0.05 250);        /* 卡片背景 */
+  --pixel-bg-input: oklch(20% 0.05 250);       /* 输入框背景 */
+  --pixel-bg-code: oklch(32% 0.05 250);        /* 代码块背景 */
+
+  /* 文字色系 */
+  --pixel-text-primary: oklch(90% 0.02 250);   /* 主要文字 - 亮白色 */
+  --pixel-text-secondary: oklch(85% 0.02 250); /* 次要文字 */
+  --pixel-text-tertiary: oklch(80% 0.03 250);  /* 第三级文字 */
+  --pixel-text-muted: oklch(75% 0.03 250);     /* 弱化文字 */
+  --pixel-text-disabled: oklch(50% 0.03 250);  /* 禁用文字 */
+  --pixel-text-code: oklch(70% 0.03 250);      /* 代码文字 */
+
+  /* 边框色系 */
+  --pixel-border-primary: oklch(40% 0.05 250); /* 主要边框 */
+  --pixel-border-secondary: oklch(45% 0.05 250); /* 次要边框 */
+  --pixel-border-input: oklch(35% 0.08 250);   /* 输入框边框 */
+  --pixel-border-focus: oklch(75% 0.15 195);   /* 焦点边框 */
+
+  /* 阴影色系 */
+  --pixel-shadow-primary: oklch(25% 0.05 250); /* 主要阴影 */
+  --pixel-shadow-secondary: oklch(20% 0.05 250); /* 次要阴影 */
+  --pixel-shadow-deep: oklch(15% 0.05 250);    /* 深层阴影 */
+  --pixel-shadow-light: oklch(50% 0.03 250);   /* 浅色阴影 */
+
+  /* 强调色系 */
+  --pixel-accent-cyan: oklch(70% 0.15 195);    /* 青色强调 - 主要按钮 */
+  --pixel-accent-cyan-hover: oklch(75% 0.15 195); /* 青色悬停 */
+  --pixel-accent-cyan-light: oklch(80% 0.1 195);  /* 淡青色 */
+  --pixel-accent-cyan-border: oklch(60% 0.15 195); /* 青色边框 */
+  --pixel-accent-cyan-shadow: oklch(60% 0.2 195);  /* 青色阴影 */
+
+  /* 状态色系 */
+  --pixel-status-success: oklch(70% 0.15 145);  /* 成功状态 - 绿色 */
+  --pixel-status-success-border: oklch(60% 0.2 145); /* 成功边框 */
+  --pixel-status-warning: oklch(75% 0.15 85);   /* 警告状态 - 黄色 */
+  --pixel-status-warning-border: oklch(65% 0.2 85);  /* 警告边框 */
+  --pixel-status-error: oklch(65% 0.15 25);     /* 错误状态 - 红色 */
+  --pixel-status-error-border: oklch(55% 0.2 25);    /* 错误边框 */
+  --pixel-status-info: oklch(50% 0.2 15);       /* 信息状态 - 橙色 */
+  --pixel-status-info-border: oklch(60% 0.2 15);     /* 信息边框 */
+
+  /* 特殊强调色 */
+  --pixel-highlight-yellow: oklch(84% 0.15 85); /* 黄色高亮 - 标题强调 */
+  --pixel-highlight-green: oklch(45% 0.15 120); /* 绿色高亮 */
+  --pixel-highlight-green-text: oklch(95% 0.02 120); /* 绿色高亮文字 */
+  --pixel-highlight-green-border: oklch(35% 0.15 120); /* 绿色高亮边框 */
+  --pixel-highlight-teal: oklch(50% 0.2 180);   /* 青绿色高亮 */
+  --pixel-highlight-teal-text: oklch(95% 0.02 180);  /* 青绿色高亮文字 */
+  --pixel-highlight-teal-border: oklch(40% 0.2 180); /* 青绿色高亮边框 */
+
+  /* 渐变色系 */
+  --pixel-gradient-start: oklch(65% 0.15 200);  /* 渐变起始色 */
+  --pixel-gradient-mid: oklch(70% 0.12 160);    /* 渐变中间色 */
+  --pixel-gradient-end: oklch(75% 0.1 120);     /* 渐变结束色 */
 }
 
 .dark {
@@ -149,6 +210,67 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.274 0.006 286.033);
   --sidebar-ring: oklch(0.442 0.017 285.786);
+
+  /* 暗色主题下的像素风格色彩系统 */
+  /* 背景色系 */
+  --pixel-bg-primary: oklch(25% 0.05 250);     /* 主背景 - 深灰色 */
+  --pixel-bg-secondary: oklch(30% 0.05 250);   /* 次要背景 - 中灰色 */
+  --pixel-bg-tertiary: oklch(35% 0.05 250);    /* 第三级背景 */
+  --pixel-bg-quaternary: oklch(40% 0.05 250);  /* 第四级背景 */
+  --pixel-bg-card: oklch(28% 0.05 250);        /* 卡片背景 */
+  --pixel-bg-input: oklch(20% 0.05 250);       /* 输入框背景 */
+  --pixel-bg-code: oklch(32% 0.05 250);        /* 代码块背景 */
+
+  /* 文字色系 */
+  --pixel-text-primary: oklch(90% 0.02 250);   /* 主要文字 - 亮白色 */
+  --pixel-text-secondary: oklch(85% 0.02 250); /* 次要文字 */
+  --pixel-text-tertiary: oklch(80% 0.03 250);  /* 第三级文字 */
+  --pixel-text-muted: oklch(75% 0.03 250);     /* 弱化文字 */
+  --pixel-text-disabled: oklch(50% 0.03 250);  /* 禁用文字 */
+  --pixel-text-code: oklch(70% 0.03 250);      /* 代码文字 */
+
+  /* 边框色系 */
+  --pixel-border-primary: oklch(40% 0.05 250); /* 主要边框 */
+  --pixel-border-secondary: oklch(45% 0.05 250); /* 次要边框 */
+  --pixel-border-input: oklch(35% 0.08 250);   /* 输入框边框 */
+  --pixel-border-focus: oklch(75% 0.15 195);   /* 焦点边框 */
+
+  /* 阴影色系 */
+  --pixel-shadow-primary: oklch(25% 0.05 250); /* 主要阴影 */
+  --pixel-shadow-secondary: oklch(20% 0.05 250); /* 次要阴影 */
+  --pixel-shadow-deep: oklch(15% 0.05 250);    /* 深层阴影 */
+  --pixel-shadow-light: oklch(50% 0.03 250);   /* 浅色阴影 */
+
+  /* 强调色系 */
+  --pixel-accent-cyan: oklch(70% 0.15 195);    /* 青色强调 - 主要按钮 */
+  --pixel-accent-cyan-hover: oklch(75% 0.15 195); /* 青色悬停 */
+  --pixel-accent-cyan-light: oklch(80% 0.1 195);  /* 淡青色 */
+  --pixel-accent-cyan-border: oklch(60% 0.15 195); /* 青色边框 */
+  --pixel-accent-cyan-shadow: oklch(60% 0.2 195);  /* 青色阴影 */
+
+  /* 状态色系 */
+  --pixel-status-success: oklch(70% 0.15 145);  /* 成功状态 - 绿色 */
+  --pixel-status-success-border: oklch(60% 0.2 145); /* 成功边框 */
+  --pixel-status-warning: oklch(75% 0.15 85);   /* 警告状态 - 黄色 */
+  --pixel-status-warning-border: oklch(65% 0.2 85);  /* 警告边框 */
+  --pixel-status-error: oklch(65% 0.15 25);     /* 错误状态 - 红色 */
+  --pixel-status-error-border: oklch(55% 0.2 25);    /* 错误边框 */
+  --pixel-status-info: oklch(50% 0.2 15);       /* 信息状态 - 橙色 */
+  --pixel-status-info-border: oklch(60% 0.2 15);     /* 信息边框 */
+
+  /* 特殊强调色 */
+  --pixel-highlight-yellow: oklch(84% 0.15 85); /* 黄色高亮 - 标题强调 */
+  --pixel-highlight-green: oklch(45% 0.15 120); /* 绿色高亮 */
+  --pixel-highlight-green-text: oklch(95% 0.02 120); /* 绿色高亮文字 */
+  --pixel-highlight-green-border: oklch(35% 0.15 120); /* 绿色高亮边框 */
+  --pixel-highlight-teal: oklch(50% 0.2 180);   /* 青绿色高亮 */
+  --pixel-highlight-teal-text: oklch(95% 0.02 180);  /* 青绿色高亮文字 */
+  --pixel-highlight-teal-border: oklch(40% 0.2 180); /* 青绿色高亮边框 */
+
+  /* 渐变色系 */
+  --pixel-gradient-start: oklch(65% 0.15 200);  /* 渐变起始色 */
+  --pixel-gradient-mid: oklch(70% 0.12 160);    /* 渐变中间色 */
+  --pixel-gradient-end: oklch(75% 0.1 120);     /* 渐变结束色 */
 }
 
 @layer base {
@@ -218,7 +340,7 @@ body {
 }
 
 .highlight-explain-selection {
-  text-decoration: underline oklch(60.9% 0.126 221.723) wavy 2px;
+  text-decoration: underline var(--pixel-accent-cyan) wavy 2px;
   position: relative;
   cursor: pointer;
 }
@@ -288,7 +410,7 @@ body {
   height: 8px;
   font-weight: bold;
   border-radius: 50%;
-  background-color: oklch(60.9% 0.126 221.723);
+ /* background-color: var(--pixel-accent-cyan);
   position: absolute;
   right: -8px;
   top: -6px; */
@@ -318,55 +440,55 @@ body {
 
 /* 像素按钮 */
 .pixel-btn {
-  background: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
-  color: oklch(90% 0.02 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
   padding: 8px 16px;
-  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+  box-shadow: 2px 2px 0 var(--pixel-border-primary);
   transition: all 0.15s ease;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
 }
 .pixel-btn:hover {
-  background: oklch(35% 0.05 250);
+  background: var(--pixel-bg-tertiary);
   transform: translateY(-1px);
-  box-shadow: 3px 3px 0 oklch(40% 0.05 250);
+  box-shadow: 3px 3px 0 var(--pixel-border-primary);
 }
 .pixel-btn:active {
   transform: translateY(1px);
-  box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+  box-shadow: 1px 1px 0 var(--pixel-border-primary);
 }
 
 /* 像素按钮 - 主要强调色 */
 .pixel-btn-primary {
-  background: oklch(70% 0.15 195);
-  border: 2px solid oklch(60% 0.2 195);
-  color: oklch(90% 0.02 250);
+  background: var(--pixel-accent-cyan);
+  border: 2px solid var(--pixel-accent-cyan-border);
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
   padding: 8px 16px;
-  box-shadow: 2px 2px 0 oklch(60% 0.2 195);
+  box-shadow: 2px 2px 0 var(--pixel-accent-cyan-border);
   transition: all 0.15s ease;
   image-rendering: pixelated;
 }
 .pixel-btn-primary:hover {
-  background: oklch(80% 0.1 195);
+  background: var(--pixel-accent-cyan-light);
   transform: translateY(-1px);
-  box-shadow: 3px 3px 0 oklch(60% 0.2 195);
+  box-shadow: 3px 3px 0 var(--pixel-accent-cyan-border);
 }
 .pixel-btn-primary:active {
   transform: translateY(1px);
-  box-shadow: 1px 1px 0 oklch(60% 0.2 195);
+  box-shadow: 1px 1px 0 var(--pixel-accent-cyan-border);
 }
 
 /* 像素卡片 */
 .pixel-card {
-  background: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(35% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
   padding: 16px;
   margin: 8px;
   image-rendering: pixelated;
@@ -375,19 +497,19 @@ body {
 .pixel-card:hover {
   transform: translateY(-2px);
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(35% 0.05 250),
-    6px 6px 0 oklch(25% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary),
+    6px 6px 0 var(--pixel-shadow-primary);
 }
 
 /* 像素卡片 - 高级阴影 */
 .pixel-card-elevated {
-  background: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(35% 0.05 250),
-    6px 6px 0 oklch(25% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary),
+    6px 6px 0 var(--pixel-shadow-primary);
   padding: 16px;
   margin: 8px;
   image-rendering: pixelated;
@@ -396,59 +518,59 @@ body {
 .pixel-card-elevated:hover {
   transform: translateY(-3px);
   box-shadow:
-    3px 3px 0 oklch(40% 0.05 250),
-    6px 6px 0 oklch(35% 0.05 250),
-    9px 9px 0 oklch(25% 0.05 250);
+    3px 3px 0 var(--pixel-border-primary),
+    6px 6px 0 var(--pixel-bg-tertiary),
+    9px 9px 0 var(--pixel-shadow-primary);
 }
 
 /* 像素边框 */
 .pixel-border {
-  border: 2px solid oklch(40% 0.05 250);
+  border: 2px solid var(--pixel-border-primary);
   box-shadow:
-    0 0 0 2px oklch(25% 0.05 250),
-    2px 2px 0 0 oklch(50% 0.03 250);
+    0 0 0 2px var(--pixel-shadow-primary),
+    2px 2px 0 0 var(--pixel-shadow-light);
 }
 
 /* 像素阴影层级 */
 .pixel-shadow-sm {
-  box-shadow: 2px 2px 0 0 oklch(50% 0.03 250);
+  box-shadow: 2px 2px 0 0 var(--pixel-shadow-light);
 }
 .pixel-shadow-md {
   box-shadow:
-    2px 2px 0 0 oklch(50% 0.03 250),
-    4px 4px 0 0 oklch(40% 0.05 250);
+    2px 2px 0 0 var(--pixel-shadow-light),
+    4px 4px 0 0 var(--pixel-border-primary);
 }
 .pixel-shadow-lg {
   box-shadow:
-    2px 2px 0 0 oklch(50% 0.03 250),
-    4px 4px 0 0 oklch(40% 0.05 250),
-    6px 6px 0 0 oklch(25% 0.05 250);
+    2px 2px 0 0 var(--pixel-shadow-light),
+    4px 4px 0 0 var(--pixel-border-primary),
+    6px 6px 0 0 var(--pixel-shadow-primary);
 }
 
 /* 像素状态指示器 */
 .pixel-status-online {
-  background: oklch(70% 0.15 145);
+  background: var(--pixel-status-success);
   width: 8px;
   height: 8px;
-  border: 1px solid oklch(60% 0.2 145);
+  border: 1px solid var(--pixel-status-success-border);
 }
 .pixel-status-offline {
-  background: oklch(65% 0.15 25);
+  background: var(--pixel-status-error);
   width: 8px;
   height: 8px;
-  border: 1px solid oklch(55% 0.2 25);
+  border: 1px solid var(--pixel-status-error-border);
 }
 .pixel-status-warning {
-  background: oklch(75% 0.15 85);
+  background: var(--pixel-status-warning);
   width: 8px;
   height: 8px;
-  border: 1px solid oklch(65% 0.2 85);
+  border: 1px solid var(--pixel-status-warning-border);
 }
 .pixel-status-unknown {
-  background: oklch(50% 0.05 250);
+  background: var(--pixel-text-disabled);
   width: 8px;
   height: 8px;
-  border: 1px solid oklch(40% 0.05 250);
+  border: 1px solid var(--pixel-border-primary);
 }
 
 /* 像素字体 */
@@ -463,34 +585,34 @@ body {
 .pixel-title {
   font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
   font-weight: 700;
-  color: oklch(90% 0.02 250);
+  color: var(--pixel-text-primary);
   image-rendering: pixelated;
 }
 
 /* 像素文本 */
 .pixel-text {
   font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
-  color: oklch(75% 0.03 250);
+  color: var(--pixel-text-secondary);
   image-rendering: pixelated;
 }
 
 /* 像素文本 - 次要 */
 .pixel-text-muted {
   font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
-  color: oklch(50% 0.03 250);
+  color: var(--pixel-text-disabled);
   image-rendering: pixelated;
 }
 
 /* 像素进度条 */
 .pixel-progress-bar {
-  background: oklch(25% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-primary);
+  border: 2px solid var(--pixel-border-primary);
   height: 16px;
   position: relative;
   image-rendering: pixelated;
 }
 .pixel-progress-fill {
-  background: oklch(70% 0.15 195);
+  background: var(--pixel-accent-cyan);
   height: 100%;
   transition: width 0.3s ease;
 }
@@ -498,16 +620,16 @@ body {
 /* 像素网格背景 */
 .pixel-grid-bg {
   background-image:
-    repeating-linear-gradient(0deg, oklch(70% 0.15 195) 0px, oklch(70% 0.15 195) 1px, transparent 1px, transparent 8px),
-    repeating-linear-gradient(90deg, oklch(70% 0.15 195) 0px, oklch(70% 0.15 195) 1px, transparent 1px, transparent 8px);
+    repeating-linear-gradient(0deg, var(--pixel-accent-cyan) 0px, var(--pixel-accent-cyan) 1px, transparent 1px, transparent 8px),
+    repeating-linear-gradient(90deg, var(--pixel-accent-cyan) 0px, var(--pixel-accent-cyan) 1px, transparent 1px, transparent 8px);
   opacity: 0.05;
 }
 
 /* 像素噪点背景 */
 .pixel-noise-bg {
   background-image:
-    radial-gradient(circle at 25% 25%, oklch(70% 0.15 195) 1px, transparent 1px),
-    radial-gradient(circle at 75% 75%, oklch(70% 0.15 145) 1px, transparent 1px);
+    radial-gradient(circle at 25% 25%, var(--pixel-accent-cyan) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, var(--pixel-status-success) 1px, transparent 1px);
   background-size: 16px 16px;
   background-position:
     0 0,

@@ -59,7 +59,7 @@ const copyCode = async () => {
 
 <template>
   <div>
-    <div class="flex items-center justify-between gap-1.5 border border-muted bg-default border-b-0 relative rounded-t-md px-4 py-3">
+    <div class="flex items-center justify-between gap-1.5 border border-[var(--pixel-border-primary)] bg-default border-b-0 relative rounded-t-md px-4 py-3">
       <div class="flex items-center gap-1.5">
         <Icon :name="`vscode-icons:file-type-${language}`" />{{ filename }}
       </div>
@@ -74,7 +74,7 @@ const copyCode = async () => {
         </button>
       </ClientOnly>
     </div>
-    <pre ref="preRef" :class="$props.class">
+    <pre ref="preRef" :class="$props.class" class="!mt-0">
       <slot />
     </pre>
   </div>

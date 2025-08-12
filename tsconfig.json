@@ -2,6 +2,9 @@
   // https://v3.nuxtjs.org/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
+    // "paths": {
+    //   "@prisma/client": ["./prisma/generated/prisma"]
+    // },
     "noImplicitAny": false,
     "inlineSources": true,
     "sourceMap": true

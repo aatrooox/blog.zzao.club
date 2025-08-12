@@ -225,8 +225,8 @@ function focusActualInput(): void {
   position: relative;
   padding: 0.5rem;
   cursor: text;
-  background-color: oklch(28% 0.05 250);
-  border: 2px solid oklch(35% 0.08 250);
+  background-color: var(--pixel-bg-card);
+  border: 2px solid var(--pixel-border-input);
   width: 100%;
   box-sizing: border-box;
   font-family: ui-monospace, monospace;
@@ -236,9 +236,9 @@ function focusActualInput(): void {
 .pixel-tag-item {
   display: inline-flex;
   align-items: center;
-  background-color: oklch(45% 0.15 120);
-  color: oklch(95% 0.02 120);
-  border: 2px solid oklch(35% 0.15 120);
+  background-color: var(--pixel-highlight-green);
+  color: var(--pixel-highlight-green-text);
+  border: 2px solid var(--pixel-highlight-green-border);
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
   line-height: 1.25;
@@ -255,12 +255,12 @@ function focusActualInput(): void {
   font-size: 1rem;
   min-width: 100px;
   background: transparent;
-  color: oklch(90% 0.02 250);
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
 }
 
 .pixel-input::placeholder {
-  color: oklch(60% 0.02 250);
+  color: var(--pixel-text-disabled);
 }
 
 .pixel-suggestions {
@@ -269,9 +269,9 @@ function focusActualInput(): void {
   width: 100%;
   margin-top: 0.25rem;
   padding: 0.5rem;
-  background-color: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.1 250);
-  box-shadow: 4px 4px 0 oklch(20% 0.05 250);
+  background-color: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
+  box-shadow: 4px 4px 0 var(--pixel-shadow-secondary);
   font-size: 0.875rem;
 }
 
@@ -284,20 +284,20 @@ function focusActualInput(): void {
 }
 
 .pixel-suggestion-active {
-  background-color: oklch(50% 0.2 180);
-  color: oklch(95% 0.02 180);
-  border: 2px solid oklch(40% 0.2 180);
+  background-color: var(--pixel-highlight-teal);
+  color: var(--pixel-highlight-teal-text);
+  border: 2px solid var(--pixel-highlight-teal-border);
 }
 
 .pixel-suggestion-normal {
-  background-color: oklch(35% 0.08 250);
-  color: oklch(90% 0.02 250);
-  border: 2px solid oklch(25% 0.08 250);
+  background-color: var(--pixel-bg-tertiary);
+  color: var(--pixel-text-primary);
+  border: 2px solid var(--pixel-shadow-primary);
 }
 
 .pixel-suggestion-normal:hover {
-  background-color: oklch(40% 0.1 250);
+  background-color: var(--pixel-bg-quaternary);
   transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0 oklch(20% 0.05 250);
+  box-shadow: 2px 2px 0 var(--pixel-shadow-secondary);
 }
 </style>

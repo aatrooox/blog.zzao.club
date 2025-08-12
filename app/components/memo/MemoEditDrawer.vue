@@ -105,37 +105,37 @@ function handleCancel() {
 <style scoped>
 /* Pixel style for MemoEditDrawer */
 .pixel-drawer {
-  background-color: oklch(20% 0.05 250);
-  border: 2px solid oklch(40% 0.1 250);
+  background-color: var(--pixel-bg-input);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 0;
   font-family: ui-monospace, monospace;
   image-rendering: pixelated;
 }
 
 .pixel-drawer-header {
-  background-color: oklch(25% 0.05 250);
-  border-bottom: 2px solid oklch(40% 0.1 250);
+  background-color: var(--pixel-bg-primary);
+  border-bottom: 2px solid var(--pixel-border-primary);
   padding: 16px;
 }
 
 .pixel-drawer-title {
-  color: oklch(90% 0.02 250);
+  color: var(--pixel-text-primary);
   font-size: 18px;
   font-weight: bold;
   font-family: ui-monospace, monospace;
-  text-shadow: 1px 1px 0 oklch(10% 0.05 250);
+  text-shadow: 1px 1px 0 var(--pixel-shadow-deep);
 }
 
 .pixel-drawer-content {
   padding: 16px;
-  background-color: oklch(20% 0.05 250);
+  background-color: var(--pixel-bg-input);
 }
 
 .pixel-tag-section {
   margin-bottom: 16px;
   padding: 12px;
-  background-color: oklch(25% 0.05 250);
-  border: 1px solid oklch(40% 0.1 250);
+  background-color: var(--pixel-bg-primary);
+  border: 1px solid var(--pixel-border-primary);
   border-radius: 0;
 }
 

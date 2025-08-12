@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 // import anime from 'animejs/lib/anime.es.js'
-import type { Prisma } from '@prisma/client'
+import type { Prisma } from '~~/prisma/generated/prisma/client'
 
 const props = defineProps<Props>()
 const emit = defineEmits(['refresh'])

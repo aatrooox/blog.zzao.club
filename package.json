@@ -28,7 +28,7 @@
     "@pinia/nuxt": "^0.10.1",
     "@primevue/forms": "^4.3.3",
     "@primevue/themes": "^4.1.1",
-    "@prisma/nuxt": "^0.3.0",
+    "@prisma/client": "^6.13.0",
     "@tailwindcss/vite": "^4.1.4",
     "@vee-validate/zod": "^4.15.0",
     "@vueuse/components": "^13.1.0",
@@ -53,6 +53,7 @@
     "nuxt-auth-utils": "^0.5.20",
     "ohash": "^1.1.4",
     "pinia": "^3.0.1",
+    "prisma": "^6.13.0",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-document": "^7.0.3",
     "rehype-sanitize": "^6.0.0",
@@ -98,5 +99,6 @@
     "nodemailer": "^6.10.1",
     "nuxi": "^3.24.1",
     "nuxt-nodemailer": "^1.1.2"
-  }
+  },
+  "manager": "pnpm"
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CommentData } from '@nuxtjs/mdc'
-import type { Prisma, User } from '@prisma/client'
+import type { Prisma, User } from '~~/prisma/generated/prisma/client'
 import type { Visitor } from '~~/types/blog'
 import type { ApiResponse } from '~~/types/fetch'
 import { camelCaseToHyphen, EffectCssAttrs, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs } from '@/config/richText'
@@ -535,7 +535,7 @@ watchEffect(async () => {
 
 <template>
   <div class="pb-10 m-auto mb-4 font-mono pixel-layout">
-    <div class="relative w-full max-w-full">
+    <div class="relative w-full max-w-full flex justify-center">
       <!-- 底部固定的操作栏 -->
       <ClientOnly>
         <div
@@ -565,7 +565,7 @@ watchEffect(async () => {
         </div>
       </ClientOnly>
 
-      <div v-if="page" class="flex w-full">
+      <div v-if="page" class="flex w-full max-w-7xl mx-auto gap-8 items-start">
         <!-- 左侧点赞评论操作栏 -->
         <!-- <ClientOnly>
           <div class="flex-col gap-4 h-80 hidden md:flex top-28 sticky">
@@ -587,7 +587,7 @@ watchEffect(async () => {
             </div>
           </div>
         </ClientOnly> -->
-        <div ref="articleWrap" class="article-wrap relative flex flex-col flex-1 px-6 box-border overflow-x-auto shadow-pixel mx-4 my-6">
+        <div ref="articleWrap" class="article-wrap relative max-w-4xl flex flex-col flex-1 md:px-6 box-border my-6">
           <!-- 选中文字的悬浮气泡 -->
           <ClientOnly>
             <transition appear @enter="commentEnter" @before-enter="commentBeforeEnter" @leave="commentLeave">
@@ -621,13 +621,13 @@ watchEffect(async () => {
           </div>
 
           <!-- 文章内容 markdown -->
-          <article ref="curMdContentRef" class="content-wrap pixel-content prose-invert p-6 w-full">
+          <article ref="curMdContentRef" class="content-wrap pixel-content prose-invert prose-lg max-w-none p-6 w-full">
             <ContentRenderer :value="page?.body" />
           </article>
           <!-- 相邻的文章 -->
           <ClientOnly>
             <div v-if="adjacentPages.length">
-              <Separator class="my-4" label="END" />
+              <!-- <Separator class="my-4" label="END" /> -->
               <div class="pixel-card p-4 md:p-6">
                 <div class="flex justify-between text-sm md:text-base font-mono">
                   <div class="flex-1 flex items-center gap-2">
@@ -654,7 +654,7 @@ watchEffect(async () => {
           <ClientOnly>
             <div class="comment-area pixel-card p-4 md:p-6 mt-6">
               <template v-if="page?.body && !isDefer">
-                <Separator class="my-4" label="评论" />
+                <!-- <Separator class="my-4" label="评论" /> -->
                 <div id="评论区" class="text-xl py-4 font-mono text-gray-100">
                   评论区
                 </div>
@@ -686,8 +686,29 @@ watchEffect(async () => {
         </div>
 
         <ClientOnly>
-          <div class="sticky top-28 hidden lg:block h-[500px]">
-            <AppToc v-if="tocData && tocData.length" :toc-data="tocData" :active-id="activeTocId" class="pixel-card" />
+          <div v-if="tocData && tocData.length" class="hidden lg:block w-64 ml-8 self-start">
+            <!-- 简单的悬浮目录 -->
+            <div class="simple-toc">
+              <div class="simple-toc-header">
+                目录
+              </div>
+              <ul class="simple-toc-list">
+                <template v-for="link in tocData" :key="link.id">
+                  <li class="simple-toc-item" :class="{ active: link.id === activeTocId }">
+                    <a :href="`#${link.id}`" class="simple-toc-link">
+                      {{ link.text }}
+                    </a>
+                  </li>
+                  <template v-if="link.children">
+                    <li v-for="child in link.children" :key="child.id" class="simple-toc-item simple-toc-child" :class="{ active: child.id === activeTocId }">
+                      <a :href="`#${child.id}`" class="simple-toc-link">
+                        {{ child.text }}
+                      </a>
+                    </li>
+                  </template>
+                </template>
+              </ul>
+            </div>
           </div>
         </ClientOnly>
       </div>
@@ -705,47 +726,38 @@ watchEffect(async () => {
 
 /* 像素风格卡片 */
 .pixel-card {
-  background: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 8px;
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(35% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
   transition: all 0.2s ease;
-}
-
-.pixel-card:hover {
-  background: oklch(35% 0.05 250);
-  transform: translateY(-2px);
-  box-shadow:
-    3px 3px 0 oklch(40% 0.05 250),
-    6px 6px 0 oklch(35% 0.05 250),
-    9px 9px 0 oklch(30% 0.05 250);
 }
 
 /* 像素风格按钮 */
 .pixel-btn {
-  background: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
-  color: oklch(90% 0.02 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
   padding: 8px 16px;
   border-radius: 8px;
-  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+  box-shadow: 2px 2px 0 var(--pixel-border-primary);
   transition: all 0.15s ease;
   font-weight: bold;
 }
 
 .pixel-btn:hover {
-  background: oklch(35% 0.05 250);
-  color: oklch(70% 0.15 195);
+  background: var(--pixel-bg-tertiary);
+  color: var(--pixel-accent-cyan);
   transform: translateY(-1px);
-  box-shadow: 3px 3px 0 oklch(40% 0.05 250);
+  box-shadow: 3px 3px 0 var(--pixel-border-primary);
 }
 
 .pixel-btn:active {
   transform: translateY(1px);
-  box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+  box-shadow: 1px 1px 0 var(--pixel-border-primary);
 }
 
 .pixel-btn-sm {
@@ -754,46 +766,46 @@ watchEffect(async () => {
 }
 
 .pixel-btn-primary {
-  background: oklch(70% 0.15 195);
-  color: oklch(25% 0.05 250);
-  border-color: oklch(75% 0.15 195);
+  background: var(--pixel-accent-cyan);
+  color: var(--pixel-bg-primary);
+  border-color: var(--pixel-accent-cyan-light);
 }
 
 .pixel-btn-primary:hover {
-  background: oklch(75% 0.15 195);
-  color: oklch(25% 0.05 250);
+  background: var(--pixel-accent-cyan-light);
+  color: var(--pixel-bg-primary);
 }
 
 /* 像素风格操作卡片 */
 .pixel-card-action {
-  background: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 8px;
-  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+  box-shadow: 2px 2px 0 var(--pixel-border-primary);
   padding: 12px;
   transition: all 0.2s ease;
 }
 
 .pixel-card-action:hover {
-  background: oklch(35% 0.05 250);
+  background: var(--pixel-bg-tertiary);
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 3px 3px 0 oklch(40% 0.05 250);
+  box-shadow: 3px 3px 0 var(--pixel-border-primary);
 }
 
 .pixel-card-action:active {
   transform: translateY(1px) scale(0.98);
-  box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+  box-shadow: 1px 1px 0 var(--pixel-border-primary);
 }
 
 /* 像素风格内容区域 */
 .pixel-content {
-  background: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 8px;
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(35% 0.05 250);
-  color: oklch(85% 0.02 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
+  color: var(--pixel-text-secondary);
   font-family: ui-monospace, monospace;
   padding: 24px;
   line-height: 1.8;
@@ -801,7 +813,7 @@ watchEffect(async () => {
 
 /* 为 ContentRenderer 内容添加像素风格 */
 .pixel-content :deep(p) {
-  color: oklch(85% 0.02 250);
+  color: var(--pixel-text-secondary);
   font-family: ui-monospace, monospace;
   line-height: 1.6;
   margin: 16px 0;
@@ -809,7 +821,7 @@ watchEffect(async () => {
 
 .pixel-content :deep(ul),
 .pixel-content :deep(ol) {
-  color: oklch(85% 0.02 250);
+  color: var(--pixel-text-secondary);
   font-family: ui-monospace, monospace;
   margin: 16px 0;
   padding-left: 24px;
@@ -820,9 +832,9 @@ watchEffect(async () => {
 }
 
 .pixel-content :deep(blockquote) {
-  background: oklch(28% 0.05 250);
-  border-left: 4px solid oklch(70% 0.15 195);
-  color: oklch(80% 0.03 250);
+  background: var(--pixel-bg-primary);
+  border-left: 4px solid var(--pixel-accent-cyan);
+  color: var(--pixel-text-muted);
   font-family: ui-monospace, monospace;
   margin: 16px 0;
   padding: 16px;
@@ -830,17 +842,17 @@ watchEffect(async () => {
 }
 
 .pixel-content :deep(code:not(pre code)) {
-  background: oklch(35% 0.05 250);
-  color: oklch(70% 0.15 195);
+  background: var(--pixel-bg-tertiary);
+  color: var(--pixel-accent-cyan);
   font-family: ui-monospace, monospace;
   padding: 2px 6px;
   border-radius: 4px;
-  border: 1px solid oklch(45% 0.05 250);
+  border: 1px solid var(--pixel-border-secondary);
 }
 
 .pixel-content :deep(table) {
-  background: oklch(28% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-primary);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 8px;
   border-collapse: separate;
   border-spacing: 0;
@@ -850,21 +862,21 @@ watchEffect(async () => {
 
 .pixel-content :deep(th),
 .pixel-content :deep(td) {
-  border-bottom: 1px solid oklch(40% 0.05 250);
-  border-right: 1px solid oklch(40% 0.05 250);
-  color: oklch(85% 0.02 250);
+  border-bottom: 1px solid var(--pixel-border-primary);
+  border-right: 1px solid var(--pixel-border-primary);
+  color: var(--pixel-text-secondary);
   font-family: ui-monospace, monospace;
   padding: 12px;
 }
 
 .pixel-content :deep(th) {
-  background: oklch(32% 0.05 250);
+  background: var(--pixel-bg-secondary);
   font-weight: bold;
 }
 
 .pixel-content :deep(hr) {
   border: none;
-  border-top: 2px solid oklch(40% 0.05 250);
+  border-top: 2px solid var(--pixel-border-primary);
   margin: 24px 0;
 }
 
@@ -874,56 +886,56 @@ watchEffect(async () => {
 .pixel-content :deep(h4),
 .pixel-content :deep(h5),
 .pixel-content :deep(h6) {
-  color: oklch(84% 0.15 85);
+  color: var(--pixel-accent-yellow);
   font-family: ui-monospace, monospace;
   font-weight: bold;
-  text-shadow: 1px 1px 0 oklch(25% 0.05 250);
+  text-shadow: 1px 1px 0 var(--pixel-bg-primary);
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
 
 .pixel-content :deep(p) {
-  color: oklch(90% 0.02 250);
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
   margin-bottom: 1rem;
 }
 
 .pixel-content :deep(a) {
-  color: oklch(70% 0.15 195);
+  color: var(--pixel-accent-cyan);
   text-decoration: underline;
   transition: color 0.2s ease;
 }
 
 .pixel-content :deep(a:hover) {
-  color: oklch(75% 0.15 195);
+  color: var(--pixel-accent-cyan-light);
 }
 
 .pixel-content :deep(code) {
-  background: oklch(25% 0.05 250);
-  color: oklch(70% 0.15 195);
+  background: var(--pixel-bg-primary);
+  color: var(--pixel-accent-cyan);
   padding: 2px 6px;
   border-radius: 4px;
-  border: 1px solid oklch(40% 0.05 250);
+  border: 1px solid var(--pixel-border-primary);
   font-family: ui-monospace, monospace;
 }
 
 .pixel-content :deep(pre) {
-  background: oklch(25% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-primary);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 8px;
   padding: 16px;
   overflow-x: auto;
   margin: 1rem 0;
-  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+  box-shadow: 2px 2px 0 var(--pixel-border-primary);
 }
 
 .pixel-content :deep(blockquote) {
-  background: oklch(28% 0.05 250);
-  border-left: 4px solid oklch(70% 0.15 195);
+  background: var(--pixel-bg-primary);
+  border-left: 4px solid var(--pixel-accent-cyan);
   padding: 16px;
   margin: 1rem 0;
   border-radius: 0 8px 8px 0;
-  color: oklch(85% 0.03 250);
+  color: var(--pixel-text-secondary);
   font-style: italic;
 }
 
@@ -934,12 +946,12 @@ watchEffect(async () => {
 }
 
 .pixel-content :deep(li) {
-  color: oklch(90% 0.02 250);
+  color: var(--pixel-text-primary);
   margin-bottom: 0.5rem;
 }
 
 .pixel-content :deep(table) {
-  border: 2px solid oklch(40% 0.05 250);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 8px;
   overflow: hidden;
   margin: 1rem 0;
@@ -948,49 +960,141 @@ watchEffect(async () => {
 
 .pixel-content :deep(th),
 .pixel-content :deep(td) {
-  border: 1px solid oklch(40% 0.05 250);
+  border: 1px solid var(--pixel-border-primary);
   padding: 8px 12px;
   text-align: left;
 }
 
 .pixel-content :deep(th) {
-  background: oklch(35% 0.05 250);
-  color: oklch(84% 0.15 85);
+  background: var(--pixel-bg-tertiary);
+  color: var(--pixel-accent-yellow);
   font-weight: bold;
 }
 
 .pixel-content :deep(td) {
-  background: oklch(30% 0.05 250);
-  color: oklch(90% 0.02 250);
+  background: var(--pixel-bg-secondary);
+  color: var(--pixel-text-primary);
+}
+
+/* 简单目录样式 */
+.simple-toc {
+  position: sticky;
+  top: 80px;
+  width: 200px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
+  border-radius: 8px;
+  box-shadow:
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
+  font-family: ui-monospace, monospace;
+  z-index: 100;
+}
+
+.simple-toc-header {
+  padding: 12px 16px;
+  background: var(--pixel-bg-tertiary);
+  border-bottom: 2px solid var(--pixel-border-primary);
+  font-weight: bold;
+  font-size: 14px;
+  color: var(--pixel-accent-cyan);
+  text-align: center;
+}
+
+.simple-toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+}
+
+.simple-toc-item {
+  margin: 2px 0;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.simple-toc-child {
+  margin-left: 16px;
+}
+
+.simple-toc-link {
+  display: block;
+  padding: 6px 8px;
+  color: var(--pixel-text-primary);
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1.4;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.simple-toc-link:hover {
+  background: var(--pixel-bg-tertiary);
+  color: var(--pixel-accent-cyan);
+}
+
+.simple-toc-item.active .simple-toc-link {
+  background: var(--pixel-bg-quaternary);
+  color: var(--pixel-highlight-yellow);
+  font-weight: bold;
+  border: 1px solid var(--pixel-accent-cyan);
+}
+
+.simple-toc::-webkit-scrollbar {
+  width: 6px;
+}
+
+.simple-toc::-webkit-scrollbar-track {
+  background: var(--pixel-bg-primary);
+  border-radius: 3px;
+}
+
+.simple-toc::-webkit-scrollbar-thumb {
+  background: var(--pixel-bg-quaternary);
+  border-radius: 3px;
+  border: 1px solid var(--pixel-border-secondary);
+}
+
+.simple-toc::-webkit-scrollbar-thumb:hover {
+  background: var(--pixel-text-disabled);
 }
 
 /* 响应式适配 */
 @media (max-width: 768px) {
   .pixel-card {
     border-width: 1px;
-    box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+    box-shadow: 1px 1px 0 var(--pixel-border-primary);
   }
 
   .pixel-card:hover {
-    box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+    box-shadow: 2px 2px 0 var(--pixel-border-primary);
   }
 
   .pixel-btn {
     border-width: 1px;
-    box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+    box-shadow: 1px 1px 0 var(--pixel-border-primary);
   }
 
   .pixel-btn:hover {
-    box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+    box-shadow: 2px 2px 0 var(--pixel-border-primary);
   }
 
   .pixel-card-action {
     border-width: 1px;
-    box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+    box-shadow: 1px 1px 0 var(--pixel-border-primary);
   }
 
   .pixel-card-action:hover {
-    box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+    box-shadow: 2px 2px 0 var(--pixel-border-primary);
+  }
+
+  .simple-toc {
+    display: none;
   }
 }
 </style>

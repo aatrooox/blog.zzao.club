@@ -223,13 +223,10 @@ function scrollToTop() {
 /* 使用公共像素风格变量和类 */
 .pixel-layout {
   @apply min-h-screen;
-  background: oklch(25% 0.05 250);
+  background: var(--pixel-bg-primary);
   font-family:
     ui-monospace, SFMono-Regular, 'Cascadia Code', 'Segoe UI Mono', 'Liberation Mono', Menlo, Monaco, Consolas,
     'Courier New', monospace;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
 }
 
 .pixel-main {
@@ -239,11 +236,11 @@ function scrollToTop() {
 /* 移动端悬浮底部导航栏样式 */
 .pixel-nav-floating {
   @apply fixed bottom-6 left-6 right-6 z-50 h-16;
-  background: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(40% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-border-primary);
   border-radius: 0;
 }
 
@@ -253,29 +250,29 @@ function scrollToTop() {
 
 .pixel-nav-item {
   @apply flex flex-col items-center justify-center gap-1 px-3 py-2 no-underline transition-all duration-150 border-2 border-transparent rounded-none min-w-[64px] relative;
-  color: oklch(70% 0.05 250);
+  color: var(--pixel-text-muted);
 }
 
 .pixel-nav-item:hover {
   @apply -translate-y-px;
-  color: oklch(65% 0.15 200);
-  background: oklch(35% 0.05 250);
-  border-color: oklch(40% 0.05 250);
-  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+  color: var(--pixel-accent-cyan);
+  background: var(--pixel-bg-tertiary);
+  border-color: var(--pixel-border-primary);
+  box-shadow: 2px 2px 0 var(--pixel-border-primary);
 }
 
 .pixel-nav-item.active {
-  color: oklch(65% 0.15 200);
-  background: oklch(35% 0.05 250);
-  border-color: oklch(65% 0.15 200);
+  color: var(--pixel-accent-cyan);
+  background: var(--pixel-bg-tertiary);
+  border-color: var(--pixel-accent-cyan);
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(40% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-border-primary);
 }
 
 .pixel-nav-item:active {
   @apply translate-y-px;
-  box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+  box-shadow: 1px 1px 0 var(--pixel-border-primary);
 }
 
 .pixel-nav-icon {
@@ -290,23 +287,23 @@ function scrollToTop() {
 /* PC端悬浮侧边导航栏样式 */
 .pixel-sidebar-floating {
   @apply fixed left-6 top-6 bottom-6 w-36 z-50;
-  background: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(40% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-border-primary);
   border-radius: 0;
 }
 
 .pixel-sidebar-header {
   @apply flex items-center justify-center p-6 border-b-2;
-  border-color: oklch(40% 0.05 250);
-  background: oklch(35% 0.05 250);
+  border-color: var(--pixel-border-primary);
+  background: var(--pixel-bg-tertiary);
 }
 
 .pixel-sidebar-logo {
   @apply w-8 h-8;
-  color: oklch(65% 0.15 200);
+  color: var(--pixel-accent-cyan);
   image-rendering: pixelated;
 }
 
@@ -316,29 +313,29 @@ function scrollToTop() {
 
 .pixel-sidebar-item {
   @apply flex items-center gap-3 px-4 py-3 no-underline transition-all duration-150 border-2 border-transparent rounded-none;
-  color: oklch(70% 0.05 250);
+  color: var(--pixel-text-muted);
 }
 
 .pixel-sidebar-item:hover {
   @apply -translate-x-px;
-  color: oklch(65% 0.15 200);
-  background: oklch(35% 0.05 250);
-  border-color: oklch(40% 0.05 250);
-  box-shadow: 2px 2px 0 oklch(40% 0.05 250);
+  color: var(--pixel-accent-cyan);
+  background: var(--pixel-bg-tertiary);
+  border-color: var(--pixel-border-primary);
+  box-shadow: 2px 2px 0 var(--pixel-border-primary);
 }
 
 .pixel-sidebar-item.active {
-  color: oklch(65% 0.15 200);
-  background: oklch(35% 0.05 250);
-  border-color: oklch(65% 0.15 200);
+  color: var(--pixel-accent-cyan);
+  background: var(--pixel-bg-tertiary);
+  border-color: var(--pixel-accent-cyan);
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(40% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-border-primary);
 }
 
 .pixel-sidebar-item:active {
   @apply translate-x-px;
-  box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+  box-shadow: 1px 1px 0 var(--pixel-border-primary);
 }
 
 .pixel-sidebar-icon {
@@ -352,15 +349,15 @@ function scrollToTop() {
 
 .pixel-desktop-main-floating {
   @apply flex-1 overflow-auto p-6;
-  background: oklch(25% 0.05 250);
+  background: var(--pixel-bg-primary);
   margin-left: 192px;
   margin-right: 24px;
   margin-top: 24px;
   margin-bottom: 24px;
-  border: 2px solid oklch(40% 0.05 250);
+  border: 2px solid var(--pixel-border-primary);
   box-shadow:
-    inset 0 2px 8px 0 oklch(40% 0.05 250),
-    2px 2px 0 oklch(40% 0.05 250);
+    inset 0 2px 8px 0 var(--pixel-border-primary),
+    2px 2px 0 var(--pixel-border-primary);
 }
 
 /* 响应式设计 */

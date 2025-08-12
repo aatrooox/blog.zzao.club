@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { User } from '@prisma/client'
+import type { User } from '~~/prisma/generated/prisma/client'
 import type { ApiResponse } from '~~/types/fetch'
 import useTags from '~/composables/useTags'
 
@@ -223,8 +223,8 @@ function onMemoTagClick(tagName: string) {
 <style scoped>
 /* Pixel style layout */
 .pixel-layout {
-  background-color: oklch(25% 0.05 250);
-  color: oklch(90% 0.02 250);
+  background-color: var(--pixel-bg-primary);
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
   image-rendering: pixelated;
   max-width: 1200px;
@@ -237,18 +237,27 @@ function onMemoTagClick(tagName: string) {
 
 /* Pixel style cards */
 .pixel-card {
-  background-color: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.1 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
+  border-radius: 8px;
   box-shadow:
-    4px 4px 0 oklch(20% 0.05 250),
-    8px 8px 0 oklch(15% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
   padding: 1.5rem;
   position: relative;
+  transition: all 0.2s ease;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
 
 .pixel-card-inner {
-  background-color: oklch(28% 0.05 250);
-  border: 2px solid oklch(35% 0.08 250);
+  background: var(--pixel-bg-card);
+  border: 2px solid var(--pixel-border-primary);
+  border-radius: 8px;
+  box-shadow:
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
   padding: 1rem;
 }
 
@@ -257,52 +266,66 @@ function onMemoTagClick(tagName: string) {
 }
 
 .pixel-card-hover:hover {
-  transform: translate(-2px, -2px);
+  transform: translateY(-2px);
   box-shadow:
-    6px 6px 0 oklch(20% 0.05 250),
-    10px 10px 0 oklch(15% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary),
+    6px 6px 0 var(--pixel-bg-secondary);
 }
 
 /* Pixel style text */
 .pixel-title {
+  color: var(--pixel-text-primary);
+  text-shadow: 1px 1px 0 var(--pixel-shadow-primary);
   font-family: ui-monospace, monospace;
   font-weight: bold;
-  color: oklch(84% 0.15 85);
   font-size: 1rem;
   line-height: 1.2;
 }
 
+.pixel-title:hover {
+  color: var(--pixel-highlight-yellow);
+  text-shadow: 2px 2px 0 var(--pixel-shadow-primary);
+}
+
 .pixel-text {
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
-  color: oklch(90% 0.02 250);
   font-size: 0.875rem;
   line-height: 1.4;
 }
 
 /* Pixel style avatar */
 .pixel-avatar {
-  border: 2px solid oklch(40% 0.1 250);
+  border: 2px solid var(--pixel-border-primary);
   image-rendering: pixelated;
 }
 
 /* Pixel style tags */
 .pixel-tag {
-  background-color: oklch(28% 0.05 250);
-  color: oklch(70% 0.15 195);
-  border: 2px solid oklch(35% 0.08 250);
-  padding: 0.25rem 0.5rem;
+  background: var(--pixel-bg-card);
+  color: var(--pixel-accent-cyan);
+  border: 2px solid var(--pixel-accent-cyan-border);
+  padding: 2px 8px;
+  border-radius: 4px;
+  box-shadow: 1px 1px 0 var(--pixel-accent-cyan-border);
   font-family: ui-monospace, monospace;
   font-size: 0.75rem;
   font-weight: bold;
   white-space: nowrap;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .pixel-tag:hover {
-  background-color: oklch(35% 0.08 250);
-  color: oklch(80% 0.15 195);
-  transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0 oklch(20% 0.05 250);
+  background: var(--pixel-bg-tertiary);
+  color: var(--pixel-accent-cyan-hover);
+  transform: translateY(-1px);
+  box-shadow: 2px 2px 0 var(--pixel-accent-cyan-border);
+}
+
+.pixel-tag:active {
+  transform: translateY(1px);
+  box-shadow: 0px 0px 0 var(--pixel-accent-cyan-border);
 }
 
 /* Animation styles */
@@ -331,12 +354,12 @@ function onMemoTagClick(tagName: string) {
 }
 
 .overflow-x-auto::-webkit-scrollbar-thumb {
-  background: oklch(40% 0.1 250);
+  background: var(--pixel-border-primary);
   border-radius: 0;
 }
 
 .overflow-x-auto::-webkit-scrollbar-track {
-  background: oklch(25% 0.05 250);
+  background: var(--pixel-bg-primary);
 }
 
 @media (min-width: 768px) {

@@ -1,4 +1,4 @@
-import type { User } from '@prisma/client'
+import type { User } from '~~/prisma/generated/prisma/client'
 import { useStorage } from '@vueuse/core'
 import { skipHydrate } from 'pinia'
 

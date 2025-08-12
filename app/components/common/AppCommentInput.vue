@@ -220,9 +220,9 @@ defineExpose({ clear })
 }
 
 .pixel-input-field {
-  background-color: oklch(28% 0.05 250);
-  border: 2px solid oklch(35% 0.08 250);
-  color: oklch(90% 0.02 250);
+  background-color: var(--pixel-bg-card);
+  border: 2px solid var(--pixel-border-input);
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
   padding: 0.5rem;
   flex: 1;
@@ -232,7 +232,7 @@ defineExpose({ clear })
 .pixel-hello {
   font-size: 0.875rem;
   padding-bottom: 0.5rem;
-  color: oklch(85% 0.15 180);
+  color: var(--pixel-accent-cyan);
   font-family: ui-monospace, monospace;
   font-weight: bold;
 }
@@ -244,21 +244,21 @@ defineExpose({ clear })
 }
 
 .pixel-checkbox {
-  border: 2px solid oklch(40% 0.1 250);
+  border: 2px solid var(--pixel-border-primary);
 }
 
 .pixel-label {
   font-size: 0.875rem;
   line-height: 1;
-  color: oklch(90% 0.02 250);
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
 }
 
 .pixel-textarea {
   width: 100%;
-  background-color: oklch(28% 0.05 250);
-  border: 2px solid oklch(35% 0.08 250);
-  color: oklch(90% 0.02 250);
+  background-color: var(--pixel-bg-card);
+  border: 2px solid var(--pixel-border-input);
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
   padding: 0.75rem;
   resize: vertical;
@@ -267,12 +267,12 @@ defineExpose({ clear })
 
 .pixel-textarea:focus {
   outline: none;
-  border-color: oklch(50% 0.2 180);
-  box-shadow: 0 0 0 2px oklch(50% 0.2 180 / 0.3);
+  border-color: var(--pixel-border-focus);
+  box-shadow: 0 0 0 2px var(--pixel-accent-cyan-border);
 }
 
 .pixel-textarea::placeholder {
-  color: oklch(60% 0.02 250);
+  color: var(--pixel-text-disabled);
 }
 
 .pixel-buttons {
@@ -290,7 +290,7 @@ defineExpose({ clear })
 
 .pixel-text {
   font-size: 0.75rem;
-  color: oklch(70% 0.02 250);
+  color: var(--pixel-text-muted);
   font-family: ui-monospace, monospace;
 }
 
@@ -314,28 +314,28 @@ defineExpose({ clear })
 }
 
 .pixel-button-primary {
-  background-color: oklch(70% 0.15 195);
-  color: oklch(95% 0.02 195);
-  border-color: oklch(60% 0.15 195);
+  background-color: var(--pixel-accent-cyan);
+  color: var(--pixel-highlight-green-text);
+  border-color: var(--pixel-accent-cyan-border);
 }
 
 .pixel-button-primary:hover {
-  background-color: oklch(75% 0.15 195);
-  border-color: oklch(65% 0.15 195);
+  background-color: var(--pixel-accent-cyan-hover);
+  border-color: var(--pixel-accent-cyan-border);
   transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0 oklch(60% 0.15 195);
+  box-shadow: 2px 2px 0 var(--pixel-accent-cyan-border);
 }
 
 .pixel-button-secondary {
-  background-color: oklch(35% 0.08 250);
-  color: oklch(90% 0.02 250);
-  border-color: oklch(25% 0.08 250);
+  background-color: var(--pixel-bg-tertiary);
+  color: var(--pixel-text-primary);
+  border-color: var(--pixel-bg-primary);
 }
 
 .pixel-button-secondary:hover {
-  background-color: oklch(40% 0.1 250);
+  background-color: var(--pixel-bg-quaternary);
   transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0 oklch(20% 0.05 250);
+  box-shadow: 2px 2px 0 var(--pixel-shadow-secondary);
 }
 
 @media (max-width: 768px) {

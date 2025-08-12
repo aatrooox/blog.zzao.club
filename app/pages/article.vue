@@ -129,32 +129,32 @@ onMounted(() => {
 
 .pixel-layout {
   @apply font-mono;
-  background: oklch(25% 0.05 250);
-  color: oklch(90% 0.02 250);
+  background: var(--pixel-bg-primary);
+  color: var(--pixel-text-primary);
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
 }
 
 .pixel-card {
-  background: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 8px;
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(35% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
   padding: 16px;
   margin: 8px 0;
   transition: all 0.2s ease;
 }
 
 .pixel-card-hover:hover {
-  background: oklch(35% 0.05 250);
+  background: var(--pixel-bg-tertiary);
   transform: translateY(-2px);
   box-shadow:
-    3px 3px 0 oklch(40% 0.05 250),
-    6px 6px 0 oklch(35% 0.05 250),
-    9px 9px 0 oklch(30% 0.05 250);
+    3px 3px 0 var(--pixel-border-primary),
+    6px 6px 0 var(--pixel-bg-tertiary),
+    9px 9px 0 var(--pixel-bg-secondary);
 }
 
 .article-post-item {

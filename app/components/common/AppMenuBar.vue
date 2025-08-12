@@ -119,7 +119,7 @@ function showRegisterDialog() {
               <div class="w-8 h-8 md:w-10 md:h-10 pixel-btn-primary flex items-center justify-center group-hover:pixel-btn-secondary transition-all duration-200">
                 <Icon name="twemoji:wedding" class="text-white text-sm md:text-lg" />
               </div>
-              <span class="text-lg md:text-xl pixel-title pixel-text hidden sm:block group-hover:text-[oklch(65%_0.15_200)] transition-colors duration-200">早早集市</span>
+              <span class="text-lg md:text-xl pixel-title pixel-text hidden sm:block group-hover:text-[var(--pixel-gradient-start)] transition-colors duration-200">早早集市</span>
             </NuxtLink>
           </div>
 
@@ -173,7 +173,7 @@ function showRegisterDialog() {
     </div>
 
     <!-- 装饰性像素边框 -->
-    <div class="h-1 bg-gradient-to-r from-[oklch(65%_0.15_200)] via-[oklch(70%_0.12_160)] to-[oklch(75%_0.1_120)]">
+    <div class="h-1 bg-gradient-to-r from-[var(--pixel-gradient-start)] via-[var(--pixel-gradient-mid)] to-[var(--pixel-gradient-end)]">
       <div class="max-w-7xl mx-auto px-4 md:px-8 h-full" />
     </div>
   </div>

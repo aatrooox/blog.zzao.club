@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     // '@nuxtjs/sitemap',
     // '@nuxtjs/robots'
     // '@nuxtjs/seo'
-    '@nuxtjs/color-mode', '@prisma/nuxt', '@pinia/nuxt', '@vueuse/nuxt', 'shadcn-nuxt', 'vue-sonner/nuxt', 'nuxt-nodemailer', 'nuxt-auth-utils', '@nuxt/eslint'],
+    '@nuxtjs/color-mode', '@pinia/nuxt', '@vueuse/nuxt', 'shadcn-nuxt', 'vue-sonner/nuxt', 'nuxt-nodemailer', 'nuxt-auth-utils', '@nuxt/eslint'],
   components: [
     {
       path: '~/components/common',
@@ -210,6 +210,9 @@ export default defineNuxtConfig({
   nitro: {
     // preset: 'bun',
     errorHandler: '~~/server/error',
+    externals: {
+      inline: ['./prisma/generated/prisma'],
+    },
     experimental: {
       openAPI: true,
     },

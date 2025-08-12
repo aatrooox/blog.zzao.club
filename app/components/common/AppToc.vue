@@ -78,17 +78,14 @@ onUnmounted(() => observer.value?.disconnect())
   height: 500px;
   overflow-y: auto;
   box-sizing: border-box;
-  background: oklch(30% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-secondary);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 4px;
   padding: 8px;
   font-family: ui-monospace, monospace;
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(35% 0.05 250);
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
 }
 
 /* 目录项基础样式 */
@@ -114,57 +111,53 @@ onUnmounted(() => observer.value?.disconnect())
 }
 
 /* 目录项悬停效果 */
-.pixel-toc-item:hover {
-  background: oklch(35% 0.05 250);
-  border: 1px solid oklch(45% 0.05 250);
-  box-shadow: 1px 1px 0 oklch(45% 0.05 250);
-}
+/* .pixel-toc-item:hover {
+  background: var(--pixel-bg-tertiary);
+  border: 1px solid var(--pixel-border-secondary);
+  box-shadow: 1px 1px 0 var(--pixel-border-secondary);
+} */
 
 /* 激活状态的目录项 */
 .pixel-toc-active {
-  background: oklch(40% 0.05 250);
-  border: 1px solid oklch(70% 0.15 195);
-  box-shadow: 1px 1px 0 oklch(70% 0.15 195);
+  background: var(--pixel-bg-quaternary);
+  border: 1px solid var(--pixel-accent-cyan);
 }
 
 /* 激活指示器 */
 .pixel-toc-indicator {
-  color: oklch(70% 0.15 195);
+  color: var(--pixel-accent-cyan);
   font-weight: bold;
   font-size: 12px;
-  text-shadow: 1px 1px 0 oklch(25% 0.05 250);
+  text-shadow: 1px 1px 0 var(--pixel-shadow-primary);
   flex-shrink: 0;
 }
 
 /* 目录链接基础样式 */
 .pixel-toc-link {
-  color: oklch(90% 0.02 250);
-  text-decoration: none;
+  color: var(--pixel-text-primary) !important;
+  text-decoration: none !important;
   font-weight: 400;
   transition: all 0.15s ease;
   flex: 1;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-shadow: 1px 1px 0 oklch(10% 0.05 250);
+  text-shadow: none;
 }
 
 /* 目录链接悬停效果 */
 .pixel-toc-link:hover {
-  color: oklch(95% 0.02 250);
-  text-shadow:
-    1px 1px 0 oklch(10% 0.05 250),
-    0 0 4px oklch(70% 0.15 195);
+  color: var(--pixel-text-primary) !important;
+  text-shadow: 0 0 4px var(--pixel-accent-cyan);
 }
 
 /* 激活状态的目录链接 */
 .pixel-toc-link-active {
-  color: oklch(84% 0.15 85) !important;
+  color: var(--pixel-highlight-yellow) !important;
   font-weight: bold !important;
   text-shadow:
-    1px 1px 0 oklch(10% 0.05 250),
-    0 0 6px oklch(84% 0.15 85),
-    0 0 12px oklch(84% 0.15 85);
+    0 0 6px var(--pixel-highlight-yellow),
+    0 0 12px var(--pixel-highlight-yellow);
 }
 
 /* 滚动条样式 */
@@ -173,25 +166,25 @@ onUnmounted(() => observer.value?.disconnect())
 }
 
 .pixel-toc::-webkit-scrollbar-track {
-  background: oklch(25% 0.05 250);
+  background: var(--pixel-bg-primary);
   border-radius: 2px;
 }
 
 .pixel-toc::-webkit-scrollbar-thumb {
-  background: oklch(40% 0.05 250);
+  background: var(--pixel-bg-quaternary);
   border-radius: 2px;
-  border: 1px solid oklch(45% 0.05 250);
+  border: 1px solid var(--pixel-border-secondary);
 }
 
 .pixel-toc::-webkit-scrollbar-thumb:hover {
-  background: oklch(50% 0.05 250);
+  background: var(--pixel-text-disabled);
 }
 
 /* 响应式适配 */
 @media (max-width: 768px) {
   .pixel-toc {
     border-width: 1px;
-    box-shadow: 1px 1px 0 oklch(40% 0.05 250);
+    box-shadow: 1px 1px 0 var(--pixel-border-primary);
   }
 
   .pixel-toc-item {

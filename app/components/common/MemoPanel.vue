@@ -178,7 +178,7 @@ const parsedContent = computed(() => {
 
 .pixel-memo-content {
   flex: 1;
-  color: oklch(90% 0.02 250);
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
   line-height: 1.6;
   font-size: 0.875rem;
@@ -187,7 +187,7 @@ const parsedContent = computed(() => {
 /* Override MDC prose styles for pixel theme */
 .pixel-memo-content :deep(p) {
   margin: 0.5rem 0;
-  color: oklch(90% 0.02 250);
+  color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
 }
 
@@ -197,34 +197,34 @@ const parsedContent = computed(() => {
 .pixel-memo-content :deep(h4),
 .pixel-memo-content :deep(h5),
 .pixel-memo-content :deep(h6) {
-  color: oklch(85% 0.15 180);
+  color: var(--pixel-highlight-teal-text);
   font-family: ui-monospace, monospace;
   font-weight: bold;
   margin: 1rem 0 0.5rem 0;
 }
 
 .pixel-memo-content :deep(a) {
-  color: oklch(70% 0.2 200);
+  color: var(--pixel-gradient-start);
   text-decoration: underline;
   font-family: ui-monospace, monospace;
 }
 
 .pixel-memo-content :deep(a:hover) {
-  color: oklch(80% 0.25 200);
+  color: var(--pixel-gradient-start);
 }
 
 .pixel-memo-content :deep(code) {
-  background-color: oklch(35% 0.08 250);
-  color: oklch(85% 0.15 120);
+  background-color: var(--pixel-bg-tertiary);
+  color: var(--pixel-highlight-green-text);
   padding: 0.125rem 0.25rem;
-  border: 1px solid oklch(40% 0.1 250);
+  border: 1px solid var(--pixel-border-primary);
   font-family: ui-monospace, monospace;
   font-size: 0.8rem;
 }
 
 .pixel-memo-content :deep(pre) {
-  background-color: oklch(20% 0.05 250);
-  border: 2px solid oklch(30% 0.08 250);
+  background-color: var(--pixel-bg-input);
+  border: 2px solid var(--pixel-bg-secondary);
   padding: 1rem;
   overflow-x: auto;
   margin: 1rem 0;
@@ -234,14 +234,14 @@ const parsedContent = computed(() => {
   background: none;
   border: none;
   padding: 0;
-  color: oklch(90% 0.02 250);
+  color: var(--pixel-text-primary);
 }
 
 .pixel-memo-content :deep(blockquote) {
-  border-left: 4px solid oklch(50% 0.2 180);
+  border-left: 4px solid var(--pixel-highlight-teal);
   padding-left: 1rem;
   margin: 1rem 0;
-  color: oklch(80% 0.02 250);
+  color: var(--pixel-text-tertiary);
   font-style: italic;
 }
 
@@ -253,13 +253,13 @@ const parsedContent = computed(() => {
 
 .pixel-memo-content :deep(li) {
   margin: 0.25rem 0;
-  color: oklch(90% 0.02 250);
+  color: var(--pixel-text-primary);
 }
 
 .pixel-memo-content :deep(img) {
   max-width: 100%;
   height: auto;
-  border: 2px solid oklch(40% 0.1 250);
+  border: 2px solid var(--pixel-border-primary);
   image-rendering: pixelated;
 }
 

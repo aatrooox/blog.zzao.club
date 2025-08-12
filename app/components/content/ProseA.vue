@@ -18,9 +18,9 @@ const props = defineProps({
   <NuxtLink
     :href="props.href" :target="props.target"
     class="font-bold font-mono border-b-2 border-dashed transition-all duration-200"
-    style="color: oklch(70% 0.15 195); border-color: oklch(60% 0.15 195);"
-    @mouseover="$event.target.style.color = 'oklch(75% 0.15 195)'; $event.target.style.borderColor = 'oklch(65% 0.15 195)'; $event.target.style.borderStyle = 'solid';"
-    @mouseleave="$event.target.style.color = 'oklch(70% 0.15 195)'; $event.target.style.borderColor = 'oklch(60% 0.15 195)'; $event.target.style.borderStyle = 'dashed';"
+    style="color: var(--pixel-accent-cyan); border-color: var(--pixel-accent-cyan-border);"
+    @mouseover="$event.target.style.color = 'var(--pixel-accent-cyan-hover)'; $event.target.style.borderColor = 'var(--pixel-accent-cyan-border)'; $event.target.style.borderStyle = 'solid';"
+    @mouseleave="$event.target.style.color = 'var(--pixel-accent-cyan)'; $event.target.style.borderColor = 'var(--pixel-accent-cyan-border)'; $event.target.style.borderStyle = 'dashed';"
   >
     <slot />
   </NuxtLink>

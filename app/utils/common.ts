@@ -1,4 +1,4 @@
-import type { User } from '@prisma/client'
+import type { User } from '~~/prisma/generated/prisma/client'
 import type { Visitor } from '~~/types/blog'
 import type { ApiResponse } from '~~/types/fetch'
 

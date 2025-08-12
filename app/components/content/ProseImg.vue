@@ -48,12 +48,12 @@ const refinedSrc = computed(() => {
 .pixel-img-container {
   display: inline-block;
   margin: 16px 0;
-  background: oklch(28% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-card);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 8px;
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(35% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
   padding: 8px;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;

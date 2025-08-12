@@ -96,12 +96,12 @@ const showSearchDialog = (tag: string) => {
 
 <style scoped>
 .pixel-card {
-  background: oklch(28% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-card);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 8px;
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(35% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
   transition: all 0.2s ease;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
@@ -111,48 +111,48 @@ const showSearchDialog = (tag: string) => {
 .pixel-card:hover {
   transform: translateY(-2px);
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(35% 0.05 250),
-    6px 6px 0 oklch(30% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary),
+    6px 6px 0 var(--pixel-bg-secondary);
 }
 
 .pixel-title {
-  color: oklch(90% 0.03 250);
-  text-shadow: 1px 1px 0 oklch(25% 0.05 250);
+  color: var(--pixel-text-primary);
+  text-shadow: 1px 1px 0 var(--pixel-shadow-primary);
 }
 
 .pixel-title:hover {
-  color: oklch(90% 0.15 85);
-  text-shadow: 2px 2px 0 oklch(25% 0.05 250);
+  color: var(--pixel-highlight-yellow);
+  text-shadow: 2px 2px 0 var(--pixel-shadow-primary);
 }
 
 .pixel-text {
-  color: oklch(90% 0.02 250);
+  color: var(--pixel-text-primary);
 }
 
 .pixel-meta {
-  color: oklch(75% 0.03 250);
+  color: var(--pixel-text-muted);
 }
 
 .pixel-tag {
-  background: oklch(28% 0.05 250);
-  color: oklch(70% 0.15 195);
-  border: 2px solid oklch(60% 0.15 195);
+  background: var(--pixel-bg-card);
+  color: var(--pixel-accent-cyan);
+  border: 2px solid var(--pixel-accent-cyan-border);
   padding: 2px 8px;
   border-radius: 4px;
-  box-shadow: 1px 1px 0 oklch(60% 0.15 195);
+  box-shadow: 1px 1px 0 var(--pixel-accent-cyan-border);
   transition: all 0.15s ease;
 }
 
 .pixel-tag:hover {
-  background: oklch(35% 0.05 250);
-  color: oklch(75% 0.15 195);
+  background: var(--pixel-bg-tertiary);
+  color: var(--pixel-accent-cyan-hover);
   transform: translateY(-1px);
-  box-shadow: 2px 2px 0 oklch(60% 0.15 195);
+  box-shadow: 2px 2px 0 var(--pixel-accent-cyan-border);
 }
 
 .pixel-tag:active {
   transform: translateY(1px);
-  box-shadow: 0px 0px 0 oklch(60% 0.15 195);
+  box-shadow: 0px 0px 0 var(--pixel-accent-cyan-border);
 }
 </style>

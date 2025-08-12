@@ -86,12 +86,12 @@ pre code .line {
 }
 
 .pixel-code-block {
-  background: oklch(28% 0.05 250);
-  border: 2px solid oklch(40% 0.05 250);
+  background: var(--pixel-bg-card);
+  border: 2px solid var(--pixel-border-primary);
   border-radius: 8px;
   box-shadow:
-    2px 2px 0 oklch(40% 0.05 250),
-    4px 4px 0 oklch(35% 0.05 250);
+    2px 2px 0 var(--pixel-border-primary),
+    4px 4px 0 var(--pixel-bg-tertiary);
   margin: 16px 0;
   overflow: hidden;
   image-rendering: pixelated;
@@ -104,9 +104,9 @@ pre code .line {
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
-  background: oklch(32% 0.05 250);
-  border-bottom: 2px solid oklch(40% 0.05 250);
-  color: oklch(75% 0.03 250);
+  background: var(--pixel-bg-code);
+  border-bottom: 2px solid var(--pixel-border-primary);
+  color: var(--pixel-text-muted);
   font-family: ui-monospace, monospace;
 }
 
@@ -115,9 +115,9 @@ pre code .line {
   align-items: center;
   gap: 4px;
   padding: 4px 8px;
-  background: oklch(35% 0.05 250);
-  color: oklch(70% 0.03 250);
-  border: 2px solid oklch(45% 0.05 250);
+  background: var(--pixel-bg-tertiary);
+  color: var(--pixel-text-code);
+  border: 2px solid var(--pixel-border-secondary);
   border-radius: 4px;
   font-family: ui-monospace, monospace;
   font-size: 12px;
@@ -126,10 +126,10 @@ pre code .line {
 }
 
 .pixel-btn-copy:hover {
-  background: oklch(40% 0.05 250);
-  color: oklch(75% 0.03 250);
+  background: var(--pixel-bg-quaternary);
+  color: var(--pixel-text-muted);
   transform: translateY(-1px);
-  box-shadow: 1px 1px 0 oklch(45% 0.05 250);
+  box-shadow: 1px 1px 0 var(--pixel-border-secondary);
 }
 
 .pixel-btn-copy:active {
@@ -141,7 +141,7 @@ pre code .line {
   padding: 16px;
   margin: 0;
   background: transparent;
-  color: oklch(85% 0.02 250);
+  color: var(--pixel-text-secondary);
   font-family: ui-monospace, monospace;
   font-size: 14px;
   line-height: 1.5;

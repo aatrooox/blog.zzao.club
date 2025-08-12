@@ -1,4 +1,4 @@
-import type { BlogMemo, Prisma } from '@prisma/client'
+import type { BlogMemo, Prisma } from '~~/prisma/generated/prisma/client'
 
 export type BlogMemoWithUser = Prisma.BlogMemoGetPayload<{
   include: {
