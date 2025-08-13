@@ -8,13 +8,14 @@ type UserInfo = User | {
 }
 
 const props = defineProps<{
+  user?: UserInfo | null
   userInfo?: UserInfo | null
   previewUrl?: string
 }>()
 const fallbackText = computed(() => 'Z')
 
 const imgUrl = computed(() => {
-  return props.previewUrl || props.userInfo?.avatarUrl
+  return props.previewUrl || props.user?.avatarUrl || props.userInfo?.avatarUrl
 })
 </script>
 

@@ -4,9 +4,9 @@ const toast = useGlobalToast()
 const loginForm = ref(null)
 const registerForm = ref<{ show: () => void } | null>(null)
 // const config = useRuntimeConfig()
-const userStore = useUserStore()
-const tokenStore = useTokenStore()
-const navBarStore = useNavBarStore()
+const isLoginDialogOpen = ref(false)
+const userStore = useUser()
+const navBarStore = useNavBar()
 // const colorMode = useColorMode()
 const { $api } = useNuxtApp()
 // const modes = ['light', 'dark']
@@ -74,7 +74,7 @@ async function loginBlog(body) {
   const res = await $api.post('/api/v1/user/login', body)
   if (res) {
     userStore.setUser(res.data.user)
-    tokenStore.setToken(res.data.token)
+    userStore.setToken(res.data.token)
     toast.add({ type: 'success', message: '登录成功' })
   }
 }
@@ -106,7 +106,7 @@ function showRegisterDialog() {
   <div
     class="sticky top-0 w-full z-[49] mb-4 md:mb-8 transition-all duration-200"
     :style="{
-      top: navBarStore.navBar?.isHidden ? '0px' : '-100px',
+      top: navBarStore.navBar.value?.isHidden ? '0px' : '-100px',
     }"
   >
     <!-- 主导航容器 -->
@@ -162,6 +162,7 @@ function showRegisterDialog() {
               <AppLoginDialog
                 v-if="!userStore.isLogin"
                 ref="loginForm"
+                v-model="isLoginDialogOpen"
                 :login="loginBlog"
                 @show-register-dialog="showRegisterDialog"
               />

@@ -1,3 +1,5 @@
 <template>
-  <p><slot /></p>
+  <p class="text-[var(--pixel-text-primary)]">
+    <slot />
+  </p>
 </template>

@@ -12,7 +12,7 @@ definePageMeta({
 const route = useRoute()
 const router = useRouter()
 const { $api } = useNuxtApp()
-const userStore = useUserStore()
+const userStore = useUser()
 const toast = useGlobalToast()
 
 const memoId = computed(() => (route.params.slug && route.params.slug[0]) ?? '')
@@ -68,7 +68,7 @@ async function handleMemoUpdated() {
 
 // 创建评论
 async function createComment(data: CommentData) {
-  if (!userStore.user?.id) {
+  if (!userStore.user.value?.id) {
     const v = data.visitor as Visitor
     if (v && (v.name || v.email || v.website)) {
       await createVistorIDWithInfo(v)
@@ -81,7 +81,7 @@ async function createComment(data: CommentData) {
     type: 'memo',
     memo_id: memoId.value,
     content: data.content,
-    user_id: userStore.user.id,
+    user_id: userStore.user.value.id,
     path: `https://zzao.club${route.fullPath}`,
   })
 
@@ -99,19 +99,17 @@ async function createVistorIDWithInfo(visitor: Visitor) {
     website: visitor.website,
   })
   if (!res.error) {
-    userStore.setUser(res.data.data.user)
-    const tokenStore = useTokenStore()
-    tokenStore.setToken(res.data.data.token)
+    userStore.setUser(res.data.user)
+    userStore.setToken(res.data.token)
   }
 }
 // 无访客信息时注册
 async function createVistorIDByFingerprint() {
   const clientjs = useClientjs()
-  const tokenStore = useTokenStore()
   const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
   if (!res.error) {
-    userStore.setUser(res.data.data.user)
-    tokenStore.setToken(res.data.data.token)
+    userStore.setUser(res.data.user)
+    userStore.setToken(res.data.token)
   }
 }
 
@@ -122,7 +120,7 @@ async function initComment() {
     memo_id: memoId.value,
   })
   if (!res.error) {
-    comments.value = res.data.data
+    comments.value = res.data
   }
   isDefer.value = false
 }
@@ -141,19 +139,18 @@ const formatCommentCount = computed(() => {
 // 点赞操作
 async function handleLike() {
   // 游客点赞 生成指纹 -> 注册为游客 (随机用户名 + 固定id)
-  if (!userStore.user.id) {
+  if (!userStore.user.value.id) {
     const clientjs = useClientjs()
     const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-    userStore.setUser(res.data.data.user)
-    const tokenStore = useTokenStore()
-    tokenStore.setToken(res.data.data.token)
+    userStore.setUser(res.data.user)
+    userStore.setToken(res.data.token)
   }
 
   if (isLiked.value) {
     return toast.warn('已经点过赞了')
   }
 
-  const res = await $api.post<ApiResponse>('/api/v1/memo/like', { memo_id: memoId.value, user_id: userStore.user.id })
+  const res = await $api.post<ApiResponse>('/api/v1/memo/like', { memo_id: memoId.value, user_id: userStore.user.value.id })
 
   if (!res.error) {
     toast.success('感谢支持！')
@@ -163,10 +160,10 @@ async function handleLike() {
 
 // 初始化点赞数据
 async function initLikeCount() {
-  const res = await $api.get<ApiResponse>('/api/v1/memo/like', { id: memoId.value, user_id: userStore.user.id })
+  const res = await $api.get<ApiResponse>('/api/v1/memo/like', { id: memoId.value, user_id: userStore.user.value.id })
   if (!res.error) {
-    likeCount.value = res.data.data.count
-    isLiked.value = res.data.data.isLiked
+    likeCount.value = res.data.count
+    isLiked.value = res.data.isLiked
   }
 }
 
@@ -197,7 +194,7 @@ function handleTagClick(tagName: string) {
       </div>
 
       <!-- Memo内容 -->
-      <div v-else class="space-y-4 md:space-y-6">
+      <div v-else class="space-y-4 md:space-y-6 w-full">
         <!-- 返回按钮 -->
         <div class="flex items-center">
           <Button
@@ -211,19 +208,19 @@ function handleTagClick(tagName: string) {
           </Button>
         </div>
 
-        <!-- 交互按钮区域 -->
+        <!-- 用户信息和操作区域 -->
         <ClientOnly>
-          <div class="pixel-card bg-base border-2 md:border-4 border-bg-base rounded-t-lg md:rounded-t-xl shadow-pixel p-4 md:p-6">
+          <div class="pixel-card bg-base border-2 md:border-4 border-bg-base rounded-lg md:rounded-xl shadow-pixel p-4 md:p-6">
             <div class="flex items-center justify-between">
               <!-- 左侧用户信息 -->
               <div class="flex items-center space-x-3">
-                <UserAvatar :user-info="memo.user_info" />
-                <div>
-                  <div class="text-[var(--pixel-text-primary)] font-mono font-bold">
-                    {{ memo.user_info?.username || '匿名用户' }}
+                <UserAvatar :user-info="memo.user_info" class="w-10 h-10 md:w-12 md:h-12" />
+                <div class="flex flex-col">
+                  <div class="text-[var(--pixel-text-primary)] font-mono font-bold text-sm md:text-base">
+                    {{ memo.user_info?.nickname || '匿名用户' }}
                   </div>
+                  <NuxtTime :datetime="memo.createTs" class="text-xs text-[var(--pixel-text-secondary)] font-mono" />
                 </div>
-                <NuxtTime :datetime="memo.createTs" class="text-xs text-[var(--pixel-text-secondary)] font-mono" />
               </div>
 
               <!-- 右侧操作按钮 -->
@@ -289,23 +286,27 @@ function handleTagClick(tagName: string) {
           </div>
         </ClientOnly>
         <!-- Memo面板 -->
-        <div class="pixel-content bg-base border-x-2 md:border-x-4 border-bg-base shadow-pixel p-4 md:p-6 overflow-hidden">
+        <div class="pixel-card bg-base border-2 md:border-4 border-bg-base rounded-lg md:rounded-xl shadow-pixel p-4 md:p-6 overflow-hidden">
           <MemoPanel :memo="memo" :show-all="true" :hide-btns="true" />
         </div>
 
         <!-- Tags显示 -->
-        <div v-if="memo.tags && memo.tags.length > 0" class="pixel-card bg-base border-2 md:border-4 border-bg-base rounded-b-lg md:rounded-b-xl shadow-pixel p-4 md:p-6">
-          <div class="flex flex-wrap gap-2 items-center">
-            <div class="w-3 h-3 bg-primary-600 rounded-sm mr-2" />
-            <Icon name="material-symbols:tag" class="w-4 h-4 text-bg-base" />
-            <span
-              v-for="tag in memo.tags"
-              :key="tag.id"
-              class="pixel-tag text-xs cursor-pointer bg-base text-primary-600 font-mono font-bold border-2 border-bg-base rounded-lg px-3 py-1 hover:bg-bg-base hover:text-primary-700 hover:scale-105 transition-all duration-200"
-              @click="handleTagClick(tag.tagName)"
-            >
-              {{ tag.tagName }}
-            </span>
+        <div v-if="memo.tags && memo.tags.length > 0" class="pixel-card bg-base border-2 md:border-4 border-bg-base rounded-lg md:rounded-xl shadow-pixel p-4 md:p-6">
+          <div class="flex flex-wrap gap-3 items-center">
+            <div class="flex items-center gap-2 text-[var(--pixel-text-primary)] font-mono font-bold text-sm">
+              <Icon name="material-symbols:tag" class="w-4 h-4" />
+              <span>标签</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span
+                v-for="tag in memo.tags"
+                :key="tag.id"
+                class="pixel-tag text-xs cursor-pointer bg-secondary-500/20 text-primary-600 font-mono font-bold border-2 border-primary-600/30 rounded-lg px-3 py-1 hover:bg-primary-600 hover:text-white hover:scale-105 transition-all duration-200"
+                @click="handleTagClick(tag.tagName)"
+              >
+                {{ tag.tagName }}
+              </span>
+            </div>
           </div>
         </div>
         <!-- 评论区 -->
@@ -341,11 +342,12 @@ function handleTagClick(tagName: string) {
                 </transition-group>
               </template>
               <div v-else class="text-center py-8">
-                <div class="bg-secondary-500/20 border-2 border-bg-base rounded-lg p-6">
-                  <div class="text-bg-base font-mono font-bold text-lg mb-2">
+                <div class="bg-gradient-to-br from-secondary-500/10 to-primary-600/10 border-2 border-dashed border-secondary-500/30 rounded-lg p-8">
+                  <Icon name="material-symbols:chat-bubble-outline" class="w-12 h-12 text-secondary-500/60 mx-auto mb-3" />
+                  <div class="text-[var(--pixel-text-primary)] font-mono font-bold text-lg mb-2">
                     暂无评论
                   </div>
-                  <div class="text-bg-base/70 font-mono">
+                  <div class="text-[var(--pixel-text-secondary)] font-mono text-sm">
                     快来抢沙发吧！
                   </div>
                 </div>

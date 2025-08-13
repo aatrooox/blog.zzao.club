@@ -5,13 +5,12 @@ import type { User } from '~~/types/memo'
 export async function createVistorID(visitor: Visitor) {
   const { $api } = useNuxtApp()
   const clientjs = useClientjs()
-  const userStore = useUserStore()
-  const tokenStore = useTokenStore()
+  const userStore = useUser()
 
   const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId(), visitorName: visitor.name, visitorEmail: visitor.email, visitorWebsite: visitor.website })
 
-  userStore.setUser(res.data.data.user)
-  tokenStore.setToken(res.data.data.token)
+  userStore.setUser(res.data.user)
+  userStore.setToken(res.data.token)
 }
 
 /**

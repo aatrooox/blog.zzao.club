@@ -14,7 +14,7 @@ import {
 
 // 用户表
 export const users = mysqlTable('blog_user', {
-  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID().slice(0, 7)),
+  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   email: varchar('email', { length: 255 }),
   phone: varchar('phone', { length: 255 }),
   username: varchar('username', { length: 255 }).notNull().unique(),
@@ -28,7 +28,7 @@ export const users = mysqlTable('blog_user', {
 
 // 用户配置表
 export const userConfigs = mysqlTable('blog_user_config', {
-  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID().slice(0, 7)),
+  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   userId: varchar('userId', { length: 255 }).notNull().unique(),
   allowEmailNotify: int('allowEmailNotify').default(0),
   createdAt: datetime('createdAt').notNull().default(new Date()),
@@ -37,7 +37,7 @@ export const userConfigs = mysqlTable('blog_user_config', {
 
 // 访问令牌表
 export const accessTokens = mysqlTable('blog_access_token', {
-  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID().slice(0, 7)),
+  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   userId: varchar('userId', { length: 255 }).notNull(),
   token: varchar('token', { length: 255 }).notNull().unique(),
   roles: varchar('roles', { length: 255 }).notNull().default('user'),
@@ -52,7 +52,7 @@ export const accessTokens = mysqlTable('blog_access_token', {
 
 // 第三方登录表
 export const oauths = mysqlTable('blog_oauth', {
-  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID().slice(0, 7)),
+  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   userId: varchar('userId', { length: 255 }),
   provider: varchar('provider', { length: 255 }).notNull(),
   providerId: varchar('providerId', { length: 255 }).notNull(),
@@ -67,7 +67,7 @@ export const oauths = mysqlTable('blog_oauth', {
 
 // 博客评论表
 export const blogComments = mysqlTable('blog_comment', {
-  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID().slice(0, 7)),
+  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   content: mediumtext('content').notNull(),
   createTs: datetime('create_ts').notNull().default(new Date()),
   updatedTs: datetime('updated_ts').notNull().default(new Date()).$onUpdate(() => new Date()),
@@ -81,7 +81,7 @@ export const blogComments = mysqlTable('blog_comment', {
 
 // 博客解释表
 export const blogExplains = mysqlTable('blog_explain', {
-  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID().slice(0, 7)),
+  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   createTs: datetime('create_ts').notNull().default(new Date()),
   updatedTs: datetime('updated_ts').notNull().default(new Date()).$onUpdate(() => new Date()),
   text: mediumtext('text').notNull(),
@@ -91,7 +91,7 @@ export const blogExplains = mysqlTable('blog_explain', {
 
 // 博客子评论表
 export const blogSubComments = mysqlTable('blog_sub_comment', {
-  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID().slice(0, 7)),
+  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   content: mediumtext('content').notNull(),
   createTs: datetime('create_ts').notNull().default(new Date()),
   updatedTs: datetime('updated_ts').notNull().default(new Date()).$onUpdate(() => new Date()),
@@ -115,7 +115,7 @@ export const blogLikes = mysqlTable('blog_like', {
 
 // 博客备忘录表
 export const blogMemos = mysqlTable('blog_memos', {
-  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID().slice(0, 7)),
+  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   content: mediumtext('content'),
   createTs: datetime('create_ts').notNull().default(new Date()),
   updatedTs: datetime('updated_ts').notNull().default(new Date()).$onUpdate(() => new Date()),
@@ -129,7 +129,7 @@ export const blogMemos = mysqlTable('blog_memos', {
 
 // 备忘录标签表
 export const memoTags = mysqlTable('blog_memo_tag', {
-  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID().slice(0, 7)),
+  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   tagName: varchar('tag_name', { length: 255 }).notNull().unique(),
   createTs: datetime('create_ts').notNull().default(new Date()),
   updatedTs: datetime('updated_ts').notNull().default(new Date()).$onUpdate(() => new Date()),
@@ -148,7 +148,7 @@ export const memoTagRelations = mysqlTable('blog_memo_tag_relations', {
 
 // Garmin 活动表
 export const garminActivities = mysqlTable('blog_garmin_activity', {
-  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID().slice(0, 7)),
+  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   activityType: varchar('activity_type', { length: 255 }).notNull(),
   date: datetime('date').notNull(),
   isFavorite: boolean('is_favorite').notNull(),

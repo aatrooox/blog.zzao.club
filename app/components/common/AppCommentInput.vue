@@ -19,7 +19,7 @@ const {
   tags = [],
 } = defineProps<{ type?: string, target?: string, showHello?: boolean, submitBtnText?: string, cancelBtnText?: string, inputTip?: string, placeholder?: string, initialValue?: string, tags?: string[] }>()
 const emit = defineEmits(['valueChange', 'send', 'cancel'])
-const userStore = useUserStore()
+const userStore = useUser()
 // const emojiPopover = ref(null)
 // const color = useColorMode()
 // const EmojiPickerRef = ref()
@@ -152,8 +152,8 @@ function cancelSend() {
 }
 
 onMounted(() => {
-  if (userStore.user?.username) {
-    visitorName.value = userStore.user.username
+  if (userStore.user.value?.username) {
+    visitorName.value = userStore.user.value.username
   }
   // 设置初始值
   if (initialValue) {
@@ -173,7 +173,7 @@ defineExpose({ clear })
         <Input v-model="visitorWebsite" placeholder="你的主页" class="pixel-input-field" />
       </div>
       <div v-else-if="showHello" class="pixel-hello">
-        Hi，{{ userStore.user.nickname || userStore.user.username }}。欢迎评论👏
+        Hi，{{ userStore.user.value.nickname || userStore.user.value.username }}。欢迎评论👏
       </div>
       <div v-show="!userStore.isLogin && visitorEmail" class="pixel-checkbox-container">
         <div class="flex items-center space-x-2">

@@ -1,19 +1,47 @@
 import type { User } from '~~/types/memo'
 import { useStorage } from '@vueuse/core'
-import { skipHydrate } from 'pinia'
 
-export const useUserStore = defineStore('user', () => {
-  const user = useStorage<User | any>('blog/user', {})
-  const token = useStorage<string>('blog/token', '')
+export function useUser() {
+  // 用户状态管理
+  const user = useState<User | any>('user', () => {
+    if (import.meta.client) {
+      return useStorage('blog/user', {}).value
+    }
+    return {}
+  })
+
+  // Token状态管理
+  const token = useState<string>('token', () => {
+    if (import.meta.client) {
+      return useStorage('blog/token', '').value
+    }
+    return ''
+  })
+
+  // 同步到localStorage的方法
+  const syncToStorage = () => {
+    if (import.meta.client) {
+      const userStorage = useStorage('blog/user', {})
+      const tokenStorage = useStorage('blog/token', '')
+      userStorage.value = user.value
+      tokenStorage.value = token.value
+    }
+  }
+
   const setUser = (userData: User) => {
     user.value = userData
+    syncToStorage()
   }
 
   const setToken = (newToken: string) => {
     token.value = newToken
+    syncToStorage()
   }
+
   const logout = () => {
     user.value = {}
+    token.value = ''
+    syncToStorage()
   }
 
   const isLogin = computed(() => {
@@ -29,8 +57,8 @@ export const useUserStore = defineStore('user', () => {
   })
 
   return {
-    user: skipHydrate(user),
-    token: skipHydrate(token),
+    user: readonly(user),
+    token: readonly(token),
     setUser,
     setToken,
     isLogin,
@@ -38,4 +66,4 @@ export const useUserStore = defineStore('user', () => {
     isSuperAdmin,
     logout,
   }
-})
+}

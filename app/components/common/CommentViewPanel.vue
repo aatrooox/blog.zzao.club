@@ -5,7 +5,7 @@ import type { BlogCommentWithUserInfo } from '~~/types/blog-drizzle'
 const props = defineProps<Props>()
 const emit = defineEmits(['refresh'])
 const toast = useGlobalToast()
-const userStore = useUserStore()
+const userStore = useUser()
 const { $api } = useNuxtApp()
 const commentReplyOpen = ref(false)
 const subCommentsRef = ref()
@@ -26,7 +26,7 @@ const commentUserMap = computed(() => {
 })
 // 回复评论
 function commentReply() {
-  if (!userStore?.user.username) {
+  if (!userStore?.user.value.username) {
     toast.add({ message: '请先登录' })
     return
   }
@@ -38,7 +38,7 @@ async function createSubComment(message) {
   const res = await $api.post('/api/v1/comment/sub/create', {
     comment_id: props.comment.id, // 当前评论的 id
     content: message.content,
-    user_id: userStore?.user.id,
+    user_id: userStore?.user.value.id,
   })
   if (!res.error) {
     commentReplyOpen.value = false
@@ -117,7 +117,7 @@ function refreshList() {
           </Button>
           <!-- 管理员 或自己 可删除 -->
           <Button
-            v-if="comment.userId === userStore?.user.id || userStore?.user.role === 'superAdmin'" variant="ghost" text
+            v-if="comment.userId === userStore?.user.value.id || userStore?.user.value.role === 'superAdmin'" variant="ghost" text
             size="sm"
             @click.stop="delComment"
           >

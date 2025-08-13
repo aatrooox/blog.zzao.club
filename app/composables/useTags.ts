@@ -13,7 +13,7 @@ export interface BlogTag {
 
 export default function useTags() {
   const { $api } = useNuxtApp()
-  const userStore = useUserStore()
+  const userStore = useUser()
   const toast = useGlobalToast()
   const tags = useState<BlogTag[]>('tags', () => [])
 

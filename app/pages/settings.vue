@@ -29,7 +29,7 @@ definePageMeta({
 const { user } = useUserSession()
 const { $api } = useNuxtApp()
 const toast = useGlobalToast()
-const userStore = useUserStore()
+const userStore = useUser()
 const schema = ref<any>(null)
 const configSchema = ref<any>(null)
 const route = useRoute()
@@ -52,7 +52,7 @@ async function onSubmit(values: Record<string, any>) {
 
   console.log(`values`, values)
 
-  const res = await $api.put<ApiResponse>(`/api/v1/user/${userStore.user.id}`, values)
+  const res = await $api.put<ApiResponse>(`/api/v1/user/${userStore.user.value.id}`, values)
 
   if (res.data) {
     toast.success('更新成功')
@@ -65,7 +65,7 @@ async function onSubmitConfig(values: Record<string, any>) {
 
   console.log(`values`, values)
   values.allowEmailNotify = values.allowEmailNotify ? 1 : 0
-  const res = await $api.post<ApiResponse>(`/api/v1/user/config`, { ...values, userId: userStore.user.id })
+  const res = await $api.post<ApiResponse>(`/api/v1/user/config`, { ...values, userId: userStore.user.value.id })
   if (res.data) {
     toast.success('更新成功')
   }
@@ -80,15 +80,15 @@ async function onSubmitPassword(values: Record<string, any>) {
   values = Object.fromEntries(Object.entries(values).filter(([_, value]) => value !== null && value !== undefined))
 
   values.password = md5(values.password)
-  const res = await $api.put(`/api/v1/user/${userStore.user.id}`, { ...values })
+  const res = await $api.put(`/api/v1/user/${userStore.user.value.id}`, { ...values })
   if (res.data) {
     toast.success('更新成功')
   }
 }
 
 async function getUserInfo() {
-  const res = await $api.post('/api/v1/user/detail', { id: userStore.user.id })
-  const res2 = await $api.get(`/api/v1/user/config/${userStore.user.id}`)
+  const res = await $api.post('/api/v1/user/detail', { id: userStore.user.value.id })
+  const res2 = await $api.get(`/api/v1/user/config/${userStore.user.value.id}`)
 
   console.log(`res`, res, res2)
   if (res.data) {
@@ -141,7 +141,7 @@ async function getUserInfo() {
 watchEffect(async () => {
   // 关联 github 的头像
   if (route.query.oath === '1') {
-    const { data, error } = await $api.put(`/api/v1/user/${userStore.user.id}`, {
+    const { data, error } = await $api.put(`/api/v1/user/${userStore.user.value.id}`, {
       avatar_url: user.value?.avatar_url,
     })
 

@@ -18,7 +18,7 @@ useHead({
 const router = useRouter()
 const route = useRoute()
 const { loggedIn, user } = useUserSession()
-const userStore = useUserStore()
+const userStore = useUser()
 // const config = useAppConfig()
 // const { public: runtimeConfig } = useRuntimeConfig()
 const { $api } = useNuxtApp()

@@ -30,8 +30,23 @@ export default defineStandardResponseHandler(async (event) => {
       nickname: users.nickname,
       avatarUrl: users.avatarUrl,
     },
-    tags: sql`JSON_ARRAYAGG(JSON_OBJECT('id', ${memoTags.id}, 'tagName', ${memoTags.tagName}))`,
-    likes: sql`JSON_ARRAYAGG(JSON_OBJECT('userId', ${blogLikes.userId}, 'id', ${blogLikes.id}))`,
+    tags: sql`(
+      SELECT CASE 
+        WHEN COUNT(mt.id) = 0 THEN JSON_ARRAY() 
+        ELSE JSON_ARRAYAGG(JSON_OBJECT('id', mt.id, 'tagName', mt.tag_name))
+      END
+      FROM ${memoTagRelations} mtr
+      LEFT JOIN ${memoTags} mt ON mtr.tagId = mt.id
+      WHERE mtr.memoId = ${blogMemos.id}
+    )`,
+    likes: sql`(
+      SELECT CASE 
+        WHEN COUNT(bl.id) = 0 THEN JSON_ARRAY() 
+        ELSE JSON_ARRAYAGG(JSON_OBJECT('userId', bl.user_id, 'id', bl.id))
+      END
+      FROM ${blogLikes} bl
+      WHERE bl.blogMemoId = ${blogMemos.id}
+    )`,
     _count: {
       comments: sql<number>`(SELECT COUNT(*) FROM ${blogComments} WHERE ${blogComments.memoId} = ${blogMemos.id})`,
       likes: sql<number>`(SELECT COUNT(*) FROM ${blogLikes} WHERE ${blogLikes.blogMemoId} = ${blogMemos.id})`,
@@ -39,10 +54,6 @@ export default defineStandardResponseHandler(async (event) => {
   })
     .from(blogMemos)
     .leftJoin(users, eq(blogMemos.userId, users.id))
-    .leftJoin(memoTagRelations, eq(blogMemos.id, memoTagRelations.memoId))
-    .leftJoin(memoTags, eq(memoTagRelations.tagId, memoTags.id))
-    .leftJoin(blogLikes, eq(blogMemos.id, blogLikes.blogMemoId))
-    .groupBy(blogMemos.id)
     .orderBy(desc(blogMemos.createTs))
     .limit(take)
     .offset(skip)

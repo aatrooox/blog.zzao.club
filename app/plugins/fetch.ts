@@ -11,13 +11,15 @@ export default defineNuxtPlugin({
     // 创建自定义 fetch 实例
     const $api = $fetch.create({
       onRequest: ({ options }) => {
-        options.headers.set('Authorization', `Bearer ${useTokenStore()?.token ?? ''}`)
+        const userStore = useUser()
+        options.headers.set('Authorization', `Bearer ${userStore.token.value ?? ''}`)
       },
       onResponseError({ response }) {
         console.error('[useHttp] [error]', response.status)
         // 过期/未登录 - 禁止访问 => 退出登录，清除信息
         if (response?.status === 403) {
-          useUserStore().logout()
+          const userStore = useUser()
+          userStore.logout()
         }
         // 无权限，仅提示
         // 处理错误

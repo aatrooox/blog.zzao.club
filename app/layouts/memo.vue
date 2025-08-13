@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const userStore = useUserStore()
+const userStore = useUser()
 
 const { memoStats, getMemoStats } = useMemoStats()
 
@@ -102,10 +102,10 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
       <div class="user-info text-center">
         <ClientOnly>
           <NuxtLink to="/">
-            <UserAvatar :user-info="userStore.user" alt="User Avatar" class="w-24 h-24 rounded-lg mx-auto mb-4 border-2 border-bg-base hover:scale-105 transition-transform duration-200" />
+            <UserAvatar :user-info="userStore.user.value" alt="User Avatar" class="w-24 h-24 rounded-lg mx-auto mb-4 border-2 border-bg-base hover:scale-105 transition-transform duration-200" />
           </NuxtLink>
           <h2 class="text-xl font-pixel font-bold text-bg-base">
-            {{ userStore?.user?.nickname || '早早集市' }}
+            {{ userStore?.user.value?.nickname || '早早集市' }}
           </h2>
           <template #fallback>
             <div class="w-24 h-24 rounded-lg mx-auto mb-4 border-2 border-bg-base bg-secondary-500/20 flex items-center justify-center">
@@ -177,11 +177,11 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
       <div class="compact-user-info md:hidden mb-6 bg-base border-2 border-bg-base rounded-lg shadow-pixel p-4">
         <div class="flex items-center space-x-3">
           <NuxtLink to="/">
-            <UserAvatar :user-info="userStore.user" alt="User Avatar" class="w-12 h-12 rounded-lg border-2 border-bg-base hover:scale-105 transition-transform duration-200" />
+            <UserAvatar :user-info="userStore.user.value" alt="User Avatar" class="w-12 h-12 rounded-lg border-2 border-bg-base hover:scale-105 transition-transform duration-200" />
           </NuxtLink>
           <div class="flex-1 flex items-center space-x-4">
             <h2 class="text-base font-pixel font-bold text-bg-base">
-              {{ userStore?.user?.nickname || '早早集市' }}
+              {{ userStore?.user.value?.nickname || '早早集市' }}
             </h2>
             <div class="flex space-x-3 text-sm font-cartoon text-bg-base">
               <span class="flex items-center space-x-1">

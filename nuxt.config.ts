@@ -204,9 +204,6 @@ export default defineNuxtConfig({
     server: isDev,
     client: isDev ?? 'inline',
   },
-  future: {
-    compatibilityVersion: 4,
-  },
   compatibilityDate: '2024-10-29',
   nitro: {
     // preset: 'bun',

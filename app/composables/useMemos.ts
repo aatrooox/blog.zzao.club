@@ -3,7 +3,7 @@ import type { BlogMemosWithUser, BlogMemoWithUser } from '~~/types/memo'
 
 export default function useMemos() {
   const { $api } = useNuxtApp()
-  const userStore = useUserStore()
+  const userStore = useUser()
   const toast = useGlobalToast()
   const memos = useState<BlogMemosWithUser>('memos', () => [])
 
@@ -39,7 +39,7 @@ export default function useMemos() {
       const { error } = await $api.post<ApiResponse<BlogMemoWithUser>>('/api/v1/memo/create', {
         content,
         tags,
-        user_id: userStore.user?.id,
+        user_id: userStore.user.value?.id,
       })
       if (error) {
         toast.error('出错了，再试一下')

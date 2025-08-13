@@ -22,3 +22,24 @@ declare module '#auth-utils' {
   //   // Add your own fields
   // }
 }
+
+// 声明全局变量 umami
+interface UmamiTrackEvent {
+  (eventName: string, eventData?: Record<string, any>): void
+}
+
+interface Umami {
+  track: UmamiTrackEvent
+  // 添加 umami 的其他方法和属性
+}
+
+declare global {
+  interface Window {
+    umami: Umami
+  }
+
+  // 也可以直接作为全局变量使用
+  const umami: Umami
+}
+
+export default {}

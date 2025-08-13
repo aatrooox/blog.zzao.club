@@ -3,7 +3,7 @@ import type { BlogMemoWithUser } from '~~/types/memo'
 
 export default function useMemo(id: string) {
   const { $api } = useNuxtApp()
-  const userStore = useUserStore()
+  const userStore = useUser()
   const toast = useGlobalToast()
   const memo = ref<BlogMemoWithUser | null>(null)
 

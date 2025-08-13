@@ -7,9 +7,8 @@ import { camelCaseToHyphen, EffectCssAttrs, ExcludeClassList, IMG_WRAP_CLASS, Pr
 
 const toast = useGlobalToast()
 const { $api } = useNuxtApp()
-const userStore = useUserStore()
-const tokenStore = useTokenStore()
-const navBarStore = useNavBarStore()
+const userStore = useUser()
+const navBarStore = useNavBar()
 const clientjs = useClientjs()
 const route = useRoute()
 const activeTocId = ref('')
@@ -27,8 +26,8 @@ const isOpenDrawer = ref(false)
 const commentIconPosition = computed(() => {
   if (text.value.trim().length) {
     // 发生划词时，记录当前划线的滚动距离
-    if (navBarStore.selectionScrollY === 0) {
-      navBarStore.setSelectionScrollY(navBarStore.scrollY)
+    if (navBarStore.selectionScrollY.value === 0) {
+      navBarStore.setSelectionScrollY(navBarStore.scrollY.value)
     }
     let left = -50
     if (selection?.value) {
@@ -65,7 +64,7 @@ const commentIconPosition = computed(() => {
     }
 
     return {
-      top: (rects?.value?.[0]?.top || 0) - 50 + navBarStore.selectionScrollY + (rects?.value?.[0]?.height || 0),
+      top: (rects?.value?.[0]?.top || 0) - 50 + navBarStore.selectionScrollY.value + (rects?.value?.[0]?.height || 0),
       left,
     }
   }
@@ -341,13 +340,13 @@ async function copyLink() {
   toast.add({ message: '已复制链接!' })
 }
 async function createComment(data: CommentData) {
-  if (!userStore.user.id) {
+  if (!userStore.user.value.id) {
     await createVistorID(data.visitor as Visitor)
   }
   const res = await $api.post<ApiResponse>('/api/v1/comment/create', {
     article_id: page.value?.id,
     content: data.content,
-    user_id: userStore.user.id,
+    user_id: userStore.user.value.id,
     path: `https://zzao.club${route.fullPath}`,
   })
 
@@ -359,10 +358,10 @@ async function createComment(data: CommentData) {
 }
 async function likePage() {
   // 游客点赞 生成指纹 -> 注册为游客 (随机用户名 + 固定id)
-  if (!userStore.user.id) {
+  if (!userStore.user.value.id) {
     const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-    userStore.setUser(res.data.data.user)
-    tokenStore.setToken(res.data.data.token)
+    userStore.setUser(res.data.user)
+    userStore.setToken(res.data.token)
     // return toast.add({ type: 'warning', message: '登录后才能点赞' })
   };
 
@@ -370,7 +369,7 @@ async function likePage() {
     return toast.warn('已经点过赞了')
   };
 
-  const res = await $api.post<ApiResponse>('/api/v1/like/create', { article_id: page.value?.id, user_id: userStore.user.id })
+  const res = await $api.post<ApiResponse>('/api/v1/like/create', { article_id: page.value?.id, user_id: userStore.user.value.id })
 
   if (!res.error) {
     toast.success('感谢支持！')
@@ -382,16 +381,16 @@ async function likePage() {
 async function initComment() {
   const res = await $api.get<ApiResponse>('/api/v1/comment/list', { article_id: page.value?.id })
   if (!res.error) {
-    comments.value = res.data.data
+    comments.value = res.data
   }
   isDefer.value = false
 }
 
 async function initLikeCount() {
-  const res = await $api.get<ApiResponse>('/api/v1/like/count', { article_id: page.value?.id, user_id: userStore.user.id })
+  const res = await $api.get<ApiResponse>('/api/v1/like/count', { article_id: page.value?.id, user_id: userStore.user.value.id })
   if (!res.error) {
-    likeCount.value = res.data.data.count
-    isLiked.value = res.data.data.isLiked
+    likeCount.value = res.data.count
+    isLiked.value = res.data.isLiked
   }
 }
 
@@ -610,7 +609,7 @@ watchEffect(async () => {
           </ClientOnly>
           <!-- 悬浮标题栏 -->
           <div
-            v-if="!navBarStore.navBar?.isHidden"
+            v-if="!navBarStore.navBar.value?.isHidden"
             class="fixed-title text-lg md:text-xl font-mono font-bold text-center overflow-hidden text-ellipsis h-12 leading-12 fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-gray-900/90 border-b-2 border-gray-800 backdrop-blur-sm text-gray-100"
           >
             {{ page?.title }}

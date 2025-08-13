@@ -4,7 +4,7 @@
 const props = defineProps<Props>()
 const emit = defineEmits(['refresh'])
 const toast = useGlobalToast()
-const userStore = useUserStore()
+const userStore = useUser()
 // const commentReplyMap = ref<{ [key: string]: boolean }>({})
 const { updateDateFromNow } = useDayjs()
 const { $api } = useNuxtApp()
@@ -40,7 +40,7 @@ async function createSubComment(message: Record<any, any>, subComment: Props['co
     comment_id: subComment.comment_id, // 当前一级评论的 id
     content: message.content,
     reply_sub_comment_id: subComment?.id, // 回复的二级评论的 id
-    user_id: userStore?.user.id, // 当前用户
+    user_id: userStore?.user.value.id, // 当前用户
   })
 
   if (!res.error) {
@@ -133,7 +133,7 @@ defineExpose({ refreshList })
             </Button>
             <!-- 管理员 或自己 可删除 -->
             <Button
-              v-if="comment.user_id === userStore?.user.id || userStore?.user.role === 'superAdmin'" variant="ghost" text
+              v-if="comment.user_id === userStore?.user.value.id || userStore?.user.value.role === 'superAdmin'" variant="ghost" text
               size="sm"
               @click.stop="delComment(comment)"
             >

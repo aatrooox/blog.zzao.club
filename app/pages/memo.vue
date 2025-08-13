@@ -26,8 +26,7 @@ useSeoMeta({
 const heightCache = ref<Map<string, number>>(new Map())
 
 const { getMemos, memos, createMemo } = useMemos()
-const userStore = useUserStore()
-const tokenStore = useTokenStore()
+const userStore = useUser()
 const clientjs = useClientjs()
 const toast = useGlobalToast()
 const { $api } = useNuxtApp()
@@ -60,18 +59,18 @@ const filteredMemos = computed(() => {
 const { beforeLeave, leave, afterLeave } = useStaggeredListTransition('memo-fade')
 
 async function handleLike(memoId: string) {
-  if (!userStore.user.id) {
+  if (!userStore.user.value.id) {
     const res = await $api.post<ApiResponse<UserRegistResponse>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-    userStore.setUser(res.data.data.user)
-    tokenStore.setToken(res.data.data.token)
+    userStore.setUser(res.data.user)
+    userStore.setToken(res.data.token)
   }
   try {
     const res = await $api.post<ApiResponse<MemoLikeResponse>>('/api/v1/memo/like', {
       memo_id: memoId,
-      user_id: userStore.user.id,
+      user_id: userStore.user.value.id,
     })
-    if (res?.data && res.data.data.success) {
-      if (res.data.data.message) {
+    if (res?.data && res.data.success) {
+      if (res.data.message) {
         toast.success('您已经点赞过了')
       }
       else {
@@ -165,7 +164,7 @@ function onMemoTagClick(tagName: string) {
         >
           <div class="flex items-start gap-4">
             <div class="flex-shrink-0">
-              <UserAvatar :user-info="memo.user_info" size="md" class="pixel-avatar" />
+              <UserAvatar :user-info="memo.user" size="md" class="pixel-avatar" />
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-2">

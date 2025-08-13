@@ -15,7 +15,7 @@ const wrapRef = ref<HTMLElement>()
 
 // const { formatDate } = useDayjs()
 const { $api } = useNuxtApp()
-const userStore = useUserStore()
+const userStore = useUser()
 const router = useRouter()
 
 // 计算评论数量
@@ -82,13 +82,13 @@ function handleTagClick(_: string) {
           <div v-if="memo.tags && memo.tags.length > 0" class="h-full overflow-x-auto overflow-y-hidden flex items-center gap-1.5 pb-1">
             <Badge
               v-for="tagRelation in memo.tags"
-              :key="tagRelation.tag.id"
+              :key="tagRelation.id"
               variant="secondary"
               class="text-xs cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-300 transition-all duration-200 group flex-shrink-0"
-              @click="handleTagClick(tagRelation.tag.tag_name)"
+              @click="handleTagClick(tagRelation.tagName)"
             >
               <!-- <Icon name="icon-park-outline:tag" class="w-3 h-3 mr-1" /> -->
-              #{{ tagRelation.tag.tag_name }}
+              #{{ tagRelation.tagName }}
             </Badge>
           </div>
           <!-- <div v-else class="text-xs text-gray-400 dark:text-gray-500 italic">
@@ -117,7 +117,7 @@ function handleTagClick(_: string) {
           <!-- 左侧用户头像 -->
           <div class="flex items-center space-x-2">
             <UserAvatar :user-info="memo?.user_info" />
-            <NuxtTime locale="zh-CN" :datetime="memo.create_ts" class="text-xs" />
+            <NuxtTime locale="zh-CN" :datetime="memo.createTs" class="text-xs" />
           </div>
 
           <!-- 右侧操作按钮 -->

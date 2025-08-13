@@ -8,14 +8,14 @@ const {
 const emit = defineEmits(['close', 'success'])
 const { $api } = useNuxtApp()
 const toast = useGlobalToast()
-const userStore = useUserStore()
+const userStore = useUser()
 async function createQuoteComment(comment: CommentData) {
   if (!articleId) {
     toast.warn('文章不存在，无法注释')
     return
   }
 
-  if (!userStore?.user?.id) {
+  if (!userStore?.user?.value.id) {
     await createVistorID(comment.visitor as Visitor)
   }
 

@@ -2,13 +2,11 @@
 import type { User } from '~~/types/memo'
 
 const { $api } = useNuxtApp()
-const userStore = useUserStore()
-const tokenStore = useTokenStore()
+const userStore = useUser()
 const { clear } = useUserSession()
 async function logout() {
   await $api.post('/api/v1/user/logout')
   userStore.logout()
-  tokenStore.setToken('')
   clear()
 }
 </script>
@@ -16,11 +14,11 @@ async function logout() {
 <template>
   <DropdownMenu>
     <DropdownMenuTrigger as-child>
-      <UserAvatar :user-info="(userStore.user as User)" />
+      <UserAvatar :user-info="(userStore.user.value as User)" />
     </DropdownMenuTrigger>
     <DropdownMenuContent class="w-56">
       <DropdownMenuLabel>
-        {{ (userStore.user as User).nickname || (userStore.user as User).username }}
+        {{ (userStore.user.value as User).nickname || (userStore.user.value as User).username }}
       </DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuItem @click="navigateTo('/settings')">

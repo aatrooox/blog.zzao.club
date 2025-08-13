@@ -22,7 +22,7 @@ const isUpdating = ref(false)
 watch(() => props.memo, (newMemo) => {
   if (newMemo && newMemo.tags) {
     // 从 tag 对象中提取 tagName
-    editTags.value = newMemo.tags.map((tagRelation: any) => tagRelation.tag.tagName)
+    editTags.value = newMemo.tags.map((tagRelation: any) => tagRelation.tagName)
   }
   else {
     editTags.value = []
@@ -128,7 +128,7 @@ function handleCancel() {
 
 .pixel-drawer-content {
   padding: 16px;
-  background-color: var(--pixel-bg-input);
+  background-color: var(--pixel-bg-secondary);
 }
 
 .pixel-tag-section {

@@ -6,11 +6,13 @@ import { useSearch } from '~/composables/useSearch'
 const globalToast = useGlobalToast()
 const { $toast } = useNuxtApp() as any
 const route = useRoute()
-const navBarStore = useNavBarStore()
+const navBarStore = useNavBar()
 const scrollWrap = useTemplateRef<HTMLElement>('scrollWrap')
 const scrollDirection = ref('')
 const showScrollTopBtn = ref(false)
 const { showSearchDialog } = useSearch()
+const { user, isLogin } = useUser()
+const showLoginDialog = ref(false)
 // const { x, y } = useWindowScroll()
 
 const appNavBar = [
@@ -143,7 +145,18 @@ function scrollToTop() {
       <!-- PC端悬浮左侧导航 -->
       <aside class="pixel-sidebar-floating">
         <div class="pixel-sidebar-header">
-          <Icon name="twemoji:wedding" class="pixel-sidebar-logo" />
+          <!-- 用户信息区域 -->
+          <div v-if="isLogin" class="pixel-user-info">
+            <UserAvatar :user="user" class="pixel-user-avatar" />
+            <div class="pixel-user-details">
+              <div class="pixel-user-name">{{ user.nickname || user.username }}</div>
+            </div>
+          </div>
+          <!-- 未登录时显示默认图标 -->
+          <div v-else class="pixel-login-trigger" @click="showLoginDialog = true">
+            <Icon name="twemoji:wedding" class="pixel-sidebar-logo" />
+            <div class="pixel-login-hint">点击登录</div>
+          </div>
         </div>
         <nav class="pixel-sidebar-nav">
           <NuxtLink
@@ -208,6 +221,9 @@ function scrollToTop() {
 
     <!-- 搜索对话框 -->
     <ResourceSearchDialog v-model="showSearchDialog" />
+
+    <!-- 登录对话框 -->
+    <AppLoginDialog v-model="showLoginDialog" />
 
     <!-- 像素网格背景 -->
     <div class="fixed inset-0 -z-10 pixel-grid-bg" />
@@ -381,6 +397,39 @@ function scrollToTop() {
   .pixel-main {
     @apply pb-28;
   }
+}
+
+/* 用户信息样式 */
+.pixel-user-info {
+  @apply flex items-center gap-3 p-3 rounded-lg bg-white/80 backdrop-blur-sm border-2 border-gray-800;
+  box-shadow: 4px 4px 0px #000;
+}
+
+.pixel-user-avatar {
+  @apply w-10 h-10 rounded-lg border-2 border-gray-800;
+}
+
+.pixel-user-details {
+  @apply flex-1 min-w-0;
+}
+
+.pixel-user-name {
+  @apply text-sm font-bold text-gray-800 truncate;
+}
+
+.pixel-login-trigger {
+  @apply flex flex-col items-center gap-2 p-3 rounded-lg bg-white/80 backdrop-blur-sm border-2 border-gray-800 cursor-pointer transition-all duration-200;
+  box-shadow: 4px 4px 0px #000;
+}
+
+.pixel-login-trigger:hover {
+  @apply bg-blue-50/90 border-blue-600;
+  box-shadow: 4px 4px 0px #1d4ed8;
+  transform: translate(-1px, -1px);
+}
+
+.pixel-login-hint {
+  @apply text-xs text-gray-600 font-medium;
 }
 
 @media (min-width: 1024px) {
