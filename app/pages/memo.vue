@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { ApiResponse } from '~~/types/fetch'
-import type { MemoLikeResponse, User, UserRegistResponse } from '~~/types/memo'
+import type { MemoLikeResponse, UserRegistResponse } from '~~/types/memo'
 import useTags from '~/composables/useTags'
 
 const props = defineProps({

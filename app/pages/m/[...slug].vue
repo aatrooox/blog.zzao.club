@@ -3,7 +3,7 @@ import type { CommentData } from '@nuxtjs/mdc'
 import type { Visitor } from '~~/types/blog'
 import type { BlogCommentWithUserInfo } from '~~/types/blog-drizzle'
 import type { ApiResponse } from '~~/types/fetch'
-import type { User, UserRegistResponse } from '~~/types/memo'
+import type { User } from '~~/types/memo'
 
 definePageMeta({
   layout: 'default',
