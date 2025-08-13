@@ -1,3 +1,7 @@
+import { and, eq, ne } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { users } from '~~/lib/drizzle/schema'
+
 export default defineStandardResponseHandler(async (event) => {
   const id = getRouterParam(event, 'id')
   const body = await useSafeValidatedBody(event, z.object({
@@ -32,13 +36,12 @@ export default defineStandardResponseHandler(async (event) => {
   })
 
   if (updateData.nickname) {
-    const user = await prisma.user.findUnique({
-      where: {
-        nickname: updateData.nickname,
-      },
-    })
-    // 如果已经存在了 nickname
-    if (user?.nickname === updateData.nickname && user?.id !== id) {
+    const existingUser = await db.select()
+      .from(users)
+      .where(and(eq(users.nickname, updateData.nickname), ne(users.id, id)))
+      .limit(1)
+
+    if (existingUser.length > 0) {
       throw createError({
         statusCode: 400,
         message: '昵称已经存在',
@@ -47,13 +50,12 @@ export default defineStandardResponseHandler(async (event) => {
   }
 
   if (updateData.username) {
-    const user = await prisma.user.findUnique({
-      where: {
-        username: updateData.username,
-      },
-    })
-    // 如果已经存在了 nickname
-    if (user?.username === updateData.username && user?.id !== id) {
+    const existingUser = await db.select()
+      .from(users)
+      .where(and(eq(users.username, updateData.username), ne(users.id, id)))
+      .limit(1)
+
+    if (existingUser.length > 0) {
       throw createError({
         statusCode: 400,
         message: '用户名已经存在',
@@ -61,12 +63,25 @@ export default defineStandardResponseHandler(async (event) => {
     }
   }
 
-  const updateUser = await prisma.user.update({
-    where: {
-      id,
-    },
-    data: updateData,
+  // 转换字段名
+  const drizzleUpdateData: any = {}
+  Object.keys(updateData).forEach((key) => {
+    if (key === 'avatar_url') {
+      drizzleUpdateData.avatarUrl = updateData[key]
+    }
+    else {
+      drizzleUpdateData[key] = updateData[key]
+    }
   })
 
-  return updateUser
+  await db.update(users)
+    .set(drizzleUpdateData)
+    .where(eq(users.id, id))
+
+  const updateUser = await db.select()
+    .from(users)
+    .where(eq(users.id, id))
+    .limit(1)
+
+  return updateUser[0]
 })

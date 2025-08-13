@@ -1,3 +1,7 @@
+import { and, count, desc, eq } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { blogComments, blogSubComments, users } from '~~/lib/drizzle/schema'
+
 const schema = z.object({
   type: z.string().optional().default('article'),
   page: z.string().optional().default('1').transform(Number),
@@ -40,57 +44,76 @@ export default defineStandardResponseHandler(async (event) => {
   const skip = (query.data.page - 1) * take
 
   // 构建动态查询条件
-  const whereCondition: any = {
-    type: query.data.type,
-  }
+  const whereConditions = [eq(blogComments.type, query.data.type)]
 
   if (query.data.article_id) {
-    whereCondition.article_id = query.data.article_id
+    whereConditions.push(eq(blogComments.articleId, query.data.article_id))
   }
 
   if (query.data.memo_id) {
-    whereCondition.memo_id = query.data.memo_id
+    whereConditions.push(eq(blogComments.memoId, query.data.memo_id))
   }
 
-  const comments = await prisma.blogComment.findMany({
-    where: whereCondition,
-    skip,
-    take,
-    orderBy: [
-      {
-        create_ts: 'desc',
-      },
-    ],
-    include: {
-      user_info: {
-        select: {
-          username: true,
-          nickname: true,
-          website: true,
-          avatar_url: true,
-        },
-      },
-      sub_comments: {
-        include: {
-          user_info: {
-            select: {
-              username: true,
-              nickname: true,
-              website: true,
-              avatar_url: true,
-            },
-          },
-
-        },
-      },
-      // 关系计数
-      _count: {
-        select: {
-          sub_comments: true,
-        },
-      },
+  // 查询评论列表
+  const comments = await db.select({
+    id: blogComments.id,
+    content: blogComments.content,
+    type: blogComments.type,
+    articleId: blogComments.articleId,
+    memoId: blogComments.memoId,
+    userId: blogComments.userId,
+    createTs: blogComments.createTs,
+    updatedTs: blogComments.updatedTs,
+    user_info: {
+      username: users.username,
+      nickname: users.nickname,
+      website: users.website,
+      avatar_url: users.avatarUrl,
     },
   })
+    .from(blogComments)
+    .leftJoin(users, eq(blogComments.userId, users.id))
+    .where(and(...whereConditions))
+    .orderBy(desc(blogComments.createTs))
+    .limit(take)
+    .offset(skip)
 
-  return comments
+  // 为每个评论查询子评论
+  const commentsWithSubComments = await Promise.all(
+    comments.map(async (comment) => {
+      const subComments = await db.select({
+        id: blogSubComments.id,
+        content: blogSubComments.content,
+        commentId: blogSubComments.commentId,
+        userId: blogSubComments.userId,
+        createTs: blogSubComments.createTs,
+        updatedTs: blogSubComments.updatedTs,
+        replySubCommentId: blogSubComments.replySubCommentId,
+        user_info: {
+          username: users.username,
+          nickname: users.nickname,
+          website: users.website,
+          avatar_url: users.avatarUrl,
+        },
+      })
+        .from(blogSubComments)
+        .leftJoin(users, eq(blogSubComments.userId, users.id))
+        .where(eq(blogSubComments.commentId, comment.id))
+
+      // 计算子评论数量
+      const subCommentsCount = await db.select({ count: count() })
+        .from(blogSubComments)
+        .where(eq(blogSubComments.commentId, comment.id))
+
+      return {
+        ...comment,
+        sub_comments: subComments,
+        _count: {
+          sub_comments: subCommentsCount[0].count,
+        },
+      }
+    }),
+  )
+
+  return commentsWithSubComments
 })

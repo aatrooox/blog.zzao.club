@@ -1,6 +1,6 @@
-import type { User } from '~~/prisma/generated/prisma/client'
 import type { Visitor } from '~~/types/blog'
 import type { ApiResponse } from '~~/types/fetch'
+import type { User } from '~~/types/memo'
 
 export async function createVistorID(visitor: Visitor) {
   const { $api } = useNuxtApp()
@@ -10,8 +10,8 @@ export async function createVistorID(visitor: Visitor) {
 
   const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId(), visitorName: visitor.name, visitorEmail: visitor.email, visitorWebsite: visitor.website })
 
-  userStore.setUser(res.data.user)
-  tokenStore.setToken(res.data.token)
+  userStore.setUser(res.data.data.user)
+  tokenStore.setToken(res.data.data.token)
 }
 
 /**

@@ -1,3 +1,6 @@
+import { db } from '~~/lib/drizzle'
+import { blogLikes } from '~~/lib/drizzle/schema'
+
 export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     article_id: z.string(),
@@ -10,8 +13,12 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
-  const data = await prisma.blogLike.create({
-    data: body.data,
+  const now = new Date()
+  const [data] = await db.insert(blogLikes).values({
+    articleId: body.data.article_id,
+    userId: body.data.user_id,
+    createTs: now,
+    updatedTs: now,
   })
 
   return data

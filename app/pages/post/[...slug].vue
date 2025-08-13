@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import type { CommentData } from '@nuxtjs/mdc'
-import type { Prisma, User } from '~~/prisma/generated/prisma/client'
 import type { Visitor } from '~~/types/blog'
+import type { BlogCommentWithUserInfo, User } from '~~/types/blog-drizzle'
 import type { ApiResponse } from '~~/types/fetch'
 import { camelCaseToHyphen, EffectCssAttrs, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs } from '@/config/richText'
-
-type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{
-  include: { user_info: true, _count: true, sub_comments: { include: { user_info: true } } }
-}>
 
 const toast = useGlobalToast()
 const { $api } = useNuxtApp()
@@ -365,8 +361,8 @@ async function likePage() {
   // 游客点赞 生成指纹 -> 注册为游客 (随机用户名 + 固定id)
   if (!userStore.user.id) {
     const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-    userStore.setUser(res.data.user)
-    tokenStore.setToken(res.data.token)
+    userStore.setUser(res.data.data.user)
+    tokenStore.setToken(res.data.data.token)
     // return toast.add({ type: 'warning', message: '登录后才能点赞' })
   };
 
@@ -386,7 +382,7 @@ async function likePage() {
 async function initComment() {
   const res = await $api.get<ApiResponse>('/api/v1/comment/list', { article_id: page.value?.id })
   if (!res.error) {
-    comments.value = res.data
+    comments.value = res.data.data
   }
   isDefer.value = false
 }
@@ -394,8 +390,8 @@ async function initComment() {
 async function initLikeCount() {
   const res = await $api.get<ApiResponse>('/api/v1/like/count', { article_id: page.value?.id, user_id: userStore.user.id })
   if (!res.error) {
-    likeCount.value = res.data.count
-    isLiked.value = res.data.isLiked
+    likeCount.value = res.data.data.count
+    isLiked.value = res.data.data.isLiked
   }
 }
 

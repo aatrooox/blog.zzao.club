@@ -1,3 +1,7 @@
+import { desc, eq } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { blogComments } from '~~/lib/drizzle/schema'
+
 export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     content: z.string(), // 内容
@@ -26,9 +30,19 @@ export default defineStandardResponseHandler(async (event) => {
   }
   const { type, content, article_id, memo_id, user_id, path } = body.data
 
-  const data = await prisma.blogComment.create({
-    data: { type, content, article_id, memo_id, user_id },
+  const now = new Date()
+  await db.insert(blogComments).values({
+    type,
+    content,
+    articleId: article_id,
+    memoId: memo_id,
+    userId: user_id,
+    createTs: now,
+    updatedTs: now,
   })
+
+  // 查询刚创建的评论
+  const [data] = await db.select().from(blogComments).where(eq(blogComments.userId, user_id)).orderBy(desc(blogComments.createTs)).limit(1)
 
   const myEmail = 'gnakzz@qq.com'
   try {

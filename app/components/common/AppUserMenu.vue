@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { User } from '~~/prisma/generated/prisma/client'
+import type { User } from '~~/types/memo'
 
 const { $api } = useNuxtApp()
 const userStore = useUserStore()

@@ -1,3 +1,7 @@
+import { count, eq } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { users } from '~~/lib/drizzle/schema'
+
 export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     username: z.string(),
@@ -16,17 +20,13 @@ export default defineStandardResponseHandler(async (event) => {
   const { email, password, username } = body.data
 
   // 获取用户数
-  const count = await prisma.user.count()
+  const [{ count: userCount }] = await db.select({ count: count() }).from(users)
   // 第一个注册的用户为管理员
-  if (count === 0) {
+  if (userCount === 0) {
     role = 'superAdmin'
   }
 
-  const _user = await prisma.user.findUnique({
-    where: {
-      username,
-    },
-  })
+  const [_user] = await db.select().from(users).where(eq(users.username, username))
 
   if (_user) {
     throw createError({
@@ -35,14 +35,15 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
   // 创建新用户
-  const user = await prisma.user.create({
-    data: {
-      username,
-      password,
-      email,
-      role,
-    },
+  await db.insert(users).values({
+    username,
+    password,
+    email,
+    role,
   })
+
+  // 获取新创建的用户
+  const [user] = await db.select().from(users).where(eq(users.username, username))
 
   return user
 })

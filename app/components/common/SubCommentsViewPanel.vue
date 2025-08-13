@@ -118,7 +118,7 @@ defineExpose({ refreshList })
             {{ comment.content }}
           </div>
           <div class="footer flex items-center gap-4 px-4">
-            <span class="text-gray-500 text-xs">{{ updateDateFromNow(comment.create_ts) }}</span>
+            <span class="text-gray-500 text-xs">{{ updateDateFromNow(comment.createTs) }}</span>
             <!-- <Button @click.stop="likeMemo" variant="secondary" text size="small">
           <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg" ref="likeIcon" />
           <span slot="badge">{{ likeCount }}</span>
@@ -159,7 +159,7 @@ defineExpose({ refreshList })
           {{ subComment.content }}
         </p>
         <div class="footer flex items-center gap-4">
-          <span class="text-gray-500 text-xs">{{ updateDateFromNow(subComment.create_ts) }}</span>
+          <span class="text-gray-500 text-xs">{{ updateDateFromNow(subComment.createTs) }}</span>
           <Button variant="secondary" text size="sm" @click.stop="commentReply(subComment)">
             <Icon name="icon-park-outline:comments"></Icon>
           </Button>

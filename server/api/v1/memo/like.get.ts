@@ -1,3 +1,7 @@
+import { and, count, eq } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { blogLikes } from '~~/lib/drizzle/schema'
+
 export default defineStandardResponseHandler(async (event) => {
   const schema = z.object({
     id: z.string(),
@@ -13,23 +17,21 @@ export default defineStandardResponseHandler(async (event) => {
   }
 
   // 获取某个 memo 的点赞数
-  const count = await prisma.blogLike.count({
-    where: {
-      blogMemoId: query.data.id,
-    },
-  })
+  const [{ count: likeCount }] = await db.select({ count: count() })
+    .from(blogLikes)
+    .where(eq(blogLikes.blogMemoId, query.data.id))
 
   // 查询该用户是否已经点赞
   if (query.data.user_id) {
-    const isLiked = await prisma.blogLike.findFirst({
-      where: {
-        blogMemoId: query.data.id,
-        user_id: query.data.user_id,
-      },
-    })
+    const [isLiked] = await db.select()
+      .from(blogLikes)
+      .where(and(
+        eq(blogLikes.blogMemoId, query.data.id),
+        eq(blogLikes.userId, query.data.user_id),
+      ))
 
     return {
-      count,
+      count: likeCount,
       isLiked: !!isLiked,
     }
   }

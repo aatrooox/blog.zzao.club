@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import type { CommentData } from '@nuxtjs/mdc'
-import type { Prisma, User } from '~~/prisma/generated/prisma/client'
 import type { Visitor } from '~~/types/blog'
+import type { BlogCommentWithUserInfo } from '~~/types/blog-drizzle'
 import type { ApiResponse } from '~~/types/fetch'
-
-type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{
-  include: { user_info: true, _count: true, sub_comments: { include: { user_info: true } } }
-}>
+import type { User, UserRegistResponse } from '~~/types/memo'
 
 definePageMeta({
   layout: 'default',
@@ -102,9 +99,9 @@ async function createVistorIDWithInfo(visitor: Visitor) {
     website: visitor.website,
   })
   if (!res.error) {
-    userStore.setUser(res.data.user)
+    userStore.setUser(res.data.data.user)
     const tokenStore = useTokenStore()
-    tokenStore.setToken(res.data.token)
+    tokenStore.setToken(res.data.data.token)
   }
 }
 // 无访客信息时注册
@@ -113,8 +110,8 @@ async function createVistorIDByFingerprint() {
   const tokenStore = useTokenStore()
   const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
   if (!res.error) {
-    userStore.setUser(res.data.user)
-    tokenStore.setToken(res.data.token)
+    userStore.setUser(res.data.data.user)
+    tokenStore.setToken(res.data.data.token)
   }
 }
 
@@ -125,7 +122,7 @@ async function initComment() {
     memo_id: memoId.value,
   })
   if (!res.error) {
-    comments.value = res.data
+    comments.value = res.data.data
   }
   isDefer.value = false
 }
@@ -147,9 +144,9 @@ async function handleLike() {
   if (!userStore.user.id) {
     const clientjs = useClientjs()
     const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-    userStore.setUser(res.data.user)
+    userStore.setUser(res.data.data.user)
     const tokenStore = useTokenStore()
-    tokenStore.setToken(res.data.token)
+    tokenStore.setToken(res.data.data.token)
   }
 
   if (isLiked.value) {
@@ -168,8 +165,8 @@ async function handleLike() {
 async function initLikeCount() {
   const res = await $api.get<ApiResponse>('/api/v1/memo/like', { id: memoId.value, user_id: userStore.user.id })
   if (!res.error) {
-    likeCount.value = res.data.count
-    isLiked.value = res.data.isLiked
+    likeCount.value = res.data.data.count
+    isLiked.value = res.data.data.isLiked
   }
 }
 
@@ -226,7 +223,7 @@ function handleTagClick(tagName: string) {
                     {{ memo.user_info?.username || '匿名用户' }}
                   </div>
                 </div>
-                <NuxtTime :datetime="memo.create_ts" class="text-xs text-[var(--pixel-text-secondary)] font-mono" />
+                <NuxtTime :datetime="memo.createTs" class="text-xs text-[var(--pixel-text-secondary)] font-mono" />
               </div>
 
               <!-- 右侧操作按钮 -->
@@ -302,12 +299,12 @@ function handleTagClick(tagName: string) {
             <div class="w-3 h-3 bg-primary-600 rounded-sm mr-2" />
             <Icon name="material-symbols:tag" class="w-4 h-4 text-bg-base" />
             <span
-              v-for="tagRelation in memo.tags"
-              :key="tagRelation.tag.id"
+              v-for="tag in memo.tags"
+              :key="tag.id"
               class="pixel-tag text-xs cursor-pointer bg-base text-primary-600 font-mono font-bold border-2 border-bg-base rounded-lg px-3 py-1 hover:bg-bg-base hover:text-primary-700 hover:scale-105 transition-all duration-200"
-              @click="handleTagClick(tagRelation.tag.tag_name)"
+              @click="handleTagClick(tag.tagName)"
             >
-              {{ tagRelation.tag.tag_name }}
+              {{ tag.tagName }}
             </span>
           </div>
         </div>

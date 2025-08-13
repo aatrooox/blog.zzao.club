@@ -167,11 +167,11 @@ function onMouseLeave(event) {
                 <div class="flex gap-2 flex-wrap">
                   <Badge
                     v-for="tagRelation in memo.tags.slice(0, 2)"
-                    :key="tagRelation.tag.id"
+                    :key="tagRelation.id"
                     variant="secondary"
                     class="pixel-btn text-xs"
                   >
-                    {{ tagRelation.tag.tag_name }}
+                    {{ tagRelation.tagName }}
                   </Badge>
                 </div>
               </div>
@@ -185,7 +185,7 @@ function onMouseLeave(event) {
 
               <!-- 底部时间 -->
               <div class="flex justify-end mt-2">
-                <NuxtTime :datetime="memo.create_ts" class="text-xs pixel-text-muted" />
+                <NuxtTime :datetime="memo.createTs" class="text-xs pixel-text-muted" />
               </div>
             </div>
           </div>

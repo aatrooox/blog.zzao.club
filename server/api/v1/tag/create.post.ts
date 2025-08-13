@@ -1,6 +1,10 @@
+import { and, eq } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { memoTagRelations, memoTags } from '~~/lib/drizzle/schema'
+
 export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
-    tag_name: z.string(),
+    tagName: z.string(),
     memo_id: z.string().optional(),
   }))
 
@@ -11,17 +15,17 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
-  const { tag_name, memo_id } = body.data
+  const { tagName, memo_id } = body.data
 
   // 检查 tag 是否已存在
-  const existingTag = await prisma.memoTag.findFirst({
-    where: {
-      tag_name,
-      user_id: event.context.userId,
-    },
-  })
+  const existingTag = await db.select().from(memoTags).where(
+    and(
+      eq(memoTags.tagName, tagName),
+      eq(memoTags.userId, event.context.userId),
+    ),
+  ).limit(1)
 
-  if (existingTag) {
+  if (existingTag.length > 0) {
     throw createError({
       statusCode: 400,
       message: '标签已存在',
@@ -29,20 +33,30 @@ export default defineStandardResponseHandler(async (event) => {
   }
 
   // 创建 tag
-  const tag = await prisma.memoTag.create({
-    data: {
-      tag_name,
-      user_id: event.context.userId,
-    },
+  const now = new Date()
+  await db.insert(memoTags).values({
+    tagName,
+    userId: event.context.userId,
+    createTs: now,
+    updatedTs: now,
   })
+
+  // 获取刚创建的标签
+  const [tag] = await db.select().from(memoTags).where(
+    and(
+      eq(memoTags.tagName, tagName),
+      eq(memoTags.userId, event.context.userId),
+    ),
+  ).limit(1)
 
   // 如果提供了 memo_id，创建关联
   if (memo_id) {
-    await prisma.memoTagRelations.create({
-      data: {
-        tagId: tag.id,
-        memoId: memo_id,
-      },
+    const now = new Date()
+    await db.insert(memoTagRelations).values({
+      tagId: tag.id,
+      memoId: memo_id,
+      createTs: now,
+      updatedTs: now,
     })
   }
 

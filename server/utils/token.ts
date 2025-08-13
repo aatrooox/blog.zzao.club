@@ -1,3 +1,7 @@
+import { and, eq } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { accessTokens, users } from '~~/lib/drizzle/schema'
+
 interface CachedUserValue {
   userId: string
   scope: string
@@ -19,7 +23,9 @@ export async function generateAccessToken(userId: string, scope: string = 'all')
   // 先看是否已经给用户生成了 token
   const cached = await useCachedToken(userId, scope)
   if (cached) {
-    return [cached.token, cached.expiresAt]
+    // 确保 expiresAt 是 Date 对象
+    const expiresAt = cached.expiresAt instanceof Date ? cached.expiresAt : new Date(cached.expiresAt)
+    return [cached.token, expiresAt]
   }
   // 如果是第一次登录，则生成 token
   const token = useNanoId()
@@ -69,6 +75,12 @@ export async function revokeCachedToken(userId?: string, scope: string = 'all') 
 
 // 检测 token 是否有效 （从 redis 和 mysql 校验）
 export async function verifyAccessToken({ token }: { token?: string }): Promise<{ isAuth: boolean, userId?: string, scope?: string }> {
+  if (!token) {
+    return {
+      isAuth: false,
+    }
+  }
+
   const cachedUser = await useCachedUser(token)
   // 有缓存
   if (cachedUser) {
@@ -88,11 +100,7 @@ export async function verifyAccessToken({ token }: { token?: string }): Promise<
   }
   // 无缓存
 
-  const tokenData = await prisma.accessToken.findFirst({
-    where: {
-      token,
-    },
-  })
+  const [tokenData] = await db.select().from(accessTokens).where(eq(accessTokens.token, token))
 
   // 已经无效了了, 写入到缓存中避免多次去查库
   if (tokenData?.isRevoked || new Date(tokenData?.expiresAt || '') < new Date()) {
@@ -114,6 +122,10 @@ export async function verifyAccessToken({ token }: { token?: string }): Promise<
 }
 
 export async function verifyAccessUser({ userId, scope = 'all' }: { userId?: string, scope?: string }) {
+  if (!userId) {
+    return false
+  }
+
   // 没有传 token，则按 userId + scope 校验
   const cachedToken = await useCachedToken(userId, scope)
   // 如果命中缓存 则不查库
@@ -125,12 +137,10 @@ export async function verifyAccessUser({ userId, scope = 'all' }: { userId?: str
     return true
   }
 
-  const tokenData = await prisma.accessToken.findFirst({
-    where: {
-      userId,
-      scope,
-    },
-  })
+  const [tokenData] = await db.select().from(accessTokens).where(and(
+    eq(accessTokens.userId, userId),
+    eq(accessTokens.scope, scope),
+  ))
   // 已经无效了了, 写入到缓存中避免多次去查库
   if (tokenData?.isRevoked || new Date(tokenData?.expiresAt ?? '') < new Date()) {
     revokeCachedToken(userId, scope)
@@ -148,12 +158,13 @@ export async function revokeAccessToken({ token, userId, scope = 'all' }: { user
       whereOption.token = token
     }
 
-    await prisma.accessToken.update({
-      where: whereOption,
-      data: {
-        isRevoked: true,
-      },
-    })
+    await db.update(accessTokens)
+      .set({ isRevoked: true })
+      .where(and(
+        eq(accessTokens.userId, userId),
+        eq(accessTokens.scope, scope),
+        ...(token ? [eq(accessTokens.token, token)] : []),
+      ))
 
     revokeCachedToken(userId, scope)
   }
@@ -163,56 +174,51 @@ export async function revokeAccessToken({ token, userId, scope = 'all' }: { user
     return
   }
 
-  const tokens = await prisma.accessToken.findMany({
-    where: {
-      userId,
-      scope,
-    },
-  })
+  const tokens = await db.select().from(accessTokens).where(and(
+    eq(accessTokens.userId, userId),
+    eq(accessTokens.scope, scope),
+  ))
 
   // 移除所有userId && scope 下的 token，未来可能需要
   tokens.forEach(async (tokenInfo) => {
     await revokeCachedToken(tokenInfo.token, tokenInfo.scope)
   })
 
-  await prisma.accessToken.updateMany({
-    where: {
-      userId,
-      scope,
-    },
-    data: {
-      isRevoked: true,
-    },
-  })
+  await db.update(accessTokens)
+    .set({ isRevoked: true })
+    .where(and(
+      eq(accessTokens.userId, userId),
+      eq(accessTokens.scope, scope),
+    ))
 }
 
 export async function upsertAccessToken(userId: string) {
   const [token, expiresAt] = await generateAccessToken(userId)
+  const now = new Date()
   const data = {
     token,
     expiresAt,
     userId,
     isRevoked: false,
+    createdAt: now,
+    updatedAt: now,
   }
-  const tokenInfo = await prisma.accessToken.upsert({
-    where: {
-      token,
-    },
-    create: {
-      ...data,
-    },
-    update: {},
-  })
+  const [existingToken] = await db.select().from(accessTokens).where(eq(accessTokens.token, token))
+
+  let tokenInfo
+  if (existingToken) {
+    tokenInfo = existingToken
+  }
+  else {
+    await db.insert(accessTokens).values(data)
+    tokenInfo = data
+  }
 
   return tokenInfo
 }
 
 export async function verifyUserRole(userId: string, allRoles = ['superAdmin']) {
-  const userData = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  })
+  const [userData] = await db.select().from(users).where(eq(users.id, userId))
   console.log(`userData?.role`, userData?.role)
   // 如果不包含所需要的权限
   if (!allRoles.includes(userData?.role ?? '')) {

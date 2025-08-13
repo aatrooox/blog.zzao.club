@@ -1,3 +1,7 @@
+import { inArray } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { blogLikes } from '~~/lib/drizzle/schema'
+
 export default defineCachedEventHandler(async (event) => {
   const schema = z.object({
     article_ids: z.array(z.string()).optional().default([]),
@@ -11,23 +15,21 @@ export default defineCachedEventHandler(async (event) => {
     })
   }
 
-  let where = {}
+  let likes
   if (query.data.article_ids.length) {
-    where = {
-      article_id: {
-        in: query.data.article_ids,
-      },
-    }
+    likes = await db.select()
+      .from(blogLikes)
+      .where(inArray(blogLikes.articleId, query.data.article_ids))
   }
-  const likes = await prisma.blogLike.findMany({
-    where,
-  })
+  else {
+    likes = await db.select().from(blogLikes)
+  }
 
   const result: Record<string, number> = {}
 
   likes.forEach((item) => {
-    if (item.article_id) {
-      result[item.article_id] = (result[item.article_id] || 0) + 1
+    if (item.articleId) {
+      result[item.articleId] = (result[item.articleId] || 0) + 1
     }
   })
 

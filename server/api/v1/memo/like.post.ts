@@ -1,3 +1,7 @@
+import { and, eq } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { blogLikes } from '~~/lib/drizzle/schema'
+
 export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
     memo_id: z.string(),
@@ -11,13 +15,13 @@ export default defineStandardResponseHandler(async (event) => {
   }
 
   // 检查是否已经点赞过
-  const existingLike = await prisma.blogLike.findFirst({
-    where: {
-      target: 'memo',
-      blogMemoId: body.data.memo_id,
-      user_id: body.data.user_id,
-    },
-  })
+  const [existingLike] = await db.select()
+    .from(blogLikes)
+    .where(and(
+      eq(blogLikes.target, 'memo'),
+      eq(blogLikes.blogMemoId, body.data.memo_id),
+      eq(blogLikes.userId, body.data.user_id),
+    ))
 
   // 如果已经点赞过，直接返回成功
   if (existingLike) {
@@ -25,12 +29,13 @@ export default defineStandardResponseHandler(async (event) => {
   }
 
   // 创建新的点赞记录
-  const data = await prisma.blogLike.create({
-    data: {
-      target: 'memo',
-      blogMemoId: body.data.memo_id,
-      user_id: body.data.user_id,
-    },
+  const now = new Date()
+  const [data] = await db.insert(blogLikes).values({
+    target: 'memo',
+    blogMemoId: body.data.memo_id,
+    userId: body.data.user_id,
+    createTs: now,
+    updatedTs: now,
   })
 
   return { success: true, data }

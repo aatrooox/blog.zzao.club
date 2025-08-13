@@ -1,8 +1,11 @@
+import { desc, eq, sql } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { blogComments, blogLikes, blogMemos, memoTagRelations, memoTags, users } from '~~/lib/drizzle/schema'
+
 export default defineStandardResponseHandler(async (event) => {
   const schema = z.object({
     page: z.string().optional().default('1').transform(Number),
     size: z.string().optional().default('50').transform(Number),
-    qc: z.string().optional().default('0').transform(Number),
   })
   const query = await useSafeValidatedQuery(event, schema)
 
@@ -16,77 +19,33 @@ export default defineStandardResponseHandler(async (event) => {
   const take = query.data.size
   const skip = (query.data.page - 1) * take
 
-  // 关联查询
-  const queryInclude: any = {
-    // 默认查询用户信息
+  const memos = await db.select({
+    id: blogMemos.id,
+    content: blogMemos.content,
+    createTs: blogMemos.createTs,
+    updatedTs: blogMemos.updatedTs,
+    userId: blogMemos.userId,
     user_info: {
-      select: {
-        username: true,
-        nickname: true,
-        avatar_url: true,
-      },
+      username: users.username,
+      nickname: users.nickname,
+      avatarUrl: users.avatarUrl,
     },
-    // 默认查询评论数量和点赞数量
+    tags: sql`JSON_ARRAYAGG(JSON_OBJECT('id', ${memoTags.id}, 'tagName', ${memoTags.tagName}))`,
+    likes: sql`JSON_ARRAYAGG(JSON_OBJECT('userId', ${blogLikes.userId}, 'id', ${blogLikes.id}))`,
     _count: {
-      select: {
-        comments: true,
-        likes: true,
-      },
+      comments: sql<number>`(SELECT COUNT(*) FROM ${blogComments} WHERE ${blogComments.memoId} = ${blogMemos.id})`,
+      likes: sql<number>`(SELECT COUNT(*) FROM ${blogLikes} WHERE ${blogLikes.blogMemoId} = ${blogMemos.id})`,
     },
-  }
-  // 是否查询关联的评论信息
-  // query comment ?
-  const qc = query.data.qc
-  if (qc === 1) {
-    queryInclude.comments = {
-      // 关联查询 评论
-      include: {
-        // 关联查询 评论表中 的用户
-        user_info: {
-          select: {
-            username: true,
-            avatar_url: true,
-          },
-        },
-        // _count: {
-        //   select: {
-        //     sub_comments: true
-        //   }
-        // }
-      },
-    }
-  }
-
-  // 关联查询点赞的用户
-  queryInclude.likes = {
-    select: {
-      user_id: true,
-      id: true,
-    },
-  }
-
-  // 关联查询 tags
-  queryInclude.tags = {
-    include: {
-      tag: {
-        select: {
-          id: true,
-          tag_name: true,
-        },
-      },
-    },
-  }
-
-  const memos = await prisma.blogMemo.findMany({
-    skip,
-    take,
-    orderBy: [
-      {
-        create_ts: 'desc',
-      },
-    ],
-    include: queryInclude,
   })
+    .from(blogMemos)
+    .leftJoin(users, eq(blogMemos.userId, users.id))
+    .leftJoin(memoTagRelations, eq(blogMemos.id, memoTagRelations.memoId))
+    .leftJoin(memoTags, eq(memoTagRelations.tagId, memoTags.id))
+    .leftJoin(blogLikes, eq(blogMemos.id, blogLikes.blogMemoId))
+    .groupBy(blogMemos.id)
+    .orderBy(desc(blogMemos.createTs))
+    .limit(take)
+    .offset(skip)
 
   // 通过 event.$fetch() 调用 tags 接口获取标签信息
   try {

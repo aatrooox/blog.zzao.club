@@ -1,3 +1,7 @@
+import { and, eq } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { oauths } from '~~/lib/drizzle/schema'
+
 export default defineOAuthGitHubEventHandler({
   config: {
     emailRequired: true,
@@ -7,22 +11,21 @@ export default defineOAuthGitHubEventHandler({
     console.log(`oauth tokens =>`, tokens)
     await setUserSession(event, { user })
 
-    const auth = await prisma.oAuth.findUnique({
-      where: {
-        provider_providerId: {
-          provider: 'github',
-          providerId: `${user.id}`,
-        },
-      },
-    })
+    const auth = await db.select().from(oauths).where(
+      and(
+        eq(oauths.provider, 'github'),
+        eq(oauths.providerId, `${user.id}`),
+      ),
+    ).limit(1)
 
     // 保存必要的 oauth 信息
-    if (!auth) {
-      await prisma.oAuth.create({
-        data: {
-          provider: 'github',
-          providerId: `${user.id}`,
-        },
+    if (auth.length === 0) {
+      const now = new Date()
+      await db.insert(oauths).values({
+        provider: 'github',
+        providerId: `${user.id}`,
+        createdAt: now,
+        updatedAt: now,
       })
     }
 

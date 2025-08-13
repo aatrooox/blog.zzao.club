@@ -13,11 +13,7 @@ jobs:
         run: |
           npm i -g pnpm
           pnpm install
-      - name: Generate Prisma Client
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: |
-          npx prisma generate
+
       - name: Build Project
         env:
           CONTENT_REPO_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
@@ -55,12 +51,9 @@ jobs:
           NUXT_OAUTH_GITHUB_CLIENT_SECRET: ${{ secrets.NUXT_OAUTH_GITHUB_CLIENT_SECRET }}
         run: |
           rm -rf /root/web/blog3/*
-          mkdir -p /root/web/blog3/prisma
           cp -R .output/* /root/web/blog3/
-          cp -R prisma/* /root/web/blog3/prisma/
           cp -R pm2.config.json /root/web/blog3/pm2.config.json
           cd /root/web/blog3
-          prisma migrate deploy
           pm2 restart pm2.config.json --env production
       - run: echo "  The ${{ gitea.repository }} repository has been cloned to the runner."
       - run: echo " ️ The workflow is now ready to test your code on the runner."

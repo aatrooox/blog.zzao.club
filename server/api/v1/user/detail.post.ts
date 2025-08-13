@@ -1,3 +1,7 @@
+import { eq } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { users } from '~~/lib/drizzle/schema'
+
 // 获取根据id/uid获取用户详情
 export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
@@ -11,11 +15,7 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
-  const user = await prisma.user.findUnique({
-    where: {
-      id: body.data.id,
-    },
-  })
+  const user = await db.select().from(users).where(eq(users.id, body.data.id)).limit(1)
 
-  return user
+  return user[0] || null
 })

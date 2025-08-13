@@ -1,3 +1,7 @@
+import { eq } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { blogMemos } from '~~/lib/drizzle/schema'
+
 export default defineStandardResponseHandler(async (event) => {
   const id = getRouterParam(event, 'id')
 
@@ -8,61 +12,36 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
-  const queryInclude: any = {
-    // 默认查询用户信息
-    user_info: {
-      select: {
-        username: true,
-        avatar_url: true,
-      },
-    },
-    comments: {
-      // 关联查询 评论
-      include: {
-        // 关联查询 评论表中 的用户
-        user_info: {
-          select: {
-            username: true,
-            avatar_url: true,
-          },
+  const data = await db.query.blogMemos.findFirst({
+    where: eq(blogMemos.id, id),
+    with: {
+      user: {
+        columns: {
+          username: true,
+          avatarUrl: true,
         },
-        _count: {
-          select: {
-            sub_comments: true,
+      },
+      comments: {
+        with: {
+          user: {
+            columns: {
+              username: true,
+              avatarUrl: true,
+            },
           },
         },
       },
-    },
-    // 关联查询 tags
-    tags: {
-      include: {
-        tag: {
-          select: {
-            id: true,
-            tag_name: true,
+      tags: {
+        with: {
+          tag: {
+            columns: {
+              id: true,
+              tagName: true,
+            },
           },
         },
       },
     },
-    // likes: {
-    //   include: {
-    //     user_id: true,
-    //     id: true
-    //   }
-    // },
-    // 默认查询评论数量
-    _count: {
-      select: {
-        comments: true,
-      },
-    },
-  }
-
-  const data = await prisma.blogMemo.findFirst({
-    where: {
-      id,
-    },
-    include: queryInclude,
   })
 
   return data

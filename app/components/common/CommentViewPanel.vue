@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 // import anime from 'animejs/lib/anime.es.js'
-import type { Prisma } from '~~/prisma/generated/prisma/client'
+import type { BlogCommentWithUserInfo } from '~~/types/blog-drizzle'
 
 const props = defineProps<Props>()
 const emit = defineEmits(['refresh'])
@@ -13,9 +13,6 @@ const { updateDateFromNow } = useDayjs()
 // const likeCount = ref('0')
 // const likeIcon = ref(null)
 // const Prisma = usePrismaClient();
-type BlogCommentWithUserInfo = Prisma.BlogCommentGetPayload<{
-  include: { user_info: true, _count: true, sub_comments: { include: { user_info: true } } }
-}>
 interface Props {
   comment: BlogCommentWithUserInfo
   hideBtns?: boolean
@@ -105,7 +102,7 @@ function refreshList() {
           {{ comment.content }}
         </div>
         <div class="footer flex items-center gap-4 px-4">
-          <span class="text-gray-500 text-xs">{{ updateDateFromNow(comment.create_ts) }}</span>
+          <span class="text-gray-500 text-xs">{{ updateDateFromNow(comment.createTs) }}</span>
           <!-- <Button @click.stop="likeMemo" variant="secondary" text size="small">
           <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg" ref="likeIcon" />
           <span slot="badge">{{ likeCount }}</span>
@@ -120,7 +117,7 @@ function refreshList() {
           </Button>
           <!-- 管理员 或自己 可删除 -->
           <Button
-            v-if="comment.user_id === userStore?.user.id || userStore?.user.role === 'superAdmin'" variant="ghost" text
+            v-if="comment.userId === userStore?.user.id || userStore?.user.role === 'superAdmin'" variant="ghost" text
             size="sm"
             @click.stop="delComment"
           >

@@ -2,10 +2,10 @@ import type { ApiResponse } from '~~/types/fetch'
 
 export interface BlogTag {
   id: string
-  tag_name: string
-  user_id: string
-  create_ts: string
-  updated_ts: string
+  tagName: string
+  userId: string
+  createTs: string
+  updatedTs: string
   _count?: {
     memos: number
   }
@@ -32,7 +32,7 @@ export default function useTags() {
     tags.value = data.value?.data ?? []
   }
 
-  async function createTag({ tag_name, memo_id }: { tag_name: string, memo_id?: string }) {
+  async function createTag({ tagName, memo_id }: { tagName: string, memo_id?: string }) {
     if (!userStore.isLogin) {
       toast.warn('登录后才能创建标签！')
       return
@@ -43,9 +43,9 @@ export default function useTags() {
       return
     }
 
-    if (tag_name) {
+    if (tagName) {
       const { error } = await $api.post<ApiResponse<BlogTag>>('/api/v1/tag/create', {
-        tag_name,
+        tag_name: tagName,
         memo_id,
       })
 
@@ -59,7 +59,7 @@ export default function useTags() {
     }
   }
 
-  async function updateTag(id: string, { tag_name, memo_ids }: { tag_name: string, memo_ids?: string[] }) {
+  async function updateTag(id: string, { tagName, memo_ids }: { tagName: string, memo_ids?: string[] }) {
     if (!userStore.isLogin) {
       toast.warn('登录后才能编辑标签！')
       return
@@ -70,10 +70,10 @@ export default function useTags() {
       return
     }
 
-    if (tag_name) {
+    if (tagName) {
       const { error } = await $api.post<ApiResponse<BlogTag>>('/api/v1/tag/update', {
         id,
-        tag_name,
+        tag_name: tagName,
         memo_ids,
       })
 

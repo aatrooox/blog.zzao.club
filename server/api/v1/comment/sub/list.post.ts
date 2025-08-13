@@ -1,3 +1,7 @@
+import { asc, eq } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { blogSubComments, users } from '~~/lib/drizzle/schema'
+
 // 获取评论下的二级评论
 export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
@@ -11,27 +15,25 @@ export default defineStandardResponseHandler(async (event) => {
   }
 
   // 查询所有二级评论
-  const data = await prisma.blogSubComment.findMany({
-    where: {
-      comment_id: body.data.comment_id,
-    },
-    // 最先评论的在最上边
-    orderBy: [
-      {
-        create_ts: 'asc',
-      },
-    ],
-    include: {
-      user_info: {
-        select: {
-          username: true,
-          nickname: true,
-          website: true,
-          avatar_url: true,
-        },
-      },
+  const data = await db.select({
+    id: blogSubComments.id,
+    content: blogSubComments.content,
+    commentId: blogSubComments.commentId,
+    userId: blogSubComments.userId,
+    createTs: blogSubComments.createTs,
+    updatedTs: blogSubComments.updatedTs,
+    replySubCommentId: blogSubComments.replySubCommentId,
+    user_info: {
+      username: users.username,
+      nickname: users.nickname,
+      website: users.website,
+      avatar_url: users.avatarUrl,
     },
   })
+    .from(blogSubComments)
+    .leftJoin(users, eq(blogSubComments.userId, users.id))
+    .where(eq(blogSubComments.commentId, body.data.comment_id))
+    .orderBy(asc(blogSubComments.createTs))
 
   return data
 })

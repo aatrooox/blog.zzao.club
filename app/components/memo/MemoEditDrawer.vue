@@ -21,8 +21,8 @@ const isUpdating = ref(false)
 // 监听memo变化，更新tags
 watch(() => props.memo, (newMemo) => {
   if (newMemo && newMemo.tags) {
-    // 从 tag 对象中提取 tag_name
-    editTags.value = newMemo.tags.map((tagRelation: any) => tagRelation.tag.tag_name)
+    // 从 tag 对象中提取 tagName
+    editTags.value = newMemo.tags.map((tagRelation: any) => tagRelation.tag.tagName)
   }
   else {
     editTags.value = []

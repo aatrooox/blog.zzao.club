@@ -1,14 +1,20 @@
 <script lang="ts" setup>
-import type { User } from '~~/prisma/generated/prisma/client'
+import type { User } from '~~/types/memo'
+
+type UserInfo = User | {
+  username: string
+  nickname: string | null
+  avatarUrl: string | null
+}
 
 const props = defineProps<{
-  userInfo?: User | null
+  userInfo?: UserInfo | null
   previewUrl?: string
 }>()
 const fallbackText = computed(() => 'Z')
 
 const imgUrl = computed(() => {
-  return props.previewUrl || props.userInfo?.avatar_url
+  return props.previewUrl || props.userInfo?.avatarUrl
 })
 </script>
 

@@ -1,3 +1,7 @@
+import { inArray } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { blogLikes } from '~~/lib/drizzle/schema'
+
 export default defineCachedEventHandler(async (event) => {
   const schema = z.object({
     memo_ids: z.string().optional(),
@@ -11,22 +15,23 @@ export default defineCachedEventHandler(async (event) => {
     })
   }
 
-  let where = {}
+  let likes
   if (query.data.memo_ids) {
     // 将逗号分割的字符串转换为数组
     const memoIds = query.data.memo_ids.split(',').map((id: string) => id.trim()).filter((id: string) => id)
     if (memoIds.length > 0) {
-      where = {
-        blogMemoId: {
-          in: memoIds,
-        },
-      }
+      likes = await db.select()
+        .from(blogLikes)
+        .where(inArray(blogLikes.blogMemoId, memoIds))
+    }
+    else {
+      likes = await db.select().from(blogLikes)
     }
   }
-  // 如果不传 memo_ids 参数，where 为空对象，会查询所有点赞记录
-  const likes = await prisma.blogLike.findMany({
-    where,
-  })
+  else {
+    // 如果不传 memo_ids 参数，查询所有点赞记录
+    likes = await db.select().from(blogLikes)
+  }
 
   const result: Record<string, number> = {}
 

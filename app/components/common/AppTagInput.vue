@@ -36,7 +36,7 @@ function filterSuggestions(): void {
     return
   }
   suggestions.value = allTags.value
-    .map(t => t.tag_name)
+    .map(t => t.tagName)
     .filter(tag => tag.toLowerCase().includes(currentInput.value.toLowerCase()))
   showSuggestions.value = suggestions.value.length > 0
   resetActiveSuggestion()

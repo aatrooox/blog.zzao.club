@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import type { User } from '~~/prisma/generated/prisma/client'
 import type { ApiResponse } from '~~/types/fetch'
+import type { MemoLikeResponse, User, UserRegistResponse } from '~~/types/memo'
 import useTags from '~/composables/useTags'
 
 const props = defineProps({
@@ -53,7 +53,7 @@ const filteredMemos = computed(() => {
   if (selectedTags.value.length === 0)
     return memos.value
   return memos.value.filter(memo =>
-    memo.tags && memo.tags.some(t => selectedTags.value.includes(t.tag.tag_name)),
+    memo.tags && memo.tags.some(t => selectedTags.value.includes(t.tagName)),
   )
 })
 
@@ -61,17 +61,17 @@ const { beforeLeave, leave, afterLeave } = useStaggeredListTransition('memo-fade
 
 async function handleLike(memoId: string) {
   if (!userStore.user.id) {
-    const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-    userStore.setUser(res.data.user)
-    tokenStore.setToken(res.data.token)
+    const res = await $api.post<ApiResponse<UserRegistResponse>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
+    userStore.setUser(res.data.data.user)
+    tokenStore.setToken(res.data.data.token)
   }
   try {
-    const res = await $api.post<ApiResponse<{ success: boolean, message?: string, data?: any }>>('/api/v1/memo/like', {
+    const res = await $api.post<ApiResponse<MemoLikeResponse>>('/api/v1/memo/like', {
       memo_id: memoId,
       user_id: userStore.user.id,
     })
-    if (res?.data && res.data.success) {
-      if (res.data.message) {
+    if (res?.data && res.data.data.success) {
+      if (res.data.data.message) {
         toast.success('您已经点赞过了')
       }
       else {
@@ -171,16 +171,16 @@ function onMemoTagClick(tagName: string) {
               <div class="flex items-center gap-2 mb-2">
                 <span class="pixel-title text-sm md:text-base">{{ memo.user_info?.nickname || memo.user_info?.username || '匿名' }}</span>
                 <span class="pixel-text text-xs md:text-sm opacity-70">·</span>
-                <NuxtTime :datetime="memo.create_ts" class="pixel-text text-xs md:text-sm opacity-70" />
+                <NuxtTime :datetime="memo.createTs" class="pixel-text text-xs md:text-sm opacity-70" />
               </div>
               <div v-if="memo.tags && memo.tags.length > 0" class="mb-2 h-8 overflow-x-auto overflow-y-hidden flex items-center gap-1.5 pb-1">
                 <span
-                  v-for="tagRelation in memo.tags"
-                  :key="tagRelation.tag.id"
+                  v-for="tag in memo.tags"
+                  :key="tag.id"
                   class="pixel-tag cursor-pointer"
-                  @click.stop="onMemoTagClick(tagRelation.tag.tag_name)"
+                  @click.stop="onMemoTagClick(tag.tagName)"
                 >
-                  {{ tagRelation.tag.tag_name }}
+                  {{ tag.tagName }}
                 </span>
               </div>
               <div class="mb-2">

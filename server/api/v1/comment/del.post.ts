@@ -1,4 +1,7 @@
+import { eq } from 'drizzle-orm'
 import { useSafeValidatedBody } from 'h3-zod'
+import { db } from '~~/lib/drizzle'
+import { blogComments } from '~~/lib/drizzle/schema'
 
 export default defineStandardResponseHandler(async (event) => {
   const body = await useSafeValidatedBody(event, z.object({
@@ -12,11 +15,16 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
-  const data = await prisma.blogComment.delete({
-    where: {
-      id: body.data.id,
-    },
-  })
+  const [data] = await db.select().from(blogComments).where(eq(blogComments.id, body.data.id))
+
+  if (!data) {
+    throw createError({
+      statusCode: 404,
+      message: 'Comment not found',
+    })
+  }
+
+  await db.delete(blogComments).where(eq(blogComments.id, body.data.id))
 
   return data
 })

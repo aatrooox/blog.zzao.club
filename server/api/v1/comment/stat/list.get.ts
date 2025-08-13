@@ -1,3 +1,7 @@
+import { and, count, eq, inArray } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { blogComments, blogSubComments } from '~~/lib/drizzle/schema'
+
 export default defineCachedEventHandler(async (event) => {
   const schema = z.object({
     type: z.string().optional().default('article'),
@@ -12,38 +16,31 @@ export default defineCachedEventHandler(async (event) => {
     })
   }
 
-  let where: any = {
-    type: query.data.type,
-  }
+  const whereConditions = [eq(blogComments.type, query.data.type)]
 
   if (query.data.article_ids.length) {
-    where = {
-      ...where,
-      article_id: {
-        in: query.data.article_ids,
-      },
-    }
+    whereConditions.push(inArray(blogComments.articleId, query.data.article_ids))
   }
 
-  const comments = await prisma.blogComment.findMany({
-    where,
-    include: {
-      // 关系计数
-      _count: {
-        select: {
-          sub_comments: true,
-        },
-      },
-    },
+  const comments = await db.select({
+    id: blogComments.id,
+    articleId: blogComments.articleId,
   })
+    .from(blogComments)
+    .where(and(...whereConditions))
 
   const result: Record<string, number> = {}
 
-  comments.forEach((item) => {
-    if (item.article_id) {
-      result[item.article_id] = (result[item.article_id] || 0) + 1 + item._count.sub_comments
+  // 为每个评论计算子评论数量
+  for (const comment of comments) {
+    if (comment.articleId) {
+      const subCommentsCount = await db.select({ count: count() })
+        .from(blogSubComments)
+        .where(eq(blogSubComments.commentId, comment.id))
+
+      result[comment.articleId] = (result[comment.articleId] || 0) + 1 + subCommentsCount[0].count
     }
-  })
+  }
 
   return {
     data: result,

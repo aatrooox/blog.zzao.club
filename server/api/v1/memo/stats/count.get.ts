@@ -1,5 +1,9 @@
+import { count } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { blogMemos } from '~~/lib/drizzle/schema'
+
 export default defineCachedEventHandler(async (_) => {
-  const memoCount = await prisma.blogMemo.count()
+  const [{ count: memoCount }] = await db.select({ count: count() }).from(blogMemos)
 
   return {
     data: memoCount,

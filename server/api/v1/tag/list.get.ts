@@ -1,3 +1,7 @@
+import { desc, eq } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { memoTags } from '~~/lib/drizzle/schema'
+
 export default defineStandardResponseHandler(async (event) => {
   const schema = z.object({
     user_id: z.string().optional(),
@@ -13,21 +17,7 @@ export default defineStandardResponseHandler(async (event) => {
 
   const userId = query.data.user_id || event.context.userId
 
-  const tags = await prisma.memoTag.findMany({
-    where: {
-      user_id: userId,
-    },
-    include: {
-      _count: {
-        select: {
-          memos: true,
-        },
-      },
-    },
-    orderBy: {
-      create_ts: 'desc',
-    },
-  })
+  const tags = await db.select().from(memoTags).where(eq(memoTags.userId, userId)).orderBy(desc(memoTags.createTs))
 
   return tags
 })

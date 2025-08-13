@@ -1,3 +1,7 @@
+import { desc, eq } from 'drizzle-orm'
+import { db } from '~~/lib/drizzle'
+import { blogComments, blogSubComments, userConfigs, users } from '~~/lib/drizzle/schema'
+
 export default defineStandardResponseHandler(async (event) => {
   let body
   try {
@@ -27,30 +31,25 @@ export default defineStandardResponseHandler(async (event) => {
   }
 
   // 被回复的评论者, 是否允许邮件通知
-  const comment = await prisma.blogComment.findUnique({
-    where: {
-      id: commentData.comment_id,
-    },
-    include: {
-      user_info: {
-        select: {
-          email: true,
-          nickname: true,
-          username: true,
-          user_config: {
-            select: {
-              allowEmailNotify: true,
-            },
-          },
-        },
-      },
-    },
+  const commentResult = await db.select({
+    id: blogComments.id,
+    userEmail: users.email,
+    userNickname: users.nickname,
+    userName: users.username,
+    allowEmailNotify: userConfigs.allowEmailNotify,
   })
+    .from(blogComments)
+    .leftJoin(users, eq(blogComments.userId, users.id))
+    .leftJoin(userConfigs, eq(users.id, userConfigs.userId))
+    .where(eq(blogComments.id, commentData.comment_id))
+    .limit(1)
 
-  if (comment?.user_info?.email && comment?.user_info?.user_config?.allowEmailNotify === 1) {
+  const comment = commentResult[0]
+
+  if (comment?.userEmail && comment?.allowEmailNotify === 1) {
     try {
-      sendMailNotice(comment?.user_info?.nickname || comment?.user_info?.username, {
-        to: comment?.user_info?.email,
+      sendMailNotice(comment?.userNickname || comment?.userName || '', {
+        to: comment.userEmail,
         subject: '有人回复了你在早早集市的评论',
         text: commentData.content,
         path: commentData.path,
@@ -61,30 +60,25 @@ export default defineStandardResponseHandler(async (event) => {
 
   // 如果是回复的二级评论
   if (body.data.reply_sub_comment_id) {
-    const subComment = await prisma.blogSubComment.findUnique({
-      where: {
-        id: body.data.reply_sub_comment_id,
-      },
-      include: {
-        user_info: {
-          select: {
-            email: true,
-            nickname: true,
-            username: true,
-            user_config: {
-              select: {
-                allowEmailNotify: true,
-              },
-            },
-          },
-        },
-      },
+    const subCommentResult = await db.select({
+      id: blogSubComments.id,
+      userEmail: users.email,
+      userNickname: users.nickname,
+      userName: users.username,
+      allowEmailNotify: userConfigs.allowEmailNotify,
     })
+      .from(blogSubComments)
+      .leftJoin(users, eq(blogSubComments.userId, users.id))
+      .leftJoin(userConfigs, eq(users.id, userConfigs.userId))
+      .where(eq(blogSubComments.id, body.data.reply_sub_comment_id))
+      .limit(1)
 
-    if (subComment?.user_info?.email && subComment?.user_info?.user_config?.allowEmailNotify === 1 && subComment?.user_info?.email !== comment?.user_info?.email) {
+    const subComment = subCommentResult[0]
+
+    if (subComment?.userEmail && subComment?.allowEmailNotify === 1 && subComment?.userEmail !== comment?.userEmail) {
       try {
-        sendMailNotice(subComment?.user_info?.nickname || subComment?.user_info?.username, {
-          to: subComment!.user_info!.email,
+        sendMailNotice(subComment?.userNickname || subComment?.userName || '', {
+          to: subComment.userEmail,
           subject: '有人回复了你在早早集市的评论',
           text: commentData.content,
           path: commentData.path,
@@ -93,9 +87,22 @@ export default defineStandardResponseHandler(async (event) => {
       catch {}
     }
   }
-  const data = await prisma.blogSubComment.create({
-    data: commentData,
-  })
+
+  // 转换字段名以匹配数据库schema
+  const now = new Date()
+  const insertData = {
+    content: commentData.content,
+    commentId: commentData.comment_id,
+    userId: commentData.user_id,
+    replySubCommentId: commentData.reply_sub_comment_id,
+    createTs: now,
+    updatedTs: now,
+  }
+
+  await db.insert(blogSubComments).values(insertData)
+
+  // 查询刚创建的数据
+  const [data] = await db.select().from(blogSubComments).where(eq(blogSubComments.userId, insertData.userId)).orderBy(desc(blogSubComments.createTs)).limit(1)
 
   return data
 })

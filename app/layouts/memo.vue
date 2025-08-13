@@ -157,13 +157,13 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
                 :key="tag.id"
                 class="px-3 py-2 text-sm cursor-pointer rounded-lg border-2 transition-all duration-200 group flex-shrink-0 font-cartoon font-bold hover:scale-105"
                 :class="[
-                  isTagSelected(tag.tag_name)
+                  isTagSelected(tag.tagName)
                     ? 'bg-primary-600 text-base border-bg-base'
                     : 'bg-secondary-500 text-bg-base border-bg-base hover:bg-primary-600',
                 ]"
-                @click="toggleTag(tag.tag_name)"
+                @click="toggleTag(tag.tagName)"
               >
-                {{ tag.tag_name }} ({{ tag._count?.memos || 0 }})
+                {{ tag.tagName }} ({{ tag._count?.memos || 0 }})
               </span>
             </div>
           </div>
@@ -225,13 +225,13 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
             :key="tag.id"
             class="px-3 py-2 text-sm cursor-pointer rounded-lg border-2 transition-all duration-200 group flex-shrink-0 font-cartoon font-bold hover:scale-105"
             :class="[
-              isTagSelected(tag.tag_name)
+              isTagSelected(tag.tagName)
                 ? 'bg-primary-600 text-base border-bg-base'
                 : 'bg-secondary-500 text-bg-base border-bg-base hover:bg-primary-600',
             ]"
-            @click="toggleTag(tag.tag_name)"
+            @click="toggleTag(tag.tagName)"
           >
-            {{ tag.tag_name }} ({{ tag._count?.memos || 0 }})
+            {{ tag.tagName }} ({{ tag._count?.memos || 0 }})
           </span>
         </div>
       </div>
