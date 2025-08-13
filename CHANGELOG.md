@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.15.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.15.2...v1.15.3)
+
+### 🩹 Fixes
+
+- Prisma 导致的启动问题 ([e77b431](https://github.com/aatrooox/blog.zzao.club/commit/e77b431))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.15.2
 
 [compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v1.15.1...v1.15.2)
