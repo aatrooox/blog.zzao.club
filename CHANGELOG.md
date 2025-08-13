@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v1.15.6
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.15.5...v1.15.6)
+
+### 🩹 Fixes
+
+- Nuxt build hangs ([38a4b8f](https://github.com/aatrooox/blog.zzao.club/commit/38a4b8f))
+
+### 🏡 Chore
+
+- Eslint ([110ae0e](https://github.com/aatrooox/blog.zzao.club/commit/110ae0e))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.15.5
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.15.4...v1.15.5)
