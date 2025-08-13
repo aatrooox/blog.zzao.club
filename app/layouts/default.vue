@@ -149,13 +149,17 @@ function scrollToTop() {
           <div v-if="isLogin" class="pixel-user-info">
             <UserAvatar :user="user" class="pixel-user-avatar" />
             <div class="pixel-user-details">
-              <div class="pixel-user-name">{{ user.nickname || user.username }}</div>
+              <div class="pixel-user-name">
+                {{ user.nickname || user.username }}
+              </div>
             </div>
           </div>
           <!-- 未登录时显示默认图标 -->
           <div v-else class="pixel-login-trigger" @click="showLoginDialog = true">
             <Icon name="twemoji:wedding" class="pixel-sidebar-logo" />
-            <div class="pixel-login-hint">点击登录</div>
+            <div class="pixel-login-hint">
+              点击登录
+            </div>
           </div>
         </div>
         <nav class="pixel-sidebar-nav">
