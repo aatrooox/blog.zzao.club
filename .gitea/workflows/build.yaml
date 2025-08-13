@@ -35,6 +35,7 @@ jobs:
           NUXT_OAUTH_GITHUB_CLIENT_ID: ${{ secrets.NUXT_OAUTH_GITHUB_CLIENT_ID }}
           NUXT_OAUTH_GITHUB_CLIENT_SECRET: ${{ secrets.NUXT_OAUTH_GITHUB_CLIENT_SECRET }}
         run: NODE_OPTIONS="--max-old-space-size=4080" pnpm build
+        timeout-minutes: 8
       - name: Copy and Build
         env:
           CONTENT_REPO_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}

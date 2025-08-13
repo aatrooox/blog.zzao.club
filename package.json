@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@antfu/eslint-config": "^4.14.1",
-    "@nuxt/content": "3.5.1",
+    "@nuxt/content": "3.6.3",
     "@nuxt/eslint": "1.4.1",
     "@nuxt/icon": "^1.6.1",
     "@nuxt/image": "^1.8.1",
