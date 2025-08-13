@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import { createRequire } from 'node:module'
+// import { createRequire } from 'node:module'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
@@ -15,11 +15,12 @@ const appVersion = packageJson.version
 const isDev = process.env.NODE_ENV === 'development'
 console.log(` 当前环境为：${isDev ? '开发' : '生产'}`)
 
-const { resolve } = createRequire(import.meta.url)
+// const { resolve } = createRequire(import.meta.url)
 
-const prismaClient = `prisma${path.sep}client`
+// const prismaClient = `prisma${path.sep}client`
 
-const prismaClientIndexBrowser = resolve('@prisma/client/index-browser').replace(`@${prismaClient}`, `.${prismaClient}`)
+// // 使用新的 Prisma 生成路径
+// const prismaClientIndexBrowser = path.resolve(__dirname, 'prisma/generated/prisma/runtime/index-browser.js')
 // console.log(`nuxt-secret-key已更新: `, uuid)
 export default defineNuxtConfig({
   extends: [
@@ -210,9 +211,6 @@ export default defineNuxtConfig({
   nitro: {
     // preset: 'bun',
     errorHandler: '~~/server/error',
-    externals: {
-      inline: ['./prisma/generated/prisma'],
-    },
     experimental: {
       openAPI: true,
     },
@@ -280,11 +278,12 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: ['debug'],
     },
-    resolve: {
-      alias: {
-        '.prisma/client/index-browser': path.relative(__dirname, prismaClientIndexBrowser),
-      },
-    },
+    // resolve: {
+    //   alias: {
+    //     '.prisma/client/index-browser': path.relative(__dirname, prismaClientIndexBrowser),
+    //     '@prisma/client/index-browser': path.relative(__dirname, prismaClientIndexBrowser),
+    //   },
+    // },
   },
   debug: isDev,
   hooks: {

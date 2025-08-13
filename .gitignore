@@ -12,3 +12,6 @@ node_modules
 
 .idea
 # .husky
+
+# 确保 Prisma 生成的文件不被忽略
+!prisma/generated/
