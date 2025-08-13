@@ -16,6 +16,11 @@ jobs:
         run: |
           npm i -g pnpm
           pnpm install
+      - name: Generate Prisma Client
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          npx prisma generate
       - name: Build Project
         env:
           CONTENT_REPO_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
