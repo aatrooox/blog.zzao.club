@@ -1,6 +1,30 @@
 # Changelog
 
 
+## v1.15.4
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.15.3...v1.15.4)
+
+### 🚀 Enhancements
+
+- ⚠️  把 prisma 替换为 dizzle ([e77c134](https://github.com/aatrooox/blog.zzao.club/commit/e77c134))
+
+### 🩹 Fixes
+
+- Prisma ([67cbbfc](https://github.com/aatrooox/blog.zzao.club/commit/67cbbfc))
+
+### 🏡 Chore
+
+- Eslint ([c4efe36](https://github.com/aatrooox/blog.zzao.club/commit/c4efe36))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  把 prisma 替换为 dizzle ([e77c134](https://github.com/aatrooox/blog.zzao.club/commit/e77c134))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.15.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.15.2...v1.15.3)
