@@ -133,26 +133,4 @@ const showSearchDialog = (tag: string) => {
 .pixel-meta {
   color: var(--pixel-text-muted);
 }
-
-.pixel-tag {
-  background: var(--pixel-bg-card);
-  color: var(--pixel-accent-cyan);
-  border: 2px solid var(--pixel-accent-cyan-border);
-  padding: 2px 8px;
-  border-radius: 4px;
-  box-shadow: 1px 1px 0 var(--pixel-accent-cyan-border);
-  transition: all 0.15s ease;
-}
-
-.pixel-tag:hover {
-  background: var(--pixel-bg-tertiary);
-  color: var(--pixel-accent-cyan-hover);
-  transform: translateY(-1px);
-  box-shadow: 2px 2px 0 var(--pixel-accent-cyan-border);
-}
-
-.pixel-tag:active {
-  transform: translateY(1px);
-  box-shadow: 0px 0px 0 var(--pixel-accent-cyan-border);
-}
 </style>

@@ -165,14 +165,13 @@ function onMouseLeave(event) {
               <!-- 标签 -->
               <div v-if="memo.tags && memo.tags.length > 0" class="mb-3">
                 <div class="flex gap-2 flex-wrap">
-                  <Badge
+                  <span
                     v-for="tagRelation in memo.tags.slice(0, 2)"
                     :key="tagRelation.id"
-                    variant="secondary"
-                    class="pixel-btn text-xs"
+                    class="pixel-tag text-xs"
                   >
                     {{ tagRelation.tagName }}
-                  </Badge>
+                  </span>
                 </div>
               </div>
 
@@ -236,7 +235,7 @@ function onMouseLeave(event) {
                         </div>
                       </template>
                       <template v-else>
-                        <div v-for="tag of page.tags" :key="tag" class="text-xs pixel-btn">
+                        <div v-for="tag of page.tags" :key="tag" class="text-xs pixel-tag">
                           {{ tag }}
                         </div>
                       </template>
