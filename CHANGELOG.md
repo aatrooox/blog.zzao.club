@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.0.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.0.1...v2.0.2)
+
+### 🩹 Fixes
+
+- 修复头像展示问题 ([f266bb0](https://github.com/aatrooox/blog.zzao.club/commit/f266bb0))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.0.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.15.8...v2.0.1)
