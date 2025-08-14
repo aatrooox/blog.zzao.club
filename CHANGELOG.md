@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.15.8
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.15.7...v1.15.8)
+
+### 🏡 Chore
+
+- Action ([3ac8002](https://github.com/aatrooox/blog.zzao.club/commit/3ac8002))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.15.7
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.15.6...v1.15.7)
