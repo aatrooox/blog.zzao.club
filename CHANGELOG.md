@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v2.0.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.0.2...v2.0.3)
+
+### 🩹 Fixes
+
+- 优化 toc 吸顶效果 ([180d951](https://github.com/aatrooox/blog.zzao.club/commit/180d951))
+- 恢复 toast 提示问题; 移除无用的插件 ([df198f0](https://github.com/aatrooox/blog.zzao.club/commit/df198f0))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.0.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.0.1...v2.0.2)
