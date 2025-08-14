@@ -164,7 +164,7 @@ function onMemoTagClick(tagName: string) {
         >
           <div class="flex items-start gap-4">
             <div class="flex-shrink-0">
-              <UserAvatar :user-info="memo.user" size="md" class="pixel-avatar" />
+              <UserAvatar :user-info="memo.user_info" size="md" class="pixel-avatar" />
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-2">
