@@ -14,14 +14,6 @@ const appVersion = packageJson.version
 
 const isDev = process.env.NODE_ENV === 'development'
 console.log(` 当前环境为：${isDev ? '开发' : '生产'}`)
-
-// const { resolve } = createRequire(import.meta.url)
-
-// const prismaClient = `prisma${path.sep}client`
-
-// // 使用新的 Prisma 生成路径
-// const prismaClientIndexBrowser = path.resolve(__dirname, 'prisma/generated/prisma/runtime/index-browser.js')
-// console.log(`nuxt-secret-key已更新: `, uuid)
 export default defineNuxtConfig({
   extends: [
     // README https://github.com/aatrooox/zc-auth-layer
@@ -208,21 +200,6 @@ export default defineNuxtConfig({
   nitro: {
     // preset: 'bun',
     errorHandler: '~~/server/error',
-    experimental: {
-      openAPI: true,
-    },
-    openAPI: {
-      route: '/_docs/openapi.json',
-      ui: {
-        scalar: {
-          route: '/_docs/scalar',
-          theme: 'purple',
-        },
-        swagger: {
-          route: '/_docs/swagger',
-        },
-      },
-    },
     storage: {
       redis: {
         driver: 'redis',
@@ -284,21 +261,10 @@ export default defineNuxtConfig({
   },
   debug: isDev,
   hooks: {
-    'content:file:beforeParse': function (ctx) {
-      const body: string = ctx.file.body
-      const title = '这篇文章'
-      const linkRegex = /\[\[(.*?)\]\]/g
-
-      const replacedMarkdown = body.replace(
-        linkRegex,
-        (match, content) => {
-          // 返回替换后的格式：[这篇文章](https://zzao.club/xxx)
-          const path = content.split('|')[0]
-          return `[${title}](https://zzao.club/post/${path})`
-        },
-      )
-
-      ctx.file.body = replacedMarkdown
+    close: () => {
+      // @see https://github.com/nuxt/cli/issues/169#issuecomment-1729300497
+      // Workaround for https://github.com/nuxt/cli/issues/169
+      process.exit(0)
     },
   },
   eslint: {
