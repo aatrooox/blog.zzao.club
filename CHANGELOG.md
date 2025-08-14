@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.0.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.15.8...v2.0.1)
+
+### 🏡 Chore
+
+- 2.0 像素风格版本 ([6bc92cc](https://github.com/aatrooox/blog.zzao.club/commit/6bc92cc))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.15.8
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.15.7...v1.15.8)
