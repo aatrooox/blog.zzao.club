@@ -6,6 +6,7 @@ import { useSearch } from '~/composables/useSearch'
 const globalToast = useGlobalToast()
 const { $toast } = useNuxtApp() as any
 const route = useRoute()
+const userStore = useUser()
 const navBarStore = useNavBar()
 const scrollWrap = useTemplateRef<HTMLElement>('scrollWrap')
 const scrollDirection = ref('')
@@ -117,6 +118,10 @@ function initNavBarStatus() {
   }
 }
 
+function logout() {
+  userStore.logout()
+}
+
 // 页面加载时初始化
 onMounted(() => {
   initNavBarStatus()
@@ -148,11 +153,11 @@ function scrollToTop() {
           <!-- 用户信息区域 -->
           <div v-if="isLogin" class="pixel-user-info">
             <UserAvatar :user="user" class="pixel-user-avatar" />
-            <div class="pixel-user-details">
+            <!-- <div class="pixel-user-details">
               <div class="pixel-user-name">
                 {{ user.nickname || user.username }}
               </div>
-            </div>
+            </div> -->
           </div>
           <!-- 未登录时显示默认图标 -->
           <div v-else class="pixel-login-trigger" @click="showLoginDialog = true">
@@ -173,6 +178,7 @@ function scrollToTop() {
             <Icon :name="nav.icon" class="pixel-sidebar-icon" />
             <span class="pixel-sidebar-text">{{ nav.name }}</span>
           </NuxtLink>
+          <Icon v-if="userStore.isLogin.value" name="pixelarticons:logout" size="1.5em" class="text-[var(--pixel-text-primary)] absolute bottom-4 left-12 hover:text-[var(--pixel-status-error)]" @click="logout" />
         </nav>
       </aside>
 

@@ -87,6 +87,10 @@ function showRegisterDialog() {
   registerForm.value?.show && registerForm.value.show()
 }
 
+function logout() {
+  userStore.logout()
+}
+
 // function showLoginForm() {
 //   loginForm.value?.show()
 // }
@@ -147,6 +151,10 @@ function showRegisterDialog() {
                 </button>
               </NuxtLink>
             </div>
+            <!-- logout -->
+            <Button @click="logout">
+              退出
+            </Button>
           </nav>
 
           <!-- 移动端菜单按钮 -->

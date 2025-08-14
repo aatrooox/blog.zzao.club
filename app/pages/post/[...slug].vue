@@ -14,8 +14,10 @@ const route = useRoute()
 const activeTocId = ref('')
 const curMdContentRef = templateRef('curMdContentRef')
 const articleWrap = templateRef('articleWrap')
+const tocContainer = templateRef('tocContainer')
 const selectedText = ref()
 const { text, rects, selection } = useTextSelection()
+const isTocFixed = ref(false)
 
 const likeCount = ref(0)
 const isLiked = ref(false)
@@ -516,6 +518,29 @@ function getAllTextNodes(element) {
   getTextNodes(element)
   return textNodes
 }
+// TOC滚动监听
+function handleTocScroll() {
+  if (!tocContainer.value)
+    return
+
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+  const tocOffset = tocContainer.value.offsetTop
+  const headerHeight = 80 // 固定标题栏高度
+
+  // 当滚动距离超过TOC容器位置减去标题栏高度时，启用固定定位
+  isTocFixed.value = scrollTop > (tocOffset - headerHeight)
+}
+
+onMounted(() => {
+  // 添加滚动监听
+  window.addEventListener('scroll', handleTocScroll, { passive: true })
+})
+
+onUnmounted(() => {
+  // 移除滚动监听
+  window.removeEventListener('scroll', handleTocScroll)
+})
+
 watchEffect(async () => {
   if (page.value?.id) {
     nextTick(() => {
@@ -560,7 +585,7 @@ watchEffect(async () => {
         </div>
       </ClientOnly>
 
-      <div v-if="page" class="flex w-full max-w-7xl mx-auto gap-8 items-start">
+      <div v-if="page" class="flex w-full max-w-7xl mx-auto gap-8">
         <!-- 左侧点赞评论操作栏 -->
         <!-- <ClientOnly>
           <div class="flex-col gap-4 h-80 hidden md:flex top-28 sticky">
@@ -681,28 +706,30 @@ watchEffect(async () => {
         </div>
 
         <ClientOnly>
-          <div v-if="tocData && tocData.length" class="hidden lg:block w-64 ml-8 self-start">
+          <div v-if="tocData && tocData.length" class="hidden lg:block w-64 ml-8">
             <!-- 简单的悬浮目录 -->
-            <div class="simple-toc">
-              <div class="simple-toc-header">
-                目录
-              </div>
-              <ul class="simple-toc-list">
-                <template v-for="link in tocData" :key="link.id">
-                  <li class="simple-toc-item" :class="{ active: link.id === activeTocId }">
-                    <a :href="`#${link.id}`" class="simple-toc-link">
-                      {{ link.text }}
-                    </a>
-                  </li>
-                  <template v-if="link.children">
-                    <li v-for="child in link.children" :key="child.id" class="simple-toc-item simple-toc-child" :class="{ active: child.id === activeTocId }">
-                      <a :href="`#${child.id}`" class="simple-toc-link">
-                        {{ child.text }}
+            <div ref="tocContainer" class="toc-container">
+              <div class="simple-toc" :class="{ 'toc-fixed': isTocFixed }">
+                <div class="simple-toc-header">
+                  目录
+                </div>
+                <ul class="simple-toc-list">
+                  <template v-for="link in tocData" :key="link.id">
+                    <li class="simple-toc-item" :class="{ active: link.id === activeTocId }">
+                      <a :href="`#${link.id}`" class="simple-toc-link">
+                        {{ link.text }}
                       </a>
                     </li>
+                    <template v-if="link.children">
+                      <li v-for="child in link.children" :key="child.id" class="simple-toc-item simple-toc-child" :class="{ active: child.id === activeTocId }">
+                        <a :href="`#${child.id}`" class="simple-toc-link">
+                          {{ child.text }}
+                        </a>
+                      </li>
+                    </template>
                   </template>
-                </template>
-              </ul>
+                </ul>
+              </div>
             </div>
           </div>
         </ClientOnly>
@@ -971,10 +998,14 @@ watchEffect(async () => {
   color: var(--pixel-text-primary);
 }
 
+/* TOC容器样式 */
+.toc-container {
+  position: relative;
+  width: 200px;
+}
+
 /* 简单目录样式 */
 .simple-toc {
-  position: sticky;
-  top: 80px;
   width: 200px;
   max-height: calc(100vh - 100px);
   overflow-y: auto;
@@ -986,6 +1017,14 @@ watchEffect(async () => {
     4px 4px 0 var(--pixel-bg-tertiary);
   font-family: ui-monospace, monospace;
   z-index: 100;
+  transition: all 0.3s ease;
+}
+
+/* TOC固定定位样式 */
+.simple-toc.toc-fixed {
+  position: fixed;
+  top: 80px;
+  right: max(32px, calc((100vw - 1280px) / 2 + 32px));
 }
 
 .simple-toc-header {
