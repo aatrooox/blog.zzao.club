@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.15.7
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.15.6...v1.15.7)
+
+### 🩹 Fixes
+
+- Build 后没有关闭窗口的问题 ([3516e1f](https://github.com/aatrooox/blog.zzao.club/commit/3516e1f))
+
+### 🏡 Chore
+
+- Actions ([e0a2cad](https://github.com/aatrooox/blog.zzao.club/commit/e0a2cad))
+- Action ([f5be0ef](https://github.com/aatrooox/blog.zzao.club/commit/f5be0ef))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v1.15.6
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v1.15.5...v1.15.6)
