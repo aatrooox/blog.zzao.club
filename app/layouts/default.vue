@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import type { UseScrollReturn } from '@vueuse/core'
 import { vScroll } from '@vueuse/components'
+import { toast as $toast, Toaster } from 'vue-sonner'
 import { useSearch } from '~/composables/useSearch'
+// import 'vue-sonner/style.css'
 
 const globalToast = useGlobalToast()
-const { $toast } = useNuxtApp() as any
+// const { $toast } = useNuxtApp() as any
 const route = useRoute()
 const userStore = useUser()
 const navBarStore = useNavBar()

@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  '@swc/core': ^1.4.0
-
 importers:
 
   .:
@@ -270,12 +267,6 @@ importers:
       sharp:
         specifier: ^0.34.3
         version: 0.34.3
-      why-is-node-running:
-        specifier: ^3.2.2
-        version: 3.2.2
-      wtfnode:
-        specifier: ^0.10.0
-        version: 0.10.0
 
 packages:
 
@@ -6916,11 +6907,6 @@ packages:
     engines: {node: ^18.17.0 || >=20.5.0}
     hasBin: true
 
-  why-is-node-running@3.2.2:
-    resolution: {integrity: sha512-NKUzAelcoCXhXL4dJzKIwXeR8iEVqsA0Lq6Vnd0UXvgaKbzVo4ZTHROF2Jidrv+SgxOQ03fMinnNhzZATxOD3A==}
-    engines: {node: '>=20.11'}
-    hasBin: true
-
   winston-transport@4.9.0:
     resolution: {integrity: sha512-8drMJ4rkgaPo1Me4zD/3WLfI/zPdA9o2IipKODunnGDcuqbHwjsbB79ylv04LCGGzU0xQ6vTznOMpQGaLhhm6A==}
     engines: {node: '>= 12.0.0'}
@@ -6975,11 +6961,6 @@ packages:
   wsl-utils@0.1.0:
     resolution: {integrity: sha512-h3Fbisa2nKGPxCpm89Hk33lBLsnaGBvctQopaBSOW/uIs6FTe1ATyAnKFJrzVs9vpGdsTe73WF3V4lIsk4Gacw==}
     engines: {node: '>=18'}
-
-  wtfnode@0.10.0:
-    resolution: {integrity: sha512-/GxfQORu0SZZC8AQA4Eq1wH08Akz6W42OiqNGBzTHXCJWZFhKFBJNaUfEomWnLA2MXfpy6KbFerG8iNtFcPRdg==}
-    engines: {node: '>=0.10.0'}
-    hasBin: true
 
   xml-name-validator@4.0.0:
     resolution: {integrity: sha512-ICP2e+jsHvAj2E2lIHxa5tjXRlKDJo4IdvPvCXbXQGdzSfmSpNVyIKMvoZHjDY9DP0zV17iI85o90vRFXNccRw==}
@@ -14763,8 +14744,6 @@ snapshots:
     dependencies:
       isexe: 3.1.1
 
-  why-is-node-running@3.2.2: {}
-
   winston-transport@4.9.0:
     dependencies:
       logform: 2.7.0
@@ -14813,8 +14792,6 @@ snapshots:
   wsl-utils@0.1.0:
     dependencies:
       is-wsl: 3.1.0
-
-  wtfnode@0.10.0: {}
 
   xml-name-validator@4.0.0: {}
 

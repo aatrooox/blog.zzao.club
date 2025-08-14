@@ -17,7 +17,13 @@ export default defineStandardResponseHandler(async (event) => {
 
   const userId = query.data.user_id || event.context.userId
 
-  const tags = await db.select().from(memoTags).where(eq(memoTags.userId, userId)).orderBy(desc(memoTags.createTs))
+  let tags
+  if (userId) {
+    tags = await db.select().from(memoTags).where(eq(memoTags.userId, userId)).orderBy(desc(memoTags.createTs))
+  }
+  else {
+    tags = await db.select().from(memoTags).orderBy(desc(memoTags.createTs))
+  }
 
   return tags
 })

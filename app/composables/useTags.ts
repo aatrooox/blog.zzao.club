@@ -50,7 +50,7 @@ export default function useTags() {
       })
 
       if (error) {
-        toast.error('创建标签失败，再试一下')
+        // toast.error('创建标签失败，再试一下')
         return
       }
 
@@ -78,7 +78,7 @@ export default function useTags() {
       })
 
       if (error) {
-        toast.error('更新标签失败，再试一下')
+        // toast.error('更新标签失败，再试一下')
         return
       }
 

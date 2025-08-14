@@ -42,7 +42,7 @@ export default function useMemos() {
         user_id: userStore.user.value?.id,
       })
       if (error) {
-        toast.error('出错了，再试一下')
+        // toast.error('出错了，再试一下')
         return false
       }
       getMemos()
@@ -77,7 +77,7 @@ export default function useMemos() {
       })
 
       if (error) {
-        toast.error('更新失败，再试一下')
+        // toast.error('更新失败，再试一下')
         return
       }
 

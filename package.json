@@ -103,9 +103,7 @@
     "nodemailer": "^6.10.1",
     "nuxi": "^3.24.1",
     "nuxt-nodemailer": "^1.1.2",
-    "sharp": "^0.34.3",
-    "why-is-node-running": "^3.2.2",
-    "wtfnode": "^0.10.0"
+    "sharp": "^0.34.3"
   },
   "manager": "pnpm"
 }
