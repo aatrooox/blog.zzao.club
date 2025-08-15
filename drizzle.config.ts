@@ -10,7 +10,7 @@ export default defineConfig({
   },
   migrations: {
     prefix: 'timestamp',
-    table: '__drizzle_migrations__',
+    table: '__drizzle_migrations',
     schema: 'public',
   },
 })
