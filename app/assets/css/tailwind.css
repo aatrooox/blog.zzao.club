@@ -18,7 +18,7 @@
   @apply prose prose-zinc prose-p:leading-5 prose-p:mb-2 dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-cyan-100 dark:prose-code:bg-cyan-600 prose-code:text-zinc-800 dark:prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300;
 } */
 
-pre>code {
+pre > code {
   @apply block align-top p-0 leading-normal;
 }
 .hover-shadow-cyan {
