@@ -86,9 +86,6 @@ onUnmounted(() => observer.value?.disconnect())
   box-shadow:
     2px 2px 0 oklch(40% 0.05 250),
     4px 4px 0 oklch(35% 0.05 250);
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
 }
 
 /* 目录项基础样式 */

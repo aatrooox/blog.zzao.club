@@ -6,7 +6,6 @@
 - **像素化边框**：所有元素使用2px-4px的硬边边框，营造像素块效果
 - **方块阴影**：使用多层方块阴影（box-shadow）模拟3D像素效果
 - **等宽字体**：统一使用 Courier New、Consolas 等等宽字体
-- **像素化渲染**：启用 `image-rendering: pixelated` 确保像素边缘清晰
 - **高对比度**：使用高对比度的颜色组合，确保像素风格的清晰可读
 - **图标系统**：使用像素风格的emoji图标，配合像素化文字
 
@@ -121,12 +120,6 @@
   - 中标题：text-xl 到 text-2xl - 像素化中标题
   - 正文：text-base 到 text-lg - 像素化正文
   - 小字：text-sm 到 text-xs - 像素化小字
-- **像素化渲染**：
-  ```css
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-  ```
 
 #### 3.6 像素风格边框规范
 - **边框宽度**：2px-4px 硬边像素边框

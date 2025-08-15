@@ -94,9 +94,6 @@ pre code .line {
     4px 4px 0 var(--pixel-bg-tertiary);
   margin: 16px 0;
   overflow: hidden;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
 }
 
 .pixel-code-header {

@@ -109,7 +109,6 @@ function handleCancel() {
   border: 2px solid var(--pixel-border-primary);
   border-radius: 0;
   font-family: ui-monospace, monospace;
-  image-rendering: pixelated;
 }
 
 .pixel-drawer-header {

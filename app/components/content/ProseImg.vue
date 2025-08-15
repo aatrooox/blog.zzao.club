@@ -55,9 +55,6 @@ const refinedSrc = computed(() => {
     2px 2px 0 var(--pixel-border-primary),
     4px 4px 0 var(--pixel-bg-tertiary);
   padding: 8px;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
 }
 
 .pixel-img {
@@ -65,8 +62,5 @@ const refinedSrc = computed(() => {
   max-width: 100%;
   height: auto;
   border-radius: 4px;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
 }
 </style>

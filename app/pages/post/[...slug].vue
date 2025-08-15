@@ -381,7 +381,7 @@ async function likePage() {
 }
 
 async function initComment() {
-  const res = await $api.get<ApiResponse>('/api/v1/comment/list', { article_id: page.value?.id })
+  const res = await $api.get<ApiResponse<any>>('/api/v1/comment/list', { article_id: page.value?.id })
   if (!res.error) {
     comments.value = res.data
   }
@@ -389,7 +389,7 @@ async function initComment() {
 }
 
 async function initLikeCount() {
-  const res = await $api.get<ApiResponse>('/api/v1/like/count', { article_id: page.value?.id, user_id: userStore.user.value.id })
+  const res = await $api.get<ApiResponse<any>>('/api/v1/like/count', { article_id: page.value?.id, user_id: userStore.user.value.id })
   if (!res.error) {
     likeCount.value = res.data.count
     isLiked.value = res.data.isLiked

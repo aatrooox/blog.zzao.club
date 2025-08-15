@@ -137,7 +137,6 @@ function handleKeydown(event: KeyboardEvent) {
 .pixel-login-dialog {
   @apply w-full max-w-md mx-4 bg-white rounded-lg border-4 border-gray-800 font-mono;
   box-shadow: 8px 8px 0px #000;
-  image-rendering: pixelated;
 }
 
 /* 对话框头部 */
