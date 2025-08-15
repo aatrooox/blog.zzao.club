@@ -126,7 +126,7 @@
   --pixel-bg-code: oklch(32% 0.05 250); /* 代码块背景 */
 
   /* 文字色系 */
-  --pixel-text-primary: rgba(36,  36,  38, 1); /* 主要文字 - 亮白色 */
+  --pixel-text-primary: rgba(36, 36, 38, 1); /* 主要文字 - 亮白色 */
   --pixel-text-secondary: rgba(124, 124, 128, 1); /* 次要文字 */
   --pixel-text-tertiary: rgba(142, 142, 147, 1); /* 第三级文字 */
   --pixel-text-muted: rgba(142, 142, 147, 1); /* 弱化文字 */
@@ -134,10 +134,10 @@
   --pixel-text-code: rgba(142, 142, 147, 1); /* 代码文字 */
 
   /* 边框色系 */
-  --pixel-border-primary: rgba(28,  28,  30, 1); /* 主要边框 */
-  --pixel-border-secondary: rgba(28,  28,  30, 1); /* 次要边框 */
+  --pixel-border-primary: rgba(28, 28, 30, 1); /* 主要边框 */
+  --pixel-border-secondary: rgba(28, 28, 30, 1); /* 次要边框 */
   --pixel-border-input: rgba(142, 142, 147, 1); /* 输入框边框 */
-  --pixel-border-focus: rgba(36,  36,  38, 1); /* 焦点边框 */
+  --pixel-border-focus: rgba(36, 36, 38, 1); /* 焦点边框 */
 
   /* 阴影色系 */
   --pixel-shadow-primary: oklch(25% 0.05 250); /* 主要阴影 */
@@ -146,7 +146,7 @@
   --pixel-shadow-light: oklch(50% 0.03 250); /* 浅色阴影 */
 
   /* 强调色系 */
-  --pixel-accent-primary: rgba(28,  28,  30, 1); /* 青色强调 - 主要按钮 */
+  --pixel-accent-primary: rgba(28, 28, 30, 1); /* 青色强调 - 主要按钮 */
   --pixel-accent-cyan: rgb(0, 162, 162); /* 青色强调 - 主要按钮 */
   --pixel-accent-cyan-hover: rgb(0, 202, 203); /* 青色悬停 */
   --pixel-accent-cyan-light: oklch(80% 0.1 195); /* 淡青色 */
@@ -464,11 +464,13 @@ body {
 }
 
 /* 像素卡片 */
-.pixel-card, .pixel-card-elevated {
+.pixel-card,
+.pixel-card-elevated {
   @apply bg-bg-pixel-card border-2 border-b-4 border-r-4 border-border-pixel-primary;
   @apply p-4 m-2 transition-all duration-200 ease-in-out;
 }
-.pixel-card:hover, .pixel-card-elevated:hover {
+.pixel-card:hover,
+.pixel-card-elevated:hover {
   @apply -translate-y-0.5 border-b-4 border-r-4 bg-bg-pixel-tertiary;
 }
 
@@ -503,12 +505,13 @@ body {
   @apply bg-text-pixel-disabled w-2 h-2 border border-border-pixel-primary;
 }
 
-.pixel-textarea, .pixel-input {
+.pixel-textarea,
+.pixel-input {
   @apply w-full bg-bg-pixel-card border-2 border-border-pixel-input text-text-pixel-primary font-mono p-3 resize-y min-h-[80px] rounded-none;
 }
 
 .pixel-input {
-  @apply min-h-[20px]
+  @apply min-h-[20px];
 }
 .pixel-textarea:focus {
   @apply outline-none;
