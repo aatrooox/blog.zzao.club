@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v2.1.5
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.1.4...v2.1.5)
+
+### 🏡 Chore
+
+- 优化样式 ([e4e1b98](https://github.com/aatrooox/blog.zzao.club/commit/e4e1b98))
+- Eslint ([e3bd19f](https://github.com/aatrooox/blog.zzao.club/commit/e3bd19f))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.1.4
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.1.3...v2.1.4)
