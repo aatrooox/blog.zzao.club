@@ -43,7 +43,7 @@ defineExpose({
 
 <template>
   <Dialog v-model:visible="visible" header="全文搜索" modal class="w-[90%] md:w-[70%]">
-    <div class="content py-4">
+    <div class="content py-4 pixel-card">
       <FloatLabel variant="on" class="w-full">
         <Input id="on_label" v-model="queryText" autocomplete="off" class="w-full" />
         <label for="on_label">搜索（文章）标题和简介</label>

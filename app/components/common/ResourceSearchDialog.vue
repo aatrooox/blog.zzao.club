@@ -54,7 +54,7 @@ watch(
 
 <template>
   <Dialog v-model:open="show">
-    <DialogContent class="md:!max-w-none md:!w-[700px] p-6 min-h-[380px] max-h-[480px] flex flex-col overflow-hidden">
+    <DialogContent class="md:!max-w-none md:!w-[700px] p-6 min-h-[380px] max-h-[480px] flex flex-col overflow-hidden !bg-bg-pixel-primary font-mono rounded-none">
       <DialogHeader>
         <DialogTitle>站内搜索</DialogTitle>
         <DialogDescription />
@@ -84,9 +84,9 @@ watch(
                 class="flex items-center gap-2 search-result-item group cursor-pointer"
                 @click="navigateTo(article.path)"
               >
-                <Icon name="material-symbols:article" class="text-cyan-500 flex-shrink-0" size="1.2em" />
+                <Icon name="pixelarticons:open" class="text-text-pixel-secondary flex-shrink-0" size="1.2em" />
                 <span
-                  class="relative font-medium transition-colors duration-200 group-hover:text-cyan-600 hover-underline-animate"
+                  class="relative font-medium transition-colors duration-200 hover-underline-animate"
                 >
                   {{ article.title }}
                   <span class="hover-underline" />
@@ -116,7 +116,7 @@ watch(
 </template>
 
 <style>
-.custom-vertical-inner-shadow {
+/* .custom-vertical-inner-shadow {
   box-shadow: inset 0 16px 24px -12px rgba(8, 145, 178, 0.1);
-}
+} */
 </style>

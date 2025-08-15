@@ -620,17 +620,17 @@ body {
 /* cyan 主题滚动条样式，优先用于弹窗、结果列表等区域 */
 .cyan-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #0891b2 #e0f2fe;
+  scrollbar-color: var(--pixel-bg-tertiary) var(--pixel-bg-primary);
 }
 .cyan-scrollbar::-webkit-scrollbar {
   width: 4px;
-  background: #e0f2fe;
+  background: var(--pixel-bg-secondary);
   border-radius: 2px;
 }
 .cyan-scrollbar::-webkit-scrollbar-thumb {
-  background: #0891b2;
+  background: var(--pixel-bg-secondary);
   border-radius: 6px;
 }
 .cyan-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #06b6d4;
+  background: var(--pixel-bg-secondary);
 }
