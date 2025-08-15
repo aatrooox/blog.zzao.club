@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.1.7
+
+[compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v2.1.6...v2.1.7)
+
+### 🏡 Chore
+
+- 优化头像显示 (bee880b)
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.1.6
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.1.5...v2.1.6)
