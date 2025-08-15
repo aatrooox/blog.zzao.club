@@ -8,8 +8,8 @@ CREATE TABLE `blog_access_token` (
 	`isRevoked` boolean NOT NULL DEFAULT false,
 	`ip` varchar(255),
 	`expiresAt` datetime NOT NULL,
-	`createdAt` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.955',
-	`updatedAt` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.955',
+	`createdAt` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
+	`updatedAt` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
 	CONSTRAINT `blog_access_token_id` PRIMARY KEY(`id`),
 	CONSTRAINT `blog_access_token_token_unique` UNIQUE(`token`)
 );
@@ -17,8 +17,8 @@ CREATE TABLE `blog_access_token` (
 CREATE TABLE `blog_comment` (
 	`id` varchar(255) NOT NULL,
 	`content` mediumtext NOT NULL,
-	`create_ts` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.955',
-	`updated_ts` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
+	`create_ts` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
+	`updated_ts` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
 	`type` varchar(50) NOT NULL DEFAULT 'article',
 	`quoteContent` text,
 	`article_id` varchar(255),
@@ -30,8 +30,8 @@ CREATE TABLE `blog_comment` (
 --> statement-breakpoint
 CREATE TABLE `blog_explain` (
 	`id` varchar(255) NOT NULL,
-	`create_ts` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
-	`updated_ts` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
+	`create_ts` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
+	`updated_ts` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
 	`text` mediumtext NOT NULL,
 	`content` mediumtext NOT NULL,
 	`article_id` varchar(255) NOT NULL,
@@ -40,8 +40,8 @@ CREATE TABLE `blog_explain` (
 --> statement-breakpoint
 CREATE TABLE `blog_like` (
 	`id` int AUTO_INCREMENT NOT NULL,
-	`create_ts` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
-	`updated_ts` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
+	`create_ts` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
+	`updated_ts` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
 	`target` varchar(50) NOT NULL DEFAULT 'article',
 	`article_id` varchar(255),
 	`sub_comment_id` varchar(255),
@@ -54,8 +54,8 @@ CREATE TABLE `blog_like` (
 CREATE TABLE `blog_memos` (
 	`id` varchar(255) NOT NULL,
 	`content` mediumtext,
-	`create_ts` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
-	`updated_ts` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
+	`create_ts` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
+	`updated_ts` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
 	`visible` varchar(50) NOT NULL DEFAULT 'public',
 	`defalt_floded` boolean NOT NULL DEFAULT false,
 	`flod_tip` varchar(255),
@@ -68,8 +68,8 @@ CREATE TABLE `blog_memos` (
 CREATE TABLE `blog_sub_comment` (
 	`id` varchar(255) NOT NULL,
 	`content` mediumtext NOT NULL,
-	`create_ts` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
-	`updated_ts` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
+	`create_ts` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
+	`updated_ts` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
 	`comment_id` varchar(255) NOT NULL,
 	`reply_sub_comment_id` varchar(255),
 	`user_id` varchar(255),
@@ -102,8 +102,8 @@ CREATE TABLE `blog_garmin_activity` (
 	`is_grit` boolean,
 	`best_lap_time` decimal(8,2),
 	`lap_count` int,
-	`created_at` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
-	`updated_at` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
+	`created_at` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.392',
+	`updated_at` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.392',
 	CONSTRAINT `blog_garmin_activity_id` PRIMARY KEY(`id`),
 	CONSTRAINT `blog_garmin_activity_date_activity_type_unique` UNIQUE(`date`,`activity_type`)
 );
@@ -111,16 +111,16 @@ CREATE TABLE `blog_garmin_activity` (
 CREATE TABLE `blog_memo_tag_relations` (
 	`tagId` varchar(255) NOT NULL,
 	`memoId` varchar(255) NOT NULL,
-	`create_ts` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
-	`updated_ts` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
+	`create_ts` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
+	`updated_ts` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
 	CONSTRAINT `blog_memo_tag_relations_tagId_memoId_pk` PRIMARY KEY(`tagId`,`memoId`)
 );
 --> statement-breakpoint
 CREATE TABLE `blog_memo_tag` (
 	`id` varchar(255) NOT NULL,
 	`tag_name` varchar(255) NOT NULL,
-	`create_ts` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
-	`updated_ts` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.956',
+	`create_ts` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
+	`updated_ts` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
 	`user_id` varchar(255) NOT NULL,
 	CONSTRAINT `blog_memo_tag_id` PRIMARY KEY(`id`),
 	CONSTRAINT `blog_memo_tag_tag_name_unique` UNIQUE(`tag_name`)
@@ -134,8 +134,8 @@ CREATE TABLE `blog_oauth` (
 	`providerUnionId` varchar(255),
 	`providerToken` varchar(255),
 	`providerRefreshToken` varchar(255),
-	`createdAt` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.955',
-	`updatedAt` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.955',
+	`createdAt` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
+	`updatedAt` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
 	CONSTRAINT `blog_oauth_id` PRIMARY KEY(`id`),
 	CONSTRAINT `blog_oauth_provider_providerId_unique` UNIQUE(`provider`,`providerId`)
 );
@@ -144,8 +144,8 @@ CREATE TABLE `blog_user_config` (
 	`id` varchar(255) NOT NULL,
 	`userId` varchar(255) NOT NULL,
 	`allowEmailNotify` int DEFAULT 0,
-	`createdAt` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.955',
-	`updatedAt` datetime NOT NULL DEFAULT '2025-08-15 09:03:52.955',
+	`createdAt` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
+	`updatedAt` datetime NOT NULL DEFAULT '2025-08-15 09:10:52.391',
 	CONSTRAINT `blog_user_config_id` PRIMARY KEY(`id`),
 	CONSTRAINT `blog_user_config_userId_unique` UNIQUE(`userId`)
 );

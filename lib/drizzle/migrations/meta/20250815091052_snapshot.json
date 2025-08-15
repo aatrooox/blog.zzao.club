@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "33ab38e3-71e7-4f9f-81d9-9f4b83f00c99",
+  "id": "1dc73d6a-683b-4b85-8291-aca06e12bbc3",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "blog_access_token": {
@@ -80,7 +80,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.955'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "updatedAt": {
           "name": "updatedAt",
@@ -88,7 +88,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.955'"
+          "default": "'2025-08-15 09:10:52.391'"
         }
       },
       "indexes": {},
@@ -134,7 +134,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.955'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "updated_ts": {
           "name": "updated_ts",
@@ -142,7 +142,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "type": {
           "name": "type",
@@ -217,7 +217,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "updated_ts": {
           "name": "updated_ts",
@@ -225,7 +225,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "text": {
           "name": "text",
@@ -278,7 +278,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "updated_ts": {
           "name": "updated_ts",
@@ -286,7 +286,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "target": {
           "name": "target",
@@ -368,7 +368,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "updated_ts": {
           "name": "updated_ts",
@@ -376,7 +376,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "visible": {
           "name": "visible",
@@ -459,7 +459,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "updated_ts": {
           "name": "updated_ts",
@@ -467,7 +467,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "comment_id": {
           "name": "comment_id",
@@ -688,7 +688,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.392'"
         },
         "updated_at": {
           "name": "updated_at",
@@ -696,7 +696,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.392'"
         }
       },
       "indexes": {},
@@ -743,7 +743,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "updated_ts": {
           "name": "updated_ts",
@@ -751,7 +751,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.391'"
         }
       },
       "indexes": {},
@@ -791,7 +791,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "updated_ts": {
           "name": "updated_ts",
@@ -799,7 +799,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.956'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "user_id": {
           "name": "user_id",
@@ -887,7 +887,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.955'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "updatedAt": {
           "name": "updatedAt",
@@ -895,7 +895,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.955'"
+          "default": "'2025-08-15 09:10:52.391'"
         }
       },
       "indexes": {},
@@ -950,7 +950,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.955'"
+          "default": "'2025-08-15 09:10:52.391'"
         },
         "updatedAt": {
           "name": "updatedAt",
@@ -958,7 +958,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2025-08-15 09:03:52.955'"
+          "default": "'2025-08-15 09:10:52.391'"
         }
       },
       "indexes": {},
