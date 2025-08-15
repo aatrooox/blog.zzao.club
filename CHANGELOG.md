@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.1.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.1.1...v2.1.2)
+
+### 🩹 Fixes
+
+- 把初次设置为基线。 ([2f14a1b](https://github.com/aatrooox/blog.zzao.club/commit/2f14a1b))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.1.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.1.0...v2.1.1)
