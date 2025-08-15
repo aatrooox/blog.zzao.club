@@ -4,20 +4,23 @@
 
 @custom-variant dark (&:is(.dark *));
 
-.mdc-prose {
+/* .mdc-prose {
   @apply prose prose-zinc prose-p:text-zinc-600 dark:prose-p:text-zinc-300 dark:prose-invert prose-pre:bg-zinc-100 prose-pre:mt-0 dark:prose-pre:bg-zinc-800 dark:text-zinc-200 dark:prose-strong:text-zinc-200 dark:prose-blockquote:text-zinc-300 prose-code:font-bold prose-code:text-cyan-600 prose-p:text-base max-w-full;
-}
+} */
 
 /* 针对page的prose颜色配置 */
-.mdc-page-prose {
+/* .mdc-page-prose {
   @apply prose prose-zinc dark:prose-invert dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-zinc-200 dark:prose-code:bg-zinc-200 prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300;
-}
+} */
 
 /* 针对memo的prose颜色配置 */
-.mdc-memo-prose {
+/* .mdc-memo-prose {
   @apply prose prose-zinc prose-p:leading-5 prose-p:mb-2 dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-cyan-100 dark:prose-code:bg-cyan-600 prose-code:text-zinc-800 dark:prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300;
-}
+} */
 
+pre>code {
+  @apply block align-top p-0 leading-normal;
+}
 .hover-shadow-cyan {
   @apply hover:shadow-md transition-shadow duration-300 hover:shadow-cyan-600;
 }
@@ -524,33 +527,25 @@ body {
 /* 像素字体 */
 .pixel-font {
   @apply font-mono;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
 }
-
 /* 像素标题 */
 .pixel-title {
   @apply font-mono font-bold text-text-pixel-primary;
-  image-rendering: pixelated;
 }
 
 /* 像素文本 */
 .pixel-text {
   @apply font-mono text-text-pixel-secondary;
-  image-rendering: pixelated;
 }
 
 /* 像素文本 - 次要 */
 .pixel-text-muted {
   @apply font-mono text-text-pixel-disabled;
-  image-rendering: pixelated;
 }
 
 /* 像素进度条 */
 .pixel-progress-bar {
   @apply bg-bg-pixel-primary border-2 border-border-pixel-primary h-4 relative;
-  image-rendering: pixelated;
 }
 .pixel-progress-fill {
   @apply bg-accent-pixel-cyan h-full transition-[width] duration-300 ease-in-out;
