@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.1.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.1.2...v2.1.3)
+
+### 🩹 Fixes
+
+- Dizzle migration table name ([2a3f25d](https://github.com/aatrooox/blog.zzao.club/commit/2a3f25d))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.1.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.1.1...v2.1.2)
