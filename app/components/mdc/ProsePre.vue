@@ -59,14 +59,14 @@ const copyCode = async () => {
 
 <template>
   <div>
-    <div class="flex items-center justify-between gap-1.5 border border-[var(--pixel-border-primary)] bg-default border-b-0 relative rounded-t-md px-4 py-3">
+    <div class="flex items-center justify-between gap-1.5 border border-[var(--pixel-border-primary)] bg-default border-b-0 relative px-4 py-3">
       <div class="flex items-center gap-1.5">
         <Icon :name="`vscode-icons:file-type-${language}`" />{{ filename }}
       </div>
       <ClientOnly>
         <button
           v-if="isSupported"
-          class="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-foreground transition-colors rounded border border-transparent hover:border-muted"
+          class="flex items-center gap-1 px-2 py-1 text-xs text-text-pixel-primary hover:text-foreground transition-colors rounded border border-transparent hover:border-border-pixel-primary"
           title="复制代码"
           @click="copyCode"
         >
@@ -74,7 +74,7 @@ const copyCode = async () => {
         </button>
       </ClientOnly>
     </div>
-    <pre ref="preRef" :class="$props.class" class="!mt-0">
+    <pre ref="preRef" :class="$props.class" class="!mt-0 border-1 border-[var(--pixel-border-primary)] rounded-none">
       <slot />
     </pre>
   </div>

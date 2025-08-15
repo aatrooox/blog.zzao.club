@@ -1,0 +1,5 @@
+<svg width="6" height="6" viewBox="0 0 6 6" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
+  <!-- 4x4px 正方形像素块 + 2px 间隔 -->
+  <rect width="6" height="6" fill="rgba(216, 216, 220, 1)"/> <!-- 间隔/背景色 -->
+  <rect width="4" height="4" fill="rgba(28, 28, 30, 1)"/> <!-- 主色 -->
+</svg>

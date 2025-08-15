@@ -22,32 +22,32 @@ const appNavBar = [
   {
     name: '首页',
     path: '/',
-    icon: 'twemoji:wedding',
+    icon: 'pixelarticons:home',
   },
   {
     name: '文章',
     path: '/article',
-    icon: 'twemoji:page-facing-up',
+    icon: 'pixelarticons:article',
   },
   {
     name: '动态',
     path: '/memo',
-    icon: 'twemoji:memo',
+    icon: 'pixelarticons:message-processing',
   },
-  {
-    name: 'IMGX',
-    path: '/imgx',
-    icon: 'twemoji:framed-picture',
-  },
+  // {
+  //   name: 'IMGX',
+  //   path: '/imgx',
+  //   icon: 'pixelarticons:image-delete',
+  // },
   {
     name: '友链',
     path: '/links',
-    icon: 'twemoji:clinking-beer-mugs',
+    icon: 'pixelarticons:mood-neutral',
   },
   {
     name: '关于',
     path: '/about',
-    icon: 'twemoji:information',
+    icon: 'pixelarticons:info-box',
   },
 ]
 
@@ -163,7 +163,7 @@ function scrollToTop() {
           </div>
           <!-- 未登录时显示默认图标 -->
           <div v-else class="pixel-login-trigger" @click="showLoginDialog = true">
-            <Icon name="twemoji:wedding" class="pixel-sidebar-logo" />
+            <Icon name="pixelarticons:mood-sad" class="pixel-sidebar-logo" />
             <div class="pixel-login-hint">
               点击登录
             </div>
@@ -316,17 +316,10 @@ function scrollToTop() {
 .pixel-sidebar-floating {
   @apply fixed left-6 top-6 bottom-6 w-36 z-50;
   background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-border-primary);
-  border-radius: 0;
 }
 
 .pixel-sidebar-header {
-  @apply flex items-center justify-center p-6 border-b-2;
-  border-color: var(--pixel-border-primary);
-  background: var(--pixel-bg-tertiary);
+  @apply flex items-center justify-center p-6;
 }
 
 .pixel-sidebar-logo {
@@ -341,24 +334,20 @@ function scrollToTop() {
 
 .pixel-sidebar-item {
   @apply flex items-center gap-3 px-4 py-3 no-underline transition-all duration-150 border-2 border-transparent rounded-none;
-  color: var(--pixel-text-muted);
+  color: var(--pixel-text-secondary);
 }
 
 .pixel-sidebar-item:hover {
   @apply -translate-x-px;
-  color: var(--pixel-accent-cyan);
+  color: var(--pixel-accent-primary);
   background: var(--pixel-bg-tertiary);
-  border-color: var(--pixel-border-primary);
-  box-shadow: 2px 2px 0 var(--pixel-border-primary);
+  border-color: var(--pixel-accent-primary);
 }
 
 .pixel-sidebar-item.active {
-  color: var(--pixel-accent-cyan);
+  color: var(--pixel-accent-primary);
   background: var(--pixel-bg-tertiary);
-  border-color: var(--pixel-accent-cyan);
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-border-primary);
+  border-color: var(--pixel-accent-primary);
 }
 
 .pixel-sidebar-item:active {
@@ -377,15 +366,11 @@ function scrollToTop() {
 
 .pixel-desktop-main-floating {
   @apply flex-1 overflow-auto p-6;
-  background: var(--pixel-bg-primary);
+  background: var(--pixel-bg-secondary);
   margin-left: 192px;
   margin-right: 24px;
   margin-top: 24px;
   margin-bottom: 24px;
-  border: 2px solid var(--pixel-border-primary);
-  box-shadow:
-    inset 0 2px 8px 0 var(--pixel-border-primary),
-    2px 2px 0 var(--pixel-border-primary);
 }
 
 /* 响应式设计 */
@@ -413,12 +398,11 @@ function scrollToTop() {
 
 /* 用户信息样式 */
 .pixel-user-info {
-  @apply flex items-center gap-3 p-3 rounded-lg bg-white/80 backdrop-blur-sm border-2 border-gray-800;
-  box-shadow: 4px 4px 0px #000;
+  @apply flex items-center gap-3 p-2 backdrop-blur-sm;
 }
 
 .pixel-user-avatar {
-  @apply w-10 h-10 rounded-lg border-2 border-gray-800;
+  @apply w-full h-full;
 }
 
 .pixel-user-details {
@@ -430,14 +414,7 @@ function scrollToTop() {
 }
 
 .pixel-login-trigger {
-  @apply flex flex-col items-center gap-2 p-3 rounded-lg bg-white/80 backdrop-blur-sm border-2 border-gray-800 cursor-pointer transition-all duration-200;
-  box-shadow: 4px 4px 0px #000;
-}
-
-.pixel-login-trigger:hover {
-  @apply bg-blue-50/90 border-blue-600;
-  box-shadow: 4px 4px 0px #1d4ed8;
-  transform: translate(-1px, -1px);
+  @apply flex flex-col items-center gap-2 p-3 backdrop-blur-sm cursor-pointer transition-all duration-200;
 }
 
 .pixel-login-hint {

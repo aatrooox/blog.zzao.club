@@ -180,13 +180,13 @@ function handleTagClick(tagName: string) {
     <div class="max-w-4xl mx-auto px-4 md:px-6 py-6 md:py-8">
       <!-- Memo不存在 -->
       <div v-if="!memo" class="text-center py-20">
-        <div class="bg-base border-2 md:border-4 border-bg-base rounded-lg md:rounded-xl shadow-pixel p-6 md:p-8">
+        <div class="border-2 md:border-4 p-6 md:p-8">
           <h2 class="text-2xl md:text-3xl font-mono font-bold text-bg-base mb-4">
             Memo 不存在
           </h2>
           <NuxtLink
             to="/memo"
-            class="inline-block bg-primary-600 text-white font-mono font-bold px-4 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-700 hover:scale-105 transition-all duration-200"
+            class="inline-block font-mono font-bold px-4 py-2 transition-all duration-200"
           >
             返回 Memo 列表
           </NuxtLink>
@@ -200,17 +200,17 @@ function handleTagClick(tagName: string) {
           <Button
             variant="ghost"
             size="sm"
-            class="pixel-btn-nav flex items-center gap-2 bg-secondary-500 text-white font-mono font-bold px-4 py-2 border-2 border-bg-base rounded-lg hover:bg-primary-600 hover:scale-105 transition-all duration-200"
+            class="pixel-btn flex items-center gap-2 font-mono font-bold px-4 py-2 hover:scale-105 transition-all duration-200"
             @click="router.push('/memo')"
           >
             <Icon name="material-symbols:arrow-back" class="w-4 h-4" />
-            <span class="font-mono font-medium">返回 Memo 列表</span>
+            <span class="font-mono">返回 Memo 列表</span>
           </Button>
         </div>
 
         <!-- 用户信息和操作区域 -->
         <ClientOnly>
-          <div class="pixel-card bg-base border-2 md:border-4 border-bg-base rounded-lg md:rounded-xl shadow-pixel p-4 md:p-6">
+          <div class="pixel-card p-4 md:p-6">
             <div class="flex items-center justify-between">
               <!-- 左侧用户信息 -->
               <div class="flex items-center space-x-3">
@@ -227,10 +227,10 @@ function handleTagClick(tagName: string) {
               <div class="flex items-center gap-2">
                 <ClientOnly>
                   <Button
-                    class="rounded-lg border-2 border-bg-base font-mono font-bold px-3 py-2 transition-all duration-200 flex items-center gap-1" :class="[
+                    class="font-mono font-bold px-3 py-2 transition-all duration-200 flex items-center gap-1" :class="[
                       isLiked
-                        ? 'text-white bg-accent-400 hover:bg-accent-500 hover:scale-105'
-                        : 'text-bg-base bg-secondary-500 hover:bg-accent-400 hover:text-white hover:scale-105',
+                        ? 'text-highlight-pixel-red hover:scale-105'
+                        : 'hover:bg-accent-400 hover:text-white hover:scale-105',
                     ]"
                     variant="ghost"
                     size="sm"
@@ -250,14 +250,14 @@ function handleTagClick(tagName: string) {
                   </template>
                 </ClientOnly>
                 <Button
-                  class="rounded-lg border-2 border-bg-base font-mono font-bold px-3 py-2 text-bg-base bg-secondary-500 hover:bg-primary-600 hover:text-white hover:scale-105 transition-all duration-200"
+                  class="font-mono font-bold px-3 py-2  hover:scale-105 transition-all duration-200"
                   variant="ghost"
                   size="sm"
                 >
                   <Icon name="material-symbols:share-reviews-outline-rounded" class="w-4 h-4" />
                 </Button>
                 <Button
-                  class="rounded-lg border-2 border-bg-base font-mono font-bold px-3 py-2 text-bg-base bg-secondary-500 hover:bg-primary-600 hover:text-white hover:scale-105 transition-all duration-200"
+                  class="font-mono font-bold px-3 py-2 hover:scale-105 transition-all duration-200"
                   variant="ghost"
                   size="sm"
                 >
@@ -265,7 +265,7 @@ function handleTagClick(tagName: string) {
                 </Button>
                 <template v-if="userStore.isSuperAdmin">
                   <Button
-                    class="rounded-lg border-2 border-bg-base font-mono font-bold px-3 py-2 text-bg-base bg-secondary-500 hover:bg-accent-400 hover:text-white hover:scale-105 transition-all duration-200"
+                    class="font-mono font-bold px-3 py-2 hover:scale-105 transition-all duration-200"
                     variant="ghost"
                     size="sm"
                     @click="handleEdit"
@@ -273,7 +273,7 @@ function handleTagClick(tagName: string) {
                     <Icon name="material-symbols:edit-outline" class="w-4 h-4" />
                   </Button>
                   <Button
-                    class="rounded-lg border-2 border-bg-base font-mono font-bold px-3 py-2 text-white bg-red-500 hover:bg-red-600 hover:scale-105 transition-all duration-200"
+                    class="font-mono px-3 py-2 hover:text-red-600 hover:scale-105 transition-all duration-200"
                     variant="ghost"
                     size="sm"
                     @click="handleDelete"
@@ -286,12 +286,12 @@ function handleTagClick(tagName: string) {
           </div>
         </ClientOnly>
         <!-- Memo面板 -->
-        <div class="pixel-card bg-base border-2 md:border-4 border-bg-base rounded-lg md:rounded-xl shadow-pixel p-4 md:p-6 overflow-hidden">
+        <div class="pixel-card bg-base p-4 md:p-6 overflow-hidden">
           <MemoPanel :memo="memo" :show-all="true" :hide-btns="true" />
         </div>
 
         <!-- Tags显示 -->
-        <div v-if="memo.tags && memo.tags.length > 0" class="pixel-card bg-base border-2 md:border-4 border-bg-base rounded-lg md:rounded-xl shadow-pixel p-4 md:p-6">
+        <div v-if="memo.tags && memo.tags.length > 0" class="pixel-card p-4 md:p-6">
           <div class="flex flex-wrap gap-3 items-center">
             <div class="flex items-center gap-2 text-[var(--pixel-text-primary)] font-mono font-bold text-sm">
               <Icon name="material-symbols:tag" class="w-4 h-4" />
@@ -301,7 +301,7 @@ function handleTagClick(tagName: string) {
               <span
                 v-for="tag in memo.tags"
                 :key="tag.id"
-                class="pixel-tag text-xs cursor-pointer bg-secondary-500/20 text-primary-600 font-mono font-bold border-2 border-primary-600/30 rounded-lg px-3 py-1 hover:bg-primary-600 hover:text-white hover:scale-105 transition-all duration-200"
+                class="pixel-tag cursor-pointer font-mono text-xs hover:scale-105 transition-all duration-200"
                 @click="handleTagClick(tag.tagName)"
               >
                 {{ tag.tagName }}
@@ -310,7 +310,7 @@ function handleTagClick(tagName: string) {
           </div>
         </div>
         <!-- 评论区 -->
-        <div class="pixel-card bg-base border-2 md:border-4 border-bg-base rounded-lg md:rounded-xl shadow-pixel p-4 md:p-6">
+        <div class="pixel-card p-4 md:p-6">
           <div class="pixel-title text-xl md:text-2xl font-mono font-bold mb-4 md:mb-6 flex items-center gap-2">
             <Icon name="icon-park-outline:comments" class="w-5 h-5 text-[var(--pixel-text-primary)]" />
             <span class="text-[var(--pixel-text-primary)] font-mono">评论区</span>
@@ -377,274 +377,3 @@ function handleTagClick(tagName: string) {
     @update="handleMemoUpdated"
   />
 </template>
-
-<style scoped>
-/* 像素风格布局 */
-.pixel-layout {
-  font-family: ui-monospace, monospace;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
-/* 像素风格导航栏 */
-.pixel-nav {
-  background: var(--pixel-bg-secondary);
-  border-bottom: 2px solid var(--pixel-border-primary);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 2px 0 var(--pixel-bg-primary);
-}
-
-/* 像素风格按钮 */
-.pixel-btn-nav {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: var(--pixel-bg-tertiary);
-  color: var(--pixel-text-secondary);
-  border: 2px solid var(--pixel-border-secondary);
-  border-radius: 6px;
-  font-family: ui-monospace, monospace;
-  transition: all 0.2s ease;
-  box-shadow: 2px 2px 0 var(--pixel-bg-primary);
-}
-
-.pixel-btn-nav:hover {
-  background: var(--pixel-bg-quaternary);
-  transform: translateY(-1px);
-  box-shadow: 3px 3px 0 var(--pixel-bg-primary);
-}
-
-.pixel-btn-icon {
-  padding: 8px;
-  background: var(--pixel-bg-tertiary);
-  color: var(--pixel-text-secondary);
-  border: 2px solid var(--pixel-border-secondary);
-  border-radius: 6px;
-  font-family: ui-monospace, monospace;
-  transition: all 0.2s ease;
-  box-shadow: 2px 2px 0 var(--pixel-shadow-primary);
-}
-
-.pixel-btn-icon:hover {
-  background: var(--pixel-bg-quaternary);
-  transform: translateY(-1px);
-  box-shadow: 3px 3px 0 var(--pixel-shadow-primary);
-}
-
-/* 像素风格卡片 */
-.pixel-card {
-  background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  border-radius: 8px;
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary);
-  padding: 16px;
-  font-family: ui-monospace, monospace;
-  transition: all 0.2s ease;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
-.pixel-card:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary),
-    6px 6px 0 var(--pixel-bg-secondary);
-}
-
-/* 像素风格标题 */
-.pixel-title {
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-  text-shadow: 1px 1px 0 var(--pixel-shadow-primary);
-}
-
-.pixel-title:hover {
-  color: var(--pixel-highlight-yellow);
-  text-shadow: 2px 2px 0 var(--pixel-shadow-primary);
-}
-
-/* 像素风格文本 */
-.pixel-text {
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-}
-
-/* 像素风格元数据 */
-.pixel-meta {
-  color: var(--pixel-text-muted);
-  font-family: ui-monospace, monospace;
-}
-
-/* 像素风格标签 */
-.pixel-tag {
-  background: var(--pixel-bg-card);
-  color: var(--pixel-accent-cyan);
-  border: 2px solid var(--pixel-accent-cyan-border);
-  padding: 2px 8px;
-  border-radius: 4px;
-  box-shadow: 1px 1px 0 var(--pixel-accent-cyan-border);
-  font-family: ui-monospace, monospace;
-  font-size: 12px;
-  font-weight: 600;
-  transition: all 0.15s ease;
-}
-
-.pixel-tag:hover {
-  background: var(--pixel-bg-tertiary);
-  color: var(--pixel-accent-cyan-hover);
-  transform: translateY(-1px);
-  box-shadow: 2px 2px 0 var(--pixel-accent-cyan-border);
-}
-
-.pixel-tag:active {
-  transform: translateY(1px);
-  box-shadow: 0px 0px 0 var(--pixel-accent-cyan-border);
-}
-
-/* 像素风格内容区域 */
-.pixel-content {
-  background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  border-radius: 8px;
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary);
-  padding: 20px;
-  color: var(--pixel-text-primary);
-  line-height: 1.7;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
-/* 像素风格底部操作栏 */
-.pixel-bottom-bar {
-  background: var(--pixel-bg-secondary);
-  border-top: 2px solid var(--pixel-border-primary);
-  backdrop-filter: blur(8px);
-  box-shadow:
-    0 -2px 0 var(--pixel-border-primary),
-    0 -4px 0 var(--pixel-bg-tertiary);
-  padding: 16px;
-}
-
-.pixel-btn-action {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  background: var(--pixel-accent-cyan);
-  color: var(--pixel-bg-primary);
-  border: 2px solid var(--pixel-accent-cyan-border);
-  border-radius: 8px;
-  font-weight: 600;
-  font-family: ui-monospace, monospace;
-  transition: all 0.15s ease;
-  box-shadow:
-    2px 2px 0 var(--pixel-accent-cyan-border),
-    4px 4px 0 var(--pixel-bg-tertiary);
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
-.pixel-btn-action:hover {
-  background: var(--pixel-accent-cyan-hover);
-  transform: translateY(-2px);
-  box-shadow:
-    2px 2px 0 var(--pixel-accent-cyan-border),
-    4px 4px 0 var(--pixel-bg-tertiary),
-    6px 6px 0 var(--pixel-bg-secondary);
-}
-
-.pixel-btn-action:active {
-  transform: translateY(1px);
-  box-shadow:
-    1px 1px 0 var(--pixel-accent-cyan-border),
-    2px 2px 0 var(--pixel-bg-tertiary);
-}
-
-.pixel-btn-liked {
-  background: var(--pixel-status-info) !important;
-  border-color: var(--pixel-status-info-border) !important;
-  color: var(--pixel-highlight-green-text) !important;
-}
-
-/* 像素风格抽屉 */
-.pixel-drawer {
-  background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  border-radius: 12px 12px 0 0;
-  font-family: ui-monospace, monospace;
-  box-shadow:
-    0 -2px 0 var(--pixel-border-primary),
-    0 -4px 0 var(--pixel-bg-tertiary);
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
-/* 响应式适配 */
-@media (max-width: 768px) {
-  .pixel-card {
-    padding: 12px;
-    box-shadow:
-      1px 1px 0 var(--pixel-border-primary),
-      2px 2px 0 var(--pixel-bg-tertiary);
-  }
-
-  .pixel-card:hover {
-    transform: translateY(-1px);
-    box-shadow:
-      1px 1px 0 var(--pixel-border-primary),
-      2px 2px 0 var(--pixel-bg-tertiary),
-      3px 3px 0 var(--pixel-bg-secondary);
-  }
-
-  .pixel-content {
-    padding: 16px;
-    box-shadow:
-      1px 1px 0 var(--pixel-border-primary),
-      2px 2px 0 var(--pixel-bg-tertiary);
-  }
-
-  .pixel-btn-nav {
-    padding: 6px 10px;
-    box-shadow: 1px 1px 0 var(--pixel-bg-primary);
-  }
-
-  .pixel-btn-nav:hover {
-    box-shadow: 2px 2px 0 var(--pixel-bg-primary);
-  }
-
-  .pixel-btn-icon {
-    padding: 6px;
-    box-shadow: 1px 1px 0 var(--pixel-shadow-primary);
-  }
-
-  .pixel-btn-icon:hover {
-    box-shadow: 2px 2px 0 var(--pixel-shadow-primary);
-  }
-
-  .pixel-btn-action {
-    padding: 8px 12px;
-    box-shadow:
-      1px 1px 0 var(--pixel-accent-cyan-border),
-      2px 2px 0 var(--pixel-bg-tertiary);
-  }
-
-  .pixel-btn-action:hover {
-    transform: translateY(-1px);
-    box-shadow:
-      1px 1px 0 var(--pixel-accent-cyan-border),
-      2px 2px 0 var(--pixel-bg-tertiary),
-      3px 3px 0 var(--pixel-bg-secondary);
-  }
-}
-</style>

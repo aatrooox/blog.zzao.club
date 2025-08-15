@@ -137,14 +137,14 @@ function onMouseLeave(event) {
   <div class="space-y-8 pixel-font">
     <!-- 最近动态区域 -->
     <div v-if="recentMemos.length > 0" class="space-y-6">
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between pr-2">
         <h2 class="text-xl md:text-3xl pixel-title flex items-center gap-3">
-          <div class="pixel-status-online" />
+          <Icon class="ss" name="pixelarticons:radio-signal" size="1em" />
           最近动态
         </h2>
         <NuxtLink
           to="/memo"
-          class="pixel-btn-primary cursor-pointer flex items-center gap-2"
+          class="pixel-btn cursor-pointer flex items-center gap-2"
         >
           <span class="text-sm md:text-base">更多动态</span>
           <Icon name="icon-park-outline:right" class="text-sm md:text-base" />
@@ -194,14 +194,14 @@ function onMouseLeave(event) {
 
     <!-- 最近文章区域 -->
     <div class="flex-1 space-y-6">
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between pr-2">
         <h2 class="text-xl md:text-3xl pixel-title flex items-center gap-3">
-          <div class="pixel-status-online" />
+          <Icon class="ss" name="pixelarticons:radio-signal" size="1em" />
           最近文章
         </h2>
         <NuxtLink
           to="/article"
-          class="pixel-btn-primary cursor-pointer flex items-center gap-2"
+          class="pixel-btn cursor-pointer flex items-center gap-2"
         >
           <span class="text-sm md:text-base">更多文章</span>
           <Icon name="icon-park-outline:right" class="text-sm md:text-base" />
@@ -219,14 +219,10 @@ function onMouseLeave(event) {
                 >
                   <div class="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
                     <div class="flex items-center gap-3 md:gap-4 flex-1">
-                      <div class="pixel-status-online group-hover:pixel-status-warning transition-all" />
-                      <div class="text-base md:text-lg pixel-title group-hover:text-cyan-400 transition-colors leading-tight">
+                      <Icon class="ss" name="pixelarticons:open" size="1em" />
+                      <div class="text-base pixel-title group-hover:text-cyan-400 transition-colors leading-tight">
                         {{ page.title }}
                       </div>
-                      <Icon
-                        name="icon-park-outline:right"
-                        class="pixel-text-muted page-arrow-icon transition-all text-xs md:text-sm group-hover:text-cyan-400 opacity-0 group-hover:opacity-100"
-                      />
                     </div>
                     <div class="flex flex-wrap gap-2">
                       <template v-if="page.versions">

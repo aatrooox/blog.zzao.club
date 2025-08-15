@@ -641,7 +641,7 @@ watchEffect(async () => {
           </div>
 
           <!-- 文章内容 markdown -->
-          <article ref="curMdContentRef" class="content-wrap pixel-content prose-invert prose-lg max-w-none p-6 w-full">
+          <article ref="curMdContentRef" class="content-wrap prose-invert prose-lg max-w-none p-6 w-full">
             <ContentRenderer :value="page?.body" />
           </article>
           <!-- 相邻的文章 -->
@@ -652,18 +652,18 @@ watchEffect(async () => {
                 <div class="flex justify-between text-sm md:text-base font-mono">
                   <div class="flex-1 flex items-center gap-2">
                     <template v-if="adjacentPages[0]">
-                      <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em" class="text-gray-100" />
-                      <NuxtLink class="text-gray-100 hover:text-cyan-400 font-bold transition-colors duration-200" :href="adjacentPages[0].path">
+                      <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em" />
+                      <NuxtLink class="font-bold w-[300px] whitespace-nowrap overflow-hidden text-ellipsis hover:text-accent-pixel-cyan" :href="adjacentPages[0].path">
                         {{ adjacentPages[0].title }}
                       </NuxtLink>
                     </template>
                   </div>
                   <div class="flex-1 text-right flex items-center justify-end gap-2">
                     <template v-if="adjacentPages[1]">
-                      <NuxtLink class="text-gray-100 hover:text-cyan-400 font-bold transition-colors duration-200" :href="adjacentPages[1].path">
+                      <NuxtLink class="font-bold w-[300px] whitespace-nowrap overflow-hidden text-ellipsis hover:text-accent-pixel-cyan" :href="adjacentPages[1].path">
                         {{ adjacentPages[1].title }}
                       </NuxtLink>
-                      <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em" class="text-gray-100" />
+                      <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em" />
                     </template>
                   </div>
                 </div>
@@ -675,7 +675,7 @@ watchEffect(async () => {
             <div class="comment-area pixel-card p-4 md:p-6 mt-6">
               <template v-if="page?.body && !isDefer">
                 <!-- <Separator class="my-4" label="评论" /> -->
-                <div id="评论区" class="text-xl py-4 font-mono text-gray-100">
+                <div id="评论区" class="text-xl py-4 font-mono">
                   评论区
                 </div>
                 <AppCommentInput @send="createComment" />
@@ -709,10 +709,7 @@ watchEffect(async () => {
           <div v-if="tocData && tocData.length" class="hidden lg:block w-64 ml-8">
             <!-- 简单的悬浮目录 -->
             <div ref="tocContainer" class="toc-container">
-              <div class="simple-toc" :class="{ 'toc-fixed': isTocFixed }">
-                <div class="simple-toc-header">
-                  目录
-                </div>
+              <div class="simple-toc pixel-card" :class="{ 'toc-fixed': isTocFixed }">
                 <ul class="simple-toc-list">
                   <template v-for="link in tocData" :key="link.id">
                     <li class="simple-toc-item" :class="{ active: link.id === activeTocId }">
@@ -739,24 +736,6 @@ watchEffect(async () => {
 </template>
 
 <style scoped>
-/* 像素风格布局 */
-.pixel-layout {
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
-/* 像素风格卡片 */
-.pixel-card {
-  background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  border-radius: 8px;
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary);
-  transition: all 0.2s ease;
-}
-
 /* 像素风格按钮 */
 .pixel-btn {
   background: var(--pixel-bg-secondary);
@@ -1009,13 +988,6 @@ watchEffect(async () => {
   width: 200px;
   max-height: calc(100vh - 100px);
   overflow-y: auto;
-  background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  border-radius: 8px;
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary);
-  font-family: ui-monospace, monospace;
   z-index: 100;
   transition: all 0.3s ease;
 }
@@ -1049,6 +1021,10 @@ watchEffect(async () => {
   transition: all 0.2s ease;
 }
 
+.simple-toc-item.active {
+  color: var(--pixel-accent-cyan);
+}
+
 .simple-toc-child {
   margin-left: 16px;
 }
@@ -1068,15 +1044,7 @@ watchEffect(async () => {
 }
 
 .simple-toc-link:hover {
-  background: var(--pixel-bg-tertiary);
-  color: var(--pixel-accent-cyan);
-}
-
-.simple-toc-item.active .simple-toc-link {
-  background: var(--pixel-bg-quaternary);
-  color: var(--pixel-highlight-yellow);
-  font-weight: bold;
-  border: 1px solid var(--pixel-accent-cyan);
+  border-bottom: var(--pixel-accent-cyan) !important;
 }
 
 .simple-toc::-webkit-scrollbar {
@@ -1096,39 +1064,5 @@ watchEffect(async () => {
 
 .simple-toc::-webkit-scrollbar-thumb:hover {
   background: var(--pixel-text-disabled);
-}
-
-/* 响应式适配 */
-@media (max-width: 768px) {
-  .pixel-card {
-    border-width: 1px;
-    box-shadow: 1px 1px 0 var(--pixel-border-primary);
-  }
-
-  .pixel-card:hover {
-    box-shadow: 2px 2px 0 var(--pixel-border-primary);
-  }
-
-  .pixel-btn {
-    border-width: 1px;
-    box-shadow: 1px 1px 0 var(--pixel-border-primary);
-  }
-
-  .pixel-btn:hover {
-    box-shadow: 2px 2px 0 var(--pixel-border-primary);
-  }
-
-  .pixel-card-action {
-    border-width: 1px;
-    box-shadow: 1px 1px 0 var(--pixel-border-primary);
-  }
-
-  .pixel-card-action:hover {
-    box-shadow: 2px 2px 0 var(--pixel-border-primary);
-  }
-
-  .simple-toc {
-    display: none;
-  }
 }
 </style>

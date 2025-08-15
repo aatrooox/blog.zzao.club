@@ -94,7 +94,7 @@ defineExpose({ refreshList })
           <UserAvatar :user-info="comment.user_info" class="size-10" />
         </div>
         <div
-          class="comment-info flex-1 rounded-md box-border bg-white/90 dark:bg-zinc-900/80 hover:shadow-lg transition-all duration-300 ease-in-out"
+          class="comment-info flex-1 rounded-md box-border transition-all duration-300 ease-in-out"
         >
           <div class="header px-4 py-1">
             <a

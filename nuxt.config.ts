@@ -160,6 +160,8 @@ export default defineNuxtConfig({
         img: 'ProseImg',
         pre: 'ProsePre',
         code: 'ProseCode',
+        strong: 'ProseStrong',
+        hr: 'ProseHr',
       },
     },
     headings: {

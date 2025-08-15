@@ -172,7 +172,7 @@ function focusActualInput(): void {
       <span
         v-for="(tag, index) in myTags"
         :key="index"
-        class="pixel-tag-item"
+        class="pixel-tag"
       >
         #{{ tag }}
       </span>
@@ -233,20 +233,6 @@ function focusActualInput(): void {
   margin-bottom: 0.5rem;
 }
 
-.pixel-tag-item {
-  display: inline-flex;
-  align-items: center;
-  background-color: var(--pixel-highlight-green);
-  color: var(--pixel-highlight-green-text);
-  border: 2px solid var(--pixel-highlight-green-border);
-  padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1.25;
-  white-space: nowrap;
-  font-family: ui-monospace, monospace;
-  font-weight: bold;
-}
-
 .pixel-input {
   flex-grow: 1;
   border: none;
@@ -271,7 +257,7 @@ function focusActualInput(): void {
   padding: 0.5rem;
   background-color: var(--pixel-bg-secondary);
   border: 2px solid var(--pixel-border-primary);
-  box-shadow: 4px 4px 0 var(--pixel-shadow-secondary);
+  box-shadow: 2px 2px 0 var(--pixel-shadow-secondary);
   font-size: 0.875rem;
 }
 
@@ -284,7 +270,7 @@ function focusActualInput(): void {
 }
 
 .pixel-suggestion-active {
-  background-color: var(--pixel-highlight-teal);
+  background-color: var(--pixel-accent-cyan);
   color: var(--pixel-highlight-teal-text);
   border: 2px solid var(--pixel-highlight-teal-border);
 }

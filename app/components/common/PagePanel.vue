@@ -36,7 +36,7 @@ const showSearchDialog = (tag: string) => {
       <div class="flex flex-col gap-2">
         <NuxtLink
           :to="page.path"
-          class="pixel-title text-xl font-mono font-bold transition-all duration-200 leading-tight hover:scale-101"
+          class="pixel-title hover:text-text-pixel-secondary transition-all duration-200 hover:scale-101"
         >
           {{ page.title }}
           <Icon
@@ -51,16 +51,16 @@ const showSearchDialog = (tag: string) => {
       </div>
 
       <div class="flex flex-wrap items-center gap-4 text-xs font-mono">
-        <div class="flex items-center gap-1 pixel-meta">
-          <Icon name="material-symbols:nest-clock-farsight-analog-outline-rounded" />
+        <div class="flex items-center gap-1 text-text-pixel-secondary">
+          <Icon name="pixelarticons:clock" />
           {{ checkDate(page.date ?? '') ? formatDate(page.date ?? '') : '' }}
         </div>
         <template v-if="checkUpdate(page.lastmod ?? '', page.date ?? '')">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <div class="flex items-center gap-1 pixel-meta">
-                  <Icon name="material-symbols:update-rounded" />
+                <div class="flex items-center gap-1 text-text-pixel-secondary">
+                  <Icon name="pixelarticons:cloud-upload" />
                   {{ updateDateFromNow(page.lastmod ?? page?.meta?.lastmod ?? '') }}
                 </div>
               </TooltipTrigger>
@@ -78,59 +78,18 @@ const showSearchDialog = (tag: string) => {
           </span>
         </div>
         <div class="flex items-center gap-1 pixel-meta">
-          <Icon name="icon-park-outline:eyes" />
+          <Icon name="pixelarticons:eye" />
           {{ formatNumberForView(view || 0) }}
         </div>
         <div v-if="like" class="flex items-center gap-1 pixel-meta">
-          <Icon name="icon-park-outline:thumbs-up" />
+          <Icon name="pixelarticons:heart" />
           {{ formatNumberForView(like || 0) }}
         </div>
         <div v-if="comment" class="flex items-center gap-1 pixel-meta">
-          <Icon name="icon-park-outline:comments" />
+          <Icon name="pixelarticons:message-processing" />
           {{ formatNumberForView(comment || 0) }}
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-.pixel-card {
-  background: var(--pixel-bg-card);
-  border: 2px solid var(--pixel-border-primary);
-  border-radius: 8px;
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary);
-  transition: all 0.2s ease;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
-.pixel-card:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary),
-    6px 6px 0 var(--pixel-bg-secondary);
-}
-
-.pixel-title {
-  color: var(--pixel-text-primary);
-  text-shadow: 1px 1px 0 var(--pixel-shadow-primary);
-}
-
-.pixel-title:hover {
-  color: var(--pixel-highlight-yellow);
-  text-shadow: 2px 2px 0 var(--pixel-shadow-primary);
-}
-
-.pixel-text {
-  color: var(--pixel-text-primary);
-}
-
-.pixel-meta {
-  color: var(--pixel-text-muted);
-}
-</style>

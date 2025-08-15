@@ -193,10 +193,10 @@ defineExpose({ clear })
           <span class="pixel-text">{{ inputTip }}</span>
         </div>
         <div class="pixel-button-group">
-          <button class="pixel-button pixel-button-secondary" @click="cancelSend">
+          <button class="pixel-btn" @click="cancelSend">
             <Icon name="icon-park-outline:close-one" /><span>{{ cancelBtnText }}</span>
           </button>
-          <button class="pixel-button pixel-button-primary" @click="sendComment">
+          <button class="pixel-btn" @click="sendComment">
             <Icon name="icon-park-outline:send" /><span>{{ submitBtnText }}</span>
           </button>
         </div>
@@ -252,27 +252,6 @@ defineExpose({ clear })
   line-height: 1;
   color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
-}
-
-.pixel-textarea {
-  width: 100%;
-  background-color: var(--pixel-bg-card);
-  border: 2px solid var(--pixel-border-input);
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-  padding: 0.75rem;
-  resize: vertical;
-  min-height: 80px;
-}
-
-.pixel-textarea:focus {
-  outline: none;
-  border-color: var(--pixel-border-focus);
-  box-shadow: 0 0 0 2px var(--pixel-accent-cyan-border);
-}
-
-.pixel-textarea::placeholder {
-  color: var(--pixel-text-disabled);
 }
 
 .pixel-buttons {

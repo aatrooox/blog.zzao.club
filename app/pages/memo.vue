@@ -131,7 +131,7 @@ function onMemoTagClick(tagName: string) {
 </script>
 
 <template>
-  <div class="pixel-layout">
+  <div class="">
     <!-- 编辑器卡片 -->
     <div class="pixel-card pixel-card-inner">
       <AppTagInput v-model="tags" />
@@ -145,12 +145,12 @@ function onMemoTagClick(tagName: string) {
     </div>
 
     <!-- 随想卡片列表 -->
-    <div class="flex flex-col gap-4 md:gap-6">
+    <div class="flex flex-col gap-4 md:gap-4">
       <transition-group
         name="memo-fade"
         tag="div"
         appear
-        class="flex flex-col gap-4 md:gap-6"
+        class="flex flex-col gap-2 md:gap-2"
         :css="true"
         @before-leave="beforeLeave"
         @leave="leave"
@@ -159,7 +159,7 @@ function onMemoTagClick(tagName: string) {
         <div
           v-for="memo in filteredMemos"
           :key="memo.id"
-          class="pixel-card pixel-card-hover cursor-pointer"
+          class="pixel-card cursor-pointer"
           @click="handleComment(memo)"
         >
           <div class="flex items-start gap-4">
@@ -172,11 +172,11 @@ function onMemoTagClick(tagName: string) {
                 <span class="pixel-text text-xs md:text-sm opacity-70">·</span>
                 <NuxtTime :datetime="memo.createTs" class="pixel-text text-xs md:text-sm opacity-70" />
               </div>
-              <div v-if="memo.tags && memo.tags.length > 0" class="mb-2 h-8 overflow-x-auto overflow-y-hidden flex items-center gap-1.5 pb-1">
+              <div v-if="memo.tags && memo.tags.length > 0" class="py-2 overflow-x-auto overflow-y-hidden flex items-center gap-1.5 pb-1">
                 <span
                   v-for="tag in memo.tags"
                   :key="tag.id"
-                  class="pixel-tag cursor-pointer"
+                  class="pixel-tag text-xs cursor-pointer"
                   @click.stop="onMemoTagClick(tag.tagName)"
                 >
                   {{ tag.tagName }}
@@ -234,57 +234,12 @@ function onMemoTagClick(tagName: string) {
   gap: 1.5rem;
 }
 
-/* Pixel style cards */
-.pixel-card {
-  background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  border-radius: 8px;
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary);
-  padding: 1.5rem;
-  position: relative;
-  transition: all 0.2s ease;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
-.pixel-card-inner {
-  background: var(--pixel-bg-card);
-  border: 2px solid var(--pixel-border-primary);
-  border-radius: 8px;
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary);
-  padding: 1rem;
-}
-
-.pixel-card-hover {
-  transition: all 0.2s ease;
-}
-
 .pixel-card-hover:hover {
   transform: translateY(-2px);
   box-shadow:
     2px 2px 0 var(--pixel-border-primary),
     4px 4px 0 var(--pixel-bg-tertiary),
     6px 6px 0 var(--pixel-bg-secondary);
-}
-
-/* Pixel style text */
-.pixel-title {
-  color: var(--pixel-text-primary);
-  text-shadow: 1px 1px 0 var(--pixel-shadow-primary);
-  font-family: ui-monospace, monospace;
-  font-weight: bold;
-  font-size: 1rem;
-  line-height: 1.2;
-}
-
-.pixel-title:hover {
-  color: var(--pixel-highlight-yellow);
-  text-shadow: 2px 2px 0 var(--pixel-shadow-primary);
 }
 
 .pixel-text {
@@ -298,33 +253,6 @@ function onMemoTagClick(tagName: string) {
 .pixel-avatar {
   border: 2px solid var(--pixel-border-primary);
   image-rendering: pixelated;
-}
-
-/* Pixel style tags */
-.pixel-tag {
-  background: var(--pixel-bg-card);
-  color: var(--pixel-accent-cyan);
-  border: 2px solid var(--pixel-accent-cyan-border);
-  padding: 2px 8px;
-  border-radius: 4px;
-  box-shadow: 1px 1px 0 var(--pixel-accent-cyan-border);
-  font-family: ui-monospace, monospace;
-  font-size: 0.75rem;
-  font-weight: bold;
-  white-space: nowrap;
-  transition: all 0.15s ease;
-}
-
-.pixel-tag:hover {
-  background: var(--pixel-bg-tertiary);
-  color: var(--pixel-accent-cyan-hover);
-  transform: translateY(-1px);
-  box-shadow: 2px 2px 0 var(--pixel-accent-cyan-border);
-}
-
-.pixel-tag:active {
-  transform: translateY(1px);
-  box-shadow: 0px 0px 0 var(--pixel-accent-cyan-border);
 }
 
 /* Animation styles */

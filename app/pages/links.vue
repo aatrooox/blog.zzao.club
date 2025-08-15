@@ -73,7 +73,7 @@ async function addLink() {
                     <AppImg
                       :src="link.logo || `${link.url}/favicon.ico`"
                       :alt="link.name"
-                      class="w-12 h-12 md:w-16 md:h-16 rounded-lg object-cover border-2 border-gray-600"
+                      class="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover border-2 border-gray-600"
                     />
                   </div>
                   <div class="flex-1 min-w-0">
@@ -106,10 +106,10 @@ async function addLink() {
             />
             <div class="mt-3 md:mt-4">
               <button
-                class="pixel-button pixel-button-primary"
+                class="pixel-btn pixel-button-primary"
                 @click="addLink"
               >
-                <span class="text-sm md:text-base">📝 提交申请</span>
+                <span class="text-sm md:text-base">提交申请</span>
               </button>
             </div>
           </div>
@@ -118,110 +118,3 @@ async function addLink() {
     </div>
   </div>
 </template>
-
-<style scoped>
-@reference 'tailwindcss';
-
-.pixel-layout {
-  @apply font-mono;
-  background: var(--pixel-bg-primary);
-  color: var(--pixel-text-primary);
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
-}
-
-.pixel-card {
-  background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  border-radius: 8px;
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary);
-  padding: 24px;
-  margin: 8px 0;
-}
-
-.pixel-card-hover {
-  transition: all 0.2s ease;
-}
-
-.pixel-card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    4px 4px 0 var(--pixel-border-primary),
-    6px 6px 0 var(--pixel-bg-tertiary);
-}
-
-.pixel-title {
-  @apply text-base md:text-lg font-bold;
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-}
-
-.pixel-text {
-  @apply text-sm md:text-base;
-  color: var(--pixel-text-muted);
-  font-family: ui-monospace, monospace;
-  line-height: 1.6;
-}
-
-.pixel-button {
-  @apply inline-flex items-center gap-2 px-3 md:px-4 py-2 rounded-lg;
-  border: 2px solid;
-  font-family: ui-monospace, monospace;
-  font-weight: bold;
-  transition: all 0.2s ease;
-  text-decoration: none;
-}
-
-.pixel-button-primary {
-  background: var(--pixel-accent-cyan);
-  border-color: var(--pixel-accent-cyan-border);
-  color: var(--pixel-bg-primary);
-}
-
-.pixel-button-primary:hover {
-  background: var(--pixel-accent-cyan-hover);
-  transform: translateY(-1px);
-  box-shadow: 2px 2px 0 var(--pixel-accent-cyan-border);
-}
-
-.pixel-button-secondary {
-  background: var(--pixel-text-disabled);
-  border-color: var(--pixel-border-primary);
-  color: var(--pixel-text-primary);
-}
-
-.pixel-button-secondary:hover {
-  background: var(--pixel-text-disabled);
-  transform: translateY(-1px);
-  box-shadow: 2px 2px 0 var(--pixel-border-primary);
-}
-
-.pixel-card-inner {
-  background: var(--pixel-bg-card);
-  border: 2px solid var(--pixel-bg-tertiary);
-  border-radius: 6px;
-  padding: 16px;
-  margin: 8px 0;
-}
-
-.pixel-textarea {
-  @apply w-full h-32 md:h-40 p-3 rounded-lg;
-  background: var(--pixel-bg-primary);
-  border: 2px solid var(--pixel-border-primary);
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-  font-size: 14px;
-  line-height: 1.5;
-  resize: vertical;
-  transition: all 0.2s ease;
-}
-
-.pixel-textarea:focus {
-  outline: none;
-  border-color: var(--pixel-accent-cyan);
-  box-shadow: 0 0 0 2px var(--pixel-accent-cyan-border);
-}
-</style>

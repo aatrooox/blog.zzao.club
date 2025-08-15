@@ -117,27 +117,27 @@
 
   /* 像素风格主题色彩系统 */
   /* 背景色系 */
-  --pixel-bg-primary: oklch(25% 0.05 250); /* 主背景 - 深灰色 */
-  --pixel-bg-secondary: oklch(30% 0.05 250); /* 次要背景 - 中灰色 */
-  --pixel-bg-tertiary: oklch(35% 0.05 250); /* 第三级背景 */
-  --pixel-bg-quaternary: oklch(40% 0.05 250); /* 第四级背景 */
-  --pixel-bg-card: oklch(28% 0.05 250); /* 卡片背景 */
-  --pixel-bg-input: oklch(20% 0.05 250); /* 输入框背景 */
+  --pixel-bg-primary: rgba(188, 188, 192); /* 主背景 - 深灰色 */
+  --pixel-bg-secondary: rgba(216, 216, 220); /* 次要背景 - 中灰色 */
+  --pixel-bg-tertiary: rgba(235, 235, 240); /* 第三级背景 */
+
+  --pixel-bg-card: rgba(216, 216, 220); /* 卡片背景 */
+  --pixel-bg-input: rgba(242, 242, 247); /* 输入框背景 */
   --pixel-bg-code: oklch(32% 0.05 250); /* 代码块背景 */
 
   /* 文字色系 */
-  --pixel-text-primary: oklch(90% 0.02 250); /* 主要文字 - 亮白色 */
-  --pixel-text-secondary: oklch(85% 0.02 250); /* 次要文字 */
-  --pixel-text-tertiary: oklch(80% 0.03 250); /* 第三级文字 */
-  --pixel-text-muted: oklch(75% 0.03 250); /* 弱化文字 */
-  --pixel-text-disabled: oklch(50% 0.03 250); /* 禁用文字 */
-  --pixel-text-code: oklch(70% 0.03 250); /* 代码文字 */
+  --pixel-text-primary: rgba(36,  36,  38, 1); /* 主要文字 - 亮白色 */
+  --pixel-text-secondary: rgba(124, 124, 128, 1); /* 次要文字 */
+  --pixel-text-tertiary: rgba(142, 142, 147, 1); /* 第三级文字 */
+  --pixel-text-muted: rgba(142, 142, 147, 1); /* 弱化文字 */
+  --pixel-text-disabled: rgba(142, 142, 147, 1); /* 禁用文字 */
+  --pixel-text-code: rgba(142, 142, 147, 1); /* 代码文字 */
 
   /* 边框色系 */
-  --pixel-border-primary: oklch(40% 0.05 250); /* 主要边框 */
-  --pixel-border-secondary: oklch(45% 0.05 250); /* 次要边框 */
-  --pixel-border-input: oklch(35% 0.08 250); /* 输入框边框 */
-  --pixel-border-focus: oklch(75% 0.15 195); /* 焦点边框 */
+  --pixel-border-primary: rgba(28,  28,  30, 1); /* 主要边框 */
+  --pixel-border-secondary: rgba(28,  28,  30, 1); /* 次要边框 */
+  --pixel-border-input: rgba(142, 142, 147, 1); /* 输入框边框 */
+  --pixel-border-focus: rgba(36,  36,  38, 1); /* 焦点边框 */
 
   /* 阴影色系 */
   --pixel-shadow-primary: oklch(25% 0.05 250); /* 主要阴影 */
@@ -146,8 +146,9 @@
   --pixel-shadow-light: oklch(50% 0.03 250); /* 浅色阴影 */
 
   /* 强调色系 */
-  --pixel-accent-cyan: oklch(70% 0.15 195); /* 青色强调 - 主要按钮 */
-  --pixel-accent-cyan-hover: oklch(75% 0.15 195); /* 青色悬停 */
+  --pixel-accent-primary: rgba(28,  28,  30, 1); /* 青色强调 - 主要按钮 */
+  --pixel-accent-cyan: rgb(0, 162, 162); /* 青色强调 - 主要按钮 */
+  --pixel-accent-cyan-hover: rgb(0, 202, 203); /* 青色悬停 */
   --pixel-accent-cyan-light: oklch(80% 0.1 195); /* 淡青色 */
   --pixel-accent-cyan-border: oklch(60% 0.15 195); /* 青色边框 */
   --pixel-accent-cyan-shadow: oklch(60% 0.2 195); /* 青色阴影 */
@@ -442,9 +443,6 @@ body {
 .pixel-btn {
   @apply bg-bg-pixel-secondary border-2 border-border-pixel-primary text-text-pixel-primary;
   @apply font-mono px-4 py-2 shadow-pixel-btn transition-all duration-150 ease-in-out;
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
 }
 .pixel-btn:hover {
   @apply bg-bg-pixel-tertiary -translate-y-px shadow-pixel-btn-hover;
@@ -455,40 +453,29 @@ body {
 
 /* 像素按钮 - 主要强调色 */
 .pixel-btn-primary {
-  @apply bg-accent-pixel-cyan border-2 border-accent-pixel-cyan-border text-text-pixel-primary;
+  @apply bg-bg-pixel-primary border-2 text-text-pixel-primary;
   @apply font-mono px-4 py-2 shadow-pixel-btn-primary transition-all duration-150 ease-in-out;
-  image-rendering: pixelated;
 }
 .pixel-btn-primary:hover {
-  @apply bg-accent-pixel-cyan-light -translate-y-px shadow-pixel-btn-primary-hover;
+  @apply bg-bg-pixel-primary -translate-y-px shadow-pixel-btn-primary-hover text-text-pixel-primary font-bold;
 }
 .pixel-btn-primary:active {
   @apply translate-y-px shadow-pixel-btn-primary-active;
 }
 
 /* 像素卡片 */
-.pixel-card {
-  @apply bg-bg-pixel-secondary border-2 border-border-pixel-primary shadow-pixel-card;
+.pixel-card, .pixel-card-elevated {
+  @apply bg-bg-pixel-card border-2 border-b-4 border-r-4 border-border-pixel-primary;
   @apply p-4 m-2 transition-all duration-200 ease-in-out;
-  image-rendering: pixelated;
 }
-.pixel-card:hover {
-  @apply -translate-y-0.5 shadow-pixel-card-hover;
-}
-
-/* 像素卡片 - 高级阴影 */
-.pixel-card-elevated {
-  @apply bg-bg-pixel-secondary border-2 border-border-pixel-primary shadow-pixel-card-elevated;
-  @apply p-4 m-2 transition-all duration-200 ease-in-out;
-  image-rendering: pixelated;
-}
-.pixel-card-elevated:hover {
-  @apply -translate-y-0.5 shadow-pixel-card-elevated-hover;
+.pixel-card:hover, .pixel-card-elevated:hover {
+  @apply -translate-y-0.5 border-b-4 border-r-4 bg-bg-pixel-tertiary;
 }
 
 /* 像素边框 */
 .pixel-border {
-  @apply border-2 border-border-pixel-primary shadow-pixel-border;
+  @apply border-2;
+  border-image: url(pixel-border.svg) 5 repeat;
 }
 
 /* 像素阴影层级 */
@@ -514,6 +501,21 @@ body {
 }
 .pixel-status-unknown {
   @apply bg-text-pixel-disabled w-2 h-2 border border-border-pixel-primary;
+}
+
+.pixel-textarea, .pixel-input {
+  @apply w-full bg-bg-pixel-card border-2 border-border-pixel-input text-text-pixel-primary font-mono p-3 resize-y min-h-[80px] rounded-none;
+}
+
+.pixel-input {
+  @apply min-h-[20px]
+}
+.pixel-textarea:focus {
+  @apply outline-none;
+}
+
+.pixel-textarea::placeholder {
+  @apply text-text-pixel-disabled;
 }
 
 /* 像素字体 */
@@ -584,7 +586,7 @@ body {
 }
 
 .pixel-tag {
-  @apply bg-bg-pixel-card text-accent-pixel-cyan border-2 border-accent-pixel-cyan-border;
+  @apply bg-bg-pixel-card text-accent-pixel-primary border-2 border-border-pixel-primary;
   @apply px-2 py-0.5 rounded shadow-pixel-tag transition-all duration-150 ease-in-out;
 }
 

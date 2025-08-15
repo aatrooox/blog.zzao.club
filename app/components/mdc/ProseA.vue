@@ -17,9 +17,10 @@ const props = defineProps({
 <template>
   <NuxtLink
     :href="props.href"
-    :target="props.target" class="font-bold border-b-2 border-dashed border-zinc-600 hover:border-solid hover:border-zinc-900 dark:border-zinc-300 dark:hover:border-zinc-100 dark:text-zinc-200"
+    :target="props.target" class="font-bold !underline-4 !underline-offset-4 !decoration-dashed !text-text-pixel-primary !text-base"
     @click.stop
   >
     <slot />
+    <Icon name="pixelarticons:external-link" size="1em" />
   </NuxtLink>
 </template>
