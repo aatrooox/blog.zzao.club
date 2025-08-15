@@ -13,7 +13,12 @@
     "release:patch": "npx changelogen@latest --patch --release --push",
     "release:minor": "npx changelogen@latest --minor --release --push",
     "release:major": "npx changelogen@latest --major --release --push",
-    "prepare": "husky"
+    "prepare": "husky",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:drop": "drizzle-kit drop"
   },
   "dependencies": {
     "@antfu/eslint-config": "^4.14.1",

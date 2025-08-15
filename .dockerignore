@@ -1,0 +1,22 @@
+# 忽略版本控制目录
+.git
+.github
+
+# 忽略依赖和构建产物
+node_modules
+.nuxt
+.output
+dist
+build
+
+# 忽略本地开发配置文件
+.env
+.vscode
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 忽略操作系统生成的文件
+.DS_Store
+Thumbs.db

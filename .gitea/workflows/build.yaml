@@ -35,7 +35,11 @@ jobs:
           NUXT_SESSION_PASSWORD: ${{ secrets.NUXT_SESSION_PASSWORD }}
           NUXT_OAUTH_GITHUB_CLIENT_ID: ${{ secrets.NUXT_OAUTH_GITHUB_CLIENT_ID }}
           NUXT_OAUTH_GITHUB_CLIENT_SECRET: ${{ secrets.NUXT_OAUTH_GITHUB_CLIENT_SECRET }}
-        run: NODE_OPTIONS="--max-old-space-size=4080" pnpm build
+        run: |
+          echo "Running database migrations..."
+          pnpm db:migrate
+          echo "Building project..."
+          NODE_OPTIONS="--max-old-space-size=4080" pnpm build
       - name: Copy and Build
         env:
           CONTENT_REPO_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}

@@ -440,142 +440,85 @@ body {
 
 /* 像素按钮 */
 .pixel-btn {
-  background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
-  padding: 8px 16px;
-  box-shadow: 2px 2px 0 var(--pixel-border-primary);
-  transition: all 0.15s ease;
+  @apply bg-bg-pixel-secondary border-2 border-border-pixel-primary text-text-pixel-primary;
+  @apply font-mono px-4 py-2 shadow-pixel-btn transition-all duration-150 ease-in-out;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
 }
 .pixel-btn:hover {
-  background: var(--pixel-bg-tertiary);
-  transform: translateY(-1px);
-  box-shadow: 3px 3px 0 var(--pixel-border-primary);
+  @apply bg-bg-pixel-tertiary -translate-y-px shadow-pixel-btn-hover;
 }
 .pixel-btn:active {
-  transform: translateY(1px);
-  box-shadow: 1px 1px 0 var(--pixel-border-primary);
+  @apply translate-y-px shadow-pixel-btn-active;
 }
 
 /* 像素按钮 - 主要强调色 */
 .pixel-btn-primary {
-  background: var(--pixel-accent-cyan);
-  border: 2px solid var(--pixel-accent-cyan-border);
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
-  padding: 8px 16px;
-  box-shadow: 2px 2px 0 var(--pixel-accent-cyan-border);
-  transition: all 0.15s ease;
+  @apply bg-accent-pixel-cyan border-2 border-accent-pixel-cyan-border text-text-pixel-primary;
+  @apply font-mono px-4 py-2 shadow-pixel-btn-primary transition-all duration-150 ease-in-out;
   image-rendering: pixelated;
 }
 .pixel-btn-primary:hover {
-  background: var(--pixel-accent-cyan-light);
-  transform: translateY(-1px);
-  box-shadow: 3px 3px 0 var(--pixel-accent-cyan-border);
+  @apply bg-accent-pixel-cyan-light -translate-y-px shadow-pixel-btn-primary-hover;
 }
 .pixel-btn-primary:active {
-  transform: translateY(1px);
-  box-shadow: 1px 1px 0 var(--pixel-accent-cyan-border);
+  @apply translate-y-px shadow-pixel-btn-primary-active;
 }
 
 /* 像素卡片 */
 .pixel-card {
-  background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary);
-  padding: 16px;
-  margin: 8px;
+  @apply bg-bg-pixel-secondary border-2 border-border-pixel-primary shadow-pixel-card;
+  @apply p-4 m-2 transition-all duration-200 ease-in-out;
   image-rendering: pixelated;
-  transition: all 0.2s ease;
 }
 .pixel-card:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary),
-    6px 6px 0 var(--pixel-shadow-primary);
+  @apply -translate-y-0.5 shadow-pixel-card-hover;
 }
 
 /* 像素卡片 - 高级阴影 */
 .pixel-card-elevated {
-  background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary),
-    6px 6px 0 var(--pixel-shadow-primary);
-  padding: 16px;
-  margin: 8px;
+  @apply bg-bg-pixel-secondary border-2 border-border-pixel-primary shadow-pixel-card-elevated;
+  @apply p-4 m-2 transition-all duration-200 ease-in-out;
   image-rendering: pixelated;
-  transition: all 0.2s ease;
 }
 .pixel-card-elevated:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    3px 3px 0 var(--pixel-border-primary),
-    6px 6px 0 var(--pixel-bg-tertiary),
-    9px 9px 0 var(--pixel-shadow-primary);
+  @apply -translate-y-0.5 shadow-pixel-card-elevated-hover;
 }
 
 /* 像素边框 */
 .pixel-border {
-  border: 2px solid var(--pixel-border-primary);
-  box-shadow:
-    0 0 0 2px var(--pixel-shadow-primary),
-    2px 2px 0 0 var(--pixel-shadow-light);
+  @apply border-2 border-border-pixel-primary shadow-pixel-border;
 }
 
 /* 像素阴影层级 */
 .pixel-shadow-sm {
-  box-shadow: 2px 2px 0 0 var(--pixel-shadow-light);
+  @apply shadow-pixel-sm;
 }
 .pixel-shadow-md {
-  box-shadow:
-    2px 2px 0 0 var(--pixel-shadow-light),
-    4px 4px 0 0 var(--pixel-border-primary);
+  @apply shadow-pixel-md;
 }
 .pixel-shadow-lg {
-  box-shadow:
-    2px 2px 0 0 var(--pixel-shadow-light),
-    4px 4px 0 0 var(--pixel-border-primary),
-    6px 6px 0 0 var(--pixel-shadow-primary);
+  @apply shadow-pixel-lg;
 }
 
 /* 像素状态指示器 */
 .pixel-status-online {
-  background: var(--pixel-status-success);
-  width: 8px;
-  height: 8px;
-  border: 1px solid var(--pixel-status-success-border);
+  @apply bg-status-pixel-success w-2 h-2 border border-status-pixel-success-border;
 }
 .pixel-status-offline {
-  background: var(--pixel-status-error);
-  width: 8px;
-  height: 8px;
-  border: 1px solid var(--pixel-status-error-border);
+  @apply bg-status-pixel-error w-2 h-2 border border-status-pixel-error-border;
 }
 .pixel-status-warning {
-  background: var(--pixel-status-warning);
-  width: 8px;
-  height: 8px;
-  border: 1px solid var(--pixel-status-warning-border);
+  @apply bg-status-pixel-warning w-2 h-2 border border-status-pixel-warning-border;
 }
 .pixel-status-unknown {
-  background: var(--pixel-text-disabled);
-  width: 8px;
-  height: 8px;
-  border: 1px solid var(--pixel-border-primary);
+  @apply bg-text-pixel-disabled w-2 h-2 border border-border-pixel-primary;
 }
 
 /* 像素字体 */
 .pixel-font {
-  font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
+  @apply font-mono;
   image-rendering: pixelated;
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
@@ -583,38 +526,29 @@ body {
 
 /* 像素标题 */
 .pixel-title {
-  font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
-  font-weight: 700;
-  color: var(--pixel-text-primary);
+  @apply font-mono font-bold text-text-pixel-primary;
   image-rendering: pixelated;
 }
 
 /* 像素文本 */
 .pixel-text {
-  font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
-  color: var(--pixel-text-secondary);
+  @apply font-mono text-text-pixel-secondary;
   image-rendering: pixelated;
 }
 
 /* 像素文本 - 次要 */
 .pixel-text-muted {
-  font-family: ui-monospace, 'Courier New', Consolas, Monaco, monospace;
-  color: var(--pixel-text-disabled);
+  @apply font-mono text-text-pixel-disabled;
   image-rendering: pixelated;
 }
 
 /* 像素进度条 */
 .pixel-progress-bar {
-  background: var(--pixel-bg-primary);
-  border: 2px solid var(--pixel-border-primary);
-  height: 16px;
-  position: relative;
+  @apply bg-bg-pixel-primary border-2 border-border-pixel-primary h-4 relative;
   image-rendering: pixelated;
 }
 .pixel-progress-fill {
-  background: var(--pixel-accent-cyan);
-  height: 100%;
-  transition: width 0.3s ease;
+  @apply bg-accent-pixel-cyan h-full transition-[width] duration-300 ease-in-out;
 }
 
 /* 像素网格背景 */
@@ -622,53 +556,44 @@ body {
   background-image:
     repeating-linear-gradient(
       0deg,
-      var(--pixel-accent-cyan) 0px,
-      var(--pixel-accent-cyan) 1px,
+      rgb(var(--pixel-accent-cyan)) 0px,
+      rgb(var(--pixel-accent-cyan)) 1px,
       transparent 1px,
       transparent 8px
     ),
     repeating-linear-gradient(
       90deg,
-      var(--pixel-accent-cyan) 0px,
-      var(--pixel-accent-cyan) 1px,
+      rgb(var(--pixel-accent-cyan)) 0px,
+      rgb(var(--pixel-accent-cyan)) 1px,
       transparent 1px,
       transparent 8px
     );
-  opacity: 0.05;
+  @apply opacity-5;
 }
 
 /* 像素噪点背景 */
 .pixel-noise-bg {
   background-image:
-    radial-gradient(circle at 25% 25%, var(--pixel-accent-cyan) 1px, transparent 1px),
-    radial-gradient(circle at 75% 75%, var(--pixel-status-success) 1px, transparent 1px);
+    radial-gradient(circle at 25% 25%, rgb(var(--pixel-accent-cyan)) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, rgb(var(--pixel-status-success)) 1px, transparent 1px);
   background-size: 16px 16px;
   background-position:
     0 0,
     8px 8px;
-  opacity: 0.03;
+  @apply opacity-[0.03];
 }
 
 .pixel-tag {
-  background: var(--pixel-bg-card);
-  color: var(--pixel-accent-cyan);
-  border: 2px solid var(--pixel-accent-cyan-border);
-  padding: 2px 8px;
-  border-radius: 4px;
-  box-shadow: 1px 1px 0 var(--pixel-accent-cyan-border);
-  transition: all 0.15s ease;
+  @apply bg-bg-pixel-card text-accent-pixel-cyan border-2 border-accent-pixel-cyan-border;
+  @apply px-2 py-0.5 rounded shadow-pixel-tag transition-all duration-150 ease-in-out;
 }
 
 .pixel-tag:hover {
-  background: var(--pixel-bg-tertiary);
-  color: var(--pixel-accent-cyan-hover);
-  transform: translateY(-1px);
-  box-shadow: 2px 2px 0 var(--pixel-accent-cyan-border);
+  @apply bg-bg-pixel-tertiary text-accent-pixel-cyan-hover -translate-y-px shadow-pixel-tag-hover;
 }
 
 .pixel-tag:active {
-  transform: translateY(1px);
-  box-shadow: 0px 0px 0 var(--pixel-accent-cyan-border);
+  @apply translate-y-px shadow-none;
 }
 /* 下划线动画 hover 效果全局复用 */
 .hover-underline-animate {
