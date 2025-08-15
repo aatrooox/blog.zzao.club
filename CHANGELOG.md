@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v2.1.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.0.3...v2.1.0)
+
+### 🚀 Enhancements
+
+- **style:** 根据苹果Macintosh壁纸的配色重新设计样式 ([c58000a](https://github.com/aatrooox/blog.zzao.club/commit/c58000a))
+
+### 🩹 Fixes
+
+- 修复本地状态恢复; 样式优化 ([4413fe4](https://github.com/aatrooox/blog.zzao.club/commit/4413fe4))
+
+### 🏡 Chore
+
+- 删除无用的 prisma 文件; 优化部署脚本 ([f626111](https://github.com/aatrooox/blog.zzao.club/commit/f626111))
+- Style ([e2051f8](https://github.com/aatrooox/blog.zzao.club/commit/e2051f8))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.0.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.0.2...v2.0.3)
