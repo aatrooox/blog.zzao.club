@@ -12,7 +12,8 @@ export default async function useUpload(file: File, folder?: { name: string }) {
   if (error?.value) {
     throw new Error('上传失败')
   }
-  const stsResult = data.value.data
+  const stsResult = data
+  console.log(`sts-result`, stsResult)
   const {
     TmpSecretId,
     TmpSecretKey,
