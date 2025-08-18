@@ -166,7 +166,7 @@ function onMemoTagClick(tagName: string) {
             <div class="flex-shrink-0">
               <UserAvatar :user-info="memo.user_info" size="md" class="pixel-avatar" />
             </div>
-            <div class="flex-1 min-w-0">
+            <div class="min-w-0">
               <div class="flex items-center gap-2 mb-2">
                 <span class="pixel-title text-sm md:text-base">{{ memo.user_info?.nickname || memo.user_info?.username || '匿名' }}</span>
                 <span class="pixel-text text-xs md:text-sm opacity-70">·</span>
@@ -225,7 +225,6 @@ function onMemoTagClick(tagName: string) {
   background-color: var(--pixel-bg-primary);
   color: var(--pixel-text-primary);
   font-family: ui-monospace, monospace;
-  image-rendering: pixelated;
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
@@ -252,7 +251,6 @@ function onMemoTagClick(tagName: string) {
 /* Pixel style avatar */
 .pixel-avatar {
   border: 2px solid var(--pixel-border-primary);
-  image-rendering: pixelated;
 }
 
 /* Animation styles */

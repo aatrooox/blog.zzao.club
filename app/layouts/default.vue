@@ -155,11 +155,6 @@ function scrollToTop() {
           <!-- 用户信息区域 -->
           <div v-if="isLogin" class="pixel-user-info">
             <UserAvatar :user="user" class="pixel-user-avatar" />
-            <!-- <div class="pixel-user-details">
-              <div class="pixel-user-name">
-                {{ user.nickname || user.username }}
-              </div>
-            </div> -->
           </div>
           <!-- 未登录时显示默认图标 -->
           <div v-else class="pixel-login-trigger" @click="showLoginDialog = true">
@@ -305,7 +300,6 @@ function scrollToTop() {
 
 .pixel-nav-icon {
   @apply w-5 h-5;
-  image-rendering: pixelated;
 }
 
 .pixel-nav-text {
@@ -325,7 +319,6 @@ function scrollToTop() {
 .pixel-sidebar-logo {
   @apply w-8 h-8;
   color: var(--pixel-accent-cyan);
-  image-rendering: pixelated;
 }
 
 .pixel-sidebar-nav {
@@ -357,7 +350,6 @@ function scrollToTop() {
 
 .pixel-sidebar-icon {
   @apply w-5 h-5;
-  image-rendering: pixelated;
 }
 
 .pixel-sidebar-text {

@@ -217,7 +217,7 @@ function handleTagClick(tagName: string) {
                 <UserAvatar :user-info="memo.user_info" class="w-10 h-10 md:w-12 md:h-12" />
                 <div class="flex flex-col">
                   <div class="text-[var(--pixel-text-primary)] font-mono font-bold text-sm md:text-base">
-                    {{ memo.user_info?.nickname || '匿名用户' }}
+                    {{ memo.user_info?.nickname || memo.user_info?.username || '匿名用户' }}
                   </div>
                   <NuxtTime :datetime="memo.createTs" class="text-xs text-[var(--pixel-text-secondary)] font-mono" />
                 </div>

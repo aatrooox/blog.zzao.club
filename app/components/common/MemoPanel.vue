@@ -260,7 +260,6 @@ const parsedContent = computed(() => {
   max-width: 100%;
   height: auto;
   border: 2px solid var(--pixel-border-primary);
-  image-rendering: pixelated;
 }
 
 @media (min-width: 768px) {
