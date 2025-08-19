@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v2.1.8
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.1.7...v2.1.8)
+
+### 🚀 Enhancements
+
+- 增加文件上传 ([27d0f27](https://github.com/aatrooox/blog.zzao.club/commit/27d0f27))
+
+### 🩹 Fixes
+
+- 时间默认值使用 sql ([6772885](https://github.com/aatrooox/blog.zzao.club/commit/6772885))
+- Action ([68299b6](https://github.com/aatrooox/blog.zzao.club/commit/68299b6))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.1.7
 
 [compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v2.1.6...v2.1.7)
