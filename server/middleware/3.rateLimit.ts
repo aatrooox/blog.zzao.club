@@ -29,6 +29,8 @@ export default defineEventHandler(async (event) => {
     { path: '/api/v1/comment/sub/del', strict: true, limit: 5, duration: 1 * 60 * 1000 },
     { path: '/api/v1/link/add', strict: true, limit: 2, duration: 1 * 60 * 1000 },
     { path: '/api/v1/fsf/push', strict: true, limit: 5, duration: 1 * 60 * 1000 },
+    // 上传图片，五分钟内最多九次
+    { path: '/api/v1/upload', strict: true, limit: 9, duration: 5 * 60 * 1000 },
   ]
 
   // 查找匹配的规则

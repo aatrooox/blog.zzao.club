@@ -12,12 +12,14 @@ const navBarStore = useNavBar()
 const clientjs = useClientjs()
 const route = useRoute()
 const activeTocId = ref('')
-const curMdContentRef = templateRef('curMdContentRef')
-const articleWrap = templateRef('articleWrap')
-const tocContainer = templateRef('tocContainer')
+const curMdContentRef = useTemplateRef('curMdContentRef')
+const articleWrap = useTemplateRef('articleWrap')
+const tocContainer = useTemplateRef('tocContainer')
+// const actionContainer = useTemplateRef('actionContainer')
 const selectedText = ref()
 const { text, rects, selection } = useTextSelection()
 const isTocFixed = ref(false)
+const { formatDate } = useDayjs()
 
 const likeCount = ref(0)
 const isLiked = ref(false)
@@ -169,6 +171,7 @@ useHead({
 
 watch(() => page, (val) => {
   if (!val) {
+    console.log(page.value)
     throw createError({
       statusCode: 404,
       message: '页面不存在',
@@ -359,6 +362,7 @@ async function createComment(data: CommentData) {
   }
 }
 async function likePage() {
+  console.log(page)
   // 游客点赞 生成指纹 -> 注册为游客 (随机用户名 + 固定id)
   if (!userStore.user.value.id) {
     const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
@@ -557,7 +561,7 @@ watchEffect(async () => {
   <div class="pb-10 m-auto mb-4 font-mono pixel-layout">
     <div class="relative w-full max-w-full flex justify-center">
       <!-- 底部固定的操作栏 -->
-      <ClientOnly>
+      <!-- <ClientOnly>
         <div
           class="md:hidden page-fixed-footer fixed left-0 right-0 bottom-0 bg-gray-900/90 border-t-2 border-gray-800 py-3 px-4 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-pixel transition-all duration-300 z-[49] backdrop-blur-sm"
         >
@@ -583,27 +587,27 @@ watchEffect(async () => {
             </Button>
           </div>
         </div>
-      </ClientOnly>
+      </ClientOnly> -->
 
       <div v-if="page" class="flex w-full max-w-7xl mx-auto gap-8">
         <!-- 左侧点赞评论操作栏 -->
         <!-- <ClientOnly>
-          <div class="flex-col gap-4 h-80 hidden md:flex top-28 sticky">
-            <div class="pixel-card-action flex flex-col items-center cursor-pointer">
-              <Icon name="icon-park-outline:thumbs-up" size="1.5em" class="text-gray-100 mb-1" @click="likePage" />
-              <span class="text-xs font-mono font-bold text-gray-100">{{ likeCount }}</span>
+          <div ref="actionContainer" class="flex-col gap-4 z-20 h-80 hidden lg:flex fixed top-[80px] left-[200px]">
+            <div class="flex flex-col items-center cursor-pointer">
+              <Icon name="icon-park-outline:thumbs-up" size="1.5em" class="mb-1" @click="likePage" />
+              <span class="text-xs font-mono font-bold ">{{ likeCount }}</span>
             </div>
-            <div class="pixel-card-action cursor-pointer">
+            <div class="cursor-pointer">
               <NuxtLink href="#评论区" class="flex flex-col items-center">
-                <Icon name="icon-park-outline:comments" size="1.5em" class="text-gray-100 mb-1" />
-                <span class="text-xs font-mono font-bold text-gray-100">{{ formatCommentCount }}</span>
+                <Icon name="icon-park-outline:comments" size="1.5em" class=" mb-1" />
+                <span class="text-xs font-mono font-bold ">{{ formatCommentCount }}</span>
               </NuxtLink>
             </div>
-            <div class="pixel-card-action flex flex-col items-center cursor-pointer" @click="copyLink">
-              <Icon name="material-symbols:share-reviews-outline-rounded" size="1.5em" class="text-gray-100" />
+            <div class="flex flex-col items-center cursor-pointer" @click="copyLink">
+              <Icon name="material-symbols:share-reviews-outline-rounded" size="1.5em" class="" />
             </div>
-            <div class="pixel-card-action flex flex-col items-center cursor-pointer" data-umami-event="wx-copy-btn" @click="getInnerHTML">
-              <Icon name="icon-park-outline:wechat" size="1.5em" class="text-gray-100" />
+            <div class="flex flex-col items-center cursor-pointer" data-umami-event="wx-copy-btn" @click="getInnerHTML">
+              <Icon name="icon-park-outline:wechat" size="1.5em" class="" />
             </div>
           </div>
         </ClientOnly> -->
@@ -639,7 +643,30 @@ watchEffect(async () => {
           >
             {{ page?.title }}
           </div>
-
+          <h1 class="text-center text-xl font-bold">
+            {{ page?.title }}
+          </h1>
+          <ClientOnly>
+            <div class="article-actions flex gap-8 justify-center text-sm text-text-pixel-secondary py-2">
+              <div>{{ formatDate(page.date ?? '') }}</div>
+              <div class="flex items-center cursor-pointer gap-1.5">
+                <Icon name="icon-park-outline:thumbs-up" class="" @click="likePage" />
+                <span class="font-mono ">{{ likeCount }}</span>
+              </div>
+              <div class="cursor-pointer">
+                <NuxtLink href="#评论区" class="flex items-center gap-1.5">
+                  <Icon name="icon-park-outline:comments" class="" />
+                  <span class=" font-mono ">{{ formatCommentCount }}</span>
+                </NuxtLink>
+              </div>
+              <div class="flex items-center cursor-pointer" @click="copyLink">
+                <Icon name="material-symbols:share-reviews-outline-rounded" class="" />
+              </div>
+              <div class="flex items-center cursor-pointer" data-umami-event="wx-copy-btn" @click="getInnerHTML">
+                <Icon name="icon-park-outline:wechat" class="" />
+              </div>
+            </div>
+          </ClientOnly>
           <!-- 文章内容 markdown -->
           <article ref="curMdContentRef" class="content-wrap prose-invert prose-lg max-w-none p-6 w-full">
             <ContentRenderer :value="page?.body" />
@@ -997,6 +1024,11 @@ watchEffect(async () => {
   position: fixed;
   top: 80px;
   right: max(32px, calc((100vw - 1280px) / 2 + 32px));
+}
+
+.action-fixed {
+  position: fixed;
+  top: 100px;
 }
 
 .simple-toc-header {

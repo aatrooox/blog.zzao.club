@@ -3,10 +3,6 @@ import { useSafeValidatedBody } from 'h3-zod'
 import STS from 'qcloud-cos-sts'
 
 export default defineEventHandler(async (event) => {
-  if (event.context.userRole !== 'admin') {
-    throw createError({ statusCode: 403, message: '无上传权限' })
-  }
-
   const body = await useSafeValidatedBody(event, {
     filename: z.string(),
     folder: z.object({
@@ -22,6 +18,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const { cosSecretId, cosSecretKey, cosBucket, cosRegion } = useRuntimeConfig(event)
+  console.log(`COS配置:`, { cosSecretId, cosSecretKey, cosBucket, cosRegion })
   const config = {
     secretId: cosSecretId,
     secretKey: cosSecretKey,
@@ -47,6 +44,7 @@ export default defineEventHandler(async (event) => {
     const m = date.getMonth() + 1
     const ymd = `${date.getFullYear()}${m < 10 ? `0${m}` : m}${date.getDate()}`
     const r = (`000000${Math.random() * 1000000}`).slice(-6)
+    console.log('生成COS文件名', folder)
     let cosKey
     // 如果自定义了路径，则使用自定义路径，否则使用日期路径
     if (folder) {
@@ -123,7 +121,7 @@ export default defineEventHandler(async (event) => {
 
   const filename = body.data.filename
   const ext = path.extname(filename)
-  const cosKey = generateCosKey(filename, ext)
+  const cosKey = generateCosKey(filename, ext, body.data.folder)
   const condition = {}
   // 校验文件类型
   if (permission.limitExt) {

@@ -181,6 +181,10 @@ export default defineNuxtConfig({
     umamiHost: 'https://umami.abc.com',
     umamiUser: 'admin',
     umamiPass: 'your_umami_password',
+    cosRegion: '',
+    cosSecretId: '',
+    cosSecretKey: '',
+    cosBucket: '',
     public: {
       ContentVersion: '3.0.0',
       Z_BLOG_VERSION: appVersion,
@@ -246,7 +250,7 @@ export default defineNuxtConfig({
   },
   vite: {
     esbuild: {
-      drop: ['console', 'debugger'],
+      drop: isDev ? [] : ['console', 'debugger'],
     },
     plugins: [
       tailwindcss(),
