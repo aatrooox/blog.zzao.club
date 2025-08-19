@@ -16,7 +16,25 @@ jobs:
 
       - name: Build Project
         env:
+          CONTENT_REPO_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NUXT_FEISHU_WEBHOOK: ${{ secrets.NUXT_FEISHU_WEBHOOK }}
+          NUXT_FEISHU_USER_ID: ${{ secrets.NUXT_FEISHU_USER_ID }}
+          NUXT_JWT_SECRET: ${{ secrets.NUXT_JWT_SECRET }}
+          NUXT_NODEMAILER_HOST: ${{ secrets.NUXT_NODEMAILER_HOST }}
+          NUXT_NODEMAILER_PORT: ${{ secrets.NUXT_NODEMAILER_PORT }}
+          NUXT_NODEMAILER_AUTH_USER: ${{ secrets.NUXT_NODEMAILER_AUTH_USER }}
+          NUXT_NODEMAILER_AUTH_PASS: ${{ secrets.NUXT_NODEMAILER_AUTH_PASS }}
+          NUXT_UMAMI_HOST: ${{  secrets.NUXT_UMAMI_HOST }}
+          NUXT_UMAMI_USER: ${{ secrets.NUXT_UMAMI_USER }}
+          NUXT_UMAMI_PASS: ${{ secrets.NUXT_UMAMI_PASS }}
+          NUXT_SESSION_PASSWORD: ${{ secrets.NUXT_SESSION_PASSWORD }}
+          NUXT_OAUTH_GITHUB_CLIENT_ID: ${{ secrets.NUXT_OAUTH_GITHUB_CLIENT_ID }}
+          NUXT_OAUTH_GITHUB_CLIENT_SECRET: ${{ secrets.NUXT_OAUTH_GITHUB_CLIENT_SECRET }}
+          NUXT_COS_SECRET_ID: ${{ secrets.NUXT_COS_SECRET_ID }}
+          NUXT_COS_SECRET_KEY: ${{ secrets.NUXT_COS_SECRET_KEY }}
+          NUXT_COS_BUCKET: ${{ secrets.NUXT_COS_BUCKET }}
+          NUXT_COS_REGION: ${{ secrets.NUXT_COS_REGION }}
         run: |
           echo "Running database migrations..."
           pnpm db:migrate
