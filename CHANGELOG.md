@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v2.2.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.1.8...v2.2.0)
+
+### 🚀 Enhancements
+
+- 增加图片上传器，调试上传接口 ([f23ca35](https://github.com/aatrooox/blog.zzao.club/commit/f23ca35))
+- 动态支持发送图片; 更新 memoPanel 以支持显示图片 ([5ab5640](https://github.com/aatrooox/blog.zzao.club/commit/5ab5640))
+
+### 🩹 Fixes
+
+- Dizzle 迁移问题 ([527ad58](https://github.com/aatrooox/blog.zzao.club/commit/527ad58))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.1.8
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.1.7...v2.1.8)
