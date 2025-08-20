@@ -22,7 +22,7 @@ export default function useMemos() {
     memos.value = data.value?.data ?? []
   }
 
-  async function createMemo({ content, tags = [] }: { content: string, tags?: any[] }) {
+  async function createMemo({ content, tags = [], photos = [] }: { content: string, tags?: any[], photos?: string[] }) {
     if (!userStore.isLogin) {
       toast.warn('登录后才能发送！')
       return false
@@ -39,6 +39,7 @@ export default function useMemos() {
       const { error } = await $api.post<ApiResponse<BlogMemoWithUser>>('/api/v1/memo/create', {
         content,
         tags,
+        photos,
         user_id: userStore.user.value?.id,
       })
       if (error) {

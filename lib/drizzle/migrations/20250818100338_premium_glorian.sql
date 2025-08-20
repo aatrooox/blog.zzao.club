@@ -10,8 +10,6 @@ ALTER TABLE `blog_memos` MODIFY COLUMN `create_ts` datetime NOT NULL DEFAULT (CU
 ALTER TABLE `blog_memos` MODIFY COLUMN `updated_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
 ALTER TABLE `blog_sub_comment` MODIFY COLUMN `create_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
 ALTER TABLE `blog_sub_comment` MODIFY COLUMN `updated_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
-ALTER TABLE `blog_garmin_activity` MODIFY COLUMN `created_at` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
-ALTER TABLE `blog_garmin_activity` MODIFY COLUMN `updated_at` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
 ALTER TABLE `blog_memo_tag_relations` MODIFY COLUMN `create_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
 ALTER TABLE `blog_memo_tag_relations` MODIFY COLUMN `updated_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
 ALTER TABLE `blog_memo_tag` MODIFY COLUMN `create_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint

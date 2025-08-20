@@ -31,6 +31,7 @@ const clientjs = useClientjs()
 const toast = useGlobalToast()
 const { $api } = useNuxtApp()
 const { getTags } = useTags()
+const multipleImages = ref<string[]>([])
 
 const route = useRoute()
 const selectedTags = computed(() => {
@@ -106,9 +107,10 @@ function handleMemoUpdated() {
 }
 
 async function handleSendMemo(commentData) {
-  const success = await createMemo({ ...commentData, tags: tags.value })
+  const success = await createMemo({ ...commentData, tags: tags.value, photos: multipleImages.value })
   if (success) {
     tags.value = []
+    multipleImages.value = [] // 清空图片数组
     commentInputRef.value?.clear?.()
     await getTags()
   }
@@ -128,12 +130,29 @@ function onMemoTagClick(tagName: string) {
   else
     handleTagClick(tagName)
 }
+
+function onMultipleUpload(urls: string[]) {
+  toast.success(`多张上传成功: 共 ${urls.length} 张图片`)
+}
+
+function onUploadError(error: string) {
+  toast.error(`上传失败: ${error}`)
+}
 </script>
 
 <template>
   <div class="">
     <!-- 编辑器卡片 -->
-    <div class="pixel-card pixel-card-inner">
+    <div v-if="userStore.user.value?.role === 'superAdmin'" class="pixel-card pixel-card-inner">
+      <AppImageUpload
+        v-model="multipleImages"
+        :multiple="true"
+        :max-files="6"
+        :max-size="5"
+        :file-path="`memos/${new Date().getFullYear()}-${new Date().getMonth() + 1}`"
+        @upload-success="onMultipleUpload"
+        @upload-error="onUploadError"
+      />
       <AppTagInput v-model="tags" />
       <AppCommentInput
         ref="commentInputRef"

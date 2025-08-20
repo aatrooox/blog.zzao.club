@@ -16,6 +16,7 @@ interface Props {
   accept?: string
   disabled?: boolean
   modelValue?: string[]
+  filePath?: string
 }
 
 interface Emits {
@@ -31,6 +32,7 @@ const props = withDefaults(defineProps<Props>(), {
   accept: 'image/*',
   disabled: false,
   modelValue: () => [],
+  filePath: 'images',
 })
 
 const emit = defineEmits<Emits>()
@@ -47,9 +49,9 @@ const canAddMore = computed(() => {
   return uploadFiles.value.length < props.maxFiles
 })
 
-const isUploading = computed(() => {
-  return uploadFiles.value.some(file => file.uploading)
-})
+// const isUploading = computed(() => {
+//   return uploadFiles.value.some(file => file.uploading)
+// })
 
 const uploadedUrls = computed(() => {
   return uploadFiles.value
@@ -223,7 +225,7 @@ async function uploadSingleFile(uploadFile: UploadFile) {
     // 使用 useUpload 上传到 COS，传入进度回调
     const result = await useUpload(
       file.file,
-      { name: 'images' },
+      { name: props.filePath },
       (progress: number) => {
         // 更新上传进度
         file.progress = Math.round(progress * 100)
@@ -336,7 +338,7 @@ onUnmounted(() => {
       <!-- 上传按钮 -->
       <div
         v-if="canAddMore"
-        class="upload-btn flex-shrink-0 w-20 h-20 pixel-card cursor-pointer transition-all duration-200 flex items-center justify-center"
+        class="upload-btn flex-shrink-0 w-18 h-24 pixel-card !m-0 cursor-pointer transition-all duration-200 flex items-center justify-center"
         :class="{
           'border-accent-pixel-cyan border-solid': isDragging,
           'opacity-50 cursor-not-allowed': disabled,
@@ -443,13 +445,13 @@ onUnmounted(() => {
     </div>
 
     <!-- 提示信息 -->
-    <div v-if="uploadFiles.length === 0" class="mt-2 text-center text-text-pixel-secondary text-sm">
+    <!-- <div v-if="uploadFiles.length === 0" class="mt-2 text-center text-text-pixel-secondary text-sm">
       {{ multiple ? `最多上传 ${maxFiles} 张图片` : '上传 1 张图片' }}，
       单张最大 {{ maxSize }}MB
-    </div>
+    </div> -->
 
     <!-- 上传统计 -->
-    <div v-else class="mt-6 text-xs text-text-pixel-secondary font-mono">
+    <!-- <div v-else class="mt-6 text-xs text-text-pixel-secondary font-mono">
       已选择 {{ uploadFiles.length }} 张图片
       <template v-if="multiple">
         （最多 {{ maxFiles }} 张）
@@ -457,7 +459,7 @@ onUnmounted(() => {
       <span v-if="isUploading" class="text-accent-pixel-cyan ml-2">
         · 正在上传...
       </span>
-    </div>
+    </div> -->
   </div>
 </template>
 

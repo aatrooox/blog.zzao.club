@@ -148,39 +148,6 @@ export const memoTagRelations = mysqlTable('blog_memo_tag_relations', {
   pk: primaryKey({ columns: [table.tagId, table.memoId] }),
 }))
 
-// Garmin 活动表
-export const garminActivities = mysqlTable('blog_garmin_activity', {
-  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
-  activityType: varchar('activity_type', { length: 255 }).notNull(),
-  date: datetime('date').notNull(),
-  isFavorite: boolean('is_favorite').notNull(),
-  title: varchar('title', { length: 255 }),
-  distance: decimal('distance', { precision: 8, scale: 2 }),
-  calories: int('calories').notNull(),
-  duration: decimal('duration', { precision: 10, scale: 2 }).notNull(),
-  movingTime: decimal('moving_time', { precision: 10, scale: 2 }),
-  elapsedTime: decimal('elapsed_time', { precision: 10, scale: 2 }),
-  avgHr: int('avg_hr'),
-  maxHr: int('max_hr'),
-  aerobicEffect: decimal('aerobic_effect', { precision: 3, scale: 1 }),
-  trainingStressScore: decimal('training_stress_score', { precision: 5, scale: 1 }),
-  avgPace: decimal('avg_pace', { precision: 5, scale: 2 }),
-  bestPace: decimal('best_pace', { precision: 5, scale: 2 }),
-  totalStrokes: int('total_strokes'),
-  avgSwolf: int('avg_swolf'),
-  avgStrokeRate: int('avg_stroke_rate'),
-  steps: int('steps'),
-  totalReps: int('total_reps'),
-  totalSets: int('total_sets'),
-  isGrit: boolean('is_grit'),
-  bestLapTime: decimal('best_lap_time', { precision: 8, scale: 2 }),
-  lapCount: int('lap_count'),
-  createdAt: datetime('created_at').notNull().default(sql`(CURRENT_TIMESTAMP)`),
-  updatedAt: datetime('updated_at').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => sql`(CURRENT_TIMESTAMP)`),
-}, table => ({
-  dateActivityUnique: unique().on(table.date, table.activityType),
-}))
-
 // 关系定义
 export const usersRelations = relations(users, ({ one, many }) => ({
   userConfig: one(userConfigs, {

@@ -18,6 +18,7 @@ export default defineStandardResponseHandler(async (event) => {
     defalt_floded: z.boolean().optional(),
     flod_tip: z.string().optional(),
     user_id: z.string(),
+    photos: z.array(z.string()).optional(), // 新增字段，允许上传多张图片
   }))
 
   if (!body.success) {
@@ -36,9 +37,10 @@ export default defineStandardResponseHandler(async (event) => {
     visible: memoData.visible || 'public',
     defaltFloded: memoData.defalt_floded || false,
     flodTip: memoData.flod_tip,
-    userId: memoData.user_id, // 注意这里字段名的映射
+    userId: memoData.user_id,
     createTs: new Date(),
     updatedTs: new Date(),
+    photos: memoData.photos || [],
   }
 
   let insertedMemo

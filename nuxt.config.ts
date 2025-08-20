@@ -200,7 +200,7 @@ export default defineNuxtConfig({
   },
   sourcemap: {
     server: isDev,
-    client: isDev ?? 'inline',
+    client: isDev,
   },
   compatibilityDate: '2024-10-29',
   nitro: {
