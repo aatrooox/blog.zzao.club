@@ -59,6 +59,7 @@ export default {
           'pixel-info-border': 'var(--pixel-status-info-border)',
         },
         highlight: {
+          'pixel-cyan': 'var(--pixel-accent-cyan)',
           'pixel-yellow': 'var(--pixel-highlight-yellow)',
           'pixel-green': 'var(--pixel-highlight-green)',
           'pixel-green-text': 'var(--pixel-highlight-green-text)',

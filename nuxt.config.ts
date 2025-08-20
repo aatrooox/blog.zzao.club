@@ -34,6 +34,7 @@ export default defineNuxtConfig({
     {
       path: '~/components/ui',
       prefix: '',
+      extensions: ['.vue'],
     },
     {
       path: '~/components/animate',

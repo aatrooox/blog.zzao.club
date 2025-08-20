@@ -6,20 +6,32 @@ export default function useMemo(id: string) {
   const userStore = useUser()
   const toast = useGlobalToast()
   const memo = ref<BlogMemoWithUser | null>(null)
+  const isLoading = ref(false)
 
-  const { data, status, refresh } = useFetch<ApiResponse<BlogMemoWithUser>>(
-    `/api/v1/memo/${id}`,
-    {
-      server: false,
-      lazy: true,
-    },
-  )
-
+  // 移除 useFetch，改用直接的 API 调用以获得更好的控制
   async function getMemo() {
-    if (status.value === 'pending')
+    if (isLoading.value || !id)
       return
-    await refresh()
-    memo.value = (data.value as ApiResponse<BlogMemoWithUser>)?.data ?? null
+
+    isLoading.value = true
+    try {
+      const { data, error } = await $api.get<ApiResponse<BlogMemoWithUser>>(`/api/v1/memo/${id}`)
+
+      if (!error && data) {
+        memo.value = data
+      }
+      else {
+        memo.value = null
+        console.warn('Failed to fetch memo:', error)
+      }
+    }
+    catch (err) {
+      console.error('Error fetching memo:', err)
+      memo.value = null
+    }
+    finally {
+      isLoading.value = false
+    }
   }
 
   async function deleteMemo() {
@@ -48,7 +60,7 @@ export default function useMemo(id: string) {
 
   return {
     memo,
-    status,
+    isLoading,
     getMemo,
     deleteMemo,
   }

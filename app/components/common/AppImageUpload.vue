@@ -371,7 +371,7 @@ onUnmounted(() => {
                 <img
                   :src="file.url"
                   :alt="file.file.name"
-                  class="w-full h-full object-cover"
+                  class="w-full h-full object-contain"
                 >
 
                 <!-- 上传状态遮罩 -->
@@ -435,10 +435,10 @@ onUnmounted(() => {
           <!-- 重试按钮（错误时显示） -->
           <button
             v-if="file.error"
-            class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 text-xs bg-accent-pixel-cyan text-white px-2 py-1 hover:bg-opacity-80 transition-all rounded"
+            class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-xs text-accent-pixel-cyan bg-white hover:bg-opacity-80 transition-all rounded flex justify-center items-center p-1"
             @click="retryUpload(file.id)"
           >
-            重试
+            <Icon class="11" name="mdi:reload" />
           </button>
         </div>
       </TooltipProvider>

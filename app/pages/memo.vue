@@ -179,7 +179,6 @@ function onUploadError(error: string) {
           v-for="memo in filteredMemos"
           :key="memo.id"
           class="pixel-card cursor-pointer"
-          @click="handleComment(memo)"
         >
           <div class="flex items-start gap-4">
             <div class="flex-shrink-0">
@@ -195,14 +194,14 @@ function onUploadError(error: string) {
                 <span
                   v-for="tag in memo.tags"
                   :key="tag.id"
-                  class="pixel-tag text-xs cursor-pointer"
+                  class="text-xs text-highlight-pixel-cyan cursor-pointer"
                   @click.stop="onMemoTagClick(tag.tagName)"
                 >
-                  {{ tag.tagName }}
+                  #{{ tag.tagName }}
                 </span>
               </div>
               <div class="mb-2">
-                <MemoPanel :memo="memo" />
+                <MemoPanel :memo="memo" layout="xiaohongshu" :show-all="true" :photo-width="200" />
               </div>
               <div class="flex items-center gap-4 mt-3 pixel-text text-xs md:text-sm">
                 <div class="flex items-center gap-1 md:gap-2 cursor-pointer hover:opacity-80 transition-opacity" @click.stop="handleComment(memo)">

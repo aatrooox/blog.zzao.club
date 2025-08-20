@@ -157,10 +157,12 @@ function onMouseLeave(event) {
           <div
             v-for="memo in recentMemos"
             :key="memo.id"
-            class="pixel-card cursor-pointer flex-shrink-0"
-            style="width: 300px; height: 180px;"
-            @click="navigateTo(`/m/${memo.id}`)"
+            class="pixel-card cursor-pointer flex-shrink-0 relative"
+            style="width: 300px; height: 400px"
           >
+            <div class="absolute right-2 top-2 z-10 cursor-pointer" @click="navigateTo(`/m/${memo.id}`)">
+              <Icon class="hover:text-highlight-pixel-cyan" name="pixelarticons:open" size="1em" />
+            </div>
             <div class="flex flex-col h-full">
               <!-- 标签 -->
               <div v-if="memo.tags && memo.tags.length > 0" class="mb-3">
@@ -168,9 +170,9 @@ function onMouseLeave(event) {
                   <span
                     v-for="tagRelation in memo.tags.slice(0, 2)"
                     :key="tagRelation.id"
-                    class="pixel-tag text-xs"
+                    class="text-highlight-pixel-cyan text-xs"
                   >
-                    {{ tagRelation.tagName }}
+                    #{{ tagRelation.tagName }}
                   </span>
                 </div>
               </div>
@@ -178,7 +180,7 @@ function onMouseLeave(event) {
               <!-- 动态内容 -->
               <div class="flex-1 overflow-hidden">
                 <div class="text-sm pixel-text leading-relaxed" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
-                  <MemoPanel :memo="memo" />
+                  <MemoPanel :memo="memo" layout="xiaohongshu" display-mode="photos-only" />
                 </div>
               </div>
 

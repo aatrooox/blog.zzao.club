@@ -30,6 +30,7 @@ export default defineStandardResponseHandler(async (event) => {
       nickname: users.nickname,
       avatarUrl: users.avatarUrl,
     },
+    photos: blogMemos.photos,
     tags: sql`(
       SELECT CASE 
         WHEN COUNT(mt.id) = 0 THEN JSON_ARRAY() 
