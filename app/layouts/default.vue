@@ -154,7 +154,7 @@ function scrollToTop() {
         <div class="pixel-sidebar-header">
           <!-- 用户信息区域 -->
           <div v-if="isLogin" class="pixel-user-info">
-            <UserAvatar :user="user" class="pixel-user-avatar" />
+            <UserAvatar :user="user" :size="60" class="pixel-user-avatar" />
           </div>
           <!-- 未登录时显示默认图标 -->
           <div v-else class="pixel-login-trigger" @click="showLoginDialog = true">

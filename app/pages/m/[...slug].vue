@@ -248,7 +248,7 @@ function handleTagClick(tagName: string) {
             <div class="flex items-center justify-between">
               <!-- 左侧用户信息 -->
               <div class="flex items-center space-x-3">
-                <UserAvatar :user-info="memo.user_info" class="w-10 h-10 md:w-12 md:h-12" />
+                <UserAvatar :user-info="memo.user_info" :size="40" />
                 <div class="flex flex-col">
                   <div class="text-[var(--pixel-text-primary)] font-mono font-bold text-sm md:text-base">
                     {{ memo.user_info?.nickname || memo.user_info?.username || '匿名用户' }}

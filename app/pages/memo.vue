@@ -182,7 +182,7 @@ function onUploadError(error: string) {
         >
           <div class="flex items-start gap-4">
             <div class="flex-shrink-0">
-              <UserAvatar :user-info="memo.user_info" size="md" class="pixel-avatar" />
+              <UserAvatar :user-info="memo.user_info" :size="30" class="pixel-avatar" />
             </div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-2">
