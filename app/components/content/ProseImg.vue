@@ -36,7 +36,7 @@ const refinedSrc = computed(() => {
   <ClientOnly>
     <div v-viewer class="blog-zzao-club-img-component pixel-img-container">
       <NuxtImg
-        :src="refinedSrc" loading="lazy" alt="image" :width="width" :height="height"
+        :src="refinedSrc" format="webp" quality="75" loading="lazy" alt="image" :width="width" :height="height"
         placeholder
         class="pixel-img"
       />

@@ -60,6 +60,7 @@ const iconSize = computed(() => {
     <!-- 头像图片 -->
     <NuxtImg
       v-if="imgUrl && !imageError"
+      format="webp"
       :src="imgUrl"
       :width="size"
       :height="size"
