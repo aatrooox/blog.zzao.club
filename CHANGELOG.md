@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v2.2.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.2.0...v2.2.1)
+
+### 🩹 Fixes
+
+- UserAvatar 改为 nuxt/image 实现 ([ef6bfa9](https://github.com/aatrooox/blog.zzao.club/commit/ef6bfa9))
+- Nuxt-img config ([17bd5cc](https://github.com/aatrooox/blog.zzao.club/commit/17bd5cc))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.2.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.1.8...v2.2.0)
