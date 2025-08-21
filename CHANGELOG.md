@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v2.3.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.2.1...v2.3.0)
+
+### 🚀 Enhancements
+
+- 鉴权机制完善; 统一响应值处理 ([f882cb0](https://github.com/aatrooox/blog.zzao.club/commit/f882cb0))
+
+### 🏡 Chore
+
+- Rm docs ([217b429](https://github.com/aatrooox/blog.zzao.club/commit/217b429))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.2.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.2.0...v2.2.1)
