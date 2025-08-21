@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v2.3.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.0...v2.3.1)
+
+### 🩹 Fixes
+
+- 游客登录问题 ([715edb2](https://github.com/aatrooox/blog.zzao.club/commit/715edb2))
+
+### 🏡 Chore
+
+- Eslint ([e7ab9a2](https://github.com/aatrooox/blog.zzao.club/commit/e7ab9a2))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.2.1...v2.3.0)
