@@ -60,13 +60,12 @@ export default defineStandardResponseHandler(async (event) => {
     .offset(skip)
 
   // 通过 event.$fetch() 调用 tags 接口获取标签信息
-  try {
-    const tagsResponse = await event.$fetch('/api/v1/tag/list')
-    console.log('Tags response:', tagsResponse)
-  }
-  catch (error) {
-    console.error('Failed to fetch tags:', error)
-  }
+  // try {
+  //   const tagsResponse = await event.$fetch('/api/v1/tag/list')
+  // }
+  // catch (error) {
+  //   console.error('Failed to fetch tags:', error)
+  // }
 
   return memos
 })
