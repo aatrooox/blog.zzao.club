@@ -114,24 +114,40 @@ async function createComment(data: CommentData) {
 
 // 有访客信息时注册
 async function createVistorIDWithInfo(visitor: Visitor) {
-  const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', {
-    name: visitor.name,
-    email: visitor.email,
-    website: visitor.website,
-  })
-  if (!res.error) {
-    userStore.setUser(res.data.user)
-    userStore.setToken(res.data.token)
-  }
+  createVistorID(visitor)
+  // const res = await $api.post<ApiResponse<any>>('/api/v1/user/visitor/regist', {
+  //   name: visitor.name,
+  //   email: visitor.email,
+  //   website: visitor.website,
+  // })
+  // if (!res.error) {
+  //   const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
+
+  //   userStore.setUser(user)
+  //   userStore.setTokenInfo({
+  //     accessToken,
+  //     refreshToken,
+  //     accessExpiresAt,
+  //     refreshExpiresAt,
+  //   })
+  // }
 }
 // 无访客信息时注册
 async function createVistorIDByFingerprint() {
-  const clientjs = useClientjs()
-  const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-  if (!res.error) {
-    userStore.setUser(res.data.user)
-    userStore.setToken(res.data.token)
-  }
+  await createVistorID()
+  // const clientjs = useClientjs()
+  // const res = await $api.post<ApiResponse<any>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
+  // if (!res.error) {
+  //   const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
+
+  //   userStore.setUser(user)
+  //   userStore.setTokenInfo({
+  //     accessToken,
+  //     refreshToken,
+  //     accessExpiresAt,
+  //     refreshExpiresAt,
+  //   })
+  // }
 }
 
 // 初始化评论
@@ -161,10 +177,18 @@ const formatCommentCount = computed(() => {
 async function handleLike() {
   // 游客点赞 生成指纹 -> 注册为游客 (随机用户名 + 固定id)
   if (!userStore.user.value.id) {
-    const clientjs = useClientjs()
-    const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-    userStore.setUser(res.data.user)
-    userStore.setToken(res.data.token)
+    await createVistorID()
+    // const clientjs = useClientjs()
+    // const res = await $api.post<ApiResponse<any>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
+    // const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
+
+    // userStore.setUser(user)
+    // userStore.setTokenInfo({
+    //   accessToken,
+    //   refreshToken,
+    //   accessExpiresAt,
+    //   refreshExpiresAt,
+    // })
   }
 
   if (isLiked.value) {

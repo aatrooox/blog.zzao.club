@@ -27,7 +27,7 @@ const heightCache = ref<Map<string, number>>(new Map())
 
 const { getMemos, memos, createMemo } = useMemos()
 const userStore = useUser()
-const clientjs = useClientjs()
+// const clientjs = useClientjs()
 const toast = useGlobalToast()
 const { $api } = useNuxtApp()
 const { getTags } = useTags()
@@ -61,9 +61,17 @@ const { beforeLeave, leave, afterLeave } = useStaggeredListTransition('memo-fade
 
 async function handleLike(memoId: string) {
   if (!userStore.user.value.id) {
-    const res = await $api.post<ApiResponse<UserRegistResponse>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-    userStore.setUser(res.data.user)
-    userStore.setToken(res.data.token)
+    await createVistorID()
+    // const res = await $api.post<ApiResponse<any>>('/api/v1/user/visitor/regist', )
+    // const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
+
+    // userStore.setUser(user)
+    // userStore.setTokenInfo({
+    //   accessToken,
+    //   refreshToken,
+    //   accessExpiresAt,
+    //   refreshExpiresAt,
+    // })
   }
   try {
     const res = await $api.post<ApiResponse<MemoLikeResponse>>('/api/v1/memo/like', {

@@ -1,15 +1,23 @@
 <script setup lang="ts">
 import type { CommentData } from '@nuxtjs/mdc'
 import type { Visitor } from '~~/types/blog'
-import type { BlogCommentWithUserInfo, User } from '~~/types/blog-drizzle'
+import type { BlogCommentWithUserInfo } from '~~/types/blog-drizzle'
 import type { ApiResponse } from '~~/types/fetch'
 import { camelCaseToHyphen, EffectCssAttrs, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs } from '@/config/richText'
+
+// interface LoginResponse {
+//   user: any
+//   accessToken: string
+//   refreshToken: string
+//   accessExpiresAt: string
+//   refreshExpiresAt: string
+// }
 
 const toast = useGlobalToast()
 const { $api } = useNuxtApp()
 const userStore = useUser()
 const navBarStore = useNavBar()
-const clientjs = useClientjs()
+// const clientjs = useClientjs()
 const route = useRoute()
 const activeTocId = ref('')
 const curMdContentRef = useTemplateRef('curMdContentRef')
@@ -365,9 +373,17 @@ async function likePage() {
   console.log(page)
   // 游客点赞 生成指纹 -> 注册为游客 (随机用户名 + 固定id)
   if (!userStore.user.value.id) {
-    const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-    userStore.setUser(res.data.user)
-    userStore.setToken(res.data.token)
+    await createVistorID()
+    // const res = await $api.post<ApiResponse<LoginResponse>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
+    // const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
+
+    // userStore.setUser(user)
+    // userStore.setTokenInfo({
+    //   accessToken,
+    //   refreshToken,
+    //   accessExpiresAt,
+    //   refreshExpiresAt,
+    // })
     // return toast.add({ type: 'warning', message: '登录后才能点赞' })
   };
 

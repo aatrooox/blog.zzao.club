@@ -1,16 +1,22 @@
 import type { Visitor } from '~~/types/blog'
 import type { ApiResponse } from '~~/types/fetch'
-import type { User } from '~~/types/memo'
 
-export async function createVistorID(visitor: Visitor) {
+export async function createVistorID(visitor?: Visitor) {
   const { $api } = useNuxtApp()
   const clientjs = useClientjs()
   const userStore = useUser()
 
-  const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId(), visitorName: visitor.name, visitorEmail: visitor.email, visitorWebsite: visitor.website })
+  const res = await $api.post<ApiResponse<any>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId(), visitorName: visitor?.name, visitorEmail: visitor?.email, visitorWebsite: visitor?.website })
 
-  userStore.setUser(res.data.user)
-  userStore.setToken(res.data.token)
+  const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
+
+  userStore.setUser(user)
+  userStore.setTokenInfo({
+    accessToken,
+    refreshToken,
+    accessExpiresAt,
+    refreshExpiresAt,
+  })
 }
 
 /**
