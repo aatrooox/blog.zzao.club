@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.3.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.1...v2.3.2)
+
+### 🩹 Fixes
+
+- Mdc p tag margin y ([13ab9e5](https://github.com/aatrooox/blog.zzao.club/commit/13ab9e5))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.0...v2.3.1)
