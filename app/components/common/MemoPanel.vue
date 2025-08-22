@@ -11,7 +11,7 @@ interface Props {
   memo: BlogMemoWithUser
   showAll?: boolean // 是否显示所有内容（图片+文字）
   hideBtns?: boolean // 是否隐藏按钮（预留）
-  layout?: 'default' | 'xiaohongshu' // 布局选项
+  layout?: 'default' | 'xiaohongshu' | 'wechat' // 布局选项
   photoWidth?: number // 图片区域宽度，默认 300px
   maxWidth?: number // 整体最大宽度，默认 1200px
   displayMode?: 'all' | 'content-only' | 'photos-only' // 显示模式：全部 | 仅内容 | 仅图片
@@ -77,9 +77,45 @@ const useHorizontalLayout = computed(() => {
   return props.layout === 'xiaohongshu' && shouldShowPhotos.value && shouldShowContent.value
 })
 
+// 计算是否使用微信布局
+const useWechatLayout = computed(() => {
+  return props.layout === 'wechat' && (shouldShowPhotos.value || shouldShowContent.value)
+})
+
 // 计算是否是仅图片模式
 const isPhotosOnlyMode = computed(() => {
   return shouldShowPhotos.value && !shouldShowContent.value
+})
+
+// 计算微信布局中图片网格的行列数
+const wechatGridConfig = computed(() => {
+  if (!props.memo.photos || props.memo.photos.length === 0)
+    return { rows: 0, cols: 0 }
+
+  const count = props.memo.photos.length
+
+  if (count === 1)
+    return { rows: 1, cols: 1 }
+  if (count === 2)
+    return { rows: 1, cols: 2 }
+  if (count === 3)
+    return { rows: 1, cols: 3 }
+  if (count === 4)
+    return { rows: 2, cols: 2 }
+  if (count <= 6)
+    return { rows: 2, cols: 3 }
+  if (count <= 9)
+    return { rows: 3, cols: 3 }
+
+  // 超过9张只显示前9张
+  return { rows: 3, cols: 3 }
+})
+
+// 计算微信布局的最大宽度和高度
+const wechatMaxSize = computed(() => {
+  const maxWidth = Math.min(props.photoWidth || 400, 450) // 最大宽度
+  const maxHeight = maxWidth // 最大高度与宽度相等，保持正方形
+  return { maxWidth, maxHeight }
 })
 
 // async function copyURL2Clipboard() {
@@ -210,8 +246,65 @@ const isPhotosOnlyMode = computed(() => {
 
 <template>
   <div ref="memoWrap" class="pixel-memo-panel" :style="{ maxWidth: panelMaxWidth }">
+    <!-- 微信布局：上方内容，下方九宫格图片 -->
+    <div v-if="useWechatLayout" class="pixel-wechat-layout">
+      <!-- 上方内容区域 -->
+      <div v-if="memo.content && memo.content.trim()" class="pixel-wechat-content">
+        <MDC ref="contentRef" :value="memo.content" tag="section" class="pixel-memo-content" />
+      </div>
+
+      <!-- 下方图片九宫格区域 -->
+      <ClientOnly v-if="shouldShowPhotos">
+        <div
+          class="pixel-wechat-photos"
+          :style="{
+            maxWidth: `${wechatMaxSize.maxWidth}px`,
+            maxHeight: `${wechatMaxSize.maxHeight}px`,
+          }"
+        >
+          <!-- 单张图片特殊处理 -->
+          <div v-if="memo.photos.length === 1" v-viewer class="pixel-wechat-single-photo">
+            <img
+              :src="memo.photos[0]"
+              alt="Photo"
+              class="pixel-wechat-single-image"
+              :style="{ maxWidth: `${wechatMaxSize.maxWidth}px`, maxHeight: `${wechatMaxSize.maxHeight}px` }"
+            >
+          </div>
+
+          <!-- 多张图片九宫格 -->
+          <div
+            v-else
+            v-viewer
+            class="pixel-wechat-grid"
+            :style="{
+              gridTemplateRows: `repeat(${wechatGridConfig.rows}, 1fr)`,
+              gridTemplateColumns: `repeat(${wechatGridConfig.cols}, 1fr)`,
+              maxWidth: `${wechatMaxSize.maxWidth}px`,
+              maxHeight: `${wechatMaxSize.maxHeight}px`,
+            }"
+          >
+            <div
+              v-for="(photo, index) in memo.photos.slice(0, 9)"
+              :key="index"
+              class="pixel-wechat-grid-item"
+            >
+              <img
+                :src="photo"
+                :alt="`Photo ${index + 1}`"
+                class="pixel-wechat-grid-image"
+              >
+            </div>
+          </div>
+        </div>
+        <template #fallback>
+          <Skeleton :class="`w-[${wechatMaxSize.maxWidth}px] h-[200px]`" />
+        </template>
+      </ClientOnly>
+    </div>
+
     <!-- 小红书布局：左图右文（当图片和内容都需要显示时） -->
-    <div v-if="useHorizontalLayout" class="pixel-horizontal-layout">
+    <div v-else-if="useHorizontalLayout" class="pixel-horizontal-layout">
       <!-- 左侧图片轮播区域 -->
       <ClientOnly>
         <div class="pixel-photo-section" :style="{ flexBasis: photoSectionWidth }">
@@ -351,6 +444,75 @@ const isPhotosOnlyMode = computed(() => {
   width: 100%;
 }
 
+/* 微信布局 */
+.pixel-wechat-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.pixel-wechat-content {
+  width: 100%;
+}
+
+.pixel-wechat-photos {
+  width: 100%;
+  /* 移除 margin: 0 auto，让图片靠左显示 */
+}
+
+/* 微信单张图片 */
+.pixel-wechat-single-photo {
+  display: flex;
+  justify-content: flex-start; /* 改为靠左对齐 */
+  align-items: flex-start; /* 改为顶部对齐 */
+  width: 100%;
+}
+
+.pixel-wechat-single-image {
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+  cursor: zoom-in;
+}
+
+.pixel-wechat-single-image:hover {
+  transform: scale(1.02);
+}
+
+/* 微信九宫格 */
+.pixel-wechat-grid {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  /* 移除固定的 aspect-ratio: 1，让不同图片数量有不同的比例 */
+}
+
+.pixel-wechat-grid-item {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%; /* 强制每个格子为正方形 */
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: var(--pixel-bg-secondary);
+}
+
+.pixel-wechat-grid-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  cursor: zoom-in;
+}
+
+.pixel-wechat-grid-image:hover {
+  transform: scale(1.05);
+}
+
 .pixel-photo-section {
   flex: 0 0 auto; /* 移除固定宽度，改为由 style 控制 */
   position: relative;
@@ -471,6 +633,21 @@ const isPhotosOnlyMode = computed(() => {
 
   .pixel-photos-only {
     max-width: 100% !important; /* 移动端使用全宽 */
+  }
+
+  /* 微信布局移动端适配 */
+  .pixel-wechat-photos {
+    max-width: 100% !important;
+  }
+
+  .pixel-wechat-single-image {
+    max-width: 100% !important;
+    max-height: 300px !important;
+  }
+
+  .pixel-wechat-grid {
+    max-width: 100% !important;
+    max-height: 100% !important;
   }
 }
 

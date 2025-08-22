@@ -220,7 +220,7 @@ function handleTagClick(tagName: string) {
 </script>
 
 <template>
-  <div class="pixel-layout min-h-screen font-mono">
+  <div class="min-h-screen font-mono">
     <div class="max-w-4xl mx-auto px-4 md:px-6 py-6 md:py-8">
       <!-- 加载中状态 -->
       <div v-if="isLoading" class="text-center py-20">

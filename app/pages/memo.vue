@@ -209,7 +209,7 @@ function onUploadError(error: string) {
                 </span>
               </div>
               <div class="mb-2">
-                <MemoPanel :memo="memo" layout="xiaohongshu" :show-all="true" :photo-width="200" />
+                <MemoPanel :memo="memo" layout="wechat" :show-all="true" :photo-width="200" />
               </div>
               <div class="flex items-center gap-4 mt-3 pixel-text text-xs md:text-sm">
                 <div class="flex items-center gap-1 md:gap-2 cursor-pointer hover:opacity-80 transition-opacity" @click.stop="handleComment(memo)">
