@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.3.4
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.3...v2.3.4)
+
+### 🩹 Fixes
+
+- 修复 memo 相关接口错误 ([2e1973f](https://github.com/aatrooox/blog.zzao.club/commit/2e1973f))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.2...v2.3.3)
