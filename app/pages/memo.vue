@@ -19,7 +19,7 @@ definePageMeta({
 })
 
 useSeoMeta({
-  title: 'Memoz｜早早集市',
+  title: '动态｜早早集市',
   description: '基于Api数据实现SSR的页面，一些日常记录、知识碎片、其他平台的摘录',
 })
 
