@@ -250,7 +250,7 @@ const wechatMaxSize = computed(() => {
     <div v-if="useWechatLayout" class="pixel-wechat-layout">
       <!-- 上方内容区域 -->
       <div v-if="memo.content && memo.content.trim()" class="pixel-wechat-content">
-        <MDC ref="contentRef" :value="memo.content" tag="section" class="pixel-memo-content" />
+        <MDC ref="contentRef" :value="memo.content" tag="section" class="pixel-memo-content memo-mdc" />
       </div>
 
       <!-- 下方图片九宫格区域 -->
@@ -357,7 +357,7 @@ const wechatMaxSize = computed(() => {
 
       <!-- 右侧内容区域 -->
       <div class="pixel-content-section">
-        <MDC ref="contentRef" :value="parsedContent" tag="section" class="pixel-memo-content" />
+        <MDC ref="contentRef" :value="parsedContent" tag="section" class="pixel-memo-content memo-mdc" />
       </div>
     </div>
 
@@ -413,7 +413,7 @@ const wechatMaxSize = computed(() => {
 
     <!-- 仅内容模式 -->
     <div v-else-if="shouldShowContent">
-      <MDC ref="contentRef" :value="parsedContent" tag="section" class="pixel-memo-content" />
+      <MDC ref="contentRef" :value="parsedContent" tag="section" class="memo-mdc pixel-memo-content" />
     </div>
 
     <!-- 空状态 -->
@@ -448,7 +448,7 @@ const wechatMaxSize = computed(() => {
 .pixel-wechat-layout {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  /* gap: 1rem; */
   width: 100%;
 }
 
