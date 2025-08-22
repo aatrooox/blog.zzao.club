@@ -119,7 +119,7 @@ export const blogMemos = mysqlTable('blog_memos', {
   id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   content: mediumtext('content'),
   createTs: datetime('create_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`),
-  updatedTs: datetime('updated_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => sql`(CURRENT_TIMESTAMP)`),
+  updatedTs: datetime('updated_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => new Date()),
   visible: varchar('visible', { length: 50 }).notNull().default('public'),
   defaltFloded: boolean('defalt_floded').notNull().default(false),
   flodTip: varchar('flod_tip', { length: 255 }),
@@ -134,7 +134,7 @@ export const memoTags = mysqlTable('blog_memo_tag', {
   id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   tagName: varchar('tag_name', { length: 255 }).notNull().unique(),
   createTs: datetime('create_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`),
-  updatedTs: datetime('updated_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => sql`(CURRENT_TIMESTAMP)`),
+  updatedTs: datetime('updated_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => new Date()),
   userId: varchar('user_id', { length: 255 }).notNull(),
 })
 

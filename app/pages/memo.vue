@@ -23,8 +23,6 @@ useSeoMeta({
   description: '基于Api数据实现SSR的页面，一些日常记录、知识碎片、其他平台的摘录',
 })
 
-const heightCache = ref<Map<string, number>>(new Map())
-
 const { getMemos, memos, createMemo } = useMemos()
 const userStore = useUser()
 // const clientjs = useClientjs()
@@ -95,11 +93,13 @@ async function handleLike(memoId: string) {
 
 await getMemos()
 
-function handleDelete(memoId: string) {
+async function handleDelete(memoId: string) {
   const index = memos.value.findIndex(memo => memo.id === memoId)
   if (index !== -1) {
-    memos.value.splice(index, 1)
-    heightCache.value.delete(memoId)
+    // heightCache.value.delete(memoId)
+    const { deleteMemo } = useMemo(memoId)
+    await deleteMemo()
+    getMemos()
   }
 }
 

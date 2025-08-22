@@ -53,7 +53,7 @@ export default function useMemos() {
     return false
   }
 
-  async function updateMemo(id: string, { content, tags = [] }: { content: string, tags?: any[] }) {
+  async function updateMemo(id: string, { content, tags = [], photos = [] }: { content: string, tags?: any[], photos?: string[] }) {
     if (!userStore.isLogin) {
       toast.warn('登录后才能编辑！')
       return
@@ -75,6 +75,7 @@ export default function useMemos() {
         id,
         content,
         tags,
+        photos,
       })
 
       if (error) {

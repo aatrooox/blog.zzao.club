@@ -11,6 +11,7 @@ interface Emits {
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
+const multipleImages = ref<string[]>([])
 
 const { updateMemo } = useMemos()
 
@@ -27,6 +28,9 @@ watch(() => props.memo, (newMemo) => {
   else {
     editTags.value = []
   }
+
+  multipleImages.value = newMemo?.photos || []
+  console.log('当前图片:', multipleImages.value)
 }, { immediate: true, deep: true })
 
 // 计算属性：是否打开
@@ -34,6 +38,14 @@ const isOpen = computed({
   get: () => props.open,
   set: value => emit('update:open', value),
 })
+
+function onMultipleUpload(urls: string[]) {
+  toast.success(`多张上传成功: 共 ${urls.length} 张图片`)
+}
+
+function onUploadError(error: string) {
+  toast.error(`上传失败: ${error}`)
+}
 
 // 更新memo
 async function handleUpdateMemo(data: any) {
@@ -46,6 +58,7 @@ async function handleUpdateMemo(data: any) {
     await updateMemo(props.memo.id, {
       content: data.content,
       tags: data.tags,
+      photos: multipleImages.value,
     })
 
     // 关闭抽屉
@@ -73,7 +86,7 @@ function handleCancel() {
 
 <template>
   <Drawer v-model:open="isOpen">
-    <DrawerContent class="pixel-drawer">
+    <DrawerContent class="pixel-drawer px-2 md:px-6">
       <DrawerHeader class="pixel-drawer-header">
         <DrawerTitle class="pixel-drawer-title">
           正在编辑 Memo
@@ -81,6 +94,15 @@ function handleCancel() {
         <DrawerDescription />
       </DrawerHeader>
       <div class="pixel-drawer-content">
+        <AppImageUpload
+          v-model="multipleImages"
+          :multiple="true"
+          :max-files="6"
+          :max-size="5"
+          :file-path="`memos/${new Date().getFullYear()}-${new Date().getMonth() + 1}`"
+          @upload-success="onMultipleUpload"
+          @upload-error="onUploadError"
+        />
         <div class="pixel-tag-section">
           <AppTagInput v-model="editTags" />
         </div>
@@ -104,7 +126,7 @@ function handleCancel() {
 
 <style scoped>
 /* Pixel style for MemoEditDrawer */
-.pixel-drawer {
+/* .pixel-drawer {
   background-color: var(--pixel-bg-input);
   border: 2px solid var(--pixel-border-primary);
   border-radius: 0;
@@ -115,9 +137,9 @@ function handleCancel() {
   background-color: var(--pixel-bg-primary);
   border-bottom: 2px solid var(--pixel-border-primary);
   padding: 16px;
-}
+} */
 
-.pixel-drawer-title {
+/* .pixel-drawer-title {
   color: var(--pixel-text-primary);
   font-size: 18px;
   font-weight: bold;
@@ -128,18 +150,18 @@ function handleCancel() {
 .pixel-drawer-content {
   padding: 16px;
   background-color: var(--pixel-bg-secondary);
-}
+} */
 
-.pixel-tag-section {
+/* .pixel-tag-section {
   margin-bottom: 16px;
   padding: 12px;
   background-color: var(--pixel-bg-primary);
   border: 1px solid var(--pixel-border-primary);
   border-radius: 0;
-}
+} */
 
 /* 响应式设计 */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .pixel-drawer-header {
     padding: 12px;
   }
@@ -156,5 +178,5 @@ function handleCancel() {
     padding: 8px;
     margin-bottom: 12px;
   }
-}
+} */
 </style>

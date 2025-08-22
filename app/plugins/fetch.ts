@@ -11,16 +11,21 @@ export default defineNuxtPlugin({
     // 是否正在刷新token的标记
     let isRefreshing = false
     // 待重试的请求队列
-    let failedQueue: Array<{ resolve: (value: any) => void, reject: (reason: any) => void }> = []
+    let failedQueue: Array<{
+      resolve: (value: any) => void
+      reject: (reason: any) => void
+      requestFn: () => Promise<any> // 保存重试函数
+    }> = []
 
     // 处理队列中的请求
-    const processQueue = (error: any, token: string | null = null) => {
-      failedQueue.forEach(({ resolve, reject }) => {
+    const processQueue = (error: any) => {
+      failedQueue.forEach(({ resolve, reject, requestFn }) => {
         if (error) {
           reject(error)
         }
         else {
-          resolve(token)
+          // 重新发起原始请求
+          requestFn().then(resolve).catch(reject)
         }
       })
 
@@ -69,14 +74,12 @@ export default defineNuxtPlugin({
                 message: '登录已过期，请重新登录',
                 type: 'error',
               })
-              return
+              throw new Error('TOKEN_EXPIRED')
             }
 
-            // 如果当前正在刷新token，将请求加入队列
+            // 如果当前正在刷新token，抛出特殊错误，让外层处理重试
             if (isRefreshing) {
-              return new Promise((resolve, reject) => {
-                failedQueue.push({ resolve, reject })
-              })
+              throw new Error('TOKEN_REFRESHING')
             }
 
             // 开始刷新token
@@ -88,14 +91,16 @@ export default defineNuxtPlugin({
                 const success = await refreshToken()
 
                 if (success) {
-                  processQueue(null, userStore.tokenInfo.value.accessToken)
+                  processQueue(null)
+                  // 抛出特殊错误，让外层重试请求
+                  throw new Error('TOKEN_REFRESHED')
                 }
                 else {
                   throw new Error('Token refresh failed')
                 }
               }
               catch (error) {
-                processQueue(error, null)
+                processQueue(error)
                 userStore.logout()
                 globalToast.add({
                   message: '登录已过期，请重新登录',
@@ -114,8 +119,8 @@ export default defineNuxtPlugin({
                 message: '登录已过期，请重新登录',
                 type: 'error',
               })
+              throw new Error('TOKEN_EXPIRED')
             }
-            return
           }
 
           // 处理权限相关错误
@@ -153,6 +158,7 @@ export default defineNuxtPlugin({
         method: HttpMethod,
         data?: any,
         options?: UseFetchOptions<T>,
+        retryCount = 0,
       ): Promise<ApiResponse<T>> {
         // 合并默认选项和用户选项
         const defaultOptions: UseFetchOptions<T> = {
@@ -182,7 +188,24 @@ export default defineNuxtPlugin({
           return { data: response?.data || response }
         }
         catch (error: any) {
-          // 网络或其他错误
+          // 处理 token 相关错误
+          if (error?.message === 'TOKEN_REFRESHED' && retryCount < 1) {
+            // token 刷新成功，重试请求
+            return this.request<T>(url, method, data, options, retryCount + 1)
+          }
+
+          if (error?.message === 'TOKEN_REFRESHING' && retryCount < 1) {
+            // 正在刷新 token，加入队列等待
+            return new Promise((resolve, reject) => {
+              failedQueue.push({
+                resolve,
+                reject,
+                requestFn: () => this.request<T>(url, method, data, options, retryCount + 1),
+              })
+            })
+          }
+
+          // 其他错误
           return { data: null as any, error: true, message: error?.message || '请求失败' }
         }
       },

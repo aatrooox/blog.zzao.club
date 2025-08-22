@@ -41,6 +41,7 @@ const toast = useGlobalToast()
 const fileInputRef = ref<HTMLInputElement>()
 const uploadFiles = ref<UploadFile[]>([])
 const isDragging = ref(false)
+const isInitialized = ref(false) // 标记是否已初始化
 
 // 计算属性
 const canAddMore = computed(() => {
@@ -60,10 +61,13 @@ const uploadedUrls = computed(() => {
 })
 
 // 监听上传完成的文件，emit 给父组件
-watch(uploadedUrls, (newUrls) => {
+watch(uploadedUrls, (newUrls, oldUrls) => {
   emit('update:modelValue', newUrls)
-  if (newUrls.length > 0) {
-    emit('uploadSuccess', newUrls)
+
+  // 只有在初始化完成后，且 URL 数量增加时才触发 success 事件
+  if (isInitialized.value && newUrls.length > (oldUrls?.length || 0)) {
+    const newlyUploadedUrls = newUrls.slice(oldUrls?.length || 0)
+    emit('uploadSuccess', newlyUploadedUrls)
   }
 }, { deep: true })
 
@@ -243,6 +247,7 @@ async function uploadSingleFile(uploadFile: UploadFile) {
     file.uploading = false
     file.progress = 100
 
+    // 只在真正上传完成时显示成功提示
     toast.success('图片上传成功')
   }
   catch (error) {
@@ -264,6 +269,10 @@ function removeFile(fileId: string) {
       URL.revokeObjectURL(file.url)
     }
     uploadFiles.value.splice(index, 1)
+
+    // 移除文件时也需要更新父组件的值
+    const currentUrls = uploadedUrls.value
+    emit('update:modelValue', currentUrls)
   }
 }
 
@@ -311,6 +320,26 @@ function openFileSelector() {
   }
 }
 
+onMounted(() => {
+  if (props.modelValue && props.modelValue.length > 0) {
+    uploadFiles.value = props.modelValue.map(url => ({
+      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      file: new File([], url), // 创建一个空文件对象
+      url,
+      uploading: false,
+      uploaded: true,
+      progress: 100,
+    }))
+  }
+  else {
+    uploadFiles.value = []
+  }
+
+  // 初始化完成后设置标记，允许触发 success 事件
+  nextTick(() => {
+    isInitialized.value = true
+  })
+})
 // 清理预览 URL
 onUnmounted(() => {
   uploadFiles.value.forEach((file) => {

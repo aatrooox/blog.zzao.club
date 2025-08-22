@@ -38,8 +38,6 @@ export default defineStandardResponseHandler(async (event) => {
     defaltFloded: memoData.defalt_floded || false,
     flodTip: memoData.flod_tip,
     userId: memoData.user_id,
-    createTs: new Date(),
-    updatedTs: new Date(),
     photos: memoData.photos || [],
   }
 
@@ -67,12 +65,9 @@ export default defineStandardResponseHandler(async (event) => {
       let [tag] = await db.select().from(memoTags).where(eq(memoTags.tagName, tagName))
 
       if (!tag) {
-        const now = new Date()
         await db.insert(memoTags).values({
           tagName,
           userId: memoData.user_id,
-          createTs: now,
-          updatedTs: now,
         })
 
         // 获取新创建的标签
@@ -81,12 +76,9 @@ export default defineStandardResponseHandler(async (event) => {
       }
 
       // 创建关联
-      const now = new Date()
       await db.insert(memoTagRelations).values({
         tagId: tag.id,
         memoId: insertedMemo.id,
-        createTs: now,
-        updatedTs: now,
       })
     }
   }
