@@ -617,7 +617,7 @@ const wechatMaxSize = computed(() => {
 /* 响应式布局 */
 @media (max-width: 768px) {
   .pixel-memo-panel {
-    max-width: 100% !important; /* 移动端使用全宽 */
+    max-width: 100% !important;
   }
 
   .pixel-horizontal-layout {
@@ -637,7 +637,7 @@ const wechatMaxSize = computed(() => {
 
   /* 微信布局移动端适配 */
   .pixel-wechat-photos {
-    max-width: 100% !important;
+    /* max-width: 100% !important; */
   }
 
   .pixel-wechat-single-image {

@@ -44,11 +44,11 @@ const appNavBar = [
     path: '/links',
     icon: 'pixelarticons:mood-neutral',
   },
-  {
-    name: '关于',
-    path: '/about',
-    icon: 'pixelarticons:info-box',
-  },
+  // {
+  //   name: '关于',
+  //   path: '/about',
+  //   icon: 'pixelarticons:info-box',
+  // },
 ]
 
 const isPostPage = computed(() => {
@@ -203,6 +203,14 @@ function scrollToTop() {
       <!-- 移动端悬浮底部导航 -->
       <nav class="pixel-nav-floating">
         <div class="pixel-nav-container">
+          <!-- 用户信息区域 -->
+          <div v-if="isLogin" class="pixel-user-info">
+            <UserAvatar :user="user" :size="40" class="pixel-user-avatar" />
+          </div>
+          <!-- 未登录时显示默认图标 -->
+          <div v-else class="pixel-login-trigger" @click="showLoginDialog = true">
+            <Icon name="pixelarticons:mood-sad" class="pixel-sidebar-logo-phone" />
+          </div>
           <NuxtLink
             v-for="nav in appNavBar"
             :key="nav.path"
@@ -308,6 +316,11 @@ function scrollToTop() {
 }
 
 .pixel-sidebar-logo {
+  @apply w-8 h-8;
+  color: var(--pixel-accent-cyan);
+}
+
+.pixel-sidebar-logo-phone {
   @apply w-8 h-8;
   color: var(--pixel-accent-cyan);
 }
