@@ -1,6 +1,28 @@
 # Changelog
 
 
+## v2.3.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.2...v2.3.3)
+
+### 🚀 Enhancements
+
+- UseSticky / useViewportElements ([c96f062](https://github.com/aatrooox/blog.zzao.club/commit/c96f062))
+- 动态增加朋友圈布局 ([9f8648b](https://github.com/aatrooox/blog.zzao.club/commit/9f8648b))
+
+### 🏡 Chore
+
+- Eslint ([7ad562a](https://github.com/aatrooox/blog.zzao.club/commit/7ad562a))
+- Title ([d0b70a3](https://github.com/aatrooox/blog.zzao.club/commit/d0b70a3))
+
+### 🎨 Styles
+
+- 优化显示和交互效果 ([af5d0fe](https://github.com/aatrooox/blog.zzao.club/commit/af5d0fe))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.1...v2.3.2)
