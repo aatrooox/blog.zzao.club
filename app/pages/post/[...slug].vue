@@ -3,20 +3,7 @@ import type { CommentData } from '@nuxtjs/mdc'
 import type { Visitor } from '~~/types/blog'
 import type { BlogCommentWithUserInfo } from '~~/types/blog-drizzle'
 import type { ApiResponse } from '~~/types/fetch'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { camelCaseToHyphen, EffectCssAttrs, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs } from '@/config/richText'
-
-// 注册 ScrollTrigger 插件
-gsap.registerPlugin(ScrollTrigger)
-
-// interface LoginResponse {
-//   user: any
-//   accessToken: string
-//   refreshToken: string
-//   accessExpiresAt: string
-//   refreshExpiresAt: string
-// }
 
 const toast = useGlobalToast()
 const { $api } = useNuxtApp()
@@ -24,19 +11,36 @@ const userStore = useUser()
 const navBarStore = useNavBar()
 // const clientjs = useClientjs()
 const route = useRoute()
-const activeTocId = ref('')
 const curMdContentRef = useTemplateRef('curMdContentRef')
 const articleWrap = useTemplateRef('articleWrap')
 const tocContainer = useTemplateRef('tocContainer')
 const titleRef = useTemplateRef('titleRef')
+const activeTocId = ref('')
 // const actionContainer = useTemplateRef('actionContainer')
 const selectedText = ref()
 const { text, rects, selection } = useTextSelection()
 const isTocFixed = ref(false)
-// GSAP 会直接控制样式，不需要响应式状态
-let titleScrollTrigger: ScrollTrigger | null = null
+
+// 使用吸顶组合式函数
+const { isSticky: _isTitleSticky } = useSticky(titleRef, {
+  topOffset: 0, // 吸顶到页面顶部
+  triggerOffset: 24, // 额外的触发偏移
+  debug: true, // 启用调试日志
+})
+
+// 使用视口元素检测组合式函数
+const { firstVisibleId, visibleIds: _visibleIds, refresh: _refreshViewport } = useViewportHeadings({
+  debug: true, // 启用调试日志
+  rootMargin: '0px 0px -80% 0px', // 当标题进入视口前20%时触发
+})
+
 const { formatDate } = useDayjs()
 
+watch(firstVisibleId, (val) => {
+  if (val) {
+    activeTocId.value = val
+  }
+})
 const likeCount = ref(0)
 const isLiked = ref(false)
 const comments = ref<BlogCommentWithUserInfo[]>([])
@@ -197,6 +201,7 @@ watch(() => page, (val) => {
 })
 
 const tocData = computed(() => {
+  console.log('toc =>', page.value?.body?.toc?.links)
   return page.value?.body?.toc?.links
 })
 
@@ -557,103 +562,6 @@ function handleTocScroll() {
   // 当滚动距离超过TOC容器位置减去标题栏高度时，启用固定定位
   isTocFixed.value = scrollTop > (tocOffset - headerHeight)
 }
-
-// 创建 GSAP 标题动画
-function createTitleAnimation() {
-  if (!titleRef.value)
-    return
-
-  // 获取标题的原始位置信息
-  const titleElement = titleRef.value
-  const rect = titleElement.getBoundingClientRect()
-  const originalTop = titleElement.offsetTop
-  const originalLeft = rect.left
-  const originalWidth = rect.width
-
-  console.log('标题原始位置:', { originalTop, originalLeft, originalWidth })
-
-  // 重新设计吸顶逻辑
-  // 计算标题的高度
-  const titleHeight = titleElement.offsetHeight
-
-  // 关键点：当标题底部接触视口顶部时开始吸顶
-  const startStickyPoint = originalTop + titleHeight + 24
-  // 动画距离：给20px的过渡空间
-  const animationDistance = 20
-  const endStickyPoint = startStickyPoint + animationDistance
-
-  console.log('吸顶关键点:', {
-    originalTop,
-    titleHeight,
-    startStickyPoint,
-    endStickyPoint,
-  })
-
-  titleScrollTrigger = ScrollTrigger.create({
-    trigger: 'body',
-    start: `${startStickyPoint}px top`, // 标题底部接触顶部时开始
-    end: `${endStickyPoint}px top`, // 20px后完成吸顶
-    scrub: true,
-    invalidateOnRefresh: true,
-    onUpdate: (self) => {
-      const progress = self.progress
-      const scrollY = window.pageYOffset
-      console.log('吸顶进度:', progress, 'scrollY:', scrollY, 'startPoint:', startStickyPoint)
-
-      // 简化逻辑：当滚动超过开始点时就开始吸顶
-      const shouldStick = scrollY >= startStickyPoint
-
-      if (shouldStick) {
-        // 吸顶状态：固定在真正的顶部
-        gsap.set(titleElement, {
-          position: 'fixed',
-          top: '0px', // 吸到真正的顶部
-          left: `${originalLeft}px`,
-          width: `${originalWidth}px`,
-          transform: 'scale(1)', // 保持原始大小
-          backdropFilter: `blur(${Math.min(progress * 8, 6)}px)`,
-          borderRadius: `${Math.min(progress * 6, 4)}px`,
-          padding: `${Math.min(progress * 8, 6)}px ${Math.min(progress * 16, 12)}px`,
-          boxShadow: `0 2px 8px rgba(0, 0, 0, ${Math.min(progress * 0.15, 0.1)})`,
-          zIndex: 50,
-          background: 'rgba(255, 255, 255, 0.02)', // 极淡的背景
-        })
-      }
-      else {
-        // 原始状态：完全重置
-        gsap.set(titleElement, {
-          position: 'relative',
-          top: 'auto',
-          left: 'auto',
-          width: 'auto',
-          transform: 'scale(1)',
-          backdropFilter: 'none',
-          borderRadius: '0px',
-          padding: '0px',
-          boxShadow: 'none',
-          zIndex: 'auto',
-          background: 'transparent',
-        })
-      }
-    },
-    onEnter: () => {
-      console.log('标题开始进入动画区域')
-    },
-    onLeave: () => {
-      console.log('标题离开动画区域')
-    },
-    onEnterBack: () => {
-      console.log('标题返回动画区域')
-    },
-    onLeaveBack: () => {
-      console.log('标题离开动画区域（向上滚动）')
-    },
-    onToggle: (self) => {
-      console.log('ScrollTrigger 状态切换:', self.isActive)
-    },
-  })
-}
-
 // 统一的滚动处理函数
 function handleScroll() {
   handleTocScroll()
@@ -667,12 +575,6 @@ onMounted(() => {
 onUnmounted(() => {
   // 移除滚动监听
   window.removeEventListener('scroll', handleScroll)
-
-  // 清理 GSAP ScrollTrigger
-  if (titleScrollTrigger) {
-    titleScrollTrigger.kill()
-  }
-  ScrollTrigger.killAll()
 })
 
 watchEffect(async () => {
@@ -682,10 +584,6 @@ watchEffect(async () => {
       initLikeCount()
       getSurroundingPage()
       initExplain()
-      // 在内容加载完成后创建 GSAP 动画
-      setTimeout(() => {
-        createTitleAnimation()
-      }, 300)
     })
   }
 })
@@ -820,8 +718,8 @@ watchEffect(async () => {
               <div class="simple-toc pixel-card" :class="{ 'toc-fixed': isTocFixed }">
                 <ul class="simple-toc-list">
                   <template v-for="link in tocData" :key="link.id">
-                    <li class="simple-toc-item" :class="{ active: link.id === activeTocId }">
-                      <a :href="`#${link.id}`" class="simple-toc-link">
+                    <li class="simple-toc-item">
+                      <a :href="`#${link.id}`" :class="`simple-toc-link ${link.id === activeTocId ? 'text-accent-pixel-primary' : ''}`">
                         {{ link.text }}
                       </a>
                     </li>
@@ -1147,7 +1045,6 @@ watchEffect(async () => {
 .simple-toc-link {
   display: block;
   padding: 6px 8px;
-  color: var(--pixel-text-primary);
   text-decoration: none;
   font-size: 13px;
   line-height: 1.4;
