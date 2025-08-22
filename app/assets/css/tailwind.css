@@ -149,7 +149,7 @@ pre > code {
   --pixel-shadow-light: oklch(50% 0.03 250); /* 浅色阴影 */
 
   /* 强调色系 */
-  --pixel-accent-primary: rgb(0, 137, 179) ; /* 青色强调 - 主要按钮 */
+  --pixel-accent-primary: rgb(0, 137, 179); /* 青色强调 - 主要按钮 */
   --pixel-accent-secondary: rgb(255, 107, 53); /* 青色强调 - 主要按钮 */
   --pixel-accent-cyan: rgb(0, 162, 162); /* 青色强调 - 主要按钮 */
   --pixel-accent-cyan-hover: rgb(0, 202, 203); /* 青色悬停 */
