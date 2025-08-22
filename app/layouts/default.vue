@@ -195,7 +195,7 @@ function scrollToTop() {
       <main
         ref="scrollWrap"
         v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]"
-        class="pixel-main"
+        class="pixel-main bg-bg-pixel-secondary md:bg-bg-pixel-primary"
       >
         <slot />
       </main>
@@ -242,15 +242,6 @@ function scrollToTop() {
 
 <style scoped>
 @reference 'tailwindcss';
-
-/* 使用公共像素风格变量和类 */
-.pixel-layout {
-  @apply min-h-screen;
-  background: var(--pixel-bg-primary);
-  font-family:
-    ui-monospace, SFMono-Regular, 'Cascadia Code', 'Segoe UI Mono', 'Liberation Mono', Menlo, Monaco, Consolas,
-    'Courier New', monospace;
-}
 
 .pixel-main {
   @apply overflow-y-auto pb-24 min-h-[calc(100vh-80px)] p-4;

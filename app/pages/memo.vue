@@ -151,7 +151,7 @@ function onUploadError(error: string) {
 <template>
   <div class="">
     <!-- 编辑器卡片 -->
-    <div v-if="userStore.user.value?.role === 'superAdmin'" class="pixel-card pixel-card-inner">
+    <div v-if="userStore.user.value?.role === 'superAdmin'" class="pixel-card pixel-card-inner mb-2">
       <AppImageUpload
         v-model="multipleImages"
         :multiple="true"
@@ -246,39 +246,6 @@ function onUploadError(error: string) {
 </template>
 
 <style scoped>
-/* Pixel style layout */
-.pixel-layout {
-  background-color: var(--pixel-bg-primary);
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.pixel-card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary),
-    6px 6px 0 var(--pixel-bg-secondary);
-}
-
-.pixel-text {
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-  font-size: 0.875rem;
-  line-height: 1.4;
-}
-
-/* Pixel style avatar */
-.pixel-avatar {
-  border: 2px solid var(--pixel-border-primary);
-}
-
 /* Animation styles */
 .memo-fade-enter-active,
 .memo-fade-leave-active {
@@ -314,11 +281,6 @@ function onUploadError(error: string) {
 }
 
 @media (min-width: 768px) {
-  .pixel-layout {
-    padding: 2rem;
-    gap: 2rem;
-  }
-
   .pixel-card {
     padding: 2rem;
   }

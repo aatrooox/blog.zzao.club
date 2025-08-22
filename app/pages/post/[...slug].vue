@@ -3,7 +3,12 @@ import type { CommentData } from '@nuxtjs/mdc'
 import type { Visitor } from '~~/types/blog'
 import type { BlogCommentWithUserInfo } from '~~/types/blog-drizzle'
 import type { ApiResponse } from '~~/types/fetch'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { camelCaseToHyphen, EffectCssAttrs, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs } from '@/config/richText'
+
+// 注册 ScrollTrigger 插件
+gsap.registerPlugin(ScrollTrigger)
 
 // interface LoginResponse {
 //   user: any
@@ -23,10 +28,13 @@ const activeTocId = ref('')
 const curMdContentRef = useTemplateRef('curMdContentRef')
 const articleWrap = useTemplateRef('articleWrap')
 const tocContainer = useTemplateRef('tocContainer')
+const titleRef = useTemplateRef('titleRef')
 // const actionContainer = useTemplateRef('actionContainer')
 const selectedText = ref()
 const { text, rects, selection } = useTextSelection()
 const isTocFixed = ref(false)
+// GSAP 会直接控制样式，不需要响应式状态
+let titleScrollTrigger: ScrollTrigger | null = null
 const { formatDate } = useDayjs()
 
 const likeCount = ref(0)
@@ -521,7 +529,6 @@ function getAllTextNodes(element) {
 
   // 递归函数获取所有文本节点
   function getTextNodes(node) {
-    console.log(`node`, node)
     if (!node)
       return
     if (node.nodeType === Node.TEXT_NODE) {
@@ -551,14 +558,121 @@ function handleTocScroll() {
   isTocFixed.value = scrollTop > (tocOffset - headerHeight)
 }
 
+// 创建 GSAP 标题动画
+function createTitleAnimation() {
+  if (!titleRef.value)
+    return
+
+  // 获取标题的原始位置信息
+  const titleElement = titleRef.value
+  const rect = titleElement.getBoundingClientRect()
+  const originalTop = titleElement.offsetTop
+  const originalLeft = rect.left
+  const originalWidth = rect.width
+
+  console.log('标题原始位置:', { originalTop, originalLeft, originalWidth })
+
+  // 重新设计吸顶逻辑
+  // 计算标题的高度
+  const titleHeight = titleElement.offsetHeight
+
+  // 关键点：当标题底部接触视口顶部时开始吸顶
+  const startStickyPoint = originalTop + titleHeight + 24
+  // 动画距离：给20px的过渡空间
+  const animationDistance = 20
+  const endStickyPoint = startStickyPoint + animationDistance
+
+  console.log('吸顶关键点:', {
+    originalTop,
+    titleHeight,
+    startStickyPoint,
+    endStickyPoint,
+  })
+
+  titleScrollTrigger = ScrollTrigger.create({
+    trigger: 'body',
+    start: `${startStickyPoint}px top`, // 标题底部接触顶部时开始
+    end: `${endStickyPoint}px top`, // 20px后完成吸顶
+    scrub: true,
+    invalidateOnRefresh: true,
+    onUpdate: (self) => {
+      const progress = self.progress
+      const scrollY = window.pageYOffset
+      console.log('吸顶进度:', progress, 'scrollY:', scrollY, 'startPoint:', startStickyPoint)
+
+      // 简化逻辑：当滚动超过开始点时就开始吸顶
+      const shouldStick = scrollY >= startStickyPoint
+
+      if (shouldStick) {
+        // 吸顶状态：固定在真正的顶部
+        gsap.set(titleElement, {
+          position: 'fixed',
+          top: '0px', // 吸到真正的顶部
+          left: `${originalLeft}px`,
+          width: `${originalWidth}px`,
+          transform: 'scale(1)', // 保持原始大小
+          backdropFilter: `blur(${Math.min(progress * 8, 6)}px)`,
+          borderRadius: `${Math.min(progress * 6, 4)}px`,
+          padding: `${Math.min(progress * 8, 6)}px ${Math.min(progress * 16, 12)}px`,
+          boxShadow: `0 2px 8px rgba(0, 0, 0, ${Math.min(progress * 0.15, 0.1)})`,
+          zIndex: 50,
+          background: 'rgba(255, 255, 255, 0.02)', // 极淡的背景
+        })
+      }
+      else {
+        // 原始状态：完全重置
+        gsap.set(titleElement, {
+          position: 'relative',
+          top: 'auto',
+          left: 'auto',
+          width: 'auto',
+          transform: 'scale(1)',
+          backdropFilter: 'none',
+          borderRadius: '0px',
+          padding: '0px',
+          boxShadow: 'none',
+          zIndex: 'auto',
+          background: 'transparent',
+        })
+      }
+    },
+    onEnter: () => {
+      console.log('标题开始进入动画区域')
+    },
+    onLeave: () => {
+      console.log('标题离开动画区域')
+    },
+    onEnterBack: () => {
+      console.log('标题返回动画区域')
+    },
+    onLeaveBack: () => {
+      console.log('标题离开动画区域（向上滚动）')
+    },
+    onToggle: (self) => {
+      console.log('ScrollTrigger 状态切换:', self.isActive)
+    },
+  })
+}
+
+// 统一的滚动处理函数
+function handleScroll() {
+  handleTocScroll()
+}
+
 onMounted(() => {
-  // 添加滚动监听
-  window.addEventListener('scroll', handleTocScroll, { passive: true })
+  // 添加滚动监听（仅用于 TOC）
+  window.addEventListener('scroll', handleScroll, { passive: true })
 })
 
 onUnmounted(() => {
   // 移除滚动监听
-  window.removeEventListener('scroll', handleTocScroll)
+  window.removeEventListener('scroll', handleScroll)
+
+  // 清理 GSAP ScrollTrigger
+  if (titleScrollTrigger) {
+    titleScrollTrigger.kill()
+  }
+  ScrollTrigger.killAll()
 })
 
 watchEffect(async () => {
@@ -568,66 +682,20 @@ watchEffect(async () => {
       initLikeCount()
       getSurroundingPage()
       initExplain()
+      // 在内容加载完成后创建 GSAP 动画
+      setTimeout(() => {
+        createTitleAnimation()
+      }, 300)
     })
   }
 })
 </script>
 
 <template>
-  <div class="pb-10 m-auto mb-4 font-mono pixel-layout">
+  <div class="pb-10 m-auto mb-4 font-mono">
     <div class="relative w-full max-w-full flex justify-center">
-      <!-- 底部固定的操作栏 -->
-      <!-- <ClientOnly>
-        <div
-          class="md:hidden page-fixed-footer fixed left-0 right-0 bottom-0 bg-gray-900/90 border-t-2 border-gray-800 py-3 px-4 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-pixel transition-all duration-300 z-[49] backdrop-blur-sm"
-        >
-          <div class="left flex gap-2">
-            <Button variant="ghost" text size="sm" class="pixel-btn pixel-btn-sm">
-              <Icon name="icon-park-outline:thumbs-up" @click="likePage" />
-              <span>{{ likeCount }}</span>
-            </Button>
-            <Button variant="ghost" text size="sm" class="pixel-btn pixel-btn-sm" @click="navigateTo('#评论区')">
-              <Icon name="icon-park-outline:comments" />
-              <span>{{ formatCommentCount }}</span>
-            </Button>
-            <Button variant="ghost" text size="sm" class="pixel-btn pixel-btn-sm" @click="copyLink">
-              <Icon name="material-symbols:share-reviews-outline-rounded" />
-            </Button>
-            <Button variant="ghost" text size="sm" class="pixel-btn pixel-btn-sm" @click="getInnerHTML">
-              <Icon name="icon-park-outline:wechat" />
-            </Button>
-          </div>
-          <div class="right pr-6 md:pr-0">
-            <Button label="返回" variant="secondary" class="pixel-btn pixel-btn-primary" @click="navigateTo('/article')">
-              <Icon name="icon-park-outline:back" />
-            </Button>
-          </div>
-        </div>
-      </ClientOnly> -->
-
-      <div v-if="page" class="flex w-full max-w-7xl mx-auto gap-8">
-        <!-- 左侧点赞评论操作栏 -->
-        <!-- <ClientOnly>
-          <div ref="actionContainer" class="flex-col gap-4 z-20 h-80 hidden lg:flex fixed top-[80px] left-[200px]">
-            <div class="flex flex-col items-center cursor-pointer">
-              <Icon name="icon-park-outline:thumbs-up" size="1.5em" class="mb-1" @click="likePage" />
-              <span class="text-xs font-mono font-bold ">{{ likeCount }}</span>
-            </div>
-            <div class="cursor-pointer">
-              <NuxtLink href="#评论区" class="flex flex-col items-center">
-                <Icon name="icon-park-outline:comments" size="1.5em" class=" mb-1" />
-                <span class="text-xs font-mono font-bold ">{{ formatCommentCount }}</span>
-              </NuxtLink>
-            </div>
-            <div class="flex flex-col items-center cursor-pointer" @click="copyLink">
-              <Icon name="material-symbols:share-reviews-outline-rounded" size="1.5em" class="" />
-            </div>
-            <div class="flex flex-col items-center cursor-pointer" data-umami-event="wx-copy-btn" @click="getInnerHTML">
-              <Icon name="icon-park-outline:wechat" size="1.5em" class="" />
-            </div>
-          </div>
-        </ClientOnly> -->
-        <div ref="articleWrap" class="article-wrap relative max-w-4xl flex flex-col flex-1 md:px-6 box-border my-6">
+      <div v-if="page" class="flex w-full max-w-full md:max-w-7xl  mx-auto gap-8">
+        <div ref="articleWrap" class="article-wrap relative max-w-full md:max-w-4xl flex flex-col flex-1 md:px-6 box-border my-6">
           <!-- 选中文字的悬浮气泡 -->
           <ClientOnly>
             <transition appear @enter="commentEnter" @before-enter="commentBeforeEnter" @leave="commentLeave">
@@ -653,13 +721,10 @@ watchEffect(async () => {
             </transition>
           </ClientOnly>
           <!-- 悬浮标题栏 -->
-          <div
-            v-if="!navBarStore.navBar.value?.isHidden"
-            class="fixed-title text-lg md:text-xl font-mono font-bold text-center overflow-hidden text-ellipsis h-12 leading-12 fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-gray-900/90 border-b-2 border-gray-800 backdrop-blur-sm text-gray-100"
+          <h1
+            ref="titleRef"
+            class="text-center text-2xl font-bold title-normal transition-all duration-150 ease-out"
           >
-            {{ page?.title }}
-          </div>
-          <h1 class="text-center text-xl font-bold">
             {{ page?.title }}
           </h1>
           <ClientOnly>
@@ -684,8 +749,8 @@ watchEffect(async () => {
             </div>
           </ClientOnly>
           <!-- 文章内容 markdown -->
-          <article ref="curMdContentRef" class="content-wrap prose-invert prose-lg max-w-none p-6 w-full">
-            <ContentRenderer :value="page?.body" />
+          <article ref="curMdContentRef" class="content-wrap prose-invert prose-lg max-w-none p-0 md:p-6 w-full">
+            <ContentRenderer :value="page?.body" class="max-w-full" />
           </article>
           <!-- 相邻的文章 -->
           <ClientOnly>
@@ -1033,6 +1098,8 @@ watchEffect(async () => {
   overflow-y: auto;
   z-index: 100;
   transition: all 0.3s ease;
+  position: sticky;
+  top: 100px;
 }
 
 /* TOC固定定位样式 */
@@ -1112,5 +1179,25 @@ watchEffect(async () => {
 
 .simple-toc::-webkit-scrollbar-thumb:hover {
   background: var(--pixel-text-disabled);
+}
+
+/* 标题吸顶样式 */
+.title-fixed {
+  position: fixed;
+  top: 0;
+  transform: none;
+  backdrop-filter: blur(8px);
+  z-index: 50;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.05); /* 轻微的半透明背景 */
+}
+
+.title-normal {
+  position: relative;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  padding: 0;
 }
 </style>

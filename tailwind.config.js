@@ -42,6 +42,7 @@ export default {
         },
         accent: {
           'pixel-primary': 'var(--pixel-accent-primary)',
+          'pixel-secondary': 'var(--pixel-accent-secondary)',
           'pixel-cyan': 'var(--pixel-accent-cyan)',
           'pixel-cyan-hover': 'var(--pixel-accent-cyan-hover)',
           'pixel-cyan-light': 'var(--pixel-accent-cyan-light)',

@@ -101,8 +101,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="pixel-layout min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-8">
+  <div class="min-h-screen">
+    <div class="max-w-7xl mx-auto px-0 md:px-8 py-4 md:py-8">
       <div v-if="data" class="flex flex-col gap-4 md:gap-6">
         <transition-group
           tag="div" class="w-full flex flex-col gap-3 md:gap-4" appear @enter="onEnter"

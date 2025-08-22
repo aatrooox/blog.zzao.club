@@ -170,7 +170,7 @@ function onMouseLeave(event) {
                   <span
                     v-for="tagRelation in memo.tags.slice(0, 2)"
                     :key="tagRelation.id"
-                    class="text-highlight-pixel-cyan text-xs"
+                    class="text-accent-pixel-primary text-xs"
                   >
                     #{{ tagRelation.tagName }}
                   </span>
