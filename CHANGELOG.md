@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.3.6
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.5...v2.3.6)
+
+### 🚀 Enhancements
+
+- 移动端登录态展示 ([696b5c9](https://github.com/aatrooox/blog.zzao.club/commit/696b5c9))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.5
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.4...v2.3.5)
