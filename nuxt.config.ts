@@ -206,6 +206,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-10-29',
   nitro: {
     // preset: 'bun',
+    experimental: {
+      tasks: true,
+    },
+    // scheduledTasks: {
+    //   '0 * * * *': ['news:juejin'],
+    // },
     errorHandler: '~~/server/error',
     storage: {
       redis: {
