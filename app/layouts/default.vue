@@ -410,7 +410,7 @@ function scrollToTop() {
 }
 
 .pixel-login-trigger {
-  @apply flex flex-col items-center gap-2 p-3 backdrop-blur-sm cursor-pointer transition-all duration-200;
+  @apply flex flex-col items-center backdrop-blur-sm cursor-pointer transition-all duration-200;
 }
 
 .pixel-login-hint {

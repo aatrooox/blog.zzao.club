@@ -124,8 +124,9 @@ export const blogMemos = mysqlTable('blog_memos', {
   defaltFloded: boolean('defalt_floded').notNull().default(false),
   flodTip: varchar('flod_tip', { length: 255 }),
   userId: varchar('user_id', { length: 255 }).notNull(),
-  from: varchar('from', { length: 255 }),
-  courier: varchar('courier', { length: 255 }),
+  from: varchar('from', { length: 255 }).default('blog'),
+  type: varchar('type', { length: 255 }).default('memo'), // 类型：memo，表示动态。也可以由此录入新闻等咨询。快速生产内容
+  courier: varchar('courier', { length: 255 }).default('阿康zz'), // 此条内容由谁生产
   photos: json('photos').$type<string[]>().default([]), 
 })
 
