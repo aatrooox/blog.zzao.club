@@ -258,13 +258,25 @@ const parsedContent = computed(() => {
 
 .pixel-memo-content :deep(img) {
   max-width: 100%;
+  max-height: 400px;
   height: auto;
   border: 2px solid var(--pixel-border-primary);
+  object-fit: contain;
 }
 
 @media (min-width: 768px) {
   .pixel-memo-content {
     font-size: 1rem;
+  }
+
+  .pixel-memo-content :deep(img) {
+    max-height: 500px;
+  }
+}
+
+@media (max-width: 767px) {
+  .pixel-memo-content :deep(img) {
+    max-height: 300px;
   }
 }
 </style>
