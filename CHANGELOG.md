@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.3.8
+
+[compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v2.3.7...v2.3.8)
+
+### 🩹 Fixes
+
+- 单图移动端展示问题 (a67dac1)
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.7
 
 [compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v2.3.6...v2.3.7)
