@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.3.9
+
+[compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v2.3.8...v2.3.9)
+
+### 🚀 Enhancements
+
+- Memo表结构完善 (47fe7a3)
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.8
 
 [compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v2.3.7...v2.3.8)
