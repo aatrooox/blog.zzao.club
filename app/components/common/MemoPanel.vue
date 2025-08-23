@@ -114,7 +114,7 @@ const wechatGridConfig = computed(() => {
 // 计算微信布局的最大宽度和高度
 const wechatMaxSize = computed(() => {
   const maxWidth = Math.min(props.photoWidth || 400, 450) // 最大宽度
-  const maxHeight = maxWidth // 最大高度与宽度相等，保持正方形
+  const maxHeight = 'auto' // 最大高度与宽度相等，保持正方形
   return { maxWidth, maxHeight }
 })
 
@@ -259,7 +259,6 @@ const wechatMaxSize = computed(() => {
           class="pixel-wechat-photos"
           :style="{
             maxWidth: `${wechatMaxSize.maxWidth}px`,
-            maxHeight: `${wechatMaxSize.maxHeight}px`,
           }"
         >
           <!-- 单张图片特殊处理 -->
@@ -268,7 +267,7 @@ const wechatMaxSize = computed(() => {
               :src="memo.photos[0]"
               alt="Photo"
               class="pixel-wechat-single-image"
-              :style="{ maxWidth: `${wechatMaxSize.maxWidth}px`, maxHeight: `${wechatMaxSize.maxHeight}px` }"
+              :style="{ maxWidth: `${wechatMaxSize.maxWidth}px` }"
             >
           </div>
 

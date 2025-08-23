@@ -27,7 +27,7 @@ interface Emits {
 
 const props = withDefaults(defineProps<Props>(), {
   multiple: false,
-  maxFiles: 5,
+  maxFiles: 9,
   maxSize: 10, // 10MB
   accept: 'image/*',
   disabled: false,
@@ -148,10 +148,10 @@ function validateFile(file: File): string | null {
     return '只能上传图片文件'
   }
 
-  // 检查文件大小 (50MB 硬限制)
-  const maxHardLimit = 50 * 1024 * 1024
+  // 检查文件大小 (10MB 硬限制)
+  const maxHardLimit = 10 * 1024 * 1024
   if (file.size > maxHardLimit) {
-    return '文件大小不能超过 50MB'
+    return '文件大小不能超过 10MB'
   }
 
   return null
