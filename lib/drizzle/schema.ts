@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm'
+import { relations, sql } from 'drizzle-orm'
 import {
   boolean,
   datetime,
@@ -10,6 +10,7 @@ import {
   text,
   unique,
   varchar,
+  json
 } from 'drizzle-orm/mysql-core'
 
 // 用户表
@@ -31,8 +32,8 @@ export const userConfigs = mysqlTable('blog_user_config', {
   id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   userId: varchar('userId', { length: 255 }).notNull().unique(),
   allowEmailNotify: int('allowEmailNotify').default(0),
-  createdAt: datetime('createdAt').notNull().default(new Date()),
-  updatedAt: datetime('updatedAt').notNull().default(new Date()).$onUpdate(() => new Date()),
+  createdAt: datetime('createdAt').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  updatedAt: datetime('updatedAt').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => sql`(CURRENT_TIMESTAMP)`),
 })
 
 // 访问令牌表
@@ -46,8 +47,8 @@ export const accessTokens = mysqlTable('blog_access_token', {
   isRevoked: boolean('isRevoked').notNull().default(false),
   ip: varchar('ip', { length: 255 }),
   expiresAt: datetime('expiresAt').notNull(),
-  createdAt: datetime('createdAt').notNull().default(new Date()),
-  updatedAt: datetime('updatedAt').notNull().default(new Date()).$onUpdate(() => new Date()),
+  createdAt: datetime('createdAt').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  updatedAt: datetime('updatedAt').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => sql`(CURRENT_TIMESTAMP)`),
 })
 
 // 第三方登录表
@@ -59,8 +60,8 @@ export const oauths = mysqlTable('blog_oauth', {
   providerUnionId: varchar('providerUnionId', { length: 255 }),
   providerToken: varchar('providerToken', { length: 255 }),
   providerRefreshToken: varchar('providerRefreshToken', { length: 255 }),
-  createdAt: datetime('createdAt').notNull().default(new Date()),
-  updatedAt: datetime('updatedAt').notNull().default(new Date()).$onUpdate(() => new Date()),
+  createdAt: datetime('createdAt').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  updatedAt: datetime('updatedAt').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => sql`(CURRENT_TIMESTAMP)`),
 }, table => ({
   providerUnique: unique().on(table.provider, table.providerId),
 }))
@@ -69,8 +70,8 @@ export const oauths = mysqlTable('blog_oauth', {
 export const blogComments = mysqlTable('blog_comment', {
   id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   content: mediumtext('content').notNull(),
-  createTs: datetime('create_ts').notNull().default(new Date()),
-  updatedTs: datetime('updated_ts').notNull().default(new Date()).$onUpdate(() => new Date()),
+  createTs: datetime('create_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  updatedTs: datetime('updated_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => sql`(CURRENT_TIMESTAMP)`),
   type: varchar('type', { length: 50 }).notNull().default('article'),
   quoteContent: text('quoteContent'),
   articleId: varchar('article_id', { length: 255 }),
@@ -82,8 +83,8 @@ export const blogComments = mysqlTable('blog_comment', {
 // 博客解释表
 export const blogExplains = mysqlTable('blog_explain', {
   id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
-  createTs: datetime('create_ts').notNull().default(new Date()),
-  updatedTs: datetime('updated_ts').notNull().default(new Date()).$onUpdate(() => new Date()),
+  createTs: datetime('create_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  updatedTs: datetime('updated_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => sql`(CURRENT_TIMESTAMP)`),
   text: mediumtext('text').notNull(),
   content: mediumtext('content').notNull(),
   articleId: varchar('article_id', { length: 255 }).notNull(),
@@ -93,8 +94,8 @@ export const blogExplains = mysqlTable('blog_explain', {
 export const blogSubComments = mysqlTable('blog_sub_comment', {
   id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   content: mediumtext('content').notNull(),
-  createTs: datetime('create_ts').notNull().default(new Date()),
-  updatedTs: datetime('updated_ts').notNull().default(new Date()).$onUpdate(() => new Date()),
+  createTs: datetime('create_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  updatedTs: datetime('updated_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => sql`(CURRENT_TIMESTAMP)`),
   commentId: varchar('comment_id', { length: 255 }).notNull(),
   replySubCommentId: varchar('reply_sub_comment_id', { length: 255 }),
   userId: varchar('user_id', { length: 255 }),
@@ -103,8 +104,8 @@ export const blogSubComments = mysqlTable('blog_sub_comment', {
 // 博客点赞表
 export const blogLikes = mysqlTable('blog_like', {
   id: int('id').primaryKey().autoincrement(),
-  createTs: datetime('create_ts').notNull().default(new Date()),
-  updatedTs: datetime('updated_ts').notNull().default(new Date()).$onUpdate(() => new Date()),
+  createTs: datetime('create_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  updatedTs: datetime('updated_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => sql`(CURRENT_TIMESTAMP)`),
   target: varchar('target', { length: 50 }).notNull().default('article'),
   articleId: varchar('article_id', { length: 255 }),
   subCommentId: varchar('sub_comment_id', { length: 255 }),
@@ -117,22 +118,23 @@ export const blogLikes = mysqlTable('blog_like', {
 export const blogMemos = mysqlTable('blog_memos', {
   id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   content: mediumtext('content'),
-  createTs: datetime('create_ts').notNull().default(new Date()),
-  updatedTs: datetime('updated_ts').notNull().default(new Date()).$onUpdate(() => new Date()),
+  createTs: datetime('create_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  updatedTs: datetime('updated_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => new Date()),
   visible: varchar('visible', { length: 50 }).notNull().default('public'),
   defaltFloded: boolean('defalt_floded').notNull().default(false),
   flodTip: varchar('flod_tip', { length: 255 }),
   userId: varchar('user_id', { length: 255 }).notNull(),
   from: varchar('from', { length: 255 }),
   courier: varchar('courier', { length: 255 }),
+  photos: json('photos').$type<string[]>().default([]), 
 })
 
 // 备忘录标签表
 export const memoTags = mysqlTable('blog_memo_tag', {
   id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
   tagName: varchar('tag_name', { length: 255 }).notNull().unique(),
-  createTs: datetime('create_ts').notNull().default(new Date()),
-  updatedTs: datetime('updated_ts').notNull().default(new Date()).$onUpdate(() => new Date()),
+  createTs: datetime('create_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  updatedTs: datetime('updated_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => new Date()),
   userId: varchar('user_id', { length: 255 }).notNull(),
 })
 
@@ -140,43 +142,10 @@ export const memoTags = mysqlTable('blog_memo_tag', {
 export const memoTagRelations = mysqlTable('blog_memo_tag_relations', {
   tagId: varchar('tagId', { length: 255 }).notNull(),
   memoId: varchar('memoId', { length: 255 }).notNull(),
-  createTs: datetime('create_ts').notNull().default(new Date()),
-  updatedTs: datetime('updated_ts').notNull().default(new Date()).$onUpdate(() => new Date()),
+  createTs: datetime('create_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  updatedTs: datetime('updated_ts').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => sql`(CURRENT_TIMESTAMP)`),
 }, table => ({
   pk: primaryKey({ columns: [table.tagId, table.memoId] }),
-}))
-
-// Garmin 活动表
-export const garminActivities = mysqlTable('blog_garmin_activity', {
-  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
-  activityType: varchar('activity_type', { length: 255 }).notNull(),
-  date: datetime('date').notNull(),
-  isFavorite: boolean('is_favorite').notNull(),
-  title: varchar('title', { length: 255 }),
-  distance: decimal('distance', { precision: 8, scale: 2 }),
-  calories: int('calories').notNull(),
-  duration: decimal('duration', { precision: 10, scale: 2 }).notNull(),
-  movingTime: decimal('moving_time', { precision: 10, scale: 2 }),
-  elapsedTime: decimal('elapsed_time', { precision: 10, scale: 2 }),
-  avgHr: int('avg_hr'),
-  maxHr: int('max_hr'),
-  aerobicEffect: decimal('aerobic_effect', { precision: 3, scale: 1 }),
-  trainingStressScore: decimal('training_stress_score', { precision: 5, scale: 1 }),
-  avgPace: decimal('avg_pace', { precision: 5, scale: 2 }),
-  bestPace: decimal('best_pace', { precision: 5, scale: 2 }),
-  totalStrokes: int('total_strokes'),
-  avgSwolf: int('avg_swolf'),
-  avgStrokeRate: int('avg_stroke_rate'),
-  steps: int('steps'),
-  totalReps: int('total_reps'),
-  totalSets: int('total_sets'),
-  isGrit: boolean('is_grit'),
-  bestLapTime: decimal('best_lap_time', { precision: 8, scale: 2 }),
-  lapCount: int('lap_count'),
-  createdAt: datetime('created_at').notNull().default(new Date()),
-  updatedAt: datetime('updated_at').notNull().default(new Date()).$onUpdate(() => new Date()),
-}, table => ({
-  dateActivityUnique: unique().on(table.date, table.activityType),
 }))
 
 // 关系定义

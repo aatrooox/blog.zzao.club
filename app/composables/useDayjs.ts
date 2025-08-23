@@ -21,8 +21,8 @@ export default function useDayjs() {
     return dayjs(date).format(short ? 'YYYY/MM/DD' : 'YY/MM/DD')
   }
 
-  const formatFullDate = () => {
-    return dayjs().format('YYYY/MM/DD HH:mm:ss')
+  const formatFullDate = (date: string | Date) => {
+    return dayjs(date ?? new Date()).format('YYYY/MM/DD HH:mm:ss')
   }
   // 获取更新时间距今经过了多久
   const updateDateFromNow = (updateTime: string | Date) => {

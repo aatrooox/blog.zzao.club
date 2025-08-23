@@ -1,0 +1,20 @@
+ALTER TABLE `blog_access_token` MODIFY COLUMN `createdAt` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_access_token` MODIFY COLUMN `updatedAt` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_comment` MODIFY COLUMN `create_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_comment` MODIFY COLUMN `updated_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_explain` MODIFY COLUMN `create_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_explain` MODIFY COLUMN `updated_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_like` MODIFY COLUMN `create_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_like` MODIFY COLUMN `updated_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_memos` MODIFY COLUMN `create_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_memos` MODIFY COLUMN `updated_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_sub_comment` MODIFY COLUMN `create_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_sub_comment` MODIFY COLUMN `updated_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_memo_tag_relations` MODIFY COLUMN `create_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_memo_tag_relations` MODIFY COLUMN `updated_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_memo_tag` MODIFY COLUMN `create_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_memo_tag` MODIFY COLUMN `updated_ts` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_oauth` MODIFY COLUMN `createdAt` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_oauth` MODIFY COLUMN `updatedAt` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_user_config` MODIFY COLUMN `createdAt` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);--> statement-breakpoint
+ALTER TABLE `blog_user_config` MODIFY COLUMN `updatedAt` datetime NOT NULL DEFAULT (CURRENT_TIMESTAMP);

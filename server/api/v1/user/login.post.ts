@@ -1,6 +1,7 @@
 import { eq } from 'drizzle-orm'
 import { db } from '~~/lib/drizzle'
 import { users } from '~~/lib/drizzle/schema'
+import { API_CODES } from '~~/shared/utils/apiCodes'
 
 export const schema = z.object({
   username: z.string(),
@@ -13,25 +14,29 @@ export default defineStandardResponseHandler(async (event) => {
   if (!body.success) {
     throw createError({
       statusCode: 400,
-      message: JSON.stringify(body.error),
+      data: {
+        code: API_CODES.VALIDATION_ERROR,
+        message: '参数验证失败',
+        data: body.error,
+      },
     })
   }
+
   const { username, password } = body.data
 
   if (password === 'NEED_RESET_PASSWORD') {
     throw createError({
       statusCode: 400,
-      message: '未设置密码，请使用其他登录方式',
+      data: {
+        code: API_CODES.VALIDATION_ERROR,
+        message: '未设置密码，请使用其他登录方式',
+      },
     })
   }
 
   let [user] = await db.select().from(users).where(eq(users.username, username))
 
   if (!user) {
-    // throw createError({
-    //   statusCode: 400,
-    //   message: '用户不存在'
-    // })
     // 创建新用户
     await db.insert(users).values({
       username,
@@ -45,28 +50,38 @@ export default defineStandardResponseHandler(async (event) => {
   else {
     if (user.password !== password) {
       throw createError({
-        status: 400,
-        statusText: '账号或密码错误',
+        statusCode: 401,
+        data: {
+          code: API_CODES.AUTH_FAILED,
+          message: '账号或密码错误',
+        },
       })
     }
   }
 
-  console.log('准备生成token，用户ID:', user.id)
+  console.log('准备生成双token，用户ID:', user.id)
 
   try {
-    const tokenInfo = await upsertAccessToken(user.id)
-    console.log('token生成成功:', tokenInfo)
+    const tokenPair = await generateTokenPair(user.id)
+    console.log('双token生成成功:', tokenPair)
 
+    // 直接返回数据，由 handler 包装
     return {
-      token: tokenInfo.token,
+      accessToken: tokenPair.accessToken,
+      refreshToken: tokenPair.refreshToken,
+      accessExpiresAt: tokenPair.accessExpiresAt,
+      refreshExpiresAt: tokenPair.refreshExpiresAt,
       user,
     }
   }
   catch (error) {
-    console.error('token生成失败:', error)
+    console.error('双token生成失败:', error)
     throw createError({
       statusCode: 500,
-      message: 'token生成失败',
+      data: {
+        code: API_CODES.INTERNAL_ERROR,
+        message: '登录失败，请重试',
+      },
     })
   }
 })

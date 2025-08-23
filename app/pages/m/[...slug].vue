@@ -3,7 +3,6 @@ import type { CommentData } from '@nuxtjs/mdc'
 import type { Visitor } from '~~/types/blog'
 import type { BlogCommentWithUserInfo } from '~~/types/blog-drizzle'
 import type { ApiResponse } from '~~/types/fetch'
-import type { User } from '~~/types/memo'
 
 definePageMeta({
   layout: 'default',
@@ -16,7 +15,7 @@ const userStore = useUser()
 const toast = useGlobalToast()
 
 const memoId = computed(() => (route.params.slug && route.params.slug[0]) ?? '')
-const { memo, getMemo, deleteMemo } = useMemo(memoId.value)
+const { memo, getMemo, deleteMemo, isLoading } = useMemo(memoId.value)
 // const { $dayjs } = useNuxtApp()
 const comments = ref<BlogCommentWithUserInfo[]>([])
 const isDefer = ref(true)
@@ -27,6 +26,12 @@ const isLiked = ref(false)
 
 // 获取memo数据
 await getMemo()
+
+// 等待一定时间确保数据加载完成
+if (process.client) {
+  // 客户端额外等待，确保数据加载完成
+  await new Promise(resolve => setTimeout(resolve, 100))
+}
 
 // 设置SEO
 useSeoMeta({
@@ -43,6 +48,21 @@ if (process.client) {
     }
   })
 }
+
+// 客户端挂载时确保数据已加载
+onMounted(async () => {
+  // 如果数据还没有加载成功，重新尝试
+  if (!memo.value && !isLoading.value) {
+    console.log('Retrying to fetch memo on mount...')
+    await getMemo()
+  }
+
+  // 确保评论和点赞数据初始化
+  if (memo.value?.id) {
+    initComment()
+    initLikeCount()
+  }
+})
 
 // 删除memo
 async function handleDelete() {
@@ -93,24 +113,40 @@ async function createComment(data: CommentData) {
 
 // 有访客信息时注册
 async function createVistorIDWithInfo(visitor: Visitor) {
-  const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', {
-    name: visitor.name,
-    email: visitor.email,
-    website: visitor.website,
-  })
-  if (!res.error) {
-    userStore.setUser(res.data.user)
-    userStore.setToken(res.data.token)
-  }
+  createVistorID(visitor)
+  // const res = await $api.post<ApiResponse<any>>('/api/v1/user/visitor/regist', {
+  //   name: visitor.name,
+  //   email: visitor.email,
+  //   website: visitor.website,
+  // })
+  // if (!res.error) {
+  //   const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
+
+  //   userStore.setUser(user)
+  //   userStore.setTokenInfo({
+  //     accessToken,
+  //     refreshToken,
+  //     accessExpiresAt,
+  //     refreshExpiresAt,
+  //   })
+  // }
 }
 // 无访客信息时注册
 async function createVistorIDByFingerprint() {
-  const clientjs = useClientjs()
-  const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-  if (!res.error) {
-    userStore.setUser(res.data.user)
-    userStore.setToken(res.data.token)
-  }
+  await createVistorID()
+  // const clientjs = useClientjs()
+  // const res = await $api.post<ApiResponse<any>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
+  // if (!res.error) {
+  //   const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
+
+  //   userStore.setUser(user)
+  //   userStore.setTokenInfo({
+  //     accessToken,
+  //     refreshToken,
+  //     accessExpiresAt,
+  //     refreshExpiresAt,
+  //   })
+  // }
 }
 
 // 初始化评论
@@ -140,10 +176,18 @@ const formatCommentCount = computed(() => {
 async function handleLike() {
   // 游客点赞 生成指纹 -> 注册为游客 (随机用户名 + 固定id)
   if (!userStore.user.value.id) {
-    const clientjs = useClientjs()
-    const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-    userStore.setUser(res.data.user)
-    userStore.setToken(res.data.token)
+    await createVistorID()
+    // const clientjs = useClientjs()
+    // const res = await $api.post<ApiResponse<any>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
+    // const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
+
+    // userStore.setUser(user)
+    // userStore.setTokenInfo({
+    //   accessToken,
+    //   refreshToken,
+    //   accessExpiresAt,
+    //   refreshExpiresAt,
+    // })
   }
 
   if (isLiked.value) {
@@ -176,14 +220,27 @@ function handleTagClick(tagName: string) {
 </script>
 
 <template>
-  <div class="pixel-layout min-h-screen font-mono">
+  <div class="min-h-screen font-mono">
     <div class="max-w-4xl mx-auto px-4 md:px-6 py-6 md:py-8">
+      <!-- 加载中状态 -->
+      <div v-if="isLoading" class="text-center py-20">
+        <div class="border-2 md:border-4 p-6 md:p-8">
+          <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto mb-4" />
+          <h2 class="text-xl md:text-2xl font-mono font-bold text-bg-base mb-4">
+            加载中...
+          </h2>
+        </div>
+      </div>
+
       <!-- Memo不存在 -->
-      <div v-if="!memo" class="text-center py-20">
+      <div v-else-if="!memo" class="text-center py-20">
         <div class="border-2 md:border-4 p-6 md:p-8">
           <h2 class="text-2xl md:text-3xl font-mono font-bold text-bg-base mb-4">
             Memo 不存在
           </h2>
+          <p class="text-sm text-[var(--pixel-text-secondary)] font-mono mb-4">
+            页面ID: {{ memoId }}
+          </p>
           <NuxtLink
             to="/memo"
             class="inline-block font-mono font-bold px-4 py-2 transition-all duration-200"
@@ -194,7 +251,7 @@ function handleTagClick(tagName: string) {
       </div>
 
       <!-- Memo内容 -->
-      <div v-else class="space-y-4 md:space-y-6 w-full">
+      <div v-else-if="memo && !isLoading" class="space-y-4 md:space-y-6 w-full">
         <!-- 返回按钮 -->
         <div class="flex items-center">
           <Button
@@ -214,7 +271,7 @@ function handleTagClick(tagName: string) {
             <div class="flex items-center justify-between">
               <!-- 左侧用户信息 -->
               <div class="flex items-center space-x-3">
-                <UserAvatar :user-info="memo.user_info" class="w-10 h-10 md:w-12 md:h-12" />
+                <UserAvatar :user-info="memo.user_info" :size="40" />
                 <div class="flex flex-col">
                   <div class="text-[var(--pixel-text-primary)] font-mono font-bold text-sm md:text-base">
                     {{ memo.user_info?.nickname || memo.user_info?.username || '匿名用户' }}
@@ -285,9 +342,9 @@ function handleTagClick(tagName: string) {
             </div>
           </div>
         </ClientOnly>
-        <!-- Memo面板 -->
+        <!-- Memo面板 - 使用小红书布局，配置合适的尺寸 -->
         <div class="pixel-card bg-base p-4 md:p-6 overflow-hidden">
-          <MemoPanel :memo="memo" :show-all="true" :hide-btns="true" />
+          <MemoPanel :memo="memo" :show-all="true" :hide-btns="true" layout="xiaohongshu" :photo-width="320" :max-width="1000" />
         </div>
 
         <!-- Tags显示 -->

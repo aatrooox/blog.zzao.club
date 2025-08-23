@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { ApiResponse } from '~~/types/fetch'
-import type { MemoLikeResponse, UserRegistResponse } from '~~/types/memo'
+import type { MemoLikeResponse } from '~~/types/memo'
 import useTags from '~/composables/useTags'
 
 const props = defineProps({
@@ -19,18 +19,17 @@ definePageMeta({
 })
 
 useSeoMeta({
-  title: 'Memoz｜早早集市',
+  title: '动态｜早早集市',
   description: '基于Api数据实现SSR的页面，一些日常记录、知识碎片、其他平台的摘录',
 })
 
-const heightCache = ref<Map<string, number>>(new Map())
-
 const { getMemos, memos, createMemo } = useMemos()
 const userStore = useUser()
-const clientjs = useClientjs()
+// const clientjs = useClientjs()
 const toast = useGlobalToast()
 const { $api } = useNuxtApp()
 const { getTags } = useTags()
+const multipleImages = ref<string[]>([])
 
 const route = useRoute()
 const selectedTags = computed(() => {
@@ -60,9 +59,17 @@ const { beforeLeave, leave, afterLeave } = useStaggeredListTransition('memo-fade
 
 async function handleLike(memoId: string) {
   if (!userStore.user.value.id) {
-    const res = await $api.post<ApiResponse<UserRegistResponse>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-    userStore.setUser(res.data.user)
-    userStore.setToken(res.data.token)
+    await createVistorID()
+    // const res = await $api.post<ApiResponse<any>>('/api/v1/user/visitor/regist', )
+    // const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
+
+    // userStore.setUser(user)
+    // userStore.setTokenInfo({
+    //   accessToken,
+    //   refreshToken,
+    //   accessExpiresAt,
+    //   refreshExpiresAt,
+    // })
   }
   try {
     const res = await $api.post<ApiResponse<MemoLikeResponse>>('/api/v1/memo/like', {
@@ -86,11 +93,13 @@ async function handleLike(memoId: string) {
 
 await getMemos()
 
-function handleDelete(memoId: string) {
+async function handleDelete(memoId: string) {
   const index = memos.value.findIndex(memo => memo.id === memoId)
   if (index !== -1) {
-    memos.value.splice(index, 1)
-    heightCache.value.delete(memoId)
+    // heightCache.value.delete(memoId)
+    const { deleteMemo } = useMemo(memoId)
+    await deleteMemo()
+    getMemos()
   }
 }
 
@@ -106,9 +115,10 @@ function handleMemoUpdated() {
 }
 
 async function handleSendMemo(commentData) {
-  const success = await createMemo({ ...commentData, tags: tags.value })
+  const success = await createMemo({ ...commentData, tags: tags.value, photos: multipleImages.value })
   if (success) {
     tags.value = []
+    multipleImages.value = [] // 清空图片数组
     commentInputRef.value?.clear?.()
     await getTags()
   }
@@ -128,12 +138,29 @@ function onMemoTagClick(tagName: string) {
   else
     handleTagClick(tagName)
 }
+
+function onMultipleUpload(urls: string[]) {
+  toast.success(`多张上传成功: 共 ${urls.length} 张图片`)
+}
+
+function onUploadError(error: string) {
+  toast.error(`上传失败: ${error}`)
+}
 </script>
 
 <template>
   <div class="">
     <!-- 编辑器卡片 -->
-    <div class="pixel-card pixel-card-inner">
+    <div v-if="userStore.user.value?.role === 'superAdmin'" class="pixel-card pixel-card-inner mb-2">
+      <AppImageUpload
+        v-model="multipleImages"
+        :multiple="true"
+        :max-files="6"
+        :max-size="5"
+        :file-path="`memos/${new Date().getFullYear()}-${new Date().getMonth() + 1}`"
+        @upload-success="onMultipleUpload"
+        @upload-error="onUploadError"
+      />
       <AppTagInput v-model="tags" />
       <AppCommentInput
         ref="commentInputRef"
@@ -160,11 +187,10 @@ function onMemoTagClick(tagName: string) {
           v-for="memo in filteredMemos"
           :key="memo.id"
           class="pixel-card cursor-pointer"
-          @click="handleComment(memo)"
         >
           <div class="flex items-start gap-4">
             <div class="flex-shrink-0">
-              <UserAvatar :user-info="memo.user_info" size="md" class="pixel-avatar" />
+              <UserAvatar :user-info="memo.user_info" :size="30" class="pixel-avatar" />
             </div>
             <div class="min-w-0">
               <div class="flex items-center gap-2 mb-2">
@@ -176,14 +202,14 @@ function onMemoTagClick(tagName: string) {
                 <span
                   v-for="tag in memo.tags"
                   :key="tag.id"
-                  class="pixel-tag text-xs cursor-pointer"
+                  class="text-xs text-highlight-pixel-cyan cursor-pointer"
                   @click.stop="onMemoTagClick(tag.tagName)"
                 >
-                  {{ tag.tagName }}
+                  #{{ tag.tagName }}
                 </span>
               </div>
               <div class="mb-2">
-                <MemoPanel :memo="memo" />
+                <MemoPanel :memo="memo" layout="wechat" :show-all="true" :photo-width="200" />
               </div>
               <div class="flex items-center gap-4 mt-3 pixel-text text-xs md:text-sm">
                 <div class="flex items-center gap-1 md:gap-2 cursor-pointer hover:opacity-80 transition-opacity" @click.stop="handleComment(memo)">
@@ -220,39 +246,6 @@ function onMemoTagClick(tagName: string) {
 </template>
 
 <style scoped>
-/* Pixel style layout */
-.pixel-layout {
-  background-color: var(--pixel-bg-primary);
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.pixel-card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary),
-    6px 6px 0 var(--pixel-bg-secondary);
-}
-
-.pixel-text {
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-  font-size: 0.875rem;
-  line-height: 1.4;
-}
-
-/* Pixel style avatar */
-.pixel-avatar {
-  border: 2px solid var(--pixel-border-primary);
-}
-
 /* Animation styles */
 .memo-fade-enter-active,
 .memo-fade-leave-active {
@@ -288,11 +281,6 @@ function onMemoTagClick(tagName: string) {
 }
 
 @media (min-width: 768px) {
-  .pixel-layout {
-    padding: 2rem;
-    gap: 2rem;
-  }
-
   .pixel-card {
     padding: 2rem;
   }

@@ -13,6 +13,7 @@ export interface ApiResponse<T = any> {
   data: T
   message?: string
   error?: any
+  code?: number // 改为数值类型的错误代码
 }
 
 declare module 'nuxt/app' {

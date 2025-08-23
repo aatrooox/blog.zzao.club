@@ -31,9 +31,13 @@ export default defineStandardResponseHandler(async (event) => {
   const nickname = visitorName || username
 
   if (existingUser.length > 0) {
-    const tokenInfo = await upsertAccessToken(existingUser[0].id)
+    // 为现有游客用户生成新的token对
+    const tokenPair = await generateTokenPair(existingUser[0].id)
     return {
-      token: tokenInfo.token,
+      accessToken: tokenPair.accessToken,
+      refreshToken: tokenPair.refreshToken,
+      accessExpiresAt: tokenPair.accessExpiresAt,
+      refreshExpiresAt: tokenPair.refreshExpiresAt,
       user: existingUser[0],
     }
   }
@@ -55,9 +59,13 @@ export default defineStandardResponseHandler(async (event) => {
     .where(eq(users.id, visitorId))
     .limit(1)
 
-  const tokenInfo = await upsertAccessToken(user[0].id)
+  // 为新游客用户生成token对
+  const tokenPair = await generateTokenPair(user[0].id)
   return {
-    token: tokenInfo.token,
+    accessToken: tokenPair.accessToken,
+    refreshToken: tokenPair.refreshToken,
+    accessExpiresAt: tokenPair.accessExpiresAt,
+    refreshExpiresAt: tokenPair.refreshExpiresAt,
     user: user[0],
   }
 })

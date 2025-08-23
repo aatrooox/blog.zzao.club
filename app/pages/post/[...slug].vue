@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CommentData } from '@nuxtjs/mdc'
 import type { Visitor } from '~~/types/blog'
-import type { BlogCommentWithUserInfo, User } from '~~/types/blog-drizzle'
+import type { BlogCommentWithUserInfo } from '~~/types/blog-drizzle'
 import type { ApiResponse } from '~~/types/fetch'
 import { camelCaseToHyphen, EffectCssAttrs, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs } from '@/config/richText'
 
@@ -9,16 +9,38 @@ const toast = useGlobalToast()
 const { $api } = useNuxtApp()
 const userStore = useUser()
 const navBarStore = useNavBar()
-const clientjs = useClientjs()
+// const clientjs = useClientjs()
 const route = useRoute()
+const curMdContentRef = useTemplateRef('curMdContentRef')
+const articleWrap = useTemplateRef('articleWrap')
+const tocContainer = useTemplateRef('tocContainer')
+const titleRef = useTemplateRef('titleRef')
 const activeTocId = ref('')
-const curMdContentRef = templateRef('curMdContentRef')
-const articleWrap = templateRef('articleWrap')
-const tocContainer = templateRef('tocContainer')
+// const actionContainer = useTemplateRef('actionContainer')
 const selectedText = ref()
 const { text, rects, selection } = useTextSelection()
 const isTocFixed = ref(false)
 
+// 使用吸顶组合式函数
+const { isSticky: _isTitleSticky } = useSticky(titleRef, {
+  topOffset: 0, // 吸顶到页面顶部
+  triggerOffset: 24, // 额外的触发偏移
+  debug: true, // 启用调试日志
+})
+
+// 使用视口元素检测组合式函数
+const { firstVisibleId, visibleIds: _visibleIds, refresh: _refreshViewport } = useViewportHeadings({
+  debug: true, // 启用调试日志
+  rootMargin: '0px 0px -80% 0px', // 当标题进入视口前20%时触发
+})
+
+const { formatDate } = useDayjs()
+
+watch(firstVisibleId, (val) => {
+  if (val) {
+    activeTocId.value = val
+  }
+})
 const likeCount = ref(0)
 const isLiked = ref(false)
 const comments = ref<BlogCommentWithUserInfo[]>([])
@@ -169,6 +191,7 @@ useHead({
 
 watch(() => page, (val) => {
   if (!val) {
+    console.log(page.value)
     throw createError({
       statusCode: 404,
       message: '页面不存在',
@@ -178,6 +201,7 @@ watch(() => page, (val) => {
 })
 
 const tocData = computed(() => {
+  console.log('toc =>', page.value?.body?.toc?.links)
   return page.value?.body?.toc?.links
 })
 
@@ -359,11 +383,20 @@ async function createComment(data: CommentData) {
   }
 }
 async function likePage() {
+  console.log(page)
   // 游客点赞 生成指纹 -> 注册为游客 (随机用户名 + 固定id)
   if (!userStore.user.value.id) {
-    const res = await $api.post<ApiResponse<{ user: User, token: string }>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-    userStore.setUser(res.data.user)
-    userStore.setToken(res.data.token)
+    await createVistorID()
+    // const res = await $api.post<ApiResponse<LoginResponse>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
+    // const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
+
+    // userStore.setUser(user)
+    // userStore.setTokenInfo({
+    //   accessToken,
+    //   refreshToken,
+    //   accessExpiresAt,
+    //   refreshExpiresAt,
+    // })
     // return toast.add({ type: 'warning', message: '登录后才能点赞' })
   };
 
@@ -501,7 +534,6 @@ function getAllTextNodes(element) {
 
   // 递归函数获取所有文本节点
   function getTextNodes(node) {
-    console.log(`node`, node)
     if (!node)
       return
     if (node.nodeType === Node.TEXT_NODE) {
@@ -530,15 +562,19 @@ function handleTocScroll() {
   // 当滚动距离超过TOC容器位置减去标题栏高度时，启用固定定位
   isTocFixed.value = scrollTop > (tocOffset - headerHeight)
 }
+// 统一的滚动处理函数
+function handleScroll() {
+  handleTocScroll()
+}
 
 onMounted(() => {
-  // 添加滚动监听
-  window.addEventListener('scroll', handleTocScroll, { passive: true })
+  // 添加滚动监听（仅用于 TOC）
+  window.addEventListener('scroll', handleScroll, { passive: true })
 })
 
 onUnmounted(() => {
   // 移除滚动监听
-  window.removeEventListener('scroll', handleTocScroll)
+  window.removeEventListener('scroll', handleScroll)
 })
 
 watchEffect(async () => {
@@ -554,60 +590,10 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <div class="pb-10 m-auto mb-4 font-mono pixel-layout">
+  <div class="pb-10 m-auto mb-4 font-mono">
     <div class="relative w-full max-w-full flex justify-center">
-      <!-- 底部固定的操作栏 -->
-      <ClientOnly>
-        <div
-          class="md:hidden page-fixed-footer fixed left-0 right-0 bottom-0 bg-gray-900/90 border-t-2 border-gray-800 py-3 px-4 flex gap-4 justify-between w-full max-w-3xl mx-auto shadow-pixel transition-all duration-300 z-[49] backdrop-blur-sm"
-        >
-          <div class="left flex gap-2">
-            <Button variant="ghost" text size="sm" class="pixel-btn pixel-btn-sm">
-              <Icon name="icon-park-outline:thumbs-up" @click="likePage" />
-              <span>{{ likeCount }}</span>
-            </Button>
-            <Button variant="ghost" text size="sm" class="pixel-btn pixel-btn-sm" @click="navigateTo('#评论区')">
-              <Icon name="icon-park-outline:comments" />
-              <span>{{ formatCommentCount }}</span>
-            </Button>
-            <Button variant="ghost" text size="sm" class="pixel-btn pixel-btn-sm" @click="copyLink">
-              <Icon name="material-symbols:share-reviews-outline-rounded" />
-            </Button>
-            <Button variant="ghost" text size="sm" class="pixel-btn pixel-btn-sm" @click="getInnerHTML">
-              <Icon name="icon-park-outline:wechat" />
-            </Button>
-          </div>
-          <div class="right pr-6 md:pr-0">
-            <Button label="返回" variant="secondary" class="pixel-btn pixel-btn-primary" @click="navigateTo('/article')">
-              <Icon name="icon-park-outline:back" />
-            </Button>
-          </div>
-        </div>
-      </ClientOnly>
-
-      <div v-if="page" class="flex w-full max-w-7xl mx-auto gap-8">
-        <!-- 左侧点赞评论操作栏 -->
-        <!-- <ClientOnly>
-          <div class="flex-col gap-4 h-80 hidden md:flex top-28 sticky">
-            <div class="pixel-card-action flex flex-col items-center cursor-pointer">
-              <Icon name="icon-park-outline:thumbs-up" size="1.5em" class="text-gray-100 mb-1" @click="likePage" />
-              <span class="text-xs font-mono font-bold text-gray-100">{{ likeCount }}</span>
-            </div>
-            <div class="pixel-card-action cursor-pointer">
-              <NuxtLink href="#评论区" class="flex flex-col items-center">
-                <Icon name="icon-park-outline:comments" size="1.5em" class="text-gray-100 mb-1" />
-                <span class="text-xs font-mono font-bold text-gray-100">{{ formatCommentCount }}</span>
-              </NuxtLink>
-            </div>
-            <div class="pixel-card-action flex flex-col items-center cursor-pointer" @click="copyLink">
-              <Icon name="material-symbols:share-reviews-outline-rounded" size="1.5em" class="text-gray-100" />
-            </div>
-            <div class="pixel-card-action flex flex-col items-center cursor-pointer" data-umami-event="wx-copy-btn" @click="getInnerHTML">
-              <Icon name="icon-park-outline:wechat" size="1.5em" class="text-gray-100" />
-            </div>
-          </div>
-        </ClientOnly> -->
-        <div ref="articleWrap" class="article-wrap relative max-w-4xl flex flex-col flex-1 md:px-6 box-border my-6">
+      <div v-if="page" class="flex w-full max-w-full md:max-w-7xl  mx-auto gap-8">
+        <div ref="articleWrap" class="article-wrap relative max-w-full md:max-w-4xl flex flex-col flex-1 md:px-6 box-border my-6">
           <!-- 选中文字的悬浮气泡 -->
           <ClientOnly>
             <transition appear @enter="commentEnter" @before-enter="commentBeforeEnter" @leave="commentLeave">
@@ -633,16 +619,36 @@ watchEffect(async () => {
             </transition>
           </ClientOnly>
           <!-- 悬浮标题栏 -->
-          <div
-            v-if="!navBarStore.navBar.value?.isHidden"
-            class="fixed-title text-lg md:text-xl font-mono font-bold text-center overflow-hidden text-ellipsis h-12 leading-12 fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-gray-900/90 border-b-2 border-gray-800 backdrop-blur-sm text-gray-100"
+          <h1
+            ref="titleRef"
+            class="text-center text-2xl font-bold title-normal transition-all duration-150 ease-out"
           >
             {{ page?.title }}
-          </div>
-
+          </h1>
+          <ClientOnly>
+            <div class="article-actions flex gap-8 justify-center text-sm text-text-pixel-secondary py-2">
+              <div>{{ formatDate(page.date ?? '') }}</div>
+              <div class="flex items-center cursor-pointer gap-1.5">
+                <Icon name="icon-park-outline:thumbs-up" class="" @click="likePage" />
+                <span class="font-mono ">{{ likeCount }}</span>
+              </div>
+              <div class="cursor-pointer">
+                <NuxtLink href="#评论区" class="flex items-center gap-1.5">
+                  <Icon name="icon-park-outline:comments" class="" />
+                  <span class=" font-mono ">{{ formatCommentCount }}</span>
+                </NuxtLink>
+              </div>
+              <div class="flex items-center cursor-pointer" @click="copyLink">
+                <Icon name="material-symbols:share-reviews-outline-rounded" class="" />
+              </div>
+              <div class="flex items-center cursor-pointer" data-umami-event="wx-copy-btn" @click="getInnerHTML">
+                <Icon name="icon-park-outline:wechat" class="" />
+              </div>
+            </div>
+          </ClientOnly>
           <!-- 文章内容 markdown -->
-          <article ref="curMdContentRef" class="content-wrap prose-invert prose-lg max-w-none p-6 w-full">
-            <ContentRenderer :value="page?.body" />
+          <article ref="curMdContentRef" class="content-wrap prose-invert prose-lg max-w-none p-0 md:p-6 w-full">
+            <ContentRenderer :value="page?.body" class="max-w-full" />
           </article>
           <!-- 相邻的文章 -->
           <ClientOnly>
@@ -712,8 +718,8 @@ watchEffect(async () => {
               <div class="simple-toc pixel-card" :class="{ 'toc-fixed': isTocFixed }">
                 <ul class="simple-toc-list">
                   <template v-for="link in tocData" :key="link.id">
-                    <li class="simple-toc-item" :class="{ active: link.id === activeTocId }">
-                      <a :href="`#${link.id}`" class="simple-toc-link">
+                    <li class="simple-toc-item">
+                      <a :href="`#${link.id}`" :class="`simple-toc-link ${link.id === activeTocId ? 'text-accent-pixel-primary' : ''}`">
                         {{ link.text }}
                       </a>
                     </li>
@@ -990,6 +996,8 @@ watchEffect(async () => {
   overflow-y: auto;
   z-index: 100;
   transition: all 0.3s ease;
+  position: sticky;
+  top: 100px;
 }
 
 /* TOC固定定位样式 */
@@ -997,6 +1005,11 @@ watchEffect(async () => {
   position: fixed;
   top: 80px;
   right: max(32px, calc((100vw - 1280px) / 2 + 32px));
+}
+
+.action-fixed {
+  position: fixed;
+  top: 100px;
 }
 
 .simple-toc-header {
@@ -1032,7 +1045,6 @@ watchEffect(async () => {
 .simple-toc-link {
   display: block;
   padding: 6px 8px;
-  color: var(--pixel-text-primary);
   text-decoration: none;
   font-size: 13px;
   line-height: 1.4;
@@ -1064,5 +1076,25 @@ watchEffect(async () => {
 
 .simple-toc::-webkit-scrollbar-thumb:hover {
   background: var(--pixel-text-disabled);
+}
+
+/* 标题吸顶样式 */
+.title-fixed {
+  position: fixed;
+  top: 0;
+  transform: none;
+  backdrop-filter: blur(8px);
+  z-index: 50;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.05); /* 轻微的半透明背景 */
+}
+
+.title-normal {
+  position: relative;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  padding: 0;
 }
 </style>

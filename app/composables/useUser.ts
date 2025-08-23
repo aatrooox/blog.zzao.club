@@ -1,33 +1,83 @@
 import type { User } from '~~/types/memo'
 import { useStorage } from '@vueuse/core'
 
+interface TokenInfo {
+  accessToken: string
+  refreshToken: string
+  accessExpiresAt: string
+  refreshExpiresAt: string
+}
+
 export function useUser() {
   // 持久化存储
-  const userStorage = import.meta.client ? useStorage('blog/user', {}) : ref({})
-  const tokenStorage = import.meta.client ? useStorage('blog/token', '') : ref('')
+  const userStorage = import.meta.client
+    ? useStorage('blog/user', {})
+    : ref({})
+  const tokenStorage = import.meta.client
+    ? useStorage('blog/tokenInfo', {
+        accessToken: '',
+        refreshToken: '',
+        accessExpiresAt: '',
+        refreshExpiresAt: '',
+      })
+    : ref({
+        accessToken: '',
+        refreshToken: '',
+        accessExpiresAt: '',
+        refreshExpiresAt: '',
+      })
 
   // 用户状态管理
   const user = useState<User | any>('user', () => {
     if (import.meta.client) {
-      // 客户端从 localStorage 读取
       const stored = localStorage.getItem('blog/user')
       return stored ? JSON.parse(stored) : {}
     }
     return {}
   })
 
-  // Token状态管理
-  const token = useState<string>('token', () => {
+  // Token信息状态管理
+  const tokenInfo = useState<TokenInfo>('tokenInfo', () => {
     if (import.meta.client) {
-      // 客户端从 localStorage 读取
-      return localStorage.getItem('blog/token') || ''
+      const stored = localStorage.getItem('blog/tokenInfo')
+      return stored
+        ? JSON.parse(stored)
+        : {
+            accessToken: '',
+            refreshToken: '',
+            accessExpiresAt: '',
+            refreshExpiresAt: '',
+          }
     }
-    return ''
+    return {
+      accessToken: '',
+      refreshToken: '',
+      accessExpiresAt: '',
+      refreshExpiresAt: '',
+    }
   })
 
-  // 仅在客户端执行，用于从 localStorage 恢复状态
+  // 向后兼容的token getter
+  const token = computed(() => tokenInfo.value.accessToken)
+
+  // 检查access token是否过期
+  const isAccessTokenExpired = computed(() => {
+    if (!tokenInfo.value.accessExpiresAt) {
+      return true
+    }
+    return new Date() >= new Date(tokenInfo.value.accessExpiresAt)
+  })
+
+  // 检查refresh token是否过期
+  const isRefreshTokenExpired = computed(() => {
+    if (!tokenInfo.value.refreshExpiresAt) {
+      return true
+    }
+    return new Date() >= new Date(tokenInfo.value.refreshExpiresAt)
+  })
+
+  // 仅在客户端执行，从 localStorage 恢复状态
   if (import.meta.client) {
-    // 页面加载时，如果 user state 为空，则尝试从 localStorage 恢复
     if (!user.value.id) {
       const storedUser = localStorage.getItem('blog/user')
       if (storedUser) {
@@ -39,9 +89,17 @@ export function useUser() {
         }
       }
     }
-    // 页面加载时，如果 token state 为空，则尝试从 localStorage 恢复
-    if (!token.value) {
-      token.value = localStorage.getItem('blog/token') || ''
+
+    if (!tokenInfo.value.accessToken) {
+      const storedTokenInfo = localStorage.getItem('blog/tokenInfo')
+      if (storedTokenInfo) {
+        try {
+          tokenInfo.value = JSON.parse(storedTokenInfo)
+        }
+        catch (e) {
+          console.error('Failed to parse tokenInfo from localStorage', e)
+        }
+      }
     }
   }
 
@@ -52,27 +110,37 @@ export function useUser() {
       localStorage.setItem('blog/user', JSON.stringify(newUser))
     }, { deep: true })
 
-    watch(token, (newToken) => {
-      tokenStorage.value = newToken
-      localStorage.setItem('blog/token', newToken)
-    })
+    watch(tokenInfo, (newTokenInfo) => {
+      tokenStorage.value = newTokenInfo
+      localStorage.setItem('blog/tokenInfo', JSON.stringify(newTokenInfo))
+    }, { deep: true })
   }
 
   const setUser = (userData: User) => {
     user.value = userData
   }
 
+  const setTokenInfo = (newTokenInfo: Partial<TokenInfo>) => {
+    tokenInfo.value = { ...tokenInfo.value, ...newTokenInfo }
+  }
+
+  // 向后兼容的setToken方法
   const setToken = (newToken: string) => {
-    token.value = newToken
+    tokenInfo.value.accessToken = newToken
   }
 
   const logout = () => {
     user.value = {}
-    token.value = ''
+    tokenInfo.value = {
+      accessToken: '',
+      refreshToken: '',
+      accessExpiresAt: '',
+      refreshExpiresAt: '',
+    }
   }
 
   const isLogin = computed(() => {
-    return !!(user.value as User).id
+    return !!(user.value as User).id && !!tokenInfo.value.accessToken
   })
 
   const isVisitor = computed(() => {
@@ -85,9 +153,13 @@ export function useUser() {
 
   return {
     user: readonly(user),
-    token: readonly(token),
+    token: readonly(token), // 向后兼容
+    tokenInfo: readonly(tokenInfo),
+    isAccessTokenExpired,
+    isRefreshTokenExpired,
     setUser,
-    setToken,
+    setToken, // 向后兼容
+    setTokenInfo,
     isLogin,
     isVisitor,
     isSuperAdmin,

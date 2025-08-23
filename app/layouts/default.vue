@@ -44,11 +44,11 @@ const appNavBar = [
     path: '/links',
     icon: 'pixelarticons:mood-neutral',
   },
-  {
-    name: '关于',
-    path: '/about',
-    icon: 'pixelarticons:info-box',
-  },
+  // {
+  //   name: '关于',
+  //   path: '/about',
+  //   icon: 'pixelarticons:info-box',
+  // },
 ]
 
 const isPostPage = computed(() => {
@@ -154,7 +154,7 @@ function scrollToTop() {
         <div class="pixel-sidebar-header">
           <!-- 用户信息区域 -->
           <div v-if="isLogin" class="pixel-user-info">
-            <UserAvatar :user="user" class="pixel-user-avatar" />
+            <UserAvatar :user="user" :size="60" class="pixel-user-avatar" />
           </div>
           <!-- 未登录时显示默认图标 -->
           <div v-else class="pixel-login-trigger" @click="showLoginDialog = true">
@@ -195,7 +195,7 @@ function scrollToTop() {
       <main
         ref="scrollWrap"
         v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]"
-        class="pixel-main"
+        class="pixel-main bg-bg-pixel-secondary md:bg-bg-pixel-primary"
       >
         <slot />
       </main>
@@ -203,6 +203,14 @@ function scrollToTop() {
       <!-- 移动端悬浮底部导航 -->
       <nav class="pixel-nav-floating">
         <div class="pixel-nav-container">
+          <!-- 用户信息区域 -->
+          <div v-if="isLogin" class="pixel-user-info">
+            <UserAvatar :user="user" :size="40" class="pixel-user-avatar" />
+          </div>
+          <!-- 未登录时显示默认图标 -->
+          <div v-else class="pixel-login-trigger" @click="showLoginDialog = true">
+            <Icon name="pixelarticons:mood-sad" class="pixel-sidebar-logo-phone" />
+          </div>
           <NuxtLink
             v-for="nav in appNavBar"
             :key="nav.path"
@@ -242,15 +250,6 @@ function scrollToTop() {
 
 <style scoped>
 @reference 'tailwindcss';
-
-/* 使用公共像素风格变量和类 */
-.pixel-layout {
-  @apply min-h-screen;
-  background: var(--pixel-bg-primary);
-  font-family:
-    ui-monospace, SFMono-Regular, 'Cascadia Code', 'Segoe UI Mono', 'Liberation Mono', Menlo, Monaco, Consolas,
-    'Courier New', monospace;
-}
 
 .pixel-main {
   @apply overflow-y-auto pb-24 min-h-[calc(100vh-80px)] p-4;
@@ -317,6 +316,11 @@ function scrollToTop() {
 }
 
 .pixel-sidebar-logo {
+  @apply w-8 h-8;
+  color: var(--pixel-accent-cyan);
+}
+
+.pixel-sidebar-logo-phone {
   @apply w-8 h-8;
   color: var(--pixel-accent-cyan);
 }

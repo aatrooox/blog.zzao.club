@@ -18,8 +18,13 @@
   @apply prose prose-zinc prose-p:leading-5 prose-p:mb-2 dark:text-zinc-200 dark:prose-strong:text-zinc-200 prose-code:bg-cyan-100 dark:prose-code:bg-cyan-600 prose-code:text-zinc-800 dark:prose-code:text-zinc-800 dark:prose-blockquote:text-zinc-300;
 } */
 
-pre > code {
+/* mdc 相关样式 */
+.prose pre > code {
   @apply block align-top p-0 leading-normal;
+}
+
+.memo-mdc .prose-p {
+  @apply !my-2;
 }
 .hover-shadow-cyan {
   @apply hover:shadow-md transition-shadow duration-300 hover:shadow-cyan-600;
@@ -149,7 +154,8 @@ pre > code {
   --pixel-shadow-light: oklch(50% 0.03 250); /* 浅色阴影 */
 
   /* 强调色系 */
-  --pixel-accent-primary: rgba(28, 28, 30, 1); /* 青色强调 - 主要按钮 */
+  --pixel-accent-primary: rgb(0, 137, 179); /* 青色强调 - 主要按钮 */
+  --pixel-accent-secondary: rgb(255, 107, 53); /* 青色强调 - 主要按钮 */
   --pixel-accent-cyan: rgb(0, 162, 162); /* 青色强调 - 主要按钮 */
   --pixel-accent-cyan-hover: rgb(0, 202, 203); /* 青色悬停 */
   --pixel-accent-cyan-light: oklch(80% 0.1 195); /* 淡青色 */
@@ -441,7 +447,9 @@ body {
 }
 
 /* 像素风格公共类 */
-
+.pixel-layout {
+  @apply bg-bg-pixel-primary text-text-pixel-primary min-h-screen;
+}
 /* 像素按钮 */
 .pixel-btn {
   @apply bg-bg-pixel-secondary border-2 border-border-pixel-primary text-text-pixel-primary;
@@ -470,11 +478,11 @@ body {
 .pixel-card,
 .pixel-card-elevated {
   @apply bg-bg-pixel-card border-2 border-b-4 border-r-4 border-border-pixel-primary;
-  @apply p-4 m-2 transition-all duration-200 ease-in-out;
+  @apply p-4 transition-all duration-200 ease-in-out;
 }
 .pixel-card:hover,
 .pixel-card-elevated:hover {
-  @apply -translate-y-0.5 border-b-4 border-r-4 bg-bg-pixel-tertiary;
+  @apply -translate-y-0.5 border-b-4 border-r-4 bg-bg-pixel-tertiary border-accent-pixel-primary;
 }
 
 /* 像素边框 */
@@ -584,12 +592,12 @@ body {
 }
 
 .pixel-tag {
-  @apply bg-bg-pixel-card text-accent-pixel-primary border-2 border-border-pixel-primary;
+  @apply bg-bg-pixel-card text-border-pixel-primary border-2 border-border-pixel-primary;
   @apply px-2 py-0.5 rounded shadow-pixel-tag transition-all duration-150 ease-in-out;
 }
 
 .pixel-tag:hover {
-  @apply bg-bg-pixel-tertiary text-accent-pixel-cyan-hover -translate-y-px shadow-pixel-tag-hover;
+  @apply bg-bg-pixel-tertiary text-accent-pixel-primary -translate-y-px shadow-pixel-tag-hover;
 }
 
 .pixel-tag:active {

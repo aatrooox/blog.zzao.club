@@ -10,6 +10,7 @@ export default defineStandardResponseHandler(async (event) => {
     visible: z.string().optional(),
     defalt_floded: z.boolean().optional(),
     flod_tip: z.string().optional(),
+    photos: z.array(z.string()).optional(), // 新增字段，允许上传多张图片
   }))
 
   if (!body.success) {
@@ -37,26 +38,49 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
-  const updateData: any = {
-    ...memoData,
-  }
+  // 构建更新数据，只包含允许更新的字段，避免时间戳字段
+  const updateData: Record<string, any> = {}
 
-  // 删除 tags 字段，因为我们要单独处理
-  delete updateData.tags
+  if (memoData.content !== undefined)
+    updateData.content = memoData.content
+  if (memoData.visible !== undefined)
+    updateData.visible = memoData.visible
+  if (memoData.defalt_floded !== undefined)
+    updateData.defaltFloded = Boolean(memoData.defalt_floded)
+  if (memoData.flod_tip !== undefined)
+    updateData.flodTip = memoData.flod_tip
+  if (memoData.photos !== undefined && Array.isArray(memoData.photos))
+    updateData.photos = memoData.photos
+
+  console.log('接收到的原始数据:', memoData)
+  console.log('准备更新的数据:', updateData)
 
   // 先删除现有的标签关联
-  await db.delete(memoTagRelations).where(eq(memoTagRelations.memoId, id))
+  try {
+    console.log('删除现有标签关联...')
+    await db.delete(memoTagRelations).where(eq(memoTagRelations.memoId, id))
+    console.log('标签关联删除成功')
+  }
+  catch (error) {
+    console.error('删除标签关联失败:', error)
+    // 不抛出错误，继续执行更新操作
+  }
 
-  // 更新备忘录
-  await db.update(blogMemos)
-    .set(updateData)
-    .where(eq(blogMemos.id, id))
-    .catch(() => {
-      throw createError({
-        statusCode: 500,
-        message: '更新失败',
-      })
+  // 更新备忘录 - 使用简单更新，避免时间戳问题
+  try {
+    console.log('开始更新memo...')
+    await db.update(blogMemos)
+      .set(updateData)
+      .where(eq(blogMemos.id, id))
+    console.log('更新成功')
+  }
+  catch (error) {
+    console.error('更新memo失败详细错误:', error)
+    throw createError({
+      statusCode: 500,
+      message: `更新失败: ${String(error)}`,
     })
+  }
 
   // 获取更新后的数据
   const [data] = await db.select().from(blogMemos).where(eq(blogMemos.id, id)).limit(1)
@@ -77,13 +101,10 @@ export default defineStandardResponseHandler(async (event) => {
         tag = existingTag[0]
       }
       else {
-        // 创建新标签
-        const now = new Date()
+        // 创建新标签（让数据库自动设置时间戳）
         await db.insert(memoTags).values({
           tagName,
           userId: event.context.userId,
-          createTs: now,
-          updatedTs: now,
         })
         // 获取刚创建的标签
         const [newTag] = await db.select().from(memoTags).where(
@@ -95,13 +116,10 @@ export default defineStandardResponseHandler(async (event) => {
         tag = newTag
       }
 
-      // 创建关联
-      const now = new Date()
+      // 创建关联（让数据库自动设置时间戳）
       await db.insert(memoTagRelations).values({
         tagId: tag.id,
         memoId: id,
-        createTs: now,
-        updatedTs: now,
       })
     }
   }

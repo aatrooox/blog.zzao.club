@@ -34,6 +34,7 @@ export default defineNuxtConfig({
     {
       path: '~/components/ui',
       prefix: '',
+      extensions: ['.vue'],
     },
     {
       path: '~/components/animate',
@@ -181,6 +182,10 @@ export default defineNuxtConfig({
     umamiHost: 'https://umami.abc.com',
     umamiUser: 'admin',
     umamiPass: 'your_umami_password',
+    cosRegion: '',
+    cosSecretId: '',
+    cosSecretKey: '',
+    cosBucket: '',
     public: {
       ContentVersion: '3.0.0',
       Z_BLOG_VERSION: appVersion,
@@ -196,11 +201,17 @@ export default defineNuxtConfig({
   },
   sourcemap: {
     server: isDev,
-    client: isDev ?? 'inline',
+    client: isDev,
   },
   compatibilityDate: '2024-10-29',
   nitro: {
     // preset: 'bun',
+    experimental: {
+      tasks: true,
+    },
+    // scheduledTasks: {
+    //   '0 * * * *': ['news:juejin'],
+    // },
     errorHandler: '~~/server/error',
     storage: {
       redis: {
@@ -246,7 +257,7 @@ export default defineNuxtConfig({
   },
   vite: {
     esbuild: {
-      drop: ['console', 'debugger'],
+      drop: isDev ? [] : ['console', 'debugger'],
     },
     plugins: [
       tailwindcss(),

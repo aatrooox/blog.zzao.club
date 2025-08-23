@@ -42,6 +42,7 @@ export default {
         },
         accent: {
           'pixel-primary': 'var(--pixel-accent-primary)',
+          'pixel-secondary': 'var(--pixel-accent-secondary)',
           'pixel-cyan': 'var(--pixel-accent-cyan)',
           'pixel-cyan-hover': 'var(--pixel-accent-cyan-hover)',
           'pixel-cyan-light': 'var(--pixel-accent-cyan-light)',
@@ -59,6 +60,7 @@ export default {
           'pixel-info-border': 'var(--pixel-status-info-border)',
         },
         highlight: {
+          'pixel-cyan': 'var(--pixel-accent-cyan)',
           'pixel-yellow': 'var(--pixel-highlight-yellow)',
           'pixel-green': 'var(--pixel-highlight-green)',
           'pixel-green-text': 'var(--pixel-highlight-green-text)',
