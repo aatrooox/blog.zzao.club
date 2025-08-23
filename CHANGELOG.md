@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v2.3.7
+
+[compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v2.3.6...v2.3.7)
+
+### 🩹 Fixes
+
+- 移动端高度限制 (4078599)
+
+### 🏡 Chore
+
+- Tasks (ce02ea8)
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.6
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.5...v2.3.6)
