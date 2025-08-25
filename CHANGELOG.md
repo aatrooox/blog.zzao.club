@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v2.3.10
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.9...v2.3.10)
+
+### 🩹 Fixes
+
+- 修复请求重试问题 ([ea18f0b](https://github.com/aatrooox/blog.zzao.club/commit/ea18f0b))
+
+### 🏡 Chore
+
+- 尝试使用 github 构建 ([a0034c4](https://github.com/aatrooox/blog.zzao.club/commit/a0034c4))
+- Eslint ([d926156](https://github.com/aatrooox/blog.zzao.club/commit/d926156))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.9
 
 [compare changes](https://43.156.136.151/zzaoclub/blogz/compare/v2.3.8...v2.3.9)
