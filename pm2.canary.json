@@ -2,13 +2,15 @@
   "apps": [
     {
       "name": "Blog-Canary",
-      "port": "4572",
-      "exec_mode": "fork",
       "script": "./server/index.mjs",
+      "exec_mode": "fork",
+      "node_args": ["-r", "dotenv/config"],
       "env": {
         "HOST": "0.0.0.0",
         "PORT": "4572",
-        "NITRO_PORT": "4572"
+        "NITRO_PORT": "4572",
+        "DOTENV_CONFIG_PATH": "/root/envs/blog/.env",
+        "DOTENV_CONFIG_ENCODING": "utf8"
       }
     }
   ]

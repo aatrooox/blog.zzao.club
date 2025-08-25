@@ -121,14 +121,10 @@ jobs:
             fi
           fi
 
-          # Start/Reload only canary instance on a different port/name
-          if [ -n "$DOTENV" ]; then
-            eval "$DOTENV" bash -lc 'export HOST=0.0.0.0 PORT=4572 NITRO_PORT=4572; pm2 describe Blog-Canary >/dev/null 2>&1 && pm2 reload Blog-Canary --update-env || pm2 start pm2.canary.json --update-env; pm2 save'
-          else
-            export HOST=0.0.0.0 PORT=4572 NITRO_PORT=4572
-            pm2 describe Blog-Canary >/dev/null 2>&1 && pm2 reload Blog-Canary --update-env || pm2 start pm2.canary.json --update-env
-            pm2 save
-          fi
+          # Start cleanly: rely on pm2.canary.json node_args (dotenv/config)
+          pm2 delete Blog-Canary >/dev/null 2>&1 || true
+          pm2 start pm2.canary.json --update-env
+          pm2 save
           EOSSH
 
       - name: Notify (Feishu)
