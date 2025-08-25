@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.3.15
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.14...v2.3.15)
+
+### 🏡 Chore
+
+- Ci fix ([8ae01ed](https://github.com/aatrooox/blog.zzao.club/commit/8ae01ed))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.14
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.13...v2.3.14)
