@@ -10,26 +10,27 @@ export default defineNuxtPlugin({
   async setup() {
     // 是否正在刷新token的标记
     let isRefreshing = false
-    // 待重试的请求队列
+    // 待重试的请求队列（保证只 resolve，避免上层收到 reject 导致未捕获异常）
     let failedQueue: Array<{
-      resolve: (value: any) => void
-      reject: (reason: any) => void
-      requestFn: () => Promise<any> // 保存重试函数
+      resolve: (value: ApiResponse<any>) => void
+      requestFn: () => Promise<ApiResponse<any>> // 保存重试函数
     }> = []
 
     // 处理队列中的请求
     const processQueue = (error: any) => {
-      failedQueue.forEach(({ resolve, reject, requestFn }) => {
+      const queue = failedQueue
+      failedQueue = []
+      queue.forEach(({ resolve, requestFn }) => {
         if (error) {
-          reject(error)
+          resolve({ data: null as any, error: true, message: error?.message || '请求失败' })
         }
         else {
-          // 重新发起原始请求
-          requestFn().then(resolve).catch(reject)
+          // 重新发起原始请求，确保即便失败也以 ApiResponse 形式 resolve
+          requestFn()
+            .then(resolve)
+            .catch(e => resolve({ data: null as any, error: true, message: e?.message || '请求失败' }))
         }
       })
-
-      failedQueue = []
     }
 
     // 创建自定义 fetch 实例
@@ -39,7 +40,14 @@ export default defineNuxtPlugin({
 
         // 设置Authorization头
         if (userStore.tokenInfo.value.accessToken) {
-          options.headers.set('Authorization', `Bearer ${userStore.tokenInfo.value.accessToken}`)
+          // 兼容 HeadersInit：统一为 Headers 再 set
+          if (!options.headers) {
+            options.headers = new Headers()
+          }
+          else if (!(options.headers instanceof Headers)) {
+            options.headers = new Headers(options.headers as any)
+          }
+          ;(options.headers as Headers).set('Authorization', `Bearer ${userStore.tokenInfo.value.accessToken}`)
         }
       },
 
@@ -49,7 +57,8 @@ export default defineNuxtPlugin({
 
         // 处理业务层面的错误（200状态码 + 错误代码）
         const apiResponse = response._data
-        console.log('API响应:', apiResponse)
+        if (import.meta.dev)
+          console.log('API响应:', apiResponse)
 
         if (apiResponse?.code && apiResponse.code !== API_CODES.SUCCESS) {
           const { code, message } = apiResponse
@@ -77,10 +86,9 @@ export default defineNuxtPlugin({
               throw new Error('TOKEN_EXPIRED')
             }
 
-            // 如果当前正在刷新token，抛出特殊错误，让外层处理重试
-            if (isRefreshing) {
+            // 如果当前正在刷新token，抛出特殊错误，让外层处理排队/重试
+            if (isRefreshing)
               throw new Error('TOKEN_REFRESHING')
-            }
 
             // 开始刷新token
             if (userStore.tokenInfo.value.refreshToken && !userStore.isRefreshTokenExpired.value) {
@@ -92,7 +100,7 @@ export default defineNuxtPlugin({
 
                 if (success) {
                   processQueue(null)
-                  // 抛出特殊错误，让外层重试请求
+                  // 抛出特殊错误，让外层重试当前请求
                   throw new Error('TOKEN_REFRESHED')
                 }
                 else {
@@ -196,10 +204,9 @@ export default defineNuxtPlugin({
 
           if (error?.message === 'TOKEN_REFRESHING' && retryCount < 1) {
             // 正在刷新 token，加入队列等待
-            return new Promise((resolve, reject) => {
+            return new Promise<ApiResponse<T>>((resolve) => {
               failedQueue.push({
-                resolve,
-                reject,
+                resolve: resolve as (v: ApiResponse<any>) => void,
                 requestFn: () => this.request<T>(url, method, data, options, retryCount + 1),
               })
             })
