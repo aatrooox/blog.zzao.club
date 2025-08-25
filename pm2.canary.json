@@ -1,0 +1,15 @@
+{
+  "apps": [
+    {
+      "name": "Blog-Canary",
+      "port": "4572",
+      "exec_mode": "fork",
+      "script": "./server/index.mjs",
+      "env": {
+        "HOST": "0.0.0.0",
+        "PORT": "4572",
+        "NITRO_PORT": "4572"
+      }
+    }
+  ]
+}

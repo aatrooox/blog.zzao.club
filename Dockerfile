@@ -8,6 +8,16 @@ RUN npm install -g pnpm
 # 设置工作目录
 WORKDIR /app
 
+# 可选：构建期公开变量透传（用于 Nuxt 预渲染/客户端内联的 public runtimeConfig）
+# 如需覆盖，可在构建时传递：
+#   --build-arg NUXT_PUBLIC_IMG_HOST=https://img.example.com \
+#   --build-arg NUXT_BASE_URL=https://example.com
+ARG NUXT_PUBLIC_IMG_HOST
+ARG NUXT_BASE_URL
+ENV NUXT_PUBLIC_IMG_HOST=${NUXT_PUBLIC_IMG_HOST:-https://img.zzao.club}
+ENV NUXT_BASE_URL=${NUXT_BASE_URL:-https://zzao.club}
+ENV NODE_ENV=production
+
 # 复制 pnpm 相关配置文件和 package.json
 # 这样做可以利用 Docker 的层缓存机制。只有当这些文件发生变化时，才会重新执行 pnpm install。
 COPY pnpm-lock.yaml ./
@@ -40,6 +50,7 @@ COPY --from=builder /app/.output .
 # 设置环境变量
 # HOST=0.0.0.0 使得容器内的服务可以从外部访问
 # PORT=3000 是 Nuxt 默认的端口
+ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=3000
 # 您的应用使用了 Prisma，请确保在运行容器时提供 DATABASE_URL 环境变量

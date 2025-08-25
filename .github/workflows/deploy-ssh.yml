@@ -1,0 +1,124 @@
+name: Deploy via GitHub Actions (SSH + PM2 Canary)
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, 'chore(release)')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install deps
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build
+        env:
+          CONTENT_REPO_TOKEN: ${{ secrets.CONTENT_REPO_TOKEN }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NUXT_FEISHU_WEBHOOK: ${{ secrets.NUXT_FEISHU_WEBHOOK }}
+          NUXT_FEISHU_USER_ID: ${{ secrets.NUXT_FEISHU_USER_ID }}
+          NUXT_JWT_SECRET: ${{ secrets.NUXT_JWT_SECRET }}
+          NUXT_NODEMAILER_HOST: ${{ secrets.NUXT_NODEMAILER_HOST }}
+          NUXT_NODEMAILER_PORT: ${{ secrets.NUXT_NODEMAILER_PORT }}
+          NUXT_NODEMAILER_AUTH_USER: ${{ secrets.NUXT_NODEMAILER_AUTH_USER }}
+          NUXT_NODEMAILER_AUTH_PASS: ${{ secrets.NUXT_NODEMAILER_AUTH_PASS }}
+          NUXT_UMAMI_HOST: ${{ secrets.NUXT_UMAMI_HOST }}
+          NUXT_UMAMI_USER: ${{ secrets.NUXT_UMAMI_USER }}
+          NUXT_UMAMI_PASS: ${{ secrets.NUXT_UMAMI_PASS }}
+          NUXT_SESSION_PASSWORD: ${{ secrets.NUXT_SESSION_PASSWORD }}
+          NUXT_OAUTH_GITHUB_CLIENT_ID: ${{ secrets.NUXT_OAUTH_GITHUB_CLIENT_ID }}
+          NUXT_OAUTH_GITHUB_CLIENT_SECRET: ${{ secrets.NUXT_OAUTH_GITHUB_CLIENT_SECRET }}
+          NUXT_COS_SECRET_ID: ${{ secrets.NUXT_COS_SECRET_ID }}
+          NUXT_COS_SECRET_KEY: ${{ secrets.NUXT_COS_SECRET_KEY }}
+          NUXT_COS_BUCKET: ${{ secrets.NUXT_COS_BUCKET }}
+          NUXT_COS_REGION: ${{ secrets.NUXT_COS_REGION }}
+        run: |
+          NODE_OPTIONS="--max-old-space-size=4080" pnpm build
+
+      - name: Pack artifact (flatten .output)
+        run: |
+          rm -rf distpkg && mkdir -p distpkg
+          cp -R .output/* distpkg/
+          cp -f pm2.canary.json distpkg/
+          # Include Drizzle migrations & config for server-side migrate
+          mkdir -p distpkg/lib/drizzle
+          if [ -d lib/drizzle/migrations ]; then cp -R lib/drizzle/migrations distpkg/lib/drizzle/; fi
+          if [ -f drizzle.config.ts ]; then cp -f drizzle.config.ts distpkg/; fi
+          tar -C distpkg -czf artifact.tgz .
+          du -h artifact.tgz
+
+      - name: Prepare SSH key
+        run: |
+          install -m 600 /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Upload artifact via scp
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+        run: |
+          ssh -o StrictHostKeyChecking=no -p "${SSH_PORT}" "${SSH_USER}@${SSH_HOST}" "mkdir -p /root/web/blog-canary/tmp"
+          scp -P "${SSH_PORT}" artifact.tgz "${SSH_USER}@${SSH_HOST}:/root/web/blog-canary/tmp/artifact.tgz"
+
+      - name: Deploy canary & start with PM2 (isolated)
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+        run: |
+          ssh -o StrictHostKeyChecking=no -p "${SSH_PORT}" "${SSH_USER}@${SSH_HOST}" << 'EOSSH'
+          set -e
+          APP_DIR=/root/web/blog-canary
+          ENVFILE=/root/envs/blog/.env
+          TMP_DIR=$APP_DIR/tmp
+          mkdir -p "$APP_DIR" "$TMP_DIR"
+          # Clean app dir but keep tmp
+          find "$APP_DIR" -mindepth 1 -maxdepth 1 ! -name tmp -exec rm -rf {} +
+          tar -C "$APP_DIR" -xzf "$TMP_DIR/artifact.tgz"
+          cd "$APP_DIR"
+          # Source envfile for runtime variables
+          if [ -f "$ENVFILE" ]; then
+            set -a
+            . "$ENVFILE"
+            set +a
+          fi
+          # Apply Drizzle migrations on server (requires internet to fetch drizzle-kit)
+          if command -v npx >/dev/null 2>&1; then
+            npx -y drizzle-kit@0.31.4 migrate || true
+          else
+            echo "npx not found; skipping migrations"
+          fi
+          # Start/Reload only canary instance on a different port/name
+          export HOST=0.0.0.0 PORT=4572 NITRO_PORT=4572
+          pm2 describe Blog-Canary >/dev/null 2>&1 && pm2 reload Blog-Canary --update-env || pm2 start pm2.canary.json --update-env
+          pm2 save
+          EOSSH
+
+      - name: Notify (Feishu)
+        if: always()
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+            -d '{"msg_type":"text","content":{"text":"'"${{ github.repository }}"' - GH canary deploy ['"'"${{ job.status }}"'"']"}}' \
+            "${{ secrets.NUXT_FEISHU_WEBHOOK }}"
