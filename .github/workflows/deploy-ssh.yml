@@ -19,8 +19,6 @@ jobs:
 
       - name: Setup PNPM
         uses: pnpm/action-setup@v4
-        with:
-          version: 10
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -98,22 +96,36 @@ jobs:
           find "$APP_DIR" -mindepth 1 -maxdepth 1 ! -name tmp -exec rm -rf {} +
           tar -C "$APP_DIR" -xzf "$TMP_DIR/artifact.tgz"
           cd "$APP_DIR"
-          # Source envfile for runtime variables
-          if [ -f "$ENVFILE" ]; then
-            set -a
-            . "$ENVFILE"
-            set +a
-          fi
-          # Apply Drizzle migrations on server (requires internet to fetch drizzle-kit)
-          if command -v npx >/dev/null 2>&1; then
-            npx -y drizzle-kit@0.31.4 migrate || true
+          # Prefer globally installed dotenv-cli; fallback to npx dotenv-cli; else source fallback
+          if command -v dotenv >/dev/null 2>&1; then
+            DOTENV="dotenv -e \"$ENVFILE\" --"
+          elif command -v npx >/dev/null 2>&1; then
+            DOTENV="npx -y dotenv-cli -e \"$ENVFILE\" --"
           else
-            echo "npx not found; skipping migrations"
+            DOTENV=""
           fi
+
+          # Apply Drizzle migrations on server
+          if [ -n "$DOTENV" ]; then
+            eval "$DOTENV" npx -y drizzle-kit@0.31.4 migrate || true
+          else
+            echo "dotenv-cli not available; using source fallback for migrations"
+            if [ -f "$ENVFILE" ]; then set -a; . "$ENVFILE"; set +a; fi
+            if command -v npx >/dev/null 2>&1; then
+              npx -y drizzle-kit@0.31.4 migrate || true
+            else
+              echo "npx not found; skipping migrations"
+            fi
+          fi
+
           # Start/Reload only canary instance on a different port/name
-          export HOST=0.0.0.0 PORT=4572 NITRO_PORT=4572
-          pm2 describe Blog-Canary >/dev/null 2>&1 && pm2 reload Blog-Canary --update-env || pm2 start pm2.canary.json --update-env
-          pm2 save
+          if [ -n "$DOTENV" ]; then
+            eval "$DOTENV" bash -lc 'export HOST=0.0.0.0 PORT=4572 NITRO_PORT=4572; pm2 describe Blog-Canary >/dev/null 2>&1 && pm2 reload Blog-Canary --update-env || pm2 start pm2.canary.json --update-env; pm2 save'
+          else
+            export HOST=0.0.0.0 PORT=4572 NITRO_PORT=4572
+            pm2 describe Blog-Canary >/dev/null 2>&1 && pm2 reload Blog-Canary --update-env || pm2 start pm2.canary.json --update-env
+            pm2 save
+          fi
           EOSSH
 
       - name: Notify (Feishu)
