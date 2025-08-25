@@ -4,7 +4,7 @@
       "name": "Blog-Canary",
       "script": "./server/index.mjs",
       "exec_mode": "fork",
-      "node_args": ["-r", "dotenv/config"],
+      "node_args": ["-r", "./pm2.preload.cjs"],
       "env": {
         "HOST": "0.0.0.0",
         "PORT": "4572",

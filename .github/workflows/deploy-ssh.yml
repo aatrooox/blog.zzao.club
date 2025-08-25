@@ -60,6 +60,7 @@ jobs:
           rm -rf distpkg && mkdir -p distpkg
           cp -R .output/* distpkg/
           cp -f pm2.canary.json distpkg/
+          cp -f pm2.preload.cjs distpkg/
           # Include Drizzle migrations & config for server-side migrate
           mkdir -p distpkg/lib/drizzle
           if [ -d lib/drizzle/migrations ]; then cp -R lib/drizzle/migrations distpkg/lib/drizzle/; fi

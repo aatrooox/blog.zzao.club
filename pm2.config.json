@@ -2,9 +2,16 @@
   "apps": [
     {
       "name": "Blog",
-      "port": "4571",
+      "script": "./server/index.mjs",
       "exec_mode": "fork",
-      "script": "./server/index.mjs"
+      "node_args": ["-r", "./pm2.preload.cjs"],
+      "env": {
+        "HOST": "0.0.0.0",
+        "PORT": "4571",
+        "NITRO_PORT": "4571",
+        "DOTENV_CONFIG_PATH": "/root/envs/blog/.env",
+        "DOTENV_CONFIG_ENCODING": "utf8"
+      }
     }
   ]
 }

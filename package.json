@@ -44,6 +44,7 @@
     "clsx": "^2.1.1",
     "crawler": "^2.0.2",
     "dayjs": "^1.11.13",
+    "dotenv": "^16.4.5",
     "drizzle-orm": "^0.44.4",
     "embla-carousel-vue": "^8.6.0",
     "eslint": "^9.28.0",
