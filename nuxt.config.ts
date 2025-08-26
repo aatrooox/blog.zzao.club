@@ -193,6 +193,7 @@ export default defineNuxtConfig({
     '/article': { prerender: true },
     '/post/**': { prerender: true },
     '/settings': { prerender: false },
+    '/admin/**': { prerender: false },
   },
   sourcemap: {
     server: isDev,
