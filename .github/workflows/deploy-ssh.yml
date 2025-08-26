@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
   schedule:
     # 北京时间 12:00 和 24:00（UTC+8） -> 对应 UTC 04:00 与 16:00
-    - cron: "0 4 * * *"
-    - cron: "0 16 * * *"
+    - cron: '0 4 * * *'
+    - cron: '0 16 * * *'
 
 concurrency:
   group: deploy-main
