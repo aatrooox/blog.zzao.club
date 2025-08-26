@@ -297,7 +297,10 @@ const wechatMaxSize = computed(() => {
           </div>
         </div>
         <template #fallback>
-          <Skeleton :class="`w-[${wechatMaxSize.maxWidth}px] h-[200px]`" />
+          <div class="pixel-wechat-photos" :style="{ maxWidth: `${wechatMaxSize.maxWidth}px` }">
+            <!-- 宽度自适应容器，高度给一个合适占位 -->
+            <Skeleton style="width: 100%; height: 200px;" />
+          </div>
         </template>
       </ClientOnly>
     </div>
@@ -350,7 +353,12 @@ const wechatMaxSize = computed(() => {
         </div>
         <template #fallback>
           <!-- this will be rendered on server side -->
-          <Skeleton :class="`w-[${props.photoWidth}] h-[${(props.photoWidth / 3) * 4}]`" />
+          <div class="pixel-photo-section" :style="{ flexBasis: photoSectionWidth }">
+            <!-- 复用正式内容的容器以获得固定比例 -->
+            <div class="pixel-photo-container">
+              <Skeleton style="width: 100%; height: 100%;" />
+            </div>
+          </div>
         </template>
       </ClientOnly>
 
@@ -406,7 +414,11 @@ const wechatMaxSize = computed(() => {
       </div>
       <template #fallback>
         <!-- this will be rendered on server side -->
-        <Skeleton :class="`w-[${props.photoWidth}px] h-[${(props.photoWidth / 3) * 4}px]`" />
+        <div class="pixel-photos-only" :style="{ maxWidth: photoMaxWidth }">
+          <div class="pixel-photo-container-full">
+            <Skeleton style="width: 100%; height: 100%;" />
+          </div>
+        </div>
       </template>
     </ClientOnly>
 
@@ -635,9 +647,7 @@ const wechatMaxSize = computed(() => {
   }
 
   /* 微信布局移动端适配 */
-  .pixel-wechat-photos {
-    /* max-width: 100% !important; */
-  }
+  /* (移除空规则，避免 linter 报错) */
 
   .pixel-wechat-single-image {
     max-width: 100% !important;

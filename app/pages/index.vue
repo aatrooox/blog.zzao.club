@@ -25,9 +25,13 @@ const { $api } = useNuxtApp()
 // const curSocial = ref()
 // const { formatDate } = useDayjs()
 
-// 获取动态数据
-const { getMemos, memos } = useMemos()
-await getMemos()
+// 获取动态数据（仅在客户端加载，避免 SSR 首屏水合问题）
+const { getMemos, memos, status } = useMemos()
+onMounted(() => {
+  getMemos()
+})
+
+const loadingMemos = computed(() => status.value === 'pending')
 
 // 获取最近7条动态
 const recentMemos = computed(() => memos.value.slice(0, 7))
@@ -135,64 +139,103 @@ function onMouseLeave(event) {
 
 <template>
   <div class="space-y-8 pixel-font">
-    <!-- 最近动态区域 -->
-    <div v-if="recentMemos.length > 0" class="space-y-6">
-      <div class="flex items-center justify-between pr-2">
-        <h2 class="text-xl md:text-3xl pixel-title flex items-center gap-3">
-          <Icon class="ss" name="pixelarticons:radio-signal" size="1em" />
-          最近动态
-        </h2>
-        <NuxtLink
-          to="/memo"
-          class="pixel-btn cursor-pointer flex items-center gap-2"
-        >
-          <span class="text-sm md:text-base">更多动态</span>
-          <Icon name="icon-park-outline:right" class="text-sm md:text-base" />
-        </NuxtLink>
-      </div>
+    <!-- 最近动态区域（仅客户端渲染，SSR 显示骨架） -->
+    <ClientOnly>
+      <template #default>
+        <div v-if="recentMemos.length > 0" class="space-y-6">
+          <div class="flex items-center justify-between pr-2">
+            <h2 class="text-xl md:text-3xl pixel-title flex items-center gap-3">
+              <Icon class="ss" name="pixelarticons:radio-signal" size="1em" />
+              最近动态
+            </h2>
+            <NuxtLink
+              to="/memo"
+              class="pixel-btn cursor-pointer flex items-center gap-2"
+            >
+              <span class="text-sm md:text-base">更多动态</span>
+              <Icon name="icon-park-outline:right" class="text-sm md:text-base" />
+            </NuxtLink>
+          </div>
 
-      <!-- 横向滚动动态卡片 -->
-      <div class="overflow-x-auto pb-4">
-        <div class="flex gap-6 p-4 w-max">
-          <div
-            v-for="memo in recentMemos"
-            :key="memo.id"
-            class="pixel-card cursor-pointer flex-shrink-0 relative"
-            style="width: 300px; height: 400px"
-          >
-            <div class="absolute right-2 top-2 z-10 cursor-pointer" @click="navigateTo(`/m/${memo.id}`)">
-              <Icon class="hover:text-highlight-pixel-cyan" name="pixelarticons:open" size="1em" />
-            </div>
-            <div class="flex flex-col h-full">
-              <!-- 标签 -->
-              <div v-if="memo.tags && memo.tags.length > 0" class="mb-3">
-                <div class="flex gap-2 flex-wrap">
-                  <span
-                    v-for="tagRelation in memo.tags.slice(0, 2)"
-                    :key="tagRelation.id"
-                    class="text-accent-pixel-primary text-xs"
-                  >
-                    #{{ tagRelation.tagName }}
-                  </span>
+          <!-- 横向滚动动态卡片 -->
+          <div class="overflow-x-auto pb-4">
+            <div class="flex gap-6 p-4 w-max">
+              <div
+                v-for="memo in recentMemos"
+                :key="memo.id"
+                class="pixel-card cursor-pointer flex-shrink-0 relative"
+                style="width: 300px; height: 400px"
+              >
+                <div class="absolute right-2 top-2 z-10 cursor-pointer" @click="navigateTo(`/m/${memo.id}`)">
+                  <Icon class="hover:text-highlight-pixel-cyan" name="pixelarticons:open" size="1em" />
                 </div>
-              </div>
+                <div class="flex flex-col h-full">
+                  <!-- 标签 -->
+                  <div v-if="memo.tags && memo.tags.length > 0" class="mb-3">
+                    <div class="flex gap-2 flex-wrap">
+                      <span
+                        v-for="tagRelation in memo.tags.slice(0, 2)"
+                        :key="tagRelation.id"
+                        class="text-accent-pixel-primary text-xs"
+                      >
+                        #{{ tagRelation.tagName }}
+                      </span>
+                    </div>
+                  </div>
 
-              <!-- 动态内容 -->
-              <div class="flex-1 overflow-hidden">
-                <div class="text-sm pixel-text leading-relaxed" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
-                  <MemoPanel :memo="memo" layout="xiaohongshu" display-mode="photos-only" />
+                  <!-- 动态内容 -->
+                  <div class="flex-1 overflow-hidden">
+                    <div class="text-sm pixel-text leading-relaxed" style="display: -webkit-box; line-clamp: 3; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                      <MemoPanel :memo="memo" layout="xiaohongshu" display-mode="photos-only" />
+                    </div>
+                  </div>
+
+                  <!-- 底部时间 -->
+                  <div class="flex justify-end mt-2">
+                    <NuxtTime :datetime="memo.createTs" class="text-xs pixel-text-muted" />
+                  </div>
                 </div>
-              </div>
-
-              <!-- 底部时间 -->
-              <div class="flex justify-end mt-2">
-                <NuxtTime :datetime="memo.createTs" class="text-xs pixel-text-muted" />
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+
+        <!-- 加载中骨架（客户端首屏加载阶段） -->
+        <div v-else-if="loadingMemos" class="space-y-6">
+          <div class="flex items-center justify-between pr-2">
+            <h2 class="text-xl md:text-3xl pixel-title flex items-center gap-3">
+              <Icon class="ss" name="pixelarticons:radio-signal" size="1em" />
+              最近动态
+            </h2>
+          </div>
+          <div class="overflow-x-auto pb-4">
+            <div class="flex gap-6 p-4 w-max">
+              <div v-for="i in 3" :key="i" class="pixel-card flex-shrink-0" style="width: 300px; height: 400px">
+                <Skeleton class="w-[300px] h-[400px]" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+      <template #fallback>
+        <!-- SSR 骨架占位，避免水合不一致 -->
+        <div class="space-y-6">
+          <div class="flex items-center justify-between pr-2">
+            <h2 class="text-xl md:text-3xl pixel-title flex items-center gap-3">
+              <Icon class="ss" name="pixelarticons:radio-signal" size="1em" />
+              最近动态
+            </h2>
+          </div>
+          <div class="overflow-x-auto pb-4">
+            <div class="flex gap-6 p-4 w-max">
+              <div v-for="i in 3" :key="i" class="pixel-card flex-shrink-0" style="width: 300px; height: 400px">
+                <Skeleton class="w-[300px] h-[400px]" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </ClientOnly>
 
     <!-- 最近文章区域 -->
     <div class="flex-1 space-y-6">
