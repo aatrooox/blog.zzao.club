@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.3.16
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.15...v2.3.16)
+
+### 🏡 Chore
+
+- Ci prod ([c7ae521](https://github.com/aatrooox/blog.zzao.club/commit/c7ae521))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.15
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.14...v2.3.15)
