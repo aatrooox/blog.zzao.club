@@ -1,5 +1,0 @@
-version: '3.9'
-
-# This file has been deprecated. Production no longer uses docker-compose for the app.
-# Use Gitea/GitHub Actions + SSH + PM2 deployment instead.
-# Intentionally left blank to avoid accidental usage.

@@ -1,27 +1,25 @@
 # 博客站
 
-一个基于 [Nuxt@3.17.2](https://nuxt.com/)、[NuxtContent@3.4.0](https://content.nuxt.com/)、[shadcn/vue](https://www.shadcn-vue.com/)、[inspira-ui](https://inspira-ui.com/components)、Prisma、MySQL、Redis的全栈站点
+一个基于 [Nuxt@4.0.3](https://nuxt.com/)、[NuxtContent@3.4.0](https://content.nuxt.com/)、[shadcn/vue](https://www.shadcn-vue.com/)、[inspira-ui](https://inspira-ui.com/components)、Dizzle、MySQL、Redis的全栈站点
 
 **娱乐性质的个人空间，可不兴学啊！**
 
 ## 功能
 
 - 登录注册(用户名+密码)
+- 双 token ，无限自动续期
 - Github登录
 - 点赞
 - 评论
 - mysql
 - redis
 - umami网站数据统计
-- 亮暗色切换
 - 一键复制HTML到公众号(保留所有样式)
 - 基于Github仓库的md文件生成文章
 - `$fetch/useFetch`最佳实践
 - Sitemap
 - Rss
 - robots.txt
-
-- [ ] IMGX
 
 ## 安装依赖
 
@@ -41,6 +39,82 @@ pnpm i
 视报错信息而定:
 
 涉及从 npm 切换到 pnpm 时，可能需要重新 `pnpm add better-sqlite3` 和 `pnpm rebuild better-sqlite3`
+
+## 零环境快速开始（本地开发）
+
+先决条件：
+- Node.js 20+（建议用 nvm 管理），PNPM 10+
+- Docker 与 Docker Compose（用于本地 MySQL/Redis）
+- macOS/Linux 或 Windows WSL2 环境
+
+步骤：
+1) 启动数据库与缓存（使用内置 compose）
+
+```bash
+docker compose -f docker-compose.local.yml up -d
+```
+
+默认账号与端口：
+- MySQL: root / 123456，数据库 blog，端口 3306
+- Redis: 无密码，端口 6379
+
+2) 创建 .env（项目根目录）
+
+```bash
+# 数据库连接（与 compose 保持一致）
+DATABASE_URL=mysql://root:123456@127.0.0.1:3306/blog
+
+# Redis（不配置则默认 127.0.0.1:6379）
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+
+# 从 GitHub 仓库拉取文章内容所需（如不使用，可留空或注释 content.config.ts 的 source）
+CONTENT_REPO_TOKEN=
+
+# 应用密钥（本地可任意随机值，生产需妥善保管）
+NUXT_SESSION_PASSWORD=please_set_a_32_chars_random_string
+NUXT_JWT_SECRET=please_set_a_random_string
+
+# 可选：埋点/邮件/COS 等第三方配置（本地可留空）
+NUXT_UMAMI_HOST=
+NUXT_UMAMI_USER=
+NUXT_UMAMI_PASS=
+NUXT_NODEMAILER_HOST=
+NUXT_NODEMAILER_PORT=
+NUXT_NODEMAILER_AUTH_USER=
+NUXT_NODEMAILER_AUTH_PASS=
+NUXT_COS_SECRET_ID=
+NUXT_COS_SECRET_KEY=
+NUXT_COS_BUCKET=
+NUXT_COS_REGION=
+```
+
+3) 初始化数据库（二选一）
+
+优先使用迁移（如果仓库已包含 `lib/drizzle/migrations`）：
+
+```bash
+pnpm db:migrate
+```
+
+如果没有历史迁移或希望按 `schema.ts` 直接同步结构：
+
+```bash
+pnpm db:push
+```
+
+4) 启动开发服务器
+
+```bash
+pnpm dev
+```
+
+访问：http://localhost:4775
+
+排错小贴士：
+- 3306/6379 端口被占用：修改 `docker-compose.local.yml` 的端口映射，或停止占用进程。
+- better-sqlite3 报错：执行 `pnpm rebuild better-sqlite3`。
+- 无法拉取 GitHub 文章：确认 `CONTENT_REPO_TOKEN` 有权限，或临时注释 `content.config.ts` 的 `source` 配置。
 
 ## 运行前配置
 
@@ -90,10 +164,15 @@ NUXT_FEISHU_USER_ID=
 
 先启动 mysql、redis
 
-## 初始化数据库和表结构
+## 使用 Dizzle 初始化数据库和表结构
 
 ```bash
-npx prisma migrate dev
+# 方式一：使用迁移（推荐）
+pnpm db:migrate
+
+# 方式二：按 schema 直接推送
+pnpm db:push
+
 ```
 
 ## 启动项目
@@ -102,13 +181,61 @@ npx prisma migrate dev
 pnpm dev
 ```
 
-## 部署
+## 生产部署
 
-想起来再写
+部署链路：GitHub Actions 构建 -> 打包 `.output` + `pm2.config.json` + `pm2.preload.cjs` -> SSH 上传 -> 服务器 `/root/web/blog` 原地解压 -> Drizzle 迁移 -> PM2 启动 `Blog`（端口 4571）。
 
-```bash
-pnpm build
-```
+1) 服务器准备
+- 安装 Node.js 20+ 与 PM2（全局）
+  - `npm i -g pm2`
+- 创建目录与生产环境变量文件：
+  - 应用目录：`/root/web/blog`
+  - 环境文件：`/root/envs/blog/.env`
+- 必需变量（示例）：
+  - `DATABASE_URL=mysql://user:pass@host:3306/blog`
+  - `NUXT_SESSION_PASSWORD=<32位随机字符串>`
+  - `NUXT_JWT_SECRET=<随机字符串>`
+  - 可选：`REDIS_HOST`、`REDIS_PORT`、`CONTENT_REPO_TOKEN`、`NUXT_*`（Umami、Nodemailer、OAuth GitHub、COS、Feishu等）
+
+2) 配置 GitHub Secrets（仓库 Settings -> Secrets and variables -> Actions）
+- SSH 访问：`SSH_PRIVATE_KEY`、`SSH_HOST`、`SSH_USER`、`SSH_PORT`
+- 应用密钥与依赖：`DATABASE_URL`、`NUXT_SESSION_PASSWORD`、`NUXT_JWT_SECRET`
+- 内容拉取：`CONTENT_REPO_TOKEN`（若启用 content 仓库）
+- 可选通知与第三方：`NUXT_FEISHU_WEBHOOK`、`NUXT_FEISHU_USER_ID`、`NUXT_UMAMI_HOST/USER/PASS`、`NUXT_NODEMAILER_*`、`NUXT_OAUTH_GITHUB_CLIENT_ID/SECRET`、`NUXT_COS_*`
+
+3) 触发部署
+- Push 到 `main` 且提交信息包含 `chore(release)` 会自动触发（可使用 `pnpm release:patch|minor|major` 脚本生成）
+
+4) 运行方式与端口
+- PM2 使用 `pm2.config.json` 启动进程名 `Blog`，监听 `4571`
+- 运行时通过 `node_args: -r ./pm2.preload.cjs` 读取 `/root/envs/blog/.env`，无需安装 `dotenv`
+- 反向代理（示例 Nginx）：
+  ```nginx
+  server {
+    listen 80;
+    server_name your.domain.com;
+    location / {
+      proxy_pass http://127.0.0.1:4571;
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+    }
+  }
+  ```
+
+5) 数据库迁移
+- 工作流会在服务器上自动执行 Drizzle 迁移（优先 `dotenv-cli`，无则回退为 `source ENVFILE` + `npx drizzle-kit migrate`）
+- 如服务器无公网 npm，可自行预先装好 `dotenv-cli`，或手动执行迁移
+
+6) 回滚与灰度（可选）
+- 回滚：直接 `git revert` 上次 release 提交并 push（同样会触发部署）
+- 灰度：仓库包含 `pm2.canary.json`（4572 端口），如需金丝雀可另行添加对应 Workflows 与目录（例如 `/root/web/blog-canary`）
+
+7) 常见排查
+- 启动异常：`pm2 logs Blog` 查看日志
+- 环境变量未生效：确认 `/root/envs/blog/.env` 存在且键名正确；`pm2 env 0`/`pm2 describe Blog` 检查进程环境
+- 无法连接数据库/Redis：验证 `DATABASE_URL`、`REDIS_HOST/PORT` 与网络策略
 
 ## 发布
 
