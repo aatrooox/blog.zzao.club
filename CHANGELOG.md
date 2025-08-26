@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v2.3.18
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.17...v2.3.18)
+
+### 📖 Documentation
+
+- Readme ([f89e778](https://github.com/aatrooox/blog.zzao.club/commit/f89e778))
+
+### 🏡 Chore
+
+- Rm gitea actions; github action cron ([39fdb14](https://github.com/aatrooox/blog.zzao.club/commit/39fdb14))
+- Eslint ([7d771f8](https://github.com/aatrooox/blog.zzao.club/commit/7d771f8))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.17
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.16...v2.3.17)
