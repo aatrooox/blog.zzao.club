@@ -15,11 +15,6 @@ const appVersion = packageJson.version
 const isDev = process.env.NODE_ENV === 'development'
 console.log(` 当前环境为：${isDev ? '开发' : '生产'}`)
 export default defineNuxtConfig({
-  extends: [
-    // README https://github.com/aatrooox/zc-auth-layer
-    // ['github:aatrooox/zc-auth-layer', { install: true }]
-    // 'zc-auth-layer'
-  ],
   modules: ['@nuxtjs/robots', '@nuxt/content', '@nuxt/image', '@nuxt/icon', // '@nuxtjs/robots',
     '@nuxtjs/mdc', // 以下三个模块还没有支持最新的 nuxt content 版本
     // '@nuxtjs/sitemap',

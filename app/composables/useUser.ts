@@ -143,12 +143,14 @@ export function useUser() {
     return !!(user.value as User).id && !!tokenInfo.value.accessToken
   })
 
+  const getRole = () => (user.value && (user.value as any).role) || ''
+
   const isVisitor = computed(() => {
-    return user.value.role === 'visitor'
+    return getRole() === 'visitor'
   })
 
   const isSuperAdmin = computed(() => {
-    return user.value.role === 'superAdmin'
+    return getRole() === 'superAdmin'
   })
 
   return {
