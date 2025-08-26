@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+  schedule:
+    # 北京时间 12:00 和 24:00（UTC+8） -> 对应 UTC 04:00 与 16:00
+    - cron: "0 4 * * *"
+    - cron: "0 16 * * *"
 
 concurrency:
   group: deploy-main
@@ -11,10 +16,10 @@ concurrency:
 
 jobs:
   deploy:
+    if: ${{ github.repository == 'aatrooox/blog.zzao.club' && (github.event_name != 'push' || contains(github.event.head_commit.message || '', 'chore(release)')) }}
     runs-on: ubuntu-latest
     environment:
       name: zzaoclub
-    if: contains(github.event.head_commit.message, 'chore(release)')
     steps:
       - name: Checkout
         uses: actions/checkout@v4
