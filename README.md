@@ -4,6 +4,11 @@
 
 **娱乐性质的个人空间，可不兴学啊！**
 
+![](/githubAssets/page-home.png)
+![](/githubAssets/page-memo.png)
+![](/githubAssets/page-home-mobile.png)
+![](/githubAssets/page-memo-mobile.png)
+
 ## 功能
 
 - 登录注册(用户名+密码)
