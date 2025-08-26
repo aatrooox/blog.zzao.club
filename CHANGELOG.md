@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v2.3.17
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.16...v2.3.17)
+
+### 🩹 Fixes
+
+- 首页动态列表水合问题 ([57f982a](https://github.com/aatrooox/blog.zzao.club/commit/57f982a))
+
+### 📖 Documentation
+
+- Readme ([bc5e6d7](https://github.com/aatrooox/blog.zzao.club/commit/bc5e6d7))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.16
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.15...v2.3.16)
