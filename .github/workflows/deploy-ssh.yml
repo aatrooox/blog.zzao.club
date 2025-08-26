@@ -1,4 +1,4 @@
-name: Deploy via GitHub Actions (SSH + PM2 Canary)
+name: Deploy via GitHub Actions (SSH + PM2 Prod)
 
 on:
   push:
@@ -59,7 +59,7 @@ jobs:
         run: |
           rm -rf distpkg && mkdir -p distpkg
           cp -R .output/* distpkg/
-          cp -f pm2.canary.json distpkg/
+          cp -f pm2.config.json distpkg/
           cp -f pm2.preload.cjs distpkg/
           # Include Drizzle migrations & config for server-side migrate
           mkdir -p distpkg/lib/drizzle
@@ -81,10 +81,10 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_PORT: ${{ secrets.SSH_PORT }}
         run: |
-          ssh -o StrictHostKeyChecking=no -p "${SSH_PORT}" "${SSH_USER}@${SSH_HOST}" "mkdir -p /root/web/blog-canary/tmp"
-          scp -P "${SSH_PORT}" artifact.tgz "${SSH_USER}@${SSH_HOST}:/root/web/blog-canary/tmp/artifact.tgz"
+          ssh -o StrictHostKeyChecking=no -p "${SSH_PORT}" "${SSH_USER}@${SSH_HOST}" "mkdir -p /root/web/blog"
+          scp -P "${SSH_PORT}" artifact.tgz "${SSH_USER}@${SSH_HOST}:/root/web/blog/artifact.tgz"
 
-      - name: Deploy canary & start with PM2 (isolated)
+      - name: Deploy prod & start with PM2
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
@@ -92,14 +92,14 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -p "${SSH_PORT}" "${SSH_USER}@${SSH_HOST}" << 'EOSSH'
           set -e
-          APP_DIR=/root/web/blog-canary
+          APP_DIR=/root/web/blog
           ENVFILE=/root/envs/blog/.env
-          TMP_DIR=$APP_DIR/tmp
-          mkdir -p "$APP_DIR" "$TMP_DIR"
-          # Clean app dir but keep tmp
-          find "$APP_DIR" -mindepth 1 -maxdepth 1 ! -name tmp -exec rm -rf {} +
-          tar -C "$APP_DIR" -xzf "$TMP_DIR/artifact.tgz"
+          mkdir -p "$APP_DIR"
           cd "$APP_DIR"
+          # Clean app dir but keep artifact
+          find "$APP_DIR" -mindepth 1 -maxdepth 1 ! -name artifact.tgz -exec rm -rf {} +
+          tar -xzf artifact.tgz -C "$APP_DIR"
+          rm -f artifact.tgz
           # Prefer globally installed dotenv-cli; fallback to npx dotenv-cli; else source fallback
           if command -v dotenv >/dev/null 2>&1; then
             DOTENV="dotenv -e \"$ENVFILE\" --"
@@ -122,9 +122,9 @@ jobs:
             fi
           fi
 
-          # Start cleanly: rely on pm2.canary.json node_args (dotenv/config)
-          pm2 delete Blog-Canary >/dev/null 2>&1 || true
-          pm2 start pm2.canary.json --update-env
+          # Start cleanly: use prod pm2.config.json
+          pm2 delete Blog >/dev/null 2>&1 || true
+          pm2 start pm2.config.json --update-env
           pm2 save
           EOSSH
 
