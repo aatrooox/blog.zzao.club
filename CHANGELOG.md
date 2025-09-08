@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v2.3.19
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.18...v2.3.19)
+
+### 🚀 Enhancements
+
+- Admin layer ([bf6a442](https://github.com/aatrooox/blog.zzao.club/commit/bf6a442))
+
+### 🩹 Fixes
+
+- 管理员权限校验 ([0fdec8c](https://github.com/aatrooox/blog.zzao.club/commit/0fdec8c))
+
+### 🏡 Chore
+
+- Admin pages don't prerender ([e8e699c](https://github.com/aatrooox/blog.zzao.club/commit/e8e699c))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.18
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.17...v2.3.18)
