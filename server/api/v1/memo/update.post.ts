@@ -20,6 +20,8 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
+  await assertSuperAdmin(event.context.userId)
+
   const { id, ...memoData } = body.data
   console.log(`更新memo`, { id, ...memoData })
 

@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
       message: JSON.stringify(body.error),
     })
   }
-
+  await assertSuperAdmin(event.context.userId)
   const { cosSecretId, cosSecretKey, cosBucket, cosRegion } = useRuntimeConfig(event)
   console.log(`COS配置:`, { cosSecretId, cosSecretKey, cosBucket, cosRegion })
   const config = {

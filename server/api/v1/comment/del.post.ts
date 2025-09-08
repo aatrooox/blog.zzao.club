@@ -15,6 +15,8 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
+  await assertSuperAdmin(event.context.userId)
+
   const [data] = await db.select().from(blogComments).where(eq(blogComments.id, body.data.id))
 
   if (!data) {

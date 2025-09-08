@@ -27,6 +27,9 @@ export default defineStandardResponseHandler(async (event) => {
       message: JSON.stringify(body.error),
     })
   }
+
+  await assertSuperAdmin(event.context.userId)
+
   const memoData = {
     ...body.data,
   }

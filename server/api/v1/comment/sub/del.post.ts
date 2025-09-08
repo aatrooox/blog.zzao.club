@@ -14,6 +14,8 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
+  await assertSuperAdmin(event.context.userId)
+
   // 先查询要删除的数据
   const data = await db.select().from(blogSubComments).where(
     eq(blogSubComments.id, body.data.id),

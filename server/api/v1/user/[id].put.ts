@@ -19,6 +19,8 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
+  await assertSuperAdmin(event.context.userId)
+
   if (Object.keys(body.data).length === 0) {
     throw createError({
       statusCode: 400,

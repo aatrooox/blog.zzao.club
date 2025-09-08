@@ -15,6 +15,7 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
+  await assertSuperAdmin(event.context.userId)
   // 先获取要删除的数据
   const [data] = await db.select().from(blogMemos).where(eq(blogMemos.id, body.data.id)).limit(1).catch(() => {
     throw createError({

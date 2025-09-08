@@ -15,13 +15,8 @@ export default defineStandardResponseHandler(async (event) => {
       message: JSON.stringify(body.error),
     })
   }
-  const hasAuth = await verifyUserRole(event.context.userId)
-  if (!hasAuth) {
-    throw createError({
-      statusCode: 401,
-      message: '无此操作权限',
-    })
-  }
+
+  await assertSuperAdmin(event.context.userId)
 
   const { content, article_id, text } = body.data
 

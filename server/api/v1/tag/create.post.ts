@@ -15,6 +15,8 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
+  await assertSuperAdmin(event.context.userId)
+
   const { tagName, memo_id } = body.data
 
   // 检查 tag 是否已存在

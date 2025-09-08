@@ -12,14 +12,7 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
-  const hasAuth = await verifyUserRole(event.context.userId)
-
-  if (!hasAuth) {
-    throw createError({
-      statusCode: 401,
-      message: '无权限访问',
-    })
-  }
+  await assertSuperAdmin(event.context.userId)
 
   const [data] = await db.select().from(blogExplains).where(eq(blogExplains.id, id))
 

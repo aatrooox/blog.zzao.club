@@ -16,6 +16,8 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
+  await assertSuperAdmin(event.context.userId)
+
   const { id, tagName, memo_ids } = body.data
 
   // 检查 tag 是否存在且属于当前用户
