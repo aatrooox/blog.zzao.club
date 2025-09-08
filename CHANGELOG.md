@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.3.20
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.19...v2.3.20)
+
+### 🩹 Fixes
+
+- 提示信息优化 ([7bd78cd](https://github.com/aatrooox/blog.zzao.club/commit/7bd78cd))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.19
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.18...v2.3.19)
