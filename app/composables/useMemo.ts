@@ -49,13 +49,10 @@ export default function useMemo(id: string) {
       id,
     })
 
-    if (error) {
-      toast.error('删除失败，再试一下')
+    if (error)
       return false
-    }
 
     toast.success('Memo 已删除')
-    return true
   }
 
   return {
