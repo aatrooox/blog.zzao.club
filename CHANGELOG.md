@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v2.3.22
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.21...v2.3.22)
+
 ## v2.3.21
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.20...v2.3.21)
