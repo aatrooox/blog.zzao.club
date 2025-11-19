@@ -110,7 +110,7 @@ function onMouseEnter(event) {
     // translateY: [
     //   { to: '0px', duration: 100 },
     // ],
-    color: 'cyan',
+    color: '#5f9ea0',
   })
 }
 
@@ -265,7 +265,7 @@ function onMouseLeave(event) {
                   <div class="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
                     <div class="flex items-center gap-3 md:gap-4 flex-1">
                       <Icon class="ss" name="pixelarticons:open" size="1em" />
-                      <div class="text-base pixel-title group-hover:text-cyan-400 transition-colors leading-tight">
+                      <div class="text-base pixel-title group-hover:text-accent-pixel-cyan transition-colors leading-tight">
                         {{ page.title }}
                       </div>
                     </div>

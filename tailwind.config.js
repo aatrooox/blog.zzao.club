@@ -157,10 +157,10 @@ export default {
       },
     },
     fontFamily: {
-      sans: ['LXGWS', 'sans-serif'],
+      sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
       mono: ['ui-monospace', 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', 'monospace'],
       lxgws: ['LXGWS', 'sans-serif'],
-      pixel: ['"Press Start 2P"', 'monospace'],
+      pixel: ['Inter', 'sans-serif'], // 映射到现代字体，保持兼容性
       cartoon: ['Nunito', 'sans-serif'],
       // douyin: ['DouYin', 'sans-serif'],
       // ipix: ['IPIX', 'sans-serif'],

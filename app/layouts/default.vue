@@ -150,40 +150,72 @@ function scrollToTop() {
     <!-- PC端布局：左侧导航 + 右侧内容 -->
     <div class="hidden lg:flex min-h-screen w-full relative">
       <!-- PC端悬浮左侧导航 -->
-      <aside class="pixel-sidebar-floating">
-        <div class="pixel-sidebar-header">
-          <!-- 用户信息区域 -->
-          <div v-if="isLogin" class="pixel-user-info">
-            <UserAvatar :user="user" :size="60" class="pixel-user-avatar" />
-          </div>
-          <!-- 未登录时显示默认图标 -->
-          <div v-else class="pixel-login-trigger" @click="showLoginDialog = true">
-            <Icon name="pixelarticons:mood-sad" class="pixel-sidebar-logo" />
-            <div class="pixel-login-hint">
-              点击登录
-            </div>
-          </div>
+      <aside class="fixed left-6 top-6 bottom-6 w-48 z-50 flex flex-col bg-white/80 backdrop-blur-xl border border-border-pixel-primary rounded-2xl shadow-sm transition-all duration-300">
+        <!-- 顶部 Logo 或 留白 -->
+        <div class="p-6 flex justify-center">
+          <!-- <NuxtLink to="/" class="group flex items-center gap-2">
+            <Icon name="pixelarticons:radio-signal" class="w-6 h-6 text-text-pixel-primary group-hover:text-accent-pixel-cyan transition-colors" />
+            <span class="font-bold text-lg tracking-tight text-text-pixel-primary group-hover:text-accent-pixel-cyan transition-colors">BLOGZ</span>
+          </NuxtLink> -->
         </div>
-        <nav class="pixel-sidebar-nav">
+
+        <!-- 导航菜单 -->
+        <nav class="px-3 space-y-1 flex-1 overflow-y-auto">
           <NuxtLink
             v-for="nav in appNavBar"
             :key="nav.path"
             :to="nav.path"
-            class="pixel-sidebar-item"
-            :class="{ active: $route.path === nav.path }"
+            class="flex items-center gap-3 px-3 py-2.5 transition-all duration-200 rounded-lg group"
+            :class="[$route.path === nav.path ? 'bg-zinc-100 text-zinc-900 font-medium' : 'text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900']"
           >
-            <Icon :name="nav.icon" class="pixel-sidebar-icon" />
-            <span class="pixel-sidebar-text">{{ nav.name }}</span>
+            <Icon
+              :name="nav.icon"
+              class="w-5 h-5 transition-colors"
+              :class="[$route.path === nav.path ? 'text-accent-pixel-cyan' : 'text-zinc-400 group-hover:text-zinc-600']"
+            />
+            <span class="text-sm">{{ nav.name }}</span>
           </NuxtLink>
-          <Icon v-if="userStore.isLogin.value" name="pixelarticons:logout" size="1.5em" class="text-[var(--pixel-text-primary)] absolute bottom-4 left-12 hover:text-[var(--pixel-status-error)]" @click="logout" />
         </nav>
+
+        <!-- 底部用户区域 -->
+        <div class="p-3 mt-auto border-t border-border-pixel-primary/50">
+          <div class="flex items-center justify-between px-2 py-2 rounded-lg hover:bg-zinc-50 transition-colors group">
+            <!-- 已登录：显示头像 -->
+            <div v-if="isLogin" class="flex items-center gap-3 flex-1 min-w-0 cursor-pointer" @click="navigateTo('/settings')">
+              <UserAvatar :user="user" :size="32" class="w-8 h-8 rounded-full ring-1 ring-border-pixel-primary" />
+              <div class="flex-1 min-w-0">
+                <div class="text-xs font-medium text-zinc-700 truncate">
+                  {{ user?.nickname || user?.username || 'User' }}
+                </div>
+              </div>
+            </div>
+
+            <!-- 未登录：显示登录触发器 -->
+            <div v-else class="flex items-center gap-3 flex-1 cursor-pointer" @click="showLoginDialog = true">
+              <div class="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-400 group-hover:text-accent-pixel-cyan group-hover:bg-accent-pixel-cyan-light/20 transition-colors">
+                <Icon name="pixelarticons:user" class="w-4 h-4" />
+              </div>
+              <span class="text-xs font-medium text-zinc-500 group-hover:text-zinc-700">登录账户</span>
+            </div>
+
+            <!-- 退出按钮 (仅登录显示) -->
+            <button
+              v-if="isLogin"
+              class="p-1.5 rounded-md text-zinc-400 hover:text-red-500 hover:bg-red-50 transition-colors ml-1"
+              title="退出登录"
+              @click.stop="logout"
+            >
+              <Icon name="pixelarticons:logout" class="w-4 h-4" />
+            </button>
+          </div>
+        </div>
       </aside>
 
       <!-- PC端内容区域 -->
       <main
         ref="scrollWrap"
         v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]"
-        class="pixel-desktop-main-floating"
+        class="flex-1 overflow-auto p-8 bg-transparent ml-[216px] mr-6 min-h-screen"
       >
         <slot />
       </main>
@@ -195,31 +227,31 @@ function scrollToTop() {
       <main
         ref="scrollWrap"
         v-scroll="[onScroll, { throttle: 200, behavior: 'smooth' }]"
-        class="pixel-main bg-bg-pixel-secondary md:bg-bg-pixel-primary"
+        class="overflow-y-auto pb-24 min-h-[calc(100vh-80px)] p-4"
       >
         <slot />
       </main>
 
       <!-- 移动端悬浮底部导航 -->
-      <nav class="pixel-nav-floating">
-        <div class="pixel-nav-container">
+      <nav class="fixed bottom-6 left-6 right-6 z-50 h-16 bg-white/90 backdrop-blur-xl border border-border-pixel-primary shadow-lg rounded-2xl lg:hidden">
+        <div class="flex justify-around items-center h-full px-4">
           <!-- 用户信息区域 -->
-          <div v-if="isLogin" class="pixel-user-info">
-            <UserAvatar :user="user" :size="40" class="pixel-user-avatar" />
+          <div v-if="isLogin" class="flex items-center gap-3 p-2 backdrop-blur-sm">
+            <UserAvatar :user="user" :size="40" class="w-full h-full" />
           </div>
           <!-- 未登录时显示默认图标 -->
-          <div v-else class="pixel-login-trigger" @click="showLoginDialog = true">
-            <Icon name="pixelarticons:mood-sad" class="pixel-sidebar-logo-phone" />
+          <div v-else class="flex flex-col items-center backdrop-blur-sm cursor-pointer transition-all duration-200" @click="showLoginDialog = true">
+            <Icon name="pixelarticons:mood-sad" class="w-8 h-8 text-accent-pixel-cyan" />
           </div>
           <NuxtLink
             v-for="nav in appNavBar"
             :key="nav.path"
             :to="nav.path"
-            class="pixel-nav-item"
-            :class="{ active: $route.path === nav.path }"
+            class="flex flex-col items-center justify-center gap-1 px-3 py-2 transition-all duration-200 border border-transparent rounded-xl min-w-[64px] relative active:translate-y-0 active:scale-95"
+            :class="[$route.path === nav.path ? 'text-accent-pixel-cyan bg-accent-pixel-cyan-light font-semibold' : 'text-text-pixel-muted hover:-translate-y-1 hover:text-accent-pixel-cyan hover:bg-accent-pixel-cyan-light hover:shadow-sm']"
           >
-            <Icon :name="nav.icon" class="pixel-nav-icon" />
-            <span class="pixel-nav-text">{{ nav.name }}</span>
+            <Icon :name="nav.icon" class="w-5 h-5" />
+            <span class="text-[10px] font-medium uppercase tracking-wide leading-none">{{ nav.name }}</span>
           </NuxtLink>
         </div>
       </nav>
@@ -249,181 +281,14 @@ function scrollToTop() {
 </template>
 
 <style scoped>
-@reference 'tailwindcss';
-
-.pixel-main {
-  @apply overflow-y-auto pb-24 min-h-[calc(100vh-80px)] p-4;
-}
-
-/* 移动端悬浮底部导航栏样式 */
-.pixel-nav-floating {
-  @apply fixed bottom-6 left-6 right-6 z-50 h-16;
-  background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-border-primary);
-  border-radius: 0;
-}
-
-.pixel-nav-container {
-  @apply flex justify-around items-center h-full px-4;
-}
-
-.pixel-nav-item {
-  @apply flex flex-col items-center justify-center gap-1 px-3 py-2 no-underline transition-all duration-150 border-2 border-transparent rounded-none min-w-[64px] relative;
-  color: var(--pixel-text-muted);
-}
-
-.pixel-nav-item:hover {
-  @apply -translate-y-px;
-  color: var(--pixel-accent-cyan);
-  background: var(--pixel-bg-tertiary);
-  border-color: var(--pixel-border-primary);
-  box-shadow: 2px 2px 0 var(--pixel-border-primary);
-}
-
-.pixel-nav-item.active {
-  color: var(--pixel-accent-cyan);
-  background: var(--pixel-bg-tertiary);
-  border-color: var(--pixel-accent-cyan);
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-border-primary);
-}
-
-.pixel-nav-item:active {
-  @apply translate-y-px;
-  box-shadow: 1px 1px 0 var(--pixel-border-primary);
-}
-
-.pixel-nav-icon {
-  @apply w-5 h-5;
-}
-
-.pixel-nav-text {
-  @apply text-[10px] font-bold uppercase tracking-wide leading-none;
-}
-
-/* PC端悬浮侧边导航栏样式 */
-.pixel-sidebar-floating {
-  @apply fixed left-6 top-6 bottom-6 w-36 z-50;
-  background: var(--pixel-bg-secondary);
-}
-
-.pixel-sidebar-header {
-  @apply flex items-center justify-center p-6;
-}
-
-.pixel-sidebar-logo {
-  @apply w-8 h-8;
-  color: var(--pixel-accent-cyan);
-}
-
-.pixel-sidebar-logo-phone {
-  @apply w-8 h-8;
-  color: var(--pixel-accent-cyan);
-}
-
-.pixel-sidebar-nav {
-  @apply p-4 space-y-2 flex-1 overflow-y-auto;
-}
-
-.pixel-sidebar-item {
-  @apply flex items-center gap-3 px-4 py-3 no-underline transition-all duration-150 border-2 border-transparent rounded-none;
-  color: var(--pixel-text-secondary);
-}
-
-.pixel-sidebar-item:hover {
-  @apply -translate-x-px;
-  color: var(--pixel-accent-primary);
-  background: var(--pixel-bg-tertiary);
-  border-color: var(--pixel-accent-primary);
-}
-
-.pixel-sidebar-item.active {
-  color: var(--pixel-accent-primary);
-  background: var(--pixel-bg-tertiary);
-  border-color: var(--pixel-accent-primary);
-}
-
-.pixel-sidebar-item:active {
-  @apply translate-x-px;
-  box-shadow: 1px 1px 0 var(--pixel-border-primary);
-}
-
-.pixel-sidebar-icon {
-  @apply w-5 h-5;
-}
-
-.pixel-sidebar-text {
-  @apply font-bold text-sm;
-}
-
-.pixel-desktop-main-floating {
-  @apply flex-1 overflow-auto p-6;
-  background: var(--pixel-bg-secondary);
-  margin-left: 192px;
-  margin-right: 24px;
-  margin-top: 24px;
-  margin-bottom: 24px;
-}
+@import 'tailwindcss';
 
 /* 响应式设计 */
 @media (max-width: 640px) {
-  .pixel-nav-floating {
-    @apply left-4 right-4 bottom-4;
-  }
-
-  .pixel-nav-container {
-    @apply px-2;
-  }
-
-  .pixel-nav-item {
-    @apply min-w-[60px] px-2 py-1;
-  }
-
-  .pixel-nav-text {
-    @apply text-[9px];
-  }
-
-  .pixel-main {
-    @apply pb-28;
-  }
-}
-
-/* 用户信息样式 */
-.pixel-user-info {
-  @apply flex items-center gap-3 p-2 backdrop-blur-sm;
-}
-
-.pixel-user-avatar {
-  @apply w-full h-full;
-}
-
-.pixel-user-details {
-  @apply flex-1 min-w-0;
-}
-
-.pixel-user-name {
-  @apply text-sm font-bold text-gray-800 truncate;
-}
-
-.pixel-login-trigger {
-  @apply flex flex-col items-center backdrop-blur-sm cursor-pointer transition-all duration-200;
-}
-
-.pixel-login-hint {
-  @apply text-xs text-gray-600 font-medium;
-}
-
-@media (min-width: 1024px) {
-  .pixel-main {
-    @apply pb-0 mb-0;
-  }
-
-  .pixel-nav-floating {
-    @apply hidden;
+  .fixed.bottom-6.left-6.right-6 {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
   }
 }
 </style>
