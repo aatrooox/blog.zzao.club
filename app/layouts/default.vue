@@ -233,7 +233,7 @@ function scrollToTop() {
       </main>
 
       <!-- 移动端悬浮底部导航 -->
-      <nav class="fixed bottom-6 left-6 right-6 z-50 h-16 bg-white/90 backdrop-blur-xl border border-border-pixel-primary shadow-lg rounded-2xl lg:hidden">
+      <nav class="fixed bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 z-50 h-16 bg-white/90 backdrop-blur-xl border border-border-pixel-primary shadow-lg rounded-2xl lg:hidden">
         <div class="flex justify-around items-center h-full px-4">
           <!-- 用户信息区域 -->
           <div v-if="isLogin" class="flex items-center gap-3 p-2 backdrop-blur-sm">
@@ -279,16 +279,3 @@ function scrollToTop() {
     <div class="fixed inset-0 -z-10 pixel-noise-bg" />
   </div>
 </template>
-
-<style scoped>
-@import 'tailwindcss';
-
-/* 响应式设计 */
-@media (max-width: 640px) {
-  .fixed.bottom-6.left-6.right-6 {
-    left: 1rem;
-    right: 1rem;
-    bottom: 1rem;
-  }
-}
-</style>

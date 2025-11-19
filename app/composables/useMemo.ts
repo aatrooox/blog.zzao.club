@@ -5,8 +5,8 @@ export default function useMemo(id: string) {
   const { $api } = useNuxtApp()
   const userStore = useUser()
   const toast = useGlobalToast()
-  const memo = ref<BlogMemoWithUser | null>(null)
-  const isLoading = ref(false)
+  const memo = useState<BlogMemoWithUser | null>(`memo-detail-${id}`, () => null)
+  const isLoading = useState<boolean>(`memo-detail-loading-${id}`, () => false)
 
   // 移除 useFetch，改用直接的 API 调用以获得更好的控制
   async function getMemo() {
