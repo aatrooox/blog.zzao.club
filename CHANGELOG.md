@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.3.21
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.20...v2.3.21)
+
+### 🚀 Enhancements
+
+- 使用 gemini3pro 重构设计风格 ([bc50551](https://github.com/aatrooox/blog.zzao.club/commit/bc50551))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.20
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.19...v2.3.20)
