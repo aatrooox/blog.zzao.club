@@ -416,7 +416,7 @@ const wechatMaxSize = computed(() => {
         <!-- this will be rendered on server side -->
         <div class="pixel-photos-only" :style="{ maxWidth: photoMaxWidth }">
           <div class="pixel-photo-container-full">
-            <Skeleton style="width: 100%; height: 100%;" />
+            <Skeleton class="w-full h-full" />
           </div>
         </div>
       </template>
@@ -546,6 +546,7 @@ const wechatMaxSize = computed(() => {
   /* border-radius: 8px; */
   overflow: hidden;
   background-color: var(--pixel-bg-secondary);
+  display: block;
 }
 
 .pixel-photo-container-full {

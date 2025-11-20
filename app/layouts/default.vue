@@ -182,7 +182,7 @@ function scrollToTop() {
           <div class="flex items-center justify-between px-2 py-2 rounded-lg hover:bg-zinc-50 transition-colors group">
             <!-- 已登录：显示头像 -->
             <div v-if="isLogin" class="flex items-center gap-3 flex-1 min-w-0 cursor-pointer" @click="navigateTo('/settings')">
-              <UserAvatar :user="user" :size="32" class="w-8 h-8 rounded-full ring-1 ring-border-pixel-primary" />
+              <UserAvatar :user="user" :size="32" class="w-8 h-8 rounded-full ring-1 ring-border-pixel-primary shrink-0" style="overflow: hidden;" />
               <div class="flex-1 min-w-0">
                 <div class="text-xs font-medium text-zinc-700 truncate">
                   {{ user?.nickname || user?.username || 'User' }}

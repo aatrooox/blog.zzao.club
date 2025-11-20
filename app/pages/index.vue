@@ -211,7 +211,7 @@ function onMouseLeave(event) {
           <div class="overflow-x-auto pb-4">
             <div class="flex gap-6 p-4 w-max">
               <div v-for="i in 3" :key="i" class="pixel-card flex-shrink-0" style="width: 300px; height: 400px">
-                <Skeleton class="w-[300px] h-[400px]" />
+                <Skeleton class="w-full h-full" />
               </div>
             </div>
           </div>
@@ -229,7 +229,7 @@ function onMouseLeave(event) {
           <div class="overflow-x-auto pb-4">
             <div class="flex gap-6 p-4 w-max">
               <div v-for="i in 3" :key="i" class="pixel-card flex-shrink-0" style="width: 300px; height: 400px">
-                <Skeleton class="w-[300px] h-[400px]" />
+                <Skeleton class="w-full h-full" />
               </div>
             </div>
           </div>
