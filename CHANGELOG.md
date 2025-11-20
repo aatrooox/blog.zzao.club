@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v2.3.23
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.22...v2.3.23)
+
+### 🩹 Fixes
+
+- 动态详情水合问题 ([df1b798](https://github.com/aatrooox/blog.zzao.club/commit/df1b798))
+- 首页骨架屏样式问题 ([8a43fc2](https://github.com/aatrooox/blog.zzao.club/commit/8a43fc2))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.22
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.21...v2.3.22)
