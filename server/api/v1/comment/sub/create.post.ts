@@ -19,7 +19,8 @@ export default defineStandardResponseHandler(async (event) => {
       })
     }
   }
-  catch {
+  catch (err) {
+    console.log('解析评论创建参数失败', err)
     throw createError({
       statusCode: 400,
       message: '参数解析失败',

@@ -80,64 +80,90 @@ function refreshList() {
 </script>
 
 <template>
-  <div class="card transition-all duration-300 box-border mb-4">
-    <div class="comment-wrap w-full flex mb-4">
-      <div class="avatar-wrap w-12">
-        <UserAvatar :user-info="comment.user_info" class="size-10" />
+  <div class="pixel-card mb-4 transition-all duration-300 hover:shadow-md">
+    <div class="flex gap-3 md:gap-4">
+      <!-- Avatar -->
+      <div class="flex-shrink-0">
+        <UserAvatar :user-info="comment.user_info" class="size-10 md:size-12 border border-border-pixel-primary rounded-full" />
       </div>
-      <div
-        class="comment-info flex-1 rounded-md box-border transition-all pb-2 duration-300 "
-      >
-        <div class="header px-4 py-1">
+
+      <!-- Main Content -->
+      <div class="flex-1 min-w-0">
+        <!-- Header -->
+        <div class="flex items-center gap-2 mb-1">
           <a
-            v-if="comment.user_info?.website" :href="comment.user_info?.website" target="_blank"
-            class="flex items-center hover:!underline"
-          > {{
-            comment?.user_info?.nickname
-              || comment?.user_info?.username }} <Icon name="material-symbols:web-traffic-rounded" /></a>
-          <span v-else :class="`${comment.user_info?.role === 'superAdmin' ? 'text-cyan-700 font-bold' : 'font-bold'}`">
-            {{ comment?.user_info?.nickname || comment?.user_info?.username }}</span>
+            v-if="comment.user_info?.website"
+            :href="comment.user_info?.website"
+            target="_blank"
+            class="pixel-title text-sm md:text-base hover:text-accent-pixel-cyan transition-colors flex items-center gap-1"
+          >
+            {{ comment?.user_info?.nickname || comment?.user_info?.username }}
+            <Icon name="material-symbols:web-traffic-rounded" class="text-text-pixel-muted text-xs" />
+          </a>
+          <span
+            v-else
+            class="pixel-title text-sm md:text-base"
+            :class="{ 'text-accent-pixel-cyan': comment.user_info?.role === 'superAdmin' }"
+          >
+            {{ comment?.user_info?.nickname || comment?.user_info?.username }}
+          </span>
+
+          <!-- Role Badge -->
+          <span v-if="comment.user_info?.role === 'superAdmin'" class="pixel-tag text-[10px] px-1.5 py-0.5 scale-90 origin-left">
+            ADMIN
+          </span>
         </div>
-        <div class="content py-4 px-4 ">
+
+        <!-- Content -->
+        <div class="pixel-text text-sm md:text-base mb-2 break-words leading-relaxed">
           {{ comment.content }}
         </div>
-        <div class="footer flex items-center gap-4 px-4">
-          <span class="text-gray-500 text-xs">{{ updateDateFromNow(comment.createTs) }}</span>
-          <!-- <Button @click.stop="likeMemo" variant="secondary" text size="small">
-          <Icon slot="icon" name="icon-park-outline:thumbs-up" mode="svg" ref="likeIcon" />
-          <span slot="badge">{{ likeCount }}</span>
-        </Button> -->
-          <Button variant="ghost" size="sm" @click.stop="commentReply">
-            <Icon name="icon-park-outline:comments" :style="{ color: comment._count?.sub_comments ? 'black' : '' }" />
-            <template #badge>
-              <span :class="`${comment._count?.sub_comments ? 'font-bold' : ''}`">{{
-                comment._count?.sub_comments
-                  || 0 }}</span>
-            </template>
-          </Button>
-          <!-- 管理员 或自己 可删除 -->
-          <Button
-            v-if="comment.userId === userStore?.user.value.id || userStore?.user.value.role === 'superAdmin'" variant="ghost" text
-            size="sm"
+
+        <!-- Footer Actions -->
+        <div class="flex items-center gap-4 select-none">
+          <span class="text-xs pixel-text-muted">{{ updateDateFromNow(comment.createTs) }}</span>
+
+          <button
+            class="flex items-center gap-1 text-xs pixel-text-muted hover:text-accent-pixel-cyan transition-colors cursor-pointer group"
+            @click.stop="commentReply"
+          >
+            <Icon name="icon-park-outline:comments" class="group-hover:scale-110 transition-transform" :class="{ 'text-text-pixel-primary': comment._count?.sub_comments }" />
+            <span v-if="comment._count?.sub_comments">{{ comment._count?.sub_comments }}</span>
+            <span v-else>回复</span>
+          </button>
+
+          <button
+            v-if="comment.userId === userStore?.user.value.id || userStore?.user.value.role === 'superAdmin'"
+            class="flex items-center gap-1 text-xs pixel-text-muted hover:text-status-pixel-error transition-colors cursor-pointer group"
             @click.stop="delComment"
           >
-            <Icon name="icon-park-outline:delete" />
-          </Button>
+            <Icon name="icon-park-outline:delete" class="group-hover:scale-110 transition-transform" />
+            <span>删除</span>
+          </button>
         </div>
       </div>
     </div>
-    <!-- 回复某条评论 -->
-    <div v-if="commentReplyOpen" class="reply-box w-full pl-4 mt-2 mb-4">
+
+    <!-- Reply Input -->
+    <div v-if="commentReplyOpen" class="mt-4 pl-12 md:pl-16">
       <AppCommentInput
-        type="reply" :target="comment.user_info?.nickname || comment.user_info?.username"
-        @cancel="commentReplyOpen = false" @send="createSubComment"
+        type="reply"
+        :target="comment.user_info?.nickname || comment.user_info?.username"
+        @cancel="commentReplyOpen = false"
+        @send="createSubComment"
       />
     </div>
-    <template v-for="subComment in comment.sub_comments" :key="subComment.id">
-      <SubCommentsViewPanel
-        ref="subCommentsRef" :comment="subComment" :comment-user-map="commentUserMap"
-        @refresh="refreshList"
-      />
-    </template>
+
+    <!-- Sub Comments -->
+    <div v-if="comment.sub_comments?.length" class="mt-4 pl-4 md:pl-6 ml-4 md:ml-6 border-l-2 border-border-pixel-secondary space-y-4">
+      <template v-for="subComment in comment.sub_comments" :key="subComment.id">
+        <SubCommentsViewPanel
+          ref="subCommentsRef"
+          :comment="subComment"
+          :comment-user-map="commentUserMap"
+          @refresh="refreshList"
+        />
+      </template>
+    </div>
   </div>
 </template>
