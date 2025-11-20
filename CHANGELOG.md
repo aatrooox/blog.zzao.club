@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v2.4.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.23...v2.4.0)
+
+### 🚀 Enhancements
+
+- 增加 PAT, 支持签发 token ; 优化设置页面; ([43fd531](https://github.com/aatrooox/blog.zzao.club/commit/43fd531))
+
+### 🩹 Fixes
+
+- 修复评论区展示问题 ([3af6eb1](https://github.com/aatrooox/blog.zzao.club/commit/3af6eb1))
+
+### 🏡 Chore
+
+- Eslint ([59168c5](https://github.com/aatrooox/blog.zzao.club/commit/59168c5))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.3.23
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.22...v2.3.23)
