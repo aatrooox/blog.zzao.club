@@ -21,22 +21,23 @@ export default defineStandardResponseHandler(async (event) => {
   const { refreshToken } = body.data
 
   try {
-    const newTokenData = await refreshAccessToken(refreshToken)
+    const newTokenPair = await refreshAccessToken(refreshToken)
 
-    if (!newTokenData) {
+    if (!newTokenPair) {
       throw createError({
         statusCode: 401,
         data: {
           code: API_CODES.REFRESH_TOKEN_EXPIRED,
-          message: 'Refresh token 无效或已过期',
+          message: 'Refresh token 无效或已过期，请重新登录',
         },
       })
     }
 
-    // 直接返回数据，由 handler 包装
+    // 返回新的 Token Pair
     return {
-      accessToken: newTokenData.accessToken,
-      expiresAt: newTokenData.expiresAt,
+      accessToken: newTokenPair.accessToken,
+      refreshToken: newTokenPair.refreshToken, // 返回新的 refresh token
+      expiresAt: newTokenPair.accessExpiresAt,
     }
   }
   catch (error: any) {

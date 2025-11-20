@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt'
 import { eq } from 'drizzle-orm'
 import { db } from '~~/lib/drizzle'
 import { users } from '~~/lib/drizzle/schema'
@@ -37,10 +38,11 @@ export default defineStandardResponseHandler(async (event) => {
   let [user] = await db.select().from(users).where(eq(users.username, username))
 
   if (!user) {
-    // 创建新用户
+    // 创建新用户 (自动注册)
+    const hashedPassword = await bcrypt.hash(password, 10)
     await db.insert(users).values({
       username,
-      password,
+      password: hashedPassword,
       nickname: username,
       role: 'user',
     })
@@ -48,7 +50,28 @@ export default defineStandardResponseHandler(async (event) => {
     user = newUser
   }
   else {
-    if (user.password !== password) {
+    // 验证密码 (支持平滑迁移)
+    let isValid = false
+    // 简单的判断是否为 bcrypt 哈希 (以 $2a$ 或 $2b$ 开头)
+    const isBcryptHash = user.password.startsWith('$2a$') || user.password.startsWith('$2b$')
+
+    if (isBcryptHash) {
+      isValid = await bcrypt.compare(password, user.password)
+    }
+    else {
+      // 旧明文密码验证
+      isValid = user.password === password
+      if (isValid) {
+        // 迁移到 bcrypt
+        const hashedPassword = await bcrypt.hash(password, 10)
+        await db.update(users)
+          .set({ password: hashedPassword })
+          .where(eq(users.id, user.id))
+        console.log(`用户 ${username} 密码已自动升级为 Hash 存储`)
+      }
+    }
+
+    if (!isValid) {
       throw createError({
         statusCode: 401,
         data: {

@@ -1,54 +1,73 @@
 // 校验有无权限 jwt
 export default defineEventHandler(async (event) => {
-  // api/v1 开头的接口需要校验token
-  // POST请求需要校验， GET放过
-  // 排除掉登录和注册
-  if (!getWhiteRoutes().includes(getRequestURL(event).pathname)) {
-    // 需要校验的请求类型和路径
-    if (getRequestURL(event).pathname.startsWith('/api/v1') && event.node.req.method !== 'GET' && !event.context.visitorAuth) {
-      // 排除掉登录、注册和refresh token
-      const whiteRoutes = getWhiteRoutes()
-      whiteRoutes.push('/api/v1/auth/refresh') // 添加refresh端点到白名单
+  const url = getRequestURL(event)
+  const pathname = url.pathname
 
-      if (!whiteRoutes.includes(getRequestURL(event).pathname)) {
-        if (!event.context.token) {
-          // 中间件直接返回标准格式的错误响应，状态码 200
-          setResponseStatus(event, 200)
-          return {
-            code: API_CODES.NO_TOKEN,
-            message: API_ERROR_MESSAGES[API_CODES.NO_TOKEN],
-            data: null,
-            timestamp: Date.now(),
-          }
-        }
+  // 1. 仅拦截 /api/v1 开头的接口
+  if (!pathname.startsWith('/api/v1')) {
+    return
+  }
 
-        // 使用JWT验证（无状态）
-        const { isAuth, userId, error } = verifyJWTAccessToken(event.context.token)
-        console.log(`${getRequestURL(event).pathname} - jwt: ${isAuth}, 用户ID: ${userId}, 错误信息: ${error}`)
+  // 2. 白名单检查 (登录、注册、刷新Token等无需鉴权)
+  const whiteRoutes = [...getWhiteRoutes(), '/api/v1/auth/refresh']
+  if (whiteRoutes.includes(pathname)) {
+    return
+  }
 
-        if (!isAuth) {
-          // 根据JWT错误类型返回不同的错误代码
-          let errorCode: number = API_CODES.AUTH_FAILED
-          if (error?.includes('expired')) {
-            errorCode = API_CODES.TOKEN_EXPIRED
-          }
-          else if (error?.includes('invalid') || error?.includes('malformed')) {
-            errorCode = API_CODES.TOKEN_INVALID
-          }
+  // 3. 尝试获取 Token (由 1.token.ts 中间件解析)
+  const token = event.context.token
 
-          // 中间件直接返回标准格式的错误响应，状态码 200
-          setResponseStatus(event, 200)
-          return {
-            code: errorCode,
-            message: API_ERROR_MESSAGES[errorCode as keyof typeof API_ERROR_MESSAGES],
-            data: null,
-            timestamp: Date.now(),
-          }
-        }
+  // 4. 鉴权逻辑
+  if (token) {
+    // A. 如果携带了 Token，必须验证其有效性 (无论 GET 还是 POST)
+    let isAuth = false
+    let userId: string | undefined
 
-        event.context.userId = userId
-        console.log(`auth0 - ${getRequestURL(event).pathname}`)
+    // 优先尝试 JWT 验证
+    const jwtResult = verifyJWTAccessToken(token)
+    if (jwtResult.isAuth) {
+      isAuth = true
+      userId = jwtResult.userId
+    }
+    else {
+      // JWT 验证失败，尝试 PAT 验证
+      const patResult = await verifyPAT(token)
+      if (patResult.isAuth) {
+        isAuth = true
+        userId = patResult.userId
       }
     }
+
+    if (isAuth && userId) {
+      // 验证成功，注入用户身份
+      event.context.userId = userId
+      // console.log(`[Auth] User ${userId} accessed ${pathname}`)
+    }
+    else {
+      // 验证失败 (Token 过期或无效)
+      // 如果是 GET 请求且 Token 无效，通常也应该报错，或者降级为游客？
+      // 标准做法：既然带了 Token 就是想以用户身份访问，Token 错就是错。
+      setResponseStatus(event, 200)
+      return {
+        code: API_CODES.TOKEN_EXPIRED, // 或 TOKEN_INVALID
+        message: '登录已过期，请重新登录',
+        data: null,
+        timestamp: Date.now(),
+      }
+    }
+  }
+  else {
+    // B. 未携带 Token
+    if (event.node.req.method !== 'GET' && !event.context.visitorAuth) {
+      // 非 GET 请求 (POST/PUT/DELETE) 必须鉴权
+      setResponseStatus(event, 200)
+      return {
+        code: API_CODES.NO_TOKEN,
+        message: '请先登录',
+        data: null,
+        timestamp: Date.now(),
+      }
+    }
+    // GET 请求未带 Token -> 视为游客访问 (Guest Mode)，直接放行
   }
 })

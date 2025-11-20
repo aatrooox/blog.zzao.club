@@ -1,12 +1,77 @@
+import { createHash } from 'node:crypto'
+import process from 'node:process'
 import { and, eq } from 'drizzle-orm'
 import jwt from 'jsonwebtoken'
 import { db } from '~~/lib/drizzle'
 import { accessTokens, users } from '~~/lib/drizzle/schema'
 
 // JWT配置
-const JWT_SECRET = useRuntimeConfig().jwtSecret || 'your-secret-key-change-in-production'
+const config = useRuntimeConfig()
+const JWT_SECRET = config.jwtSecret || 'your-secret-key-change-in-production'
+
+if (process.dev && JWT_SECRET === 'your-secret-key-change-in-production') {
+  console.warn('\x1B[33m%s\x1B[0m', '⚠️ [Security] 您正在使用默认的 JWT 密钥。请在 .env 中配置 NUXT_JWT_SECRET 以确保生产环境安全。')
+}
+
 const ACCESS_TOKEN_EXPIRES_IN = '15m' // 15分钟
 const REFRESH_TOKEN_EXPIRES_IN = 7 * 24 * 60 * 60 // 7天（秒）
+
+/**
+ * 生成 Personal Access Token (PAT)
+ * 用于第三方应用调用 API
+ * @param userId 用户ID
+ * @param note 备注/名称
+ * @param expiresInDays 有效期（天），0表示永不过期
+ */
+export async function generatePAT(userId: string, note: string, expiresInDays: number = 365) {
+  const rawToken = `pat_${useNanoId(40)}`
+  const hashedToken = createHash('sha256').update(rawToken).digest('hex')
+
+  const now = new Date()
+  const expiresAt = expiresInDays === 0
+    ? new Date('2099-12-31')
+    : new Date(now.getTime() + expiresInDays * 24 * 60 * 60 * 1000)
+
+  await db.insert(accessTokens).values({
+    userId,
+    token: hashedToken,
+    scope: `pat:${note}`, // 将备注存储在 scope 中
+    status: 1,
+    isRevoked: false,
+    expiresAt,
+    createdAt: now,
+    updatedAt: now,
+  })
+
+  return rawToken
+}
+
+/**
+ * 验证 Personal Access Token
+ */
+export async function verifyPAT(token: string): Promise<{ isAuth: boolean, userId?: string, scope?: string }> {
+  if (!token.startsWith('pat_')) {
+    return { isAuth: false }
+  }
+
+  const hashedToken = createHash('sha256').update(token).digest('hex')
+
+  const [tokenData] = await db.select().from(accessTokens).where(eq(accessTokens.token, hashedToken))
+
+  if (!tokenData) {
+    return { isAuth: false }
+  }
+
+  if (tokenData.isRevoked || new Date(tokenData.expiresAt) < new Date()) {
+    return { isAuth: false }
+  }
+
+  return {
+    isAuth: true,
+    userId: tokenData.userId,
+    scope: tokenData.scope,
+  }
+}
 
 interface JWTPayload {
   userId: string
@@ -96,39 +161,30 @@ export function verifyJWTAccessToken(token: string): { isAuth: boolean, userId?:
 }
 
 /**
- * 使用 Refresh Token 刷新 Access Token
- * @param refreshToken Refresh Token
- * @returns 新的 Access Token
+ * 使用 Refresh Token 刷新 Access Token (实现 Token 轮换)
+ * @param refreshToken 旧的 Refresh Token
+ * @returns 新的 Token Pair
  */
-export async function refreshAccessToken(refreshToken: string): Promise<{ accessToken: string, expiresAt: Date } | null> {
-  // 从Redis获取refresh token数据
+export async function refreshAccessToken(refreshToken: string): Promise<TokenPair | null> {
+  // 1. 从Redis获取旧 token 数据
   const refreshData = await useStorage('redis').getItem<RefreshTokenData>(`refresh_token:${refreshToken}`)
 
+  // 2. 立即删除旧 token (防止重放攻击，实现轮换)
+  await useStorage('redis').removeItem(`refresh_token:${refreshToken}`)
+
+  // 3. 校验有效性
   if (!refreshData || refreshData.isRevoked) {
+    // TODO: 安全警报 - 检测到可能的 Refresh Token 重用/盗用
+    // 建议在此处撤销该用户的所有 Token
     return null
   }
 
   if (new Date(refreshData.expiresAt) < new Date()) {
-    // refresh token过期，删除
-    await useStorage('redis').removeItem(`refresh_token:${refreshToken}`)
     return null
   }
 
-  // 生成新的JWT Access Token
-  const accessTokenPayload: JWTPayload = {
-    userId: refreshData.userId,
-    scope: refreshData.scope,
-  }
-  const accessToken = jwt.sign(accessTokenPayload, JWT_SECRET, {
-    expiresIn: ACCESS_TOKEN_EXPIRES_IN,
-  })
-
-  const accessExpiresAt = new Date(Date.now() + 15 * 60 * 1000) // 15分钟
-
-  return {
-    accessToken,
-    expiresAt: accessExpiresAt,
-  }
+  // 4. 生成全新的 Token Pair (Access + Refresh)
+  return await generateTokenPair(refreshData.userId, refreshData.scope)
 }
 
 /**

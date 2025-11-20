@@ -1,4 +1,5 @@
 import { count, eq } from 'drizzle-orm'
+import bcrypt from 'bcrypt'
 import { db } from '~~/lib/drizzle'
 import { users } from '~~/lib/drizzle/schema'
 
@@ -34,10 +35,14 @@ export default defineStandardResponseHandler(async (event) => {
       message: '用户名已存在',
     })
   }
+
+  // 密码加密
+  const hashedPassword = await bcrypt.hash(password, 10)
+
   // 创建新用户
   await db.insert(users).values({
     username,
-    password,
+    password: hashedPassword,
     email,
     role,
   })
