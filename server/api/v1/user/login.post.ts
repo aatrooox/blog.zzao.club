@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import { eq, count } from 'drizzle-orm'
+import { count, eq } from 'drizzle-orm'
 import { db } from '~~/lib/drizzle'
 import { users } from '~~/lib/drizzle/schema'
 import { API_CODES } from '~~/shared/utils/apiCodes'
