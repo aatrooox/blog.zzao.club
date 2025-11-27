@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import { eq } from 'drizzle-orm'
+import { eq, count } from 'drizzle-orm'
 import { db } from '~~/lib/drizzle'
 import { users } from '~~/lib/drizzle/schema'
 import { API_CODES } from '~~/shared/utils/apiCodes'
@@ -39,12 +39,19 @@ export default defineStandardResponseHandler(async (event) => {
 
   if (!user) {
     // 创建新用户 (自动注册)
+    // 获取用户数
+    const [{ count: userCount }] = await db.select({ count: count() }).from(users)
+    // 第一个注册的用户为管理员
+    let role = 'user'
+    if (userCount === 0) {
+      role = 'superAdmin'
+    }
     const hashedPassword = await bcrypt.hash(password, 10)
     await db.insert(users).values({
       username,
       password: hashedPassword,
       nickname: username,
-      role: 'user',
+      role,
     })
     const [newUser] = await db.select().from(users).where(eq(users.username, username))
     user = newUser
