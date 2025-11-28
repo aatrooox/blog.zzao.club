@@ -19,7 +19,7 @@ const router = useRouter()
 const route = useRoute()
 const { loggedIn, user } = useUserSession()
 const userStore = useUser()
-// const config = useAppConfig()
+const appConfig = useAppConfig()
 // const { public: runtimeConfig } = useRuntimeConfig()
 const { $api } = useNuxtApp()
 // const curSocial = ref()
@@ -237,6 +237,48 @@ function onMouseLeave(event) {
         </div>
       </template>
     </ClientOnly>
+
+    <!-- 最近产品区域 -->
+    <div class="space-y-6">
+      <div class="flex items-center justify-between pr-2">
+        <h2 class="text-xl md:text-3xl pixel-title flex items-center gap-3">
+          <Icon class="ss" name="pixelarticons:gamepad" size="1em" />
+          最近产品
+        </h2>
+        <NuxtLink
+          to="/product"
+          class="pixel-btn cursor-pointer flex items-center gap-2"
+        >
+          <span class="text-sm md:text-base">更多产品</span>
+          <Icon name="icon-park-outline:right" class="text-sm md:text-base" />
+        </NuxtLink>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <NuxtLink
+          v-for="product in appConfig.products.slice(0, 2)"
+          :key="product.slug"
+          :to="product.link"
+          class="block group"
+        >
+          <div class="pixel-card h-full hover:border-accent-pixel-cyan transition-colors">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 flex items-center justify-center bg-accent-pixel-primary/10 rounded-lg shrink-0">
+                <Icon :name="product.icon" class="text-2xl text-accent-pixel-primary" />
+              </div>
+              <div>
+                <h3 class="text-lg font-bold pixel-subtitle mb-2 group-hover:text-accent-pixel-cyan transition-colors">
+                  {{ product.name }}
+                </h3>
+                <p class="text-sm pixel-text-muted line-clamp-2">
+                  {{ product.description }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </NuxtLink>
+      </div>
+    </div>
 
     <!-- 最近文章区域 -->
     <div class="flex-1 space-y-6">

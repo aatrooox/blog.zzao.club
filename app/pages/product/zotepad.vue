@@ -16,8 +16,9 @@ const product = {
     { title: '开源免费', desc: '完全开源，免费使用，欢迎贡献代码、提供需求。', icon: 'lucide:file-text' },
   ],
   images: [
-    'https://placehold.co/800x450/2a2a2a/FFF?text=Zotepad+Preview+1',
-    'https://placehold.co/800x450/2a2a2a/FFF?text=Zotepad+Preview+2',
+    'https://img.zzao.club/20251128140542363.png',
+    'https://img.zzao.club/20251128140736542.png',
+    'https://img.zzao.club/20251128140850102.png',
   ],
   downloadLink: '#',
   docLink: '#',
@@ -121,10 +122,7 @@ onMounted(() => {
       <!-- Preview Section (Optional) -->
       <div v-if="product.images.length" class="py-24 px-4 sm:px-6 lg:px-8">
         <div class="max-w-6xl mx-auto">
-          <div class="rounded-2xl overflow-hidden shadow-2xl shadow-black/20 border border-white/10 relative group">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <img :src="product.images[0]" alt="App Preview" class="w-full h-auto transform transition-transform duration-700 group-hover:scale-[1.01]">
-          </div>
+          <AppCarousel :images="product.images" />
         </div>
       </div>
     </div>

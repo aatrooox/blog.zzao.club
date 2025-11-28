@@ -5,24 +5,8 @@ definePageMeta({
   layout: 'clean',
 })
 
-const products = [
-  {
-    name: '博客站',
-    slug: 'blog',
-    description: '基于Nuxt4+Drizzle+MySQL的全栈博客系统，支持SSR渲染、动态内容发布、用户系统等功能。',
-    icon: 'lucide:layout-template',
-    features: ['SSR 渲染', '全栈开发', 'PAT', '开源免费'],
-    link: '/',
-  },
-  {
-    name: 'Zotepad',
-    slug: 'zotepad',
-    description: '一款基于Nuxt4和Tauri2构建的多端纯本地笔记推送应用，支持自定义【推送】内容到任意服务器',
-    icon: 'lucide:notebook-pen',
-    features: ['跨平台', '本地优先', '自定义推送', '开源免费'],
-    link: '/product/zotepad',
-  },
-]
+const appConfig = useAppConfig()
+const products = appConfig.products
 
 const containerRef = ref(null)
 
