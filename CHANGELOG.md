@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v2.5.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.4.0...v2.5.0)
+
+### 🚀 Enhancements
+
+- 新增产品介绍页; 以及memo发布来源 ([fea30a7](https://github.com/aatrooox/blog.zzao.club/commit/fea30a7))
+
+### 🩹 Fixes
+
+- 自动注册时，第一个账号默认为超级管理员 ([1995066](https://github.com/aatrooox/blog.zzao.club/commit/1995066))
+
+### 🏡 Chore
+
+- Eslint ([e36aae1](https://github.com/aatrooox/blog.zzao.club/commit/e36aae1))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.4.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.3.23...v2.4.0)
