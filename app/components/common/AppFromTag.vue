@@ -5,7 +5,7 @@ const props = defineProps<{
 
 const froms = ref({
   blog: {
-    href: 'https://zzao.club',
+    href: '',
   },
   zotepad: {
     href: 'https://zzao.club/product/zotepad',
@@ -26,9 +26,10 @@ const froms = ref({
         </TooltipTrigger>
         <TooltipContent>
           <p>
-            来自于 {{ props.from }}, <NuxtLink
+            来自于 {{ props.from }}<NuxtLink
+              v-if="froms[props.from].href"
               :to="froms[props.from].href"
-              class="inline-block text-xs hover:underline"
+              class="inline-block text-xs ml-1 hover:underline"
             >
               了解更多
             </NuxtLink>

@@ -254,23 +254,23 @@ function onMouseLeave(event) {
         </NuxtLink>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
         <NuxtLink
-          v-for="product in appConfig.products.slice(0, 2)"
+          v-for="product in appConfig.products.slice(0, 3)"
           :key="product.slug"
           :to="product.link"
           class="block group"
         >
-          <div class="pixel-card h-full hover:border-accent-pixel-cyan transition-colors">
-            <div class="flex items-start gap-4">
-              <div class="w-12 h-12 flex items-center justify-center bg-accent-pixel-primary/10 rounded-lg shrink-0">
-                <Icon :name="product.icon" class="text-2xl text-accent-pixel-primary" />
+          <div class="pixel-card h-full hover:border-accent-pixel-cyan transition-colors p-3">
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 flex items-center justify-center bg-accent-pixel-primary/10 rounded-lg shrink-0">
+                <Icon :name="product.icon" class="text-xl text-accent-pixel-primary" />
               </div>
-              <div>
-                <h3 class="text-lg font-bold pixel-subtitle mb-2 group-hover:text-accent-pixel-cyan transition-colors">
+              <div class="min-w-0 flex-1">
+                <h3 class="text-sm font-bold pixel-subtitle mb-1 group-hover:text-accent-pixel-cyan transition-colors truncate">
                   {{ product.name }}
                 </h3>
-                <p class="text-sm pixel-text-muted line-clamp-2">
+                <p class="text-xs pixel-text-muted line-clamp-2 leading-relaxed">
                   {{ product.description }}
                 </p>
               </div>

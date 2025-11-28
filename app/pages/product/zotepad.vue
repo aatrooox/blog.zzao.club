@@ -19,6 +19,7 @@ const product = {
     'https://img.zzao.club/20251128140542363.png',
     'https://img.zzao.club/20251128140736542.png',
     'https://img.zzao.club/20251128140850102.png',
+    'https://img.zzao.club/20251128145953202.png',
   ],
   downloadLink: '#',
   docLink: '#',
