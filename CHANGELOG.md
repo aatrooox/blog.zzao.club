@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.5.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.5.1...v2.5.2)
+
+### 🏡 Chore
+
+- 落地页截图; 优化from tag展示 ([49667a5](https://github.com/aatrooox/blog.zzao.club/commit/49667a5))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.5.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.5.0...v2.5.1)
