@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.5.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.5.2...v2.5.3)
+
+### 🩹 Fixes
+
+- 修复头像异常显示问题 ([d3a049e](https://github.com/aatrooox/blog.zzao.club/commit/d3a049e))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.5.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.5.1...v2.5.2)
