@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.5.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.5.0...v2.5.1)
+
+### 🚀 Enhancements
+
+- 优化from tag; zotepad 落地页 ([ca067f8](https://github.com/aatrooox/blog.zzao.club/commit/ca067f8))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.5.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.4.0...v2.5.0)
