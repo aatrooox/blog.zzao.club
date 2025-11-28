@@ -25,7 +25,11 @@ export const defineStandardResponseHandler = <T extends EventHandlerRequest, D> 
         // 检查是否包含自定义错误代码
         const customCode = error.data?.code
         const customMessage = error.data?.message || error.message
-
+        console.error('Handled error:', {
+          statusCode: error.statusCode,
+          customCode,
+          message: customMessage,
+        })
         return {
           code: customCode || API_CODES.INTERNAL_ERROR,
           message: customMessage || '出错啦，请稍后再试～',

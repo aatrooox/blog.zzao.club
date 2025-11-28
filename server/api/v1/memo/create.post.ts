@@ -11,17 +11,20 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
+  console.log(`当前用户`, event.context.userId)
   const body = await useSafeValidatedBody(event, z.object({
     content: z.string(),
     tags: z.array(z.string()).optional(),
     visible: z.string().optional(),
     defalt_floded: z.boolean().optional(),
     flod_tip: z.string().optional(),
-    user_id: z.string(),
+    user_id: z.string().optional(), // 可选，默认从token中获取
+    from: z.string().optional(),
     photos: z.array(z.string()).optional(), // 新增字段，允许上传多张图片
   }))
 
   if (!body.success) {
+    console.error('请求参数验证失败:', body.error)
     throw createError({
       statusCode: 400,
       message: JSON.stringify(body.error),
@@ -40,7 +43,8 @@ export default defineStandardResponseHandler(async (event) => {
     visible: memoData.visible || 'public',
     defaltFloded: memoData.defalt_floded || false,
     flodTip: memoData.flod_tip,
-    userId: memoData.user_id,
+    userId: memoData.user_id || event.context.userId,
+    from: memoData.from || 'blog',
     photos: memoData.photos || [],
   }
 

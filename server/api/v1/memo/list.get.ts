@@ -25,6 +25,7 @@ export default defineStandardResponseHandler(async (event) => {
     createTs: blogMemos.createTs,
     updatedTs: blogMemos.updatedTs,
     userId: blogMemos.userId,
+    from: blogMemos.from,
     user_info: {
       username: users.username,
       nickname: users.nickname,

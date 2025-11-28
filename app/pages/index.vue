@@ -191,7 +191,8 @@ function onMouseLeave(event) {
                   </div>
 
                   <!-- 底部时间 -->
-                  <div class="flex justify-end mt-2">
+                  <div class="flex justify-end items-center gap-2 mt-2">
+                    <AppFromTag :from="memo.from || 'blog'" />
                     <NuxtTime :datetime="memo.createTs" class="text-xs pixel-text-muted" />
                   </div>
                 </div>

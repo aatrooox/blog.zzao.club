@@ -197,6 +197,8 @@ function onUploadError(error: string) {
                 <span class="pixel-title text-sm md:text-base">{{ memo.user_info?.nickname || memo.user_info?.username || '匿名' }}</span>
                 <span class="pixel-text text-xs md:text-sm opacity-70">·</span>
                 <NuxtTime :datetime="memo.createTs" class="pixel-text text-xs md:text-sm opacity-70" />
+                <span class="pixel-text text-xs md:text-sm opacity-70">·</span>
+                <AppFromTag :from="memo.from || 'blog'" />
               </div>
               <div v-if="memo.tags && memo.tags.length > 0" class="py-2 overflow-x-auto overflow-y-hidden flex items-center gap-1.5 pb-1">
                 <span
