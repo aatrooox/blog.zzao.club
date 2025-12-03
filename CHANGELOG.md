@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v2.6.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.5.3...v2.6.0)
+
+### 🏡 Chore
+
+- 更新产品图 ([91f21d4](https://github.com/aatrooox/blog.zzao.club/commit/91f21d4))
+
+### 🎨 Styles
+
+- 优化样式 ([06230ab](https://github.com/aatrooox/blog.zzao.club/commit/06230ab))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.5.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.5.2...v2.5.3)
