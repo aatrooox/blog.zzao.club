@@ -285,21 +285,6 @@ function getOneDomCssStyle(childDom, pointCssAttrs: string[] = []) {
         curCssStyles[cssAttr] = value
       }
     })
-    // 如果当前元素有些属性需要添加进去
-    // if (classList.some( item => !!customTagCssAttrs[item])) {
-    //   console.log(`当前 classList ${classList} 存在自定义属性值`, )
-    //   classList.forEach( item => {
-    //     if (customTagCssAttrs[item]) {
-    //       customTagCssAttrs[item].forEach( cssAttr => {
-    //         const value = computedCssStyles[cssAttr]
-    //         if (value) {
-    //           curCssStyles[cssAttr] = value
-    //           console.log(`自定义后的属性值为 => `, curCssStyles)
-    //         }
-    //       })
-    //     }
-    //   })
-    // }
 
     // 设置缓存, 如果存在相同html, 则直接使用缓存
     _htmlCache[childOutHTML] = curCssStyles

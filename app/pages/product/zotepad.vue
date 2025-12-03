@@ -21,6 +21,13 @@ const product = {
     'https://img.zzao.club/20251128140850102.png',
     'https://img.zzao.club/20251128145953202.png',
   ],
+  appImages: [
+    'https://img.zzao.club/zotepad/1764766210414_lmbq88mw18.jpg',
+    'https://img.zzao.club/zotepad/1764766216556_xdxhxddqyb.jpg',
+    'https://img.zzao.club/zotepad/1764766243399_fza8b2i6u6.jpg',
+    'https://img.zzao.club/zotepad/1764766237781_v7df6ejgft.jpg',
+    'https://img.zzao.club/zotepad/1764766223966_tgv8tciu66.jpg',
+  ],
   downloadLink: '#',
   docLink: '#',
 }
@@ -124,6 +131,12 @@ onMounted(() => {
       <div v-if="product.images.length" class="py-24 px-4 sm:px-6 lg:px-8">
         <div class="max-w-6xl mx-auto">
           <AppCarousel :images="product.images" />
+        </div>
+      </div>
+
+      <div v-if="product.appImages.length" class="py-24 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+          <AppCarousel :images="product.appImages" />
         </div>
       </div>
     </div>
