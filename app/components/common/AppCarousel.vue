@@ -133,16 +133,14 @@ onUnmounted(() => {
     @mouseleave="startAutoplay"
   >
     <!-- Images -->
-    <div class="relative w-full h-full">
+    <div class="relative w-full h-full flex items-center justify-center">
       <img
         v-for="(img) in images"
         :key="img"
         :src="img"
-        class="carousel-image absolute inset-0 w-full h-full object-cover opacity-0"
+        class="carousel-image absolute max-w-full max-h-full w-auto h-auto object-contain opacity-0"
         alt="Product Preview"
       >
-      <!-- Overlay gradient -->
-      <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10" />
     </div>
 
     <!-- Controls -->
