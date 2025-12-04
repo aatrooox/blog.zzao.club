@@ -127,16 +127,15 @@ onMounted(() => {
         </div>
       </div>
 
-      <!-- Preview Section (Optional) -->
-      <div v-if="product.images.length" class="py-24 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-6xl mx-auto">
-          <AppCarousel :images="product.images" />
+      <div v-if="product.appImages.length" class="py-24 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto flex justify-center">
+          <AppCarousel :images="product.appImages" />
         </div>
       </div>
-
-      <div v-if="product.appImages.length" class="py-24 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-6xl mx-auto">
-          <AppCarousel :images="product.appImages" />
+      <!-- Preview Section (Optional) -->
+      <div v-if="product.images.length" class="py-24 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto flex justify-center">
+          <AppCarousel :images="product.images" />
         </div>
       </div>
     </div>

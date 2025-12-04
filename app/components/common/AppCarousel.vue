@@ -81,34 +81,29 @@ function animateTransition(from: number, to: number) {
   const fromImg = images[from]
   const toImg = images[to]
 
-  // Initial state for entering image
-  gsap.set(toImg, {
-    xPercent: direction.value * 100,
-    opacity: 1,
-    zIndex: 2,
-  })
+  // 淡入淡出动画
+  gsap.set(toImg, { opacity: 0, zIndex: 2 })
   gsap.set(fromImg, { zIndex: 1 })
 
   const tl = gsap.timeline({
     onComplete: () => {
       isAnimating.value = false
-      gsap.set(fromImg, { opacity: 0, xPercent: 0 })
+      gsap.set(fromImg, { opacity: 0 })
       gsap.set(toImg, { zIndex: 1 })
     },
   })
 
   tl.to(fromImg, {
-    xPercent: -direction.value * 20,
     opacity: 0,
-    duration: 0.8,
-    ease: 'power3.inOut',
+    duration: 0.5,
+    ease: 'power2.inOut',
   }, 0)
 
   tl.to(toImg, {
-    xPercent: 0,
-    duration: 0.8,
-    ease: 'power3.inOut',
-  }, 0)
+    opacity: 1,
+    duration: 0.5,
+    ease: 'power2.inOut',
+  }, 0.2)
 }
 
 onMounted(() => {
@@ -128,17 +123,24 @@ onUnmounted(() => {
 <template>
   <div
     ref="containerRef"
-    class="relative w-full overflow-hidden rounded-2xl group aspect-video bg-muted/10 border border-white/10 shadow-2xl shadow-black/20"
+    class="relative inline-block overflow-hidden rounded-2xl group max-w-full"
     @mouseenter="stopAutoplay"
     @mouseleave="startAutoplay"
   >
     <!-- Images -->
-    <div class="relative w-full h-full flex items-center justify-center">
+    <div v-viewer class="relative max-w-full">
+      <!-- 用第一张图片撑开容器大小 -->
+      <img
+        :src="images[0]"
+        class="h-auto max-w-full max-h-[70vh] invisible"
+        alt=""
+      >
+      <!-- 实际轮播图片 -->
       <img
         v-for="(img) in images"
         :key="img"
         :src="img"
-        class="carousel-image absolute max-w-full max-h-full w-auto h-auto object-contain opacity-0"
+        class="carousel-image absolute inset-0 w-full h-full object-contain opacity-0"
         alt="Product Preview"
       >
     </div>
