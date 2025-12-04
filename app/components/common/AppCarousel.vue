@@ -128,23 +128,24 @@ onUnmounted(() => {
     @mouseleave="startAutoplay"
   >
     <!-- Images -->
-    <div v-viewer class="relative max-w-full">
-      <!-- 用第一张图片撑开容器大小 -->
-      <img
-        :src="images[0]"
-        class="h-auto max-w-full max-h-[70vh] invisible"
-        alt=""
-      >
-      <!-- 实际轮播图片 -->
-      <img
-        v-for="(img) in images"
-        :key="img"
-        :src="img"
-        class="carousel-image absolute inset-0 w-full h-full object-contain opacity-0"
-        alt="Product Preview"
-      >
-    </div>
-
+    <ClientOnly>
+      <div v-viewer class="relative max-w-full">
+        <!-- 用第一张图片撑开容器大小 -->
+        <img
+          :src="images[0]"
+          class="h-auto max-w-full max-h-[70vh] invisible"
+          alt=""
+        >
+        <!-- 实际轮播图片 -->
+        <img
+          v-for="(img) in images"
+          :key="img"
+          :src="img"
+          class="carousel-image absolute inset-0 w-full h-full object-contain opacity-0"
+          alt="Product Preview"
+        >
+      </div>
+    </ClientOnly>
     <!-- Controls -->
     <div v-if="images.length > 1" class="absolute inset-0 flex items-center justify-between p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
       <button
