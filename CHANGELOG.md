@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.6.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.6.1...v2.6.2)
+
+### 🩹 Fixes
+
+- Ssr ([cfe1615](https://github.com/aatrooox/blog.zzao.club/commit/cfe1615))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.6.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.6.0...v2.6.1)
