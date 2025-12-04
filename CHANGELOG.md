@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.6.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.6.0...v2.6.1)
+
+### 🎨 Styles
+
+- 优化产品落地页 ([9330f5f](https://github.com/aatrooox/blog.zzao.club/commit/9330f5f))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.6.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.5.3...v2.6.0)
