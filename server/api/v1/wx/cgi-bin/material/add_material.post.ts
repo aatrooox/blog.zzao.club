@@ -104,14 +104,19 @@ export default defineStandardResponseHandler(async (event) => {
   wxApiUrl.searchParams.set('type', 'image')
 
   try {
-    const response = await $fetch<WxAddMaterialResponse>(wxApiUrl.toString(), {
+    const rawResponse = await $fetch<WxAddMaterialResponse | string>(wxApiUrl.toString(), {
       method: 'POST',
       body: wxFormData,
       timeout: 30000, // 30 秒超时（上传文件可能较慢）
     })
-    console.log('[WX Material] 微信接口返回结果 ========== ')
-    console.log(JSON.stringify(response, null, 2))
-    console.log('===================================')
+
+    // 微信可能返回 JSON 字符串，需要解析
+    const response: WxAddMaterialResponse = typeof rawResponse === 'string'
+      ? JSON.parse(rawResponse)
+      : rawResponse
+
+    console.log('[WX Material] 微信接口返回结果:', response)
+
     // 8. 检查微信返回的错误
     if (response.errcode && response.errcode !== 0) {
       console.error('[WX Material] 微信接口返回错误:', response)
