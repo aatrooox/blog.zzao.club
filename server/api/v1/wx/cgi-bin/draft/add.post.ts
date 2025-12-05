@@ -148,11 +148,16 @@ export default defineStandardResponseHandler(async (event) => {
   wxApiUrl.searchParams.set('access_token', accessToken)
 
   try {
-    const response = await $fetch<WxDraftAddResponse>(wxApiUrl.toString(), {
+    const rawResponse = await $fetch<WxDraftAddResponse>(wxApiUrl.toString(), {
       method: 'POST',
       body: { articles: body.articles },
       timeout: 30000,
     })
+
+    // 微信可能返回 JSON 字符串，需要解析
+    const response: WxDraftAddResponse = typeof rawResponse === 'string'
+      ? JSON.parse(rawResponse)
+      : rawResponse
 
     // 8. 检查微信返回的错误
     if (response.errcode && response.errcode !== 0) {
