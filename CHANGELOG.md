@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v2.7.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.7.0...v2.7.1)
+
+### 🩹 Fixes
+
+- 修复action中缺失SECRET问题 ([4252110](https://github.com/aatrooox/blog.zzao.club/commit/4252110))
+- 修复删除PAT失败问题 ([0027903](https://github.com/aatrooox/blog.zzao.club/commit/0027903))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.7.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.6.2...v2.7.0)
