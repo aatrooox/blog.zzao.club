@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.8.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.7.1...v2.8.0)
+
+### 🚀 Enhancements
+
+- 新增公众号上传永久素材和创建草稿功能 ([228e86c](https://github.com/aatrooox/blog.zzao.club/commit/228e86c))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.7.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.7.0...v2.7.1)
