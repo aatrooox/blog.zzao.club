@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.8.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.1...v2.8.2)
+
+### 🩹 Fixes
+
+- 增加调试信息 ([34641d7](https://github.com/aatrooox/blog.zzao.club/commit/34641d7))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.8.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.0...v2.8.1)
