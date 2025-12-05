@@ -127,10 +127,9 @@ async function deletePAT(id: string) {
     return
   }
   const res = await $api.delete<ApiResponse>(`/api/v1/token/${id}`)
-  if (res.code === 200) {
-    toast.success('移除成功')
-    fetchPATs()
-  }
+  console.log(res)
+  toast.success('移除成功')
+  fetchPATs()
 }
 
 const passwordSchema = z.object({
