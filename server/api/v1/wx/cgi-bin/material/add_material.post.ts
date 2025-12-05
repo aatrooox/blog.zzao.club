@@ -56,6 +56,12 @@ export default defineStandardResponseHandler(async (event) => {
   const typeField = formData.find(field => field.name === 'type')
   const mediaField = formData.find(field => field.name === 'media')
 
+  console.log('[WX Material] 上传素材参数 ========== ')
+  console.log('access_token:', accessTokenField?.data?.toString())
+  console.log('type:', typeField?.data?.toString())
+  console.log('media:', mediaField ? `(filename: ${mediaField.filename}, type: ${mediaField.type}, size: ${mediaField.data?.byteLength} bytes)` : 'null')
+  console.log('===================================')
+
   // 验证 access_token
   const accessToken = accessTokenField?.data?.toString()
   if (!accessToken) {
@@ -103,7 +109,9 @@ export default defineStandardResponseHandler(async (event) => {
       body: wxFormData,
       timeout: 30000, // 30 秒超时（上传文件可能较慢）
     })
-
+    console.log('[WX Material] 微信接口返回结果 ========== ')
+    console.log(JSON.stringify(response, null, 2))
+    console.log('===================================')
     // 8. 检查微信返回的错误
     if (response.errcode && response.errcode !== 0) {
       console.error('[WX Material] 微信接口返回错误:', response)

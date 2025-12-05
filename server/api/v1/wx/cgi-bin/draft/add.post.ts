@@ -1,9 +1,6 @@
 /**
  * 微信公众号新增草稿接口
  *
- * 安全措施：
- * 1. 需要用户登录（JWT 验证）
- * 2. 可选的来源验证（X-App-Source 头）
  *
  * POST /api/v1/wx/cgi-bin/draft/add
  *
