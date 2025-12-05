@@ -22,12 +22,14 @@ export default defineEventHandler(async (event) => {
     // A. 如果携带了 Token，必须验证其有效性 (无论 GET 还是 POST)
     let isAuth = false
     let userId: string | undefined
+    let scope: string | undefined
 
     // 优先尝试 JWT 验证
     const jwtResult = verifyJWTAccessToken(token)
     if (jwtResult.isAuth) {
       isAuth = true
       userId = jwtResult.userId
+      scope = 'all' // JWT 拥有全部权限
     }
     else {
       // JWT 验证失败，尝试 PAT 验证
@@ -35,18 +37,29 @@ export default defineEventHandler(async (event) => {
       if (patResult.isAuth) {
         isAuth = true
         userId = patResult.userId
+        scope = patResult.scope
       }
     }
 
     if (isAuth && userId) {
+      // PAT scope 校验
+      if (scope && !isPathAllowedByScope(scope, pathname)) {
+        setResponseStatus(event, 200)
+        return {
+          code: API_CODES.PERMISSION_DENIED,
+          message: '该 Token 无权访问此接口',
+          data: null,
+          timestamp: Date.now(),
+        }
+      }
+
       // 验证成功，注入用户身份
       event.context.userId = userId
+      event.context.scope = scope
       // console.log(`[Auth] User ${userId} accessed ${pathname}`)
     }
     else {
       // 验证失败 (Token 过期或无效)
-      // 如果是 GET 请求且 Token 无效，通常也应该报错，或者降级为游客？
-      // 标准做法：既然带了 Token 就是想以用户身份访问，Token 错就是错。
       setResponseStatus(event, 200)
       return {
         code: API_CODES.TOKEN_EXPIRED, // 或 TOKEN_INVALID

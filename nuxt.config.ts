@@ -174,6 +174,7 @@ export default defineNuxtConfig({
     baseURL: 'https://zzao.club',
     imgHost: 'https://img.zzao.club',
     jwtSecret: 'your_jwt_secret',
+    cryptoSecretKey: '', // 用于加密敏感数据的密钥（至少 32 字符）
     umamiHost: 'https://umami.abc.com',
     umamiUser: 'admin',
     umamiPass: 'your_umami_password',

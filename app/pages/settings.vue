@@ -65,8 +65,11 @@ const tabs = [
 const currentTab = ref('profile')
 
 // PAT 相关
-const generatedToken = ref<{ token: string, note: string, expiresInDays: number } | null>(null)
+const generatedToken = ref<{ token: string, note: string, expiresInDays: number, scopes: string[] } | null>(null)
 const patList = ref<any[]>([])
+const availableScopes = ref<{ key: string, label: string, paths: string[] }[]>([])
+const selectedScopes = ref<string[]>(['all'])
+
 const patSchema = z.object({
   note: z.string()
     .min(1, { message: '备注不能为空' })
@@ -78,6 +81,38 @@ const patSchema = z.object({
     .default(365)
     .describe('有效期(天)'),
 })
+
+async function fetchScopes() {
+  const res = await $api.get<ApiResponse>('/api/v1/token/scopes')
+  if (res.data?.scopes) {
+    availableScopes.value = res.data.scopes
+  }
+}
+
+function toggleScope(scopeKey: string) {
+  if (scopeKey === 'all') {
+    // 选择 all 时清除其他选择
+    selectedScopes.value = ['all']
+    return
+  }
+
+  // 选择其他时移除 all
+  const filtered = selectedScopes.value.filter(s => s !== 'all')
+
+  if (filtered.includes(scopeKey)) {
+    // 取消选择
+    const newScopes = filtered.filter(s => s !== scopeKey)
+    selectedScopes.value = newScopes.length > 0 ? newScopes : ['all']
+  }
+  else {
+    // 添加选择
+    selectedScopes.value = [...filtered, scopeKey]
+  }
+}
+
+function isScopeSelected(scopeKey: string): boolean {
+  return selectedScopes.value.includes(scopeKey)
+}
 
 async function fetchPATs() {
   const res = await $api.get<ApiResponse>('/api/v1/token/list')
@@ -147,10 +182,14 @@ async function onSubmitPassword(values: Record<string, any>) {
 }
 
 async function onSubmitPAT(values: Record<string, any>) {
-  const res = await $api.post<ApiResponse>('/api/v1/token/generate', values)
+  const res = await $api.post<ApiResponse>('/api/v1/token/generate', {
+    ...values,
+    scopes: selectedScopes.value,
+  })
   if (res.data) {
     generatedToken.value = res.data
     toast.success('Token 生成成功')
+    selectedScopes.value = ['all'] // 重置选择
     fetchPATs() // 刷新列表
   }
 }
@@ -231,6 +270,7 @@ watchEffect(async () => {
 onMounted(() => {
   getUserInfo()
   fetchPATs()
+  fetchScopes()
 })
 </script>
 
@@ -377,6 +417,34 @@ onMounted(() => {
             }"
             @submit="onSubmitPAT"
           >
+            <!-- Scopes 选择 -->
+            <div class="space-y-2">
+              <label class="text-sm font-bold text-gray-700">权限范围</label>
+              <p class="text-xs text-gray-500 mb-2">
+                选择该 Token 可以访问的接口范围，建议按需选择最小权限
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <button
+                  v-for="scope in availableScopes"
+                  :key="scope.key"
+                  type="button"
+                  class="px-3 py-1.5 text-sm rounded-lg border-2 transition-all duration-200 font-cartoon"
+                  :class="[
+                    isScopeSelected(scope.key)
+                      ? 'bg-primary-600 border-bg-base text-gray-800 shadow-pixel'
+                      : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50',
+                  ]"
+                  :title="scope.paths.join(', ')"
+                  @click="toggleScope(scope.key)"
+                >
+                  {{ scope.label }}
+                </button>
+              </div>
+              <p v-if="selectedScopes.length > 0 && !selectedScopes.includes('all')" class="text-xs text-blue-600 mt-1">
+                已选择: {{ selectedScopes.map(s => availableScopes.find(a => a.key === s)?.label).join('、') }}
+              </p>
+            </div>
+
             <button
               type="submit"
               class="text-gray-600 font-cartoon font-bold px-4 md:px-6 py-2 md:py-3 rounded-lg border-2 md:border-4 border-bg-base shadow-pixel hover:shadow-[6px_6px_0_0_#000000] transition-all duration-200 hover:scale-105"
@@ -415,9 +483,10 @@ onMounted(() => {
             </button>
           </div>
 
-          <div class="mt-4 text-xs text-gray-500">
+          <div class="mt-4 text-xs text-gray-500 space-y-1">
             <p>备注: {{ generatedToken.note }}</p>
             <p>有效期: {{ generatedToken.expiresInDays === 0 ? '永久' : `${generatedToken.expiresInDays} 天` }}</p>
+            <p>权限范围: {{ generatedToken.scopes?.map(s => availableScopes.find(a => a.key === s)?.label || s).join('、') || '全部' }}</p>
           </div>
         </div>
 
@@ -447,6 +516,15 @@ onMounted(() => {
                 <div class="text-xs text-gray-500 flex flex-wrap gap-x-4 gap-y-1">
                   <span>创建于: <NuxtTime :datetime="pat.createdAt" /></span>
                   <span>过期时间: <NuxtTime :datetime="pat.expiresAt" /></span>
+                </div>
+                <div v-if="pat.scopes && pat.scopes.length > 0" class="mt-1 flex flex-wrap gap-1">
+                  <span
+                    v-for="scope in pat.scopes"
+                    :key="scope"
+                    class="text-xs bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded border border-blue-200"
+                  >
+                    {{ availableScopes.find(a => a.key === scope)?.label || scope }}
+                  </span>
                 </div>
               </div>
 

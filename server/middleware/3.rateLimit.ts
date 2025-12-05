@@ -31,6 +31,8 @@ export default defineEventHandler(async (event) => {
     { path: '/api/v1/fsf/push', strict: true, limit: 5, duration: 1 * 60 * 1000 },
     // 上传图片，五分钟内最多九次
     { path: '/api/v1/upload', strict: true, limit: 9, duration: 5 * 60 * 1000 },
+    // 微信相关接口，严格限制用户请求 1 分钟内最多 10 次
+    { path: '/api/v1/wx', strict: true, limit: 10, duration: 1 * 60 * 1000 },
   ]
 
   // 查找匹配的规则

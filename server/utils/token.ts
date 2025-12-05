@@ -5,6 +5,48 @@ import jwt from 'jsonwebtoken'
 import { db } from '~~/lib/drizzle'
 import { accessTokens, users } from '~~/lib/drizzle/schema'
 
+/**
+ * PAT Scope 定义
+ * 每个 scope 对应允许访问的 API 路径前缀
+ */
+export const PAT_SCOPES = {
+  all: { label: '全部权限', paths: ['/api/v1/'] },
+  wx: { label: '微信接口', paths: ['/api/v1/wx/'] },
+  memo: { label: '动态管理', paths: ['/api/v1/memo/'] },
+  comment: { label: '评论管理', paths: ['/api/v1/comment/'] },
+  upload: { label: '文件上传', paths: ['/api/v1/upload/'] },
+  user: { label: '用户信息', paths: ['/api/v1/user/'] },
+} as const
+
+export type PatScopeKey = keyof typeof PAT_SCOPES
+
+/**
+ * 检查路径是否在 scope 允许范围内
+ */
+export function isPathAllowedByScope(scope: string, pathname: string): boolean {
+  // 解析 scope 字符串，格式: "scopes:wx,memo|note:我的备注"
+  const scopeMatch = scope.match(/^scopes:([^|]+)/)
+  if (!scopeMatch) {
+    // 兼容旧格式 "pat:备注"，视为 all 权限
+    return true
+  }
+
+  const scopeKeys = scopeMatch[1].split(',') as PatScopeKey[]
+
+  // 检查是否有 all 权限
+  if (scopeKeys.includes('all')) {
+    return true
+  }
+
+  // 检查路径是否匹配任一 scope 的允许路径
+  return scopeKeys.some((key) => {
+    const scopeDef = PAT_SCOPES[key]
+    if (!scopeDef)
+      return false
+    return scopeDef.paths.some(allowedPath => pathname.startsWith(allowedPath))
+  })
+}
+
 // JWT配置
 const config = useRuntimeConfig()
 const JWT_SECRET = config.jwtSecret || 'your-secret-key-change-in-production'
@@ -22,8 +64,14 @@ const REFRESH_TOKEN_EXPIRES_IN = 7 * 24 * 60 * 60 // 7天（秒）
  * @param userId 用户ID
  * @param note 备注/名称
  * @param expiresInDays 有效期（天），0表示永不过期
+ * @param scopes 权限范围数组，默认 ['all']
  */
-export async function generatePAT(userId: string, note: string, expiresInDays: number = 365) {
+export async function generatePAT(
+  userId: string,
+  note: string,
+  expiresInDays: number = 365,
+  scopes: PatScopeKey[] = ['all'],
+) {
   const rawToken = `pat_${useNanoId(40)}`
   const hashedToken = createHash('sha256').update(rawToken).digest('hex')
 
@@ -32,10 +80,13 @@ export async function generatePAT(userId: string, note: string, expiresInDays: n
     ? new Date('2099-12-31')
     : new Date(now.getTime() + expiresInDays * 24 * 60 * 60 * 1000)
 
+  // scope 格式: "scopes:wx,memo|note:我的备注"
+  const scopeString = `scopes:${scopes.join(',')}|note:${note}`
+
   await db.insert(accessTokens).values({
     userId,
     token: hashedToken,
-    scope: `pat:${note}`, // 将备注存储在 scope 中
+    scope: scopeString,
     status: 1,
     isRevoked: false,
     expiresAt,
