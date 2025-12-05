@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.7.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.6.2...v2.7.0)
+
+### 🚀 Enhancements
+
+- 限制PAT作用范围; 增加获取微信授权接口 ([5df2e1e](https://github.com/aatrooox/blog.zzao.club/commit/5df2e1e))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.6.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.6.1...v2.6.2)
