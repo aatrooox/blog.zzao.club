@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.8.4
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.3...v2.8.4)
+
+### 🩹 Fixes
+
+- 微信上传草稿箱接口处理问题 ([d3374ec](https://github.com/aatrooox/blog.zzao.club/commit/d3374ec))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.8.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.2...v2.8.3)
