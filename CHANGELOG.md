@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.8.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.0...v2.8.1)
+
+### 🩹 Fixes
+
+- 修改post传值为body ([457dec0](https://github.com/aatrooox/blog.zzao.club/commit/457dec0))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.8.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.7.1...v2.8.0)
