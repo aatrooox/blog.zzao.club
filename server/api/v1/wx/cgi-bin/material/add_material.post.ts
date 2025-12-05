@@ -6,9 +6,9 @@
  * 2. 仅支持 image 类型
  * 3. 可选的来源验证（X-App-Source 头）
  *
- * POST /api/v1/wx/cgi-bin/material/add_material?access_token=ACCESS_TOKEN&type=image
+ * POST /api/v1/wx/cgi-bin/material/add_material
  *
- * Body: FormData { media: File }
+ * Body: FormData { media: File, access_token: string, type: 'image' }
  * 返回: { media_id: string, url: string }
  */
 
@@ -41,29 +41,7 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
-  // 3. 获取并验证 query 参数
-  const query = getQuery(event)
-  const accessToken = query.access_token as string
-  const type = query.type as string
-
-  if (!accessToken) {
-    throw createError({
-      statusCode: 400,
-      message: '缺少 access_token 参数',
-      data: { code: API_CODES.VALIDATION_ERROR },
-    })
-  }
-
-  // 4. 仅允许 image 类型
-  if (type !== 'image') {
-    throw createError({
-      statusCode: 400,
-      message: '仅支持 type=image',
-      data: { code: API_CODES.VALIDATION_ERROR },
-    })
-  }
-
-  // 5. 获取上传的文件
+  // 3. 获取上传的文件和参数
   const formData = await readMultipartFormData(event)
   if (!formData || formData.length === 0) {
     throw createError({
@@ -73,8 +51,32 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
-  // 查找 media 字段
+  // 查找各字段
+  const accessTokenField = formData.find(field => field.name === 'access_token')
+  const typeField = formData.find(field => field.name === 'type')
   const mediaField = formData.find(field => field.name === 'media')
+
+  // 验证 access_token
+  const accessToken = accessTokenField?.data?.toString()
+  if (!accessToken) {
+    throw createError({
+      statusCode: 400,
+      message: '缺少 access_token 参数',
+      data: { code: API_CODES.VALIDATION_ERROR },
+    })
+  }
+
+  // 验证 type，仅允许 image
+  const type = typeField?.data?.toString()
+  if (type !== 'image') {
+    throw createError({
+      statusCode: 400,
+      message: '仅支持 type=image',
+      data: { code: API_CODES.VALIDATION_ERROR },
+    })
+  }
+
+  // 验证 media
   if (!mediaField || !mediaField.data) {
     throw createError({
       statusCode: 400,

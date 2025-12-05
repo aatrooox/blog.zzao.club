@@ -5,9 +5,9 @@
  * 1. 需要用户登录（JWT 验证）
  * 2. 可选的来源验证（X-App-Source 头）
  *
- * POST /api/v1/wx/cgi-bin/draft/add?access_token=ACCESS_TOKEN
+ * POST /api/v1/wx/cgi-bin/draft/add
  *
- * Body: { articles: Article[] }
+ * Body: { access_token: string, articles: Article[] }
  * 返回: { media_id: string }
  */
 
@@ -35,6 +35,7 @@ interface Article {
 }
 
 interface DraftAddRequest {
+  access_token: string
   articles: Article[]
 }
 
@@ -66,10 +67,11 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
-  // 3. 获取并验证 query 参数
-  const query = getQuery(event)
-  const accessToken = query.access_token as string
+  // 3. 获取请求体
+  const body = await readBody<DraftAddRequest>(event)
 
+  // 4. 验证 access_token
+  const accessToken = body?.access_token
   if (!accessToken) {
     throw createError({
       statusCode: 400,
@@ -78,8 +80,7 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
-  // 4. 获取请求体
-  const body = await readBody<DraftAddRequest>(event)
+  // 5. 验证 articles
   if (!body?.articles || !Array.isArray(body.articles) || body.articles.length === 0) {
     throw createError({
       statusCode: 400,
@@ -88,7 +89,7 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
-  // 5. 验证每篇文章的必填字段
+  // 6. 验证每篇文章的必填字段
   for (let i = 0; i < body.articles.length; i++) {
     const article = body.articles[i]
 
@@ -145,7 +146,7 @@ export default defineStandardResponseHandler(async (event) => {
     }
   }
 
-  // 6. 调用微信接口新增草稿
+  // 7. 调用微信接口新增草稿
   const wxApiUrl = new URL('https://api.weixin.qq.com/cgi-bin/draft/add')
   wxApiUrl.searchParams.set('access_token', accessToken)
 
@@ -156,7 +157,7 @@ export default defineStandardResponseHandler(async (event) => {
       timeout: 30000,
     })
 
-    // 7. 检查微信返回的错误
+    // 8. 检查微信返回的错误
     if (response.errcode && response.errcode !== 0) {
       console.error('[WX Draft] 微信接口返回错误:', response)
       throw createError({
@@ -170,7 +171,7 @@ export default defineStandardResponseHandler(async (event) => {
       })
     }
 
-    // 8. 返回成功结果
+    // 9. 返回成功结果
     return {
       media_id: response.media_id,
     }
