@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.8.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.2...v2.8.3)
+
+### 🩹 Fixes
+
+- 修复上传素材接口异常情况 ([be8f90d](https://github.com/aatrooox/blog.zzao.club/commit/be8f90d))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.8.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.1...v2.8.2)
