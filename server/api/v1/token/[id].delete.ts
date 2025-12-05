@@ -28,7 +28,10 @@ export default defineStandardResponseHandler(async (event) => {
 
   // 软删除：标记为已撤销
   await db.update(accessTokens)
-    .set({ isRevoked: true })
+    .set({
+      isRevoked: true,
+      updatedAt: new Date(),
+    })
     .where(and(
       eq(accessTokens.id, id),
       eq(accessTokens.userId, userId), // 确保只能删除自己的

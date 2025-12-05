@@ -48,7 +48,7 @@ export const accessTokens = mysqlTable('blog_access_token', {
   ip: varchar('ip', { length: 255 }),
   expiresAt: datetime('expiresAt').notNull(),
   createdAt: datetime('createdAt').notNull().default(sql`(CURRENT_TIMESTAMP)`),
-  updatedAt: datetime('updatedAt').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => sql`(CURRENT_TIMESTAMP)`),
+  updatedAt: datetime('updatedAt').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => new Date()),
 })
 
 // 第三方登录表

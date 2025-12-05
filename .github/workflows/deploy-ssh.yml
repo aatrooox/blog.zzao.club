@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
   schedule:
     # 北京时间 12:00 和 24:00（UTC+8） -> 对应 UTC 04:00 与 16:00
-    - cron: '0 4 * * *'
-    - cron: '0 16 * * *'
+    - cron: "0 4 * * *"
+    - cron: "0 16 * * *"
 
 concurrency:
   group: deploy-main
@@ -57,6 +57,7 @@ jobs:
           NUXT_COS_SECRET_KEY: ${{ secrets.NUXT_COS_SECRET_KEY }}
           NUXT_COS_BUCKET: ${{ secrets.NUXT_COS_BUCKET }}
           NUXT_COS_REGION: ${{ secrets.NUXT_COS_REGION }}
+          NUXT_CRYPTO_SECRET_KEY: ${{ secrets.NUXT_CRYPTO_SECRET_KEY }}
         run: |
           NODE_OPTIONS="--max-old-space-size=4080" pnpm build
 
