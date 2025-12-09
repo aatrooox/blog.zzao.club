@@ -44,7 +44,7 @@ export default defineCachedEventHandler(async (event) => {
       query: {
         startAt: createdAt,
         endAt: +new Date(),
-        type: 'url',
+        type: 'path',
         // timezone: 'Asia/Shanghai',
       },
       headers: { Authorization: `Bearer ${token}` },
