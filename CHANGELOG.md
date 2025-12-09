@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.8.7
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.6...v2.8.7)
+
+### 🩹 Fixes
+
+- Umami api 参数变更 ([97eb619](https://github.com/aatrooox/blog.zzao.club/commit/97eb619))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.8.6
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.5...v2.8.6)
