@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.8.6
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.5...v2.8.6)
+
+### 🩹 Fixes
+
+- Umami token过期处理 ([367dfdf](https://github.com/aatrooox/blog.zzao.club/commit/367dfdf))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.8.5
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.4...v2.8.5)
