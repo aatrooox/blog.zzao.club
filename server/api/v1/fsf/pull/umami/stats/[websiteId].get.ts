@@ -17,23 +17,57 @@ export default defineCachedEventHandler(async (event) => {
   }
 
   const { umamiUser, umamiPass, umamiHost } = useRuntimeConfig()
-  let umamiToken = await useStorage('redis').getItem(`umamiToken`)
-  let umamiCreatedAt = await useStorage('redis').getItem(`umamiCreatedAt`)
-  if (!umamiToken) {
+  const redis = useStorage('redis')
+
+  async function loginUmami() {
     const res = await $fetch<{ token: string, user: Record<string, string> }>(`${umamiHost}/api/auth/login`, { method: 'POST', body: { username: umamiUser, password: umamiPass } })
     if (res.token) {
-      await useStorage('redis').setItem(`umamiToken`, res.token, { ttl: 60 * 60 * 24 * 7 })
-      await useStorage('redis').setItem(`umamiCreatedAt`, +new Date(res.user.createdAt), { ttl: 60 * 60 * 24 * 7 })
-      umamiToken = res.token
-      umamiCreatedAt = +res.user.createdAt
+      const createdAt = +new Date(res.user.createdAt)
+      await redis.setItem('umamiToken', res.token, { ttl: 60 * 60 * 24 * 7 })
+      await redis.setItem('umamiCreatedAt', createdAt, { ttl: 60 * 60 * 24 * 7 })
+      return { token: res.token, createdAt }
+    }
+    throw createError({ statusCode: 500, message: 'Umami 登录失败，未返回 token' })
+  }
+
+  let umamiToken = await redis.getItem<string>('umamiToken')
+  let umamiCreatedAt = await redis.getItem<number>('umamiCreatedAt')
+  if (!umamiToken || !umamiCreatedAt) {
+    const loginRes = await loginUmami()
+    umamiToken = loginRes.token
+    umamiCreatedAt = loginRes.createdAt
+  }
+
+  async function fetchMetrics(token: string, createdAt: number) {
+    return await $fetch<any[]>(`${umamiHost}/api/websites/${websiteId}/metrics`, {
+      method: 'GET',
+      query: {
+        startAt: createdAt,
+        endAt: +new Date(),
+        type: 'url',
+        // timezone: 'Asia/Shanghai',
+      },
+      headers: { Authorization: `Bearer ${token}` },
+    })
+  }
+
+  let data: any[]
+  try {
+    data = await fetchMetrics(umamiToken, umamiCreatedAt)
+  }
+  catch (error: any) {
+    const status = error?.response?.status || error?.statusCode || error?.status
+    if (status === 401) {
+      // Token 失效，清理缓存并重新获取
+      await redis.removeItem('umamiToken')
+      await redis.removeItem('umamiCreatedAt')
+      const loginRes = await loginUmami()
+      data = await fetchMetrics(loginRes.token, loginRes.createdAt)
+    }
+    else {
+      throw error
     }
   }
-  const data = await $fetch<any[]>(`${umamiHost}/api/websites/${websiteId}/metrics`, { method: 'GET', query: {
-    startAt: umamiCreatedAt,
-    endAt: +new Date(),
-    type: 'url',
-    // timezone: 'Asia/Shanghai',
-  }, headers: { Authorization: `Bearer ${umamiToken}` } })
 
   const filteredData = data.filter(item => item.x.startsWith('/post'))
   const dataMap: Record<string, number> = {}
