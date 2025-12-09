@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.8.5
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.4...v2.8.5)
+
+### 🏡 Chore
+
+- 更新umami v3 ([3d97ac2](https://github.com/aatrooox/blog.zzao.club/commit/3d97ac2))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.8.4
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.3...v2.8.4)
