@@ -9,7 +9,7 @@
  */
 
 interface ImageInfo {
-  image_media_id: string
+  image_list: { image_media_id: string }[]
 }
 
 interface Article {
@@ -28,7 +28,7 @@ interface Article {
   /** 是否打开评论 0=不打开 1=打开，默认打开 */
   need_open_comment?: number
   /** 图片信息，article_type=newspic 时必填 */
-  image_info?: ImageInfo[]
+  image_info?: ImageInfo
 }
 
 interface DraftAddRequest {
@@ -128,7 +128,7 @@ export default defineStandardResponseHandler(async (event) => {
 
     // article_type=newspic 时，image_info 必填
     if (article.article_type === 'newspic') {
-      if (!article.image_info || !Array.isArray(article.image_info) || article.image_info.length === 0) {
+      if (!article.image_info || !Array.isArray(article.image_info.image_list) || article.image_info.image_list.length === 0) {
         throw createError({
           statusCode: 400,
           message: `articles[${i}].image_info 在 article_type=newspic 时必填`,
