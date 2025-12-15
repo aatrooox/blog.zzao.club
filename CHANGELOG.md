@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.8.8
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.7...v2.8.8)
+
+### 🩹 Fixes
+
+- 修复微信公众号接口参数 ([f8384a1](https://github.com/aatrooox/blog.zzao.club/commit/f8384a1))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.8.7
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.6...v2.8.7)
