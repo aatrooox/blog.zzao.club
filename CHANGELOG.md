@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.9.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.8...v2.9.0)
+
+### 🚀 Enhancements
+
+- 新年新气象，又换皮肤了 ([e47853b](https://github.com/aatrooox/blog.zzao.club/commit/e47853b))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.8.8
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.7...v2.8.8)
