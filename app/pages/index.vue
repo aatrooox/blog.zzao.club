@@ -147,9 +147,10 @@ function onEnter(el: any) {
                   <NuxtTime :datetime="item.data.createTs" class="text-xs text-zinc-400" />
                   <AppFromTag :from="item.data.from || 'blog'" />
                 </div>
-                <div class="text-sm text-zinc-600 dark:text-zinc-300 line-clamp-3 leading-relaxed group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors">
+                <!-- <div class="text-sm text-zinc-600 dark:text-zinc-300 line-clamp-3 leading-relaxed group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors">
                   {{ item.data.content }}
-                </div>
+                </div> -->
+                <MemoPanel :memo="item.data" layout="wechat" display-mode="content-only" :show-all="true" :photo-width="200" />
               </div>
 
               <!-- 右侧：图片 (最多3张) -->

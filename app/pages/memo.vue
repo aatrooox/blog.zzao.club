@@ -223,7 +223,7 @@ function onUploadError(error: string) {
                   <span>{{ memo._count?.likes || 0 }}</span>
                 </div> -->
                 <template v-if="userStore.isSuperAdmin.value">
-                  <span class="mx-1 opacity-20">|</span>
+                  <!-- <span class="mx-1 opacity-20">|</span> -->
                   <span class="cursor-pointer hover:text-primary transition-colors flex items-center gap-1" @click.stop="handleEdit(memo)">
                     <Icon name="material-symbols:edit-outline" class="w-4 h-4" /> 编辑
                   </span>

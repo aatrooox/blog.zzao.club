@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Page } from '~/components/common/PagePanel.vue'
+// import type { Page } from '~/components/common/PagePanel.vue'
 
 useHead({
   title: '文章｜早早集市',
