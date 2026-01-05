@@ -9,9 +9,7 @@ export default defineContentConfig({
         include: '**/*.md',
         exclude: ['**/-*.md', 'book/**/*.md', 'Excalidraw/**/*.*'],
         prefix: '/post',
-        // cwd: process.env.CONTENT_FS_PATH,
-        repository: 'https://github.com/aatrooox/Blog',
-        authToken: process.env.CONTENT_REPO_TOKEN,
+        // cwd: 'content',
       },
       schema: z.object({
         date: z.date(),

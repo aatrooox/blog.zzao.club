@@ -351,7 +351,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="app-image-upload">
+  <div class="w-full">
     <!-- 隐藏的文件输入框 -->
     <input
       ref="fileInputRef"
@@ -363,15 +363,14 @@ onUnmounted(() => {
     >
 
     <!-- 图片网格：横向滚动布局 -->
-    <div class="flex gap-1 overflow-x-auto pb-2">
+    <div class="flex gap-2 overflow-x-auto pb-2">
       <!-- 上传按钮 -->
       <div
         v-if="canAddMore"
-        class="upload-btn flex-shrink-0 w-18 h-24 pixel-card !m-0 cursor-pointer transition-all duration-200 flex items-center justify-center"
+        class="flex-shrink-0 w-20 h-24 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg cursor-pointer transition-all duration-200 flex items-center justify-center hover:border-primary hover:bg-gray-50 dark:hover:bg-zinc-800"
         :class="{
-          'border-accent-pixel-cyan border-solid': isDragging,
+          'border-primary bg-primary/5': isDragging,
           'opacity-50 cursor-not-allowed': disabled,
-          'hover:bg-bg-pixel-tertiary': !disabled,
         }"
         @click="openFileSelector"
         @dragover="onDragOver"
@@ -380,8 +379,8 @@ onUnmounted(() => {
       >
         <Icon
           name="lucide:plus"
-          class="w-6 h-6 text-accent-pixel-cyan"
-          :class="{ 'animate-pulse': isDragging }"
+          class="w-6 h-6 text-gray-400 dark:text-gray-500"
+          :class="{ 'text-primary': isDragging }"
         />
       </div>
 
@@ -390,26 +389,26 @@ onUnmounted(() => {
         <div
           v-for="file in uploadFiles"
           :key="file.id"
-          class="image-item flex-shrink-0 relative"
+          class="flex-shrink-0 relative group"
         >
           <Tooltip>
             <TooltipTrigger as-child>
               <!-- 图片容器 -->
-              <div class="w-18 h-24 pixel-card !p-0 !m-0 overflow-hidden relative">
+              <div class="w-20 h-24 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden relative bg-gray-50 dark:bg-zinc-800">
                 <!-- 图片 -->
                 <img
                   :src="file.url"
                   :alt="file.file.name"
-                  class="w-full h-full object-contain"
+                  class="w-full h-full object-cover"
                 >
 
                 <!-- 上传状态遮罩 -->
                 <div
                   v-if="file.uploading"
-                  class="absolute inset-0 bg-bg-pixel-primary bg-opacity-90 flex flex-col items-center justify-center"
+                  class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center"
                 >
-                  <Icon name="lucide:loader-2" class="w-4 h-4 text-accent-pixel-cyan animate-spin mb-1" />
-                  <div class="text-xs font-mono text-accent-pixel-cyan">
+                  <Icon name="lucide:loader-2" class="w-4 h-4 text-white animate-spin mb-1" />
+                  <div class="text-xs font-mono text-white">
                     {{ file.progress }}%
                   </div>
                 </div>
@@ -419,23 +418,23 @@ onUnmounted(() => {
                   v-else-if="file.uploaded"
                   class="absolute top-1 right-1"
                 >
-                  <div class="w-2 h-2 bg-status-pixel-success rounded-full flex items-center justify-center" />
+                  <div class="w-2 h-2 bg-green-500 rounded-full shadow-sm" />
                 </div>
 
                 <!-- 错误状态 -->
                 <div
                   v-else-if="file.error"
-                  class="absolute inset-0 bg-status-pixel-error bg-opacity-90 flex items-center justify-center"
+                  class="absolute inset-0 bg-red-500/80 flex items-center justify-center"
                 >
                   <Icon name="lucide:alert-circle" class="w-4 h-4 text-white" />
                 </div>
 
                 <!-- 删除按钮 -->
                 <button
-                  class="absolute top-1 left-1 w-4 h-4 bg-bg-pixel-primary bg-opacity-80 text-status-pixel-error hover:bg-opacity-100 transition-all flex items-center justify-center text-xs"
+                  class="absolute top-1 left-1 w-5 h-5 bg-black/50 hover:bg-red-500 text-white rounded-full flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-all"
                   @click="removeFile(file.id)"
                 >
-                  ×
+                  <Icon name="lucide:x" class="w-3 h-3" />
                 </button>
               </div>
             </TooltipTrigger>
@@ -493,34 +492,21 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.upload-btn {
-  border: 2px dashed var(--pixel-border-primary);
-  border-radius: 0;
-}
-
-.upload-btn:hover {
-  border-color: var(--pixel-accent-cyan);
-}
-
-.image-item {
-  position: relative;
-}
-
 /* 横向滚动条样式 */
 .overflow-x-auto::-webkit-scrollbar {
   height: 4px;
 }
 
 .overflow-x-auto::-webkit-scrollbar-track {
-  background: var(--pixel-bg-secondary);
+  background: transparent;
 }
 
 .overflow-x-auto::-webkit-scrollbar-thumb {
-  background: var(--pixel-accent-cyan);
-  border-radius: 0;
+  background: #e5e7eb;
+  border-radius: 2px;
 }
 
-.overflow-x-auto::-webkit-scrollbar-thumb:hover {
-  background: var(--pixel-accent-cyan-border);
+.dark .overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #374151;
 }
 </style>

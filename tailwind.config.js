@@ -14,85 +14,42 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: {
-          'pixel-primary': 'var(--pixel-bg-primary)',
-          'pixel-secondary': 'var(--pixel-bg-secondary)',
-          'pixel-tertiary': 'var(--pixel-bg-tertiary)',
-          'pixel-card': 'var(--pixel-bg-card)',
-          'pixel-input': 'var(--pixel-bg-input)',
-          'pixel-code': 'var(--pixel-bg-code)',
+        border: 'var(--border)',
+        input: 'var(--input)',
+        ring: 'var(--ring)',
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        primary: {
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
         },
-        text: {
-          'pixel-primary': 'var(--pixel-text-primary)',
-          'pixel-secondary': 'var(--pixel-text-secondary)',
-          'pixel-tertiary': 'var(--pixel-text-tertiary)',
-          'pixel-muted': 'var(--pixel-text-muted)',
-          'pixel-disabled': 'var(--pixel-text-disabled)',
-          'pixel-code': 'var(--pixel-text-code)',
+        secondary: {
+          DEFAULT: 'var(--secondary)',
+          foreground: 'var(--secondary-foreground)',
         },
-        border: {
-          'pixel-primary': 'var(--pixel-border-primary)',
-          'pixel-secondary': 'var(--pixel-border-secondary)',
-          'pixel-input': 'var(--pixel-border-input)',
-          'pixel-focus': 'var(--pixel-border-focus)',
+        destructive: {
+          DEFAULT: 'var(--destructive)',
+          foreground: 'var(--destructive-foreground)',
         },
-        shadow: {
-          'pixel-primary': 'var(--pixel-shadow-primary)',
-          'pixel-secondary': 'var(--pixel-shadow-secondary)',
+        muted: {
+          DEFAULT: 'var(--muted)',
+          foreground: 'var(--muted-foreground)',
         },
         accent: {
-          'pixel-primary': 'var(--pixel-accent-primary)',
-          'pixel-secondary': 'var(--pixel-accent-secondary)',
-          'pixel-cyan': 'var(--pixel-accent-cyan)',
-          'pixel-cyan-hover': 'var(--pixel-accent-cyan-hover)',
-          'pixel-cyan-light': 'var(--pixel-accent-cyan-light)',
-          'pixel-cyan-border': 'var(--pixel-accent-cyan-border)',
-          'pixel-cyan-shadow': 'var(--pixel-accent-cyan-shadow)',
+          DEFAULT: 'var(--accent)',
+          foreground: 'var(--accent-foreground)',
         },
-        status: {
-          'pixel-success': 'var(--pixel-status-success)',
-          'pixel-success-border': 'var(--pixel-status-success-border)',
-          'pixel-warning': 'var(--pixel-status-warning)',
-          'pixel-warning-border': 'var(--pixel-status-warning-border)',
-          'pixel-error': 'var(--pixel-status-error)',
-          'pixel-error-border': 'var(--pixel-status-error-border)',
-          'pixel-info': 'var(--pixel-status-info)',
-          'pixel-info-border': 'var(--pixel-status-info-border)',
+        popover: {
+          DEFAULT: 'var(--popover)',
+          foreground: 'var(--popover-foreground)',
         },
-        highlight: {
-          'pixel-cyan': 'var(--pixel-accent-cyan)',
-          'pixel-yellow': 'var(--pixel-highlight-yellow)',
-          'pixel-green': 'var(--pixel-highlight-green)',
-          'pixel-green-text': 'var(--pixel-highlight-green-text)',
-          'pixel-green-border': 'var(--pixel-highlight-green-border)',
-          'pixel-teal': 'var(--pixel-highlight-teal)',
-          'pixel-teal-text': 'var(--pixel-highlight-teal-text)',
-          'pixel-teal-border': 'var(--pixel-highlight-teal-border)',
-        },
-        gradient: {
-          'pixel-start': 'var(--pixel-gradient-start)',
-          'pixel-mid': 'var(--pixel-gradient-mid)',
-          'pixel-end': 'var(--pixel-gradient-end)',
+        card: {
+          DEFAULT: 'var(--card)',
+          foreground: 'var(--card-foreground)',
         },
       },
       boxShadow: {
-        'pixel': '4px 4px 0 0 #000000',
-        'pixel-sm': '2px 2px 0 0 var(--pixel-shadow-light)',
-        'pixel-md': '2px 2px 0 0 var(--pixel-shadow-light), 4px 4px 0 0 var(--pixel-border-primary)',
-        'pixel-lg': '2px 2px 0 0 var(--pixel-shadow-light), 4px 4px 0 0 var(--pixel-border-primary), 6px 6px 0 0 var(--pixel-shadow-primary)',
-        'pixel-btn': '2px 2px 0 var(--pixel-border-primary)',
-        'pixel-btn-hover': '3px 3px 0 var(--pixel-border-primary)',
-        'pixel-btn-active': '1px 1px 0 var(--pixel-border-primary)',
-        'pixel-btn-primary': '2px 2px 0 var(--pixel-accent-cyan-border)',
-        'pixel-btn-primary-hover': '3px 3px 0 var(--pixel-accent-cyan-border)',
-        'pixel-btn-primary-active': '1px 1px 0 var(--pixel-accent-cyan-border)',
-        'pixel-card': '2px 2px 0 var(--pixel-bg-card), 4px 4px 0 var(--pixel-bg-tertiary)',
-        'pixel-card-hover': '2px 2px 0 var(--pixel-border-primary), 4px 4px 0 var(--pixel-bg-tertiary), 6px 6px 0 var(--pixel-shadow-primary)',
-        'pixel-card-elevated': '2px 2px 0 var(--pixel-border-primary), 4px 4px 0 var(--pixel-bg-tertiary), 6px 6px 0 var(--pixel-shadow-primary)',
-        'pixel-card-elevated-hover': '3px 3px 0 var(--pixel-border-primary), 6px 6px 0 var(--pixel-bg-tertiary), 9px 9px 0 var(--pixel-shadow-primary)',
-        'pixel-border': '0 0 0 2px var(--pixel-shadow-primary), 2px 2px 0 0 var(--pixel-shadow-light)',
-        'pixel-tag': '1px 1px 0 var(--pixel-accent-cyan-border)',
-        'pixel-tag-hover': '2px 2px 0 var(--pixel-accent-cyan-border)',
+        // Cleaned up pixel shadows
       },
       spacing: {
         18: '4.5rem', // 72px

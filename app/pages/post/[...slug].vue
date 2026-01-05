@@ -5,28 +5,32 @@ import type { BlogCommentWithUserInfo } from '~~/types/blog-drizzle'
 import type { ApiResponse } from '~~/types/fetch'
 import { camelCaseToHyphen, EffectCssAttrs, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs } from '@/config/richText'
 
+definePageMeta({
+  layout: 'post-layout',
+})
+
 const toast = useGlobalToast()
 const { $api } = useNuxtApp()
 const userStore = useUser()
-const navBarStore = useNavBar()
+// const navBarStore = useNavBar()
 // const clientjs = useClientjs()
 const route = useRoute()
 const curMdContentRef = useTemplateRef('curMdContentRef')
 const articleWrap = useTemplateRef('articleWrap')
-const tocContainer = useTemplateRef('tocContainer')
-const titleRef = useTemplateRef('titleRef')
+// const tocContainer = useTemplateRef('tocContainer')
+// const titleRef = useTemplateRef('titleRef')
 const activeTocId = ref('')
 // const actionContainer = useTemplateRef('actionContainer')
 const selectedText = ref()
-const { text, rects, selection } = useTextSelection()
-const isTocFixed = ref(false)
+const { text } = useTextSelection()
+// const isTocFixed = ref(false)
 
 // 使用吸顶组合式函数
-const { isSticky: _isTitleSticky } = useSticky(titleRef, {
-  topOffset: 0, // 吸顶到页面顶部
-  triggerOffset: 24, // 额外的触发偏移
-  debug: true, // 启用调试日志
-})
+// const { isSticky: _isTitleSticky } = useSticky(titleRef, {
+//   topOffset: 0, // 吸顶到页面顶部
+//   triggerOffset: 24, // 额外的触发偏移
+//   debug: true, // 启用调试日志
+// })
 
 // 使用视口元素检测组合式函数
 const { firstVisibleId, visibleIds: _visibleIds, refresh: _refreshViewport } = useViewportHeadings({
@@ -47,59 +51,59 @@ const comments = ref<BlogCommentWithUserInfo[]>([])
 const isDefer = ref(true)
 const isOpenDrawer = ref(false)
 
-const commentIconPosition = computed(() => {
-  if (text.value.trim().length) {
-    // 发生划词时，记录当前划线的滚动距离
-    if (navBarStore.selectionScrollY.value === 0) {
-      navBarStore.setSelectionScrollY(navBarStore.scrollY.value)
-    }
-    let left = -50
-    if (selection?.value) {
-      const range = selection?.value?.getRangeAt(0)
-      if (range) {
-        const startNode = range.startContainer
-        const endNode = range.endContainer
-        const targetElement = curMdContentRef.value
-        // 判断选中的文本是否完全包含在目标元素内
-        if (targetElement && targetElement?.contains(startNode) && targetElement?.contains(endNode)) {
-          const rectList = range.getClientRects()
+// const commentIconPosition = computed(() => {
+//   if (text.value.trim().length) {
+//     // 发生划词时，记录当前划线的滚动距离
+//     if (navBarStore.selectionScrollY.value === 0) {
+//       navBarStore.setSelectionScrollY(navBarStore.scrollY.value)
+//     }
+//     let left = -50
+//     if (selection?.value) {
+//       const range = selection?.value?.getRangeAt(0)
+//       if (range) {
+//         const startNode = range.startContainer
+//         const endNode = range.endContainer
+//         const targetElement = curMdContentRef.value
+//         // 判断选中的文本是否完全包含在目标元素内
+//         if (targetElement && targetElement?.contains(startNode) && targetElement?.contains(endNode)) {
+//           const rectList = range.getClientRects()
 
-          // selectedText.value = serializeSelection(text.value)
+//           // selectedText.value = serializeSelection(text.value)
 
-          if (rectList.length > 0) {
-            const firstRect = rectList[0]
-            const containerRect = articleWrap.value?.getBoundingClientRect()
-            const rectLeft = firstRect?.left ?? window.scrollX
-            if (containerRect) {
-              left = rectLeft - containerRect.left
-            }
-            else {
-              left = rectLeft + window.scrollX
-            }
-          }
-        }
-        else {
-          return {
-            top: 0,
-            left: 0,
-          }
-        }
-      }
-    }
+//           if (rectList.length > 0) {
+//             const firstRect = rectList[0]
+//             const containerRect = articleWrap.value?.getBoundingClientRect()
+//             const rectLeft = firstRect?.left ?? window.scrollX
+//             if (containerRect) {
+//               left = rectLeft - containerRect.left
+//             }
+//             else {
+//               left = rectLeft + window.scrollX
+//             }
+//           }
+//         }
+//         else {
+//           return {
+//             top: 0,
+//             left: 0,
+//           }
+//         }
+//       }
+//     }
 
-    return {
-      top: (rects?.value?.[0]?.top || 0) - 50 + navBarStore.selectionScrollY.value + (rects?.value?.[0]?.height || 0),
-      left,
-    }
-  }
-  else {
-    navBarStore.setSelectionScrollY(0)
-    return {
-      top: 0,
-      left: 0,
-    }
-  }
-})
+//     return {
+//       top: (rects?.value?.[0]?.top || 0) - 50 + navBarStore.selectionScrollY.value + (rects?.value?.[0]?.height || 0),
+//       left,
+//     }
+//   }
+//   else {
+//     navBarStore.setSelectionScrollY(0)
+//     return {
+//       top: 0,
+//       left: 0,
+//     }
+//   }
+// })
 
 watch(
   () => text.value,
@@ -156,9 +160,9 @@ function commentLeave(el, done) {
   })
 }
 
-function handleCommentPragph() {
-  console.log('评论段落', selectedText.value)
-}
+// function handleCommentPragph() {
+//   console.log('评论段落', selectedText.value)
+// }
 // 选中时及时保存当前文字
 function serializeSelection(text?: string) {
   if (!text)
@@ -367,36 +371,36 @@ async function createComment(data: CommentData) {
     initComment()
   }
 }
-async function likePage() {
-  console.log(page)
-  // 游客点赞 生成指纹 -> 注册为游客 (随机用户名 + 固定id)
-  if (!userStore.user.value.id) {
-    await createVistorID()
-    // const res = await $api.post<ApiResponse<LoginResponse>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
-    // const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
+// async function likePage() {
+//   console.log(page)
+//   // 游客点赞 生成指纹 -> 注册为游客 (随机用户名 + 固定id)
+//   if (!userStore.user.value.id) {
+//     await createVistorID()
+//     // const res = await $api.post<ApiResponse<LoginResponse>>('/api/v1/user/visitor/regist', { visitorId: clientjs.getVisitorId() })
+//     // const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
 
-    // userStore.setUser(user)
-    // userStore.setTokenInfo({
-    //   accessToken,
-    //   refreshToken,
-    //   accessExpiresAt,
-    //   refreshExpiresAt,
-    // })
-    // return toast.add({ type: 'warning', message: '登录后才能点赞' })
-  };
+//     // userStore.setUser(user)
+//     // userStore.setTokenInfo({
+//     //   accessToken,
+//     //   refreshToken,
+//     //   accessExpiresAt,
+//     //   refreshExpiresAt,
+//     // })
+//     // return toast.add({ type: 'warning', message: '登录后才能点赞' })
+//   };
 
-  if (isLiked.value) {
-    return toast.warn('已经点过赞了')
-  };
+//   if (isLiked.value) {
+//     return toast.warn('已经点过赞了')
+//   };
 
-  const res = await $api.post<ApiResponse>('/api/v1/like/create', { article_id: page.value?.id, user_id: userStore.user.value.id })
+//   const res = await $api.post<ApiResponse>('/api/v1/like/create', { article_id: page.value?.id, user_id: userStore.user.value.id })
 
-  if (!res.error) {
-    toast.success('感谢支持！')
-    umami.track('like', { page: page.value?.id, isOk: true })
-    initLikeCount()
-  }
-}
+//   if (!res.error) {
+//     toast.success('感谢支持！')
+//     umami.track('like', { page: page.value?.id, isOk: true })
+//     initLikeCount()
+//   }
+// }
 
 async function initComment() {
   const res = await $api.get<ApiResponse<any>>('/api/v1/comment/list', { article_id: page.value?.id })
@@ -414,15 +418,15 @@ async function initLikeCount() {
   }
 }
 
-const formatCommentCount = computed(() => {
-  let count = comments.value.length
-  comments.value.forEach((item) => {
-    count += (item._count?.sub_comments ?? 0)
-  })
-  if (count > 99)
-    return '99+'
-  return count
-})
+// const formatCommentCount = computed(() => {
+//   let count = comments.value.length
+//   comments.value.forEach((item) => {
+//     count += (item._count?.sub_comments ?? 0)
+//   })
+//   if (count > 99)
+//     return '99+'
+//   return count
+// })
 
 async function getSurroundingPage() {
   // const paths = route.path.split('/').filter(Boolean)
@@ -536,31 +540,31 @@ function getAllTextNodes(element) {
   return textNodes
 }
 // TOC滚动监听
-function handleTocScroll() {
-  if (!tocContainer.value)
-    return
+// function handleTocScroll() {
+//   if (!tocContainer.value)
+//     return
 
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-  const tocOffset = tocContainer.value.offsetTop
-  const headerHeight = 80 // 固定标题栏高度
+//   const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+//   const tocOffset = tocContainer.value.offsetTop
+//   const headerHeight = 80 // 固定标题栏高度
 
-  // 当滚动距离超过TOC容器位置减去标题栏高度时，启用固定定位
-  isTocFixed.value = scrollTop > (tocOffset - headerHeight)
-}
+//   // 当滚动距离超过TOC容器位置减去标题栏高度时，启用固定定位
+//   isTocFixed.value = scrollTop > (tocOffset - headerHeight)
+// }
 // 统一的滚动处理函数
-function handleScroll() {
-  handleTocScroll()
-}
+// function handleScroll() {
+//   handleTocScroll()
+// }
 
-onMounted(() => {
-  // 添加滚动监听（仅用于 TOC）
-  window.addEventListener('scroll', handleScroll, { passive: true })
-})
+// onMounted(() => {
+//   // 添加滚动监听（仅用于 TOC）
+//   window.addEventListener('scroll', handleScroll, { passive: true })
+// })
 
-onUnmounted(() => {
-  // 移除滚动监听
-  window.removeEventListener('scroll', handleScroll)
-})
+// onUnmounted(() => {
+//   // 移除滚动监听
+//   window.removeEventListener('scroll', handleScroll)
+// })
 
 watchEffect(async () => {
   if (page.value?.id) {
@@ -575,12 +579,12 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <div class="pb-10 m-auto mb-4 font-mono">
+  <div class="pb-10 m-auto mb-4">
     <div class="relative w-full max-w-full flex justify-center">
-      <div v-if="page" class="flex w-full max-w-full md:max-w-7xl  mx-auto gap-8">
-        <div ref="articleWrap" class="article-wrap relative max-w-full md:max-w-4xl flex flex-col flex-1 md:px-6 box-border my-6">
+      <div v-if="page" class="relative w-full max-w-full mx-auto">
+        <div ref="articleWrap" class="article-wrap relative w-full flex flex-col box-border my-6">
           <!-- 选中文字的悬浮气泡 -->
-          <ClientOnly>
+          <!-- <ClientOnly>
             <transition appear @enter="commentEnter" @before-enter="commentBeforeEnter" @leave="commentLeave">
               <div
                 v-if="commentIconPosition.top !== 0 || commentIconPosition.left !== 0"
@@ -602,27 +606,26 @@ watchEffect(async () => {
                 />
               </div>
             </transition>
-          </ClientOnly>
+          </ClientOnly> -->
           <!-- 悬浮标题栏 -->
           <h1
-            ref="titleRef"
-            class="text-center text-2xl font-bold title-normal transition-all duration-150 ease-out"
+            class="text-left text-2xl font-bold title-normal transition-all duration-150 ease-out"
           >
             {{ page?.title }}
           </h1>
           <ClientOnly>
-            <div class="article-actions flex gap-8 justify-center text-sm text-text-pixel-secondary py-2">
+            <div class="article-actions flex gap-8 justify-start text-sm text-zinc-500 py-2">
               <div>{{ formatDate(page.date ?? '') }}</div>
-              <div class="flex items-center cursor-pointer gap-1.5">
+              <!-- <div class="flex items-center cursor-pointer gap-1.5">
                 <Icon name="icon-park-outline:thumbs-up" class="" @click="likePage" />
-                <span class="font-mono ">{{ likeCount }}</span>
+                <span class=" ">{{ likeCount }}</span>
               </div>
               <div class="cursor-pointer">
                 <NuxtLink href="#评论区" class="flex items-center gap-1.5">
                   <Icon name="icon-park-outline:comments" class="" />
-                  <span class=" font-mono ">{{ formatCommentCount }}</span>
+                  <span class="  ">{{ formatCommentCount }}</span>
                 </NuxtLink>
-              </div>
+              </div> -->
               <div class="flex items-center cursor-pointer" @click="copyLink">
                 <Icon name="material-symbols:share-reviews-outline-rounded" class="" />
               </div>
@@ -632,7 +635,7 @@ watchEffect(async () => {
             </div>
           </ClientOnly>
           <!-- 文章内容 markdown -->
-          <article ref="curMdContentRef" class="content-wrap prose-invert prose-lg max-w-none p-0 md:p-6 w-full">
+          <article ref="curMdContentRef" class="content-wrap prose-invert prose-lg max-w-none p-0 w-full">
             <ContentRenderer :value="page?.body" class="max-w-full" />
           </article>
           <!-- 相邻的文章 -->
@@ -640,7 +643,7 @@ watchEffect(async () => {
             <div v-if="adjacentPages.length">
               <!-- <Separator class="my-4" label="END" /> -->
               <div class="pixel-card p-4 md:p-6">
-                <div class="flex justify-between text-sm md:text-base font-mono">
+                <div class="flex justify-between text-sm md:text-base ">
                   <div class="flex-1 flex items-center gap-2">
                     <template v-if="adjacentPages[0]">
                       <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em" />
@@ -666,7 +669,7 @@ watchEffect(async () => {
             <div class="comment-area pixel-card p-4 md:p-6 mt-6">
               <template v-if="page?.body && !isDefer">
                 <!-- <Separator class="my-4" label="评论" /> -->
-                <div id="评论区" class="text-xl py-4 font-mono">
+                <div id="评论区" class="text-xl py-4 ">
                   评论区
                 </div>
                 <AppCommentInput @send="createComment" />
@@ -684,7 +687,7 @@ watchEffect(async () => {
           <Drawer v-model:open="isOpenDrawer" :dismissible="true">
             <DrawerContent class="bg-gray-900 border-t-2 border-gray-800">
               <DrawerHeader>
-                <DrawerTitle class="font-mono text-gray-100" />
+                <DrawerTitle class=" text-gray-100" />
               </DrawerHeader>
               <div class="border-box px-4 pb-8 md:px-20">
                 <QuoteComment
@@ -697,19 +700,19 @@ watchEffect(async () => {
         </div>
 
         <ClientOnly>
-          <div v-if="tocData && tocData.length" class="hidden lg:block w-64 ml-8">
-            <!-- 简单的悬浮目录 -->
-            <div ref="tocContainer" class="toc-container">
-              <div class="simple-toc pixel-card" :class="{ 'toc-fixed': isTocFixed }">
+          <div v-if="tocData && tocData.length" class="hidden xl:block absolute top-0 left-full ml-8 h-full">
+            <div class="sticky top-24 w-[200px] max-h-[calc(100vh-8rem)] overflow-y-auto">
+              <!-- 简单的悬浮目录 -->
+              <div class="simple-toc">
                 <ul class="simple-toc-list">
                   <template v-for="link in tocData" :key="link.id">
                     <li class="simple-toc-item">
-                      <a :href="`#${link.id}`" :class="`simple-toc-link ${link.id === activeTocId ? 'text-accent-pixel-primary' : ''}`">
+                      <a :href="`#${link.id}`" :class="`simple-toc-link ${link.id === activeTocId ? 'text-primary font-bold' : 'text-zinc-500'}`">
                         {{ link.text }}
                       </a>
                     </li>
                     <template v-if="link.children">
-                      <li v-for="child in link.children" :key="child.id" class="simple-toc-item simple-toc-child" :class="{ active: child.id === activeTocId }">
+                      <li v-for="child in link.children" :key="child.id" class="simple-toc-item simple-toc-child" :class="`${child.id === activeTocId ? 'text-primary font-bold' : 'text-zinc-500'}`">
                         <a :href="`#${child.id}`" class="simple-toc-link">
                           {{ child.text }}
                         </a>
@@ -727,359 +730,39 @@ watchEffect(async () => {
 </template>
 
 <style scoped>
-/* 像素风格按钮 */
-.pixel-btn {
-  background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-  padding: 8px 16px;
-  border-radius: 8px;
-  box-shadow: 2px 2px 0 var(--pixel-border-primary);
-  transition: all 0.15s ease;
-  font-weight: bold;
-}
-
-.pixel-btn:hover {
-  background: var(--pixel-bg-tertiary);
-  color: var(--pixel-accent-cyan);
-  transform: translateY(-1px);
-  box-shadow: 3px 3px 0 var(--pixel-border-primary);
-}
-
-.pixel-btn:active {
-  transform: translateY(1px);
-  box-shadow: 1px 1px 0 var(--pixel-border-primary);
-}
-
-.pixel-btn-sm {
-  padding: 6px 12px;
-  font-size: 0.875rem;
-}
-
-.pixel-btn-primary {
-  background: var(--pixel-accent-cyan);
-  color: var(--pixel-bg-primary);
-  border-color: var(--pixel-accent-cyan-light);
-}
-
-.pixel-btn-primary:hover {
-  background: var(--pixel-accent-cyan-light);
-  color: var(--pixel-bg-primary);
-}
-
-/* 像素风格操作卡片 */
-.pixel-card-action {
-  background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  border-radius: 8px;
-  box-shadow: 2px 2px 0 var(--pixel-border-primary);
-  padding: 12px;
-  transition: all 0.2s ease;
-}
-
-.pixel-card-action:hover {
-  background: var(--pixel-bg-tertiary);
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 3px 3px 0 var(--pixel-border-primary);
-}
-
-.pixel-card-action:active {
-  transform: translateY(1px) scale(0.98);
-  box-shadow: 1px 1px 0 var(--pixel-border-primary);
-}
-
-/* 像素风格内容区域 */
-.pixel-content {
-  background: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  border-radius: 8px;
-  box-shadow:
-    2px 2px 0 var(--pixel-border-primary),
-    4px 4px 0 var(--pixel-bg-tertiary);
-  color: var(--pixel-text-secondary);
-  font-family: ui-monospace, monospace;
-  padding: 24px;
-  line-height: 1.8;
-}
-
-/* 为 ContentRenderer 内容添加像素风格 */
-.pixel-content :deep(p) {
-  color: var(--pixel-text-secondary);
-  font-family: ui-monospace, monospace;
-  line-height: 1.6;
-  margin: 16px 0;
-}
-
-.pixel-content :deep(ul),
-.pixel-content :deep(ol) {
-  color: var(--pixel-text-secondary);
-  font-family: ui-monospace, monospace;
-  margin: 16px 0;
-  padding-left: 24px;
-}
-
-.pixel-content :deep(li) {
-  margin: 8px 0;
-}
-
-.pixel-content :deep(blockquote) {
-  background: var(--pixel-bg-primary);
-  border-left: 4px solid var(--pixel-accent-cyan);
-  color: var(--pixel-text-muted);
-  font-family: ui-monospace, monospace;
-  margin: 16px 0;
-  padding: 16px;
-  border-radius: 4px;
-}
-
-.pixel-content :deep(code:not(pre code)) {
-  background: var(--pixel-bg-tertiary);
-  color: var(--pixel-accent-cyan);
-  font-family: ui-monospace, monospace;
-  padding: 2px 6px;
-  border-radius: 4px;
-  border: 1px solid var(--pixel-border-secondary);
-}
-
-.pixel-content :deep(table) {
-  background: var(--pixel-bg-primary);
-  border: 2px solid var(--pixel-border-primary);
-  border-radius: 8px;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin: 16px 0;
-  overflow: hidden;
-}
-
-.pixel-content :deep(th),
-.pixel-content :deep(td) {
-  border-bottom: 1px solid var(--pixel-border-primary);
-  border-right: 1px solid var(--pixel-border-primary);
-  color: var(--pixel-text-secondary);
-  font-family: ui-monospace, monospace;
-  padding: 12px;
-}
-
-.pixel-content :deep(th) {
-  background: var(--pixel-bg-secondary);
-  font-weight: bold;
-}
-
-.pixel-content :deep(hr) {
-  border: none;
-  border-top: 2px solid var(--pixel-border-primary);
-  margin: 24px 0;
-}
-
-.pixel-content :deep(h1),
-.pixel-content :deep(h2),
-.pixel-content :deep(h3),
-.pixel-content :deep(h4),
-.pixel-content :deep(h5),
-.pixel-content :deep(h6) {
-  color: var(--pixel-accent-yellow);
-  font-family: ui-monospace, monospace;
-  font-weight: bold;
-  text-shadow: 1px 1px 0 var(--pixel-bg-primary);
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-}
-
-.pixel-content :deep(p) {
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-  margin-bottom: 1rem;
-}
-
-.pixel-content :deep(a) {
-  color: var(--pixel-accent-cyan);
-  text-decoration: underline;
-  transition: color 0.2s ease;
-}
-
-.pixel-content :deep(a:hover) {
-  color: var(--pixel-accent-cyan-light);
-}
-
-.pixel-content :deep(code) {
-  background: var(--pixel-bg-primary);
-  color: var(--pixel-accent-cyan);
-  padding: 2px 6px;
-  border-radius: 4px;
-  border: 1px solid var(--pixel-border-primary);
-  font-family: ui-monospace, monospace;
-}
-
-.pixel-content :deep(pre) {
-  background: var(--pixel-bg-primary);
-  border: 2px solid var(--pixel-border-primary);
-  border-radius: 8px;
-  padding: 16px;
-  overflow-x: auto;
-  margin: 1rem 0;
-  box-shadow: 2px 2px 0 var(--pixel-border-primary);
-}
-
-.pixel-content :deep(blockquote) {
-  background: var(--pixel-bg-primary);
-  border-left: 4px solid var(--pixel-accent-cyan);
-  padding: 16px;
-  margin: 1rem 0;
-  border-radius: 0 8px 8px 0;
-  color: var(--pixel-text-secondary);
-  font-style: italic;
-}
-
-.pixel-content :deep(ul),
-.pixel-content :deep(ol) {
-  padding-left: 2rem;
-  margin-bottom: 1rem;
-}
-
-.pixel-content :deep(li) {
-  color: var(--pixel-text-primary);
-  margin-bottom: 0.5rem;
-}
-
-.pixel-content :deep(table) {
-  border: 2px solid var(--pixel-border-primary);
-  border-radius: 8px;
-  overflow: hidden;
-  margin: 1rem 0;
-  width: 100%;
-}
-
-.pixel-content :deep(th),
-.pixel-content :deep(td) {
-  border: 1px solid var(--pixel-border-primary);
-  padding: 8px 12px;
-  text-align: left;
-}
-
-.pixel-content :deep(th) {
-  background: var(--pixel-bg-tertiary);
-  color: var(--pixel-accent-yellow);
-  font-weight: bold;
-}
-
-.pixel-content :deep(td) {
-  background: var(--pixel-bg-secondary);
-  color: var(--pixel-text-primary);
-}
-
-/* TOC容器样式 */
-.toc-container {
-  position: relative;
-  width: 200px;
-}
-
-/* 简单目录样式 */
 .simple-toc {
-  width: 200px;
-  max-height: calc(100vh - 100px);
-  overflow-y: auto;
-  z-index: 100;
-  transition: all 0.3s ease;
-  position: sticky;
-  top: 100px;
-}
-
-/* TOC固定定位样式 */
-.simple-toc.toc-fixed {
-  position: fixed;
-  top: 80px;
-  right: max(32px, calc((100vw - 1280px) / 2 + 32px));
-}
-
-.action-fixed {
-  position: fixed;
-  top: 100px;
-}
-
-.simple-toc-header {
-  padding: 12px 16px;
-  background: var(--pixel-bg-tertiary);
-  border-bottom: 2px solid var(--pixel-border-primary);
-  font-weight: bold;
-  font-size: 14px;
-  color: var(--pixel-accent-cyan);
-  text-align: center;
+  padding: 1rem;
 }
 
 .simple-toc-list {
   list-style: none;
+  padding: 0;
   margin: 0;
-  padding: 8px;
 }
 
 .simple-toc-item {
-  margin: 2px 0;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
-
-.simple-toc-item.active {
-  color: var(--pixel-accent-cyan);
-}
-
-.simple-toc-child {
-  margin-left: 16px;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: g;
 }
 
 .simple-toc-link {
-  display: block;
-  padding: 6px 8px;
   text-decoration: none;
-  font-size: 13px;
-  line-height: 1.4;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-  white-space: nowrap;
+  transition: color 0.2s;
+  display: block;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.simple-toc-link:hover {
-  border-bottom: var(--pixel-accent-cyan) !important;
+.simple-toc-link:hover,
+.simple-toc-link.active {
+  color: var(--primary);
 }
 
-.simple-toc::-webkit-scrollbar {
-  width: 6px;
-}
-
-.simple-toc::-webkit-scrollbar-track {
-  background: var(--pixel-bg-primary);
-  border-radius: 3px;
-}
-
-.simple-toc::-webkit-scrollbar-thumb {
-  background: var(--pixel-bg-quaternary);
-  border-radius: 3px;
-  border: 1px solid var(--pixel-border-secondary);
-}
-
-.simple-toc::-webkit-scrollbar-thumb:hover {
-  background: var(--pixel-text-disabled);
-}
-
-/* 标题吸顶样式 */
-.title-fixed {
-  position: fixed;
-  top: 0;
-  transform: none;
-  backdrop-filter: blur(8px);
-  z-index: 50;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  background: rgba(255, 255, 255, 0.05); /* 轻微的半透明背景 */
-}
-
-.title-normal {
-  position: relative;
-  background: transparent;
-  backdrop-filter: none;
-  box-shadow: none;
-  padding: 0;
+.simple-toc-child {
+  padding-left: 1rem;
+  margin-top: 0.25rem;
 }
 </style>

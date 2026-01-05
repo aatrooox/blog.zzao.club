@@ -27,7 +27,7 @@ const { getMemos, memos, createMemo } = useMemos()
 const userStore = useUser()
 // const clientjs = useClientjs()
 const toast = useGlobalToast()
-const { $api } = useNuxtApp()
+// const { $api } = useNuxtApp()
 const { getTags } = useTags()
 const multipleImages = ref<string[]>([])
 
@@ -57,39 +57,39 @@ const filteredMemos = computed(() => {
 
 const { beforeLeave, leave, afterLeave } = useStaggeredListTransition('memo-fade')
 
-async function handleLike(memoId: string) {
-  if (!userStore.user.value.id) {
-    await createVistorID()
-    // const res = await $api.post<ApiResponse<any>>('/api/v1/user/visitor/regist', )
-    // const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
+// async function handleLike(memoId: string) {
+//   if (!userStore.user.value.id) {
+//     await createVistorID()
+//     // const res = await $api.post<ApiResponse<any>>('/api/v1/user/visitor/regist', )
+//     // const { user, accessToken, refreshToken, accessExpiresAt, refreshExpiresAt } = res.data
 
-    // userStore.setUser(user)
-    // userStore.setTokenInfo({
-    //   accessToken,
-    //   refreshToken,
-    //   accessExpiresAt,
-    //   refreshExpiresAt,
-    // })
-  }
-  try {
-    const res = await $api.post<ApiResponse<MemoLikeResponse>>('/api/v1/memo/like', {
-      memo_id: memoId,
-      user_id: userStore.user.value.id,
-    })
-    if (res?.data && res.data.success) {
-      if (res.data.message) {
-        toast.success('您已经点赞过了')
-      }
-      else {
-        toast.success('感谢支持！')
-      }
-      await getMemos()
-    }
-  }
-  catch {
-    toast.error('点赞失败，请重试')
-  }
-}
+//     // userStore.setUser(user)
+//     // userStore.setTokenInfo({
+//     //   accessToken,
+//     //   refreshToken,
+//     //   accessExpiresAt,
+//     //   refreshExpiresAt,
+//     // })
+//   }
+//   try {
+//     const res = await $api.post<ApiResponse<MemoLikeResponse>>('/api/v1/memo/like', {
+//       memo_id: memoId,
+//       user_id: userStore.user.value.id,
+//     })
+//     if (res?.data && res.data.success) {
+//       if (res.data.message) {
+//         toast.success('您已经点赞过了')
+//       }
+//       else {
+//         toast.success('感谢支持！')
+//       }
+//       await getMemos()
+//     }
+//   }
+//   catch {
+//     toast.error('点赞失败，请重试')
+//   }
+// }
 
 await getMemos()
 
@@ -124,9 +124,9 @@ async function handleSendMemo(commentData) {
   }
 }
 
-function handleComment(memo: any) {
-  navigateTo(`/m/${memo.id}`)
-}
+// function handleComment(memo: any) {
+//   navigateTo(`/m/${memo.id}`)
+// }
 
 function handleTagClick(tagName: string) {
   navigateTo({ path: '/memo', query: { tags: tagName } })
@@ -149,9 +149,9 @@ function onUploadError(error: string) {
 </script>
 
 <template>
-  <div class="">
+  <div class="max-w-3xl mx-auto">
     <!-- 编辑器卡片 -->
-    <div v-if="userStore.user.value?.role === 'superAdmin'" class="pixel-card pixel-card-inner mb-2">
+    <div v-if="userStore.user.value?.role === 'superAdmin'" class="mb-8 p-4 border border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-zinc-900">
       <AppImageUpload
         v-model="multipleImages"
         :multiple="true"
@@ -172,12 +172,12 @@ function onUploadError(error: string) {
     </div>
 
     <!-- 随想卡片列表 -->
-    <div class="flex flex-col gap-4 md:gap-4">
+    <div class="flex flex-col">
       <transition-group
         name="memo-fade"
         tag="div"
         appear
-        class="flex flex-col gap-2 md:gap-2"
+        class="flex flex-col"
         :css="true"
         @before-leave="beforeLeave"
         @leave="leave"
@@ -186,25 +186,25 @@ function onUploadError(error: string) {
         <div
           v-for="memo in filteredMemos"
           :key="memo.id"
-          class="pixel-card cursor-pointer"
+          class="px-4 py-2 border-primary/5 border-b-2 mb-4 hover:bg-primary/5 last:border-0"
         >
           <div class="flex items-start gap-4">
-            <div class="flex-shrink-0">
-              <UserAvatar :user-info="memo.user_info" :size="30" class="pixel-avatar" />
-            </div>
-            <div class="min-w-0">
+            <!-- <div class="flex-shrink-0">
+              <UserAvatar :user-info="memo.user_info" :size="40" class="rounded-full" />
+            </div> -->
+            <div class="min-w-0 flex-1">
               <div class="flex items-center gap-2 mb-2">
-                <span class="pixel-title text-sm md:text-base">{{ memo.user_info?.nickname || memo.user_info?.username || '匿名' }}</span>
-                <span class="pixel-text text-xs md:text-sm opacity-70">·</span>
-                <NuxtTime :datetime="memo.createTs" class="pixel-text text-xs md:text-sm opacity-70" />
-                <span class="pixel-text text-xs md:text-sm opacity-70">·</span>
+                <!-- <span class="font-bold text-gray-900 dark:text-gray-100 text-base">{{ memo.user_info?.nickname || memo.user_info?.username || '匿名' }}</span> -->
+                <!-- <span class="text-gray-400 text-sm">·</span> -->
+                <NuxtTime :datetime="memo.createTs" class="text-gray-400 text-sm" />
+                <span class="text-gray-400 text-sm">·</span>
                 <AppFromTag :from="memo.from || 'blog'" />
               </div>
               <div v-if="memo.tags && memo.tags.length > 0" class="py-2 overflow-x-auto overflow-y-hidden flex items-center gap-1.5 pb-1">
                 <span
                   v-for="tag in memo.tags"
                   :key="tag.id"
-                  class="text-xs text-highlight-pixel-cyan cursor-pointer"
+                  class="text-xs text-primary cursor-pointer hover:underline"
                   @click.stop="onMemoTagClick(tag.tagName)"
                 >
                   #{{ tag.tagName }}
@@ -213,22 +213,22 @@ function onUploadError(error: string) {
               <div class="mb-2">
                 <MemoPanel :memo="memo" layout="wechat" :show-all="true" :photo-width="200" />
               </div>
-              <div class="flex items-center gap-4 mt-3 pixel-text text-xs md:text-sm">
-                <div class="flex items-center gap-1 md:gap-2 cursor-pointer hover:opacity-80 transition-opacity" @click.stop="handleComment(memo)">
-                  <Icon name="icon-park-outline:comments" class="w-4 h-4 md:w-5 md:h-5" />
+              <div class="flex items-center gap-6 mt-3 text-gray-500 text-sm">
+                <!-- <div class="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors" @click.stop="handleComment(memo)">
+                  <Icon name="icon-park-outline:comments" class="w-4 h-4" />
                   <span>{{ memo._count?.comments || 0 }}</span>
                 </div>
-                <div class="flex items-center gap-1 md:gap-2 cursor-pointer hover:opacity-80 transition-opacity" @click.stop="handleLike(memo.id)">
-                  <Icon name="icon-park-outline:thumbs-up" class="w-4 h-4 md:w-5 md:h-5" />
+                <div class="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors" @click.stop="handleLike(memo.id)">
+                  <Icon name="icon-park-outline:thumbs-up" class="w-4 h-4" />
                   <span>{{ memo._count?.likes || 0 }}</span>
-                </div>
+                </div> -->
                 <template v-if="userStore.isSuperAdmin.value">
-                  <span class="mx-1 opacity-50">|</span>
-                  <span class="cursor-pointer hover:opacity-80 transition-opacity" @click.stop="handleEdit(memo)">
-                    <Icon name="material-symbols:edit-outline" class="w-4 h-4 md:w-5 md:h-5" /> 编辑
+                  <span class="mx-1 opacity-20">|</span>
+                  <span class="cursor-pointer hover:text-primary transition-colors flex items-center gap-1" @click.stop="handleEdit(memo)">
+                    <Icon name="material-symbols:edit-outline" class="w-4 h-4" /> 编辑
                   </span>
-                  <span class="cursor-pointer hover:opacity-80 transition-opacity" @click.stop="handleDelete(memo.id)">
-                    <Icon name="icon-park-outline:delete" class="w-4 h-4 md:w-5 md:h-5" /> 删除
+                  <span class="cursor-pointer hover:text-red-500 transition-colors flex items-center gap-1" @click.stop="handleDelete(memo.id)">
+                    <Icon name="icon-park-outline:delete" class="w-4 h-4" /> 删除
                   </span>
                 </template>
               </div>
@@ -274,25 +274,15 @@ function onUploadError(error: string) {
 }
 
 .overflow-x-auto::-webkit-scrollbar-thumb {
-  background: var(--pixel-border-primary);
-  border-radius: 0;
+  background: #e5e7eb;
+  border-radius: 2px;
+}
+
+.dark .overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #374151;
 }
 
 .overflow-x-auto::-webkit-scrollbar-track {
-  background: var(--pixel-bg-primary);
-}
-
-@media (min-width: 768px) {
-  .pixel-card {
-    padding: 2rem;
-  }
-
-  .pixel-title {
-    font-size: 1.125rem;
-  }
-
-  .pixel-text {
-    font-size: 1rem;
-  }
+  background: transparent;
 }
 </style>

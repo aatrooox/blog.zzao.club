@@ -165,14 +165,14 @@ function focusActualInput(): void {
 
 <template>
   <div
-    class="pixel-tag-input"
+    class="relative p-2 cursor-text bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-md w-full mb-2 focus-within:ring-2 focus-within:ring-primary focus-within:border-transparent transition-all"
     @click="focusActualInput"
   >
     <div class="flex flex-wrap items-center gap-1.5">
       <span
         v-for="(tag, index) in myTags"
         :key="index"
-        class="pixel-tag"
+        class="px-2 py-0.5 text-sm text-primary bg-primary/10 rounded-full"
       >
         #{{ tag }}
       </span>
@@ -180,7 +180,7 @@ function focusActualInput(): void {
         ref="inputElement"
         v-model="currentInput"
         type="text"
-        class="pixel-input"
+        class="flex-grow border-none outline-none p-1 text-sm min-w-[100px] bg-transparent text-gray-900 dark:text-gray-100 placeholder-gray-400"
         placeholder="输入标签..."
         @input="handleInput"
         @focus="handleFocus"
@@ -198,16 +198,16 @@ function focusActualInput(): void {
     >
       <div
         v-if="showSuggestions && suggestions.length > 0"
-        class="pixel-suggestions"
+        class="absolute z-10 w-full left-0 mt-2 p-2 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg"
       >
         <ul class="flex flex-wrap gap-1.5">
           <li
             v-for="(suggestion, index) in suggestions"
             :key="suggestion"
-            class="pixel-suggestion-item"
+            class="px-2 py-1 text-sm cursor-pointer rounded-md transition-colors"
             :class="{
-              'pixel-suggestion-active': index === activeSuggestionIndex,
-              'pixel-suggestion-normal': index !== activeSuggestionIndex,
+              'bg-primary text-white': index === activeSuggestionIndex,
+              'bg-gray-100 dark:bg-zinc-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-600': index !== activeSuggestionIndex,
             }"
             @mousedown.prevent="selectTag(suggestion)"
           >
@@ -220,70 +220,4 @@ function focusActualInput(): void {
 </template>
 
 <style scoped>
-/* Pixel style tag input */
-.pixel-tag-input {
-  position: relative;
-  padding: 0.5rem;
-  cursor: text;
-  background-color: var(--pixel-bg-card);
-  border: 2px solid var(--pixel-border-input);
-  width: 100%;
-  box-sizing: border-box;
-  font-family: ui-monospace, monospace;
-  margin-bottom: 0.5rem;
-}
-
-.pixel-input {
-  flex-grow: 1;
-  border: none;
-  outline: none;
-  padding: 0.25rem 0.125rem;
-  font-size: 1rem;
-  min-width: 100px;
-  background: transparent;
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-}
-
-.pixel-input::placeholder {
-  color: var(--pixel-text-disabled);
-}
-
-.pixel-suggestions {
-  position: absolute;
-  z-index: 10;
-  width: 100%;
-  margin-top: 0.25rem;
-  padding: 0.5rem;
-  background-color: var(--pixel-bg-secondary);
-  border: 2px solid var(--pixel-border-primary);
-  box-shadow: 2px 2px 0 var(--pixel-shadow-secondary);
-  font-size: 0.875rem;
-}
-
-.pixel-suggestion-item {
-  padding: 0.25rem 0.5rem;
-  cursor: pointer;
-  font-family: ui-monospace, monospace;
-  font-weight: bold;
-  transition: all 0.1s ease;
-}
-
-.pixel-suggestion-active {
-  background-color: var(--pixel-accent-cyan);
-  color: var(--pixel-highlight-teal-text);
-  border: 2px solid var(--pixel-highlight-teal-border);
-}
-
-.pixel-suggestion-normal {
-  background-color: var(--pixel-bg-tertiary);
-  color: var(--pixel-text-primary);
-  border: 2px solid var(--pixel-shadow-primary);
-}
-
-.pixel-suggestion-normal:hover {
-  background-color: var(--pixel-bg-quaternary);
-  transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0 var(--pixel-shadow-secondary);
-}
 </style>

@@ -245,28 +245,28 @@ const wechatMaxSize = computed(() => {
 </script>
 
 <template>
-  <div ref="memoWrap" class="pixel-memo-panel" :style="{ maxWidth: panelMaxWidth }">
+  <div ref="memoWrap" class="w-full" :style="{ maxWidth: panelMaxWidth }">
     <!-- 微信布局：上方内容，下方九宫格图片 -->
-    <div v-if="useWechatLayout" class="pixel-wechat-layout">
+    <div v-if="useWechatLayout" class="flex flex-col gap-2">
       <!-- 上方内容区域 -->
-      <div v-if="memo.content && memo.content.trim()" class="pixel-wechat-content">
-        <MDC ref="contentRef" :value="memo.content" tag="section" class="pixel-memo-content memo-mdc" />
+      <div v-if="memo.content && memo.content.trim()" class="">
+        <MDC ref="contentRef" :value="memo.content" tag="section" class="prose prose-sm dark:prose-invert max-w-none" />
       </div>
 
       <!-- 下方图片九宫格区域 -->
       <ClientOnly v-if="shouldShowPhotos">
         <div
-          class="pixel-wechat-photos"
+          class="mt-2"
           :style="{
             maxWidth: `${wechatMaxSize.maxWidth}px`,
           }"
         >
           <!-- 单张图片特殊处理 -->
-          <div v-if="memo.photos.length === 1" v-viewer class="pixel-wechat-single-photo">
+          <div v-if="memo.photos.length === 1" v-viewer class="overflow-hidden rounded-lg">
             <img
               :src="memo.photos[0]"
               alt="Photo"
-              class="pixel-wechat-single-image"
+              class="w-full h-auto object-cover"
               :style="{ maxWidth: `${wechatMaxSize.maxWidth}px` }"
             >
           </div>
@@ -275,7 +275,7 @@ const wechatMaxSize = computed(() => {
           <div
             v-else
             v-viewer
-            class="pixel-wechat-grid"
+            class="grid gap-1"
             :style="{
               gridTemplateRows: `repeat(${wechatGridConfig.rows}, 1fr)`,
               gridTemplateColumns: `repeat(${wechatGridConfig.cols}, 1fr)`,
@@ -286,18 +286,18 @@ const wechatMaxSize = computed(() => {
             <div
               v-for="(photo, index) in memo.photos.slice(0, 9)"
               :key="index"
-              class="pixel-wechat-grid-item"
+              class="aspect-square overflow-hidden rounded-md"
             >
               <img
                 :src="photo"
                 :alt="`Photo ${index + 1}`"
-                class="pixel-wechat-grid-image"
+                class="w-full h-full object-cover"
               >
             </div>
           </div>
         </div>
         <template #fallback>
-          <div class="pixel-wechat-photos" :style="{ maxWidth: `${wechatMaxSize.maxWidth}px` }">
+          <div class="mt-2" :style="{ maxWidth: `${wechatMaxSize.maxWidth}px` }">
             <!-- 宽度自适应容器，高度给一个合适占位 -->
             <Skeleton style="width: 100%; height: 200px;" />
           </div>
@@ -306,20 +306,20 @@ const wechatMaxSize = computed(() => {
     </div>
 
     <!-- 小红书布局：左图右文（当图片和内容都需要显示时） -->
-    <div v-else-if="useHorizontalLayout" class="pixel-horizontal-layout">
+    <div v-else-if="useHorizontalLayout" class="flex flex-col md:flex-row gap-4">
       <!-- 左侧图片轮播区域 -->
       <ClientOnly>
-        <div class="pixel-photo-section" :style="{ flexBasis: photoSectionWidth }">
-          <Carousel v-if="memo.photos && memo.photos.length > 1" class="w-full pixel-carousel">
+        <div class="flex-none w-full md:w-auto" :style="{ flexBasis: photoSectionWidth }">
+          <Carousel v-if="memo.photos && memo.photos.length > 1" class="w-full group relative">
             <template #default="{ canScrollNext, canScrollPrev, scrollNext, scrollPrev }">
-              <div class="pixel-carousel-wrapper">
+              <div class="relative overflow-hidden rounded-lg">
                 <CarouselContent v-viewer>
                   <CarouselItem v-for="(photo, index) in memo.photos" :key="index">
-                    <div class="pixel-photo-container">
+                    <div class="aspect-[3/4] w-full">
                       <img
                         :src="photo"
                         :alt="`Photo ${index + 1}`"
-                        class="pixel-photo-image"
+                        class="w-full h-full object-cover"
                       >
                     </div>
                   </CarouselItem>
@@ -327,14 +327,14 @@ const wechatMaxSize = computed(() => {
                 <!-- 自定义内部导航按钮 - 基于整体轮播容器 -->
                 <button
                   v-if="canScrollPrev"
-                  class="pixel-carousel-btn pixel-carousel-prev"
+                  class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                   @click="scrollPrev"
                 >
                   <Icon name="material-symbols:chevron-left" class="w-5 h-5" />
                 </button>
                 <button
                   v-if="canScrollNext"
-                  class="pixel-carousel-btn pixel-carousel-next"
+                  class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                   @click="scrollNext"
                 >
                   <Icon name="material-symbols:chevron-right" class="w-5 h-5" />
@@ -343,19 +343,19 @@ const wechatMaxSize = computed(() => {
             </template>
           </Carousel>
           <!-- 单图展示 -->
-          <div v-else-if="memo.photos && memo.photos.length === 1" v-viewer class="pixel-photo-container">
+          <div v-else-if="memo.photos && memo.photos.length === 1" v-viewer class="aspect-[3/4] w-full overflow-hidden rounded-lg">
             <img
               :src="memo.photos[0]"
               alt="Photo"
-              class="pixel-photo-image"
+              class="w-full h-full object-cover"
             >
           </div>
         </div>
         <template #fallback>
           <!-- this will be rendered on server side -->
-          <div class="pixel-photo-section" :style="{ flexBasis: photoSectionWidth }">
+          <div class="flex-none w-full md:w-auto" :style="{ flexBasis: photoSectionWidth }">
             <!-- 复用正式内容的容器以获得固定比例 -->
-            <div class="pixel-photo-container">
+            <div class="aspect-[3/4] w-full">
               <Skeleton style="width: 100%; height: 100%;" />
             </div>
           </div>
@@ -363,24 +363,24 @@ const wechatMaxSize = computed(() => {
       </ClientOnly>
 
       <!-- 右侧内容区域 -->
-      <div class="pixel-content-section">
-        <MDC ref="contentRef" :value="parsedContent" tag="section" class="pixel-memo-content memo-mdc" />
+      <div class="flex-1 min-w-0">
+        <MDC ref="contentRef" :value="parsedContent" tag="section" class="prose prose-sm dark:prose-invert max-w-none" />
       </div>
     </div>
 
     <!-- 仅图片展示模式 -->
     <ClientOnly v-else-if="isPhotosOnlyMode">
-      <div class="pixel-photos-only" :style="{ maxWidth: photoMaxWidth }">
-        <Carousel v-if="memo.photos && memo.photos.length > 1" class="w-full pixel-carousel">
+      <div class="w-full mx-auto" :style="{ maxWidth: photoMaxWidth }">
+        <Carousel v-if="memo.photos && memo.photos.length > 1" class="w-full group relative">
           <template #default="{ canScrollNext, canScrollPrev, scrollNext, scrollPrev }">
-            <div class="pixel-carousel-wrapper">
+            <div class="relative overflow-hidden rounded-lg">
               <CarouselContent v-viewer>
                 <CarouselItem v-for="(photo, index) in memo.photos" :key="index">
-                  <div class="pixel-photo-container-full">
+                  <div class="aspect-[3/4] w-full">
                     <img
                       :src="photo"
                       :alt="`Photo ${index + 1}`"
-                      class="pixel-photo-image-full"
+                      class="w-full h-full object-cover"
                     >
                   </div>
                 </CarouselItem>
@@ -388,14 +388,14 @@ const wechatMaxSize = computed(() => {
               <!-- 自定义内部导航按钮 - 基于整体轮播容器 -->
               <button
                 v-if="canScrollPrev"
-                class="pixel-carousel-btn pixel-carousel-prev"
+                class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                 @click="scrollPrev"
               >
                 <Icon name="material-symbols:chevron-left" class="w-5 h-5" />
               </button>
               <button
                 v-if="canScrollNext"
-                class="pixel-carousel-btn pixel-carousel-next"
+                class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                 @click="scrollNext"
               >
                 <Icon name="material-symbols:chevron-right" class="w-5 h-5" />
@@ -404,18 +404,18 @@ const wechatMaxSize = computed(() => {
           </template>
         </Carousel>
         <!-- 单图展示 -->
-        <div v-else-if="memo.photos && memo.photos.length === 1" v-viewer class="pixel-photo-container-full">
+        <div v-else-if="memo.photos && memo.photos.length === 1" v-viewer class="aspect-[3/4] w-full overflow-hidden rounded-lg">
           <img
             :src="memo.photos[0]"
             alt="Photo"
-            class="pixel-photo-image-full"
+            class="w-full h-full object-cover"
           >
         </div>
       </div>
       <template #fallback>
         <!-- this will be rendered on server side -->
-        <div class="pixel-photos-only" :style="{ maxWidth: photoMaxWidth }">
-          <div class="pixel-photo-container-full">
+        <div class="w-full mx-auto" :style="{ maxWidth: photoMaxWidth }">
+          <div class="aspect-[3/4] w-full">
             <Skeleton class="w-full h-full" />
           </div>
         </div>
@@ -424,12 +424,12 @@ const wechatMaxSize = computed(() => {
 
     <!-- 仅内容模式 -->
     <div v-else-if="shouldShowContent">
-      <MDC ref="contentRef" :value="parsedContent" tag="section" class="memo-mdc pixel-memo-content" />
+      <MDC ref="contentRef" :value="parsedContent" tag="section" class="prose prose-sm dark:prose-invert max-w-none" />
     </div>
 
     <!-- 空状态 -->
-    <div v-else class="pixel-empty-state">
-      <p class="text-[var(--pixel-text-secondary)] font-mono text-sm">
+    <div v-else class="flex items-center justify-center min-h-[120px] text-center text-gray-500">
+      <p class="text-sm">
         暂无内容
       </p>
     </div>
@@ -437,341 +437,9 @@ const wechatMaxSize = computed(() => {
 </template>
 
 <style scoped>
-/* Pixel style memo panel */
-.pixel-memo-panel {
-  min-height: 30px;
-  display: flex;
-  flex-direction: column;
-  font-family: ui-monospace, monospace;
-  width: 100%;
-  margin: 0 auto; /* 居中显示 */
-}
-
-/* 小红书水平布局 */
-.pixel-horizontal-layout {
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
-  width: 100%;
-}
-
-/* 微信布局 */
-.pixel-wechat-layout {
-  display: flex;
-  flex-direction: column;
-  /* gap: 1rem; */
-  width: 100%;
-}
-
-.pixel-wechat-content {
-  width: 100%;
-}
-
-.pixel-wechat-photos {
-  width: 100%;
-  /* 移除 margin: 0 auto，让图片靠左显示 */
-}
-
-/* 微信单张图片 */
-.pixel-wechat-single-photo {
-  display: flex;
-  justify-content: flex-start; /* 改为靠左对齐 */
-  align-items: flex-start; /* 改为顶部对齐 */
-  width: 100%;
-}
-
-.pixel-wechat-single-image {
-  object-fit: cover;
-  border-radius: 8px;
-  transition: transform 0.3s ease;
-  cursor: zoom-in;
-}
-
-.pixel-wechat-single-image:hover {
-  transform: scale(1.02);
-}
-
-/* 微信九宫格 */
-.pixel-wechat-grid {
-  display: grid;
-  gap: 4px;
-  width: 100%;
-  /* 移除固定的 aspect-ratio: 1，让不同图片数量有不同的比例 */
-}
-
-.pixel-wechat-grid-item {
-  position: relative;
-  width: 100%;
-  height: 0;
-  padding-bottom: 100%; /* 强制每个格子为正方形 */
-  overflow: hidden;
-  border-radius: 4px;
-  background-color: var(--pixel-bg-secondary);
-}
-
-.pixel-wechat-grid-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-  cursor: zoom-in;
-}
-
-.pixel-wechat-grid-image:hover {
-  transform: scale(1.05);
-}
-
-.pixel-photo-section {
-  flex: 0 0 auto; /* 移除固定宽度，改为由 style 控制 */
-  position: relative;
-  min-width: 200px; /* 最小宽度限制 */
-  max-width: 500px; /* 最大宽度限制 */
-}
-
-.pixel-content-section {
-  flex: 1;
-  min-width: 0; /* 防止flex内容溢出 */
-}
-
-/* 图片容器样式 */
-.pixel-photo-container,
-.pixel-photo-container-full {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3/4; /* 小红书常用的图片比例 */
-  /* border: 2px solid var(--pixel-border-primary); */
-  /* border-radius: 8px; */
-  overflow: hidden;
-  background-color: var(--pixel-bg-secondary);
-  display: block;
-}
-
-.pixel-photo-container-full {
-  margin: 0 auto;
-}
-
-.pixel-photo-image,
-.pixel-photo-image-full {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-}
-
-.pixel-photo-image:hover,
-.pixel-photo-image-full:hover {
-  transform: scale(1.02);
-}
-
-/* 仅图片模式 */
-.pixel-photos-only {
-  width: 100%;
-  margin: 0 auto;
-}
-
-/* 轮播容器包装器 */
-.pixel-carousel-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-/* 自定义轮播按钮样式 - 调整为真正的内部定位 */
-.pixel-carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 20;
-  width: 32px;
-  height: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.pixel-carousel-prev {
-  left: 8px; /* 更靠内的位置 */
-}
-
-.pixel-carousel-next {
-  right: 8px; /* 更靠内的位置 */
-}
-
-/* 鼠标悬停在轮播容器上时显示按钮 */
-.pixel-carousel-wrapper:hover .pixel-carousel-btn {
-  opacity: 0.9;
-}
-
-.pixel-carousel-btn:hover {
-  background: rgba(0, 0, 0, 0.6);
-  border-color: rgba(255, 255, 255, 0.9);
-  transform: translateY(-50%) scale(1.05);
-  opacity: 1;
-}
-
 /* 隐藏原有的 Carousel 按钮 */
 :deep(.carousel-previous),
 :deep(.carousel-next) {
   display: none;
-}
-
-/* 响应式布局 */
-@media (max-width: 768px) {
-  .pixel-memo-panel {
-    max-width: 100% !important;
-  }
-
-  .pixel-horizontal-layout {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .pixel-photo-section {
-    flex: none;
-    width: 100%;
-    max-width: none; /* 移动端移除最大宽度限制 */
-  }
-
-  .pixel-photos-only {
-    max-width: 100% !important; /* 移动端使用全宽 */
-  }
-
-  /* 微信布局移动端适配 */
-  /* (移除空规则，避免 linter 报错) */
-
-  .pixel-wechat-single-image {
-    max-width: 100% !important;
-    max-height: 300px !important;
-  }
-
-  .pixel-wechat-grid {
-    max-width: 100% !important;
-    max-height: 100% !important;
-  }
-}
-
-.pixel-memo-content {
-  flex: 1;
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-  line-height: 1.6;
-  font-size: 0.875rem;
-}
-
-/* Override MDC prose styles for pixel theme */
-.pixel-memo-content :deep(p) {
-  margin: 0.5rem 0;
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-}
-
-.pixel-memo-content :deep(h1),
-.pixel-memo-content :deep(h2),
-.pixel-memo-content :deep(h3),
-.pixel-memo-content :deep(h4),
-.pixel-memo-content :deep(h5),
-.pixel-memo-content :deep(h6) {
-  color: var(--pixel-highlight-teal-text);
-  font-family: ui-monospace, monospace;
-  font-weight: bold;
-  margin: 1rem 0 0.5rem 0;
-}
-
-.pixel-memo-content :deep(a) {
-  color: var(--pixel-gradient-start);
-  text-decoration: underline;
-  font-family: ui-monospace, monospace;
-}
-
-.pixel-memo-content :deep(a:hover) {
-  color: var(--pixel-gradient-start);
-}
-
-.pixel-memo-content :deep(code) {
-  background-color: var(--pixel-bg-tertiary);
-  color: var(--pixel-highlight-green-text);
-  padding: 0.125rem 0.25rem;
-  border: 1px solid var(--pixel-border-primary);
-  font-family: ui-monospace, monospace;
-  font-size: 0.8rem;
-}
-
-.pixel-memo-content :deep(pre) {
-  background-color: var(--pixel-bg-input);
-  border: 2px solid var(--pixel-bg-secondary);
-  padding: 1rem;
-  overflow-x: auto;
-  margin: 1rem 0;
-}
-
-.pixel-memo-content :deep(pre code) {
-  background: none;
-  border: none;
-  padding: 0;
-  color: var(--pixel-text-primary);
-}
-
-.pixel-memo-content :deep(blockquote) {
-  border-left: 4px solid var(--pixel-highlight-teal);
-  padding-left: 1rem;
-  margin: 1rem 0;
-  color: var(--pixel-text-tertiary);
-  font-style: italic;
-}
-
-.pixel-memo-content :deep(ul),
-.pixel-memo-content :deep(ol) {
-  margin: 0.5rem 0;
-  padding-left: 1.5rem;
-}
-
-.pixel-memo-content :deep(li) {
-  margin: 0.25rem 0;
-  color: var(--pixel-text-primary);
-}
-
-.pixel-memo-content :deep(img) {
-  max-width: 100%;
-  max-height: 400px;
-  height: auto;
-  border: 2px solid var(--pixel-border-primary);
-  object-fit: contain;
-}
-
-@media (min-width: 768px) {
-  .pixel-memo-content {
-    font-size: 1rem;
-  }
-
-  .pixel-memo-content :deep(img) {
-    max-height: 500px;
-  }
-}
-
-@media (max-width: 767px) {
-  .pixel-memo-content :deep(img) {
-    max-height: 300px;
-  }
-}
-
-/* 空状态样式 */
-.pixel-empty-state {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 120px;
-  text-align: center;
-  color: var(--pixel-text-secondary);
 }
 </style>

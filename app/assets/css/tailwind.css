@@ -47,46 +47,7 @@
   }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
-}
+
 
 :root {
   --background: oklch(1 0 0);
@@ -95,7 +56,7 @@
   --card-foreground: oklch(0.141 0.005 285.823);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.21 0.006 285.885);
+  --primary: hsl(142 32% 32%);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
@@ -127,7 +88,7 @@
   /* 背景色系 - 干净、通透 */
   --pixel-bg-primary: oklch(99% 0.002 240); /* 主背景 - 极淡的灰白 */
   --pixel-bg-secondary: oklch(100% 0 0); /* 次要背景 - 纯白 (用于卡片) */
-  --pixel-bg-tertiary: oklch(97% 0.005 240); /* 第三级背景 - 悬停态 */
+  --pixel-bg-tertiary: oklch(17.779% 0.00886 224.148); /* 第三级背景 - 悬停态 */
 
   --pixel-bg-card: oklch(100% 0 0); /* 卡片背景 - 纯白 */
   --pixel-bg-input: oklch(98% 0.002 240); /* 输入框背景 */
@@ -298,6 +259,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'SweiCurveLeg';
+  src: url('/fonts/SweiCurveLegCJKsc-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* @font-face {
   font-family: 'IPIX';
   src: url('/fonts/IPIX.ttf') format('truetype');
@@ -336,8 +305,9 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: 'LXGWS', sans-serif;
+  font-family: 'SweiCurveLeg', sans-serif;
   font-size: 16px;
+  @apply bg-zinc-50;
 }
 
 #__nuxt {
@@ -447,146 +417,7 @@ body {
   }
 }
 
-/* 像素风格公共类 */
-.pixel-layout {
-  @apply bg-bg-pixel-primary text-text-pixel-primary min-h-screen;
-}
-/* 现代按钮 */
-.pixel-btn {
-  @apply bg-bg-pixel-secondary border border-border-pixel-primary text-text-pixel-primary;
-  @apply font-sans font-medium px-4 py-2 rounded-lg shadow-sm transition-all duration-200 ease-in-out;
-}
-.pixel-btn:hover {
-  @apply bg-bg-pixel-tertiary -translate-y-0.5 shadow-md text-accent-pixel-cyan;
-}
-.pixel-btn:active {
-  @apply translate-y-0 shadow-sm scale-95;
-}
 
-/* 现代按钮 - 主要强调色 */
-.pixel-btn-primary {
-  @apply bg-accent-pixel-cyan border border-transparent text-white;
-  @apply font-sans font-medium px-4 py-2 rounded-lg shadow-md transition-all duration-200 ease-in-out;
-}
-.pixel-btn-primary:hover {
-  @apply bg-accent-pixel-cyan-hover -translate-y-0.5 shadow-lg;
-}
-.pixel-btn-primary:active {
-  @apply translate-y-0 shadow-md scale-95;
-}
-
-/* 现代卡片 */
-.pixel-card,
-.pixel-card-elevated {
-  @apply bg-bg-pixel-card border border-border-pixel-primary;
-  @apply p-5 rounded-2xl shadow-sm transition-all duration-300 ease-in-out;
-}
-.pixel-card:hover,
-.pixel-card-elevated:hover {
-  @apply -translate-y-1 shadow-xl border-accent-pixel-cyan-border;
-}
-
-/* 现代边框 */
-.pixel-border {
-  @apply border border-border-pixel-primary rounded-lg;
-}
-
-/* 现代阴影层级 */
-.pixel-shadow-sm {
-  @apply shadow-sm;
-}
-.pixel-shadow-md {
-  @apply shadow-md;
-}
-.pixel-shadow-lg {
-  @apply shadow-lg;
-}
-
-/* 现代状态指示器 */
-.pixel-status-online {
-  @apply bg-status-pixel-success w-2.5 h-2.5 rounded-full ring-2 ring-white;
-}
-.pixel-status-offline {
-  @apply bg-status-pixel-error w-2.5 h-2.5 rounded-full ring-2 ring-white;
-}
-.pixel-status-warning {
-  @apply bg-status-pixel-warning w-2.5 h-2.5 rounded-full ring-2 ring-white;
-}
-.pixel-status-unknown {
-  @apply bg-text-pixel-disabled w-2.5 h-2.5 rounded-full ring-2 ring-white;
-}
-
-.pixel-textarea,
-.pixel-input {
-  @apply w-full bg-bg-pixel-input border border-border-pixel-input text-text-pixel-primary font-sans p-3 resize-y min-h-[80px] rounded-xl transition-all duration-200;
-}
-
-.pixel-input {
-  @apply min-h-[40px];
-}
-.pixel-textarea:focus,
-.pixel-input:focus {
-  @apply outline-none border-accent-pixel-cyan ring-2 ring-accent-pixel-cyan-light bg-white;
-}
-
-.pixel-textarea::placeholder,
-.pixel-input::placeholder {
-  @apply text-text-pixel-muted;
-}
-
-/* 现代字体 */
-.pixel-font {
-  @apply font-sans tracking-tight;
-}
-/* 现代标题 */
-.pixel-title {
-  @apply font-sans font-bold text-text-pixel-primary tracking-tight;
-}
-
-/* 现代文本 */
-.pixel-text {
-  @apply font-sans text-text-pixel-secondary leading-relaxed;
-}
-
-/* 现代文本 - 次要 */
-.pixel-text-muted {
-  @apply font-sans text-text-pixel-muted;
-}
-
-/* 现代进度条 */
-.pixel-progress-bar {
-  @apply bg-bg-pixel-input h-2 rounded-full overflow-hidden;
-}
-.pixel-progress-fill {
-  @apply bg-accent-pixel-cyan h-full rounded-full transition-[width] duration-500 ease-out;
-}
-
-/* 现代网格背景 - 极淡 */
-.pixel-grid-bg {
-  background-image:
-    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-  background-size: 24px 24px;
-  @apply opacity-100;
-}
-
-/* 移除噪点背景，改用纯净背景 */
-.pixel-noise-bg {
-  background: none;
-}
-
-.pixel-tag {
-  @apply bg-accent-pixel-cyan-light text-accent-pixel-cyan border border-transparent;
-  @apply px-3 py-1 rounded-full text-xs font-medium transition-all duration-200 ease-in-out;
-}
-
-.pixel-tag:hover {
-  @apply bg-accent-pixel-cyan text-white -translate-y-0.5 shadow-md;
-}
-
-.pixel-tag:active {
-  @apply translate-y-0 scale-95;
-}
 /* 下划线动画 hover 效果全局复用 */
 .hover-underline-animate {
   display: inline-block;
@@ -609,20 +440,9 @@ body {
   transform: scaleX(1);
 }
 
-/* cyan 主题滚动条样式，优先用于弹窗、结果列表等区域 */
-.cyan-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: var(--pixel-bg-tertiary) var(--pixel-bg-primary);
+
+
+.pixel-card {
+  @apply bg-white border-2 border-zinc-100 rounded-xl shadow-sm;
 }
-.cyan-scrollbar::-webkit-scrollbar {
-  width: 4px;
-  background: var(--pixel-bg-secondary);
-  border-radius: 2px;
-}
-.cyan-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--pixel-bg-secondary);
-  border-radius: 6px;
-}
-.cyan-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--pixel-bg-secondary);
-}
+

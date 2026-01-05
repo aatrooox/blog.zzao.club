@@ -138,7 +138,7 @@ pre code .line {
   padding: 16px;
   margin: 0;
   background: transparent;
-  color: var(--pixel-text-secondary);
+  color: var(--primary);
   font-family: ui-monospace, monospace;
   font-size: 14px;
   line-height: 1.5;

@@ -166,37 +166,37 @@ defineExpose({ clear })
 
 <template>
   <ClientOnly>
-    <div class="pixel-comment-input">
-      <div v-if="!userStore.isLogin" class="pixel-visitor-form">
-        <Input v-model="visitorName" placeholder="名字" :disabled="userStore.isVisitor" class="pixel-input-field" />
-        <Input v-model="visitorEmail" placeholder="邮箱" type="email" class="pixel-input-field" />
-        <Input v-model="visitorWebsite" placeholder="你的主页" class="pixel-input-field" />
+    <div class="w-full">
+      <div v-if="!userStore.isLogin" class="grid grid-cols-1 md:grid-cols-3 gap-2 mb-2">
+        <Input v-model="visitorName" placeholder="名字" :disabled="userStore.isVisitor" class="w-full" />
+        <Input v-model="visitorEmail" placeholder="邮箱" type="email" class="w-full" />
+        <Input v-model="visitorWebsite" placeholder="你的主页" class="w-full" />
       </div>
-      <div v-else-if="showHello" class="pixel-hello">
+      <div v-else-if="showHello" class="text-sm font-bold text-primary mb-2">
         Hi，{{ userStore.user.value.nickname || userStore.user.value.username }}。欢迎评论👏
       </div>
-      <div v-show="!userStore.isLogin && visitorEmail" class="pixel-checkbox-container">
+      <div v-show="!userStore.isLogin && visitorEmail" class="flex items-center gap-2 mb-2">
         <div class="flex items-center space-x-2">
-          <Checkbox id="terms2" v-model="allowEmailNotify" disabled class="pixel-checkbox" />
-          <label for="terms2" class="pixel-label">
+          <Checkbox id="terms2" v-model="allowEmailNotify" disabled />
+          <label for="terms2" class="text-sm text-gray-700 dark:text-gray-300">
             收到回复时邮件通知我
           </label>
         </div>
       </div>
       <Textarea
         id="over_label"
-        ref="commentInputRef" v-model="comment" class="pixel-textarea" auto-resize :rows="rows"
+        ref="commentInputRef" v-model="comment" class="w-full min-h-[100px] p-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" auto-resize :rows="rows"
         maxlength="512" :placeholder="placeholder" @value-change="emit('valueChange', comment)" @click.stop
       />
-      <div class="pixel-buttons">
-        <div class="pixel-tip">
-          <span class="pixel-text">{{ inputTip }}</span>
+      <div class="flex flex-col md:flex-row justify-between items-center mt-2 gap-2">
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-gray-400">{{ inputTip }}</span>
         </div>
-        <div class="pixel-button-group">
-          <button class="pixel-btn" @click="cancelSend">
+        <div class="flex items-center gap-2">
+          <button class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-md transition-colors flex items-center gap-1" @click="cancelSend">
             <Icon name="icon-park-outline:close-one" /><span>{{ cancelBtnText }}</span>
           </button>
-          <button class="pixel-btn" @click="sendComment">
+          <button class="px-4 py-2 text-sm font-medium text-white bg-primary hover:bg-primary/90 rounded-md transition-colors flex items-center gap-1" @click="sendComment">
             <Icon name="icon-park-outline:send" /><span>{{ submitBtnText }}</span>
           </button>
         </div>
@@ -206,130 +206,4 @@ defineExpose({ clear })
 </template>
 
 <style scoped>
-/* Pixel style comment input */
-.pixel-comment-input {
-  transition: all 0.3s ease-in-out;
-  font-family: ui-monospace, monospace;
-}
-
-.pixel-visitor-form {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.pixel-input-field {
-  background-color: var(--pixel-bg-card);
-  border: 2px solid var(--pixel-border-input);
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-  padding: 0.5rem;
-  flex: 1;
-  min-width: 120px;
-}
-
-.pixel-hello {
-  font-size: 0.875rem;
-  padding-bottom: 0.5rem;
-  color: var(--pixel-accent-cyan);
-  font-family: ui-monospace, monospace;
-  font-weight: bold;
-}
-
-.pixel-checkbox-container {
-  display: flex;
-  gap: 0.5rem;
-  padding: 0.5rem 0;
-}
-
-.pixel-checkbox {
-  border: 2px solid var(--pixel-border-primary);
-}
-
-.pixel-label {
-  font-size: 0.875rem;
-  line-height: 1;
-  color: var(--pixel-text-primary);
-  font-family: ui-monospace, monospace;
-}
-
-.pixel-buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 0.5rem;
-}
-
-.pixel-tip {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.pixel-text {
-  font-size: 0.75rem;
-  color: var(--pixel-text-muted);
-  font-family: ui-monospace, monospace;
-}
-
-.pixel-button-group {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.pixel-button {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.5rem 1rem;
-  font-family: ui-monospace, monospace;
-  font-weight: bold;
-  font-size: 0.875rem;
-  border: 2px solid;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background: none;
-}
-
-.pixel-button-primary {
-  background-color: var(--pixel-accent-cyan);
-  color: var(--pixel-highlight-green-text);
-  border-color: var(--pixel-accent-cyan-border);
-}
-
-.pixel-button-primary:hover {
-  background-color: var(--pixel-accent-cyan-hover);
-  border-color: var(--pixel-accent-cyan-border);
-  transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0 var(--pixel-accent-cyan-border);
-}
-
-.pixel-button-secondary {
-  background-color: var(--pixel-bg-tertiary);
-  color: var(--pixel-text-primary);
-  border-color: var(--pixel-bg-primary);
-}
-
-.pixel-button-secondary:hover {
-  background-color: var(--pixel-bg-quaternary);
-  transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0 var(--pixel-shadow-secondary);
-}
-
-@media (max-width: 768px) {
-  .pixel-visitor-form {
-    flex-direction: column;
-  }
-
-  .pixel-buttons {
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: stretch;
-  }
-
-  .pixel-button-group {
-    justify-content: center;
-  }
-}
 </style>

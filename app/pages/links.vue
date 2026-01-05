@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-const { $api } = useNuxtApp()
-const toast = useGlobalToast()
+// const { $api } = useNuxtApp()
+// const toast = useGlobalToast()
 
 useHead({
   title: '友链｜早早集市',
@@ -14,49 +14,49 @@ useHead({
 
 const { links } = useAppConfig()
 
-const newLink = ref(JSON.stringify({
-  name: '网站名称',
-  url: 'https://www.example.com',
-  desc: '网站描述',
-}, null, 2))
+// const newLink = ref(JSON.stringify({
+//   name: '网站名称',
+//   url: 'https://www.example.com',
+//   desc: '网站描述',
+// }, null, 2))
 
-async function addLink() {
-  console.log(newLink.value)
-  let propsObj: any
-  try {
-    // 先尝试直接解析\
-    propsObj = JSON.parse(newLink.value)
-  }
-  catch {
-    try {
-      // 如果直接解析失败，尝试处理格式
-      const jsonStr = newLink.value
-        .replace(/(['"])?(\w+)(['"])?:/g, '"$2":') // 只处理键名部分
-        .replace(/'/g, '"') // 将单引号替换为双引号
+// async function addLink() {
+//   console.log(newLink.value)
+//   let propsObj: any
+//   try {
+//     // 先尝试直接解析\
+//     propsObj = JSON.parse(newLink.value)
+//   }
+//   catch {
+//     try {
+//       // 如果直接解析失败，尝试处理格式
+//       const jsonStr = newLink.value
+//         .replace(/(['"])?(\w+)(['"])?:/g, '"$2":') // 只处理键名部分
+//         .replace(/'/g, '"') // 将单引号替换为双引号
 
-      propsObj = JSON.parse(jsonStr)
-    }
-    catch (e) {
-      console.error('转换失败', e)
-      return
-    }
-  }
+//       propsObj = JSON.parse(jsonStr)
+//     }
+//     catch (e) {
+//       console.error('转换失败', e)
+//       return
+//     }
+//   }
 
-  console.log(propsObj)
-  const res = await $api.post('/api/v1/link/add', propsObj)
-  await $api.post('/api/v1/fsf/push/mail/send', {
-    name: '测试人员',
-    text: '你好，我试试邮件\n 可以么？\n 测试一下',
-    to: 'gnakzz@qq.com',
-  })
+//   console.log(propsObj)
+//   const res = await $api.post('/api/v1/link/add', propsObj)
+//   await $api.post('/api/v1/fsf/push/mail/send', {
+//     name: '测试人员',
+//     text: '你好，我试试邮件\n 可以么？\n 测试一下',
+//     to: 'gnakzz@qq.com',
+//   })
 
-  if (res.error) {
-    // toast.add({ type: 'warning', message: res.error.message ?? '提交失败，请检查格式'})
-  }
-  else {
-    toast.add({ type: 'success', message: '提交成功' })
-  }
-}
+//   if (res.error) {
+//     // toast.add({ type: 'warning', message: res.error.message ?? '提交失败，请检查格式'})
+//   }
+//   else {
+//     toast.add({ type: 'success', message: '提交成功' })
+//   }
+// }
 </script>
 
 <template>
@@ -67,7 +67,7 @@ async function addLink() {
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           <template v-for="link of links" :key="link.url">
             <NuxtLink :href="link.url" target="_blank" class="group">
-              <div class="pixel-card pixel-card-hover h-full">
+              <div class="bg-primary/5 p-4 h-full">
                 <div class="flex items-start gap-3 md:gap-4">
                   <div class="relative">
                     <AppImg
@@ -91,7 +91,7 @@ async function addLink() {
         </div>
 
         <!-- 申请友链卡片 -->
-        <div class="pixel-card">
+        <!-- <div class="pixel-card">
           <h2 class="pixel-title mb-3 md:mb-4 flex items-center gap-2">
             <div class="pixel-indicator pixel-indicator-secondary" />
             申请友链
@@ -113,7 +113,7 @@ async function addLink() {
               </button>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

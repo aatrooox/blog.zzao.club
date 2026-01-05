@@ -19,11 +19,8 @@ const router = useRouter()
 const route = useRoute()
 const { loggedIn, user } = useUserSession()
 const userStore = useUser()
-const appConfig = useAppConfig()
-// const { public: runtimeConfig } = useRuntimeConfig()
+// const appConfig = useAppConfig()
 const { $api } = useNuxtApp()
-// const curSocial = ref()
-// const { formatDate } = useDayjs()
 
 // 获取动态数据（仅在客户端加载，避免 SSR 首屏水合问题）
 const { getMemos, memos, status } = useMemos()
@@ -31,12 +28,6 @@ onMounted(() => {
   getMemos()
 })
 
-const loadingMemos = computed(() => status.value === 'pending')
-
-// 获取最近7条动态
-const recentMemos = computed(() => memos.value.slice(0, 7))
-
-console.log(`loggedIn`, loggedIn.value)
 // 登录成功后，同步github信息
 watchEffect(async () => {
   if (loggedIn.value && route.query.login === 'github' && route.query.status === 'success') {
@@ -56,283 +47,144 @@ watchEffect(async () => {
   }
 })
 
-const { data: articles } = await usePages({ limit: 5 })
+const { data: articles } = await usePages({ limit: 10 })
 
-function onEnter(el) {
-  animate(el, {
-    opacity: '1',
-    duration: 100,
-    delay: 200,
-    ease: 'inOut',
-    onComplete: () => {
-      animate('.home-post-item', {
-        // scale: [0.5, 1, 1.5, 1],
-        x: [
-          { to: '20px', ease: 'outExpo', duration: 200 },
-          { to: 0, ease: 'outBounce', duration: 200, delay: 150 },
-        ],
-        opacity: '1',
-        duration: 400,
-        delay: (_, i) => i * 50,
-        ease: 'inOutCirc',
-        onComplete: () => {
+// 混合列表逻辑
+const mixedList = computed(() => {
+  const items: any[] = []
 
-        },
+  // 1. Articles
+  if (articles.value) {
+    articles.value.forEach((article: any) => {
+      items.push({
+        type: 'article',
+        id: `article-${article.path}`,
+        date: article.date ? new Date(article.date).getTime() : 0,
+        data: article,
       })
-    },
-  })
-}
-function onBeforeEnter(el) {
-  el.style.opacity = '0'
-}
+    })
+  }
 
-function onLeave(el, done) {
-  animate(el, {
-    scale: [1, 1.1, 1],
-    opacity: '0',
-    duration: 200,
-    delay: 300,
-    ease: 'inOut',
-    onComplete: () => {
-      done && done()
-    },
-  })
-}
+  // 2. Memos
+  if (memos.value) {
+    memos.value.forEach((memo: any) => {
+      items.push({
+        type: 'memo',
+        id: `memo-${memo.id}`,
+        date: new Date(memo.createTs).getTime(),
+        data: memo,
+      })
+    })
+  }
 
-function onMouseEnter(event) {
-  const el = event.target.querySelector('.page-arrow-icon')
-  animate(el, {
-    translateX: [
-      { to: '4px', duration: 100 },
-      { to: '-4px', duration: 20, ease: 'inCirc', delay: 100 },
-      { to: '4px', duration: 20, ease: 'outCirc', delay: 120 },
-    ],
-    // translateY: [
-    //   { to: '0px', duration: 100 },
-    // ],
-    color: '#5f9ea0',
-  })
-}
+  // 按时间倒序排序
+  items.sort((a, b) => b.date - a.date)
 
-function onMouseLeave(event) {
-  const el = event.target.querySelector('.page-arrow-icon')
-  animate(el, {
-    translateX: [
-      { to: '0px', duration: 100 },
-    ],
-    // translateY: [
-    //   { to: '0px', duration: 100 },
-    // ],
-  })
-}
-// function toggle(event, socail: any) {
-//   curSocial.value = socail
-//   if (socail.url) {
-//     navigateTo(socail.url, { external: true, open: { target: '_blank' } })
-//   }
-// }
+  return items
+})
 
-// function turnToPages() {
-//   navigateTo('/article')
-// }
+// 动画相关
+function onEnter(el: any) {
+  // 简单的淡入动画，如果 animate 全局可用
+  if (typeof animate !== 'undefined') {
+    animate(el, {
+      opacity: ['0', '1'],
+      translateY: ['20px', '0'],
+      duration: 400,
+      easing: 'easeOutQuad',
+    })
+  }
+  else {
+    // Fallback
+    el.style.opacity = '1'
+    el.style.transform = 'translateY(0)'
+  }
+}
 </script>
 
 <template>
-  <div class="space-y-8 pixel-font">
-    <!-- 最近动态区域（仅客户端渲染，SSR 显示骨架） -->
-    <ClientOnly>
-      <template #default>
-        <div v-if="recentMemos.length > 0" class="space-y-6">
-          <div class="flex items-center justify-between pr-2">
-            <h2 class="text-xl md:text-3xl pixel-title flex items-center gap-3">
-              <Icon class="ss" name="pixelarticons:radio-signal" size="1em" />
-              最近动态
-            </h2>
-            <NuxtLink
-              to="/memo"
-              class="pixel-btn cursor-pointer flex items-center gap-2"
-            >
-              <span class="text-sm md:text-base">更多动态</span>
-              <Icon name="icon-park-outline:right" class="text-sm md:text-base" />
-            </NuxtLink>
-          </div>
-
-          <!-- 横向滚动动态卡片 -->
-          <div class="overflow-x-auto pb-4">
-            <div class="flex gap-6 p-4 w-max">
-              <div
-                v-for="memo in recentMemos"
-                :key="memo.id"
-                class="pixel-card cursor-pointer flex-shrink-0 relative"
-                style="width: 300px; height: 400px"
-              >
-                <div class="absolute right-2 top-2 z-10 cursor-pointer" @click="navigateTo(`/m/${memo.id}`)">
-                  <Icon class="hover:text-highlight-pixel-cyan" name="pixelarticons:open" size="1em" />
+  <div class="font-sans max-w-3xl mx-auto">
+    <div class="space-y-4">
+      <transition-group name="list" tag="div" class="space-y-4" @enter="onEnter">
+        <template v-for="item in mixedList" :key="item.id">
+          <!-- Article Item -->
+          <NuxtLink
+            v-if="item.type === 'article'"
+            :to="item.data.path"
+            class="block group"
+          >
+            <div class="bg-gray-50 dark:bg-zinc-900 p-2 transition-all duration-300 border border-transparent">
+              <div class="flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3 min-w-0">
+                  <Icon name="pixelarticons:article" class="text-zinc-400 shrink-0" />
+                  <h3 class="text-base font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-primary transition-colors truncate">
+                    {{ item.data.title }}
+                  </h3>
                 </div>
-                <div class="flex flex-col h-full">
-                  <!-- 标签 -->
-                  <div v-if="memo.tags && memo.tags.length > 0" class="mb-3">
-                    <div class="flex gap-2 flex-wrap">
-                      <span
-                        v-for="tagRelation in memo.tags.slice(0, 2)"
-                        :key="tagRelation.id"
-                        class="text-accent-pixel-primary text-xs"
-                      >
-                        #{{ tagRelation.tagName }}
-                      </span>
-                    </div>
-                  </div>
-
-                  <!-- 动态内容 -->
-                  <div class="flex-1 overflow-hidden">
-                    <div class="text-sm pixel-text leading-relaxed" style="display: -webkit-box; line-clamp: 3; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
-                      <MemoPanel :memo="memo" layout="xiaohongshu" display-mode="photos-only" />
-                    </div>
-                  </div>
-
-                  <!-- 底部时间 -->
-                  <div class="flex justify-end items-center gap-2 mt-2">
-                    <AppFromTag :from="memo.from || 'blog'" />
-                    <NuxtTime :datetime="memo.createTs" class="text-xs pixel-text-muted" />
-                  </div>
+                <div class="flex gap-2 shrink-0">
+                  <template v-if="item.data.tags">
+                    <span v-for="tag in item.data.tags.slice(0, 2)" :key="tag" class="text-xs px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-500 rounded-md">
+                      #{{ tag }}
+                    </span>
+                  </template>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </NuxtLink>
 
-        <!-- 加载中骨架（客户端首屏加载阶段） -->
-        <div v-else-if="loadingMemos" class="space-y-6">
-          <div class="flex items-center justify-between pr-2">
-            <h2 class="text-xl md:text-3xl pixel-title flex items-center gap-3">
-              <Icon class="ss" name="pixelarticons:radio-signal" size="1em" />
-              最近动态
-            </h2>
-          </div>
-          <div class="overflow-x-auto pb-4">
-            <div class="flex gap-6 p-4 w-max">
-              <div v-for="i in 3" :key="i" class="pixel-card flex-shrink-0" style="width: 300px; height: 400px">
-                <Skeleton class="w-full h-full" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </template>
-      <template #fallback>
-        <!-- SSR 骨架占位，避免水合不一致 -->
-        <div class="space-y-6">
-          <div class="flex items-center justify-between pr-2">
-            <h2 class="text-xl md:text-3xl pixel-title flex items-center gap-3">
-              <Icon class="ss" name="pixelarticons:radio-signal" size="1em" />
-              最近动态
-            </h2>
-          </div>
-          <div class="overflow-x-auto pb-4">
-            <div class="flex gap-6 p-4 w-max">
-              <div v-for="i in 3" :key="i" class="pixel-card flex-shrink-0" style="width: 300px; height: 400px">
-                <Skeleton class="w-full h-full" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </template>
-    </ClientOnly>
-
-    <!-- 最近产品区域 -->
-    <div class="space-y-6">
-      <div class="flex items-center justify-between pr-2">
-        <h2 class="text-xl md:text-3xl pixel-title flex items-center gap-3">
-          <Icon class="ss" name="pixelarticons:gamepad" size="1em" />
-          最近产品
-        </h2>
-        <NuxtLink
-          to="/product"
-          class="pixel-btn cursor-pointer flex items-center gap-2"
-        >
-          <span class="text-sm md:text-base">更多产品</span>
-          <Icon name="icon-park-outline:right" class="text-sm md:text-base" />
-        </NuxtLink>
-      </div>
-
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <NuxtLink
-          v-for="product in appConfig.products.slice(0, 3)"
-          :key="product.slug"
-          :to="product.link"
-          class="block group"
-        >
-          <div class="pixel-card h-full hover:border-accent-pixel-cyan transition-colors p-3">
-            <div class="flex items-start gap-3">
-              <div class="w-10 h-10 flex items-center justify-center bg-accent-pixel-primary/10 rounded-lg shrink-0">
-                <Icon :name="product.icon" class="text-xl text-accent-pixel-primary" />
-              </div>
-              <div class="min-w-0 flex-1">
-                <h3 class="text-sm font-bold pixel-subtitle mb-1 group-hover:text-accent-pixel-cyan transition-colors truncate">
-                  {{ product.name }}
-                </h3>
-                <p class="text-xs pixel-text-muted line-clamp-2 leading-relaxed">
-                  {{ product.description }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </NuxtLink>
-      </div>
-    </div>
-
-    <!-- 最近文章区域 -->
-    <div class="flex-1 space-y-6">
-      <div class="flex items-center justify-between pr-2">
-        <h2 class="text-xl md:text-3xl pixel-title flex items-center gap-3">
-          <Icon class="ss" name="pixelarticons:radio-signal" size="1em" />
-          最近文章
-        </h2>
-        <NuxtLink
-          to="/article"
-          class="pixel-btn cursor-pointer flex items-center gap-2"
-        >
-          <span class="text-sm md:text-base">更多文章</span>
-          <Icon name="icon-park-outline:right" class="text-sm md:text-base" />
-        </NuxtLink>
-      </div>
-
-      <div class="space-y-4">
-        <transition-group name="page-transition" appear @enter="onEnter" @leave="onLeave" @before-enter="onBeforeEnter">
-          <template v-for="page of articles" :key="page.path">
-            <div class="group home-post-item">
-              <NuxtLink :to="page.path" class="block">
-                <div
-                  class="pixel-card-elevated"
-                  @mouseenter="onMouseEnter" @mouseleave="onMouseLeave"
-                >
-                  <div class="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
-                    <div class="flex items-center gap-3 md:gap-4 flex-1">
-                      <Icon class="ss" name="pixelarticons:open" size="1em" />
-                      <div class="text-base pixel-title group-hover:text-accent-pixel-cyan transition-colors leading-tight">
-                        {{ page.title }}
-                      </div>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                      <template v-if="page.versions">
-                        <div v-for="v of page.versions.filter((v: any, i: number) => i < 2)" :key="v" class="text-xs pixel-btn">
-                          {{ v }}
-                        </div>
-                      </template>
-                      <template v-else>
-                        <div v-for="tag of page.tags" :key="tag" class="text-xs pixel-tag">
-                          {{ tag }}
-                        </div>
-                      </template>
-                    </div>
-                  </div>
+          <!-- Memo Item -->
+          <div
+            v-else-if="item.type === 'memo'"
+            class="bg-primary/5 dark:bg-zinc-900 p-5 transition-all duration-300 border border-transparent cursor-pointer group"
+            @click="navigateTo(`/m/${item.data.id}`)"
+          >
+            <div class="flex gap-4 justify-between">
+              <!-- 左侧：信息 + 内容 -->
+              <div class="flex-1 min-w-0 flex flex-col">
+                <div class="flex items-center gap-2 mb-2">
+                  <Icon name="pixelarticons:radio-signal" class="text-primary text-xs" />
+                  <span class="text-xs text-zinc-400">动态</span>
+                  <NuxtTime :datetime="item.data.createTs" class="text-xs text-zinc-400" />
+                  <AppFromTag :from="item.data.from || 'blog'" />
                 </div>
-              </NuxtLink>
+                <div class="text-sm text-zinc-600 dark:text-zinc-300 line-clamp-3 leading-relaxed group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors">
+                  {{ item.data.content }}
+                </div>
+              </div>
+
+              <!-- 右侧：图片 (最多3张) -->
+              <div v-if="item.data.photos && item.data.photos.length > 0" class="shrink-0 flex gap-2">
+                <template v-for="res in item.data.photos.slice(0, 3)" :key="res.id">
+                  <NuxtImg
+                    :src="res"
+                    class="w-20 h-20 object-cover rounded-lg bg-zinc-200 dark:bg-zinc-800"
+                    loading="lazy"
+                  />
+                </template>
+              </div>
             </div>
-          </template>
-        </transition-group>
+          </div>
+        </template>
+      </transition-group>
+
+      <!-- 加载更多/底部提示 -->
+      <div class="text-center py-8 text-zinc-400 text-sm">
+        <span v-if="status === 'pending'">加载中...</span>
+        <span v-else>不是写不出来，是待发布！</span>
       </div>
     </div>
   </div>
 </template>
 
-<style lang="less" scoped></style>
+<style scoped>
+/* 列表过渡动画 */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+</style>
