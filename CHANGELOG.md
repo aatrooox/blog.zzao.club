@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.9.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.0...v2.9.1)
+
+### 🎨 Styles
+
+- 修复样式问题 ([7814618](https://github.com/aatrooox/blog.zzao.club/commit/7814618))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.9.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.8.8...v2.9.0)
