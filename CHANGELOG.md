@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.9.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.2...v2.9.3)
+
+### 📖 Documentation
+
+- 文章更新 ([90682ad](https://github.com/aatrooox/blog.zzao.club/commit/90682ad))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.9.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.1...v2.9.2)
