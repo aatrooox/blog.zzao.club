@@ -8,14 +8,15 @@ versions:
   - hono@4.5.11
 showTitle: 【Hono】Gitea+Bun+Hono+Pm2 自动化部署后记
 ---
-# 【Hono】Gitea+Bun+Hono+Pm2 自动化部署后记
+<br />
+
 本文记录一下`bun`项目在使用`pm2`部署时产生的一点问题。
 
 部署流程：使用`Gitea`自建git仓库，编写workflow，on[push]，自动拉取代码=>下载依赖=>打包=>移动到目标文件夹=>启动/重启 `pm2 stop/start ecosystem.config.cjs`
 
 > 云服务器（新加坡）：debian 12  2h4g
-bun: 1.1.31 
-pm2: 5.4.2
+> bun: 1.1.31
+> pm2: 5.4.2
 
 这是一个4G内存的机器，所以我上了gitea，利用gitea的`act_runner`自动部署。
 
@@ -118,6 +119,4 @@ jobs:
           ls ${{ gitea.workspace }}          
       - run: echo "  This job's status is ${{ job.status }}."
 ```
-
-
 

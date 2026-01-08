@@ -8,10 +8,12 @@ versions:
   - hono@4.5.11
 showTitle: 【Hono】完善：使用sqlite数据库及基于winston的日志持久化
 ---
-# 【Hono】完善：使用sqlite数据库及基于winston的日志持久化
+<br />
+
 前面两章完成了项目搭建、路由分组、参数校验、响应标准化、错误处理等功能点。
 
 这一章来继续完善项目，并且为整个项目画一个图辅助理解。
+
 ## 使用Bun:sqlite作为数据库
 
 在`hono`项目中使用`sqlite`作为数据库十分简单，因为bun自带了sqlite模块！
@@ -215,7 +217,5 @@ api.use('*', async (c, next) => {
 
 目前整个项目的结构已经比较清晰了，最后的**环境配置**放在下一节的优化里来一起写，最后再补一个图来梳理一下整个流程
 
-
-![](https://img.zzao.club/article/202411191443812.png)
-
+![1.00](https://img.zzao.club/article/202411191443812.png)
 

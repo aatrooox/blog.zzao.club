@@ -8,10 +8,12 @@ versions:
   - hono@4.5.11
 showTitle: 【Hono】部署篇 Docker+pm2部署
 ---
-# 【Hono】部署篇 Docker+pm2部署
+<br />
+
 项目开发完后，要部署到服务器上才能正常使用，这里我分享一下`docker`和`pm2`两种方式的部署。
 
-以下经验来自于**我日常的折腾中，适合入门，非企业级操作。**仅用于分享！
+以下经验来自于\*\*我日常的折腾中，适合入门，非企业级操作。\*\*仅用于分享！
+
 ## Docker部署
 
 用`docker`的话，也算有两种运行方式。
@@ -23,7 +25,6 @@ showTitle: 【Hono】部署篇 Docker+pm2部署
 一种是使用`docker run` 附带一些参数进行启动
 
 另一种使用`docker-compose.yml`配置参数，用`docker compose`命令重新拉取最新的镜像并重启。
-
 
 ## Dockerfile
 
@@ -84,13 +85,13 @@ ENTRYPOINT [ "bun", "run", "index.js" ]
 
 有几个`dockerfile`内需要注意的点：
 
-- 如果你有env文件，记得也把env复制进去
+* 如果你有env文件，记得也把env复制进去
 
-- 如果你的日志等文件持久化了（放在了一个自定义的目录下），记得**分配读写权限**
+* 如果你的日志等文件持久化了（放在了一个自定义的目录下），记得**分配读写权限**
 
-- 记得设置ENV NODE_ENV=xxx
+* 记得设置ENV NODE\_ENV=xxx
 
-- 分阶段构建不是必须的
+* 分阶段构建不是必须的
 
 另外，`dockerfile`中用到了`bun run build`这个命令
 
@@ -117,7 +118,7 @@ docker build ./ -t your_name --load
 
 ## Docker Compose
 
-小水管服务器最好还是不要在服务器上跑**`docker build`** ，真是很容易就卡死。
+小水管服务器最好还是不要在服务器上跑\*\*`docker build`\*\* ，真是很容易就卡死。
 
 在项目根目录下新建`docker-compose`配置文件
 
@@ -188,7 +189,6 @@ docker-compose up
 sudo docker login --username=<your username> registry.cn-beijing.aliyuncs.com
 ```
 
-
 **注意：后面的地址`registry.cn-beijing.aliyuncs.com`，可以在你的阿里云后台找到**
 
 **打包**
@@ -229,15 +229,16 @@ docker-compose down
 docker-compose up --build -d
 ```
 
-注意：`docker compose`是可以管理多个镜像的，如果你要同时使用`redis`、`mysql`、`nginx`等，都可以统一管理，详细使用可以看我这篇**[《使用Docker Compose部署Nest应用》](https://mp.weixin.qq.com/s/UNxFJvZNrZyCnDKFQyApsQ)**，里面有详细的配置说明
+注意：`docker compose`是可以管理多个镜像的，如果你要同时使用`redis`、`mysql`、`nginx`等，都可以统一管理，详细使用可以看我这篇\*\*[《使用Docker Compose部署Nest应用》](https://mp.weixin.qq.com/s/UNxFJvZNrZyCnDKFQyApsQ)\*\*，里面有详细的配置说明
 
 ## 小结一下
 
->  1. 配置`package.json`中的`build`命令，注意`--taget=bun`
- 2. 参考bun官方示例，编写`Dockerfile`，构建，然后把项目打上版本号，打包发布到指定平台
- 3. 服务器上只装`docker`，服务都使用`docker`运行
- 3. 编写多个`docker-compose.*.yml`文件，配置不同环境的策略，拉取指定平台指定版本的镜像
- 4. 后续使用`docker compose`命令进行更新和重新运行
+> 1. 配置`package.json`中的`build`命令，注意`--taget=bun`
+
+1. 参考bun官方示例，编写`Dockerfile`，构建，然后把项目打上版本号，打包发布到指定平台
+2. 服务器上只装`docker`，服务都使用`docker`运行
+3. 编写多个`docker-compose.*.yml`文件，配置不同环境的策略，拉取指定平台指定版本的镜像
+4. 后续使用`docker compose`命令进行更新和重新运行
 
 再来看一下pm2部署有什么不同
 
@@ -349,13 +350,13 @@ sudo systemctl reload nginx
 
 **最终，你的服务器上的项目文件夹内要具备：**
 
-- node_modules 是的，后端项目不同于前端，也是需要node_modules才能正常运行的
+* node\_modules 是的，后端项目不同于前端，也是需要node\_modules才能正常运行的
 
-- package.json 用于**安装和更新node_modules**
+* package.json 用于**安装和更新node\_modules**
 
-- `env`文件环境变量配置
+* `env`文件环境变量配置
 
-- 打包且压缩后的JS文件/文件夹，如：server/index.js
+* 打包且压缩后的JS文件/文件夹，如：server/index.js
 
 此时在你的服务器环境下运行就可以了
 
@@ -380,6 +381,3 @@ pm2 start ecosystem.config.js
 如果真的有业务，着急搭建，我觉得花点钱找个靠谱的人弄都行，不用费这种心。
 
 以上就是全部内容啦👏👏
-
-
-

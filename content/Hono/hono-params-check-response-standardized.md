@@ -8,7 +8,8 @@ versions:
   - hono@4.5.11
 showTitle: 【Hono】完善：参数校验+响应标准化
 ---
-# 【Hono】完善：参数校验+响应标准化
+<br />
+
 上一章我们完成了基于`Hono`的web项目的搭建工作，并实现了路由分组，错误处理等逻辑。
 
 这一章来继续完善项目，让它变的健壮起来💪。
@@ -210,7 +211,7 @@ export const errorHandler = async (err: Error, c: Context) => {
 }
 ```
 
-这样每个抛出错误的中间价，可以写入详细的错误信息，而一组自定义的 `errorcode` 也可以应付更多的业务场景，如果增加了一个场景，我们**只需要去map结构中再加一组key-value，**如果没有自定义错误信息，则使用 `code` 对应的默认 `msg` 进行返回。
+这样每个抛出错误的中间价，可以写入详细的错误信息，而一组自定义的 `errorcode` 也可以应付更多的业务场景，如果增加了一个场景，我们\*\*只需要去map结构中再加一组key-value，\*\*如果没有自定义错误信息，则使用 `code` 对应的默认 `msg` 进行返回。
 
 抛出错误时，自定义错误信息。 这一块可以进行一个封装，因为每个接口都要写这么一大串，明显不合理，所以**提取到公共的文件夹下面去**。
 
@@ -258,6 +259,7 @@ user.post("/list", zvalidator('json', pageSchema), (c) => {
 ```
 
 有细节没优化不是什么大问题，重要的是把流程先打通
+
 ## JWT TOKEN
 
 现在路由也分组了，错误也捕捉了，正常响应也处理了，参数也进行了校验。那就到了接口权限这一步上。
@@ -289,9 +291,9 @@ user.post("/login", async (c) => {
 
 其中如果 `exp`在payload中，则jwt会检查token是否过期了，payload还可以传入其他参数：
 
-- `nbf` : 检查token在指定时间之前没有被使用
+* `nbf` : 检查token在指定时间之前没有被使用
 
-- `iat` : 检查token没有使用未来的时间进行签发。意思是，设置一个未来时间使自己的token一直有效（I guess） （The token is checked to ensure it is not issued in the future.）
+* `iat` : 检查token没有使用未来的时间进行签发。意思是，设置一个未来时间使自己的token一直有效（I guess） （The token is checked to ensure it is not issued in the future.）
 
 这里我只使用了`exp`设置token 60min后过期就可以了。
 
@@ -357,10 +359,8 @@ user.use('/*', async (c, next) => {
 
 请求失败时，在上下文中使用`c.set/get`注入错误信息，在`errorHandler`中间件中取出错误信息，并返回和成功时一致的json结构。
 
-这样看起来就又完善了一些~~
+这样看起来就又完善了一些\~\~
 
 **下一章为日志、数据库操作、配置文件相关逻辑**
 
-**欢迎点赞催更(¯▽¯)**👍
-
-
+\*\*欢迎点赞催更(¯▽¯)\*\*👍

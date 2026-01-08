@@ -6,8 +6,9 @@ showTitle: 【Hono】Bun竟然能这么快？搭配HonoJS的入门指南
 tags:
   - Hono
 ---
-# 【Hono】Bun竟然能这么快？搭配HonoJS的入门指南
-![](https://img.zzao.club/article/202411191444086.png)
+<br />
+
+![1.00](https://img.zzao.club/article/202411191444086.png)
 
 最近我用bun+hono搭建了一个web服务，并尝试用docker打包部署。
 
@@ -17,7 +18,7 @@ tags:
 
 ## Bun和Node到底是什么关系
 
-> Bun is an all-in-one JavaScript runtime & toolkit designed for speed, complete with a 
+> Bun is an all-in-one JavaScript runtime & toolkit designed for speed, complete with a
 > bundler, test runner, and Node.js-compatible package manager.
 
 Bun 是一款专为提高速度而设计的一体化 JavaScript **运行时**和**工具包**，配有捆绑器、测试运行器和与 Node.js 兼容的包管理器。
@@ -32,7 +33,7 @@ Node.js 是一个免费、开源、跨平台的 JavaScript **运行时**环境�
 
 截止到当前，Node已经发布到了`22.8.0`，庞大的开源module支撑起了整个社群的，而他的官方包管理器`npm`有点让人一言难尽
 
-![](https://img.zzao.club/article/202411191444087.png)
+![1.00](https://img.zzao.club/article/202411191444087.png)
 
 于是又出现了`yarn`、`pnpm`，**老外写这些东西可能真的是在解决需求，到了咱这边真的也就是给面试官多提供了一些出题思路。** 而Bun本身就自带包管理器。
 
@@ -41,7 +42,7 @@ Node.js 是一个免费、开源、跨平台的 JavaScript **运行时**环境�
 而Node生态下光打包器就有：Webpack、Rollup、Vite等等，更不要说Rust开始被大厂卷起来之后，又用Rust对以前打包速度、运行速度有上限的打包器进行重构。**面试官的出题角度还在增加**。
 而Bun本身也是一个打包器。
 
-另外还有测试运行器.. ` Vitest/Jest`
+另外还有测试运行器..  ` Vitest/Jest`
 
 所以现在可以明白，在2022年才发布的Bun究竟是想要做什么了
 
@@ -62,11 +63,13 @@ Hono则是在文档里提供了很多官方的插件（Helper），无需翻看�
 按照官方文档开始搭建，因为我这里使用的是Bun，所以需要先下载好Bun
 
 Macos/Linux
+
 ```shell
 curl -fsSL https://bun.sh/install | bash
 ```
 
 然后创建项目
+
 ```shell
 bun create hono@latest my-app
 ```
@@ -202,6 +205,6 @@ app.onError((err, c) => {
 
 这篇文章是一个入门篇，主要目的是讲述一下Node和Bun的区别，以及使用Bun+Hono的一个入门项目。
 
-路由分组、错误捕捉这些功能很简单的就可以实现了，因为篇幅原因，我就把其他功能拆分成多篇教程了。后续教程会涉及：数据库、响应标准化、日志、jwt鉴权、docker/docker-compose打包部署等等，是一个完整闭环的小项目，代码也会开源分享出来，感兴趣的可以关注起来~
+路由分组、错误捕捉这些功能很简单的就可以实现了，因为篇幅原因，我就把其他功能拆分成多篇教程了。后续教程会涉及：数据库、响应标准化、日志、jwt鉴权、docker/docker-compose打包部署等等，是一个完整闭环的小项目，代码也会开源分享出来，感兴趣的可以关注起来\~
 
 欢迎点赞催更👍
