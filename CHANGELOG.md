@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v2.9.5
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.4...v2.9.5)
+
 ## v2.9.4
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.3...v2.9.4)
