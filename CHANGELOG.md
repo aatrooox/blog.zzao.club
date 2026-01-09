@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.9.4
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.3...v2.9.4)
+
+### 🏡 Chore
+
+- 测试是否是丢失frontmatter导致文章不显示 ([ddec4be](https://github.com/aatrooox/blog.zzao.club/commit/ddec4be))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.9.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.2...v2.9.3)
