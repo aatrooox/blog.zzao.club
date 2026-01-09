@@ -18,7 +18,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "db:drop": "drizzle-kit drop"
+    "db:drop": "drizzle-kit drop",
+    "publish:post": "git add . && git commit -m \"docs: 文章更新\" && git push"
   },
   "dependencies": {
     "@antfu/eslint-config": "^4.14.1",

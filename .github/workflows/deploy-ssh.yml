@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   deploy:
-    if: ${{ github.repository == 'aatrooox/blog.zzao.club' && (github.event_name != 'push' || contains(github.event.head_commit.message || '', 'chore(release)')) }}
+    if: ${{ github.repository == 'aatrooox/blog.zzao.club' && (github.event_name != 'push' || contains(github.event.head_commit.message || '', 'chore(release)') || contains(github.event.head_commit.message || '', '文章更新')) }}
     runs-on: ubuntu-latest
     environment:
       name: zzaoclub
