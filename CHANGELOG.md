@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v2.9.6
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.5...v2.9.6)
+
+### 🚀 Enhancements
+
+- Opencode build toc ([95d1d46](https://github.com/aatrooox/blog.zzao.club/commit/95d1d46))
+
+### 📖 Documentation
+
+- 文章更新 ([16c3785](https://github.com/aatrooox/blog.zzao.club/commit/16c3785))
+
+### 🎨 Styles
+
+- 统一样式 ([1677015](https://github.com/aatrooox/blog.zzao.club/commit/1677015))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.9.5
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.4...v2.9.5)
