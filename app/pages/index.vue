@@ -135,33 +135,29 @@ function onEnter(el: any) {
           <!-- Memo Item -->
           <div
             v-else-if="item.type === 'memo'"
-            class="bg-primary/5 dark:bg-zinc-900 p-5 transition-all duration-300 border border-transparent cursor-pointer group"
+            class="px-4 py-2 caption-bottomm b-4 bg-primary/5 last:border-0 cursor-pointer"
             @click="navigateTo(`/m/${item.data.id}`)"
           >
-            <div class="flex gap-4 justify-between">
-              <!-- 左侧：信息 + 内容 -->
-              <div class="flex-1 min-w-0 flex flex-col">
+            <div class="flex items-start gap-4">
+              <div class="min-w-0 flex-1">
                 <div class="flex items-center gap-2 mb-2">
-                  <Icon name="pixelarticons:radio-signal" class="text-primary text-xs" />
-                  <span class="text-xs text-zinc-400">动态</span>
-                  <NuxtTime :datetime="item.data.createTs" class="text-xs text-zinc-400" />
+                  <NuxtTime :datetime="item.data.createTs" class="text-gray-400 text-sm" />
+                  <span class="text-gray-400 text-sm">·</span>
                   <AppFromTag :from="item.data.from || 'blog'" />
                 </div>
-                <!-- <div class="text-sm text-zinc-600 dark:text-zinc-300 line-clamp-3 leading-relaxed group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors">
-                  {{ item.data.content }}
-                </div> -->
-                <MemoPanel :memo="item.data" layout="wechat" display-mode="content-only" :show-all="true" :photo-width="200" />
-              </div>
-
-              <!-- 右侧：图片 (最多3张) -->
-              <div v-if="item.data.photos && item.data.photos.length > 0" class="shrink-0 flex gap-2">
-                <template v-for="res in item.data.photos.slice(0, 3)" :key="res.id">
-                  <NuxtImg
-                    :src="res"
-                    class="w-20 h-20 object-cover rounded-lg bg-zinc-200 dark:bg-zinc-800"
-                    loading="lazy"
-                  />
-                </template>
+                <div v-if="item.data.tags && item.data.tags.length > 0" class="py-2 overflow-x-auto overflow-y-hidden flex items-center gap-1.5 pb-1">
+                  <span
+                    v-for="tag in item.data.tags"
+                    :key="tag.id"
+                    class="text-xs text-primary cursor-pointer hover:underline"
+                    @click.stop="navigateTo({ path: '/memo', query: { tags: tag.tagName } })"
+                  >
+                    #{{ tag.tagName }}
+                  </span>
+                </div>
+                <div class="mb-2">
+                  <MemoPanel :memo="item.data" layout="wechat" :show-all="true" :photo-width="200" />
+                </div>
               </div>
             </div>
           </div>
@@ -187,5 +183,23 @@ function onEnter(el: any) {
 .list-leave-to {
   opacity: 0;
   transform: translateY(30px);
+}
+
+/* Scrollbar styles */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 2px;
+}
+
+.dark .overflow-x-auto::-webkit-scrollbar-thumb {
+  background: #374151;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: transparent;
 }
 </style>

@@ -184,7 +184,7 @@ function onUploadError(error: string) {
         <div
           v-for="memo in filteredMemos"
           :key="memo.id"
-          class="px-4 py-2 border-primary/5 border-b-2 mb-4 hover:bg-primary/5 last:border-0"
+          class="px-4 py-2 mb-4 bg-primary/5 last:border-0"
         >
           <div class="flex items-start gap-4">
             <!-- <div class="flex-shrink-0">
