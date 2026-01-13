@@ -1,4 +1,3 @@
-import process from 'node:process'
 import { defineCollection, defineContentConfig, z } from '@nuxt/content'
 
 export default defineContentConfig({

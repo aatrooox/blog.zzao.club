@@ -566,6 +566,18 @@ function getAllTextNodes(element) {
 //   window.removeEventListener('scroll', handleScroll)
 // })
 
+// Smooth scroll to heading
+function smoothScrollTo(id: string) {
+  const element = document.getElementById(id)
+  if (element) {
+    const offsetTop = element.getBoundingClientRect().top + window.pageYOffset - 100
+    window.scrollTo({
+      top: offsetTop,
+      behavior: 'smooth',
+    })
+  }
+}
+
 watchEffect(async () => {
   if (page.value?.id) {
     nextTick(() => {
@@ -701,26 +713,38 @@ watchEffect(async () => {
 
         <ClientOnly>
           <div v-if="tocData && tocData.length" class="hidden xl:block absolute top-0 left-full ml-8 h-full">
-            <div class="sticky top-24 w-[200px] max-h-[calc(100vh-8rem)] overflow-y-auto">
-              <!-- 简单的悬浮目录 -->
-              <div class="simple-toc">
-                <ul class="simple-toc-list">
+            <div class="sticky top-24 w-[240px] max-h-[calc(100vh-8rem)] overflow-y-auto">
+              <!-- Notion-style TOC -->
+              <nav class="notion-toc">
+                <ul class="notion-toc-list">
                   <template v-for="link in tocData" :key="link.id">
-                    <li class="simple-toc-item">
-                      <a :href="`#${link.id}`" :class="`simple-toc-link ${link.id === activeTocId ? 'text-primary font-bold' : 'text-zinc-500'}`">
-                        {{ link.text }}
+                    <li class="notion-toc-item">
+                      <a
+                        :href="`#${link.id}`"
+                        class="notion-toc-link" :class="[{ active: link.id === activeTocId }]"
+                        @click.prevent="smoothScrollTo(link.id)"
+                      >
+                        <span class="notion-toc-text">{{ link.text }}</span>
                       </a>
                     </li>
                     <template v-if="link.children">
-                      <li v-for="child in link.children" :key="child.id" class="simple-toc-item simple-toc-child" :class="`${child.id === activeTocId ? 'text-primary font-bold' : 'text-zinc-500'}`">
-                        <a :href="`#${child.id}`" class="simple-toc-link">
-                          {{ child.text }}
+                      <li
+                        v-for="child in link.children"
+                        :key="child.id"
+                        class="notion-toc-item notion-toc-child"
+                      >
+                        <a
+                          :href="`#${child.id}`"
+                          class="notion-toc-link" :class="[{ active: child.id === activeTocId }]"
+                          @click.prevent="smoothScrollTo(child.id)"
+                        >
+                          <span class="notion-toc-text">{{ child.text }}</span>
                         </a>
                       </li>
                     </template>
                   </template>
                 </ul>
-              </div>
+              </nav>
             </div>
           </div>
         </ClientOnly>
@@ -730,39 +754,104 @@ watchEffect(async () => {
 </template>
 
 <style scoped>
-.simple-toc {
-  padding: 1rem;
+/* Notion-style TOC Styles */
+.notion-toc {
+  padding: 0.5rem 0;
 }
 
-.simple-toc-list {
+.notion-toc-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  position: relative;
 }
 
-.simple-toc-item {
-  margin-bottom: 0.5rem;
+.notion-toc-item {
+  margin: 0;
+  position: relative;
+}
+
+.notion-toc-link {
+  display: block;
+  padding: 0.375rem 0.75rem;
   font-size: 0.875rem;
-  line-height: 1.25rem;
-  color: g;
+  line-height: 1.5;
+  color: rgb(161 161 170); /* text-zinc-400 */
+  text-decoration: none;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease;
+  position: relative;
+  border-left: 2px solid transparent;
+  margin-left: -2px; /* Compensate for border */
 }
 
-.simple-toc-link {
-  text-decoration: none;
-  transition: color 0.2s;
+/* Dark mode text colors */
+.dark .notion-toc-link {
+  color: rgb(161 161 170);
+}
+
+/* Hover state */
+.notion-toc-link:hover {
+  color: rgb(113 113 122); /* text-zinc-500 dark */
+  background-color: rgb(244 244 245); /* bg-zinc-100 */
+}
+
+.dark .notion-toc-link:hover {
+  color: rgb(212 212 216); /* text-zinc-300 */
+  background-color: rgb(39 39 42); /* bg-zinc-800 */
+}
+
+/* Active state with primary color and left border indicator */
+.notion-toc-link.active {
+  color: hsl(142 32% 32%); /* primary color */
+  background-color: rgb(240 253 244); /* bg-green-50 */
+  font-weight: 500;
+  border-left-color: hsl(142 32% 32%); /* primary border */
+}
+
+.dark .notion-toc-link.active {
+  color: hsl(142 45% 55%); /* lighter primary for dark mode */
+  background-color: rgba(34 197 94 / 0.1); /* subtle green bg */
+  border-left-color: hsl(142 45% 55%);
+}
+
+/* Text ellipsis for long titles */
+.notion-toc-text {
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.simple-toc-link:hover,
-.simple-toc-link.active {
-  color: var(--primary);
+/* Child item (nested heading) indentation */
+.notion-toc-child .notion-toc-link {
+  padding-left: 1.5rem;
+  font-size: 0.8125rem;
 }
 
-.simple-toc-child {
-  padding-left: 1rem;
-  margin-top: 0.25rem;
+/* Smooth scrollbar styling */
+.notion-toc-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.notion-toc-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.notion-toc-list::-webkit-scrollbar-thumb {
+  background: rgb(228 228 231);
+  border-radius: 2px;
+}
+
+.dark .notion-toc-list::-webkit-scrollbar-thumb {
+  background: rgb(63 63 70);
+}
+
+.notion-toc-list::-webkit-scrollbar-thumb:hover {
+  background: rgb(212 212 216);
+}
+
+.dark .notion-toc-list::-webkit-scrollbar-thumb:hover {
+  background: rgb(82 82 91);
 }
 </style>

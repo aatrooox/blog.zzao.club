@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import type { UseScrollReturn } from '@vueuse/core'
-import { vScroll } from '@vueuse/components'
 import { Toaster } from 'vue-sonner'
 import { useSearch } from '~/composables/useSearch'
 

@@ -47,8 +47,6 @@
   }
 }
 
-
-
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
@@ -417,7 +415,6 @@ body {
   }
 }
 
-
 /* 下划线动画 hover 效果全局复用 */
 .hover-underline-animate {
   display: inline-block;
@@ -440,9 +437,6 @@ body {
   transform: scaleX(1);
 }
 
-
-
 .pixel-card {
   @apply bg-white border-2 border-zinc-100 rounded-xl shadow-sm;
 }
-
