@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v2.9.7
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.6...v2.9.7)
+
+### 📖 Documentation
+
+- 文章更新 ([fbcbd40](https://github.com/aatrooox/blog.zzao.club/commit/fbcbd40))
+- 文章更新 ([9b8b358](https://github.com/aatrooox/blog.zzao.club/commit/9b8b358))
+- 更新AGENGTS.md ([04f3712](https://github.com/aatrooox/blog.zzao.club/commit/04f3712))
+- 文章更新 ([270ee75](https://github.com/aatrooox/blog.zzao.club/commit/270ee75))
+
+### 🎨 Styles
+
+- 优化动态卡片的预览模式 ([571675a](https://github.com/aatrooox/blog.zzao.club/commit/571675a))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.9.6
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.5...v2.9.6)
