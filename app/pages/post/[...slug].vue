@@ -367,7 +367,7 @@ async function createComment(data: CommentData) {
 
   if (!res.error) {
     toast.add({ type: 'success', message: '评论成功' })
-    umami.track('comment', { page: page.value?.id, isOk: true })
+    // umami.track('comment', { page: page.value?.id, isOk: true })
     initComment()
   }
 }
@@ -654,19 +654,19 @@ watchEffect(async () => {
           <ClientOnly>
             <div v-if="adjacentPages.length">
               <!-- <Separator class="my-4" label="END" /> -->
-              <div class="pixel-card p-4 md:p-6">
+              <div class="bg-primary/5 dark:bg-zinc-900 rounded-lg p-4 md:p-6">
                 <div class="flex justify-between text-sm md:text-base ">
                   <div class="flex-1 flex items-center gap-2">
                     <template v-if="adjacentPages[0]">
                       <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em" />
-                      <NuxtLink class="font-bold w-[300px] whitespace-nowrap overflow-hidden text-ellipsis hover:text-accent-pixel-cyan" :href="adjacentPages[0].path">
+                      <NuxtLink class="font-bold w-[300px] whitespace-nowrap overflow-hidden text-ellipsis hover:text-primary transition-colors" :href="adjacentPages[0].path">
                         {{ adjacentPages[0].title }}
                       </NuxtLink>
                     </template>
                   </div>
                   <div class="flex-1 text-right flex items-center justify-end gap-2">
                     <template v-if="adjacentPages[1]">
-                      <NuxtLink class="font-bold w-[300px] whitespace-nowrap overflow-hidden text-ellipsis hover:text-accent-pixel-cyan" :href="adjacentPages[1].path">
+                      <NuxtLink class="font-bold w-[300px] whitespace-nowrap overflow-hidden text-ellipsis hover:text-primary transition-colors" :href="adjacentPages[1].path">
                         {{ adjacentPages[1].title }}
                       </NuxtLink>
                       <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em" />
@@ -678,7 +678,7 @@ watchEffect(async () => {
           </ClientOnly>
           <!-- 评论区 -->
           <ClientOnly>
-            <div class="comment-area pixel-card p-4 md:p-6 mt-6">
+            <div class="comment-area bg-primary/5 dark:bg-zinc-900 rounded-lg p-4 md:p-6 mt-6">
               <template v-if="page?.body && !isDefer">
                 <!-- <Separator class="my-4" label="评论" /> -->
                 <div id="评论区" class="text-xl py-4 ">

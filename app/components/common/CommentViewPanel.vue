@@ -80,11 +80,11 @@ function refreshList() {
 </script>
 
 <template>
-  <div class="pixel-card mb-4 transition-all duration-300 hover:shadow-md">
+  <div class="bg-primary/5 dark:bg-zinc-900 rounded-lg p-4 mb-4 transition-all duration-300 hover:bg-primary/10 dark:hover:bg-zinc-800">
     <div class="flex gap-3 md:gap-4">
       <!-- Avatar -->
       <div class="flex-shrink-0">
-        <UserAvatar :user-info="comment.user_info" class="size-10 md:size-12 border border-border-pixel-primary rounded-full" />
+        <UserAvatar :user-info="comment.user_info" class="size-10 md:size-12 border border-zinc-200 dark:border-zinc-700 rounded-full" />
       </div>
 
       <!-- Main Content -->
@@ -95,46 +95,46 @@ function refreshList() {
             v-if="comment.user_info?.website"
             :href="comment.user_info?.website"
             target="_blank"
-            class="pixel-title text-sm md:text-base hover:text-accent-pixel-cyan transition-colors flex items-center gap-1"
+            class="font-semibold text-sm md:text-base text-zinc-900 dark:text-zinc-100 hover:text-primary dark:hover:text-primary transition-colors flex items-center gap-1"
           >
             {{ comment?.user_info?.nickname || comment?.user_info?.username }}
-            <Icon name="material-symbols:web-traffic-rounded" class="text-text-pixel-muted text-xs" />
+            <Icon name="material-symbols:web-traffic-rounded" class="text-zinc-400 dark:text-zinc-500 text-xs" />
           </a>
           <span
             v-else
-            class="pixel-title text-sm md:text-base"
-            :class="{ 'text-accent-pixel-cyan': comment.user_info?.role === 'superAdmin' }"
+            class="font-semibold text-sm md:text-base text-zinc-900 dark:text-zinc-100"
+            :class="{ 'text-primary dark:text-primary': comment.user_info?.role === 'superAdmin' }"
           >
             {{ comment?.user_info?.nickname || comment?.user_info?.username }}
           </span>
 
           <!-- Role Badge -->
-          <span v-if="comment.user_info?.role === 'superAdmin'" class="pixel-tag text-[10px] px-1.5 py-0.5 scale-90 origin-left">
+          <span v-if="comment.user_info?.role === 'superAdmin'" class="text-[10px] px-2 py-0.5 bg-primary/20 dark:bg-primary/30 text-primary dark:text-primary rounded-md font-medium">
             ADMIN
           </span>
         </div>
 
         <!-- Content -->
-        <div class="pixel-text text-sm md:text-base mb-2 break-words leading-relaxed">
+        <div class="text-sm md:text-base text-zinc-600 dark:text-zinc-300 mb-2 break-words leading-relaxed">
           {{ comment.content }}
         </div>
 
         <!-- Footer Actions -->
         <div class="flex items-center gap-4 select-none">
-          <span class="text-xs pixel-text-muted">{{ updateDateFromNow(comment.createTs) }}</span>
+          <span class="text-xs text-zinc-400 dark:text-zinc-500">{{ updateDateFromNow(comment.createTs) }}</span>
 
           <button
-            class="flex items-center gap-1 text-xs pixel-text-muted hover:text-accent-pixel-cyan transition-colors cursor-pointer group"
+            class="flex items-center gap-1 text-xs text-zinc-400 dark:text-zinc-500 hover:text-primary dark:hover:text-primary transition-colors cursor-pointer group"
             @click.stop="commentReply"
           >
-            <Icon name="icon-park-outline:comments" class="group-hover:scale-110 transition-transform" :class="{ 'text-text-pixel-primary': comment._count?.sub_comments }" />
+            <Icon name="icon-park-outline:comments" class="group-hover:scale-110 transition-transform" :class="{ 'text-zinc-900 dark:text-zinc-100': comment._count?.sub_comments }" />
             <span v-if="comment._count?.sub_comments">{{ comment._count?.sub_comments }}</span>
             <span v-else>回复</span>
           </button>
 
           <button
             v-if="comment.userId === userStore?.user.value.id || userStore?.user.value.role === 'superAdmin'"
-            class="flex items-center gap-1 text-xs pixel-text-muted hover:text-status-pixel-error transition-colors cursor-pointer group"
+            class="flex items-center gap-1 text-xs text-zinc-400 dark:text-zinc-500 hover:text-red-500 dark:hover:text-red-400 transition-colors cursor-pointer group"
             @click.stop="delComment"
           >
             <Icon name="icon-park-outline:delete" class="group-hover:scale-110 transition-transform" />
@@ -155,7 +155,7 @@ function refreshList() {
     </div>
 
     <!-- Sub Comments -->
-    <div v-if="comment.sub_comments?.length" class="mt-4 pl-4 md:pl-6 ml-4 md:ml-6 border-l-2 border-border-pixel-secondary space-y-4">
+    <div v-if="comment.sub_comments?.length" class="mt-4 pl-4 md:pl-6 ml-4 md:ml-6 border-l-2 border-zinc-200 dark:border-zinc-700 space-y-4">
       <template v-for="subComment in comment.sub_comments" :key="subComment.id">
         <SubCommentsViewPanel
           ref="subCommentsRef"

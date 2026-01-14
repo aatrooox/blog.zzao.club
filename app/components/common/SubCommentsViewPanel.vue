@@ -89,7 +89,7 @@ defineExpose({ refreshList })
     <div class="sub-commit-item relative transition-all duration-300 ease-in-out">
       <div class="flex gap-3">
         <div class="flex-shrink-0">
-          <UserAvatar :user-info="comment.user_info" class="size-8 md:size-9 border border-border-pixel-primary rounded-full" />
+          <UserAvatar :user-info="comment.user_info" class="size-8 md:size-9 border border-zinc-200 dark:border-zinc-700 rounded-full" />
         </div>
         <div class="flex-1 min-w-0">
           <div class="flex items-center gap-2 mb-1">
@@ -97,48 +97,48 @@ defineExpose({ refreshList })
               v-if="comment.user_info?.website"
               :href="comment.user_info?.website"
               target="_blank"
-              class="pixel-title text-sm hover:text-accent-pixel-cyan transition-colors flex items-center gap-1"
+              class="font-semibold text-sm text-zinc-900 dark:text-zinc-100 hover:text-primary dark:hover:text-primary transition-colors flex items-center gap-1"
             >
               {{ comment?.user_info?.nickname || comment?.user_info?.username }}
-              <Icon name="material-symbols:web-traffic-rounded" class="text-text-pixel-muted text-xs" />
+              <Icon name="material-symbols:web-traffic-rounded" class="text-zinc-400 dark:text-zinc-500 text-xs" />
             </a>
             <span
               v-else
-              class="pixel-title text-sm"
-              :class="{ 'text-accent-pixel-cyan': comment.user_info?.role === 'superAdmin' }"
+              class="font-semibold text-sm text-zinc-900 dark:text-zinc-100"
+              :class="{ 'text-primary dark:text-primary': comment.user_info?.role === 'superAdmin' }"
             >
               {{ comment?.user_info?.nickname || comment?.user_info?.username }}
             </span>
 
             <!-- Role Badge -->
-            <span v-if="comment.user_info?.role === 'superAdmin'" class="pixel-tag text-[10px] px-1.5 py-0.5 scale-90 origin-left">
+            <span v-if="comment.user_info?.role === 'superAdmin'" class="text-[10px] px-2 py-0.5 bg-primary/20 dark:bg-primary/30 text-primary dark:text-primary rounded-md font-medium">
               ADMIN
             </span>
           </div>
 
-          <div class="pixel-text text-sm mb-2 break-words leading-relaxed">
+          <div class="text-sm text-zinc-600 dark:text-zinc-300 mb-2 break-words leading-relaxed">
             <template v-if="comment.replySubCommentId">
-              <span class="text-text-pixel-muted mr-1">回复</span>
-              <span class="font-bold text-text-pixel-primary mr-1">@{{ getSubCommentUsernameById(comment.replySubCommentId) }}</span>
+              <span class="text-zinc-400 dark:text-zinc-500 mr-1">回复</span>
+              <span class="font-bold text-zinc-900 dark:text-zinc-100 mr-1">@{{ getSubCommentUsernameById(comment.replySubCommentId) }}</span>
             </template>
             {{ comment.content }}
           </div>
 
           <div class="flex items-center gap-4 select-none">
-            <span class="text-xs pixel-text-muted">{{ updateDateFromNow(comment.createTs) }}</span>
+            <span class="text-xs text-zinc-400 dark:text-zinc-500">{{ updateDateFromNow(comment.createTs) }}</span>
 
             <button
-              class="flex items-center gap-1 text-xs pixel-text-muted hover:text-accent-pixel-cyan cursor-pointer opacity-0 group-hover:opacity-100 transition-all"
+              class="flex items-center gap-1 text-xs text-zinc-400 dark:text-zinc-500 hover:text-primary dark:hover:text-primary cursor-pointer opacity-0 group-hover:opacity-100 transition-all"
               @click.stop="commentReply"
             >
-              <Icon name="icon-park-outline:comments" :class="{ 'text-text-pixel-primary': comment._count?.sub_comments }" />
+              <Icon name="icon-park-outline:comments" :class="{ 'text-zinc-900 dark:text-zinc-100': comment._count?.sub_comments }" />
               <span v-if="comment._count?.sub_comments">{{ comment._count?.sub_comments }}</span>
               <span v-else>回复</span>
             </button>
 
             <button
               v-if="comment.user_id === userStore?.user.value.id || userStore?.user.value.role === 'superAdmin'"
-              class="flex items-center gap-1 text-xs pixel-text-muted hover:text-status-pixel-error cursor-pointer opacity-0 group-hover:opacity-100 transition-all"
+              class="flex items-center gap-1 text-xs text-zinc-400 dark:text-zinc-500 hover:text-red-500 dark:hover:text-red-400 cursor-pointer opacity-0 group-hover:opacity-100 transition-all"
               @click.stop="delComment(comment)"
             >
               <Icon name="icon-park-outline:delete" />

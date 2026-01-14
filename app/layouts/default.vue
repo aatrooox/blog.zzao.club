@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import { Toaster } from 'vue-sonner'
+import { toast, Toaster } from 'vue-sonner'
 import { useSearch } from '~/composables/useSearch'
 
 const { showSearchDialog } = useSearch()
 const showScrollTopBtn = ref(false)
 const globalToast = useGlobalToast()
-const { $toast } = useNuxtApp() as any
 
 // Toast handling
 watch(() => globalToast.toastState.value.messages, (messages) => {
@@ -13,22 +12,22 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
     messages.forEach((message) => {
       switch (message.type) {
         case 'success':
-          $toast.success(message.message, message.options as any)
+          toast.success(message.message, message.options as any)
           break
         case 'error':
-          $toast.error(message.message, message.options as any)
+          toast.error(message.message, message.options as any)
           break
         case 'info':
-          $toast.info(message.message, message.options as any)
+          toast.info(message.message, message.options as any)
           break
         case 'warning':
-          $toast.warning(message.message, message.options as any)
+          toast.warning(message.message, message.options as any)
           break
         case 'promise':
-          $toast.promise(message.options as any)
+          toast.promise(message.options as any)
           break
         default:
-          $toast(message.message, message.options as any)
+          toast(message.message, message.options as any)
       }
     })
     globalToast.clear()
