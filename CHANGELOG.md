@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.9.9
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.8...v2.9.9)
+
+### 🩹 Fixes
+
+- 修复评论区样式问题; toast意外失效 ([47b1efb](https://github.com/aatrooox/blog.zzao.club/commit/47b1efb))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.9.8
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.7...v2.9.8)
