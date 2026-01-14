@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.9.8
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.7...v2.9.8)
+
+### 🎨 Styles
+
+- 首页丢失hover样式 ([29f1b64](https://github.com/aatrooox/blog.zzao.club/commit/29f1b64))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.9.7
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.6...v2.9.7)
