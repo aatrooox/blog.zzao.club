@@ -135,7 +135,7 @@ function onEnter(el: any) {
           <!-- Memo Item -->
           <div
             v-else-if="item.type === 'memo'"
-            class="px-4 py-2 caption-bottomm b-4 bg-primary/5 last:border-0 cursor-pointer"
+            class="px-4 py-2 caption-bottomm b-4 bg-primary/5 last:border-0 cursor-pointer hover:bg-primary/10"
             @click="navigateTo(`/m/${item.data.id}`)"
           >
             <div class="flex items-start gap-4">
