@@ -184,7 +184,8 @@ function onUploadError(error: string) {
         <div
           v-for="memo in filteredMemos"
           :key="memo.id"
-          class="px-4 py-2 mb-4 bg-primary/5 last:border-0"
+          class="px-4 py-2 mb-4 bg-primary/5 last:border-0 cursor-pointer hover:bg-primary/10 transition-colors"
+          @click="navigateTo(`/m/${memo.id}`)"
         >
           <div class="flex items-start gap-4">
             <!-- <div class="flex-shrink-0">
@@ -209,7 +210,7 @@ function onUploadError(error: string) {
                 </span>
               </div>
               <div class="mb-2">
-                <MemoPanel :memo="memo" layout="wechat" :show-all="true" :photo-width="200" />
+                <MemoPanel :memo="memo" layout="wechat" :preview="true" :photo-width="200" />
               </div>
               <div class="flex items-center gap-6 mt-3 text-gray-500 text-sm">
                 <!-- <div class="flex items-center gap-1 cursor-pointer hover:text-primary transition-colors" @click.stop="handleComment(memo)">

@@ -156,7 +156,7 @@ function onEnter(el: any) {
                   </span>
                 </div>
                 <div class="mb-2">
-                  <MemoPanel :memo="item.data" layout="wechat" :show-all="true" :photo-width="200" />
+                  <MemoPanel :memo="item.data" layout="wechat" :preview="true" :photo-width="200" />
                 </div>
               </div>
             </div>
