@@ -18,7 +18,7 @@ export const defineStandardResponseHandler = <T extends EventHandlerRequest, D> 
     catch (error: any) {
       // Error handling - 如果是已知的 createError，提取错误信息并强制返回 200 状态码
       // 强制设置 HTTP 状态码为 200
-      setResponseStatus(event, 200)
+      // setResponseStatus(event, 200)
       if (error.statusCode) {
         // 强制设置 HTTP 状态码为 200
 
