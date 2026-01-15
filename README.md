@@ -6,25 +6,22 @@
 
 ![](/githubAssets/page-home.png)
 ![](/githubAssets/page-memo.png)
-![](/githubAssets/page-home-mobile.png)
-![](/githubAssets/page-memo-mobile.png)
+![](/githubAssets/page-articles.png)
 
 ## 功能
 
 - 登录注册(用户名+密码)
-- 双 token ，无限自动续期
 - Github登录
 - 点赞
 - 评论
 - mysql
 - redis
-- umami网站数据统计
 - 一键复制HTML到公众号(保留所有样式)
-- 基于Github仓库的md文件生成文章
 - `$fetch/useFetch`最佳实践
 - Sitemap
 - Rss
 - robots.txt
+- PAT认证
 
 ## 安装依赖
 
