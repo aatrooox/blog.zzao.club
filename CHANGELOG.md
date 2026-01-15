@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v2.9.10
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.9...v2.9.10)
+
+### 📖 Documentation
+
+- 文章更新 ([fd0a035](https://github.com/aatrooox/blog.zzao.club/commit/fd0a035))
+- 文章更新 ([eb8543d](https://github.com/aatrooox/blog.zzao.club/commit/eb8543d))
+- 更新readme ([aa67d0a](https://github.com/aatrooox/blog.zzao.club/commit/aa67d0a))
+
+### 🏡 Chore
+
+- 不再强制所有请求都返回200 ([3b0cbad](https://github.com/aatrooox/blog.zzao.club/commit/3b0cbad))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.9.9
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.8...v2.9.9)
