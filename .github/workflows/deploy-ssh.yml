@@ -47,7 +47,7 @@ jobs:
           NUXT_NODEMAILER_PORT: ${{ secrets.NUXT_NODEMAILER_PORT }}
           NUXT_NODEMAILER_AUTH_USER: ${{ secrets.NUXT_NODEMAILER_AUTH_USER }}
           NUXT_NODEMAILER_AUTH_PASS: ${{ secrets.NUXT_NODEMAILER_AUTH_PASS }}
-          NUXT_UMAMI_HOST: ${{ secrets.NUXT_UMAMI_HOST }}
+          NUXT_UMAMI_HOST: ${{ secrets.UMAMI_HOST }}
           NUXT_UMAMI_USER: ${{ secrets.NUXT_UMAMI_USER }}
           NUXT_UMAMI_PASS: ${{ secrets.NUXT_UMAMI_PASS }}
           NUXT_SESSION_PASSWORD: ${{ secrets.NUXT_SESSION_PASSWORD }}
@@ -60,21 +60,14 @@ jobs:
           NUXT_CRYPTO_SECRET_KEY: ${{ secrets.NUXT_CRYPTO_SECRET_KEY }}
         run: |
           NODE_OPTIONS="--max-old-space-size=4080" pnpm build
-
-      - name: Install Sharp for Linux deployment
-        run: |
-          cd .output/server
-          echo "📦 Installing Sharp for Linux (x64)..."
-          npm install --platform=linux --arch=x64 sharp
-          echo "✅ Sharp installation complete"
-          # Verify installation
-          if [ -d "node_modules/sharp/build/Release" ]; then
-            echo "✓ Sharp binaries found:"
-            ls -la node_modules/sharp/build/Release/ | grep "\.node$" || echo "⚠️  No .node files found"
+          # Verify Sharp binaries were traced by Nuxt
+          echo "🔍 Checking for Sharp binaries in build output..."
+          if [ -d ".output/server/node_modules/@img" ]; then
+            echo "✅ Sharp binaries found:"
+            ls -la .output/server/node_modules/@img/ || true
           else
-            echo "⚠️  Sharp build directory not found"
+            echo "⚠️  Sharp binaries not found - IPX may not work properly"
           fi
-          cd ../..
 
       - name: Pack artifact (flatten .output)
         run: |
