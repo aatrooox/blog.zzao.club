@@ -61,6 +61,21 @@ jobs:
         run: |
           NODE_OPTIONS="--max-old-space-size=4080" pnpm build
 
+      - name: Install Sharp for Linux deployment
+        run: |
+          cd .output/server
+          echo "📦 Installing Sharp for Linux (x64)..."
+          npm install --platform=linux --arch=x64 sharp
+          echo "✅ Sharp installation complete"
+          # Verify installation
+          if [ -d "node_modules/sharp/build/Release" ]; then
+            echo "✓ Sharp binaries found:"
+            ls -la node_modules/sharp/build/Release/ | grep "\.node$" || echo "⚠️  No .node files found"
+          else
+            echo "⚠️  Sharp build directory not found"
+          fi
+          cd ../..
+
       - name: Pack artifact (flatten .output)
         run: |
           rm -rf distpkg && mkdir -p distpkg

@@ -50,10 +50,12 @@ export default defineNuxtConfig({
     },
   ],
   image: {
-    domains: ['zzao.club'],
+    // 允许的外部图片域名
+    domains: ['zzao.club', 'img.zzao.club'],
     provider: 'ipx',
     dir: 'public',
     quality: 80,
+    format: ['webp'], // 默认输出格式
   },
   imports: {
     presets: [
@@ -225,6 +227,7 @@ export default defineNuxtConfig({
     //   '0 * * * *': ['news:juejin'],
     // },
     errorHandler: '~~/server/error',
+    moduleSideEffects: ['sharp'],
     storage: {
       redis: {
         driver: 'redis',
