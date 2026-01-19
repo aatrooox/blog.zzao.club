@@ -2,7 +2,7 @@
 
 一个基于 [Nuxt@4.0.3](https://nuxt.com/)、[NuxtContent@3.4.0](https://content.nuxt.com/)、[shadcn/vue](https://www.shadcn-vue.com/)、[inspira-ui](https://inspira-ui.com/components)、Dizzle、MySQL、Redis的全栈站点
 
-**娱乐性质的个人空间 **
+**娱乐性质的个人空间! **
 
 ![](/githubAssets/page-home.png)
 ![](/githubAssets/page-memo.png)
