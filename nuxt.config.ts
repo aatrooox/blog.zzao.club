@@ -49,6 +49,12 @@ export default defineNuxtConfig({
       global: true,
     },
   ],
+  image: {
+    domains: ['zzao.club'],
+    provider: 'ipx',
+    dir: 'public',
+    quality: 80,
+  },
   imports: {
     presets: [
       {
