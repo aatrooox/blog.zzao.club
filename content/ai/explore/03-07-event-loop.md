@@ -1,4 +1,8 @@
-# 第7题：Node.js Event Loop - 标准答案
+---
+title: 7.Node.js Event Loop - 标准答案
+date: "2026-01-21T07:21:00.000Z"
+lastmod: "2026-01-21T07:21:00.000Z"
+---
 
 ## 题目
 
