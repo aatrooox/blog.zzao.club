@@ -17,25 +17,25 @@ lastmod: "2026-01-21T07:15:00.000Z"
 
 ### Vue2/Vue3 技术部分
 
-* [第1题：Vue 响应式原理](./03-01-vue-reactive.md)
-* [第2题：Vue 组件通信](./03-02-component-communication.md)
-* [第3题：Vue3 性能优化](./03-03-vue3-performance.md)
-* [第4题：Vue2 迁移到 Vue3](./03-04-vue-migration.md)
-* [第5题：Vue Diff 算法](./03-05-vue-diff.md)
-* [第6题：Nuxt.js SSR 实战](./03-06-nuxt-ssr.md)
+* [第1题：Vue 响应式原理]
+* [第2题：Vue 组件通信]
+* [第3题：Vue3 性能优化]
+* [第4题：Vue2 迁移到 Vue3]
+* [第5题：Vue Diff 算法]
+* [第6题：Nuxt.js SSR 实战]
 
 ### Node.js 技术部分
 
-* [第7题：Node.js Event Loop](./03-07-event-loop.md)
-* [第8题：Node.js 性能调优](./03-08-nodejs-performance.md)
+* [第7题：Node.js Event Loop]
+* [第8题：Node.js 性能调优]
 
 ### 架构设计部分
 
-* [第9题：微前端架构设计](./03-09-micro-frontend.md)
+* [第9题：微前端架构设计]
 
 ### 团队管理部分
 
-* [第10题：团队管理与技术债务](./03-10-team-management.md)
+* [第10题：团队管理与技术债务]
 
 ---
 
