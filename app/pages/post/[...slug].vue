@@ -651,7 +651,7 @@ watchEffect(async () => {
           </div>
         </ClientOnly>
         <!-- 文章内容 markdown -->
-        <article ref="curMdContentRef" class="content-wrap prose-invert prose-lg max-w-none p-0 w-full">
+        <article ref="curMdContentRef" class="content-wrap prose prose-zinc prose-base max-w-none p-0 w-full">
           <ContentRenderer :value="page?.body" class="max-w-full" />
         </article>
         <!-- 相邻的文章 -->

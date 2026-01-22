@@ -56,60 +56,49 @@ export default {
       },
       typography: {
         DEFAULT: {
-          css: {
-            'code::before': {
-              content: '""', // 移除前引号
-            },
-            'code::after': {
-              content: '""', // 移除后引号
-            },
-            'code': {
-              // backgroundColor: theme('colors.gray.100'),
-              // color: theme('colors.orange.400'),
-              fontWeight: 'normal',
-              fontSize: 'normal',
-              // paddingTop: '1px',
-              // paddingBottom: '1px',
-              // borderRadius: '2px',
-              // '&::before': {
-              //   content: `''!important`
-              // },
-              // '&::after': {
-              //   content: `''!important`
-              // }
-            },
-            'blockquote': {
-              // borderInlineStartWidth: 0,
-              // '& > p': {
-              //   '&::before': {
-              //     content: `'「'!important`,
-              //   },
-              //   '&::after': {
-              //     content: `'」'!important`,
-              //   }
-              // }
-            },
-            'p': {
-              lineHeight: '2',
-              // color: ''
-            },
-            'pre': {
-              // paddingBottom: 0,
-              // paddingTop: 0,
-              // '& > code': {
-              //   color: theme('colors.gray.900'),
-              //   backgroundColor: 'transparent'
-              // }
-              // backgroundColor: theme('colors.zinc.100'),
-            },
-            'a': {
-              textDecoration: 'none',
-            },
-            'img': {
-              marginTop: 0,
-              marginBottom: 0,
-            },
-          },
+          // css: {
+          //   // 'code::before': {
+          //   //   content: '""', // 移除前引号
+          //   // },
+          //   // 'code::after': {
+          //   //   content: '""', // 移除后引号
+          //   // },
+          //   // 'code': {
+          //   //   // backgroundColor: theme('colors.gray.100'),
+          //   //   // color: theme('colors.orange.400'),
+          //   //   fontWeight: 'normal',
+          //   //   fontSize: 'normal',
+          //   //   // paddingTop: '1px',
+          //   //   // paddingBottom: '1px',
+          //   //   // borderRadius: '2px',
+          //   //   // '&::before': {
+          //   //   //   content: `''!important`
+          //   //   // },
+          //   //   // '&::after': {
+          //   //   //   content: `''!important`
+          //   //   // }
+          //   // },
+          //   p: {
+          //     lineHeight: '2',
+          //     // color: ''
+          //   },
+          //   // pre: {
+          //   //   // paddingBottom: 0,
+          //   //   // paddingTop: 0,
+          //   //   // '& > code': {
+          //   //   //   color: theme('colors.gray.900'),
+          //   //   //   backgroundColor: 'transparent'
+          //   //   // }
+          //   //   // backgroundColor: theme('colors.zinc.100'),
+          //   // },
+          //   a: {
+          //     textDecoration: 'none',
+          //   },
+          //   img: {
+          //     marginTop: 0,
+          //     marginBottom: 0,
+          //   },
+          // },
         },
       },
     },
