@@ -63,7 +63,7 @@ function smoothScrollTo(id: string) {
     <Toaster position="top-right" rich-colors />
 
     <!-- Top Navigation -->
-    <AppTopNav max-width-class="max-w-7xl" />
+    <AppTopNav max-width-class="max-w-3xl" />
 
     <!-- Main Content Area - 悬浮式侧边栏布局(与 TOC 对称) -->
     <main class="flex-1 w-full mx-auto px-4 py-6 md:py-10">
