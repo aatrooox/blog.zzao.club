@@ -1,8 +1,10 @@
 ---
-title: 使用 Chrome DevTools 排查内存泄漏完全指南
+title: 使用 Chrome DevTools 排查内存泄漏
 date: 2026-01-22
-lastmod: 2026-01-22
+lastmod: "2026-01-22T08:35:33.662Z"
 ---
+
+
 
 ## 概述
 
@@ -158,6 +160,7 @@ Retainers:
 ### 5.1 DOM 泄漏
 
 **现象**：
+
 ```
 Constructor              # Delta    Size Delta
 ────────────────────────────────────────────
@@ -173,6 +176,7 @@ Detached HTMLDivElement  +200       +800 KB
 ### 5.2 定时器泄漏
 
 **现象**：
+
 ```
 Constructor    # Delta    Size Delta
 ────────────────────────────────────
@@ -188,6 +192,7 @@ Timeout        +50        +100 KB
 ### 5.3 事件监听器泄漏
 
 **现象**：
+
 ```
 Constructor      # Delta    Size Delta
 ──────────────────────────────────────
@@ -203,6 +208,7 @@ EventListener    +100       +200 KB
 ### 5.4 组件实例泄漏
 
 **现象**：
+
 ```
 Constructor        # Delta    Size Delta
 ────────────────────────────────────────
@@ -218,6 +224,7 @@ VueComponent       +50        +5 MB
 ### 5.5 闭包引用大对象
 
 **现象**：
+
 ```
 Constructor    # Delta    Size Delta
 ────────────────────────────────────
@@ -236,9 +243,12 @@ Constructor    # Delta    Size Delta
 ### 6.1 问题症状
 
 Performance 面板录制 60 秒后发现：
-- JS Heap 从 50MB 增长到 150MB
-- 内存呈阶梯状持续增长
-- 没有明显的 GC 回收
+
+* JS Heap 从 50MB 增长到 150MB
+
+* 内存呈阶梯状持续增长
+
+* 没有明显的 GC 回收
 
 ### 6.2 Memory 面板对比快照
 
@@ -263,10 +273,14 @@ WebSocket        +1        +50 KB      ← WebSocket 未关闭
 ### 6.4 修复方案
 
 根据 Retainers 路径,需要：
-- 限制 `data` 数组最大长度
-- 在 `onUnmounted` 中移除 `scroll` 监听器
-- 在 `onUnmounted` 中关闭 WebSocket 连接
-- 使用 `shallowRef` 优化大数据响应式开销
+
+* 限制 `data` 数组最大长度
+
+* 在 `onUnmounted` 中移除 `scroll` 监听器
+
+* 在 `onUnmounted` 中关闭 WebSocket 连接
+
+* 使用 `shallowRef` 优化大数据响应式开销
 
 ***
 
@@ -296,25 +310,35 @@ Vue 3 组件中需要在 `onUnmounted` 清理的资源：
 
 ### 关键技巧
 
-- **看 Retainers**：这是定位代码的关键,显示从 Window 到具体变量的完整路径
-- **认识常见模式**：定时器、事件监听器、DOM 引用、闭包是主要原因
-- **使用 shallowRef**：大数据场景必备,减少响应式开销
-- **限制数据量**：虚拟滚动中必须限制数组大小
-- **清理资源**：`onUnmounted` 中清理所有副作用
+* **看 Retainers**：这是定位代码的关键,显示从 Window 到具体变量的完整路径
+
+* **认识常见模式**：定时器、事件监听器、DOM 引用、闭包是主要原因
+
+* **使用 shallowRef**：大数据场景必备,减少响应式开销
+
+* **限制数据量**：虚拟滚动中必须限制数组大小
+
+* **清理资源**：`onUnmounted` 中清理所有副作用
 
 ### 最佳实践
 
-- ✅ 所有副作用都在 `onUnmounted` 中清理
-- ✅ 使用 `shallowRef` 存储大数据
-- ✅ 限制列表/数组的最大长度
-- ✅ 避免闭包捕获大对象
-- ✅ 定期用 DevTools 检查内存占用
+* ✅ 所有副作用都在 `onUnmounted` 中清理
+
+* ✅ 使用 `shallowRef` 存储大数据
+
+* ✅ 限制列表/数组的最大长度
+
+* ✅ 避免闭包捕获大对象
+
+* ✅ 定期用 DevTools 检查内存占用
 
 ***
 
 ## 参考资源
 
 * [Chrome DevTools 官方文档 - Memory](https://developer.chrome.com/docs/devtools/memory-problems/)
+
 * [Vue 3 性能优化指南](https://vuejs.org/guide/best-practices/performance.html)
+
 * [JavaScript 内存管理 - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management)
 
