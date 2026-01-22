@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v2.10.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.10.1...v2.10.2)
+
+### 🩹 Fixes
+
+- 不再永远返回200 ([c6a7966](https://github.com/aatrooox/blog.zzao.club/commit/c6a7966))
+
+### 📖 Documentation
+
+- 文章更新 ([0256b03](https://github.com/aatrooox/blog.zzao.club/commit/0256b03))
+- 文章更新 ([2ea4764](https://github.com/aatrooox/blog.zzao.club/commit/2ea4764))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.10.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.10.0...v2.10.1)
