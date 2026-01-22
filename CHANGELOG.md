@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.10.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.10.0...v2.10.1)
+
+### 🎨 Styles
+
+- 修复prose样式 ([0082a06](https://github.com/aatrooox/blog.zzao.club/commit/0082a06))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.10.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.10...v2.10.0)
