@@ -1,6 +1,37 @@
 # Changelog
 
 
+## v2.10.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.10...v2.10.0)
+
+### 🚀 Enhancements
+
+- 测试自动配图skill及显示效果 ([5bbc994](https://github.com/aatrooox/blog.zzao.club/commit/5bbc994))
+- 新增文章分组、系列, 合并展示 ([165e721](https://github.com/aatrooox/blog.zzao.club/commit/165e721))
+
+### 📖 Documentation
+
+- 文章更新 ([512e198](https://github.com/aatrooox/blog.zzao.club/commit/512e198))
+- 文章更新 ([4c8a204](https://github.com/aatrooox/blog.zzao.club/commit/4c8a204))
+- 文章更新 ([4a81bf7](https://github.com/aatrooox/blog.zzao.club/commit/4a81bf7))
+- 文章更新 ([3ebb8bd](https://github.com/aatrooox/blog.zzao.club/commit/3ebb8bd))
+- 文章更新 ([8393718](https://github.com/aatrooox/blog.zzao.club/commit/8393718))
+- 文章更新 ([ddc020e](https://github.com/aatrooox/blog.zzao.club/commit/ddc020e))
+- 文章更新 ([804a3a2](https://github.com/aatrooox/blog.zzao.club/commit/804a3a2))
+- 文章更新 ([97aed7e](https://github.com/aatrooox/blog.zzao.club/commit/97aed7e))
+- 文章更新 ([d9b006c](https://github.com/aatrooox/blog.zzao.club/commit/d9b006c))
+- 文章更新 ([ac80333](https://github.com/aatrooox/blog.zzao.club/commit/ac80333))
+- 文章更新 ([98ccc7c](https://github.com/aatrooox/blog.zzao.club/commit/98ccc7c))
+- 文章更新 ([0725ea9](https://github.com/aatrooox/blog.zzao.club/commit/0725ea9))
+- 文章更新 ([8134bf3](https://github.com/aatrooox/blog.zzao.club/commit/8134bf3))
+- 文章更新 ([d1c0bf9](https://github.com/aatrooox/blog.zzao.club/commit/d1c0bf9))
+- 文章更新 ([402e5c8](https://github.com/aatrooox/blog.zzao.club/commit/402e5c8))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.9.10
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.9.9...v2.9.10)
