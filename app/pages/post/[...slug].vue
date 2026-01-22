@@ -3,10 +3,11 @@ import type { CommentData } from '@nuxtjs/mdc'
 import type { Visitor } from '~~/types/blog'
 import type { BlogCommentWithUserInfo } from '~~/types/blog-drizzle'
 import type { ApiResponse } from '~~/types/fetch'
+import type { Page } from '~/components/common/PagePanel.vue'
 import { camelCaseToHyphen, EffectCssAttrs, ExcludeClassList, IMG_WRAP_CLASS, PreCodeCssAttrs } from '@/config/richText'
 
 definePageMeta({
-  layout: 'post-layout',
+  layout: false, // 手动控制布局
 })
 
 const toast = useGlobalToast()
@@ -208,6 +209,33 @@ const tocData = computed(() => {
   console.log('toc =>', page.value?.body?.toc?.links)
   return page.value?.body?.toc?.links
 })
+
+// 新增:判断是否为分组文章
+const isGroupedArticle = computed(() => !!page.value?.group)
+
+// 新增:获取同组文章（一级分组下的所有文章）
+const groupArticles = ref<Page[]>([])
+
+async function loadGroupArticles() {
+  if (page.value?.group) {
+    // 提取一级分组名（冒号前的部分）
+    const topLevelGroup = page.value.group.split(':')[0]
+
+    // 获取所有带分组的文章
+    const { data } = await useGroupedPages()
+    const allGroupedPages = data.value || []
+
+    // 筛选出属于同一个一级分组的所有文章
+    groupArticles.value = allGroupedPages.filter((p) => {
+      return p.group?.startsWith(`${topLevelGroup}:`) || p.group === topLevelGroup
+    })
+  }
+}
+
+// Provide 数据给布局使用
+provide('groupArticles', groupArticles)
+provide('tocData', tocData)
+provide('activeTocId', activeTocId)
 
 function getContentDom() {
   const articleDom: any = curMdContentRef.value
@@ -567,16 +595,16 @@ function getAllTextNodes(element) {
 // })
 
 // Smooth scroll to heading
-function smoothScrollTo(id: string) {
-  const element = document.getElementById(id)
-  if (element) {
-    const offsetTop = element.getBoundingClientRect().top + window.pageYOffset - 100
-    window.scrollTo({
-      top: offsetTop,
-      behavior: 'smooth',
-    })
-  }
-}
+// function smoothScrollTo(id: string) {
+//   const element = document.getElementById(id)
+//   if (element) {
+//     const offsetTop = element.getBoundingClientRect().top + window.pageYOffset - 100
+//     window.scrollTo({
+//       top: offsetTop,
+//       behavior: 'smooth',
+//     })
+//   }
+// }
 
 watchEffect(async () => {
   if (page.value?.id) {
@@ -585,50 +613,26 @@ watchEffect(async () => {
       initLikeCount()
       getSurroundingPage()
       initExplain()
+      loadGroupArticles() // 加载分组文章
     })
   }
 })
 </script>
 
 <template>
-  <div class="pb-10 m-auto mb-4">
-    <div class="relative w-full max-w-full flex justify-center">
-      <div v-if="page" class="relative w-full max-w-full mx-auto">
-        <div ref="articleWrap" class="article-wrap relative w-full flex flex-col box-border my-6">
-          <!-- 选中文字的悬浮气泡 -->
-          <!-- <ClientOnly>
-            <transition appear @enter="commentEnter" @before-enter="commentBeforeEnter" @leave="commentLeave">
-              <div
-                v-if="commentIconPosition.top !== 0 || commentIconPosition.left !== 0"
-                class="page-btns absolute opacity-0 bg-gray-900 border-2 border-gray-800 rounded-lg shadow-pixel px-3 py-2 flex items-center gap-2"
-                :style="{ top: `${commentIconPosition.top}px`, left: `${commentIconPosition.left}px` }"
-              >
-                <Icon
-                  class="cursor-pointer page-operation-btn text-gray-100 hover:text-cyan-400 transition-colors duration-200" name="icon-park-outline:comments" size="1.5em"
-                  @click.stop="handleCommentPragph"
-                />
-                <Icon
-                  class="cursor-pointer page-operation-btn text-gray-100 hover:text-cyan-400 transition-colors duration-200" name="material-symbols:image-arrow-up-rounded"
-                  size="1.5em" @click.stop="handleCommentPragph"
-                />
-                <Icon
-                  class="cursor-pointer page-operation-btn text-gray-100 hover:text-cyan-400 transition-colors duration-200"
-                  name="material-symbols:stylus-fountain-pen-outline-rounded" size="1.5em"
-                  @click="isOpenDrawer = true"
-                />
-              </div>
-            </transition>
-          </ClientOnly> -->
-          <!-- 悬浮标题栏 -->
-          <h1
-            class="text-left text-2xl font-bold title-normal transition-all duration-150 ease-out"
-          >
-            {{ page?.title }}
-          </h1>
-          <ClientOnly>
-            <div class="article-actions flex gap-8 justify-start text-sm text-zinc-500 py-2">
-              <div>{{ formatDate(page.date ?? '') }}</div>
-              <!-- <div class="flex items-center cursor-pointer gap-1.5">
+  <NuxtLayout :name="isGroupedArticle ? 'group-post-layout' : 'post-layout'">
+    <div v-if="page" class="pb-10 m-auto mb-4">
+      <div ref="articleWrap" class="article-wrap relative w-full flex flex-col box-border my-6">
+        <!-- 悬浮标题栏 -->
+        <h1
+          class="text-left text-2xl font-bold title-normal transition-all duration-150 ease-out"
+        >
+          {{ page?.title }}
+        </h1>
+        <ClientOnly>
+          <div class="article-actions flex gap-8 justify-start text-sm text-zinc-500 py-2">
+            <div>{{ formatDate(page.date ?? '') }}</div>
+            <!-- <div class="flex items-center cursor-pointer gap-1.5">
                 <Icon name="icon-park-outline:thumbs-up" class="" @click="likePage" />
                 <span class=" ">{{ likeCount }}</span>
               </div>
@@ -638,119 +642,80 @@ watchEffect(async () => {
                   <span class="  ">{{ formatCommentCount }}</span>
                 </NuxtLink>
               </div> -->
-              <div class="flex items-center cursor-pointer" @click="copyLink">
-                <Icon name="material-symbols:share-reviews-outline-rounded" class="" />
-              </div>
-              <div class="flex items-center cursor-pointer" data-umami-event="wx-copy-btn" @click="getInnerHTML">
-                <Icon name="icon-park-outline:wechat" class="" />
-              </div>
+            <div class="flex items-center cursor-pointer" @click="copyLink">
+              <Icon name="material-symbols:share-reviews-outline-rounded" class="" />
             </div>
-          </ClientOnly>
-          <!-- 文章内容 markdown -->
-          <article ref="curMdContentRef" class="content-wrap prose-invert prose-lg max-w-none p-0 w-full">
-            <ContentRenderer :value="page?.body" class="max-w-full" />
-          </article>
-          <!-- 相邻的文章 -->
-          <ClientOnly>
-            <div v-if="adjacentPages.length">
-              <!-- <Separator class="my-4" label="END" /> -->
-              <div class="bg-primary/5 dark:bg-zinc-900 rounded-lg p-4 md:p-6">
-                <div class="flex justify-between text-sm md:text-base ">
-                  <div class="flex-1 flex items-center gap-2">
-                    <template v-if="adjacentPages[0]">
-                      <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em" />
-                      <NuxtLink class="font-bold w-[300px] whitespace-nowrap overflow-hidden text-ellipsis hover:text-primary transition-colors" :href="adjacentPages[0].path">
-                        {{ adjacentPages[0].title }}
-                      </NuxtLink>
-                    </template>
-                  </div>
-                  <div class="flex-1 text-right flex items-center justify-end gap-2">
-                    <template v-if="adjacentPages[1]">
-                      <NuxtLink class="font-bold w-[300px] whitespace-nowrap overflow-hidden text-ellipsis hover:text-primary transition-colors" :href="adjacentPages[1].path">
-                        {{ adjacentPages[1].title }}
-                      </NuxtLink>
-                      <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em" />
-                    </template>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ClientOnly>
-          <!-- 评论区 -->
-          <ClientOnly>
-            <div class="comment-area bg-primary/5 dark:bg-zinc-900 rounded-lg p-4 md:p-6 mt-6">
-              <template v-if="page?.body && !isDefer">
-                <!-- <Separator class="my-4" label="评论" /> -->
-                <div id="评论区" class="text-xl py-4 ">
-                  评论区
-                </div>
-                <AppCommentInput @send="createComment" />
-                <div class="py-4" />
-                <transition-group appear name="comment" tag="div" class="comment-list mt-6 space-y-4" @enter="commentEnter" @leave="commentLeave" @before-enter="commentBeforeEnter">
-                  <template v-for="comment in comments" :key="comment.id">
-                    <CommentViewPanel :comment="comment" @refresh="initComment" />
-                  </template>
-                </transition-group>
-              </template>
-            </div>
-          </ClientOnly>
-
-          <!-- 作者添加注解 v-model:open="isOpen" -->
-          <Drawer v-model:open="isOpenDrawer" :dismissible="true">
-            <DrawerContent class="bg-gray-900 border-t-2 border-gray-800">
-              <DrawerHeader>
-                <DrawerTitle class=" text-gray-100" />
-              </DrawerHeader>
-              <div class="border-box px-4 pb-8 md:px-20">
-                <QuoteComment
-                  :content="selectedText?.text ?? ''" :article-id="page?.id" @close="isOpenDrawer = false"
-                  @success="handleSubmitExplain"
-                />
-              </div>
-            </DrawerContent>
-          </Drawer>
-        </div>
-
-        <ClientOnly>
-          <div v-if="tocData && tocData.length" class="hidden xl:block absolute top-0 left-full ml-8 h-full">
-            <div class="sticky top-24 w-[240px] max-h-[calc(100vh-8rem)] overflow-y-auto">
-              <!-- Notion-style TOC -->
-              <nav class="notion-toc">
-                <ul class="notion-toc-list">
-                  <template v-for="link in tocData" :key="link.id">
-                    <li class="notion-toc-item">
-                      <a
-                        :href="`#${link.id}`"
-                        class="notion-toc-link" :class="[{ active: link.id === activeTocId }]"
-                        @click.prevent="smoothScrollTo(link.id)"
-                      >
-                        <span class="notion-toc-text">{{ link.text }}</span>
-                      </a>
-                    </li>
-                    <template v-if="link.children">
-                      <li
-                        v-for="child in link.children"
-                        :key="child.id"
-                        class="notion-toc-item notion-toc-child"
-                      >
-                        <a
-                          :href="`#${child.id}`"
-                          class="notion-toc-link" :class="[{ active: child.id === activeTocId }]"
-                          @click.prevent="smoothScrollTo(child.id)"
-                        >
-                          <span class="notion-toc-text">{{ child.text }}</span>
-                        </a>
-                      </li>
-                    </template>
-                  </template>
-                </ul>
-              </nav>
+            <div class="flex items-center cursor-pointer" data-umami-event="wx-copy-btn" @click="getInnerHTML">
+              <Icon name="icon-park-outline:wechat" class="" />
             </div>
           </div>
         </ClientOnly>
+        <!-- 文章内容 markdown -->
+        <article ref="curMdContentRef" class="content-wrap prose-invert prose-lg max-w-none p-0 w-full">
+          <ContentRenderer :value="page?.body" class="max-w-full" />
+        </article>
+        <!-- 相邻的文章 -->
+        <ClientOnly>
+          <div v-if="adjacentPages.length">
+            <!-- <Separator class="my-4" label="END" /> -->
+            <div class="bg-primary/5 dark:bg-zinc-900 rounded-lg p-4 md:p-6">
+              <div class="flex justify-between text-sm md:text-base ">
+                <div class="flex-1 flex items-center gap-2">
+                  <template v-if="adjacentPages[0]">
+                    <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em" />
+                    <NuxtLink class="font-bold w-[300px] whitespace-nowrap overflow-hidden text-ellipsis hover:text-primary transition-colors" :href="adjacentPages[0].path">
+                      {{ adjacentPages[0].title }}
+                    </NuxtLink>
+                  </template>
+                </div>
+                <div class="flex-1 text-right flex items-center justify-end gap-2">
+                  <template v-if="adjacentPages[1]">
+                    <NuxtLink class="font-bold w-[300px] whitespace-nowrap overflow-hidden text-ellipsis hover:text-primary transition-colors" :href="adjacentPages[1].path">
+                      {{ adjacentPages[1].title }}
+                    </NuxtLink>
+                    <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em" />
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ClientOnly>
+        <!-- 评论区 -->
+        <ClientOnly>
+          <div class="comment-area bg-primary/5 dark:bg-zinc-900 rounded-lg p-4 md:p-6 mt-6">
+            <template v-if="page?.body && !isDefer">
+              <!-- <Separator class="my-4" label="评论" /> -->
+              <div id="评论区" class="text-xl py-4 ">
+                评论区
+              </div>
+              <AppCommentInput @send="createComment" />
+              <div class="py-4" />
+              <transition-group appear name="comment" tag="div" class="comment-list mt-6 space-y-4" @enter="commentEnter" @leave="commentLeave" @before-enter="commentBeforeEnter">
+                <template v-for="comment in comments" :key="comment.id">
+                  <CommentViewPanel :comment="comment" @refresh="initComment" />
+                </template>
+              </transition-group>
+            </template>
+          </div>
+        </ClientOnly>
+
+        <!-- 作者添加注解 v-model:open="isOpen" -->
+        <Drawer v-model:open="isOpenDrawer" :dismissible="true">
+          <DrawerContent class="bg-gray-900 border-t-2 border-gray-800">
+            <DrawerHeader>
+              <DrawerTitle class=" text-gray-100" />
+            </DrawerHeader>
+            <div class="border-box px-4 pb-8 md:px-20">
+              <QuoteComment
+                :content="selectedText?.text ?? ''" :article-id="page?.id" @close="isOpenDrawer = false"
+                @success="handleSubmitExplain"
+              />
+            </div>
+          </DrawerContent>
+        </Drawer>
       </div>
     </div>
-  </div>
+  </NuxtLayout>
 </template>
 
 <style scoped>

@@ -47,15 +47,29 @@ watchEffect(async () => {
   }
 })
 
-const { data: articles } = await usePages({ limit: 10 })
+const { data: allArticles } = await usePagesWithGroup({ limit: 50 })
 
-// 混合列表逻辑
+// 解析分组结构
+const groupHierarchy = computed(() => {
+  if (!allArticles.value)
+    return null
+  return parseGroupHierarchy(allArticles.value)
+})
+
+// 扁平化分组(用于渲染)
+const flatGroups = computed(() => {
+  if (!groupHierarchy.value)
+    return []
+  return flattenGroups(groupHierarchy.value)
+})
+
+// 混合列表:单篇文章 + 分组文章 + Memos
 const mixedList = computed(() => {
   const items: any[] = []
 
-  // 1. Articles
-  if (articles.value) {
-    articles.value.forEach((article: any) => {
+  // 1. 单篇文章(无 group 的)
+  if (groupHierarchy.value) {
+    groupHierarchy.value.articles.forEach((article: any) => {
       items.push({
         type: 'article',
         id: `article-${article.path}`,
@@ -65,7 +79,17 @@ const mixedList = computed(() => {
     })
   }
 
-  // 2. Memos
+  // 2. 分组文章
+  flatGroups.value.forEach((group) => {
+    items.push({
+      type: 'group',
+      id: `group-${group.fullPath}`,
+      date: group.latestDate.getTime(),
+      data: group,
+    })
+  })
+
+  // 3. Memos
   if (memos.value) {
     memos.value.forEach((memo: any) => {
       items.push({
@@ -131,6 +155,12 @@ function onEnter(el: any) {
               </div>
             </div>
           </NuxtLink>
+
+          <!-- Grouped Articles (新增) -->
+          <GroupedArticlesCard
+            v-else-if="item.type === 'group'"
+            :group="item.data"
+          />
 
           <!-- Memo Item -->
           <div

@@ -133,7 +133,7 @@ content/              # Markdown 内容（或 GitHub 源）
 ### 错误处理
 
 #### API 响应
-所有 API 端点返回标准化响应（始终为 HTTP 200）:
+所有 API 端点返回标准化响应:
 ```ts
 {
   code: number,        // 来自 API_CODES (shared/utils/apiCodes.ts)

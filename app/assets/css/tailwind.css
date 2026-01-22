@@ -440,3 +440,81 @@ body {
 .pixel-card {
   @apply bg-white border-2 border-zinc-100 rounded-xl shadow-sm;
 }
+
+/* ========== 分组文章相关样式 ========== */
+
+/* 堆叠卡片效果增强 */
+.group-stack-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group-stack-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 25px -5px rgb(0 0 0 / 0.1),
+    0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* 分组文章侧边栏滚动条样式 */
+.group-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(228 228 231) transparent;
+}
+
+.group-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.group-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.group-sidebar::-webkit-scrollbar-thumb {
+  background: rgb(228 228 231);
+  border-radius: 2px;
+  transition: background 0.2s ease;
+}
+
+.dark .group-sidebar::-webkit-scrollbar-thumb {
+  background: rgb(63 63 70);
+}
+
+.group-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgb(212 212 216);
+}
+
+.dark .group-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgb(82 82 91);
+}
+
+/* TOC 滚动条样式 */
+.notion-toc-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(228 228 231) transparent;
+}
+
+.notion-toc-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.notion-toc-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.notion-toc-list::-webkit-scrollbar-thumb {
+  background: rgb(228 228 231);
+  border-radius: 2px;
+}
+
+.dark .notion-toc-list::-webkit-scrollbar-thumb {
+  background: rgb(63 63 70);
+}
+
+.notion-toc-list::-webkit-scrollbar-thumb:hover {
+  background: rgb(212 212 216);
+}
+
+.dark .notion-toc-list::-webkit-scrollbar-thumb:hover {
+  background: rgb(82 82 91);
+}
+

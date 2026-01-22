@@ -294,6 +294,15 @@ export default defineNuxtConfig({
     //   // Workaround for https://github.com/nuxt/cli/issues/169
     //   process.exit(0)
     // },
+    'content:file:afterParse': (ctx) => {
+      const { file, content } = ctx
+      // 自定义content值，如 content.group = 'xxxx'
+      const wordsPerMinute = 180
+      const text = typeof file.body === 'string' ? file.body : ''
+      const wordCount = text.split(/\s+/).length
+
+      content.readingTime = Math.ceil(wordCount / wordsPerMinute)
+    },
   },
   eslint: {
     config: {

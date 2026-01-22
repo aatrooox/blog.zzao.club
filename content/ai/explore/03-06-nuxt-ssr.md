@@ -2,6 +2,7 @@
 title: 6.Nuxt.js SSR 实战 - 标准答案
 date: "2026-01-21T07:20:00.000Z"
 lastmod: "2026-01-21T07:20:00.000Z"
+group: "面试SKILL:答案"
 ---
 
 ## 题目

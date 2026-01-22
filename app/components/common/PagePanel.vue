@@ -14,6 +14,7 @@ export interface Page extends ParsedContent {
   showTitle?: string
   date?: string
   tags?: string[]
+  group?: string // 新增:文章分组,格式如 "面试题:前端"
   description?: string
   versions?: string[]
   lastmod?: string
