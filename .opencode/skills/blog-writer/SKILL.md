@@ -83,20 +83,27 @@ description: |
 
 ```yaml
 ---
-title: 文章标题（简洁，用于URL生成，英文或拼音更利于SEO）
-date: YYYY-MM-DD（首次发布日期）
-lastmod: YYYY-MM-DD（最后修改日期）
-showTitle: 显示标题（可以用中文，用于页面展示）
+title: 中文标题  # 中文标题，用于页面显示
+date: YYYY-MM-DD  # 首次发布日期
+lastmod: YYYY-MM-DD  # 最后修改日期
 tags:
-  - 标签1
+  - 标签1  # 最多2个标签
   - 标签2
-versions:  # 如果是技术文章，标注相关技术版本
+versions:  # 可选，如果是技术文章，标注相关技术版本
   - nuxt@4.0.3
   - vue@3.5
-description: 一句话描述（可选，用于SEO）
-group: 分组名称（可选，用于系列文章，如"面试题:前端"）
+description: 一句话描述  # 可选，用于 SEO
+group: 分组名称  # 可选，用于系列文章，如"面试题:前端"
 ---
 ```
+
+**重要规则**：
+1. **title 字段是中文**：用于页面显示，如 `稳定是最大的牢笼`
+2. **文件名是英文**：用于生成 URL，如 `stability-is-the-biggest-cage.md`
+3. **文件名和 title 不需要一致**：文件名用英文（URL友好），title 用中文（显示友好）
+4. **不需要 showTitle 字段**：页面会自动从 frontmatter 的 `title` 获取标题
+5. **tags 最多2个**：精选最核心的2个标签
+6. **必须使用中文标点**：文章正文所有标点符号必须是中文标点（`，` `。` `：` `？` `！` 等）
 
 ## 存放位置参考
 
@@ -110,9 +117,11 @@ group: 分组名称（可选，用于系列文章，如"面试题:前端"）
 - `content/tech-news/` - 技术新闻
 - `content/tips/` - 小技巧
 
-文件命名：全小写，用连字符分隔，如 `my-first-blog-post.md`
-
-草稿：文件名以 `-` 开头会被排除，如 `-draft-post.md`
+**文件命名规则**：
+1. 全小写英文单词，用连字符分隔
+2. 文件名用英文（URL 友好），frontmatter 中的 `title` 用中文（显示友好）
+3. 例如：文件名 `stability-is-the-biggest-cage.md`，对应 `title: 稳定是最大的牢笼`
+4. 草稿：文件名以 `-` 开头会被排除，如 `-draft-post.md`
 
 ## 写作技法参考
 
