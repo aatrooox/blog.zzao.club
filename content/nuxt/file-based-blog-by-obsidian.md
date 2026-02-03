@@ -2,9 +2,7 @@
 title: 基于本地文件搭建个人博客站：无缝配合Obsidian
 date: 2024-11-01
 lastmod: 2025-08-19
-tags:
-  - 博客
-  - Obsidian
+tags: ["博客", "Obsidian"]
 description: 使用 Obsidian 的Git仓库作为文章数据源，配合Nuxt搭建个人博客
 ---
 **搞博客站一直有些痛点：文件不停的搬家、需要多处同步修改、无法复制到其他平台、界面同质化严重。**

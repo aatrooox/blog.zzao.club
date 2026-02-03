@@ -2,8 +2,8 @@
 title: Debian12 服务器上启动 MySQL 服务
 date: 2025-03-05 10:17:23
 lastmod: 2025-03-09 21:07:57
-tags:
-  - Docker
+tags: ["Docker"]
+
 ---
 启动方式同[本地](https://blog.zzao.club/post/nuxt/local-init-mysql-by-docker)
 

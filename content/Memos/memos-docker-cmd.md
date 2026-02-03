@@ -1,8 +1,6 @@
 ---
 title: Memos Docker命令
-tags:
-  - das
-  - dadd
+tags: ["das", "dadd"]
 date: 2025-02-19
 lastmod: 2025-02-24
 showTitle: Memos Docker命令

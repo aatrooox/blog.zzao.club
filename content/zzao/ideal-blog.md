@@ -2,12 +2,8 @@
 title: 理想的博客站
 date: 2024-11-06
 lastmod: 2025-08-19
-versions:
-  - nitro@2.10.2
-  - nuxt@3.14.0
-tags:
-  - 博客
-  - Nuxt
+versions: ["nitro@2.10.2", "nuxt@3.14.0"]
+tags: ["博客", "Nuxt"]
 description: 建博客就好比装修房子
 showTitle: 理想的博客站
 ---

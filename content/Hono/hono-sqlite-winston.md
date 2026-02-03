@@ -2,10 +2,8 @@
 title: 【Hono】完善：使用sqlite数据库及基于winston的日志持久化
 date: 2025-02-10
 lastmod: 2025-02-12
-tags:
-  - Hono
-versions:
-  - hono@4.5.11
+tags: ["Hono"]
+versions: ["hono@4.5.11"]
 showTitle: 【Hono】完善：使用sqlite数据库及基于winston的日志持久化
 ---
 <br />

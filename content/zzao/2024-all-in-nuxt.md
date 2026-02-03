@@ -3,8 +3,8 @@ title: 2025 年，我打算 All in Nuxt
 date: 2025-01-02
 lastmod: 2025-08-19
 showTitle: 2024-all-in-nuxt
-tags:
-  - Nuxt
+tags: ["Nuxt"]
+
 ---
 最近用 Nuxt 搭建了一个博客站，把 `Obsidian` 的文章无痛搬过去，可算是收了个小尾。
 

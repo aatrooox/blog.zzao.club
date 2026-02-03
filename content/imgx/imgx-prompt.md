@@ -2,8 +2,8 @@
 title: 生成卡片的超长提示词
 date: 2025-03-12
 lastmod: 2025-04-02
-tags:
-  - IMGX
+tags: ["IMGX"]
+
 ---
 ## 提示词
 

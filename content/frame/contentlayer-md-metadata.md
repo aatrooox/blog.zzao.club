@@ -3,8 +3,8 @@ date: 2024-08-18
 lastmod: 2025-08-19
 title: 【contentlayer】兼容不同的md文件metadata的字段
 showTitle: 【contentlayer】兼容不同的md文件metadata的字段
-tags:
-  - Next
+tags: ["Next"]
+
 ---
 markdown顶部可以设置一组元数据，用于解析成作者，发布日期，简介等信息
 

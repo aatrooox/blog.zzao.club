@@ -2,9 +2,7 @@
 title: Nest从TypeORM到Prisma：迁移记录
 description: Prisma初体验
 image: 
-tags:
-  - Nest
-  - Prisma
+tags: ["Nest", "Prisma"]
 category: 技术
 author: zzdaddy
 published: 2023-01-01

@@ -3,9 +3,8 @@ title: Nuxt3.15.2升级报告
 date: 2025-01-16
 lastmod: 2025-08-19
 describtion: Nuxt3.15.2、 NuxtContent 升级踩坑报告
-tags:
-  - Nuxt
-  - issue
+tags: ["Nuxt", "issue"]
+
 ---
 Nuxt3.15.1 升级到 3.15.2 ，同时 nuxt/content@3.0.0-alpha.8 升级到了 3.0.0-alpha.9
 

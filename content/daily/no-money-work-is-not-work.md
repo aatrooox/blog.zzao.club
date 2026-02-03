@@ -2,9 +2,7 @@
 title: “无薪加班，最为致命”
 description: 早早下班
 author: zzdaddy
-tags:
-  - 吐槽
-  - 生活
+tags: ["吐槽", "生活"]
 category: 生活
 published: 2023-12-11 00:00:00
 date: 2024-04-02

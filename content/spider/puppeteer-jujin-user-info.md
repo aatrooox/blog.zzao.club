@@ -2,10 +2,7 @@
 published: 2023-12-11 00:00:00
 title: 使用puppeteer爬取掘金个人信息
 description: 使用puppeteer爬取掘金个人信息
-tags:
-  - 技术
-  - Puppeteer
-  - Node
+tags: ["技术", "Puppeteer", "Node"]
 category: 技术
 date: 2024-01-29
 lastmod: 2025-08-19

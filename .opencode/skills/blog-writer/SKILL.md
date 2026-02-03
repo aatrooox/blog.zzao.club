@@ -81,29 +81,94 @@ description: |
 
 ## 文章前置信息（Frontmatter）
 
+### 必需字段（REQUIRED）
+
+每篇文章的 frontmatter 必须包含以下字段：
+
+| 字段 | 类型 | 说明 | 示例 |
+|------|------|------|------|
+| `title` | string | **中文标题**，用于页面显示 | `从 macOS 迁移到 Windows 开发环境` |
+| `date` | YYYY-MM-DD | 首次发布日期 | `2026-02-03` |
+| `lastmod` | YYYY-MM-DD | 最后修改日期 | `2026-02-03` |
+| `tags` | array | **最多 3 个标签**，精选最核心的标签 | `["Windows", "WSL", "开发环境"]` |
+
+### 可选字段（OPTIONAL）
+
+根据文章类型选择性添加：
+
+| 字段 | 类型 | 何时使用 | 示例 |
+|------|------|----------|------|
+| `versions` | array | **技术文章必须有**，标注框架/库的版本，**最多 3 个** | `["WSL@2", "Ubuntu@22.04", "bun@1.3.7"]` |
+| `group` | string | 系列文章，用于分组 | `"面试题:前端"` 或 `"Nuxt 实战"` |
+| `description` | string | SEO 描述，一句话概括文章内容 | `"完整记录从 macOS 迁移到 Windows 开发环境的全过程"` |
+
+### 完整示例
+
+**技术文章**（必须有 versions）：
 ```yaml
 ---
-title: 中文标题  # 中文标题，用于页面显示
-date: YYYY-MM-DD  # 首次发布日期
-lastmod: YYYY-MM-DD  # 最后修改日期
-tags:
-  - 标签1  # 最多2个标签
-  - 标签2
-versions:  # 可选，如果是技术文章，标注相关技术版本
-  - nuxt@4.0.3
-  - vue@3.5
-description: 一句话描述  # 可选，用于 SEO
-group: 分组名称  # 可选，用于系列文章，如"面试题:前端"
+title: 从 macOS 迁移到 Windows 开发环境
+date: 2026-02-03
+lastmod: 2026-02-03
+tags: ["Windows", "WSL", "开发环境"]
+versions: ["WSL@2", "Ubuntu@22.04", "Node@20"]
 ---
 ```
 
-**重要规则**：
-1. **title 字段是中文**：用于页面显示，如 `稳定是最大的牢笼`
-2. **文件名是英文**：用于生成 URL，如 `stability-is-the-biggest-cage.md`
-3. **文件名和 title 不需要一致**：文件名用英文（URL友好），title 用中文（显示友好）
-4. **不需要 showTitle 字段**：页面会自动从 frontmatter 的 `title` 获取标题
-5. **tags 最多2个**：精选最核心的2个标签
-6. **必须使用中文标点**：文章正文所有标点符号必须是中文标点（`，` `。` `：` `？` `！` 等）
+**生活感悟类文章**（不需要 versions）：
+```yaml
+---
+title: 稳定是最大的牢笼
+date: 2026-02-02
+lastmod: 2026-02-02
+tags: ["认知", "职场"]
+---
+```
+
+**系列文章**（需要 group）：
+```yaml
+---
+title: Nuxt 4 路由最佳实践
+date: 2026-02-03
+lastmod: 2026-02-03
+tags: ["Nuxt", "路由"]
+versions: ["nuxt@4.0.3"]
+group: Nuxt 实战
+---
+```
+
+### 重要规则（CRITICAL）
+
+1. **title 字段是中文**，用于页面显示
+   - ✅ `title: 从 macOS 迁移到 Windows 开发环境`
+   - ❌ `title: migrate-macos-to-windows`
+
+2. **文件名是英文**，用于生成 URL
+   - ✅ 文件名：`migrate-macos-to-windows.md`
+   - ❌ 文件名：`从-macOS-迁移到-Windows.md`
+
+3. **文件名和 title 不需要一致**
+   - 文件名：`migrate-macos-to-windows.md`（URL 友好）
+   - title：`从 macOS 迁移到 Windows 开发环境`（显示友好）
+
+4. **不要添加 showTitle 字段**
+   - 页面会自动从 frontmatter 的 `title` 获取标题
+   - ❌ 不要写：`showTitle: xxx`
+
+5. **技术文章必须有 versions 字段**
+   - 任何涉及框架、库、工具的文章都要标注版本
+   - 格式：`["工具名@版本号"]` 或 `["工具名"]`（如果是通用的）
+   - **最多 3 个**：只列最核心的技术栈
+
+6. **tags 最多 3 个**
+   - 精选最核心的标签，不要贪多
+   - 优先选择已有的标签（保持一致性）
+
+7. **必须使用中文标点**
+   - 文章正文所有标点符号必须是中文标点
+   - ✅ `，` `。` `：` `？` `！` `「」` `《》`
+   - ❌ `,` `.` `:` `?` `!` `""` `<>`
+   - 例外：代码块、英文专有名词内部可用英文标点
 
 ## 存放位置参考
 

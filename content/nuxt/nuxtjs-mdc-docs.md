@@ -2,10 +2,8 @@
 title: 打造 Markdown 的绝美排版：@nuxtjs-mdc 使用指南
 date: 2025-01-13
 lastmod: 2025-02-12
-tags:
-  - Nuxt
-versions:
-  - "@nuxtjs/mdc@0.12.1"
+tags: ["Nuxt"]
+versions: [""@nuxtjs/mdc@0.12.1""]
 showTitle: 打造 Markdown 的绝美排版：@nuxtjs-mdc 使用指南
 ---
 这是一份持续更新的@nuxtjs/mdc的使用说明书，扩充官方文档的同时，更正一些错误信息（因为官方更的不及时）。同时也会涵盖解析 `Makdown` 语法的使用说明。

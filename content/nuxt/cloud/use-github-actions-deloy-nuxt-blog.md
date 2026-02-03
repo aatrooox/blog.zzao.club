@@ -2,9 +2,8 @@
 title: 白嫖一下 Github Actions 打包部署博客
 date: 2025-08-26
 lastmod: 2025-08-26
-tags:
-  - 博客
-  - Nuxt
+tags: ["博客", "Nuxt"]
+
 ---
 之前我的博客一直使用 `Gitea` 来管理代码，然后顺势也配好了 `Gitea` 的 `actions`，推送了指定 `commit msg` 时就会自动打包部署代码。
 

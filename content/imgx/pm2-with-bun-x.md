@@ -2,9 +2,8 @@
 title: 使用 pm2 启动 ipx 服务(bun运行时)
 date: 2025-04-08
 lastmod: 2025-04-08
-tags:
-  - IMGX
-  - Bun
+tags: ["IMGX", "Bun"]
+
 ---
 在给 `imgx` 的预设静态化图片启动服务时，我使用了 `unjs/ipx` 来作为图片服务，这样可以直接进行格式转换和裁剪
 

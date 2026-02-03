@@ -3,8 +3,8 @@ title: 30岁程序员，已经在副业的海洋里遨游了
 date: 2024-03-18
 lastmod: 2025-08-19
 showTitle: 30岁程序员，已经在副业的海洋里遨游了
-tags:
-  - 生活
+tags: ["生活"]
+
 ---
 ![](https://img.zzao.club/article/202411191423718.png)
 

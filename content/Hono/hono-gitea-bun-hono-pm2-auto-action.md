@@ -2,10 +2,8 @@
 title: 【Hono】Gitea+Bun+Hono+Pm2 自动化部署后记
 date: 2025-02-10
 lastmod: 2025-02-12
-tags:
-  - Hono
-versions:
-  - hono@4.5.11
+tags: ["Hono"]
+versions: ["hono@4.5.11"]
 showTitle: 【Hono】Gitea+Bun+Hono+Pm2 自动化部署后记
 ---
 <br />

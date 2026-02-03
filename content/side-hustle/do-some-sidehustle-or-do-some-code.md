@@ -4,10 +4,7 @@ author: zzdaddy
 description: 做内容！做内容！做内容！做内容！做内容！做内容！
 published: 2024-07-03 14:48:46
 category: 生活
-tags:
-  - 产品
-  - 副业
-  - 思考
+tags: ["产品", "副业", "思考"]
 date: 2024-07-03
 lastmod: 2025-02-12
 showTitle: 花时间研究赚不到钱的副业，还是花时间做个没人用的产品

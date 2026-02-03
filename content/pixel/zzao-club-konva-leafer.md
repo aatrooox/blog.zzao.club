@@ -2,9 +2,7 @@
 title: 产品进度：像素风编辑器从Konva到Leafer
 description: leafer初体验
 author: zzdaddy
-tags:
-  - Vue3
-  - Leafer
+tags: ["Vue3", "Leafer"]
 category: 技术
 published: 2023-12-11
 date created: 2023-12-28

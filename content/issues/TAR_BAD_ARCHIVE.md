@@ -3,8 +3,8 @@ title: nuxt/content运行或编译时报错unhandledRejection
 date: 2024-12-27
 lastmod: 2025-02-28
 showTitle: TAR_BAD_ARCHIVE
-tags:
-  - issue
+tags: ["issue"]
+
 ---
 
 ```shell

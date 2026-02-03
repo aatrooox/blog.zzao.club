@@ -1,9 +1,7 @@
 ---
 title: 使用puppeteer爬取掘金热榜
 description: 使用puppeteer爬取掘金热榜
-tags:
-  - Puppeteer
-  - Node
+tags: ["Puppeteer", "Node"]
 category: 技术
 published: 2023-12-11 00:00:00
 date: 2025-02-12 12:57:38

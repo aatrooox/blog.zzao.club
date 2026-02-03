@@ -2,9 +2,7 @@
 title: 浅谈卡片类应用的最后一步
 date: 2024-11-06
 lastmod: 2025-02-12
-tags:
-  - IMGX
-  - Nuxt
+tags: ["IMGX", "Nuxt"]
 showTitle: 浅谈卡片类应用的最后一步
 ---
 最近一年出现了很多大同小异的文字生成卡片类的App和网站。

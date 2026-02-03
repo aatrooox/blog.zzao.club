@@ -2,9 +2,8 @@
 title: Vibe Coding 一天内完成图片编辑工具（ Trae 又行了？
 date: 2025-07-22
 lastmod: 2025-08-19
-tags:
-  - IMGX
-  - Vibe-Code
+tags: ["IMGX", "Vibe-Code"]
+
 ---
 最近一段时间高强度使用 `Cursor`、`Kiro`、`Trae` 这三大编辑器。
 

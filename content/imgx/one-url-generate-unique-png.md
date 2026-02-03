@@ -3,9 +3,8 @@ title: 一行 URL 动态生成生成封面，免费、开源、高效
 date: 2025-02-19
 lastmod: 2025-08-19
 showTitle: 一行 URL 动态生成生成封面，免费、开源、高效
-tags:
-  - Nuxt
-  - IMGX
+tags: ["Nuxt", "IMGX"]
+
 ---
 ## 背景
 

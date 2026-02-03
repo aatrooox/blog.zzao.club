@@ -2,11 +2,8 @@
 title: Nuxt Content 实现 TOC 组件
 date: 2025-05-13
 lastmod: 2025-08-21
-versions:
-  - "@nuxt/content@3.4.0"
-  - nuxt@3.17.2
-tags:
-  - Nuxt
+versions: [""@nuxt/content@3.4.0"", "nuxt@3.17.2"]
+tags: ["Nuxt"]
 description: Nuxt Content 中配置和使用 toc
 ---
 `TOC` 全称 `table of contents` ，指的是一篇文章内的 `h1`、`h2`、`h3` 等标题的导航，用于快速跳转到对应的标题处。

@@ -4,9 +4,7 @@ published: 2023-12-14
 author: 枣把儿
 description: 像素厂 Pixed Pic Pro 迭代记录
 category: 早早集市
-tags:
-  - 早早集市
-  - Vue3
+tags: ["早早集市", "Vue3"]
 lastmod: 2025-08-19
 date: 2023-12-14
 showTitle: iKun集合！Pixeled Pic Pro 前端迭代篇（一）

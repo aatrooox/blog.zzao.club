@@ -1,8 +1,7 @@
 ---
 title: Astro建站入门指南
 description: Astro初体验
-tags:
-  - Astro
+tags: ["Astro"]
 category: 技术
 published: 2023-12-11 00:00:00
 date: 2024-02-05

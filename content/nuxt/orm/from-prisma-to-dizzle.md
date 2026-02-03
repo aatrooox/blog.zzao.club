@@ -2,8 +2,8 @@
 title: Prisma 迁移到 Dizzle 后的基线问题
 date: 2025-08-15
 lastmod: 2025-08-20
-tags:
-  - Node
+tags: ["Node"]
+
 ---
 把 `prisma` 迁移到了 `dizzle` 
 

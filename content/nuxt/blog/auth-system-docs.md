@@ -2,9 +2,8 @@
 title: 博客鉴权机制详细文档
 date: 2025-08-21
 lastmod: 2025-08-21
-tags:
-  - 博客
-  - Nuxt
+tags: ["博客", "Nuxt"]
+
 ---
 ## 概述
 

@@ -2,9 +2,7 @@
 title: 基于原生 DOM 实现Markdown复制样式到公众号
 date: 2024-11-03
 lastmod: 2025-02-12
-tags:
-  - 博客
-  - Markdown
+tags: ["博客", "Markdown"]
 showTitle: 告别在线Markdown格式转换！基于原生 DOM 实现Markdown复制样式到公众号
 ---
 很多人选择了`markdown`语法来写文章，因为它可以在纯文字的基础上添加少量的语法，就能渲染出更美观的样式，并且可以自己扩展样式。

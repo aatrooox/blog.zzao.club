@@ -2,8 +2,8 @@
 title: nuxt + prisma 编译时报错
 date: 2025-02-28
 lastmod: 2025-08-19
-tags:
-  - issue
+tags: ["issue"]
+
 ---
 浏览器控制台报错：
 

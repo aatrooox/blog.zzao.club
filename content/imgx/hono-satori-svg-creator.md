@@ -2,12 +2,8 @@
 title: 基于Hono和Satori的后端生成SVG图片简易方案
 date: 2024-11-07
 lastmod: 2025-08-19
-versions:
-  - hono@4.5.11
-  - satori@0.11.2
-tags:
-  - Hono
-  - IMGX
+versions: ["hono@4.5.11", "satori@0.11.2"]
+tags: ["Hono", "IMGX"]
 showTitle: 基于Hono和Satori的后端生成SVG图片简易方案
 ---
 `Satori` （Vercel的）是一个可以把`HTML+CSS`生成`SVG`的一个库。

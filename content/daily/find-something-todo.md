@@ -4,9 +4,7 @@ author: zzdaddy
 description: 当前任何的焦虑都来源于金钱
 published: 2024-07-09 15:43:28
 category: 生活
-tags:
-  - 生活
-  - 感悟
+tags: ["生活", "感悟"]
 date: 2024-07-09
 lastmod: 2025-02-12
 showTitle: 找个长期的事做

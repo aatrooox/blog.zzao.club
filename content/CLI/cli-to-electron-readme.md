@@ -2,8 +2,7 @@
 title: Cli工具集成到Electron客户端
 date: 2025-04-10
 lastmod: 2025-08-19
-tags:
-  - Cli
+tags: ["Cli"]
 description: 把基于JS/TS的命令行工具，转换为Electron客户端，无需重写代码，还能大大提升非开发者使用体验
 ---
 ## 背景

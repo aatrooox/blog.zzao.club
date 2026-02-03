@@ -2,8 +2,7 @@
 title: 本地版微博?开源版Flomo？服务器自建Memos有什么好处
 description: 折腾一下Memos，这是部署篇
 published: 2024-07-11 17:44:06
-tags:
-  - Memos
+tags: ["Memos"]
 category: 技术
 date: 2024-07-11
 lastmod: 2025-02-12

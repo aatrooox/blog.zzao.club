@@ -2,10 +2,8 @@
 title: 【Hono】完善：参数校验+响应标准化
 date: 2025-02-10
 lastmod: 2025-02-12
-tags:
-  - Hono
-versions:
-  - hono@4.5.11
+tags: ["Hono"]
+versions: ["hono@4.5.11"]
 showTitle: 【Hono】完善：参数校验+响应标准化
 ---
 <br />

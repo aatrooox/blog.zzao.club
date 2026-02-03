@@ -3,9 +3,7 @@ title: 🚀提升效率！早早下班！Sharp+Picgo实现压缩后上传并替�
 published: 2023-01-01
 author: zzdaddy
 description: sharp压缩图片，picgo自动上传
-tags:
-  - 技术
-  - Cli
+tags: ["技术", "Cli"]
 category: 技术
 lastmod: 2025-08-19
 date: 2023-12-13

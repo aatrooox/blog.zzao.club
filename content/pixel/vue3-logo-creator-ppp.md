@@ -4,10 +4,7 @@ author: 枣把儿
 title: Vue3项目实战：像素风LOGO编辑器 Pixeled Pic Pro
 description: 一个基于 LeaferUI 的像素风编辑器
 category: 早早集市
-tags:
-  - 产品
-  - 早早集市
-  - Vue3
+tags: ["产品", "早早集市", "Vue3"]
 date: 2023-12-11
 lastmod: 2025-08-19
 showTitle: Vue3项目实战：像素风LOGO编辑器 Pixeled Pic Pro

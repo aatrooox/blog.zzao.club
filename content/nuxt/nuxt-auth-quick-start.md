@@ -2,8 +2,7 @@
 title: Nuxt4 中使用 NuxtAuth 实现 Github 登录
 date: 2025-02-21
 lastmod: 2025-08-19
-tags:
-  - Nuxt
+tags: ["Nuxt"]
 description: NuxtAuth 使用指南，快速实现Github登录
 ---
 

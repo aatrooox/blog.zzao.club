@@ -3,8 +3,8 @@ title: 【Hono】Bun竟然能这么快？搭配HonoJS的入门指南
 date: 2025-02-10
 lastmod: 2025-04-02
 showTitle: 【Hono】Bun竟然能这么快？搭配HonoJS的入门指南
-tags:
-  - Hono
+tags: ["Hono"]
+
 ---
 <br />
 

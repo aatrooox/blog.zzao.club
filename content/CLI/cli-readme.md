@@ -2,8 +2,8 @@
 title: Z-CLI 使用说明
 date: 2025-03-21
 lastmod: 2025-08-19
-tags:
-  - Cli
+tags: ["Cli"]
+
 ---
 ## 安装
 

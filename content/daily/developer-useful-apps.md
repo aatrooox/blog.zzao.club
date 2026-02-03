@@ -1,9 +1,7 @@
 ---
 title: 推荐几款程序员常用的笔记App
 description: 热爱就是唯一的意义
-tags:
-  - 技术
-  - Memos
+tags: ["技术", "Memos"]
 category: 技术
 date: 2024-07-19
 lastmod: 2025-08-19

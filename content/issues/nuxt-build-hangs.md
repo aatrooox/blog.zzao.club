@@ -2,8 +2,8 @@
 title: 关于Nuxt4 build 后终端没有退出的问题
 date: 2025-08-14
 lastmod: 2025-08-14
-tags:
-  - issue
+tags: ["issue"]
+
 ---
 最近几日，我用 `Nuxt4` + `Tauri2` 写了一个小 Demo。
 

@@ -2,10 +2,8 @@
 title: 【Hono】优化：提取配置项及公共函数
 date: 2025-02-10
 lastmod: 2025-02-12
-tags:
-  - Hono
-versions:
-  - hono@4.5.11
+tags: ["Hono"]
+versions: ["hono@4.5.11"]
 showTitle: 【Hono】优化：提取配置项及公共函数
 ---
 #

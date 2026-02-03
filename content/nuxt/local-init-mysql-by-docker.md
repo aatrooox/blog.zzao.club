@@ -2,11 +2,8 @@
 title: 为 Nuxt 应用 MySQL 和 Redis 服务
 date: 2025-02-27 10:41:22
 lastmod: 2025-03-02 10:25:41
-tags:
-  - Docker
-versions:
-  - macos
-  - docker
+tags: ["Docker"]
+versions: ["macos", "docker"]
 description: Nuxt中如何使用Mysql和Redis服务，Docker配置详解
 ---
 最近开始陆续架设数据库服务，打算起一个mysql服务，不同应用之间分库。自己管自己的。

@@ -80,14 +80,6 @@ WSL 默认装 C 盘，空间不够可以迁移。我的迁移流程是：
 
 由于使用镜像网络模式，WSL 可以直接通过 `127.0.0.1` 访问 Windows 的代理端口。
 
-### 文件系统挂载
-
-Windows 磁盘自动挂载到 WSL：
-
-- C 盘 → `/mnt/c`
-- D 盘 → `/mnt/d`
-- 以此类推
-
 ## 前端开发环境配置
 
 ### 包管理器策略
@@ -145,6 +137,7 @@ pnpm dev               # 启动开发服务器
   export HTTPS_PROXY="http://127.0.0.1:7890"
   export ALL_PROXY="socks5://127.0.0.1:7890"
   ```
+  也可以保留一个 unproxy 函数用于清除代理
 - fnm 自动切换 Node 版本：`eval "$(fnm env --use-on-cd)"`
 
 ### 字体设置（重要）
@@ -161,11 +154,9 @@ Powerlevel10k 需要 Nerd Fonts。推荐 **MesloLGS NF**，下载地址：https:
 
 **常用扩展**（在 WSL 端）：
 - ESLint、Prettier：代码检查和格式化
-- Volar：Vue 3 开发
+- Vue(Official)：Vue 3 开发
 - Tailwind CSS IntelliSense：类名提示
 - GitLens：Git 增强
-- GitHub Copilot：AI 补全
-- GitHub Actions：CI/CD 管理
 
 ### 从 WSL 启动 VSCode
 
@@ -246,4 +237,4 @@ markdown编辑器选的 `milkdown`，所见即所得模式。 复制样式到公
 
 ***
 
-好了结束，有问题欢迎交流。
+好了分享结束，有问题欢迎评论群交流。

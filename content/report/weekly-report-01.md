@@ -3,8 +3,8 @@ title: 集市周报 Vol.01
 date: 2025-05-12
 lastmod: 2025-05-12
 description: 最近的总结
-tags:
-  - 周报
+tags: ["周报"]
+
 ---
 # 集市周报 Vol.01
 

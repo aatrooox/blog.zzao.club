@@ -2,9 +2,8 @@
 title: IMGX 更新动态贴
 date: 2025-03-11
 lastmod: 2025-08-19
-tags:
-  - IMGX
-  - Nuxt
+tags: ["IMGX", "Nuxt"]
+
 ---
 ![](https://img.zzao.club/article/202503121139543.png)
 ## 回顾

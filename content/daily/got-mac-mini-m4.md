@@ -3,8 +3,8 @@ title: 新买了 Mac Mini !!
 date: 2024-12-03
 lastmod: 2025-04-02
 showTitle: 新买了 Mac Mini !!
-tags:
-  - 生活
+tags: ["生活"]
+
 ---
 很久没有更新设备了，这次新买了最低配的 `mac mini` 16+256。教育优惠 `3749` 到手！
 

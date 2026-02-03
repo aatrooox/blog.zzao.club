@@ -1,10 +1,7 @@
 ---
 title: 当一个程序员开始做了一款产品
 published: 2023-12-28
-tags:
-  - 产品
-  - 早早集市
-  - 生活
+tags: ["产品", "早早集市", "生活"]
 author: zzdaddy
 description: 生活里的方方面面是一个大桶里的小桶，某个方面做的够好（加水），大桶里的水位也会跟着上涨
 image: https://s11.ax1x.com/2024/02/20/pFY5yFA.png

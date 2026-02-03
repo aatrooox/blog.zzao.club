@@ -2,9 +2,8 @@
 title: Vercel 收购 NuxtLabs！Nuxt UI Pro 即将免费！
 date: 2025-07-09
 lastmod: 2025-08-21
-tags:
-  - 新闻
-  - Nuxt
+tags: ["新闻", "Nuxt"]
+
 ---
 `Vercel` 收购了 `Nuxt` 以及背后的核心团队 `NuxtLabs` ! 
 

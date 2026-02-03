@@ -2,12 +2,8 @@
 title: 基于 Nuxt3 + Obsidian 搭建个人博客
 date: 2024-11-06
 lastmod: 2025-08-19
-tags:
-  - 博客
-  - Nuxt
-versions:
-  - nuxt@3.14.0
-  - nitro@2.10.2
+tags: ["博客", "Nuxt"]
+versions: ["nuxt@3.14.0", "nitro@2.10.2"]
 describtion: NuxtContent 非常适合把已有的md数据源搭建为个人博客，本文介绍如何使用Obsidian来写文章，Nuxt3来自动部署个人博客
 ---
 `Nuxt`是一个用Vue来编写的，可用来创建类型安全、高性能和生产级全栈 Web 应用程序和网站的全栈框架。后端是 `Nitro`，一个可以被单独使用的Web服务端框架。

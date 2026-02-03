@@ -2,12 +2,8 @@
 title: Nuxt 全栈开发·自定义响应和全局错误处理
 date: 2025-06-24
 lastmod: 2025-06-24
-tags:
-  - Nuxt
-  - Nitro
-versions:
-  - nuxt@3.17.2
-  - nitro@2.11.12
+tags: ["Nuxt", "Nitro"]
+versions: ["nuxt@3.17.2", "nitro@2.11.12"]
 description: 使用 Nuxt 全栈开发时，如何像NestJS 一样优雅的设置统一的响应体，以及如何捕获全局 Error
 ---
 使用 `Nuxt` 全栈开发时，如何像 `NestJS` 一样优雅的设置统一的响应体，以及如何捕获全局 Error

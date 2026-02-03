@@ -2,8 +2,8 @@
 title: Nuxt 中设置代理的正确姿势
 date: 2025-03-20
 lastmod: 2025-08-19
-tags:
-  - Nuxt
+tags: ["Nuxt"]
+
 ---
 通常在一个前端项目中，后端接口可能不是和前端 `Nuxt` 集成在一起的（`Nitro`)
 

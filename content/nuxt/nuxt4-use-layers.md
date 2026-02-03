@@ -2,10 +2,8 @@
 title: 使用 Layers 扩展你的 Nuxt4 应用
 date: 2025-02-10
 lastmod: 2025-08-19
-tags:
-  - Nuxt
-versions:
-  - nuxt@3.15.2
+tags: ["Nuxt"]
+versions: ["nuxt@3.15.2"]
 showTitle: 使用 Layers 扩展你的 Nuxt4 应用
 ---
 ## 面对一个臃肿的页面或项目，你会如何简化重构、扩展它？

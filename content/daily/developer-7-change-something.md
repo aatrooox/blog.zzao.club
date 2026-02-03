@@ -2,10 +2,7 @@
 title: 做程序员 7 年了，你改变了多少
 published: 2023-12-11 00:00:00
 description: 从入门到入土
-tags:
-  - 程序员
-  - 吐槽
-  - 生活
+tags: ["程序员", "吐槽", "生活"]
 author: zzdaddy
 category: 生活
 date: 2024-03-23

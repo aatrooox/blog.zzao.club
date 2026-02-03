@@ -3,10 +3,7 @@ title: 2024年了，副业可能还是要慢慢做
 description: 想急也急不得
 author: zzdaddy
 published: 2023-12-11 00:00:00
-tags:
-  - 副业
-  - 生活
-  - 吐槽
+tags: ["副业", "生活", "吐槽"]
 category: 副业
 date: 2024-03-22
 lastmod: 2025-08-19

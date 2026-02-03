@@ -2,9 +2,7 @@
 title: Memos自建服务入门指南
 description: 基于某个版本魔改自己的Memos
 published: 2024-07-30 14:14:16
-tags:
-  - 技术
-  - Memos
+tags: ["技术", "Memos"]
 category: 技术
 date: 2024-07-25
 lastmod: 2025-02-12

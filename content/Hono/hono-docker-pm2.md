@@ -2,10 +2,8 @@
 title: 【Hono】部署篇 Docker+pm2部署
 date: 2025-02-10
 lastmod: 2025-05-15
-tags:
-  - Hono
-versions:
-  - hono@4.5.11
+tags: ["Hono"]
+versions: ["hono@4.5.11"]
 showTitle: 【Hono】部署篇 Docker+pm2部署
 ---
 <br />

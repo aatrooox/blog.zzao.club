@@ -3,8 +3,8 @@ title: 人不 EMO 枉青年
 date: 2025-03-27
 lastmod: 2025-03-27
 description: 人不 EMO 枉青年
-tags:
-  - 生活
+tags: ["生活"]
+
 ---
 最近时不时加个班，难受！🤦
 

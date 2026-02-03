@@ -2,10 +2,7 @@
 title: 30岁的身体，18岁的灵魂，60岁的心态
 author: zzdaddy
 description: 这一届的年轻人格外拉跨
-tags:
-  - 吐槽
-  - 生活
-  - 感悟
+tags: ["吐槽", "生活", "感悟"]
 category: 生活
 published: 2023-12-11 00:00:00
 date: 2024-04-08

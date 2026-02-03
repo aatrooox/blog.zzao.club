@@ -3,9 +3,7 @@ published: 2023-12-13
 author: 枣把儿
 title: 一个产品要有一个“好底子”：Nest项目搭建
 description: Nest 项目搭建
-tags:
-  - Node
-  - Nest
+tags: ["Node", "Nest"]
 category: 技术
 date created: 2023-12-13
 lastmod: 2025-08-19

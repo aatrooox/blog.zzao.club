@@ -2,10 +2,8 @@
 title: Nuxt3全栈开发 · $fetch、useFetch、useAsyncData 你用对了吗？
 date: 2024-11-27
 lastmod: 2025-08-19
-tags:
-  - Nuxt
-versions:
-  - nuxt@3.14.0
+tags: ["Nuxt"]
+versions: ["nuxt@3.14.0"]
 description: Nuxt3中 $fetch、useFetch、useAsyncData 的使用区别，各自的用法，以及最佳实践
 ---
 Nuxt3 中有三种获取数据的方式，看起来有点绕，那实际使用中有什么区别，应该怎样使用呢？

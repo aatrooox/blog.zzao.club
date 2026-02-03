@@ -2,9 +2,7 @@
 title: 目前对我而言开发Nuxt最舒适的UI框架
 date: 2025-05-13
 lastmod: 2025-08-19
-tags:
-  - Nuxt
-  - UI
+tags: ["Nuxt", "UI"]
 description: 选择 shadcn/vue 和 inspira-ui 的理由
 ---
 对于 `Nuxt` 来说，有很多前端 UI 框架可以选择。

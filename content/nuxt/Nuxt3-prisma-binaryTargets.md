@@ -2,12 +2,8 @@
 title: Nuxt3中使用prisma binaryTargets多环境配置
 date: 2024-11-15
 lastmod: 2025-04-09
-tags:
-  - 博客
-  - Nuxt
-versions:
-  - nuxt@3.14.0
-  - "@prisma/client@5.22.0"
+tags: ["博客", "Nuxt"]
+versions: ["nuxt@3.14.0", ""@prisma/client@5.22.0""]
 description: Nuxt3中使用prisma binaryTargets多环境配置
 ---
 **场景： 本地使用macos开发，服务器是Debian12，打包时需要本地打包再上传**

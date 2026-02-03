@@ -2,9 +2,7 @@
 title: 使用 Docker Compose 部署 Nest 应用
 description: Docker compose使用指南
 published: 2023-01-01
-tags:
-  - Nest
-  - Docker
+tags: ["Nest", "Docker"]
 category: 技术
 image: 
 lastmod: 2025-08-19
