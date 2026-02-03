@@ -1,21 +1,64 @@
 ---
 title: 从 macOS 迁移到 Windows 开发环境
 date: 2026-02-03
-lastmod: 2026-02-03
+lastmod: "2026-02-03T07:33:15.721Z"
 tags: ["Windows", "WSL", "开发环境"]
-versions: ["WSL@2", "node@20.19.5", "bun@1.3.7"]
-description: 完整记录从 macOS 迁移到 Windows 开发环境的全过程，包括 WSL 安装、磁盘迁移、前端环境配置、zsh 美化以及 OpenCode 开发工具配置
 ---
 
-作为一个在 macOS 上开发多年的前端开发者，最近因为某些原因决定尝试 Windows 作为主力开发机。本文详细记录了整个迁移过程，希望能给同样需要迁移的朋友一些参考。
+![1.00](https://imgx.zzao.club/api/103/%E4%BB%8E*MacOS*%E8%BF%81%E7%A7%BB%E5%88%B0*Windows*?scale=2)
 
-## 为什么选择 WSL？
+作为一个在 macOS 上开发多年的前端开发者，最近决定尝试 Windows 作为主力开发机。本文详细记录了整个迁移过程和我常用的配置、软件，希望能给同样需要的朋友一些参考。
 
-Windows 原生的开发体验一直被诟病，但 WSL2（Windows Subsystem for Linux 2）的出现彻底改变了这个局面。WSL2 提供了接近原生 Linux 的开发体验，同时又能享受 Windows 的生态和硬件兼容性。
+## windows 开发体验
+
+Windows 原生的开发体验一直被诟病，我从换到 windows 后也确实发现了一些问题。
+
+本来我打算直接使用 WSL2 ，不想让公司的 vpn 软件在系统里随便拉屎。 但是没解决如何把这个软件安装进 debian 里这个问题，所以最后还是破罐子破摔，都装 windows 去了。
+
+刚开始，`pwsh` 配上`oh-my-pwsh`之后视觉上效果还是可以的。
+
+但是自带终端、vscode终端、vscode项目内的一些脚本比如 husky，环境竟然都不一致，很无语。 哪怕配好了node环境，husky 里的 precommit 也没法正常使用 node 命令。
+
+并且后面在各种项目里大量尝试 opencode + oh-my-opencode (omo)，发现内存占用特别高，开的窗口多了就会崩溃。（换了wsl + ubuntu 后改善很多）
+
+于是找了个时间，把系统整个重装了。
+
+以下就是我整个wsl/ubuntu/开发环境/软件等配置的分享。
 
 ## WSL 安装过程
 
-### 1. 启用 WSL 功能
+### 安装方式选择
+
+WSL 提供了两种安装方法：
+
+**方法一：一键安装（推荐）**
+
+如果你使用 **Windows 11** 或 **Windows 10 2004+** 版本，可以直接使用一键安装命令：
+
+```powershell
+# 以管理员身份打开 PowerShell，执行一条命令即可
+wsl --install
+```
+
+这个命令会自动完成以下操作：
+
+* 启用 WSL 和虚拟机平台功能
+
+* 下载并安装 Linux 内核更新包
+
+* 将 WSL 2 设置为默认版本
+
+* 安装 Ubuntu 发行版（最新版本）
+
+安装完成后重启电脑即可使用。**Windows 11 系统已经默认设置为 WSL2，无需手动设置版本。**
+
+**方法二：手动安装**
+
+如果你的系统版本较老，或者需要更精细的控制，可以使用手动安装方式。下面详细说明手动安装的每一步。
+
+### 手动安装步骤
+
+#### 1. 启用 WSL 和虚拟机平台功能
 
 以管理员身份打开 PowerShell，执行：
 
@@ -30,7 +73,7 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 Restart-Computer
 ```
 
-### 2. 设置 WSL2 为默认版本
+#### 2. 设置 WSL2 为默认版本（可选）
 
 重启后，继续在 PowerShell 中执行：
 
@@ -38,7 +81,9 @@ Restart-Computer
 wsl --set-default-version 2
 ```
 
-### 3. 安装 Ubuntu 22.04
+> **注意**：如果你使用的是 Windows 11，系统通常已经默认设置为 WSL2，可以跳过这一步。
+
+#### 3. 安装 Ubuntu 22.04
 
 ```powershell
 # 列出可用的发行版
@@ -52,9 +97,7 @@ wsl --install -d Ubuntu-22.04
 
 ### 4. 验证安装
 
-```bash
-wsl --list --verbose
-```
+验证 WSL 安装：`wsl --list --verbose`
 
 应该能看到 Ubuntu-22.04 的版本为 2，状态为 Running。
 
@@ -140,19 +183,64 @@ systemd=true
 
 启用 systemd 后，可以使用 `systemctl` 管理服务，就像在真实的 Linux 系统中一样。
 
-修改后需要重启 WSL：
-
-```powershell
-wsl --shutdown
-```
+修改后需要重启 WSL：`wsl --shutdown`
 
 ### 网络配置
 
-WSL2 默认会设置 NAT 网络，通常不需要额外配置。挂载点：
+#### 使用镜像网络模式
 
-- C 盘：`/mnt/c`
-- D 盘：`/mnt/d`
-- 以此类推...
+WSL2 默认使用 NAT 网络，但镜像网络模式能提供更好的网络体验，让 WSL 和 Windows 共享同一个网络栈。
+
+> 在开始目录直接搜索wsl settings也可以可视化的勾选这些配置
+
+在 `/etc/wsl.conf` 中添加网络配置：
+
+```ini
+[boot]
+systemd=true
+
+[network]
+# 启用镜像网络模式
+networkingMode=mirrored
+```
+
+**镜像网络的优势**：
+
+* WSL 和 Windows 共享相同的 IP 地址
+
+* 更好的网络性能
+
+* 简化端口转发配置
+
+* 更接近原生 Linux 的网络体验
+
+修改后需要重启 WSL：`wsl --shutdown`
+
+#### 代理配置
+
+如果你使用 Clash for Windows 等代理工具，需要在 WSL 中配置代理。我的配置是：
+
+**Windows 端（Clash for Windows）**：
+
+* ✅ 开启"系统代理"
+
+* ❌ 不开启 TUN 模式
+
+* 默认监听端口：7890（HTTP/HTTPS）、7891（SOCKS5）
+
+**WSL 端配置**：在 `.zshrc` 中配置代理环境变量（见下文 Zsh 配置章节）。
+
+由于使用镜像网络模式，WSL 可以直接通过 `127.0.0.1` 访问 Windows 的代理端口，无需获取 Windows 的 IP 地址。
+
+#### 文件系统挂载
+
+Windows 磁盘会自动挂载到 WSL：
+
+* C 盘：`/mnt/c`
+
+* D 盘：`/mnt/d`
+
+* 以此类推...
 
 可以在 Linux 中直接访问 Windows 文件系统。
 
@@ -176,12 +264,7 @@ curl -fsSL https://bun.sh/install | bash
 
 Bun 会自动安装到 `~/.bun`，并配置环境变量。
 
-验证安装：
-
-```bash
-bun --version
-# 1.3.7
-```
+验证安装：`bun --version`（输出：`1.3.7`）
 
 ### 安装 fnm（Fast Node Manager）
 
@@ -206,17 +289,14 @@ eval "$(fnm env --use-on-cd)"
 安装 Node.js：
 
 ```bash
-fnm install 20
-fnm use 20
-fnm default 20
+fnm install 22
+fnm use 22
+fnm default 22
 ```
 
-验证：
-
-```bash
-fnm --version  # 1.38.1
-node --version # v20.19.5
-```
+验证安装：
+- fnm 版本：`fnm --version`（输出：`1.38.1`）
+- Node 版本：`node --version`（输出：`v22.21.1`）
 
 ### 安装 pnpm
 
@@ -228,11 +308,7 @@ bun install -g pnpm
 npm install -g pnpm
 ```
 
-验证：
-
-```bash
-pnpm --version # 10.11.0
-```
+验证安装：`pnpm --version`（输出：`10.11.0`）
 
 ### 实际使用建议
 
@@ -257,18 +333,11 @@ sudo apt update
 sudo apt install zsh -y
 ```
 
-验证安装：
-
-```bash
-zsh --version
-# zsh 5.8.1 (x86_64-ubuntu-linux-gnu)
-```
+验证安装：`zsh --version`（输出：`zsh 5.8.1 (x86_64-ubuntu-linux-gnu)`）
 
 ### 设置 Zsh 为默认 Shell
 
-```bash
-chsh -s $(which zsh)
-```
+设置 Zsh 为默认 Shell：`chsh -s $(which zsh)`
 
 重启终端生效。
 
@@ -290,11 +359,7 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$
 ZSH_THEME="powerlevel10k/powerlevel10k"
 ```
 
-首次启动会自动运行配置向导：
-
-```bash
-exec zsh
-```
+首次启动会自动运行配置向导：`exec zsh`
 
 根据提示选择你喜欢的样式。我选择的是 **Powerline** 风格。
 
@@ -349,17 +414,19 @@ eval "$(fnm env --use-on-cd)"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# 代理函数（根据需要取消注释）
-# 默认启用代理
+# 代理配置（默认启用）
+# Clash for Windows 配置：开启系统代理，不开启 TUN 模式
+# 镜像网络模式下，WSL 可直接通过 127.0.0.1 访问 Windows 代理
 export HTTP_PROXY="http://127.0.0.1:7890"
 export HTTPS_PROXY="http://127.0.0.1:7890"
 export ALL_PROXY="socks5://127.0.0.1:7890"
 
+# 关闭代理的函数
 unproxy() {
     unset HTTP_PROXY
     unset HTTPS_PROXY
     unset ALL_PROXY
-    echo "Proxy disabled"
+    echo "代理已关闭"
 }
 
 # 语法高亮（放在配置文件最后）
@@ -371,25 +438,29 @@ source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ### 插件使用技巧
 
-| 插件 | 功能 | 使用示例 |
-|------|------|---------|
-| **git** | Git 命令简化 | `gst`（git status）、`gco`（git checkout）、`gp`（git push） |
-| **zsh-autosuggestions** | 根据历史自动建议命令 | 输入 `cd pro`，自动提示之前输入过的 `cd projects/` |
-| **z** | 智能目录跳转 | `z blog` 会跳转到常用的 blog 目录 |
-| **extract** | 万能解压 | `extract file.tar.gz`、`extract file.zip` 都能识别 |
+| 插件                      | 功能         | 使用示例                                                 |
+| ----------------------- | ---------- | ---------------------------------------------------- |
+| **git**                 | Git 命令简化   | `gst`（git status）、`gco`（git checkout）、`gp`（git push） |
+| **zsh-autosuggestions** | 根据历史自动建议命令 | 输入 `cd pro`，自动提示之前输入过的 `cd projects/`                |
+| **z**                   | 智能目录跳转     | `z blog` 会跳转到常用的 blog 目录                             |
+| **extract**             | 万能解压       | `extract file.tar.gz`、`extract file.zip` 都能识别        |
 
 ### 终端字体配置（重要！）
 
 Powerlevel10k 需要支持 Nerd Fonts 的字体才能正常显示图标。
 
 推荐字体：
-- **MesloLGS NF**（Powerlevel10k 推荐）
-- **JetBrains Mono Nerd Font**
-- **Fira Code Nerd Font**
 
-下载地址：https://www.nerdfonts.com/font-downloads
+* **MesloLGS NF**（Powerlevel10k 推荐）
+
+* **JetBrains Mono Nerd Font**
+
+* **Fira Code Nerd Font**
+
+下载地址：<https://www.nerdfonts.com/font-downloads>
 
 在 Windows Terminal 中设置字体：
+
 1. 打开设置（`Ctrl + ,`）
 2. 找到 Ubuntu-22.04 配置
 3. 外观 → 字体 → 选择 MesloLGS NF
@@ -400,36 +471,32 @@ VSCode 对 WSL 的支持非常完善，通过 Remote - WSL 扩展可以获得接
 
 ### 安装 VSCode（Windows 端）
 
-下载安装：https://code.visualstudio.com/
+下载安装：<https://code.visualstudio.com/>
 
 ### 安装 Remote - WSL 扩展
 
 在 VSCode 中安装：
-- **Remote - WSL**（必装）
+
+* **Remote - WSL**（必装）
 
 ### 从 WSL 启动 VSCode
 
-在 WSL 终端中：
+在 WSL 终端中使用以下命令：
 
-```bash
-# 在当前目录打开 VSCode
-code .
-
-# 打开指定目录
-code ~/projects/my-project
-```
+- 在当前目录打开 VSCode：`code .`
+- 打开指定目录：`code ~/projects/my-project`
 
 首次运行会自动在 WSL 中安装 VSCode Server。
 
 ### WSL 端必装扩展
 
-我的 WSL Ubuntu-22.04 扩展列表：
+我的 WSL Ubuntu-22.04 扩展列表可通过以下命令查看：
 
 ```bash
 code --list-extensions
 ```
 
-输出：
+输出如下（示例）：
 
 ```
 bradlc.vscode-tailwindcss          # Tailwind CSS 智能提示
@@ -446,15 +513,15 @@ vue.volar                          # Vue 3 语言支持
 
 ### 扩展说明
 
-| 扩展 | 用途 | 必要性 |
-|------|------|--------|
-| **ESLint** | 代码规范检查，配合项目 `.eslintrc` | ⭐⭐⭐⭐⭐ |
-| **Prettier** | 代码格式化（虽然项目用 ESLint 格式化，但某些场景还是需要） | ⭐⭐⭐⭐ |
-| **Volar** | Vue 3 开发必备，类型检查、智能提示 | ⭐⭐⭐⭐⭐ |
-| **Tailwind CSS IntelliSense** | Tailwind 类名提示，开发效率翻倍 | ⭐⭐⭐⭐⭐ |
-| **GitLens** | 查看代码修改历史、作者、blame 信息 | ⭐⭐⭐⭐ |
-| **GitHub Copilot** | AI 代码补全，显著提升开发效率 | ⭐⭐⭐⭐⭐ |
-| **GitHub Actions** | 在 VSCode 中管理 CI/CD 工作流 | ⭐⭐⭐ |
+| 扩展                            | 用途                                | 必要性   |
+| ----------------------------- | --------------------------------- | ----- |
+| **ESLint**                    | 代码规范检查，配合项目 `.eslintrc`           | ⭐⭐⭐⭐⭐ |
+| **Prettier**                  | 代码格式化（虽然项目用 ESLint 格式化，但某些场景还是需要） | ⭐⭐⭐⭐  |
+| **Volar**                     | Vue 3 开发必备，类型检查、智能提示              | ⭐⭐⭐⭐⭐ |
+| **Tailwind CSS IntelliSense** | Tailwind 类名提示，开发效率翻倍              | ⭐⭐⭐⭐⭐ |
+| **GitLens**                   | 查看代码修改历史、作者、blame 信息              | ⭐⭐⭐⭐  |
+| **GitHub Copilot**            | AI 代码补全，显著提升开发效率                  | ⭐⭐⭐⭐⭐ |
+| **GitHub Actions**            | 在 VSCode 中管理 CI/CD 工作流            | ⭐⭐⭐   |
 
 ### VSCode 配置建议
 
@@ -498,9 +565,9 @@ vue.volar                          # Vue 3 语言支持
 }
 ```
 
-2. **项目放在 WSL 文件系统中**：不要把项目放在 `/mnt/c/`，会很慢！应该放在 `~/projects/`。
+1. **项目放在 WSL 文件系统中**：不要把项目放在 `/mnt/c/`，会很慢！应该放在 `~/projects/`。
 
-3. **关闭 Windows Defender 实时保护（针对 WSL 目录）**：
+2. **关闭 Windows Defender 实时保护（针对 WSL 目录）**：
 
 ```powershell
 # 以管理员身份运行 PowerShell
@@ -511,244 +578,77 @@ Add-MpPreference -ExclusionPath "D:\WSL"
 
 OpenCode 是一个强大的 AI 辅助编程工具，支持多种模型和自定义 agent。
 
-### 安装 OpenCode
+### 安装与配置
 
-```bash
-# 通过 Bun 安装（推荐）
-bun install -g opencode
+使用 oh-my-opencode 可以一键安装并自动配置：
 
-# 或通过 npm
-npm install -g opencode
-```
-
-验证安装：
-
-```bash
-opencode --version
-```
-
-### 配置目录结构
-
-OpenCode 配置文件位于 `~/.config/opencode/`：
-
-```
-~/.config/opencode/
-├── opencode.json           # 主配置文件
-├── oh-my-opencode.json     # Agent 和分类配置
-├── skills/                 # 自定义技能
-└── node_modules/           # 插件依赖
-```
-
-### opencode.json 配置
-
-我的配置使用了两个插件：
-
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "plugin": [
-    "oh-my-opencode@3.2.1",
-    "opencode-antigravity-auth@1.4.3"
-  ],
-  "provider": {
-    "google": {
-      "name": "Google",
-      "models": {
-        "antigravity-gemini-3-pro": { ... },
-        "antigravity-gemini-3-flash": { ... },
-        "antigravity-claude-sonnet-4-5": { ... },
-        "antigravity-claude-sonnet-4-5-thinking": { ... },
-        "antigravity-claude-opus-4-5-thinking": { ... }
-      }
-    }
-  }
-}
-```
-
-#### 插件说明
-
-1. **oh-my-opencode**：增强 OpenCode 功能，支持自定义 agent 和分类
-2. **opencode-antigravity-auth**：反重力认证插件，连接多个 AI 模型提供商
-
-### oh-my-opencode.json 配置
-
-这是核心配置文件，定义了各个 agent 使用的模型：
-
-```json
-{
-  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
-  "agents": {
-    "sisyphus": {
-      "model": "github-copilot/claude-sonnet-4.5"
-    },
-    "oracle": {
-      "model": "github-copilot/gpt-5.2",
-      "variant": "high"
-    },
-    "librarian": {
-      "model": "github-copilot/claude-sonnet-4.5"
-    },
-    "explore": {
-      "model": "github-copilot/gpt-5-mini"
-    },
-    "multimodal-looker": {
-      "model": "google/gemini-3-flash"
-    },
-    "prometheus": {
-      "model": "github-copilot/claude-opus-4.5",
-      "variant": "max"
-    },
-    "metis": {
-      "model": "github-copilot/claude-opus-4.5",
-      "variant": "max"
-    },
-    "momus": {
-      "model": "github-copilot/gpt-5.2",
-      "variant": "medium"
-    },
-    "atlas": {
-      "model": "github-copilot/claude-sonnet-4.5"
-    }
-  },
-  "categories": {
-    "visual-engineering": {
-      "model": "google/gemini-3-pro"
-    },
-    "ultrabrain": {
-      "model": "github-copilot/gpt-5.2-codex",
-      "variant": "xhigh"
-    },
-    "artistry": {
-      "model": "google/gemini-3-pro",
-      "variant": "max"
-    },
-    "quick": {
-      "model": "github-copilot/claude-haiku-4.5"
-    },
-    "unspecified-low": {
-      "model": "github-copilot/claude-sonnet-4.5"
-    },
-    "unspecified-high": {
-      "model": "github-copilot/claude-sonnet-4.5"
-    },
-    "writing": {
-      "model": "google/gemini-3-flash"
-    }
-  }
-}
-```
-
-### Agent 角色说明
-
-| Agent | 角色 | 使用场景 |
-|-------|------|---------|
-| **sisyphus** | 主执行者 | 日常编码、bug 修复 |
-| **oracle** | 智囊咨询 | 架构设计、技术选型 |
-| **librarian** | 文档检索 | 查找 API 文档、代码示例 |
-| **explore** | 代码探索 | 理解现有代码库 |
-| **prometheus** | 规划者 | 制定开发计划 |
-| **metis** | 需求分析 | 理解模糊需求、识别潜在问题 |
-| **atlas** | 协调者 | 管理多个 agent 协作 |
-
-### 分类（Category）说明
-
-| Category | 优化方向 | 适用场景 |
-|----------|---------|---------|
-| **visual-engineering** | UI/UX | 前端界面开发、动画实现 |
-| **ultrabrain** | 逻辑推理 | 复杂算法、架构设计 |
-| **artistry** | 创新思维 | 需要创造性解决方案的问题 |
-| **quick** | 快速响应 | 简单修改、快速问答 |
-| **writing** | 文本生成 | 文档编写、注释生成 |
+- 安装命令：`bunx ohmyopencode@latest install`
+- 按照提示选择模型和配置即可
 
 ### 使用示例
 
-```bash
-# 启动交互式会话
-opencode
+使用 OpenCode 的常见方式：
 
-# 指定 agent
-opencode --agent oracle
-
-# 指定分类
-opencode --category ultrabrain
-
-# 一次性问题
-opencode "如何实现深拷贝？"
-```
+- 启动交互式会话：`opencode`
+- 指定 agent：`opencode --agent oracle`
+- 指定分类：`opencode --category ultrabrain`
+- 一次性问题：`opencode "如何实现深拷贝？"`
 
 ### 自定义技能（Skills）
 
-在 `~/.config/opencode/skills/` 目录下可以创建自定义技能：
+在 `~/.config/opencode/skills/` 目录下可以创建自定义技能，常用命令：
 
-```bash
-# 列出可用技能
-opencode skills list
-
-# 创建新技能
-opencode skills create my-skill
-```
+- 列出可用技能：`opencode skills list`
+- 创建新技能：`opencode skills create my-skill`（实际使用时，大多让 AI 自己去创建，不会用这个命令去创建）
 
 每个技能是一个包含 `AGENTS.md` 和相关提示词文件的目录。
 
+## 常用软件
+
+### Raycast (软件启动器)
+
+一开始 windows 上我用的是 `utools`，轻度使用，我知道里面有很多插件，但是打开速度真心不快。 而仅仅作为软件启动器来用，因为我喜欢把桌面上的图标都删掉，露出整个壁纸。
+
+重装完之后，和群里的小伙伴交流了之下，才发现 Raycast 有 windows 版本，于是尝试了一下，体验上比 windows 强的多。
+
+比如，我会在搜索框内简单算个数，能可以直接打开 `web search`，其他就是启动软件了，刚注册是可以体验AI功能的，不过我完全用不上。
+
+### 微信输入法
+
+微信输入法本身输入法相关的功能其实是不如搜狗的，可能也不如别的。 但是它生的好，生态就好。经过和其他设备配对之后，可以很方便的**多端文本、图片复制**。带有文本剪贴板历史，按`v`键激活，也能省下一个单独的剪贴板软件。
+
+手机端的微信输入法还自带排版成图，类似发小红书的时候把短标题弄个简单背景再发出去。前一阵我用来给文章配封面，但是现在我有自己的[IMGX](https://imgx.zzao.club)了，也不太需要了。
+
+### PixPin 截图工具
+
+截图工具一般都要有一个，这个是开源的。我想我还在用它的唯一原因就是我还没来得及用AI复刻一个截图工具吧。
+
+### Zotepad 文章编辑器/发布工具
+
+本来我在 macos 上使用 Obsidian 的，但是我用 AI 又给自己写了一个编辑器。并且集成常用的软件，自己常用的工作流。只会越用越顺手。
+
+这个工具基于 Tauri2 + Nuxt4，多端一致，目前每次都会打包 macos/安卓/exe 这三个平台的包，对应我在公司使用 windows，在家使用 macos，手上拿的安卓手机。
+
+目前我内置了**图床功能**，可以直接上传到腾讯云对象存储，所以我卸载了PicGo (感谢PicGo的陪伴)。
+
+在我用zotepad写文章时，可以直接打开侧边栏选择已经上传的图片插入，感觉方便多了。
+
+markdown编辑器选的 `milkdown`，所见即所得模式。 复制样式到公众号，这个功能在我博客站上就有，也挪过来了。并且用博客站做了公众号接口的转发，可以直接在编辑器内点击发送到公众号草稿箱。支持文章和图文两种模式。发送完再去手机端的公众号助手审一遍就可以发布了。
+
+### Flyenv
+
+我主要拿它来运行Ngxin、Mysal、Redis、PGSQL，是作为不能用`Docker Desktop`时的替代品。
+
 ## 使用感受
 
-<!-- 这部分由你自己来写 -->
+**WSL 是最好的 Linux 发行版，Windows 是最好的 Linux 桌面**
 
-### 性能对比
+这话说的没毛病。
 
-在日常开发中，WSL2 的性能表现...
+重点是所有开发环境、代码都在 Ubuntu 里，下次换另一台电脑就和从c盘迁移到别的盘一样，直接把整个打包出来就可以了，十分方便。
 
-### 工作流变化
+而且可以随意安装多个linux环境，可以实验各种配置，玩坏了直接删除重建。比当年自己装双系统啥的省事多了。
 
-从 macOS 切换到 Windows + WSL 后，我的工作流...
+***
 
-### 遇到的问题和解决方案
-
-#### 问题1：文件系统性能
-
-...
-
-#### 问题2：Git 凭证管理
-
-...
-
-### 总结
-
-经过一段时间的使用，我认为...
-
-## 常见问题（FAQ）
-
-### Q1: WSL 和虚拟机有什么区别？
-
-A: WSL2 基于轻量级虚拟化，启动速度快，资源占用低，与 Windows 文件系统集成度高。传统虚拟机（如 VirtualBox）资源占用大，文件共享复杂。
-
-### Q2: WSL 可以运行 GUI 应用吗？
-
-A: WSL2 支持运行 Linux GUI 应用（WSLg），需要 Windows 11 或 Windows 10 最新版本。
-
-### Q3: 如何在 Windows 和 WSL 之间传文件？
-
-A: 
-- Windows 访问 WSL：在文件资源管理器输入 `\\wsl$\Ubuntu-22.04`
-- WSL 访问 Windows：挂载点为 `/mnt/c`、`/mnt/d` 等
-
-### Q4: 代理如何设置？
-
-A: 在 `.zshrc` 中配置代理，WSL 通过 `127.0.0.1` 访问 Windows 代理软件（需开启 LAN 访问）。
-
-### Q5: Docker 怎么用？
-
-A: 安装 Docker Desktop for Windows，在设置中启用 "Use the WSL 2 based engine"，然后在 WSL 中直接使用 `docker` 命令。
-
-## 参考资源
-
-- [WSL 官方文档](https://docs.microsoft.com/zh-cn/windows/wsl/)
-- [Oh My Zsh GitHub](https://github.com/ohmyzsh/ohmyzsh)
-- [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
-- [fnm - Fast Node Manager](https://github.com/Schniz/fnm)
-- [Bun 官网](https://bun.sh/)
-- [OpenCode 文档](https://opencode.ai/)
-
----
-
-最后更新：2026-02-03
+好了结束，有问题欢迎交流。
