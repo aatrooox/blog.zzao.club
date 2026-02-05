@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v2.10.4
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.10.3...v2.10.4)
+
+### 🚀 Enhancements
+
+- 新增x-scraper skill; 优化已有skill ([f8cc0ac](https://github.com/aatrooox/blog.zzao.club/commit/f8cc0ac))
+
+### 📖 Documentation
+
+- 文章更新 ([694cb49](https://github.com/aatrooox/blog.zzao.club/commit/694cb49))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.10.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.10.2...v2.10.3)
