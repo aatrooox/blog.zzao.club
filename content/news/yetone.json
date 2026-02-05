@@ -1,0 +1,124 @@
+{
+  "posts": [
+    {
+      "index": 1,
+      "username": "yetone",
+      "postId": "2018056744958623874",
+      "publishTime": "2026-02-01T20:19:56.000Z",
+      "postLink": "https://x.com/dongxi_nlp/status/2018056744958623874",
+      "textContent": "醍醐灌顶，parallel！\n\ngit worktree 真正地让多个 claude session 同时工作。非常适合针对不同功能模块，多个 cc 同步 vibe coding。  \n\n以后要多多执行 git worktree add 命令。",
+      "views": "2.6万",
+      "likes": "76",
+      "retweets": "7",
+      "replies": "4"
+    },
+    {
+      "index": 2,
+      "username": "yetone",
+      "postId": "2018217610534691047",
+      "publishTime": "2026-02-02T06:59:09.000Z",
+      "postLink": "https://x.com/leon7hao/status/2018217610534691047",
+      "textContent": "你在考虑纯本地使用哦？",
+      "views": "67",
+      "likes": "0",
+      "retweets": "0",
+      "replies": "1"
+    },
+    {
+      "index": 3,
+      "username": "yetone",
+      "postId": "2018225699392553341",
+      "publishTime": "2026-02-02T07:31:18.000Z",
+      "postLink": "https://x.com/yetone/status/2018225699392553341",
+      "textContent": "因为是都是 Electron 应用，依赖本地验证环节",
+      "views": "88",
+      "likes": "1",
+      "retweets": "0",
+      "replies": "0"
+    },
+    {
+      "index": 4,
+      "username": "yetone",
+      "postId": "2018010635322474808",
+      "publishTime": "2026-02-01T17:16:42.000Z",
+      "postLink": "https://x.com/yetone/status/2018010635322474808",
+      "textContent": "我当时就说 LLM 其实只喜欢调用 filesystem based 工具，LSP 工具提供给它除了添乱外毫无用处， 纯是人嗨式行为，大家还不信（",
+      "views": "6.2万",
+      "likes": "190",
+      "retweets": "7",
+      "replies": "18"
+    },
+    {
+      "index": 5,
+      "username": "yetone",
+      "postId": "2018184136717189217",
+      "publishTime": "2026-02-02T04:46:08.000Z",
+      "postLink": "https://x.com/tk103331/status/2018184136717189217",
+      "textContent": "LLM喜欢是文件系统的组织方式？还是UNIX存在已久的工具（手册、参数、结果）？",
+      "views": "481",
+      "likes": "0",
+      "retweets": "0",
+      "replies": "1"
+    },
+    {
+      "index": 6,
+      "username": "yetone",
+      "postId": "2018184550497796249",
+      "publishTime": "2026-02-02T04:47:47.000Z",
+      "postLink": "https://x.com/yetone/status/2018184550497796249",
+      "textContent": "LLM 熟悉的就是公开的知识吧，UNIX 的一切都是",
+      "views": "474",
+      "likes": "4",
+      "retweets": "0",
+      "replies": "0"
+    },
+    {
+      "index": 7,
+      "username": "yetone",
+      "postId": "2018183036307902916",
+      "publishTime": "2026-02-02T04:41:46.000Z",
+      "postLink": "https://x.com/tk103331/status/2018183036307902916",
+      "textContent": "如果把代码解析为ast，再都按一定规则存为文件，LLM能很好的处理吗",
+      "views": "1,357",
+      "likes": "0",
+      "retweets": "0",
+      "replies": "1"
+    },
+    {
+      "index": 8,
+      "username": "yetone",
+      "postId": "2018183123901853872",
+      "publishTime": "2026-02-02T04:42:07.000Z",
+      "postLink": "https://x.com/yetone/status/2018183123901853872",
+      "textContent": "不能",
+      "views": "1,218",
+      "likes": "0",
+      "retweets": "0",
+      "replies": "1"
+    },
+    {
+      "index": 9,
+      "username": "yetone",
+      "postId": "2018180799053590657",
+      "publishTime": "2026-02-02T04:32:53.000Z",
+      "postLink": "https://x.com/leon7hao/status/2018180799053590657",
+      "textContent": "lody 目前就是建立在 GitHub App上，可以 follow 整个 flow 和展示。新的对话(worktree)会先 fetch，保持最新。",
+      "views": "61",
+      "likes": "0",
+      "retweets": "0",
+      "replies": "1"
+    },
+    {
+      "index": 10,
+      "username": "yetone",
+      "postId": "2018182501383188818",
+      "publishTime": "2026-02-02T04:39:39.000Z",
+      "postLink": "https://x.com/yetone/status/2018182501383188818",
+      "textContent": "所以还是要强绑定 GitHub workflow ",
+      "views": "75",
+      "likes": "2",
+      "retweets": "0",
+      "replies": "1"
+    }
+  ]
+}

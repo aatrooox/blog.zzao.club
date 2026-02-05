@@ -16,6 +16,11 @@ export const useAppNavigation = () => {
       icon: 'pixelarticons:message-processing',
     },
     {
+      name: '推文',
+      path: '/news',
+      icon: 'pixelarticons:radio-signal',
+    },
+    {
       name: '友链',
       path: '/links',
       icon: 'pixelarticons:mood-neutral',

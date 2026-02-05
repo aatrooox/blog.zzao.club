@@ -1,16 +1,11 @@
 ---
 title: 使用 Docker Compose 部署 Nest 应用
-description: Docker compose使用指南
-published: 2023-01-01
-tags: ["Nest", "Docker"]
-category: 技术
-image: 
-lastmod: 2025-08-19
 date: 2023-12-24
-showTitle: 使用 Docker Compose 部署 Nest 应用
+lastmod: "2026-02-05T05:59:55.857Z"
+tags: ["Nest", "Docker"]
 ---
-## 引言
 
+## 引言
 
 最近把像素厂（[PixeledPicPro](https://mp.weixin.qq.com/s/_XUUL1HR60Zfu3xjKFeZ_w)）的前端又翻新了一遍，也把 Nest应用部署到了云服务器，下面分享一下使用 docker-compose 的部署流程，保证你可以按步骤完成 Nest 项目（小水管服务器的）部署工作。
 
@@ -18,7 +13,7 @@ showTitle: 使用 Docker Compose 部署 Nest 应用
 
 本地和服务器是两个环境，所以难免会涉及配置文件问题，这里一并讲了。然后按本地模拟部署和服务器两部分演示
 
-### 本地部署 
+### 本地部署
 
 首先保证你的 Nest 服务在本地 dev 环境下是正常可用的。有些同学不要一上来就拿不知道哪年的项目开始练手，结果项目本身就有问题。
 
@@ -30,7 +25,7 @@ showTitle: 使用 Docker Compose 部署 Nest 应用
 
 在目录中位置如下：
 
-![](https://img.zzao.club/article/202411191445665.png)
+![1.00](https://img.zzao.club/article/202411191445665.png)
 
 在app.module.ts 中配置 ConfigModule，同样的，在这个文件中把 TypeOrmModule 的配置改成 env里的配置项
 
@@ -77,6 +72,7 @@ showTitle: 使用 Docker Compose 部署 Nest 应用
 redis配置同理，也把之前写死的属性值改成 env 文件里的配置项
 
 redis.module.ts
+
 ```typescript
 @Module({
   controllers: [RedisController],
@@ -248,9 +244,9 @@ docker-compose up
 
 跑完后，出现下图，即为成功
 
-![](https://img.zzao.club/article/202411191445666.png)
+![1.00](https://img.zzao.club/article/202411191445666.png)
 
-如果出现了类似以下报错，可能是**因为没建成数据库**，也可能是你挂载的本地目录` /你的目录/mysql `**不为空，导致初始化失败**。
+如果出现了类似以下报错，可能是**因为没建成数据库**，也可能是你挂载的本地目录`/你的目录/mysql`**不为空，导致初始化失败**。
 
 也可能会出现 178.x.x.x：端口号 访问不到的报错，一般是你配置文件里 `port` 配错了，应该配成容器的 `network` 的 `bridge` 的 `Gateway` 地址
 
@@ -266,7 +262,7 @@ zz_master  | Error: getaddrinfo EAI_AGAIN zz_mysql
 
 ### 服务器部署
 
-往服务器部署前还需要改一下 `docker-compose.yml` 
+往服务器部署前还需要改一下 `docker-compose.yml`
 
 mysql、redis的 `volumes` 改为服务器上的地址，没有的话先新建一下
 
@@ -360,18 +356,17 @@ docker inspect nginx
 
 感谢你的阅读，我是枣把儿\~
 
-
 ## 相关文章推荐
 
-- 产品构思： [当一个程序员突然想做一款产品](https://mp.weixin.qq.com/s/A8wHxE5Q2jl6Su_7QA6f-A)
-- 前端搭建： [Vue3项目实战：像素风LOGO编辑器 Pixeled Pic Pro](https://mp.weixin.qq.com/s/_XUUL1HR60Zfu3xjKFeZ_w)
-- 前端迭代（一）：[iKun集合！Pixeled Pic Pro 前端迭代篇（一）](https://mp.weixin.qq.com/s/n8E_clCeQl8Zu2nLg0lHbQ)
-- 后端搭建：[一个产品要有一个“好底子”：Nest项目搭建](https://mp.weixin.qq.com/s/GnYy_Ym3Z7jlVRfsjGLMUA)
+* 产品构思： [当一个程序员突然想做一款产品](https://mp.weixin.qq.com/s/A8wHxE5Q2jl6Su_7QA6f-A)
 
+* 前端搭建： [Vue3项目实战：像素风LOGO编辑器 Pixeled Pic Pro](https://mp.weixin.qq.com/s/_XUUL1HR60Zfu3xjKFeZ_w)
 
+* 前端迭代（一）：[iKun集合！Pixeled Pic Pro 前端迭代篇（一）](https://mp.weixin.qq.com/s/n8E_clCeQl8Zu2nLg0lHbQ)
+
+* 后端搭建：[一个产品要有一个“好底子”：Nest项目搭建](https://mp.weixin.qq.com/s/GnYy_Ym3Z7jlVRfsjGLMUA)
 
 ## 后记 2023年12月26日17:59:16
-
 
 nest项目通过docker-compose更新
 
@@ -381,7 +376,6 @@ docker-compose down
 # 然后后台启动的时候重新build，mysql和redis自动越过了，重新打包了nest服务
 docker-compose up --build -d
 ```
-
 
 ```shell
 sudo tee /etc/docker/daemon.json <<-EOF { "registry-mirrors": [ "https://1js6gccw.mirror.aliyuncs.com", "https://dockerproxy.com", "https://mirror.baidubce.com", "https://docker.m.daocloud.io", "https://docker.nju.edu.cn", "https://docker.mirrors.sjtug.sjtu.edu.cn" ] } EOF
@@ -405,7 +399,6 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
 
-
 ```
 docker run -d \
 --init \
@@ -414,3 +407,4 @@ docker run -d \
 --volume /home/memoz/:/var/opt/memos \
 neosmemo/memos:0.22.3
 ```
+

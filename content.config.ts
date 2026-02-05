@@ -6,7 +6,7 @@ export default defineContentConfig({
       type: 'page',
       source: {
         include: '**/*.md',
-        exclude: ['**/-*.md', 'book/**/*.md', 'Excalidraw/**/*.*'],
+        exclude: ['**/-*.md', 'book/**/*.md', 'news/**/*.*', 'Excalidraw/**/*.*'],
         prefix: '/post',
         // cwd: 'content',
       },
@@ -18,6 +18,24 @@ export default defineContentConfig({
         group: z.string().optional(), // 分组，这些显示组名，用于显示系列文章，用冒号分割层级 如 面试题:前端
         versions: z.array(z.string()),
         rawbody: z.string(),
+      }),
+    }),
+    news: defineCollection({
+      type: 'data',
+      source: 'news/**/*.json',
+      schema: z.object({
+        posts: z.array(z.object({
+          index: z.number(),
+          username: z.string(),
+          postId: z.string(),
+          publishTime: z.string(),
+          postLink: z.string().url(),
+          textContent: z.string(),
+          views: z.string(),
+          likes: z.string(),
+          retweets: z.string(),
+          replies: z.string(),
+        })),
       }),
     }),
   },
