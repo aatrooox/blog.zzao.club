@@ -77,10 +77,7 @@ CONTENT_REPO_TOKEN=
 NUXT_SESSION_PASSWORD=please_set_a_32_chars_random_string
 NUXT_JWT_SECRET=please_set_a_random_string
 
-# 可选：埋点/邮件/COS 等第三方配置（本地可留空）
-NUXT_UMAMI_HOST=
-NUXT_UMAMI_USER=
-NUXT_UMAMI_PASS=
+# 可选：邮件/COS 等第三方配置（本地可留空）
 NUXT_NODEMAILER_HOST=
 NUXT_NODEMAILER_PORT=
 NUXT_NODEMAILER_AUTH_USER=
@@ -197,13 +194,13 @@ pnpm dev
   - `DATABASE_URL=mysql://user:pass@host:3306/blog`
   - `NUXT_SESSION_PASSWORD=<32位随机字符串>`
   - `NUXT_JWT_SECRET=<随机字符串>`
-  - 可选：`REDIS_HOST`、`REDIS_PORT`、`CONTENT_REPO_TOKEN`、`NUXT_*`（Umami、Nodemailer、OAuth GitHub、COS、Feishu等）
+  - 可选：`REDIS_HOST`、`REDIS_PORT`、`CONTENT_REPO_TOKEN`、`NUXT_*`（Nodemailer、OAuth GitHub、COS、Feishu等）
 
 2) 配置 GitHub Secrets（仓库 Settings -> Secrets and variables -> Actions）
 - SSH 访问：`SSH_PRIVATE_KEY`、`SSH_HOST`、`SSH_USER`、`SSH_PORT`
 - 应用密钥与依赖：`DATABASE_URL`、`NUXT_SESSION_PASSWORD`、`NUXT_JWT_SECRET`
 - 内容拉取：`CONTENT_REPO_TOKEN`（若启用 content 仓库）
-- 可选通知与第三方：`NUXT_FEISHU_WEBHOOK`、`NUXT_FEISHU_USER_ID`、`NUXT_UMAMI_HOST/USER/PASS`、`NUXT_NODEMAILER_*`、`NUXT_OAUTH_GITHUB_CLIENT_ID/SECRET`、`NUXT_COS_*`
+- 可选通知与第三方：`NUXT_FEISHU_WEBHOOK`、`NUXT_FEISHU_USER_ID`、`NUXT_NODEMAILER_*`、`NUXT_OAUTH_GITHUB_CLIENT_ID/SECRET`、`NUXT_COS_*`
 
 3) 触发部署
 - Push 到 `main` 且提交信息包含 `chore(release)` 会自动触发（可使用 `pnpm release:patch|minor|major` 脚本生成）
