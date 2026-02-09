@@ -25,5 +25,5 @@ wsl-crash-\*-root.local\_share\_fnm\_node-versions\_v20.19.5\_installation\_bin\
 
 ## 解决方案
 
-立即清理（释放 54GB）（**直接删除即可**）
+立即清理（释放 54GB）（**直接删除即可！**）
 
