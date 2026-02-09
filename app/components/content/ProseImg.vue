@@ -30,13 +30,20 @@ const refinedSrc = computed(() => {
   }
   return props.src
 })
+
+const derivedAlt = computed(() => {
+  if (!props.src)
+    return 'image'
+  const filename = props.src.split('/').pop()?.split('.')[0] || 'image'
+  return decodeURIComponent(filename).replace(/[-_]/g, ' ')
+})
 </script>
 
 <template>
   <ClientOnly>
     <div v-viewer class="blog-zzao-club-img-component pixel-img-container">
       <NuxtImg
-        :src="refinedSrc" format="webp" quality="75" loading="lazy" alt="image" :width="width" :height="height"
+        :src="refinedSrc" format="webp" quality="75" loading="lazy" :alt="alt || derivedAlt" :width="width" :height="height"
         placeholder
         class="pixel-img"
       />

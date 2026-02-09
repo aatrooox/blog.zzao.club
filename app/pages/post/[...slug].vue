@@ -226,6 +226,32 @@ useHead({
         },
       }),
     },
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': '首页',
+            'item': 'https://zzao.club/',
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': '文章',
+            'item': 'https://zzao.club/article',
+          },
+          {
+            '@type': 'ListItem',
+            'position': 3,
+            'name': page.value?.seo?.title || page.value?.title,
+          },
+        ],
+      }),
+    },
   ],
 })
 

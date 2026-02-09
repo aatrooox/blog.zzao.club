@@ -13,6 +13,37 @@ useHead({
       href: 'https://zzao.club/',
     },
   ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        'name': '早早集市',
+        'alternateName': 'zzao.club',
+        'url': 'https://zzao.club/',
+        'description': '最新最全的Nuxt4全栈开发实战内容，提供免费的Nuxt4权威课程，高质量Nuxt中文交流群',
+        'inLanguage': 'zh-CN',
+        'publisher': {
+          '@type': 'Person',
+          'name': 'Aatrox',
+          'url': 'https://zzao.club/about',
+        },
+      }),
+    },
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        'name': 'Aatrox',
+        'url': 'https://zzao.club/about',
+        'sameAs': [
+          'https://github.com/aatrooox',
+        ],
+      }),
+    },
+  ],
 })
 
 const router = useRouter()
