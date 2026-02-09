@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v2.10.5
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.10.4...v2.10.5)
+
+### 🚀 Enhancements
+
+- **seo:** 添加OG/Twitter元标签和文章JSON-LD结构化数据 ([46884a3](https://github.com/aatrooox/blog.zzao.club/commit/46884a3))
+- **seo:** 添加BreadcrumbList/WebSite JSON-LD; 优化图片alt文本 ([3cc0682](https://github.com/aatrooox/blog.zzao.club/commit/3cc0682))
+- 修改memo渲染方式为 SSR ([102ae75](https://github.com/aatrooox/blog.zzao.club/commit/102ae75))
+
+### 🩹 Fixes
+
+- **seo:** 删除Umami残留; 添加preconnect/canonical/产品页SEO; 更新keywords ([f8f23b3](https://github.com/aatrooox/blog.zzao.club/commit/f8f23b3))
+- **seo:** Sitemap补充静态页面; 清理README中Umami残留引用 ([146e2c3](https://github.com/aatrooox/blog.zzao.club/commit/146e2c3))
+
+### 📖 Documentation
+
+- 更新项目文档和AI编码指南; 新增SEO审计和架构文档 ([05382e1](https://github.com/aatrooox/blog.zzao.club/commit/05382e1))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.10.4
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.10.3...v2.10.4)
