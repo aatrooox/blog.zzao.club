@@ -16,6 +16,17 @@ export interface ApiResponse<T = any> {
   code?: number // 改为数值类型的错误代码
 }
 
+/**
+ * 分页数据结构（API 返回的 data 字段）
+ */
+export interface PaginatedData<T> {
+  list: T[]
+  total: number
+  page: number
+  size: number
+  totalPages: number
+}
+
 declare module 'nuxt/app' {
   interface NuxtApp {
     $api: {

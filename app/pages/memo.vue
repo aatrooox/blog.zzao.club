@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useInfiniteScroll } from '@vueuse/core'
 import useTags from '~/composables/useTags'
 
 const props = defineProps({
@@ -27,7 +28,7 @@ useHead({
   ],
 })
 
-const { getMemos, memos, createMemo } = useMemos()
+const { getMemos, memos, createMemo, loadMore, hasMore, status } = useMemos()
 const userStore = useUser()
 // const clientjs = useClientjs()
 const toast = useGlobalToast()
@@ -60,6 +61,18 @@ const filteredMemos = computed(() => {
 })
 
 const { beforeLeave, leave, afterLeave } = useStaggeredListTransition('memo-fade')
+
+// Infinite scroll - auto load more when scrolling to bottom
+useInfiniteScroll(
+  window,
+  () => {
+    loadMore()
+  },
+  {
+    distance: 200,
+    canLoadMore: () => hasMore.value && status.value !== 'pending',
+  },
+)
 
 // async function handleLike(memoId: string) {
 //   if (!userStore.user.value.id) {
@@ -241,6 +254,14 @@ function onUploadError(error: string) {
           </div>
         </div>
       </transition-group>
+      <!-- 加载状态 -->
+      <div class="text-center py-8">
+        <span v-if="status === 'pending'" class="text-zinc-400 text-sm flex items-center justify-center gap-2">
+          <Icon name="svg-spinners:ring-resize" class="w-4 h-4" />
+          加载中...
+        </span>
+        <span v-else-if="!hasMore" class="text-zinc-400 text-sm">没有更多了</span>
+      </div>
     </div>
   </div>
 

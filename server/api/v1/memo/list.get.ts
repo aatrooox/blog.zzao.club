@@ -1,11 +1,11 @@
-import { desc, eq, sql } from 'drizzle-orm'
+import { count, desc, eq, sql } from 'drizzle-orm'
 import { db } from '~~/lib/drizzle'
 import { blogComments, blogLikes, blogMemos, memoTagRelations, memoTags, users } from '~~/lib/drizzle/schema'
+import { paginationSchema, withPagination } from '~~/server/utils/pagination'
 
 export default defineStandardResponseHandler(async (event) => {
   const schema = z.object({
-    page: z.string().optional().default('1').transform(Number),
-    size: z.string().optional().default('50').transform(Number),
+    ...paginationSchema,
   })
   const query = await useSafeValidatedQuery(event, schema)
 
@@ -19,7 +19,9 @@ export default defineStandardResponseHandler(async (event) => {
   const take = query.data.size
   const skip = (query.data.page - 1) * take
 
-  const memos = await db.select({
+  const countQuery = db.select({ count: count() }).from(blogMemos)
+
+  const dataQuery = db.select({
     id: blogMemos.id,
     content: blogMemos.content,
     createTs: blogMemos.createTs,
@@ -60,13 +62,10 @@ export default defineStandardResponseHandler(async (event) => {
     .limit(take)
     .offset(skip)
 
-  // 通过 event.$fetch() 调用 tags 接口获取标签信息
-  // try {
-  //   const tagsResponse = await event.$fetch('/api/v1/tag/list')
-  // }
-  // catch (error) {
-  //   console.error('Failed to fetch tags:', error)
-  // }
-
-  return memos
+  return await withPagination({
+    page: query.data.page,
+    size: query.data.size,
+    countQuery,
+    dataQuery,
+  })
 })
