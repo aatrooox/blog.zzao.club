@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import type { FlatGroup } from '~/composables/usePages'
 import type { Page } from '~/components/common/PagePanel.vue'
+import type { FlatGroup } from '~/composables/usePages'
 
 useHead({
   title: '文章｜早早集市',
@@ -108,14 +108,14 @@ function flattenGroups(root: GroupNode): FlatGroup[] {
   for (const [_, node] of root.children) {
     // 收集该分组及所有子孙分组的文章
     const allArticles: Page[] = []
-    
+
     function collectArticles(n: GroupNode) {
       allArticles.push(...n.articles)
       for (const [_, child] of n.children) {
         collectArticles(child)
       }
     }
-    
+
     collectArticles(node)
 
     if (allArticles.length > 0) {
@@ -140,7 +140,7 @@ const groupedArticles = computed(() => {
   const flatGroups = flattenGroups(hierarchy)
 
   // 按月份分组所有内容（包括普通文章和分组）
-  const groups: Record<string, { 
+  const groups: Record<string, {
     year: number
     month: number
     items: Array<Page | { type: 'group', data: FlatGroup }>
@@ -259,7 +259,7 @@ function isGroupItem(item: any): item is { type: 'group', data: FlatGroup } {
             <template v-for="item in group.items" :key="isGroupItem(item) ? `group-${item.data.fullPath}` : item.path">
               <!-- 分组卡片 -->
               <GroupedArticlesCard v-if="isGroupItem(item)" :group="item.data" />
-              
+
               <!-- 普通文章 -->
               <NuxtLink v-else :to="item.path" class="block group">
                 <div class="py-3 px-4 -mx-4 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors duration-200">

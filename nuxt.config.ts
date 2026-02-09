@@ -103,6 +103,24 @@ export default defineNuxtConfig({
           name: 'keywords',
           content: 'Nuxt4,Nuxt3,Nitro,NuxtContent,Vue,Vue3,前端,前端工程化,前端架构,Node,Hono,博客站,爬虫,副业',
         },
+        // OG defaults
+        {
+          property: 'og:site_name',
+          content: '早早集市',
+        },
+        {
+          property: 'og:type',
+          content: 'website',
+        },
+        {
+          property: 'og:locale',
+          content: 'zh_CN',
+        },
+        // Twitter Card defaults
+        {
+          name: 'twitter:card',
+          content: 'summary_large_image',
+        },
       ],
       link: [
         { rel: 'preconnect', href: 'https://img.zzao.club' },

@@ -183,6 +183,14 @@ const { data: page, pending: _pending, refresh: _refresh, error: _error } = awai
 useSeoMeta({
   title: page.value?.seo?.title,
   description: page.value?.seo?.description,
+  ogTitle: page.value?.seo?.title,
+  ogDescription: page.value?.seo?.description,
+  ogImage: 'https://img.zzao.club/og-default.png',
+  ogUrl: `https://zzao.club${route.path}`,
+  ogType: 'article',
+  twitterCard: 'summary_large_image',
+  twitterTitle: page.value?.seo?.title,
+  twitterDescription: page.value?.seo?.description,
 })
 
 useHead({
@@ -190,6 +198,33 @@ useHead({
     {
       rel: 'canonical',
       href: `https://zzao.club${route.path}`,
+    },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        'headline': page.value?.seo?.title || page.value?.title,
+        'description': page.value?.seo?.description,
+        'datePublished': page.value?.date,
+        'dateModified': page.value?.lastmod || page.value?.date,
+        'author': {
+          '@type': 'Person',
+          'name': 'Aatrox',
+          'url': 'https://zzao.club/about',
+        },
+        'publisher': {
+          '@type': 'Organization',
+          'name': '早早集市',
+          'url': 'https://zzao.club',
+        },
+        'mainEntityOfPage': {
+          '@type': 'WebPage',
+          '@id': `https://zzao.club${route.path}`,
+        },
+      }),
     },
   ],
 })

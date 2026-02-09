@@ -37,12 +37,13 @@ const { data } = await useAsyncData('news', () => queryCollection('news').all())
 
 // Transform data into flat posts with source information
 const allPosts = computed(() => {
-  if (!data.value) return []
-  
-  return data.value.flatMap(item => {
+  if (!data.value)
+    return []
+
+  return data.value.flatMap((item) => {
     const newsData = item as unknown as NewsData
     const source = item._path?.replace('/news/', '') || 'unknown'
-    
+
     return newsData.posts.map(post => ({
       ...post,
       source,
@@ -54,20 +55,20 @@ const allPosts = computed(() => {
 // Group by date
 const groupedByDate = computed(() => {
   const groups: Record<string, typeof allPosts.value> = {}
-  
+
   allPosts.value.forEach((post) => {
     const dateKey = post.parsedDate.toLocaleDateString('zh-CN', {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
     })
-    
+
     if (!groups[dateKey]) {
       groups[dateKey] = []
     }
     groups[dateKey].push(post)
   })
-  
+
   return Object.entries(groups)
     .sort(([a], [b]) => new Date(b).getTime() - new Date(a).getTime())
     .map(([date, posts]) => ({ date, posts }))
@@ -127,7 +128,7 @@ function formatEngagement(num: string) {
                       {{ new Date(post.publishTime).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) }}
                     </span>
                   </div>
-                  
+
                   <!-- External link icon -->
                   <div class="text-zinc-300 group-hover:text-zinc-500 transition-colors">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

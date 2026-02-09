@@ -77,7 +77,7 @@ const groupTree = computed(() => {
             <div class="px-3 py-1 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
               {{ node.name }}
             </div>
-            
+
             <!-- 一级分组直接的文章 -->
             <div v-if="node.articles.length > 0" class="space-y-0.5 mb-2">
               <NuxtLink
@@ -86,9 +86,9 @@ const groupTree = computed(() => {
                 :to="article.path"
                 class="group-sidebar-link"
                 :class="[
-                  article.path === currentPath 
-                    ? 'group-sidebar-link-active' 
-                    : ''
+                  article.path === currentPath
+                    ? 'group-sidebar-link-active'
+                    : '',
                 ]"
               >
                 <span class="group-sidebar-text">{{ article.title }}</span>
@@ -108,9 +108,9 @@ const groupTree = computed(() => {
                     :to="article.path"
                     class="group-sidebar-link group-sidebar-link-nested"
                     :class="[
-                      article.path === currentPath 
-                        ? 'group-sidebar-link-active' 
-                        : ''
+                      article.path === currentPath
+                        ? 'group-sidebar-link-active'
+                        : '',
                     ]"
                   >
                     <span class="group-sidebar-text">{{ article.title }}</span>

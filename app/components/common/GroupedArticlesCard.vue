@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { FlatGroup } from '~/composables/usePages'
 import type { Page } from '~/components/common/PagePanel.vue'
+import type { FlatGroup } from '~/composables/usePages'
 
 const props = defineProps<{
   group: FlatGroup
@@ -75,16 +75,16 @@ const hasSubGroups = computed(() => articleTree.value.children.size > 0)
       :key="i"
       class="absolute inset-0 bg-gray-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg transition-transform duration-300"
       :style="{
-        transform: isExpanded 
-          ? 'none' 
+        transform: isExpanded
+          ? 'none'
           : `translate(${(stackCount - i) * 4}px, ${(stackCount - i) * 4}px)`,
         zIndex: stackCount - i,
-        opacity: 1 - (i - 1) * 0.15
+        opacity: 1 - (i - 1) * 0.15,
       }"
     />
-    
+
     <!-- 主内容卡片 -->
-    <div 
+    <div
       class="relative bg-white dark:bg-zinc-950 border-2 border-primary/20 rounded-lg p-4 transition-all duration-300 hover:border-primary"
       :style="{ zIndex: stackCount + 1 }"
     >
@@ -99,12 +99,12 @@ const hasSubGroups = computed(() => articleTree.value.children.size > 0)
             {{ group.articles.length }} 篇
           </span>
         </div>
-        <Icon 
-          :name="isExpanded ? 'pixelarticons:chevron-up' : 'pixelarticons:chevron-down'" 
+        <Icon
+          :name="isExpanded ? 'pixelarticons:chevron-up' : 'pixelarticons:chevron-down'"
           class="text-zinc-400 transition-transform"
         />
       </div>
-      
+
       <!-- 折叠状态: 显示最新文章 + 子分组信息 -->
       <div v-if="!isExpanded" class="space-y-2">
         <div class="text-sm text-zinc-600 dark:text-zinc-400">
@@ -121,7 +121,7 @@ const hasSubGroups = computed(() => articleTree.value.children.size > 0)
           </span>
         </div>
       </div>
-      
+
       <!-- 展开后的文章列表(层级显示) -->
       <div v-else class="space-y-3 mt-4">
         <!-- 一级分组直接的文章 -->
