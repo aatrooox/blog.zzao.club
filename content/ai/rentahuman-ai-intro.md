@@ -1,12 +1,11 @@
 ---
 title: AI终于开始招聘人类干活了
 date: 2026-02-05
-lastmod: "2026-02-05T09:24:25.300Z"
+lastmod: "2026-02-05T10:59:39.549Z"
 tags: ["AI"]
 ---
 
-
-![](https://img.zzao.club/zotepad/1770283461718_eurujwhj619.png)
+![1.00](https://img.zzao.club/zotepad/1770283461718_eurujwhj619.png)
 
 现在轮到 AI 在网上招人干活了。有点离谱，但是真的。
 

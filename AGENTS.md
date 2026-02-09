@@ -1,6 +1,97 @@
 # AGENTS.md - AI 编码助手指南
 
-本指南为在 Nuxt 4 博客代码库中工作的 AI 编码助手提供关键信息。
+本指南为 AI 编码助手提供项目背景、业务目标和技术规范，使 AI 能在理解「为什么」的基础上编写更有效的代码。
+
+## 项目定位与愿景
+
+本项目是站长 Aatrox（GitHub: `aatrooox`）的**个人 IP 具象化平台**。所有知识产出、付费产品和内容都在此发布。
+
+- **域名**: `zzao.club`（主站）、`img.zzao.club`（图床）
+- **当前版本**: 2.10.4，从 v0.x 持续迭代至今
+- **项目性质**: 全栈单体应用，不是微服务，这是**有意为之**（详见「架构决策记录」）
+
+## 双核心业务
+
+### 核心一: 博客内容平台
+
+生产文章 → SEO 优化 → 获取自然流量 → Google Ads 收入。
+
+- 内容来源: 本地 `content/` 目录中的 Markdown 文件 → Nuxt Content 自动渲染
+- 内容页面: `/article`（文章列表）、`/post/**`（文章详情）、`/memo`（动态/短内容）
+- SEO 基础设施:
+  - 百度站长、Bing Webmaster 验证
+  - `sitemap.xml`、`feed.xml`（RSS）、`robots.txt`
+  - 网站数据统计工具待接入（Umami 已因 NextJS 安全漏洞弃用）
+- 未来方向: 接入支付系统（产品页面已存在: `/product`、`/product/zotepad`）
+
+### 核心二: API 服务中枢
+
+完整的 MySQL + Redis + NitroJS 后端，具备完整的账户和鉴权机制。
+
+- **为什么重要**: 当站长启动新项目/实验时，不需要新建 Node 服务，直接在本项目集成，通过 PAT 授权给外部项目
+- **外部项目认证**: 通过 PAT（Personal Access Token）+ 范围权限（scope）控制 API 访问
+- 已接入的外部服务:
+  - 微信公众号: `/api/v1/wx/`（素材上传、创建草稿）
+  - 飞书 Webhook: 消息推送通知
+  - Umami 数据代理: `/api/v1/fsf/pull/umami/`（已弃用，路由文件仍存在）
+  - FSF 推送: `/api/v1/fsf/push/`（向外部服务发送消息）
+
+## 角色分工
+
+| 角色 | 负责人 | 职责范围 |
+|------|--------|---------|
+| **架构师** | 站长（Aatrox） | 所有架构决策、需求定义、系统设计、技术选型 |
+| **实现者** | AI 编码助手 | 编写代码、实现功能、修复 Bug、遵循既有模式 |
+
+**AI 行为准则**:
+- 不要自行做架构级决策（如拆分服务、更换认证模型、切换数据库），先问
+- 应该主动建议既有架构内的改进（更好的错误处理、性能优化、代码质量提升）
+- 有疑问时优先查看已有代码的实现模式，保持一致性
+
+## 架构决策记录
+
+### 为什么是单体？
+这是**刻意选择**，不是技术债。作为个人 IP 平台，所有产品、内容、服务应当共存。好处: 共享认证系统、单次部署、统一数据库、低维护成本。**不要建议拆分为微服务。**
+
+### 为什么 API 版本化？
+`/api/v1/` 前缀允许未来进行破坏性变更而不影响已授权的外部 PAT 消费者。
+
+### 为什么错误返回 HTTP 200？
+客户端处理模式: 所有错误返回 HTTP 200，错误信息通过响应体中的 `code` 字段传递。这是**有意设计**，不要"修复"为返回标准 HTTP 状态码。
+
+### 为什么用 Redis？
+Token 刷新存储 + 速率限制。目前不作为通用缓存使用。
+
+## 开发优先级指南
+
+1. **SEO > 花哨功能** — SEO 驱动自然流量，流量带来收入。在花哨功能和 SEO 改进之间，优先选 SEO。
+2. **稳定性 > 新功能** — 外部项目依赖 API 中枢，破坏性变更会影响下游服务。
+3. **可读性 > 严格规范** — 个人项目，约定宽松。代码应可读且功能完备，不必教条化。
+4. **快速迭代 > 完美设计** — 先发布，再优化。项目处于活跃迭代中。
+
+## 外部集成模式
+
+外部项目通过 PAT 令牌认证，接入本项目的 API 服务:
+
+1. 外部项目生成 PAT（通过 `/api/v1/token/generate`），选择所需权限范围
+2. PAT 令牌通过 `Authorization: Bearer pat_xxx` 请求 API
+3. 中间件 `2.auth0.ts` 验证 PAT 并通过 `isPathAllowedByScope()` 检查路径权限
+
+**可用权限范围**（定义在 `server/utils/token.ts` 的 `PAT_SCOPES`）:
+
+| Scope | 标签 | 允许路径 |
+|-------|------|---------|
+| `all` | 全部权限 | `/api/v1/` |
+| `wx` | 微信接口 | `/api/v1/wx/` |
+| `memo` | 动态管理 | `/api/v1/memo/` |
+| `comment` | 评论管理 | `/api/v1/comment/` |
+| `upload` | 文件上传 | `/api/v1/upload/` |
+| `user` | 用户信息 | `/api/v1/user/` |
+
+**FSF（Forward Service Framework）模式**:
+- `/api/v1/fsf/push/` — 向外部服务推送（如飞书 Webhook）
+- `/api/v1/fsf/pull/` — 代理拉取外部服务数据（如曾用于 Umami 统计，现已弃用）
+- 新增外部集成时，评估是否需要注册新的 PAT scope
 
 ## 技术栈
 
@@ -224,10 +315,10 @@ export default defineStandardResponseHandler(async (event) => {
 ## 内容管理
 
 ### Nuxt Content 配置
-- 来源: GitHub 仓库 (`aatrooox/Blog`)，通过 `CONTENT_REPO_TOKEN` 访问
+- 来源: 本地 `content/` 目录中的 Markdown 文件
 - 路由前缀: `/post`（在 `app/pages/post/[...slug].vue` 中渲染）
-- 过滤器: `**/*.md`（包含），排除 `-*.md` 和 `book/**/*.md`
-- Schema: `date`、`lastmod`、`tags[]`、`versions[]`
+- 过滤器: `**/*.md`（包含），排除 `-*.md`、`book/**/*.md`、`news/**/*.*`、`Excalidraw/**/*.*`
+- Schema: `date`、`showTitle`、`lastmod`、`tags[]`、`group`、`versions[]`、`rawbody`
 - 自定义 MDC 组件映射在 `nuxt.config.ts -> mdc.components.map` 中
 
 ### 语法高亮
@@ -289,4 +380,4 @@ CONTENT_REPO_TOKEN=    # 如果使用 GitHub 内容源
 
 ---
 
-**Note**: This is a personal blog project with relaxed conventions ("娱乐性质的个人空间，可不兴学啊！"). Prioritize functionality and readability over strict adherence to every rule.
+AI 助手应该理解业务目标（SEO → 流量 → 收入），在此基础上做出更好的技术决策。
