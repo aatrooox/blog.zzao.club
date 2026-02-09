@@ -53,11 +53,9 @@ const userStore = useUser()
 // const appConfig = useAppConfig()
 const { $api } = useNuxtApp()
 
-// 获取动态数据（仅在客户端加载，避免 SSR 首屏水合问题）
+// 获取动态数据（SSR预渲染，构建时请求生产API获取真实数据）
 const { getMemos, memos, status } = useMemos()
-onMounted(() => {
-  getMemos()
-})
+await getMemos()
 
 // 登录成功后，同步github信息
 watchEffect(async () => {

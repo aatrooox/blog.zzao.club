@@ -16,18 +16,20 @@ export default function useTags() {
   const userStore = useUser()
   const toast = useGlobalToast()
   const tags = useState<BlogTag[]>('tags', () => [])
+  const config = useRuntimeConfig()
 
   const { data, status, refresh } = useFetch<ApiResponse<BlogTag[]>>(
     '/api/v1/tag/list',
     {
-      immediate: false,
-      lazy: true,
+      baseURL: import.meta.server ? (config.public.apiBase as string) : '',
     },
   )
 
+  watch(data, (val) => {
+    tags.value = val?.data ?? []
+  }, { immediate: true })
+
   async function getTags() {
-    if (status.value === 'pending')
-      return
     await refresh()
     tags.value = data.value?.data ?? []
   }

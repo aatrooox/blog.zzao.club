@@ -217,11 +217,13 @@ export default defineNuxtConfig({
       Z_BLOG_VERSION: appVersion,
       // nuxtSecretKey:`blog-zzao-club-${uuid}`,
       imgHost: 'https://img.zzao.club',
+      apiBase: 'https://zzao.club',
     },
   },
   routeRules: {
     '/': { prerender: true },
     '/article': { prerender: true },
+    '/memo': { prerender: true },
     '/post/**': { prerender: true },
     '/settings': { prerender: false },
     '/admin/**': { prerender: false },

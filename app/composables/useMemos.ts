@@ -5,19 +5,22 @@ export default function useMemos() {
   const { $api } = useNuxtApp()
   const userStore = useUser()
   const toast = useGlobalToast()
+  const config = useRuntimeConfig()
   const memos = useState<BlogMemosWithUser>('memos', () => [])
 
   const { data, status, refresh } = useFetch<ApiResponse<BlogMemosWithUser>>(
     '/api/v1/memo/list',
     {
-      immediate: false,
-      lazy: true,
+      baseURL: import.meta.server ? (config.public.apiBase as string) : '',
     },
   )
 
+  // Sync memos state from fetched data
+  watch(data, (val) => {
+    memos.value = val?.data ?? []
+  }, { immediate: true })
+
   async function getMemos() {
-    if (status.value === 'pending')
-      return
     await refresh()
     memos.value = data.value?.data ?? []
   }
