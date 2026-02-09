@@ -5,6 +5,19 @@ definePageMeta({
   layout: 'clean',
 })
 
+useHead({
+  title: '产品｜早早集市',
+  meta: [
+    {
+      name: 'description',
+      content: '探索早早集市打造的工具与应用，提升您的效率与体验',
+    },
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://zzao.club/product' },
+  ],
+})
+
 const appConfig = useAppConfig()
 const products = appConfig.products
 

@@ -13,6 +13,9 @@ useHead({
       content: '免费图片拼接、免费图片切割、免费拼接长图、免费生成文字图',
     },
   ],
+  link: [
+    { rel: 'canonical', href: 'https://zzao.club/imgx' },
+  ],
 })
 
 // 图片适配模式

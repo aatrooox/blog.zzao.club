@@ -7,6 +7,9 @@ useHead({
       content: '点击了解什么是早早集市，包含本站全栈开发过程以及作者的开发愿景',
     },
   ],
+  link: [
+    { rel: 'canonical', href: 'https://zzao.club/about' },
+  ],
 })
 </script>
 

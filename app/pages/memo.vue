@@ -21,6 +21,12 @@ useSeoMeta({
   description: '基于Api数据实现SSR的页面，一些日常记录、知识碎片、其他平台的摘录',
 })
 
+useHead({
+  link: [
+    { rel: 'canonical', href: 'https://zzao.club/memo' },
+  ],
+})
+
 const { getMemos, memos, createMemo } = useMemos()
 const userStore = useUser()
 // const clientjs = useClientjs()

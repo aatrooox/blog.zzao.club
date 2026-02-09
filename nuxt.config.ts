@@ -88,12 +88,6 @@ export default defineNuxtConfig({
           `,
           type: 'text/javascript',
         },
-        {
-          'src': 'https://umami.zzao.club/script.js',
-          'defer': true,
-          'data-website-id': '99898d57-c520-495b-ae82-28972a018b91',
-          'data-domains': 'zzao.club',
-        },
       ],
       meta: [
         {
@@ -107,8 +101,12 @@ export default defineNuxtConfig({
         },
         {
           name: 'keywords',
-          content: 'Nuxt4,Nuxt3,Nitro,NuxtContent,Content,Obsidian,Vue,Vue3,Vue2,Node,博客站,前端,前端工程化,前端架构,Node,Hono,爬虫,副业',
+          content: 'Nuxt4,Nuxt3,Nitro,NuxtContent,Vue,Vue3,前端,前端工程化,前端架构,Node,Hono,博客站,爬虫,副业',
         },
+      ],
+      link: [
+        { rel: 'preconnect', href: 'https://img.zzao.club' },
+        { rel: 'preconnect', href: 'https://www.googletagmanager.com' },
       ],
     },
   },
@@ -192,9 +190,6 @@ export default defineNuxtConfig({
     imgHost: 'https://img.zzao.club',
     jwtSecret: 'your_jwt_secret',
     cryptoSecretKey: '', // 用于加密敏感数据的密钥（至少 32 字符）
-    umamiHost: 'https://umami.abc.com',
-    umamiUser: 'admin',
-    umamiPass: 'your_umami_password',
     cosRegion: '',
     cosSecretId: '',
     cosSecretKey: '',

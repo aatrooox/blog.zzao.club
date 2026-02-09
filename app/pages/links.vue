@@ -10,6 +10,9 @@ useHead({
       content: '早早集市友情链接，点击和我互换友链吧',
     },
   ],
+  link: [
+    { rel: 'canonical', href: 'https://zzao.club/links' },
+  ],
 })
 
 const { links } = useAppConfig()

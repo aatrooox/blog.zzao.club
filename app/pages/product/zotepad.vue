@@ -5,6 +5,19 @@ definePageMeta({
   layout: 'clean',
 })
 
+useHead({
+  title: 'Zotepad - 记录灵感，随心推送｜早早集市',
+  meta: [
+    {
+      name: 'description',
+      content: 'Zotepad 是一个多端笔记推送应用，支持将笔记推送到博客、个人服务器、Notion等平台，本地优先，开源免费',
+    },
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://zzao.club/product/zotepad' },
+  ],
+})
+
 const product = {
   name: 'Zotepad',
   tagline: '记录灵感，随心推送',
