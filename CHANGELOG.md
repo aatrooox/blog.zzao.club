@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.10.6
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.10.5...v2.10.6)
+
+### 🚀 Enhancements
+
+- 分页函数; memo 支持分页和滚动加载 ([72592c7](https://github.com/aatrooox/blog.zzao.club/commit/72592c7))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.10.5
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.10.4...v2.10.5)
