@@ -114,6 +114,9 @@ function smoothScrollTo(id: string) {
       </div>
     </main>
 
+    <!-- Footer -->
+    <AppFooter />
+
     <!-- Bottom Navigation (Mobile) -->
     <AppBottomNav />
 

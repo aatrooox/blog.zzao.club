@@ -56,6 +56,9 @@ function scrollToTop() {
       <slot />
     </main>
 
+    <!-- Footer -->
+    <AppFooter />
+
     <!-- Bottom Navigation (Mobile) -->
     <AppBottomNav />
 
