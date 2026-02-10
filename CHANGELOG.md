@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.0.5
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.4...v3.0.5)
+
+### 🩹 Fixes
+
+- Ipx prerender error ([20224c9](https://github.com/aatrooox/blog.zzao.club/commit/20224c9))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.0.4
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.3...v3.0.4)
