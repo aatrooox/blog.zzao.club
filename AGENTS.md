@@ -56,8 +56,8 @@
 ### 为什么 API 版本化？
 `/api/v1/` 前缀允许未来进行破坏性变更而不影响已授权的外部 PAT 消费者。
 
-### 为什么错误返回 HTTP 200？
-客户端处理模式: 所有错误返回 HTTP 200，错误信息通过响应体中的 `code` 字段传递。这是**有意设计**，不要"修复"为返回标准 HTTP 状态码。
+### API 错误响应规范
+所有 API 响应都使用标准化格式（`{ code, message, data, timestamp }`），同时返回**语义化的 HTTP 状态码**（如 400 表示参数错误，401 表示未授权，500 表示服务器错误）。客户端应同时检查 HTTP 状态码和响应体中的 `code` 字段。
 
 ### 为什么用 Redis？
 Token 刷新存储 + 速率限制。目前不作为通用缓存使用。
@@ -351,7 +351,7 @@ CONTENT_REPO_TOKEN=    # 如果使用 GitHub 内容源
 2. **密码安全**: 首次登录时自动从明文升级到 bcrypt（见 `user/login.post.ts`）
 3. **首个用户**: 自动成为 `superAdmin`
 4. **Token 轮换**: Refresh 端点同时轮换 access 和 refresh token
-5. **错误响应**: 始终返回 HTTP 200，使用 `code` 字段供客户端处理
+5. **错误响应**: 返回语义化 HTTP 状态码（400/401/500 等）并使用标准响应体（含 `code` 字段）供客户端处理
 6. **范围验证**: PAT token 受范围限制（检查 `isPathAllowedByScope`）
 7. **速率限制**: 上传端点有基于 Redis 的限制
 8. **Drizzle Relations**: 优先使用 relations 而非手动 join，查询更简洁

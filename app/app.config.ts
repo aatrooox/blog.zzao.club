@@ -21,12 +21,12 @@ export default defineAppConfig({
     {
       name: '微信公众号',
       icon: 'icon-park-outline:weixin-top-stories',
-      popover: 'https://img.zzao.club/article/202412301618068.jpg',
+      popover: '/wx_gzh.jpg',
     },
     {
       name: '个人微信',
       icon: 'icon-park-outline:wechat',
-      popover: 'https://img.zzao.club/article/202412301618241.jpg',
+      popover: '/wx_qrcode.jpg',
     },
     {
       name: '订阅我的博客',
@@ -90,10 +90,14 @@ export default defineAppConfig({
       version: '6.2.5',
     },
   ],
-  // 精选文章
-  featuredPosts: [
-    { title: 'Nuxt4 全栈博客搭建实战', path: '/post/nuxt/nuxt3-full-stack', tag: 'Nuxt' },
-    { title: '从零开始的 HonoJS 后端之旅', path: '/post/hono/hono-getting-started', tag: 'Hono' },
+  // GitHub pinned 项目展示
+  githubRepos: [
+    { name: 'imgx', desc: '基于 Nuxt 和 Nitro 的图片生成/处理器', url: 'https://github.com/aatrooox/imgx', lang: 'TypeScript', langColor: '#3178c6', stars: 117 },
+    { name: 'blog.zzao.club', desc: 'A personal blog, power by Nuxt & Nuxt/Content.', url: 'https://github.com/aatrooox/blog.zzao.club', lang: 'Vue', langColor: '#41b883', stars: 1 },
+    { name: 'zotepad', desc: '记事本及其上下游工作流工具', url: 'https://github.com/aatrooox/zotepad', lang: 'Vue', langColor: '#41b883', stars: 7 },
+    { name: 'PixeledPicPro', desc: '像素风图片编辑器', url: 'https://github.com/aatrooox/PixeledPicPro', lang: 'Vue', langColor: '#41b883', stars: 11 },
+    { name: 'astro-onwidget-zz', desc: '基于 AstroWind 的本土化改造', url: 'https://github.com/aatrooox/astro-onwidget-zz', lang: 'Astro', langColor: '#ff5a03', stars: 5 },
+    { name: 'z-cli', desc: 'all-in-one cli工具箱', url: 'https://github.com/aatrooox/z-cli', lang: 'TypeScript', langColor: '#3178c6', stars: 5 },
   ],
   products: [
     {

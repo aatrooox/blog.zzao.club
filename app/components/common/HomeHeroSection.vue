@@ -1,17 +1,21 @@
 <script setup lang="ts">
 const appConfig = useAppConfig()
 
-// 过滤掉 '全部' 标签
 const tags = computed(() => {
   const allTags: string[] = appConfig.tags || []
   return allTags.filter(t => t !== '全部')
 })
 
-// 社交链接
 const socialItems = computed(() => appConfig.social || [])
 
-// 精选文章
-const featuredPosts = computed(() => appConfig.featuredPosts || [])
+const githubRepos = computed(() => appConfig.githubRepos || [])
+
+function formatStars(count: number): string {
+  if (count >= 1000) {
+    return `${(count / 1000).toFixed(1)}k`
+  }
+  return String(count)
+}
 </script>
 
 <template>
@@ -31,7 +35,7 @@ const featuredPosts = computed(() => appConfig.featuredPosts || [])
             Aatrox
           </div>
           <div class="text-xs text-zinc-400 dark:text-zinc-500 truncate">
-            Nuxt 全栈开发 · 人生游戏 DLC
+            Nuxt 全栈开发
           </div>
         </div>
       </div>
@@ -97,25 +101,39 @@ const featuredPosts = computed(() => appConfig.featuredPosts || [])
       </NuxtLink>
     </div>
 
-    <!-- 精选文章 -->
-    <div v-if="featuredPosts.length" class="space-y-2">
+    <!-- GitHub 项目 -->
+    <div v-if="githubRepos.length" class="space-y-2">
       <div class="flex items-center gap-2">
-        <Icon name="pixelarticons:bookmark" class="text-primary w-4 h-4 shrink-0" />
-        <span class="text-xs font-medium text-zinc-500 dark:text-zinc-400">精选</span>
+        <Icon name="icon-park-outline:github" class="text-primary w-4 h-4 shrink-0" />
+        <span class="text-xs font-medium text-zinc-500 dark:text-zinc-400">开源项目</span>
       </div>
-      <div class="flex flex-col gap-1">
+      <div class="grid grid-cols-2 gap-2">
         <NuxtLink
-          v-for="post in featuredPosts"
-          :key="post.path"
-          :to="post.path"
-          class="group flex items-center gap-2 py-1.5 px-3 -mx-3 rounded-md hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors"
+          v-for="repo in githubRepos"
+          :key="repo.name"
+          :to="repo.url"
+          external
+          target="_blank"
+          class="group rounded-lg border border-zinc-100 dark:border-zinc-800 p-2.5 hover:border-primary/30 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors"
         >
-          <span class="text-sm text-zinc-700 dark:text-zinc-300 group-hover:text-primary transition-colors truncate">
-            {{ post.title }}
-          </span>
-          <span v-if="post.tag" class="text-xs text-zinc-400 dark:text-zinc-500 shrink-0">
-            #{{ post.tag }}
-          </span>
+          <div class="flex items-center gap-1.5 mb-1">
+            <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300 group-hover:text-primary transition-colors truncate">
+              {{ repo.name }}
+            </span>
+          </div>
+          <p class="text-xs text-zinc-400 dark:text-zinc-500 truncate mb-1.5">
+            {{ repo.desc }}
+          </p>
+          <div class="flex items-center gap-2">
+            <span v-if="repo.lang" class="flex items-center gap-1 text-xs text-zinc-400 dark:text-zinc-500">
+              <span class="w-2 h-2 rounded-full shrink-0" :style="{ backgroundColor: repo.langColor }" />
+              {{ repo.lang }}
+            </span>
+            <span v-if="repo.stars > 0" class="flex items-center gap-0.5 text-xs text-zinc-400 dark:text-zinc-500">
+              <Icon name="lucide:star" class="w-3 h-3" />
+              {{ formatStars(repo.stars) }}
+            </span>
+          </div>
         </NuxtLink>
       </div>
     </div>
