@@ -26,7 +26,7 @@ export default defineAppConfig({
     {
       name: '个人微信',
       icon: 'icon-park-outline:wechat',
-      popover: '/wx_qrcode.jpg',
+      popover: '/wx_qrcode.png',
     },
     {
       name: '订阅我的博客',

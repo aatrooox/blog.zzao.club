@@ -55,8 +55,8 @@ function formatStars(count: number): string {
               <Icon :name="item.icon" class="w-5 h-5" />
             </NuxtLink>
             <!-- Hover 弹出二维码 -->
-            <div class="absolute right-0 top-full mt-2 hidden group-hover:block z-50">
-              <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-700 p-2">
+            <div class="absolute right-0 top-full mt-2 hidden group-hover:block z-50 w-44">
+              <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-700 p-2 w-full">
                 <div class="text-xs text-zinc-500 dark:text-zinc-400 text-center mb-1.5">
                   {{ item.name }}
                 </div>
