@@ -22,8 +22,6 @@ const articleWrap = useTemplateRef('articleWrap')
 // const titleRef = useTemplateRef('titleRef')
 const activeTocId = ref('')
 // const actionContainer = useTemplateRef('actionContainer')
-const selectedText = ref()
-const { text } = useTextSelection()
 // const isTocFixed = ref(false)
 
 // 使用吸顶组合式函数
@@ -50,7 +48,7 @@ const likeCount = ref(0)
 const isLiked = ref(false)
 const comments = ref<BlogCommentWithUserInfo[]>([])
 const isDefer = ref(true)
-const isOpenDrawer = ref(false)
+
 
 // const commentIconPosition = computed(() => {
 //   if (text.value.trim().length) {
@@ -106,15 +104,6 @@ const isOpenDrawer = ref(false)
 //   }
 // })
 
-watch(
-  () => text.value,
-  (newText) => {
-    if (newText?.trim()) {
-      selectedText.value = serializeSelection(newText)
-    }
-  },
-)
-
 function commentEnter(el) {
   animate(el, {
     // scale: [0.5, 1, 1.5, 1],
@@ -163,15 +152,6 @@ function commentLeave(el, done) {
 
 // function handleCommentPragph() {
 //   console.log('评论段落', selectedText.value)
-// }
-// 选中时及时保存当前文字
-function serializeSelection(text?: string) {
-  if (!text)
-    return {}
-  return {
-    text,
-  }
-}
 
 const adjacentPages = ref<any[]>([])
 const _htmlCache = {}
@@ -525,107 +505,6 @@ async function getSurroundingPage() {
   console.log(`data`, data.value)
   adjacentPages.value = data.value || []
 }
-function handleSubmitExplain() {
-  isOpenDrawer.value = false
-  initExplain()
-}
-// 初始化注释内容
-async function initExplain() {
-  const res = await $api.get<ApiResponse>(`/api/v1/explain?id=${encodeURIComponent(page.value?.id ?? '')}`)
-  if (!res.error) {
-    const explains = res.data
-    const container = curMdContentRef.value
-    processArticleContent(explains, container)
-  }
-}
-
-// 处理文章内容，查找并标记注解
-function processArticleContent(explains, container) {
-  // 获取所有文本节点
-  const textNodes = getAllTextNodes(container)
-
-  // 对每个注解进行处理
-  explains.forEach((annotation) => {
-    const searchText = annotation.text
-
-    // 在所有文本节点中查找匹配
-    textNodes.forEach((node) => {
-      const parent = node.parentNode
-      const content = node.textContent
-
-      // 如果文本节点包含注解文本
-      if (content.includes(searchText)) {
-        // 分割文本节点
-        const parts = content.split(searchText)
-
-        // 创建文档片段
-        const fragment = document.createDocumentFragment()
-
-        // 添加第一部分文本
-        if (parts[0]) {
-          fragment.appendChild(document.createTextNode(parts[0]))
-        }
-
-        // 创建注解元素
-        const annotatedSpan = document.createElement('span')
-        annotatedSpan.className = 'highlight-explain-selection'
-        annotatedSpan.textContent = searchText
-
-        // 创建提示气泡
-        const tooltip = document.createElement('div')
-        tooltip.className = 'explain-tooltip'
-
-        // 添加注解内容
-        const annotationItem = document.createElement('div')
-        annotationItem.className = 'explain-content'
-        annotationItem.textContent = annotation.content
-        tooltip.appendChild(annotationItem)
-
-        // 将气泡添加到注解元素
-        annotatedSpan.appendChild(tooltip)
-        fragment.appendChild(annotatedSpan)
-
-        // 添加剩余部分文本
-        for (let i = 1; i < parts.length; i++) {
-          if (i > 1) {
-            // 如果有多个匹配，添加注解文本
-            const repeatAnnotatedSpan = annotatedSpan.cloneNode(true)
-            fragment.appendChild(repeatAnnotatedSpan)
-          }
-          if (parts[i]) {
-            fragment.appendChild(document.createTextNode(parts[i]))
-          }
-        }
-
-        // 替换原始节点
-        parent && parent.replaceChild(fragment, node)
-      }
-    })
-  })
-}
-
-// 获取元素内的所有文本节点
-function getAllTextNodes(element) {
-  const textNodes: any[] = []
-
-  // 递归函数获取所有文本节点
-  function getTextNodes(node) {
-    if (!node)
-      return
-    if (node.nodeType === Node.TEXT_NODE) {
-      textNodes.push(node)
-    }
-    else {
-      const children = node.childNodes
-      for (let i = 0; i < children.length; i++) {
-        getTextNodes(children[i])
-      }
-    }
-  }
-
-  getTextNodes(element)
-  return textNodes
-}
 // TOC滚动监听
 // function handleTocScroll() {
 //   if (!tocContainer.value)
@@ -671,7 +550,6 @@ watchEffect(async () => {
       initComment()
       initLikeCount()
       getSurroundingPage()
-      initExplain()
       loadGroupArticles() // 加载分组文章
     })
   }
@@ -758,20 +636,6 @@ watchEffect(async () => {
           </div>
         </ClientOnly>
 
-        <!-- 作者添加注解 v-model:open="isOpen" -->
-        <Drawer v-model:open="isOpenDrawer" :dismissible="true">
-          <DrawerContent class="bg-gray-900 border-t-2 border-gray-800">
-            <DrawerHeader>
-              <DrawerTitle class=" text-gray-100" />
-            </DrawerHeader>
-            <div class="border-box px-4 pb-8 md:px-20">
-              <QuoteComment
-                :content="selectedText?.text ?? ''" :article-id="page?.id" @close="isOpenDrawer = false"
-                @success="handleSubmitExplain"
-              />
-            </div>
-          </DrawerContent>
-        </Drawer>
       </div>
     </div>
   </NuxtLayout>
