@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v3.0.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.10.6...v3.0.0)
+
+### 🚀 Enhancements
+
+- 集成后台管理系统 ([2a20a94](https://github.com/aatrooox/blog.zzao.club/commit/2a20a94))
+- 优化github oauth登录流程 ([cb57f7b](https://github.com/aatrooox/blog.zzao.club/commit/cb57f7b))
+
+### 📖 Documentation
+
+- 文章更新 ([436c502](https://github.com/aatrooox/blog.zzao.club/commit/436c502))
+- 文章更新 ([9c17ccc](https://github.com/aatrooox/blog.zzao.club/commit/9c17ccc))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v2.10.6
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.10.5...v2.10.6)
