@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v3.0.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.1...v3.0.2)
+
+### 🚀 Enhancements
+
+- 文章页增加筛选功能; 优化文章样式 ([1ca2f04](https://github.com/aatrooox/blog.zzao.club/commit/1ca2f04))
+
+### 🩹 Fixes
+
+- 修复toast异常; admin增加评论跳转到对应页面 ([da3f2de](https://github.com/aatrooox/blog.zzao.club/commit/da3f2de))
+
+### 🏡 Chore
+
+- 隐藏推文目录 ([63546f7](https://github.com/aatrooox/blog.zzao.club/commit/63546f7))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.0.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.0...v3.0.1)
