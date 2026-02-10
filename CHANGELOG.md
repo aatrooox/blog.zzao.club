@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.0.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.0...v3.0.1)
+
+### 🚀 Enhancements
+
+- 新增统一footer; 修复admin内容区域无法滚动问题 ([e1727cd](https://github.com/aatrooox/blog.zzao.club/commit/e1727cd))
+
+### 🏡 Chore
+
+- **skill:** Add nuxt ui skill ([edab821](https://github.com/aatrooox/blog.zzao.club/commit/edab821))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.0.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v2.10.6...v3.0.0)
