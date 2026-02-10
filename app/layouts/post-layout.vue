@@ -1,43 +1,12 @@
 <script lang="ts" setup>
-import { Toaster } from 'vue-sonner'
 import { useSearch } from '~/composables/useSearch'
 
 const { showSearchDialog } = useSearch()
 const showScrollTopBtn = ref(false)
-const globalToast = useGlobalToast()
-const { $toast } = useNuxtApp() as any
 
 // 从slot中获取tocData(通过provide/inject)
 const tocData = inject<any>('tocData', ref(null))
 const activeTocId = inject<any>('activeTocId', ref(''))
-
-// Toast handling
-watch(() => globalToast.toastState.value.messages, (messages) => {
-  if (messages.length > 0) {
-    messages.forEach((message) => {
-      switch (message.type) {
-        case 'success':
-          $toast.success(message.message, message.options as any)
-          break
-        case 'error':
-          $toast.error(message.message, message.options as any)
-          break
-        case 'info':
-          $toast.info(message.message, message.options as any)
-          break
-        case 'warning':
-          $toast.warning(message.message, message.options as any)
-          break
-        case 'promise':
-          $toast.promise(message.options as any)
-          break
-        default:
-          $toast(message.message, message.options as any)
-      }
-    })
-    globalToast.clear()
-  }
-}, { deep: true })
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -57,9 +26,6 @@ function smoothScrollTo(id: string) {
 
 <template>
   <div class="min-h-screen bg-zinc-50 flex flex-col font-sans text-zinc-900">
-    <!-- Toast Notifications -->
-    <Toaster position="top-right" rich-colors />
-
     <!-- Top Navigation -->
     <AppTopNav max-width-class="max-w-3xl" />
 

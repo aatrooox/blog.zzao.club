@@ -102,6 +102,30 @@ function getAuthor(comment: any) {
   return '匿名用户'
 }
 
+// Build source link for a comment
+function getSourceLink(comment: any): string | null {
+  if (comment.type === 'memo' && comment.memoId) {
+    return `https://zzao.club/m/${comment.memoId}`
+  }
+  if (comment.articleId) {
+    // Nuxt Content v3 id format: "content/post/tips/some-slug.md" → "/post/tips/some-slug"
+    const path = comment.articleId.replace(/^content/, '').replace(/\.md$/, '')
+    return `https://zzao.club${path}#评论区`
+  }
+  return null
+}
+
+// Get source label for a comment
+function getSourceLabel(comment: any): string {
+  if (comment.type === 'memo' && comment.memoId) {
+    return `动态: ${comment.memoId.slice(0, 8)}...`
+  }
+  if (comment.articleId) {
+    return `文章: ${comment.articleId.slice(0, 20)}...`
+  }
+  return ''
+}
+
 onMounted(() => {
   fetchComments()
 })
@@ -149,10 +173,14 @@ onMounted(() => {
               <UBadge :color="getTypeColor(comment.type)" variant="subtle" size="xs">
                 {{ getTypeLabel(comment.type) }}
               </UBadge>
-              <span class="text-xs text-muted-foreground">
-                {{ comment.articleId ? `文章: ${comment.articleId.slice(0, 8)}...` : '' }}
-                {{ comment.memoId ? `动态: ${comment.memoId.slice(0, 8)}...` : '' }}
-              </span>
+              <a
+                v-if="getSourceLink(comment)"
+                :href="getSourceLink(comment)!"
+                target="_blank"
+                class="text-xs text-primary hover:underline"
+              >
+                {{ getSourceLabel(comment) }}
+              </a>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-xs text-muted-foreground">{{ formatDate(comment.createTs) }}</span>

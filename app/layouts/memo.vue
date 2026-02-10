@@ -62,40 +62,9 @@ function handleTagClickSingle(tagName: string) {
     query: { ...route.query, tags: tagName },
   })
 }
-
-// Toast 支持
-const globalToast = useGlobalToast()
-const { $toast } = useNuxtApp() as any
-watch(() => globalToast.toastState.value.messages, (messages) => {
-  if (messages.length > 0) {
-    messages.forEach((message) => {
-      switch (message.type) {
-        case 'success':
-          $toast.success(message.message, message.options as any)
-          break
-        case 'error':
-          $toast.error(message.message, message.options as any)
-          break
-        case 'info':
-          $toast.info(message.message, message.options as any)
-          break
-        case 'warning':
-          $toast.warning(message.message, message.options as any)
-          break
-        case 'promise':
-          $toast.promise(message.options as any)
-          break
-        default:
-          $toast(message.message, message.options as any)
-      }
-    })
-    globalToast.clear()
-  }
-}, { deep: true })
 </script>
 
 <template>
-  <Toaster position="top-right" rich-colors />
   <div class="memos-page-container min-h-screen bg-secondary-100 p-4 flex flex-col md:flex-row gap-4">
     <!-- Left Column: User Info & Stats -->
     <aside class="w-1/4 lg:w-1/5 hidden md:block p-4 md:p-6 bg-base border-2 border-bg-base rounded-lg shadow-pixel sticky top-4 self-start">

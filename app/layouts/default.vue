@@ -1,38 +1,8 @@
 <script lang="ts" setup>
-import { toast, Toaster } from 'vue-sonner'
 import { useSearch } from '~/composables/useSearch'
 
 const { showSearchDialog } = useSearch()
 const showScrollTopBtn = ref(false)
-const globalToast = useGlobalToast()
-
-// Toast handling
-watch(() => globalToast.toastState.value.messages, (messages) => {
-  if (messages.length > 0) {
-    messages.forEach((message) => {
-      switch (message.type) {
-        case 'success':
-          toast.success(message.message, message.options as any)
-          break
-        case 'error':
-          toast.error(message.message, message.options as any)
-          break
-        case 'info':
-          toast.info(message.message, message.options as any)
-          break
-        case 'warning':
-          toast.warning(message.message, message.options as any)
-          break
-        case 'promise':
-          toast.promise(message.options as any)
-          break
-        default:
-          toast(message.message, message.options as any)
-      }
-    })
-    globalToast.clear()
-  }
-}, { deep: true })
 
 // function onScroll(state: UseScrollReturn) {
 //   showScrollTopBtn.value = state.y.value > 200
@@ -45,9 +15,6 @@ function scrollToTop() {
 
 <template>
   <div class="min-h-screen bg-zinc-50 flex flex-col font-sans text-zinc-900">
-    <!-- Toast Notifications -->
-    <Toaster position="top-right" rich-colors />
-
     <!-- Top Navigation (Desktop) -->
     <AppTopNav />
 
