@@ -7,9 +7,11 @@ defineProps({
 })
 
 const { navItems } = useAppNavigation()
-const { user, isLogin } = useUser()
+const { user, isLogin, isSuperAdmin } = useUser()
 const userStore = useUser()
 const showLoginDialog = ref(false)
+
+const userAvatarLink = computed(() => isSuperAdmin.value ? '/admin' : '/settings')
 
 function logout() {
   userStore.logout()
@@ -41,7 +43,7 @@ function logout() {
       <!-- User / Actions -->
       <div class="flex items-center gap-2">
         <template v-if="isLogin">
-          <NuxtLink to="/settings" class="flex items-center gap-2 hover:bg-zinc-50 p-1.5 rounded-full transition-colors">
+          <NuxtLink :to="userAvatarLink" class="flex items-center gap-2 hover:bg-zinc-50 p-1.5 rounded-full transition-colors">
             <UserAvatar :user="user" :size="28" />
           </NuxtLink>
           <button

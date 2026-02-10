@@ -24,11 +24,19 @@ export type PatScopeKey = keyof typeof PAT_SCOPES
  * 检查路径是否在 scope 允许范围内
  */
 export function isPathAllowedByScope(scope: string, pathname: string): boolean {
-  // 解析 scope 字符串，格式: "scopes:wx,memo|note:我的备注"
+  // JWT tokens 使用简单 scope 字符串 (如 'all')，直接处理
+  if (scope === 'all') {
+    return true
+  }
+  const simpleScope = PAT_SCOPES[scope as PatScopeKey]
+  if (simpleScope) {
+    return simpleScope.paths.some(allowedPath => pathname.startsWith(allowedPath))
+  }
+
+  // PAT tokens 使用复合格式: "scopes:wx,memo|note:我的备注"
   const scopeMatch = scope.match(/^scopes:([^|]+)/)
   if (!scopeMatch) {
-    // 兼容旧格式 "pat:备注"，视为 all 权限
-    return true
+    return false
   }
 
   const scopeKeys = scopeMatch[1].split(',') as PatScopeKey[]

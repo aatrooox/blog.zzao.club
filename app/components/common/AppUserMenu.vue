@@ -3,6 +3,7 @@ import type { User } from '~~/types/memo'
 
 const { $api } = useNuxtApp()
 const userStore = useUser()
+const { isSuperAdmin } = useUser()
 const { clear } = useUserSession()
 async function logout() {
   await $api.post('/api/v1/user/logout')
@@ -21,6 +22,9 @@ async function logout() {
         {{ (userStore.user.value as User).nickname || (userStore.user.value as User).username }}
       </DropdownMenuLabel>
       <DropdownMenuSeparator />
+      <DropdownMenuItem v-if="isSuperAdmin" @click="navigateTo('/admin')">
+        <span>管理后台</span>
+      </DropdownMenuItem>
       <DropdownMenuItem @click="navigateTo('/settings')">
         <span>设置</span>
       </DropdownMenuItem>
