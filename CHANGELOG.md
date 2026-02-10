@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.0.6
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.5...v3.0.6)
+
+### 🩹 Fixes
+
+- 二维码显示异常 ([51a693c](https://github.com/aatrooox/blog.zzao.club/commit/51a693c))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.0.5
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.4...v3.0.5)
