@@ -4,11 +4,10 @@ import type { User } from '~~/types/memo'
 const { $api } = useNuxtApp()
 const userStore = useUser()
 const { isSuperAdmin } = useUser()
-const { clear } = useUserSession()
+
 async function logout() {
   await $api.post('/api/v1/user/logout')
   userStore.logout()
-  clear()
 }
 </script>
 

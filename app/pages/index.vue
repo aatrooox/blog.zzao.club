@@ -46,35 +46,9 @@ useHead({
   ],
 })
 
-const router = useRouter()
-const route = useRoute()
-const { loggedIn, user } = useUserSession()
-const userStore = useUser()
-// const appConfig = useAppConfig()
-const { $api } = useNuxtApp()
-
 // 获取动态数据（SSR预渲染，构建时请求生产API获取真实数据）
 const { getMemos, memos, status } = useMemos({ size: 10 })
 await getMemos()
-
-// 登录成功后，同步github信息
-watchEffect(async () => {
-  if (loggedIn.value && route.query.login === 'github' && route.query.status === 'success') {
-    const { data, error } = await $api.post('/api/v1/auth/connect/github', {
-      id: user.value?.id,
-      avatar_url: user.value?.avatar_url,
-      email: user.value?.email,
-      login: user.value?.login,
-    })
-
-    if (!error) {
-      userStore.setUser(data.user)
-      userStore.setToken(data.token)
-    }
-
-    router.replace('/')
-  }
-})
 
 const { data: allArticles } = await usePagesWithGroup({ limit: 50 })
 

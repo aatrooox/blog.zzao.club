@@ -123,12 +123,22 @@ jobs:
             DOTENV=""
           fi
 
+          # Seed migration journal: marks pre-existing migrations as applied (idempotent)
+          if [ -f "$ENVFILE" ]; then set -a; . "$ENVFILE"; set +a; fi
+          if [ -n "$DATABASE_URL" ] && docker ps --format '{{.Names}}' | grep -q '^zzclub_mysql_server$'; then
+            DB_USER=$(echo "$DATABASE_URL" | sed -n 's|mysql://\([^:]*\):.*|\1|p')
+            DB_PASS=$(echo "$DATABASE_URL" | sed -n 's|mysql://[^:]*:\([^@]*\)@.*|\1|p')
+            DB_NAME=$(echo "$DATABASE_URL" | sed -n 's|mysql://[^/]*/\(.*\)|\1|p')
+            SEED_SQL="CREATE TABLE IF NOT EXISTS \`__drizzle_migrations__\` (\`id\` bigint unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY, \`hash\` text NOT NULL, \`created_at\` bigint); INSERT IGNORE INTO \`__drizzle_migrations__\` (\`hash\`, \`created_at\`) VALUES ('0084fec653d6f1326a4a0d0dd65560fbbc734122626c5864fa7140f99c018483', 1755249052400), ('f7463641417526b606033f9cc8b7e8cab0c6a7d54cb91ac6617611b8ebcf5960', 1755511011512), ('593d13552e3a962af0e64a92cad75e2be4ec30be305dd614fb1843a7785543ff', 1755511418940), ('ebae4c45cd8a0abf2c149d0c17060b4730e6aabd1a00509634fdb804ce2cac5e', 1755925826780);"
+            docker exec zzclub_mysql_server mysql -u"$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "$SEED_SQL" && echo "Migration journal seeded" || echo "Migration journal seed skipped"
+          else
+            echo "MySQL container or DATABASE_URL not available; skipping journal seed"
+          fi
+
           # Apply Drizzle migrations on server
           if [ -n "$DOTENV" ]; then
             eval "$DOTENV" npx -y drizzle-kit@0.31.4 migrate || true
           else
-            echo "dotenv-cli not available; using source fallback for migrations"
-            if [ -f "$ENVFILE" ]; then set -a; . "$ENVFILE"; set +a; fi
             if command -v npx >/dev/null 2>&1; then
               npx -y drizzle-kit@0.31.4 migrate || true
             else

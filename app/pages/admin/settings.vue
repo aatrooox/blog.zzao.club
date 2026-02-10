@@ -9,8 +9,6 @@ definePageMeta({
 const { $api } = useNuxtApp()
 const toast = useGlobalToast()
 const userStore = useUser()
-const route = useRoute()
-const { user: sessionUser } = useUserSession()
 
 const userId = computed(() => userStore.user.value?.id)
 
@@ -124,22 +122,8 @@ async function onSubmitSecurity() {
   }
 }
 
-// --- OAuth handling ---
-async function handleOAuth() {
-  if (route.query.oath === '1' && sessionUser.value?.avatar_url) {
-    const res = await $api.put(`/api/v1/user/${userId.value}`, {
-      avatar_url: sessionUser.value.avatar_url,
-    })
-    if (res.data) {
-      userStore.setUser(res.data)
-      toast.success('已成功关联 GitHub 头像')
-    }
-  }
-}
-
 onMounted(async () => {
   await Promise.all([loadProfile(), loadConfig()])
-  handleOAuth()
 })
 </script>
 
@@ -159,7 +143,7 @@ onMounted(async () => {
             基本信息
           </h3>
           <UButton
-            to="/api/v1/auth/github?setting=1"
+            to="/api/v1/auth/github?redirect=/admin/settings"
             external
             variant="outline"
             icon="i-lucide-github"
