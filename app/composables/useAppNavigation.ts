@@ -15,11 +15,11 @@ export const useAppNavigation = () => {
       path: '/memo',
       icon: 'pixelarticons:message-processing',
     },
-    {
-      name: '推文',
-      path: '/news',
-      icon: 'pixelarticons:radio-signal',
-    },
+    // {
+    //   name: '推文',
+    //   path: '/news',
+    //   icon: 'pixelarticons:radio-signal',
+    // },
     {
       name: '友链',
       path: '/links',
