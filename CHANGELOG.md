@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.0.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.2...v3.0.3)
+
+### 🚀 Enhancements
+
+- 优化首页个人信息 ([84a6c7d](https://github.com/aatrooox/blog.zzao.club/commit/84a6c7d))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.0.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.1...v3.0.2)
