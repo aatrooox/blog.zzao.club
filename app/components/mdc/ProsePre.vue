@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { CalendarSearch } from 'lucide-vue-next'
 import { useClipboard } from '@vueuse/core'
 
 const props = defineProps({
@@ -55,13 +56,95 @@ const copyCode = async () => {
     toast.error('复制失败')
   }
 }
+
+const vscodeIconMap = (lang: string | null) => {
+  if (!lang)
+    return 'rnc'
+
+  const langMap: Record<string, string> = {
+    // Common mappings
+    text: 'rnc',
+    txt: 'rnc',
+    plaintext: 'rnc',
+
+    // JavaScript/TypeScript
+    javascript: 'js',
+    js: 'js',
+    typescript: 'ts',
+    ts: 'ts',
+    jsx: 'reactjs',
+    tsx: 'reactts',
+
+    // Web
+    html: 'html',
+    css: 'css',
+    scss: 'scss',
+    sass: 'sass',
+    less: 'less',
+    vue: 'vue',
+
+    // Config formats
+    json: 'json',
+    yaml: 'yaml',
+    yml: 'yaml',
+    toml: 'toml',
+    xml: 'xml',
+
+    // Shell/Scripts
+    shell: 'shell',
+    sh: 'shell',
+    bash: 'shell',
+    zsh: 'shell',
+    fish: 'shell',
+    powershell: 'powershell',
+    ps1: 'powershell',
+
+    // Programming languages
+    python: 'python',
+    py: 'python',
+    java: 'java',
+    c: 'c',
+    cpp: 'cpp',
+    csharp: 'csharp',
+    cs: 'csharp',
+    go: 'go',
+    rust: 'rust',
+    rs: 'rust',
+    php: 'php',
+    ruby: 'ruby',
+    rb: 'ruby',
+    swift: 'swift',
+    kotlin: 'kotlin',
+    kt: 'kotlin',
+
+    // Database
+    sql: 'sql',
+    mysql: 'mysql',
+    postgresql: 'pgsql',
+    postgres: 'pgsql',
+
+    // Markup/Documentation
+    markdown: 'markdown',
+    md: 'markdown',
+    mdx: 'mdx',
+
+    // Others
+    docker: 'docker',
+    dockerfile: 'docker',
+    git: 'git',
+    graphql: 'graphql',
+    prisma: 'prisma',
+  }
+
+  return langMap[lang.toLowerCase()] || 'text'
+}
 </script>
 
 <template>
   <div>
-    <div class="flex items-center justify-between gap-1.5 border-1 border-zinc-400 bg-zinc-500/10 border-b-0 relative px-4 py-1">
+    <div class="flex items-center justify-between gap-1.5 border-1 border-zinc-400 bg-zinc-100/10  relative px-4 py-1 rounded-tl-sm rounded-tr-lg">
       <div class="flex items-center gap-1.5 text-sm">
-        <Icon :name="`vscode-icons:file-type-${language}`" />{{ filename }}
+        <Icon :name="`vscode-icons:file-type-${vscodeIconMap(language)}`" />{{ filename }}
       </div>
       <ClientOnly>
         <button
@@ -74,8 +157,6 @@ const copyCode = async () => {
         </button>
       </ClientOnly>
     </div>
-    <pre ref="preRef" :class="$props.class" class="!mt-0 border-1 rounded-none !py-0 overflow-x-auto !leading-snug">
-      <slot />
-    </pre>
+    <pre ref="preRef" :class="$props.class" class="mt-0! rounded-none border-zinc-400 border border-t-0 py-0! overflow-x-auto leading-snug! rounded-bl-lg rounded-br-lg"><slot /></pre>
   </div>
 </template>

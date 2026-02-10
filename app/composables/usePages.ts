@@ -28,19 +28,27 @@ export async function usePageByPath(path: string) {
   return { data, pending, refresh, error }
 }
 
-// ========== 新增:获取所有文章(含分组字段) ==========
-export async function usePagesWithGroup(options?: { limit?: number }) {
+export async function usePagesWithGroup(options?: { filter_tags?: MaybeRef<string[] | null>, limit?: number }) {
+  const filterTags = computed(() => toValue(options?.filter_tags) ?? null)
   const limit = options?.limit
-  const key = `pages-with-group-${limit ?? 'all'}`
+  const key = computed(() => `pages-with-group-${filterTags.value?.join(',') ?? 'all'}-${limit ?? 'all'}`)
 
   const { data, pending, refresh, error } = await useAsyncData(key, async () => {
     let query = queryCollection('content')
+
+    const tags = filterTags.value
+    if (tags && tags.length > 0) {
+      for (const tag of tags) {
+        query = query.where('tags', 'LIKE', `%${tag}%`)
+      }
+    }
+
     query = query.order('date', 'DESC')
     if (limit) {
       query = query.limit(limit)
     }
     return await query.select('id', 'path', 'title', 'date', 'tags', 'group', 'lastmod').all() as unknown as Page[]
-  })
+  }, { watch: [filterTags] })
 
   return { data, pending, refresh, error }
 }

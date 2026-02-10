@@ -131,6 +131,9 @@ function onEnter(el: any) {
 
 <template>
   <div class="font-sans max-w-3xl mx-auto">
+    <!-- 首页信息栏：作者简介 + 标签 + 精选 -->
+    <HomeHeroSection />
+
     <div class="space-y-4">
       <transition-group name="list" tag="div" class="space-y-4" @enter="onEnter">
         <template v-for="item in mixedList" :key="item.id">

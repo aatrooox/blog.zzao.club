@@ -8,7 +8,7 @@ export default defineAppConfig({
   // 描述
   desciption: '人生游戏 DLC',
   // 头像
-  avatar: 'https://img.zzao.club/article/202412301500611.png',
+  avatar: '/avatar.jpg',
   // 社交媒体 icon 从 https://icones.js.org/ 里找
   social: [
     {
@@ -38,7 +38,7 @@ export default defineAppConfig({
   // 配置后会以此处配置的标签作为 /article 页面筛选栏
   // 比如: tags: ['哈哈'], 则会搜索 文章中 tags 字段中包含(模糊搜索) '哈哈' 的文章
   // 因为观察到其他博客，如果把所有的 tags 都自动罗列出来，会有很多 tag 只有一篇文章，可能是当时随手加的，所以不如自己维护几个高频的
-  tags: ['全部', 'Nuxt', 'Hono', 'Vue', '生活'],
+  tags: ['Nuxt', 'AI', 'Hono', 'Vue', '生活'],
   authLayer: {
     enabled: false,
   },
@@ -90,11 +90,16 @@ export default defineAppConfig({
       version: '6.2.5',
     },
   ],
+  // 精选文章
+  featuredPosts: [
+    { title: 'Nuxt4 全栈博客搭建实战', path: '/post/nuxt/nuxt3-full-stack', tag: 'Nuxt' },
+    { title: '从零开始的 HonoJS 后端之旅', path: '/post/hono/hono-getting-started', tag: 'Hono' },
+  ],
   products: [
     {
       name: '博客站',
       slug: 'blog',
-      description: '基于Nuxt4+Drizzle+PostgreSQL的全栈博客系统，支持SSR渲染、动态内容发布、用户系统等功能。',
+      description: '基于Nuxt4+Drizzle+MySQL的全栈博客系统，支持SSR渲染、动态内容发布、用户系统等功能。',
       icon: 'lucide:layout-template',
       features: ['SSR 渲染', '全栈开发', '用户系统', '动态内容'],
       link: '/',
@@ -102,7 +107,7 @@ export default defineAppConfig({
     {
       name: 'Zotepad',
       slug: 'zotepad',
-      description: '一款基于Nuxt4和Tauri2构建的多端纯本地笔记推送应用，支持自定义【推送】到任意服务器',
+      description: '基于Nuxt4和Tauri2构建的多端纯本地笔记推送应用',
       icon: 'lucide:notebook-pen',
       features: ['跨平台', '本地优先', '自定义推送', '隐私安全'],
       link: '/product/zotepad',

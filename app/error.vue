@@ -26,8 +26,8 @@ const handleError = () => clearError({ redirect: '/' })
 </script>
 
 <template>
-  <NuxtLayout>
-    <div class="error-page flex flex-col gap-4">
+  <NuxtLayout name="default">
+    <div class="error-page flex flex-col items-center justify-center gap-4 py-20 text-center">
       <div class="text-5xl">
         {{ props.error?.statusCode }}
       </div>

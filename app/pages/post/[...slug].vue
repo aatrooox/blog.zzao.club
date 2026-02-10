@@ -180,6 +180,15 @@ let copyHTML = ``
 
 const { data: page, pending: _pending, refresh: _refresh, error: _error } = await usePageByPath(route.path)
 
+// 内容不存在时立即抛出 404，而不是渲染空白页
+if (!page.value) {
+  throw createError({
+    statusCode: 404,
+    message: '页面不存在',
+    fatal: true,
+  })
+}
+
 useSeoMeta({
   title: page.value?.seo?.title,
   description: page.value?.seo?.description,
@@ -253,17 +262,6 @@ useHead({
       }),
     },
   ],
-})
-
-watch(() => page, (val) => {
-  if (!val) {
-    console.log(page.value)
-    throw createError({
-      statusCode: 404,
-      message: '页面不存在',
-      fatal: true,
-    })
-  }
 })
 
 const tocData = computed(() => {
@@ -712,7 +710,7 @@ watchEffect(async () => {
           </div>
         </ClientOnly>
         <!-- 文章内容 markdown -->
-        <article ref="curMdContentRef" class="content-wrap prose prose-zinc prose-base max-w-none p-0 w-full">
+        <article ref="curMdContentRef" class="content-wrap prose prose-stone prose-base max-w-none p-0 w-full">
           <ContentRenderer :value="page?.body" class="max-w-full" />
         </article>
         <!-- 相邻的文章 -->
