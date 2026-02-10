@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v3.0.7
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.6...v3.0.7)
+
+### 🏡 Chore
+
+- 尝试让nodejs使用代理 ([5f9c44f](https://github.com/aatrooox/blog.zzao.club/commit/5f9c44f))
+- 尝试让nodejs使用代理 ([81e3271](https://github.com/aatrooox/blog.zzao.club/commit/81e3271))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.0.6
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.5...v3.0.6)
