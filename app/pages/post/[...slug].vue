@@ -49,7 +49,6 @@ const isLiked = ref(false)
 const comments = ref<BlogCommentWithUserInfo[]>([])
 const isDefer = ref(true)
 
-
 // const commentIconPosition = computed(() => {
 //   if (text.value.trim().length) {
 //     // 发生划词时，记录当前划线的滚动距离
@@ -635,7 +634,6 @@ watchEffect(async () => {
             </template>
           </div>
         </ClientOnly>
-
       </div>
     </div>
   </NuxtLayout>

@@ -248,7 +248,8 @@ export default defineNuxtConfig({
     },
     prerender: {
       crawlLinks: true,
-      failOnError: true, //
+      failOnError: true,
+      ignore: ['/_ipx'],
       routes: ['/feed.xml', '/sitemap.xml'],
     },
     imports: {
