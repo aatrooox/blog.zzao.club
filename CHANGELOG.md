@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.0.4
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.3...v3.0.4)
+
+### 🩹 Fixes
+
+- Remove explain effect ([d2f4751](https://github.com/aatrooox/blog.zzao.club/commit/d2f4751))
+
+### 🏡 Chore
+
+- 去除多余日志 ([107e11f](https://github.com/aatrooox/blog.zzao.club/commit/107e11f))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.0.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.2...v3.0.3)
