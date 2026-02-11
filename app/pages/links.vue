@@ -63,61 +63,69 @@ const { links } = useAppConfig()
 </script>
 
 <template>
-  <div class="pixel-layout min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-8">
-      <div class="flex flex-col gap-4 md:gap-8">
-        <!-- 友链网格 -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          <template v-for="link of links" :key="link.url">
-            <NuxtLink :href="link.url" target="_blank" class="group">
-              <div class="bg-primary/5 p-4 h-full">
-                <div class="flex items-start gap-3 md:gap-4">
-                  <div class="relative">
-                    <AppImg
-                      :src="link.logo || `${link.url}/favicon.ico`"
-                      :alt="link.name"
-                      class="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover border-2 border-gray-600"
-                    />
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <h3 class="pixel-title mb-1 md:mb-2 truncate">
-                      {{ link.name }}
-                    </h3>
-                    <p class="pixel-text text-xs md:text-sm line-clamp-2 md:line-clamp-3">
-                      {{ link.desc }}
-                    </p>
-                  </div>
+  <div class="min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-12">
+      <!-- 页面标题区 -->
+      <div class="mb-8 md:mb-12">
+        <h1 class="text-3xl md:text-4xl font-bold text-zinc-800 dark:text-zinc-100 mb-3">
+          友情链接
+        </h1>
+        <p class="text-zinc-500 dark:text-zinc-400 text-sm md:text-base">
+          点击卡片访问友链，发现更多精彩内容
+        </p>
+      </div>
+
+      <!-- 友链列表 -->
+      <div class="max-w-3xl mx-auto space-y-3">
+        <template v-for="link of links" :key="link.url">
+          <NuxtLink
+            :href="link.url"
+            target="_blank"
+            class="group block"
+          >
+            <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4 transition-all duration-300 hover:border-primary/30 dark:hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-md">
+              <div class="flex items-center gap-4">
+                <!-- 头像 -->
+                <div class="shrink-0">
+                  <AppImg
+                    :src="link.logo || `${link.url}/favicon.ico`"
+                    :alt="link.name"
+                    class="w-12 h-12 rounded-full object-cover"
+                  />
+                </div>
+
+                <!-- 内容 -->
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-base md:text-lg font-semibold text-zinc-800 dark:text-zinc-100 group-hover:text-primary transition-colors duration-300">
+                    {{ link.name }}
+                  </h3>
+                  <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-1 line-clamp-1">
+                    {{ link.desc }}
+                  </p>
+                </div>
+
+                <!-- 箭头 -->
+                <div class="shrink-0">
+                  <Icon name="pixelarticons:arrow-right" class="w-5 h-5 text-zinc-400 group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
                 </div>
               </div>
-            </NuxtLink>
-          </template>
-        </div>
-
-        <!-- 申请友链卡片 -->
-        <!-- <div class="pixel-card">
-          <h2 class="pixel-title mb-3 md:mb-4 flex items-center gap-2">
-            <div class="pixel-indicator pixel-indicator-secondary" />
-            申请友链
-          </h2>
-          <p class="pixel-text mb-3 md:mb-4">
-            如果你也想与我交换友链，请按照以下格式填写后提交：
-          </p>
-          <div class="pixel-card-inner">
-            <Textarea
-              v-model="newLink"
-              class="pixel-textarea"
-            />
-            <div class="mt-3 md:mt-4">
-              <button
-                class="pixel-btn pixel-button-primary"
-                @click="addLink"
-              >
-                <span class="text-sm md:text-base">提交申请</span>
-              </button>
             </div>
-          </div>
-        </div> -->
+          </NuxtLink>
+        </template>
       </div>
+
+      <!-- 申请友链提示 -->
+      <!-- <div class="mt-8 md:mt-12 text-center">
+        <div class="inline-block bg-zinc-50 dark:bg-zinc-900 rounded-lg px-6 py-4 border border-zinc-200 dark:border-zinc-800">
+          <p class="text-sm md:text-base text-zinc-600 dark:text-zinc-400">
+            想要交换友链？欢迎通过
+            <NuxtLink to="/about" class="text-primary hover:underline">
+              关于页面
+            </NuxtLink>
+            联系我
+          </p>
+        </div>
+      </div> -->
     </div>
   </div>
 </template>

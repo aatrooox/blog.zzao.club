@@ -2,15 +2,9 @@
 import { useSearch } from '~/composables/useSearch'
 
 const { showSearchDialog } = useSearch()
-const showScrollTopBtn = ref(false)
 
-// 从slot中获取tocData(通过provide/inject)
 const tocData = inject<any>('tocData', ref(null))
 const activeTocId = inject<any>('activeTocId', ref(''))
-
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-}
 
 function smoothScrollTo(id: string) {
   const element = document.getElementById(id)
@@ -25,7 +19,12 @@ function smoothScrollTo(id: string) {
 </script>
 
 <template>
-  <div class="min-h-screen bg-zinc-50 flex flex-col font-sans text-zinc-900">
+  <div class="min-h-screen bg-beauty-minimal flex flex-col font-sans text-zinc-900 dark:text-zinc-50">
+    <!-- Decorative Elements (Plan B) -->
+    <div class="decorative-top-line" />
+    <div class="decorative-edge-glow decorative-edge-glow-left" />
+    <div class="decorative-edge-glow decorative-edge-glow-right" />
+
     <!-- Top Navigation -->
     <AppTopNav max-width-class="max-w-2xl" />
 
@@ -80,20 +79,14 @@ function smoothScrollTo(id: string) {
       </div>
     </main>
 
+    <!-- Scroll to Top Button -->
+    <ScrollTopButton />
+
     <!-- Footer -->
     <AppFooter />
 
     <!-- Bottom Navigation (Mobile) -->
     <AppBottomNav />
-
-    <!-- Scroll to Top Button -->
-    <div
-      v-if="showScrollTopBtn"
-      class="fixed right-6 bottom-24 md:bottom-10 z-40 bg-white border border-zinc-200 shadow-lg rounded-full p-3 cursor-pointer hover:bg-zinc-50 transition-all"
-      @click="scrollToTop"
-    >
-      <Icon name="pixelarticons:arrow-up" class="w-6 h-6 text-zinc-600" />
-    </div>
 
     <!-- Global Search Dialog -->
     <ResourceSearchDialog v-model="showSearchDialog" />

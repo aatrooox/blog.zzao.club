@@ -2,17 +2,12 @@
 import { useSearch } from '~/composables/useSearch'
 
 const { showSearchDialog } = useSearch()
-const showScrollTopBtn = ref(false)
 
 // 从slot中获取groupArticles和tocData(通过provide/inject)
 const groupArticles = inject<any>('groupArticles', ref([]))
 const tocData = inject<any>('tocData', ref(null))
 const route = useRoute()
 const activeTocId = inject<any>('activeTocId', ref(''))
-
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-}
 
 function smoothScrollTo(id: string) {
   const element = document.getElementById(id)
@@ -96,13 +91,7 @@ function smoothScrollTo(id: string) {
     <AppBottomNav />
 
     <!-- Scroll to Top Button -->
-    <div
-      v-if="showScrollTopBtn"
-      class="fixed right-6 bottom-24 md:bottom-10 z-40 bg-white border border-zinc-200 shadow-lg rounded-full p-3 cursor-pointer hover:bg-zinc-50 transition-all"
-      @click="scrollToTop"
-    >
-      <Icon name="pixelarticons:arrow-up" class="w-6 h-6 text-zinc-600" />
-    </div>
+    <ScrollTopButton />
 
     <!-- Global Search Dialog -->
     <ResourceSearchDialog v-model="showSearchDialog" />

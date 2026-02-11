@@ -143,7 +143,7 @@ function onEnter(el: any) {
             :to="item.data.path"
             class="block group"
           >
-            <div class="bg-gray-50 dark:bg-zinc-900 p-2 transition-all duration-300 border border-transparent">
+            <div class="bg-white dark:bg-zinc-900 p-4 rounded-lg transition-all duration-300 border border-zinc-100 dark:border-zinc-800 hover:border-primary/30 dark:hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-md">
               <div class="flex items-center justify-between gap-4">
                 <div class="flex items-center gap-3 min-w-0">
                   <Icon name="pixelarticons:article" class="text-zinc-400 shrink-0" />
@@ -153,7 +153,7 @@ function onEnter(el: any) {
                 </div>
                 <div class="flex gap-2 shrink-0">
                   <template v-if="item.data.tags">
-                    <span v-for="tag in item.data.tags.slice(0, 2)" :key="tag" class="text-xs px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-500 rounded-md">
+                    <span v-for="tag in item.data.tags.slice(0, 2)" :key="tag" class="text-xs px-2 py-1 bg-zinc-50 dark:bg-zinc-800 text-zinc-500 rounded-md">
                       #{{ tag }}
                     </span>
                   </template>
@@ -171,7 +171,7 @@ function onEnter(el: any) {
           <!-- Memo Item -->
           <div
             v-else-if="item.type === 'memo'"
-            class="px-4 py-2 caption-bottomm b-4 bg-primary/5 last:border-0 cursor-pointer hover:bg-primary/10"
+            class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-100 dark:border-zinc-800 px-4 py-3 cursor-pointer hover:border-primary/30 dark:hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-300"
             @click="navigateTo(`/m/${item.data.id}`)"
           >
             <div class="flex items-start gap-4">

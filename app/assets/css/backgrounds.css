@@ -1,0 +1,358 @@
+/* 
+ * 美观背景样式系统
+ * 5 种轻量级纯 CSS 背景效果
+ * 支持亮色/暗色模式
+ */
+
+/* ========== 1. 柔和渐变网格 ========== */
+.bg-beauty-gradient-mesh {
+  background:
+    linear-gradient(135deg, rgba(236, 254, 255, 0.8) 0%, rgba(252, 231, 243, 0.6) 50%, rgba(254, 243, 199, 0.5) 100%),
+    radial-gradient(circle at 20% 30%, rgba(191, 219, 254, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(254, 202, 202, 0.25) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(253, 224, 71, 0.15) 0%, transparent 50%);
+  background-size: 100% 100%, 800px 800px, 600px 600px, 1000px 1000px;
+  background-position: center, 0% 0%, 100% 100%, 50% 50%;
+  animation: beauty-mesh-move 20s ease-in-out infinite alternate;
+}
+
+@keyframes beauty-mesh-move {
+  0% {
+    background-position: center, 0% 0%, 100% 100%, 50% 50%;
+  }
+  50% {
+    background-position: center, 30% 30%, 70% 70%, 60% 40%;
+  }
+  100% {
+    background-position: center, 20% 50%, 80% 50%, 40% 60%;
+  }
+}
+
+.dark .bg-beauty-gradient-mesh {
+  background:
+    linear-gradient(135deg, rgba(24, 24, 27, 0.95) 0%, rgba(39, 39, 42, 0.9) 50%, rgba(24, 24, 27, 0.95) 100%),
+    radial-gradient(circle at 20% 30%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(244, 63, 94, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(234, 179, 8, 0.05) 0%, transparent 50%);
+}
+
+/* ========== 2. 现代极光效果 ========== */
+.bg-beauty-aurora {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 119, 198, 0.3), transparent),
+    radial-gradient(ellipse 60% 50% at 0% 50%, rgba(236, 72, 153, 0.25), transparent),
+    radial-gradient(ellipse 60% 50% at 100% 50%, rgba(59, 130, 246, 0.25), transparent),
+    radial-gradient(ellipse 80% 50% at 50% 120%, rgba(16, 185, 129, 0.2), transparent),
+    linear-gradient(to bottom, #fefefe 0%, #f8fafc 100%);
+  background-size: 100% 100%;
+  animation: beauty-aurora-shift 20s ease-in-out infinite alternate;
+}
+
+@keyframes beauty-aurora-shift {
+  0% {
+    filter: hue-rotate(0deg) brightness(1);
+  }
+  50% {
+    filter: hue-rotate(15deg) brightness(1.05);
+  }
+  100% {
+    filter: hue-rotate(0deg) brightness(1);
+  }
+}
+
+.dark .bg-beauty-aurora {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 119, 198, 0.15), transparent),
+    radial-gradient(ellipse 60% 50% at 0% 50%, rgba(236, 72, 153, 0.12), transparent),
+    radial-gradient(ellipse 60% 50% at 100% 50%, rgba(59, 130, 246, 0.12), transparent),
+    radial-gradient(ellipse 80% 50% at 50% 120%, rgba(16, 185, 129, 0.1), transparent),
+    linear-gradient(to bottom, #18181b 0%, #27272a 100%);
+}
+
+/* ========== 3. 优雅波纹 ========== */
+.bg-beauty-wave {
+  background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+  position: relative;
+}
+
+.bg-beauty-wave::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      rgba(191, 219, 254, 0.08) 2px,
+      transparent 4px,
+      transparent 80px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      rgba(254, 202, 202, 0.06) 2px,
+      transparent 4px,
+      transparent 80px
+    );
+  animation: beauty-wave-flow 30s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes beauty-wave-flow {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(80px, 80px);
+  }
+}
+
+.dark .bg-beauty-wave {
+  background: linear-gradient(180deg, #18181b 0%, #27272a 100%);
+}
+
+.dark .bg-beauty-wave::before {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px,
+      rgba(6, 182, 212, 0.04) 2px,
+      transparent 4px,
+      transparent 80px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      rgba(244, 63, 94, 0.03) 2px,
+      transparent 4px,
+      transparent 80px
+    );
+}
+
+/* ========== 4. 散点星空 ========== */
+.bg-beauty-stars {
+  background:
+    radial-gradient(circle at 15% 25%, rgba(59, 130, 246, 0.15) 0%, transparent 15%),
+    radial-gradient(circle at 85% 15%, rgba(236, 72, 153, 0.12) 0%, transparent 12%),
+    radial-gradient(circle at 45% 65%, rgba(16, 185, 129, 0.1) 0%, transparent 18%),
+    radial-gradient(circle at 75% 75%, rgba(251, 146, 60, 0.13) 0%, transparent 14%),
+    radial-gradient(circle at 25% 85%, rgba(168, 85, 247, 0.11) 0%, transparent 16%),
+    radial-gradient(circle at 90% 45%, rgba(234, 179, 8, 0.09) 0%, transparent 10%),
+    radial-gradient(circle at 10% 55%, rgba(14, 165, 233, 0.12) 0%, transparent 13%),
+    linear-gradient(to bottom, #fafafa 0%, #f5f5f5 100%);
+  background-size: 100% 100%;
+  animation: beauty-stars-twinkle 20s ease-in-out infinite;
+}
+
+@keyframes beauty-stars-twinkle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.dark .bg-beauty-stars {
+  background:
+    radial-gradient(circle at 15% 25%, rgba(59, 130, 246, 0.08) 0%, transparent 15%),
+    radial-gradient(circle at 85% 15%, rgba(236, 72, 153, 0.06) 0%, transparent 12%),
+    radial-gradient(circle at 45% 65%, rgba(16, 185, 129, 0.05) 0%, transparent 18%),
+    radial-gradient(circle at 75% 75%, rgba(251, 146, 60, 0.07) 0%, transparent 14%),
+    radial-gradient(circle at 25% 85%, rgba(168, 85, 247, 0.06) 0%, transparent 16%),
+    radial-gradient(circle at 90% 45%, rgba(234, 179, 8, 0.05) 0%, transparent 10%),
+    radial-gradient(circle at 10% 55%, rgba(14, 165, 233, 0.06) 0%, transparent 13%),
+    linear-gradient(to bottom, #18181b 0%, #27272a 100%);
+}
+
+/* ========== 5. 清新气泡 ========== */
+.bg-beauty-bubbles {
+  background:
+    radial-gradient(circle at 20% 30%, rgba(165, 243, 252, 0.4) 0%, transparent 35%),
+    radial-gradient(circle at 80% 20%, rgba(253, 186, 116, 0.35) 0%, transparent 40%),
+    radial-gradient(circle at 70% 70%, rgba(196, 181, 253, 0.3) 0%, transparent 38%),
+    radial-gradient(circle at 30% 75%, rgba(252, 165, 165, 0.32) 0%, transparent 33%),
+    radial-gradient(circle at 50% 50%, rgba(134, 239, 172, 0.25) 0%, transparent 45%),
+    linear-gradient(135deg, #fefefe 0%, #f9fafb 100%);
+  background-size: 100% 100%;
+  animation: beauty-bubbles-float 25s ease-in-out infinite alternate;
+}
+
+@keyframes beauty-bubbles-float {
+  0% {
+    background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%, 50% 50%;
+  }
+  50% {
+    background-position: 10% 10%, 90% 10%, 85% 85%, 5% 90%, 55% 45%;
+  }
+  100% {
+    background-position: 5% 15%, 95% 5%, 90% 80%, 10% 95%, 45% 55%;
+  }
+}
+
+.dark .bg-beauty-bubbles {
+  background:
+    radial-gradient(circle at 20% 30%, rgba(6, 182, 212, 0.15) 0%, transparent 35%),
+    radial-gradient(circle at 80% 20%, rgba(251, 146, 60, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 70% 70%, rgba(168, 85, 247, 0.1) 0%, transparent 38%),
+    radial-gradient(circle at 30% 75%, rgba(244, 63, 94, 0.13) 0%, transparent 33%),
+    radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.08) 0%, transparent 45%),
+    linear-gradient(135deg, #18181b 0%, #27272a 100%);
+}
+
+/* ========== 6. 极简纯净白 ========== */
+.bg-beauty-minimal {
+  background: linear-gradient(180deg, #ffffff 0%, #fefefe 100%);
+  position: relative;
+}
+
+.dark .bg-beauty-minimal {
+  background: linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 100%);
+}
+
+/* === Plan B: Subtle Decorative Elements === */
+
+/* 1. Top decorative line - 1px gradient with primary color */
+.decorative-top-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    hsl(142 32% 32%) 20%,
+    hsl(142 32% 42%) 50%,
+    hsl(142 32% 32%) 80%,
+    transparent 100%
+  );
+  z-index: 50;
+  opacity: 0.6;
+}
+
+.dark .decorative-top-line {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    hsl(142 32% 42%) 20%,
+    hsl(142 32% 52%) 50%,
+    hsl(142 32% 42%) 80%,
+    transparent 100%
+  );
+  opacity: 0.5;
+}
+
+/* 2. Page edge glow - extremely subtle radial gradient on left/right edges */
+.decorative-edge-glow {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.decorative-edge-glow-left {
+  left: 0;
+  background: radial-gradient(
+    ellipse at left center,
+    hsl(142 32% 32% / 0.03) 0%,
+    transparent 70%
+  );
+}
+
+.decorative-edge-glow-right {
+  right: 0;
+  background: radial-gradient(
+    ellipse at right center,
+    hsl(142 32% 32% / 0.03) 0%,
+    transparent 70%
+  );
+}
+
+.dark .decorative-edge-glow-left {
+  background: radial-gradient(
+    ellipse at left center,
+    hsl(142 32% 42% / 0.02) 0%,
+    transparent 70%
+  );
+}
+
+.dark .decorative-edge-glow-right {
+  background: radial-gradient(
+    ellipse at right center,
+    hsl(142 32% 42% / 0.02) 0%,
+    transparent 70%
+  );
+}
+
+/* 3. Reading progress - sidebar vertical bar (Method A) - DISABLED */
+/* .reading-progress-sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 3px;
+  background: linear-gradient(
+    to bottom,
+    hsl(142 32% 32%),
+    hsl(142 32% 42%)
+  );
+  z-index: 51;
+  transform-origin: top;
+  transition: height 0.1s ease-out;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+}
+
+.dark .reading-progress-sidebar {
+  background: linear-gradient(
+    to bottom,
+    hsl(142 32% 42%),
+    hsl(142 32% 52%)
+  );
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+} */
+
+/* 4. Scroll to top button with circular progress (Method B) */
+.scroll-top-with-progress {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.scroll-top-progress-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.scroll-top-progress-circle {
+  fill: none;
+  stroke: hsl(142 32% 32%);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s ease-out;
+}
+
+.dark .scroll-top-progress-circle {
+  stroke: hsl(142 32% 52%);
+}
+
+.scroll-top-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}

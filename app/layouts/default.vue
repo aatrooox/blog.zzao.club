@@ -2,41 +2,31 @@
 import { useSearch } from '~/composables/useSearch'
 
 const { showSearchDialog } = useSearch()
-const showScrollTopBtn = ref(false)
-
-// function onScroll(state: UseScrollReturn) {
-//   showScrollTopBtn.value = state.y.value > 200
-// }
-
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-}
 </script>
 
 <template>
-  <div class="min-h-screen bg-zinc-50 flex flex-col font-sans text-zinc-900">
+  <div class="min-h-screen bg-beauty-minimal flex flex-col font-sans text-zinc-900 dark:text-zinc-50">
+    <!-- Decorative Elements (Plan B) -->
+    <div class="decorative-top-line" />
+    <div class="decorative-edge-glow decorative-edge-glow-left" />
+    <div class="decorative-edge-glow decorative-edge-glow-right" />
+
     <!-- Top Navigation (Desktop) -->
     <AppTopNav max-width-class="max-w-2xl" />
 
     <!-- Main Content Area -->
-    <main class="flex-1 w-full max-w-2xl mx-auto px-4 py-6 md:py-10">
+    <main class="flex-1 w-full max-w-2xl mx-auto px-4 py-6 md:py-10 relative">
       <slot />
     </main>
+
+    <!-- Scroll to Top Button -->
+    <ScrollTopButton />
 
     <!-- Footer -->
     <AppFooter />
 
     <!-- Bottom Navigation (Mobile) -->
     <AppBottomNav />
-
-    <!-- Scroll to Top Button -->
-    <div
-      v-if="showScrollTopBtn"
-      class="fixed right-6 bottom-24 md:bottom-10 z-40 bg-white border border-zinc-200 shadow-lg rounded-full p-3 cursor-pointer hover:bg-zinc-50 transition-all"
-      @click="scrollToTop"
-    >
-      <Icon name="pixelarticons:arrow-up" class="w-6 h-6 text-zinc-600" />
-    </div>
 
     <!-- Global Search Dialog -->
     <ResourceSearchDialog v-model="showSearchDialog" />
