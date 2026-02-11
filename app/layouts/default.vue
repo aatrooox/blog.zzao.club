@@ -16,10 +16,10 @@ function scrollToTop() {
 <template>
   <div class="min-h-screen bg-zinc-50 flex flex-col font-sans text-zinc-900">
     <!-- Top Navigation (Desktop) -->
-    <AppTopNav />
+    <AppTopNav max-width-class="max-w-2xl" />
 
     <!-- Main Content Area -->
-    <main class="flex-1 w-full max-w-3xl mx-auto px-4 py-6 md:py-10">
+    <main class="flex-1 w-full max-w-2xl mx-auto px-4 py-6 md:py-10">
       <slot />
     </main>
 

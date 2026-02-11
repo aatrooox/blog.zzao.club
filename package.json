@@ -5,7 +5,7 @@
   "packageManager": "pnpm@10.11.0",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev -p 4775",
+    "dev": "nuxt dev -p 4775 --open",
     "preview": "nuxt preview",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

@@ -51,12 +51,11 @@ export default defineNuxtConfig({
     },
   ],
   image: {
-    // 允许的外部图片域名
     domains: ['zzao.club', 'img.zzao.club'],
-    provider: 'ipx',
+    provider: isDev ? 'none' : 'ipx',
     dir: 'public',
     quality: 80,
-    format: ['webp'], // 默认输出格式
+    format: ['webp'],
   },
   imports: {
     presets: [

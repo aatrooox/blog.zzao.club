@@ -27,12 +27,12 @@ function smoothScrollTo(id: string) {
 <template>
   <div class="min-h-screen bg-zinc-50 flex flex-col font-sans text-zinc-900">
     <!-- Top Navigation -->
-    <AppTopNav max-width-class="max-w-3xl" />
+    <AppTopNav max-width-class="max-w-2xl" />
 
     <!-- Main Content Area - 带TOC的布局 -->
     <main class="flex-1 w-full mx-auto px-4 py-6 md:py-10">
       <div class="relative w-full max-w-7xl mx-auto">
-        <div class="relative w-full max-w-3xl mx-auto">
+        <div class="relative w-full max-w-2xl mx-auto">
           <!-- 中间:文章内容 -->
           <div class="relative w-full">
             <slot />

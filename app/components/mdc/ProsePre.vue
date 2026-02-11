@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { CalendarSearch } from 'lucide-vue-next'
 import { useClipboard } from '@vueuse/core'
 
 const props = defineProps({
