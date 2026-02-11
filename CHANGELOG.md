@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.0.8
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.7...v3.0.8)
+
+### 🚀 Enhancements
+
+- 让Agent帮我学英语; 优化阅读体验; 优化友链 ([e6824d2](https://github.com/aatrooox/blog.zzao.club/commit/e6824d2))
+
+### 🎨 Styles
+
+- 优化排版样式 ([8f59e33](https://github.com/aatrooox/blog.zzao.club/commit/8f59e33))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.0.7
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.6...v3.0.7)
