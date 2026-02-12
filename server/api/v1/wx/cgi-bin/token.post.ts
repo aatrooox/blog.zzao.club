@@ -1,5 +1,3 @@
-import { decryptObject } from '~~/server/utils/crypto'
-
 interface WxCredentials {
   appId: string
   appSecret: string
@@ -17,13 +15,12 @@ interface WxTokenResponse {
  *
  * 安全措施：
  * 1. 需要用户登录（JWT 验证）
- * 2. AppID 和 AppSecret 需加密传输
+ * 2. AppID 和 AppSecret 通过 HTTPS 传输
  * 3. 可选的来源验证（X-App-Source 头）
  *
  * POST /api/v1/wx/cgi-bin/token
  *
- * Body: { encrypted: "加密后的凭证字符串" }
- * 凭证格式: { appId: string, appSecret: string }
+ * Body: { appId: string, appSecret: string }
  */
 export default defineStandardResponseHandler(async (event) => {
   // 1. 验证用户已登录
@@ -47,40 +44,19 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
-  // 3. 获取加密的凭证
-  const body = await readBody<{ encrypted: string }>(event)
-  if (!body?.encrypted) {
+  // 3. 获取凭证
+  const body = await readBody<WxCredentials>(event)
+  if (!body?.appId || !body?.appSecret) {
     throw createError({
       statusCode: 400,
-      message: '缺少加密凭证',
+      message: '缺少凭证(appId/appSecret)',
       data: { code: API_CODES.VALIDATION_ERROR },
     })
   }
 
-  // 4. 解密凭证
-  let credentials: WxCredentials
-  try {
-    credentials = decryptObject<WxCredentials>(body.encrypted)
-  }
-  catch (error) {
-    console.error('[WX Token] 解密失败:', error)
-    throw createError({
-      statusCode: 400,
-      message: '凭证解密失败，请检查加密密钥是否正确',
-      data: { code: API_CODES.VALIDATION_ERROR },
-    })
-  }
+  const credentials = body
 
-  // 5. 验证凭证完整性
-  if (!credentials.appId || !credentials.appSecret) {
-    throw createError({
-      statusCode: 400,
-      message: 'AppID 或 AppSecret 不能为空',
-      data: { code: API_CODES.VALIDATION_ERROR },
-    })
-  }
-
-  // 6. 调用微信接口获取 Access Token
+  // 4. 调用微信接口获取 Access Token
   const wxApiUrl = new URL('https://api.weixin.qq.com/cgi-bin/token')
   wxApiUrl.searchParams.set('grant_type', 'client_credential')
   wxApiUrl.searchParams.set('appid', credentials.appId)
