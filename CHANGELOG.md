@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.0.9
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.8...v3.0.9)
+
+### 🚀 Enhancements
+
+- Wx get access token api 不再加密 ([b010853](https://github.com/aatrooox/blog.zzao.club/commit/b010853))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.0.8
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.7...v3.0.8)
