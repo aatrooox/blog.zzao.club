@@ -15,3 +15,5 @@ node_modules
 
 # 确保 Prisma 生成的文件不被忽略
 !prisma/generated/
+# local env backups
+.env.bak.*
