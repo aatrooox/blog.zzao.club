@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v3.0.10
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.9...v3.0.10)
+
+### 📖 Documentation
+
+- **nuxt:** Add Nuxt4 migration checklist article ([fdd5678](https://github.com/aatrooox/blog.zzao.club/commit/fdd5678))
+- 文章更新 ([0332db6](https://github.com/aatrooox/blog.zzao.club/commit/0332db6))
+- 文章更新 ([31d1998](https://github.com/aatrooox/blog.zzao.club/commit/31d1998))
+
+### 🏡 Chore
+
+- 删除无用的文件 ([53df234](https://github.com/aatrooox/blog.zzao.club/commit/53df234))
+- **release:** Publish post ([0a4645d](https://github.com/aatrooox/blog.zzao.club/commit/0a4645d))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.0.9
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.8...v3.0.9)
