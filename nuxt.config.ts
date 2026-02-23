@@ -16,6 +16,9 @@ const appVersion = packageJson.version
 const isDev = process.env.NODE_ENV === 'development'
 console.log(` 当前环境为：${isDev ? '开发' : '生产'}`)
 export default defineNuxtConfig({
+  experimental: {
+    watcher: isDev ? 'parcel' : undefined,
+  },
   modules: ['@nuxt/ui', '@nuxtjs/robots', '@nuxt/content', '@nuxt/image', '@nuxt/icon', // '@nuxtjs/robots',
     '@nuxtjs/mdc', // 以下三个模块还没有支持最新的 nuxt content 版本
     // '@nuxtjs/sitemap',
@@ -269,14 +272,45 @@ export default defineNuxtConfig({
     watchOptions: {
       ignored: [
         '**/node_modules/**',
+        '**/node_modules/.pnpm/**',
         '**/dist/**',
         '**/.git/**',
+        '**/.nuxt/**',
+        '**/.data/**',
+        '**/.output/**',
+      ],
+    },
+  },
+  watchers: {
+    chokidar: {
+      ignored: [
+        '**/node_modules/**',
+        '**/node_modules/.pnpm/**',
+        '**/.git/**',
+        '**/dist/**',
+        '**/.nuxt/**',
+        '**/.data/**',
+        '**/.output/**',
+        '**/githubAssets/**',
       ],
     },
   },
   vite: {
     esbuild: {
       drop: isDev ? [] : ['console', 'debugger'],
+    },
+    server: {
+      watch: {
+        ignored: [
+          '**/node_modules/**',
+          '**/node_modules/.pnpm/**',
+          '**/.git/**',
+          '**/dist/**',
+          '**/.data/**',
+          '**/.output/**',
+          '**/githubAssets/**',
+        ],
+      },
     },
     plugins: [],
     optimizeDeps: {
@@ -334,7 +368,7 @@ export default defineNuxtConfig({
   },
   shadcn: {
     prefix: '',
-    componentDir: '~/components/ui',
+    componentDir: 'app/components/ui',
   },
   ui: {
     prefix: 'U',

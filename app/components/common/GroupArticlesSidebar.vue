@@ -71,7 +71,7 @@ const groupTree = computed(() => {
       <!-- 文章列表 -->
       <nav class="space-y-0.5">
         <!-- 递归渲染层级结构 -->
-        <template v-for="[_, node] in groupTree.children" :key="node.fullPath">
+        <template v-for="[key, node] in groupTree.children" :key="node.fullPath || key">
           <!-- 一级分组标题 -->
           <div class="mb-3">
             <div class="px-3 py-1 text-[11px] font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
@@ -96,7 +96,7 @@ const groupTree = computed(() => {
             </div>
 
             <!-- 二级子分组 -->
-            <template v-for="[_, childNode] in node.children" :key="childNode.fullPath">
+            <template v-for="[childKey, childNode] in node.children" :key="childNode.fullPath || childKey">
               <div class="mb-2">
                 <div class="px-3 py-1 text-[11px] font-medium text-zinc-600 dark:text-zinc-400">
                   {{ childNode.name }}

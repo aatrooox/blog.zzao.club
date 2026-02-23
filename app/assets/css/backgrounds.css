@@ -1,4 +1,4 @@
-/* 
+/*
  * 美观背景样式系统
  * 5 种轻量级纯 CSS 背景效果
  * 支持亮色/暗色模式
@@ -11,20 +11,40 @@
     radial-gradient(circle at 20% 30%, rgba(191, 219, 254, 0.3) 0%, transparent 50%),
     radial-gradient(circle at 80% 70%, rgba(254, 202, 202, 0.25) 0%, transparent 50%),
     radial-gradient(circle at 50% 50%, rgba(253, 224, 71, 0.15) 0%, transparent 50%);
-  background-size: 100% 100%, 800px 800px, 600px 600px, 1000px 1000px;
-  background-position: center, 0% 0%, 100% 100%, 50% 50%;
+  background-size:
+    100% 100%,
+    800px 800px,
+    600px 600px,
+    1000px 1000px;
+  background-position:
+    center,
+    0% 0%,
+    100% 100%,
+    50% 50%;
   animation: beauty-mesh-move 20s ease-in-out infinite alternate;
 }
 
 @keyframes beauty-mesh-move {
   0% {
-    background-position: center, 0% 0%, 100% 100%, 50% 50%;
+    background-position:
+      center,
+      0% 0%,
+      100% 100%,
+      50% 50%;
   }
   50% {
-    background-position: center, 30% 30%, 70% 70%, 60% 40%;
+    background-position:
+      center,
+      30% 30%,
+      70% 70%,
+      60% 40%;
   }
   100% {
-    background-position: center, 20% 50%, 80% 50%, 40% 60%;
+    background-position:
+      center,
+      20% 50%,
+      80% 50%,
+      40% 60%;
   }
 }
 
@@ -80,20 +100,8 @@
   position: absolute;
   inset: 0;
   background:
-    repeating-linear-gradient(
-      90deg,
-      transparent 0px,
-      rgba(191, 219, 254, 0.08) 2px,
-      transparent 4px,
-      transparent 80px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      transparent 0px,
-      rgba(254, 202, 202, 0.06) 2px,
-      transparent 4px,
-      transparent 80px
-    );
+    repeating-linear-gradient(90deg, transparent 0px, rgba(191, 219, 254, 0.08) 2px, transparent 4px, transparent 80px),
+    repeating-linear-gradient(0deg, transparent 0px, rgba(254, 202, 202, 0.06) 2px, transparent 4px, transparent 80px);
   animation: beauty-wave-flow 30s linear infinite;
   pointer-events: none;
   z-index: 0;
@@ -114,20 +122,8 @@
 
 .dark .bg-beauty-wave::before {
   background:
-    repeating-linear-gradient(
-      90deg,
-      transparent 0px,
-      rgba(6, 182, 212, 0.04) 2px,
-      transparent 4px,
-      transparent 80px
-    ),
-    repeating-linear-gradient(
-      0deg,
-      transparent 0px,
-      rgba(244, 63, 94, 0.03) 2px,
-      transparent 4px,
-      transparent 80px
-    );
+    repeating-linear-gradient(90deg, transparent 0px, rgba(6, 182, 212, 0.04) 2px, transparent 4px, transparent 80px),
+    repeating-linear-gradient(0deg, transparent 0px, rgba(244, 63, 94, 0.03) 2px, transparent 4px, transparent 80px);
 }
 
 /* ========== 4. 散点星空 ========== */
@@ -146,7 +142,8 @@
 }
 
 @keyframes beauty-stars-twinkle {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -181,13 +178,28 @@
 
 @keyframes beauty-bubbles-float {
   0% {
-    background-position: 0% 0%, 100% 0%, 100% 100%, 0% 100%, 50% 50%;
+    background-position:
+      0% 0%,
+      100% 0%,
+      100% 100%,
+      0% 100%,
+      50% 50%;
   }
   50% {
-    background-position: 10% 10%, 90% 10%, 85% 85%, 5% 90%, 55% 45%;
+    background-position:
+      10% 10%,
+      90% 10%,
+      85% 85%,
+      5% 90%,
+      55% 45%;
   }
   100% {
-    background-position: 5% 15%, 95% 5%, 90% 80%, 10% 95%, 45% 55%;
+    background-position:
+      5% 15%,
+      95% 5%,
+      90% 80%,
+      10% 95%,
+      45% 55%;
   }
 }
 
@@ -256,36 +268,20 @@
 
 .decorative-edge-glow-left {
   left: 0;
-  background: radial-gradient(
-    ellipse at left center,
-    hsl(142 32% 32% / 0.03) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(ellipse at left center, hsl(142 32% 32% / 0.03) 0%, transparent 70%);
 }
 
 .decorative-edge-glow-right {
   right: 0;
-  background: radial-gradient(
-    ellipse at right center,
-    hsl(142 32% 32% / 0.03) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(ellipse at right center, hsl(142 32% 32% / 0.03) 0%, transparent 70%);
 }
 
 .dark .decorative-edge-glow-left {
-  background: radial-gradient(
-    ellipse at left center,
-    hsl(142 32% 42% / 0.02) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(ellipse at left center, hsl(142 32% 42% / 0.02) 0%, transparent 70%);
 }
 
 .dark .decorative-edge-glow-right {
-  background: radial-gradient(
-    ellipse at right center,
-    hsl(142 32% 42% / 0.02) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(ellipse at right center, hsl(142 32% 42% / 0.02) 0%, transparent 70%);
 }
 
 /* 3. Reading progress - sidebar vertical bar (Method A) - DISABLED */

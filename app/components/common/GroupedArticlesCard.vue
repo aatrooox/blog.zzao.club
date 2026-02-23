@@ -113,7 +113,7 @@ const hasSubGroups = computed(() => articleTree.value.children.size > 0)
         <!-- 显示子分组标签 -->
         <div v-if="hasSubGroups" class="flex flex-wrap gap-1.5">
           <span
-            v-for="[name, _] in articleTree.children"
+            v-for="[name] in articleTree.children"
             :key="name"
             class="text-xs text-zinc-500 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-2 py-0.5 rounded"
           >
