@@ -3,7 +3,7 @@ title: Nuxt3全栈开发 · 如何使用Prisma+Sqlite
 date: 2024-11-26
 lastmod: 2025-08-19
 tags: ["博客", "Nuxt", "Prisma"]
-versions: ["nuxt@3.14.0", ""@prisma/client@5.22.0""]
+versions: ["nuxt@3.14.0", "@prisma/client@5.22.0"]
 description: Nuxt3全栈开发时，如何使用Prisma来管理Sqlite、Mysql等数据库
 ---
 想要在 `Nuxt3` 中使用 `Sqlite` 非常简单，但重点是如何管理表结构的变更。
@@ -383,4 +383,3 @@ npx prisma migrate deploy
 后续还会有深入和具体的 Nuxt3 全栈项目内的使用，完全使用 Nuxt 的 Server 能力开发接口等内容还在编写中～
 
 欢迎关注「**早早集市**」
-

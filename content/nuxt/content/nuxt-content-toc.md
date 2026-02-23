@@ -2,7 +2,7 @@
 title: Nuxt Content 实现 TOC 组件
 date: 2025-05-13
 lastmod: 2025-08-21
-versions: [""@nuxt/content@3.4.0"", "nuxt@3.17.2"]
+versions: ["@nuxt/content@3.4.0", "nuxt@3.17.2"]
 tags: ["Nuxt"]
 description: Nuxt Content 中配置和使用 toc
 ---

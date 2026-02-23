@@ -3,7 +3,7 @@ date: 2024-12-06
 lastmod: 2025-08-19
 title: nuxt-content v3 使用及迁移记录
 tags: ["Nuxt"]
-versions: [""@nuxt/content@3.0.0-alpha.8""]
+versions: ["@nuxt/content@3.0.0-alpha.8"]
 description: nuxt-content v3 使用及迁移记录
 ---
 这是一篇关于 `nuxt/content` v3 版本的使用和迁移指南，分享一下我在使用 `nuxt/content` 时的一些经验和问题。
@@ -153,6 +153,4 @@ source: {
 如果你恰好也是 Nuxt 的使用者，欢迎关注我，一起来讨论。
 
 👋👋
-
-
 

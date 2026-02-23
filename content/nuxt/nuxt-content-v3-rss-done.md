@@ -3,8 +3,8 @@ title: Nuxt Content v3 实现 RSS 订阅功能
 date: 2025-01-15
 lastmod: 2025-08-19
 tags: ["Nuxt"]
-versions: [""@nuxt/content@3.0.0-alpha.8"", ""@nuxtjs/mdc@0.12.1""]
-describtion: Nuxt Content v3 实现 RSS 订阅功能
+versions: ["@nuxt/content@3.0.0-alpha.8", "@nuxtjs/mdc@0.12.1"]
+description: Nuxt Content v3 实现 RSS 订阅功能
 ---
 这可能是对现在而言唯一一篇关于Content v3 版本的 RSS 订阅的文章了。我找遍了能搜出来的每篇文章，没有一个能用的。
 

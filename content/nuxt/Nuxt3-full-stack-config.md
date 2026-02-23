@@ -3,9 +3,10 @@ title: Nuxt3全栈开发 · 配置篇
 date: 2024-11-19
 lastmod: 2025-08-19
 tags: ["博客", "Nuxt"]
-versions: ["nuxt@3.14.0", ""@nuxt/content@2.13.4"", ""@prisma/client@5.22.0""]
-describtion: Nuxt3全栈开发个人博客，会用到哪些插件和包，以及它们的详细配置
+versions: ["nuxt@3.14.0", "@nuxt/content@2.13.4", "@prisma/client@5.22.0"]
+description: Nuxt3全栈开发个人博客，会用到哪些插件和包，以及它们的详细配置
 ---
+ 
 最近在用Nuxt3全栈开发个人博客，踩了不少小坑，这篇文章总结一下。
 
 ## 依赖库及博客主要功能
@@ -381,5 +382,3 @@ useHead({
 其中涉及到大量对 Nitro 的探索，鉴权、中间件、数据库等等。这也是后面文章输出的重点方向，即 Nuxt3 的全栈开发。
 
 👏👏欢迎关注 「早早集市」
-
-
