@@ -7,6 +7,9 @@ defineEmits(['refresh'])
 const memoWrap = ref<any>(null)
 const contentRef = ref<any>(null)
 
+// Memo 内容渲染统一 class：强制 prose-sm 字号（ProseP 等自定义组件会硬编码 text-base，需覆盖）
+const memoProseClass = 'prose prose-sm dark:prose-invert max-w-none [&_p]:text-sm [&_li]:text-sm [&_h1]:text-base [&_h2]:text-sm [&_h3]:text-sm'
+
 // 检测内容是否溢出
 const isContentOverflowing = ref(false)
 
@@ -275,69 +278,59 @@ const wechatMaxSize = computed(() => {
 
 <template>
   <div ref="memoWrap" class="w-full" :style="{ maxWidth: panelMaxWidth }">
-    <!-- 微信布局：上方内容，下方九宫格图片 -->
-    <div v-if="useWechatLayout" class="flex flex-col gap-2">
-      <!-- 上方内容区域 -->
-      <div v-if="memo.content && memo.content.trim()" class="relative">
-        <div :class="{ 'preview-content': preview }">
-          <MDC ref="contentRef" :value="memo.content" tag="section" class="prose prose-sm dark:prose-invert max-w-none" />
-        </div>
-        <!-- 预览模式的渐变遮罩 - 仅在内容溢出时显示 -->
-        <div v-if="preview && isContentOverflowing" class="preview-gradient" />
-      </div>
-
-      <!-- 下方图片九宫格区域 -->
+    <!-- 微信布局：上方图片，下方内容 -->
+    <div v-if="useWechatLayout" class="flex flex-col gap-3">
+      <!-- 上方图片区域（非 preview：全宽展示，保持原比例；preview：小尺寸裁切） -->
       <ClientOnly v-if="shouldShowPhotos">
-        <div
-          class="mt-2"
-          :class="{ 'preview-photos': preview }"
-          :style="{
-            maxWidth: preview ? '200px' : `${wechatMaxSize.maxWidth}px`,
-          }"
-        >
-          <!-- 单张图片特殊处理 -->
+        <div :class="{ 'preview-photos': preview }">
+          <!-- 单张图片：保持原始比例 -->
           <div v-if="memo.photos.length === 1" v-viewer class="overflow-hidden rounded-lg">
             <img
               :src="memo.photos[0]"
               alt="Photo"
-              class="w-full h-auto object-cover"
-              :class="{ 'preview-single-photo': preview }"
-              :style="{ maxWidth: preview ? '200px' : `${wechatMaxSize.maxWidth}px` }"
+              :class="preview ? 'preview-single-photo w-full object-cover' : 'w-full h-auto rounded-lg'"
             >
           </div>
 
-          <!-- 多张图片九宫格 -->
+          <!-- 多张图片：preview 用九宫格，非 preview 用响应式网格保持原比例 -->
           <div
             v-else
             v-viewer
-            :class="preview ? 'preview-grid' : 'grid gap-1'"
-            :style="{
+            :class="preview ? 'preview-grid' : 'grid gap-2'"
+            :style="preview ? {
               gridTemplateRows: `repeat(${wechatGridConfig.rows}, 1fr)`,
               gridTemplateColumns: `repeat(${wechatGridConfig.cols}, 1fr)`,
-              maxWidth: preview ? '200px' : `${wechatMaxSize.maxWidth}px`,
-              maxHeight: preview ? '150px' : `${wechatMaxSize.maxHeight}px`,
+              maxWidth: '200px',
+              maxHeight: '150px',
+            } : {
+              gridTemplateColumns: memo.photos.length === 2 ? 'repeat(2, 1fr)' : memo.photos.length === 3 ? 'repeat(3, 1fr)' : 'repeat(2, 1fr)',
             }"
           >
             <div
               v-for="(photo, index) in memo.photos.slice(0, 9)"
               :key="index"
-              class="aspect-square overflow-hidden rounded-md"
+              :class="preview ? 'aspect-square overflow-hidden rounded-md' : 'overflow-hidden rounded-md'"
             >
               <img
                 :src="photo"
                 :alt="`Photo ${index + 1}`"
-                class="w-full h-full object-cover"
+                :class="preview ? 'w-full h-full object-cover' : 'w-full h-auto'"
               >
             </div>
           </div>
         </div>
         <template #fallback>
-          <div class="mt-2" :style="{ maxWidth: `${wechatMaxSize.maxWidth}px` }">
-            <!-- 宽度自适应容器，高度给一个合适占位 -->
-            <Skeleton style="width: 100%; height: 200px;" />
-          </div>
+          <Skeleton style="width: 100%; height: 200px;" class="rounded-lg" />
         </template>
       </ClientOnly>
+      <!-- 下方内容区域 -->
+      <div v-if="memo.content && memo.content.trim()" class="relative">
+        <div :class="{ 'preview-content': preview }">
+          <MDC ref="contentRef" :value="memo.content" tag="section" :class="memoProseClass" />
+        </div>
+        <!-- 预览模式的渐变遮罩 - 仅在内容溢出时显示 -->
+        <div v-if="preview && isContentOverflowing" class="preview-gradient" />
+      </div>
     </div>
 
     <!-- 小红书布局：左图右文（当图片和内容都需要显示时） -->
@@ -400,7 +393,7 @@ const wechatMaxSize = computed(() => {
       <!-- 右侧内容区域 -->
       <div class="flex-1 min-w-0 relative">
         <div :class="{ 'preview-content': preview }">
-          <MDC ref="contentRef" :value="parsedContent" tag="section" class="prose prose-sm dark:prose-invert max-w-none" />
+          <MDC ref="contentRef" :value="parsedContent" tag="section" :class="memoProseClass" />
         </div>
         <!-- 预览模式的渐变遮罩 - 仅在内容溢出时显示 -->
         <div v-if="preview && isContentOverflowing" class="preview-gradient" />
@@ -464,7 +457,7 @@ const wechatMaxSize = computed(() => {
     <!-- 仅内容模式 -->
     <div v-else-if="shouldShowContent" class="relative">
       <div :class="{ 'preview-content': preview }">
-        <MDC ref="contentRef" :value="parsedContent" tag="section" class="prose prose-sm dark:prose-invert max-w-none" />
+        <MDC ref="contentRef" :value="parsedContent" tag="section" :class="memoProseClass" />
       </div>
       <!-- 预览模式的渐变遮罩 - 仅在内容溢出时显示 -->
       <div v-if="preview && isContentOverflowing" class="preview-gradient" />

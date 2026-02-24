@@ -60,7 +60,7 @@ function firstPhoto(memo: BlogMemoWithUser): string | null {
               <MDC
                 :value="memo.content ?? ''"
                 tag="div"
-                class="prose prose-sm dark:prose-invert max-w-none text-zinc-700 dark:text-zinc-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors leading-snug [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
+                class="prose prose-sm dark:prose-invert max-w-none text-zinc-700 dark:text-zinc-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors leading-snug [&>*:first-child]:mt-0 [&>*:last-child]:mb-0 [&_p]:text-sm [&_li]:text-sm [&_h1]:text-base [&_h2]:text-sm [&_h3]:text-sm"
               />
             </div>
           </div>

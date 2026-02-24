@@ -119,12 +119,12 @@ function handleTagClick(tagName: string) {
 </script>
 
 <template>
-  <div class="min-h-screen">
-    <div class="max-w-3xl mx-auto px-4 md:px-8 py-8 md:py-12">
+  <div class="min-h-screen bg-white dark:bg-zinc-950">
+    <div class="max-w-3xl mx-auto px-4 md:px-8 py-4 md:py-6">
       <ClientOnly>
         <template #fallback>
           <div class="text-center py-20">
-            <div class="bg-primary/5 dark:bg-zinc-900 p-12 max-w-md mx-auto">
+            <div class="border border-zinc-100 dark:border-zinc-800 p-10 max-w-md mx-auto">
               <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4" />
               <p class="text-zinc-600 dark:text-zinc-300">
                 加载中...
@@ -134,7 +134,7 @@ function handleTagClick(tagName: string) {
         </template>
 
         <div v-if="isLoading" class="text-center py-20">
-          <div class="bg-primary/5 dark:bg-zinc-900 p-12 max-w-md mx-auto">
+          <div class="border border-zinc-100 dark:border-zinc-800 p-10 max-w-md mx-auto">
             <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4" />
             <p class="text-zinc-600 dark:text-zinc-300">
               加载中...
@@ -143,7 +143,7 @@ function handleTagClick(tagName: string) {
         </div>
 
         <div v-else-if="!memo" class="text-center py-20">
-          <div class="bg-primary/5 dark:bg-zinc-900 p-12 max-w-md mx-auto">
+          <div class="border border-zinc-100 dark:border-zinc-800 p-10 max-w-md mx-auto">
             <h2 class="text-2xl font-bold text-zinc-800 dark:text-zinc-200 mb-4">
               Memo 不存在
             </h2>
@@ -157,24 +157,23 @@ function handleTagClick(tagName: string) {
         </div>
 
         <div v-else-if="memo && !isLoading" class="space-y-4 w-full">
-          <div class="mb-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              class="flex items-center gap-2 text-zinc-600 dark:text-zinc-300 hover:text-primary transition-colors"
-              @click="router.push('/memo')"
-            >
-              <Icon name="material-symbols:arrow-back" class="w-4 h-4" />
-              <span>返回</span>
-            </Button>
-          </div>
-
-          <div class="bg-primary/5 dark:bg-zinc-900 p-6 transition-all duration-300">
-            <div class="flex items-center gap-2 mb-4 text-xs text-zinc-400">
-              <Icon name="pixelarticons:radio-signal" class="text-primary" />
-              <span>动态</span>
-              <NuxtTime :datetime="memo.createTs" />
-              <AppFromTag :from="memo.from || 'blog'" />
+          <div class="border border-zinc-100 dark:border-zinc-800 p-6 transition-all duration-300">
+            <div class="flex items-center justify-between mb-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                class="-ml-2 flex items-center gap-1.5 text-zinc-500 dark:text-zinc-400 hover:text-primary transition-colors"
+                @click="router.push('/memo')"
+              >
+                <Icon name="material-symbols:arrow-back" class="w-4 h-4" />
+                <span>返回</span>
+              </Button>
+              <div class="flex items-center gap-2 text-xs text-zinc-400">
+                <Icon name="pixelarticons:radio-signal" class="text-primary" />
+                <span>动态</span>
+                <NuxtTime :datetime="memo.createTs" />
+                <AppFromTag :from="memo.from || 'blog'" />
+              </div>
             </div>
 
             <div v-if="memo.tags && memo.tags.length > 0" class="flex flex-wrap gap-2 mb-4">
@@ -192,9 +191,7 @@ function handleTagClick(tagName: string) {
               <MemoPanel
                 :memo="memo"
                 :show-all="true"
-                layout="xiaohongshu"
-                :photo-width="400"
-                :max-width="1000"
+                layout="wechat"
               />
             </div>
 
@@ -218,7 +215,7 @@ function handleTagClick(tagName: string) {
             </ClientOnly>
           </div>
 
-          <div class="bg-primary/5 dark:bg-zinc-900 p-6">
+          <div class="border border-zinc-100 dark:border-zinc-800 p-6 mt-4">
             <div class="flex items-center gap-2 mb-6">
               <Icon name="icon-park-outline:comments" class="w-5 h-5 text-zinc-600 dark:text-zinc-300" />
               <h2 class="text-xl font-bold text-zinc-800 dark:text-zinc-200">
