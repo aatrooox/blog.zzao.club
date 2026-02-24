@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v3.1.0
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.10...v3.1.0)
+
+### 🚀 Enhancements
+
+- Add author field to content schema ([0e1dd54](https://github.com/aatrooox/blog.zzao.club/commit/0e1dd54))
+- Add home layout and newspaper-style column components ([2f2ad83](https://github.com/aatrooox/blog.zzao.club/commit/2f2ad83))
+- Add Jinx config and update dual-author hero section ([12c3f9b](https://github.com/aatrooox/blog.zzao.club/commit/12c3f9b))
+- Add useJinxArticles composable and refactor index page to newspaper layout ([65450d8](https://github.com/aatrooox/blog.zzao.club/commit/65450d8))
+- Show author badge and tags on article list and detail pages ([d689ee6](https://github.com/aatrooox/blog.zzao.club/commit/d689ee6))
+
+### 📖 Documentation
+
+- 文章更新 ([a3a11d5](https://github.com/aatrooox/blog.zzao.club/commit/a3a11d5))
+- 文章更新 ([c012856](https://github.com/aatrooox/blog.zzao.club/commit/c012856))
+- Fix content frontmatter versions ([6ac4b14](https://github.com/aatrooox/blog.zzao.club/commit/6ac4b14))
+
+### 🏡 Chore
+
+- Stabilize dev watcher and tooling ([317e81a](https://github.com/aatrooox/blog.zzao.club/commit/317e81a))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.0.10
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.9...v3.0.10)
