@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.1.1
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.0...v3.1.1)
+
+### 🚀 Enhancements
+
+- Improve memo column with horizontal scroll and markdown rendering ([2031c6a](https://github.com/aatrooox/blog.zzao.club/commit/2031c6a))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.1.0
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.0.10...v3.1.0)
