@@ -47,7 +47,7 @@ export async function usePagesWithGroup(options?: { filter_tags?: MaybeRef<strin
     if (limit) {
       query = query.limit(limit)
     }
-    return await query.select('id', 'path', 'title', 'date', 'tags', 'group', 'lastmod').all() as unknown as Page[]
+    return await query.select('id', 'path', 'title', 'date', 'tags', 'group', 'lastmod', 'author').all() as unknown as Page[]
   }, { watch: [filterTags] })
 
   return { data, pending, refresh, error }
@@ -60,7 +60,7 @@ export async function useGroupedPages() {
   const { data, pending, refresh, error } = await useAsyncData(key, async () => {
     // Nuxt Content 不支持 IS NOT NULL,需获取全部后过滤
     const query = queryCollection('content').order('date', 'DESC')
-    const allPages = await query.select('id', 'path', 'title', 'date', 'tags', 'group', 'lastmod').all() as unknown as Page[]
+    const allPages = await query.select('id', 'path', 'title', 'date', 'tags', 'group', 'lastmod', 'author').all() as unknown as Page[]
 
     return allPages.filter(page => page.group) // 仅保留有 group 的文章
   })
@@ -74,7 +74,7 @@ export async function usePagesByGroup(groupPath: string) {
 
   const { data, pending, refresh, error } = await useAsyncData(key, async () => {
     const query = queryCollection('content').order('date', 'DESC')
-    const allPages = await query.select('id', 'path', 'title', 'date', 'tags', 'group', 'lastmod', 'body').all() as unknown as Page[]
+    const allPages = await query.select('id', 'path', 'title', 'date', 'tags', 'group', 'lastmod', 'body', 'author').all() as unknown as Page[]
 
     // 匹配完整路径或父级路径
     // 例如: groupPath="Nuxt系列:全栈开发" 应匹配 "Nuxt系列:全栈开发:配置篇"
@@ -196,4 +196,22 @@ export function flattenGroups(root: GroupNode): FlatGroup[] {
   })
 
   return result
+}
+
+// ========== Jinx 专栏：按 author 字段过滤 ==========
+export async function useJinxArticles(options?: { limit?: number }) {
+  const limit = options?.limit ?? 10
+  const key = `pages-jinx-${limit}`
+
+  const { data, pending, refresh, error } = await useAsyncData(key, async () => {
+    let query = queryCollection('content')
+      .where('author', '=', 'Jinx')
+      .order('date', 'DESC')
+    if (limit) {
+      query = query.limit(limit)
+    }
+    return await query.select('id', 'path', 'title', 'date', 'tags', 'author', 'description').all() as unknown as Page[]
+  })
+
+  return { data, pending, refresh, error }
 }

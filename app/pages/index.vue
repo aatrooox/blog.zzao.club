@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+definePageMeta({ layout: 'home' })
 useHead({
   title: '早早集市｜博客站',
   meta: [
@@ -46,196 +47,81 @@ useHead({
   ],
 })
 
-// 获取动态数据（SSR预渲染，构建时请求生产API获取真实数据）
-const { getMemos, memos, status } = useMemos({ size: 10 })
+// 并行获取所有数据
+const [
+  { getMemos, memos },
+  { data: allArticles },
+  { data: jinxArticles },
+] = await Promise.all([
+  useMemos({ size: 8 }),
+  usePagesWithGroup({ limit: 50 }),
+  useJinxArticles({ limit: 8 }),
+])
+
 await getMemos()
 
-const { data: allArticles } = await usePagesWithGroup({ limit: 50 })
-
-// 解析分组结构
+// 解析文章分组结构（排除 Jinx 文章）
 const groupHierarchy = computed(() => {
   if (!allArticles.value)
     return null
-  return parseGroupHierarchy(allArticles.value)
+  // 过滤掉 Jinx 的文章，Aatrox 专栏只展示 Aatrox 的内容
+  const aatroxArticles = allArticles.value.filter((a: any) => !a.author || a.author !== 'Jinx')
+  return parseGroupHierarchy(aatroxArticles)
 })
 
-// 扁平化分组(用于渲染)
 const flatGroups = computed(() => {
   if (!groupHierarchy.value)
     return []
   return flattenGroups(groupHierarchy.value)
 })
 
-// 混合列表:单篇文章 + 分组文章 + Memos
-const mixedList = computed(() => {
-  const items: any[] = []
-
-  // 1. 单篇文章(无 group 的)
-  if (groupHierarchy.value) {
-    groupHierarchy.value.articles.forEach((article: any) => {
-      items.push({
-        type: 'article',
-        id: `article-${article.path}`,
-        date: article.date ? new Date(article.date).getTime() : 0,
-        data: article,
-      })
-    })
-  }
-
-  // 2. 分组文章
-  flatGroups.value.forEach((group) => {
-    items.push({
-      type: 'group',
-      id: `group-${group.fullPath}`,
-      date: group.latestDate.getTime(),
-      data: group,
-    })
-  })
-
-  // 3. Memos
-  if (memos.value) {
-    memos.value.forEach((memo: any) => {
-      items.push({
-        type: 'memo',
-        id: `memo-${memo.id}`,
-        date: new Date(memo.createTs).getTime(),
-        data: memo,
-      })
-    })
-  }
-
-  // 按时间倒序排序
-  items.sort((a, b) => b.date - a.date)
-
-  return items
+// LATEST 列：最新5篇 Aatrox 无分组文章
+const latestArticles = computed(() => {
+  if (!groupHierarchy.value)
+    return []
+  return groupHierarchy.value.articles.slice(0, 5)
 })
 
-// 动画相关
-function onEnter(el: any) {
-  // 简单的淡入动画，如果 animate 全局可用
-  if (typeof animate !== 'undefined') {
-    animate(el, {
-      opacity: ['0', '1'],
-      translateY: ['20px', '0'],
-      duration: 400,
-      easing: 'easeOutQuad',
+// 技术文章列表（单篇 + 分组，排除前3篇已在 Latest 展示的；最多8条）
+const techItems = computed(() => {
+  const items: any[] = []
+  if (groupHierarchy.value) {
+    groupHierarchy.value.articles.forEach((article: any, idx: number) => {
+      if (idx < 5)
+        return // Latest 已展示前5篇
+      items.push({ type: 'article', data: article })
     })
   }
-  else {
-    // Fallback
-    el.style.opacity = '1'
-    el.style.transform = 'translateY(0)'
-  }
-}
+  flatGroups.value.forEach((group) => {
+    items.push({ type: 'group', data: group })
+  })
+  return items.slice(0, 8)
+})
 </script>
 
 <template>
-  <div class="font-sans max-w-3xl mx-auto">
-    <!-- 首页信息栏：作者简介 + 标签 + 精选 -->
+  <div class="max-w-7xl mx-auto px-4 py-6">
+    <!-- 顶部信息栏 -->
     <HomeHeroSection />
 
-    <div class="space-y-4">
-      <transition-group name="list" tag="div" class="space-y-4" @enter="onEnter">
-        <template v-for="item in mixedList" :key="item.id">
-          <!-- Article Item -->
-          <NuxtLink
-            v-if="item.type === 'article'"
-            :to="item.data.path"
-            class="block group"
-          >
-            <div class="bg-white dark:bg-zinc-900 p-4 rounded-lg transition-all duration-300 border border-zinc-100 dark:border-zinc-800 hover:border-primary/30 dark:hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-md">
-              <div class="flex items-center justify-between gap-4">
-                <div class="flex items-center gap-3 min-w-0">
-                  <Icon name="pixelarticons:article" class="text-zinc-400 shrink-0" />
-                  <h3 class="text-base font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-primary transition-colors truncate">
-                    {{ item.data.title }}
-                  </h3>
-                </div>
-                <div class="flex gap-2 shrink-0">
-                  <template v-if="item.data.tags">
-                    <span v-for="tag in item.data.tags.slice(0, 2)" :key="tag" class="text-xs px-2 py-1 bg-zinc-50 dark:bg-zinc-800 text-zinc-500 rounded-md">
-                      #{{ tag }}
-                    </span>
-                  </template>
-                </div>
-              </div>
-            </div>
-          </NuxtLink>
-
-          <!-- Grouped Articles (新增) -->
-          <GroupedArticlesCard
-            v-else-if="item.type === 'group'"
-            :group="item.data"
-          />
-
-          <!-- Memo Item -->
-          <div
-            v-else-if="item.type === 'memo'"
-            class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-100 dark:border-zinc-800 px-4 py-3 cursor-pointer hover:border-primary/30 dark:hover:border-primary/40 hover:-translate-y-0.5 hover:shadow-md transition-all duration-300"
-            @click="navigateTo(`/m/${item.data.id}`)"
-          >
-            <div class="flex items-start gap-4">
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center gap-2 mb-2">
-                  <NuxtTime :datetime="item.data.createTs" class="text-gray-400 text-sm" />
-                  <span class="text-gray-400 text-sm">·</span>
-                  <AppFromTag :from="item.data.from || 'blog'" />
-                </div>
-                <div v-if="item.data.tags && item.data.tags.length > 0" class="py-2 overflow-x-auto overflow-y-hidden flex items-center gap-1.5 pb-1">
-                  <span
-                    v-for="tag in item.data.tags"
-                    :key="tag.id"
-                    class="text-xs text-primary cursor-pointer hover:underline"
-                    @click.stop="navigateTo({ path: '/memo', query: { tags: tag.tagName } })"
-                  >
-                    #{{ tag.tagName }}
-                  </span>
-                </div>
-                <div class="mb-2">
-                  <MemoPanel :memo="item.data" layout="wechat" :preview="true" :photo-width="200" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </transition-group>
-
-      <!-- 加载更多/底部提示 -->
-      <div class="text-center py-8 text-zinc-400 text-sm">
-        <span v-if="status === 'pending'">加载中...</span>
-        <span v-else>不是写不出来，是待发布！</span>
+    <!-- Memo 横向卡片区 -->
+    <div class="mb-8 pb-8 border-b border-zinc-200 dark:border-zinc-800">
+      <HomeMemoColumn :memos="memos ?? []" />
+    </div>
+    <!-- 三列文章区：LATEST | AATROX | JINX -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-0 xl:divide-x divide-zinc-200 dark:divide-zinc-800">
+      <!-- LATEST -->
+      <div class="xl:pr-6">
+        <HomeNewsColumn :articles="latestArticles" />
+      </div>
+      <!-- AATROX -->
+      <div class="pt-6 xl:pt-0 xl:px-6 border-t md:border-t-0 xl:border-t-0 border-zinc-200 dark:border-zinc-800">
+        <HomeTechColumn :items="techItems" />
+      </div>
+      <!-- JINX -->
+      <div class="pt-6 xl:pt-0 xl:pl-6 border-t xl:border-t-0 border-zinc-200 dark:border-zinc-800">
+        <HomeJinxColumn :articles="jinxArticles ?? []" />
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-/* 列表过渡动画 */
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.5s ease;
-}
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-/* Scrollbar styles */
-.overflow-x-auto::-webkit-scrollbar {
-  height: 4px;
-}
-
-.overflow-x-auto::-webkit-scrollbar-thumb {
-  background: #e5e7eb;
-  border-radius: 2px;
-}
-
-.dark .overflow-x-auto::-webkit-scrollbar-thumb {
-  background: #374151;
-}
-
-.overflow-x-auto::-webkit-scrollbar-track {
-  background: transparent;
-}
-</style>
