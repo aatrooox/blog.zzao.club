@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.1.2
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.1...v3.1.2)
+
+### 🚀 Enhancements
+
+- Unify memo pages visual style to white/border theme ([a98d172](https://github.com/aatrooox/blog.zzao.club/commit/a98d172))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.1.1
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.0...v3.1.1)
