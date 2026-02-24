@@ -16,6 +16,7 @@ export default defineContentConfig({
         lastmod: z.date(),
         tags: z.array(z.string()),
         group: z.string().optional(), // 分组，这些显示组名，用于显示系列文章，用冒号分割层级 如 面试题:前端
+        author: z.string().optional(), // 作者，用于区分 Jinx 等多作者内容
         versions: z.array(z.string()),
         rawbody: z.string(),
       }),
