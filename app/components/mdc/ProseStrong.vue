@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <strong class="!text-base">
+  <strong class="font-bold">
     <slot />
   </strong>
 </template>
