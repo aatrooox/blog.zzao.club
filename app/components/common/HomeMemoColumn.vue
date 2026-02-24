@@ -8,17 +8,6 @@ defineProps<{
 
 const { formatDate } = useDayjs()
 
-function stripMarkdown(text: string | null | undefined): string {
-  if (!text) return ''
-  return text
-    .replace(/!\[.*?\]\(.*?\)/g, '') // 图片
-    .replace(/\[.*?\]\(.*?\)/g, '$1') // 链接
-    .replace(/#{1,6}\s+/g, '') // 标题
-    .replace(/[*_~`]/g, '') // 粗斜体、代码
-    .replace(/\n+/g, ' ') // 换行
-    .trim()
-}
-
 function firstPhoto(memo: BlogMemoWithUser): string | null {
   return memo.photos?.length ? memo.photos[0] : null
 }
@@ -43,13 +32,16 @@ function firstPhoto(memo: BlogMemoWithUser): string | null {
       暂无动态
     </div>
 
-    <!-- 横向卡片网格：xl:4列，md:2列，sm:1列 -->
-    <div v-else class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+    <!-- 单行横向滚动卡片 -->
+    <div
+      v-else
+      class="flex gap-3 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+    >
       <NuxtLink
         v-for="memo in memos"
         :key="memo.id"
         :to="`/m/${memo.id}`"
-        class="group flex flex-col rounded-lg border border-zinc-100 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-600 hover:shadow-sm transition-all overflow-hidden bg-white dark:bg-zinc-900/40"
+        class="group shrink-0 w-64 flex flex-col rounded-lg border border-zinc-100 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-600 hover:shadow-sm transition-all overflow-hidden bg-white dark:bg-zinc-900/40"
       >
         <!-- 有图：封面图 -->
         <div v-if="firstPhoto(memo)" class="w-full h-32 shrink-0 overflow-hidden">
@@ -59,15 +51,21 @@ function firstPhoto(memo: BlogMemoWithUser): string | null {
             class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
           />
         </div>
+
         <!-- 文字内容区 -->
-        <div class="flex flex-col justify-between flex-1 p-3" :class="firstPhoto(memo) ? 'min-h-16' : 'h-24'">
-          <p
-            class="text-sm text-zinc-700 dark:text-zinc-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors leading-snug overflow-hidden flex-1"
-            :class="firstPhoto(memo) ? 'line-clamp-2' : 'line-clamp-3'"
-          >
-            {{ stripMarkdown(memo.content) }}
-          </p>
-        <!-- 底部：时间 + 标签 -->
+        <div class="flex flex-col justify-between flex-1 p-3" :class="firstPhoto(memo) ? 'min-h-16' : 'h-36'">
+          <!-- MDC 渲染内容，限制高度 + 禁止内部链接干扰卡片点击 -->
+          <div class="flex-1 overflow-hidden" :class="firstPhoto(memo) ? 'max-h-12' : 'max-h-24'">
+            <div class="pointer-events-none">
+              <MDC
+                :value="memo.content ?? ''"
+                tag="div"
+                class="prose prose-sm dark:prose-invert max-w-none text-zinc-700 dark:text-zinc-300 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors leading-snug [&>*:first-child]:mt-0 [&>*:last-child]:mb-0"
+              />
+            </div>
+          </div>
+
+          <!-- 底部：时间 + 标签 -->
           <div class="flex items-center gap-2 mt-2 shrink-0">
             <span class="text-[11px] text-zinc-400 dark:text-zinc-500 shrink-0">
               {{ formatDate(memo.createTs) }}
