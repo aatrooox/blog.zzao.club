@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.1.3
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.2...v3.1.3)
+
+### 🩹 Fixes
+
+- Remove hardcoded text-base from ProseStrong and ProseCode ([cee0453](https://github.com/aatrooox/blog.zzao.club/commit/cee0453))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.1.2
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.1...v3.1.2)
