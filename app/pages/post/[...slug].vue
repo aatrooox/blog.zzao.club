@@ -10,6 +10,7 @@ definePageMeta({
   layout: false, // 手动控制布局
 })
 
+const appConfig = useAppConfig()
 const toast = useGlobalToast()
 const { $api } = useNuxtApp()
 const userStore = useUser()
@@ -566,23 +567,40 @@ watchEffect(async () => {
           {{ page?.title }}
         </h1>
         <ClientOnly>
-          <div class="article-actions flex gap-8 justify-start text-sm text-zinc-500 py-2">
-            <div>{{ formatDate(page.date ?? '') }}</div>
-            <!-- <div class="flex items-center cursor-pointer gap-1.5">
-                <Icon name="icon-park-outline:thumbs-up" class="" @click="likePage" />
-                <span class=" ">{{ likeCount }}</span>
+          <!-- 作者信息 + 日期 + 标签 -->
+          <div class="flex flex-col gap-3 py-3 mb-2 border-b border-zinc-100 dark:border-zinc-800">
+            <!-- 第一行：作者头像 + 名字 + 日期 + 操作 -->
+            <div class="flex items-center gap-3">
+              <NuxtImg
+                :src="page.author === 'Jinx' ? appConfig.jinx.avatar : appConfig.avatar"
+                :alt="page.author === 'Jinx' ? appConfig.jinx.name : 'Aatrox'"
+                class="w-8 h-8 rounded-full object-cover shrink-0"
+              />
+              <div class="flex flex-col leading-tight">
+                <span class="text-sm font-semibold text-zinc-800 dark:text-zinc-200">
+                  {{ page.author === 'Jinx' ? appConfig.jinx.name : 'Aatrox' }}
+                </span>
+                <span class="text-xs text-zinc-400 dark:text-zinc-500 font-mono">{{ formatDate(page.date ?? '') }}</span>
               </div>
-              <div class="cursor-pointer">
-                <NuxtLink href="#评论区" class="flex items-center gap-1.5">
-                  <Icon name="icon-park-outline:comments" class="" />
-                  <span class="  ">{{ formatCommentCount }}</span>
-                </NuxtLink>
-              </div> -->
-            <div class="flex items-center cursor-pointer" @click="copyLink">
-              <Icon name="material-symbols:share-reviews-outline-rounded" class="" />
+              <!-- 右侧操作按钮 -->
+              <div class="ml-auto flex items-center gap-4 text-zinc-400 dark:text-zinc-500">
+                <button class="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors" title="复制链接" @click="copyLink">
+                  <Icon name="material-symbols:share-reviews-outline-rounded" class="w-4 h-4" />
+                </button>
+                <button class="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors" data-umami-event="wx-copy-btn" title="复制为微信公众号格式" @click="getInnerHTML">
+                  <Icon name="icon-park-outline:wechat" class="w-4 h-4" />
+                </button>
+              </div>
             </div>
-            <div class="flex items-center cursor-pointer" data-umami-event="wx-copy-btn" @click="getInnerHTML">
-              <Icon name="icon-park-outline:wechat" class="" />
+            <!-- 第二行：标签 -->
+            <div v-if="page.tags && page.tags.length" class="flex flex-wrap gap-2">
+              <span
+                v-for="tag in page.tags"
+                :key="tag"
+                class="text-xs px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400"
+              >
+                #{{ tag }}
+              </span>
             </div>
           </div>
         </ClientOnly>

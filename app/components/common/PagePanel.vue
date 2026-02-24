@@ -19,6 +19,7 @@ export interface Page extends ParsedContent {
   versions?: string[]
   lastmod?: string
   meta?: any
+  author?: string
   seo?: {
     title?: string
     description?: string

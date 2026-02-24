@@ -335,26 +335,39 @@ function isGroupItem(item: any): item is { type: 'group', data: FlatGroup } {
 
               <NuxtLink v-else :to="item.path" class="block group">
                 <div class="py-3 px-4 -mx-4 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors duration-200">
-                  <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2 md:gap-4">
-                    <h3 class="text-base md:text-lg font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-primary transition-colors leading-snug">
+                  <!-- 第一行：作者 badge + 标题 -->
+                  <div class="flex items-center gap-2 min-w-0">
+                    <span
+                      v-if="item.author === 'Jinx'"
+                      class="shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-100 dark:bg-indigo-900/40 text-indigo-500 dark:text-indigo-400 leading-none"
+                    >
+                      Jinx
+                    </span>
+                    <span
+                      v-else
+                      class="shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500 leading-none"
+                    >
+                      Aatrox
+                    </span>
+                    <h3 class="text-base md:text-lg font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-primary transition-colors leading-snug truncate">
                       {{ item.title }}
                     </h3>
-
-                    <div class="flex items-center gap-3 shrink-0 text-xs md:text-sm">
-                      <div v-if="item.tags && item.tags.length" class="flex gap-2">
-                        <button
-                          v-for="tag in item.tags.slice(0, 3)"
-                          :key="tag"
-                          class="text-zinc-400 dark:text-zinc-500 hover:text-primary transition-colors cursor-pointer"
-                          @click.prevent.stop="toggleTag(tag)"
-                        >
-                          #{{ tag }}
-                        </button>
-                      </div>
-                      <span class="text-zinc-300 dark:text-zinc-600 font-mono">
-                        <NuxtTime :datetime="item.date" month="numeric" day="numeric" />
-                      </span>
+                  </div>
+                  <!-- 第二行：标签 + 日期 -->
+                  <div class="flex items-center gap-3 mt-1 text-xs">
+                    <div v-if="item.tags && item.tags.length" class="flex gap-2">
+                      <button
+                        v-for="tag in item.tags.slice(0, 3)"
+                        :key="tag"
+                        class="text-zinc-400 dark:text-zinc-500 hover:text-primary transition-colors cursor-pointer"
+                        @click.prevent.stop="toggleTag(tag)"
+                      >
+                        #{{ tag }}
+                      </button>
                     </div>
+                    <span class="text-zinc-300 dark:text-zinc-600 font-mono ml-auto">
+                      <NuxtTime :datetime="item.date" month="numeric" day="numeric" />
+                    </span>
                   </div>
                 </div>
               </NuxtLink>
