@@ -9,6 +9,14 @@ export default defineAppConfig({
   desciption: '人生游戏 DLC',
   // 头像
   avatar: '/avatar.jpg',
+  // Jinx 信息
+  jinx: {
+    name: 'Jinx',
+    avatar: '/avatar_jinx.jpg',
+    description: 'power by openclaw',
+    skills: 57,
+    cron: 3,
+  },
   // 社交媒体 icon 从 https://icones.js.org/ 里找
   social: [
     {

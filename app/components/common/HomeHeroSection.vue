@@ -22,24 +22,56 @@ function formatStars(count: number): string {
   <div class="space-y-5 mb-8">
     <!-- 作者简介 + 社交 -->
     <div class="flex items-center justify-between gap-4">
-      <div class="flex items-center gap-3 min-w-0">
-        <NuxtImg
-          :src="appConfig.avatar"
-          alt="Aatrox"
-          width="40"
-          height="40"
-          class="rounded-full shrink-0"
-        />
-        <div class="min-w-0">
-          <div class="font-bold text-zinc-800 dark:text-zinc-200 text-sm truncate">
-            Aatrox
+      <div class="flex items-center gap-4 min-w-0">
+        <!-- Aatrox -->
+        <div class="flex items-center gap-3">
+          <NuxtImg
+            :src="appConfig.avatar"
+            alt="Aatrox"
+            width="40"
+            height="40"
+            class="rounded-full shrink-0"
+          />
+          <div class="min-w-0">
+            <div class="font-bold text-zinc-800 dark:text-zinc-200 text-sm truncate">
+              Aatrox
+            </div>
+            <div class="text-xs text-zinc-400 dark:text-zinc-500 truncate">
+              Nuxt 全栈开发
+            </div>
           </div>
-          <div class="text-xs text-zinc-400 dark:text-zinc-500 truncate">
-            Nuxt 全栈开发
+        </div>
+
+        <!-- 竖线分隔 -->
+        <div v-if="appConfig.jinx" class="h-8 w-px bg-zinc-200 dark:bg-zinc-700 shrink-0" />
+
+        <!-- Jinx -->
+        <div v-if="appConfig.jinx" class="flex items-center gap-3 min-w-0">
+          <NuxtImg
+            :src="appConfig.jinx.avatar"
+            :alt="appConfig.jinx.name"
+            width="40"
+            height="40"
+            class="rounded-full shrink-0"
+          />
+          <div class="min-w-0">
+            <div class="font-bold text-indigo-600 dark:text-indigo-400 text-sm truncate">
+              {{ appConfig.jinx.name }}
+            </div>
+            <div class="text-xs text-zinc-400 dark:text-zinc-500 truncate">
+              {{ appConfig.jinx.description }}
+            </div>
+            <div class="flex items-center gap-2.5 mt-0.5">
+              <span class="text-[10px] text-zinc-400 dark:text-zinc-500">
+                <span class="font-semibold text-zinc-600 dark:text-zinc-300">{{ appConfig.jinx.skills }}</span> SKILLS
+              </span>
+              <span class="text-[10px] text-zinc-400 dark:text-zinc-500">
+                <span class="font-semibold text-zinc-600 dark:text-zinc-300">{{ appConfig.jinx.cron }}</span> CRON
+              </span>
+            </div>
           </div>
         </div>
       </div>
-
       <!-- 社交图标 -->
       <div class="flex items-center gap-1 shrink-0">
         <template v-for="item in socialItems" :key="item.name">
@@ -72,7 +104,6 @@ function formatStars(count: number): string {
               <div class="absolute -top-1.5 right-3 w-3 h-3 bg-white dark:bg-zinc-800 border-l border-t border-zinc-200 dark:border-zinc-700 rotate-45" />
             </div>
           </div>
-
           <!-- 纯链接的 -->
           <NuxtLink
             v-else-if="item.url"
@@ -101,41 +132,23 @@ function formatStars(count: number): string {
       </NuxtLink>
     </div>
 
-    <!-- GitHub 项目 -->
-    <div v-if="githubRepos.length" class="space-y-2">
-      <div class="flex items-center gap-2">
-        <Icon name="icon-park-outline:github" class="text-primary w-4 h-4 shrink-0" />
-        <span class="text-xs font-medium text-zinc-500 dark:text-zinc-400">开源项目</span>
-      </div>
-      <div class="grid grid-cols-2 gap-2">
-        <NuxtLink
-          v-for="repo in githubRepos"
-          :key="repo.name"
-          :to="repo.url"
-          external
-          target="_blank"
-          class="group rounded-lg border border-zinc-100 dark:border-zinc-800 p-2.5 hover:border-primary/30 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors"
-        >
-          <div class="flex items-center gap-1.5 mb-1">
-            <span class="text-sm font-medium text-zinc-700 dark:text-zinc-300 group-hover:text-primary transition-colors truncate">
-              {{ repo.name }}
-            </span>
-          </div>
-          <p class="text-xs text-zinc-400 dark:text-zinc-500 truncate mb-1.5">
-            {{ repo.desc }}
-          </p>
-          <div class="flex items-center gap-2">
-            <span v-if="repo.lang" class="flex items-center gap-1 text-xs text-zinc-400 dark:text-zinc-500">
-              <span class="w-2 h-2 rounded-full shrink-0" :style="{ backgroundColor: repo.langColor }" />
-              {{ repo.lang }}
-            </span>
-            <span v-if="repo.stars > 0" class="flex items-center gap-0.5 text-xs text-zinc-400 dark:text-zinc-500">
-              <Icon name="lucide:star" class="w-3 h-3" />
-              {{ formatStars(repo.stars) }}
-            </span>
-          </div>
-        </NuxtLink>
-      </div>
+    <!-- GitHub 项目：紧凑 chip 行 -->
+    <div v-if="githubRepos.length" class="flex items-center gap-2 flex-wrap">
+      <Icon name="icon-park-outline:github" class="text-zinc-400 dark:text-zinc-500 w-3.5 h-3.5 shrink-0" />
+      <NuxtLink
+        v-for="repo in githubRepos"
+        :key="repo.name"
+        :to="repo.url"
+        external
+        target="_blank"
+        class="group flex items-center gap-1 text-xs px-2 py-0.5 rounded-full border border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400 hover:border-primary/40 hover:text-primary dark:hover:text-primary transition-colors"
+      >
+        <span>{{ repo.name }}</span>
+        <span v-if="repo.stars > 0" class="flex items-center gap-0.5 text-zinc-400 dark:text-zinc-500 group-hover:text-primary/70 transition-colors">
+          <Icon name="lucide:star" class="w-2.5 h-2.5" />
+          {{ formatStars(repo.stars) }}
+        </span>
+      </NuxtLink>
     </div>
 
     <!-- 分隔线 -->
