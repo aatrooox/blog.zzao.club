@@ -206,14 +206,23 @@ function onUploadError(error: string) {
           class="px-3 py-4 rounded-md border-b border-zinc-100 dark:border-zinc-800 cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-900/40 transition-colors"
           @click="navigateTo(`/m/${memo.id}`)"
         >
-          <div class="flex items-start gap-4">
-            <!-- <div class="flex-shrink-0">
-              <UserAvatar :user-info="memo.user_info" :size="40" class="rounded-full" />
-            </div> -->
+          <div class="flex items-start gap-3">
+            <!-- 作者头像 -->
+            <div v-if="memo.user_info" class="flex-shrink-0 mt-0.5">
+              <img
+                v-if="memo.user_info.avatarUrl"
+                :src="memo.user_info.avatarUrl"
+                :alt="memo.user_info.nickname || memo.user_info.username"
+                class="w-8 h-8 rounded-full object-cover"
+              >
+              <span v-else class="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-sm font-medium text-zinc-600 dark:text-zinc-300">
+                {{ (memo.user_info.nickname || memo.user_info.username || '?')[0].toUpperCase() }}
+              </span>
+            </div>
             <div class="min-w-0 flex-1">
               <div class="flex items-center gap-2 mb-2">
-                <!-- <span class="font-bold text-gray-900 dark:text-gray-100 text-base">{{ memo.user_info?.nickname || memo.user_info?.username || '匿名' }}</span> -->
-                <!-- <span class="text-gray-400 text-sm">·</span> -->
+                <span v-if="memo.user_info" class="font-semibold text-gray-900 dark:text-gray-100 text-sm">{{ memo.user_info.nickname || memo.user_info.username || '匿名' }}</span>
+                <span v-if="memo.user_info" class="text-gray-400 text-sm">·</span>
                 <NuxtTime :datetime="memo.createTs" class="text-gray-400 text-sm" />
                 <span class="text-gray-400 text-sm">·</span>
                 <AppFromTag :from="memo.from || 'blog'" />
@@ -251,7 +260,6 @@ function onUploadError(error: string) {
                 </template>
               </div>
             </div>
-          </div>
         </div>
       </transition-group>
       <!-- 加载状态 -->

@@ -65,8 +65,26 @@ function firstPhoto(memo: BlogMemoWithUser): string | null {
             </div>
           </div>
 
-          <!-- 底部：时间 + 标签 -->
+          <!-- 底部：作者 + 时间 + 标签 -->
           <div class="flex items-center gap-2 mt-2 shrink-0">
+            <!-- 作者头像 + 名称 -->
+            <template v-if="memo.user_info">
+              <img
+                v-if="memo.user_info.avatarUrl"
+                :src="memo.user_info.avatarUrl"
+                :alt="memo.user_info.nickname || memo.user_info.username"
+                class="w-4 h-4 rounded-full object-cover shrink-0"
+              >
+              <span
+                v-else
+                class="w-4 h-4 rounded-full bg-zinc-300 dark:bg-zinc-600 flex items-center justify-center text-[8px] text-zinc-600 dark:text-zinc-300 shrink-0"
+              >
+                {{ (memo.user_info.nickname || memo.user_info.username || '?')[0].toUpperCase() }}
+              </span>
+              <span class="text-[11px] text-zinc-400 dark:text-zinc-500 shrink-0 max-w-[60px] truncate">
+                {{ memo.user_info.nickname || memo.user_info.username }}
+              </span>
+            </template>
             <span class="text-[11px] text-zinc-400 dark:text-zinc-500 shrink-0">
               {{ formatDate(memo.createTs) }}
             </span>
@@ -76,7 +94,6 @@ function firstPhoto(memo: BlogMemoWithUser): string | null {
             >
               {{ memo.tags.map(t => `#${t.tagName}`).join(' ') }}
             </span>
-          </div>
         </div>
       </NuxtLink>
     </div>
