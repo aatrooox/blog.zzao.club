@@ -31,7 +31,7 @@ export default defineStandardResponseHandler(async (event) => {
     })
   }
 
-  await assertSuperAdmin(event.context.userId)
+  // 任意已登录用户（含 PAT 持有者）均可创建 memo，userId 已在上方鉴权校验
 
   const memoData = {
     ...body.data,

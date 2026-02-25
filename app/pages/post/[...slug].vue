@@ -495,16 +495,17 @@ async function initLikeCount() {
 //   return count
 // })
 
-async function getSurroundingPage() {
-  // const paths = route.path.split('/').filter(Boolean)
-  // console.log(`paths`, route.path)
-  const { data } = await useAsyncData(page.value?.id || 'surrounding-page', () => {
-    return queryCollectionItemSurroundings('content', route.path).order('date', 'DESC')
-  })
+const { data: surroundingPages } = await useAsyncData('surrounding-page', () => {
+  if (!page.value?.id)
+    return []
+  return queryCollectionItemSurroundings('content', route.path).order('date', 'DESC')
+}, {
+  watch: [() => page.value?.id, () => route.path],
+})
 
-  console.log(`data`, data.value)
-  adjacentPages.value = data.value || []
-}
+watchEffect(() => {
+  adjacentPages.value = surroundingPages.value || []
+})
 // TOC滚动监听
 // function handleTocScroll() {
 //   if (!tocContainer.value)
@@ -549,7 +550,6 @@ watchEffect(async () => {
     nextTick(() => {
       initComment()
       initLikeCount()
-      getSurroundingPage()
       loadGroupArticles() // 加载分组文章
     })
   }

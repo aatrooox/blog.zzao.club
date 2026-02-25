@@ -26,6 +26,10 @@ const sidebarItems = [
     icon: 'i-lucide-users',
     to: '/admin/users',
   }, {
+    label: '创作者管理',
+    icon: 'i-lucide-user-pen',
+    to: '/admin/creators',
+  }, {
     label: 'Token 管理',
     icon: 'i-lucide-key',
     to: '/admin/tokens',
@@ -55,6 +59,8 @@ const pageTitle = computed(() => {
     return '标签管理'
   if (path.startsWith('/admin/users'))
     return '用户管理'
+  if (path.startsWith('/admin/creators'))
+    return '创作者管理'
   if (path.startsWith('/admin/tokens'))
     return 'Token 管理'
   if (path.startsWith('/admin/settings'))
@@ -73,6 +79,7 @@ const commandGroups = [{
     { id: 'nav-comments', label: '评论管理', icon: 'i-lucide-messages-square', to: '/admin/comments' },
     { id: 'nav-tags', label: '标签管理', icon: 'i-lucide-tag', to: '/admin/tags' },
     { id: 'nav-users', label: '用户管理', icon: 'i-lucide-users', to: '/admin/users' },
+    { id: 'nav-creators', label: '创作者管理', icon: 'i-lucide-user-pen', to: '/admin/creators' },
     { id: 'nav-tokens', label: 'Token 管理', icon: 'i-lucide-key', to: '/admin/tokens' },
     { id: 'nav-settings', label: '系统设置', icon: 'i-lucide-settings', to: '/admin/settings' },
   ],
