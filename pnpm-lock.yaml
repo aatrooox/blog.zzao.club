@@ -2158,7 +2158,7 @@ packages:
       '@bomb.sh/tab': 0.0.12(citty@0.2.1)
       '@clack/prompts': 1.0.1
       '@nuxt/schema': 4.0.3
-      c12: 3.3.3(magicast@0.3.5)
+      c12: 3.3.3(magicast@0.5.2)
       citty: 0.2.1
       confbox: 0.2.4
       consola: 3.4.2
@@ -2208,13 +2208,13 @@ packages:
       sqlite3:
         optional: true
     dependencies:
-      '@nuxt/kit': 3.21.1(magicast@0.3.5)
+      '@nuxt/kit': 3.21.1
       '@nuxtjs/mdc': 0.17.0
       '@shikijs/langs': 3.23.0
       '@sqlite.org/sqlite-wasm': 3.50.1-build1
       '@webcontainer/env': 1.1.1
       better-sqlite3: 12.6.2
-      c12: 3.3.3(magicast@0.3.5)
+      c12: 3.3.3(magicast@0.5.2)
       chokidar: 4.0.3
       consola: 3.4.2
       db0: 0.3.4(better-sqlite3@12.6.2)(drizzle-orm@0.44.7)(mysql2@3.18.0)
@@ -2273,6 +2273,18 @@ packages:
       vite: '>=6.0'
     dependencies:
       '@nuxt/kit': 3.21.1(magicast@0.3.5)
+      execa: 8.0.1
+      vite: 7.3.1(@types/node@25.3.0)(jiti@2.6.1)
+    transitivePeerDependencies:
+      - magicast
+    dev: false
+
+  /@nuxt/devtools-kit@2.7.0(vite@7.3.1):
+    resolution: {integrity: sha512-MIJdah6CF6YOW2GhfKnb8Sivu6HpcQheqdjOlZqShBr+1DyjtKQbAKSCAyKPaoIzZP4QOo2SmTFV6aN8jBeEIQ==}
+    peerDependencies:
+      vite: '>=6.0'
+    dependencies:
+      '@nuxt/kit': 3.21.1
       execa: 8.0.1
       vite: 7.3.1(@types/node@25.3.0)(jiti@2.6.1)
     transitivePeerDependencies:
@@ -2416,10 +2428,10 @@ packages:
         optional: true
     dependencies:
       '@eslint/config-inspector': 1.4.2(eslint@9.39.3)
-      '@nuxt/devtools-kit': 2.7.0(magicast@0.3.5)(vite@7.3.1)
+      '@nuxt/devtools-kit': 2.7.0(vite@7.3.1)
       '@nuxt/eslint-config': 1.4.1(@typescript-eslint/utils@8.56.1)(@vue/compiler-sfc@3.5.29)(eslint-plugin-format@1.5.0)(eslint@9.39.3)(typescript@5.9.3)
       '@nuxt/eslint-plugin': 1.4.1(eslint@9.39.3)(typescript@5.9.3)
-      '@nuxt/kit': 3.21.1(magicast@0.3.5)
+      '@nuxt/kit': 3.21.1
       chokidar: 4.0.3
       eslint: 9.39.3
       eslint-flat-config-utils: 2.1.4
@@ -2491,8 +2503,8 @@ packages:
       '@iconify/types': 2.0.0
       '@iconify/utils': 2.3.0
       '@iconify/vue': 5.0.0(vue@3.5.29)
-      '@nuxt/devtools-kit': 2.7.0(magicast@0.3.5)(vite@7.3.1)
-      '@nuxt/kit': 3.21.1(magicast@0.3.5)
+      '@nuxt/devtools-kit': 2.7.0(vite@7.3.1)
+      '@nuxt/kit': 3.21.1
       consola: 3.4.2
       local-pkg: 1.1.2
       mlly: 1.8.0
@@ -2535,7 +2547,7 @@ packages:
     resolution: {integrity: sha512-4kzhvb2tJfxMsa/JZeYn1sMiGbx2J/S6BQrQSdXNsHgSvywGVkFhTiQGjoP6O49EsXyAouJrer47hMeBcTcfXQ==}
     engines: {node: '>=18.20.6'}
     dependencies:
-      '@nuxt/kit': 3.21.1(magicast@0.3.5)
+      '@nuxt/kit': 3.21.1
       consola: 3.4.2
       defu: 6.1.4
       h3: 1.15.5
@@ -2570,6 +2582,34 @@ packages:
       - uploadthing
     dev: false
 
+  /@nuxt/kit@3.21.1:
+    resolution: {integrity: sha512-QORZRjcuTKgo++XP1Pc2c2gqwRydkaExrIRfRI9vFsPA3AzuHVn5Gfmbv1ic8y34e78mr5DMBvJlelUaeOuajg==}
+    engines: {node: '>=18.12.0'}
+    dependencies:
+      c12: 3.3.3(magicast@0.5.2)
+      consola: 3.4.2
+      defu: 6.1.4
+      destr: 2.0.5
+      errx: 0.1.0
+      exsolve: 1.0.8
+      ignore: 7.0.5
+      jiti: 2.6.1
+      klona: 2.0.6
+      knitwork: 1.3.0
+      mlly: 1.8.0
+      ohash: 2.0.11
+      pathe: 2.0.3
+      pkg-types: 2.3.0
+      rc9: 3.0.0
+      scule: 1.3.0
+      semver: 7.7.4
+      tinyglobby: 0.2.15
+      ufo: 1.6.3
+      unctx: 2.5.0
+      untyped: 2.0.0
+    transitivePeerDependencies:
+      - magicast
+
   /@nuxt/kit@3.21.1(magicast@0.3.5):
     resolution: {integrity: sha512-QORZRjcuTKgo++XP1Pc2c2gqwRydkaExrIRfRI9vFsPA3AzuHVn5Gfmbv1ic8y34e78mr5DMBvJlelUaeOuajg==}
     engines: {node: '>=18.12.0'}
@@ -2597,12 +2637,13 @@ packages:
       untyped: 2.0.0
     transitivePeerDependencies:
       - magicast
+    dev: false
 
   /@nuxt/kit@4.0.3:
     resolution: {integrity: sha512-9+lwvP4n8KhO91azoebO0o39smESGzEV4HU6nef9HIFyt04YwlVMY37Pk63GgZn0WhWVjyPWcQWs0rUdZUYcPw==}
     engines: {node: '>=18.12.0'}
     dependencies:
-      c12: 3.3.3(magicast@0.3.5)
+      c12: 3.3.3(magicast@0.5.2)
       consola: 3.4.2
       defu: 6.1.4
       destr: 2.0.5
@@ -2631,7 +2672,7 @@ packages:
     resolution: {integrity: sha512-UjBFt72dnpc+83BV3OIbCT0YHLevJtgJCHpxMX0YRKWLDhhbcDdUse87GtsQBrjvOzK7WUNUYLDS/hQLYev5rA==}
     engines: {node: '>=18.12.0'}
     dependencies:
-      c12: 3.3.3(magicast@0.3.5)
+      c12: 3.3.3(magicast@0.5.2)
       consola: 3.4.2
       defu: 6.1.4
       destr: 2.0.5
@@ -2902,7 +2943,7 @@ packages:
   /@nuxtjs/color-mode@3.5.2:
     resolution: {integrity: sha512-cC6RfgZh3guHBMLLjrBB2Uti5eUoGM9KyauOaYS9ETmxNWBMTvpgjvSiSJp1OFljIXPIqVTJ3xtJpSNZiO3ZaA==}
     dependencies:
-      '@nuxt/kit': 3.21.1(magicast@0.3.5)
+      '@nuxt/kit': 3.21.1
       pathe: 1.1.2
       pkg-types: 1.3.1
       semver: 7.7.4
@@ -2913,7 +2954,7 @@ packages:
   /@nuxtjs/mdc@0.17.0:
     resolution: {integrity: sha512-5HFJ2Xatl4oSfEZuYRJhzYhVHNvb31xc9Tu/qfXpRIWeQsQphqjaV3wWB5VStZYEHpTw1i6Hzyz/ojQZVl4qPg==}
     dependencies:
-      '@nuxt/kit': 3.21.1(magicast@0.3.5)
+      '@nuxt/kit': 3.21.1
       '@shikijs/langs': 3.23.0
       '@shikijs/themes': 3.23.0
       '@shikijs/transformers': 3.23.0
@@ -3688,6 +3729,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     dependencies:
       is-glob: 4.0.3
+      napi-wasm: 1.1.3
       picomatch: 4.0.3
     dev: false
     bundledDependencies:
@@ -3755,7 +3797,7 @@ packages:
     peerDependencies:
       pinia: ^3.0.1
     dependencies:
-      '@nuxt/kit': 3.21.1(magicast@0.3.5)
+      '@nuxt/kit': 3.21.1
       pinia: 3.0.4(typescript@5.9.3)(vue@3.5.29)
     transitivePeerDependencies:
       - magicast
@@ -5768,7 +5810,7 @@ packages:
     peerDependencies:
       nuxt: ^3.0.0
     dependencies:
-      '@nuxt/kit': 3.21.1(magicast@0.3.5)
+      '@nuxt/kit': 3.21.1
       '@vueuse/core': 12.7.0(typescript@5.9.3)
       '@vueuse/metadata': 12.7.0
       local-pkg: 1.1.2
@@ -6197,6 +6239,7 @@ packages:
       perfect-debounce: 2.1.0
       pkg-types: 2.3.0
       rc9: 2.1.2
+    dev: false
 
   /c12@3.3.3(magicast@0.5.2):
     resolution: {integrity: sha512-750hTRvgBy5kcMNPdh95Qo+XUBeGo8C7nsKSmedDmaQI+E0r82DwHeM6vBewDe4rGFbnxoa4V9pw+sPh5+Iz8Q==}
@@ -6219,7 +6262,6 @@ packages:
       perfect-debounce: 2.1.0
       pkg-types: 2.3.0
       rc9: 2.1.2
-    dev: false
 
   /cac@6.7.14:
     resolution: {integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==}
@@ -9821,6 +9863,7 @@ packages:
       '@babel/parser': 7.29.0
       '@babel/types': 7.29.0
       source-map-js: 1.2.1
+    dev: false
 
   /magicast@0.5.2:
     resolution: {integrity: sha512-E3ZJh4J3S9KfwdjZhe2afj6R9lGIN5Pher1pF39UGrXRqq/VDaGVIGN13BjHd2u8B61hArAGOnso7nBOouW3TQ==}
@@ -9828,7 +9871,6 @@ packages:
       '@babel/parser': 7.29.0
       '@babel/types': 7.29.0
       source-map-js: 1.2.1
-    dev: false
 
   /markdown-it@14.1.1:
     resolution: {integrity: sha512-BuU2qnTti9YKgK5N+IeMubp14ZUKUUw7yeJbkjtosvHiP0AZ5c8IAgEMk79D0eC8F23r4Ac/q8cAIFdm2FtyoA==}
@@ -10554,6 +10596,10 @@ packages:
     hasBin: true
     dev: false
 
+  /napi-wasm@1.1.3:
+    resolution: {integrity: sha512-h/4nMGsHjZDCYmQVNODIrYACVJ+I9KItbG+0si6W/jSjdA9JbWDoU4LLeMXVcEQGHjttI2tuXqDrbGF7qkUHHg==}
+    dev: false
+
   /natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
@@ -10841,7 +10887,7 @@ packages:
     peerDependencies:
       nodemailer: ^7.0.6
     dependencies:
-      '@nuxt/kit': 3.21.1(magicast@0.3.5)
+      '@nuxt/kit': 3.21.1
       '@types/nodemailer': 7.0.11
       nodemailer: 6.10.1
     transitivePeerDependencies:
@@ -10902,7 +10948,7 @@ packages:
       '@types/node': 25.3.0
       '@unhead/vue': 2.1.7(vue@3.5.29)
       '@vue/shared': 3.5.29
-      c12: 3.3.3(magicast@0.3.5)
+      c12: 3.3.3(magicast@0.5.2)
       chokidar: 4.0.3
       compatx: 0.2.0
       consola: 3.4.2
@@ -12646,7 +12692,7 @@ packages:
   /shadcn-nuxt@2.0.1:
     resolution: {integrity: sha512-V/dGlCig45B+v+peC0iYm8lcqjnjcKgJA42lmxRujPDK7CSNIjMTnM8+dHY8pvsC8KE52gw7uStmu4TfebQ18w==}
     dependencies:
-      '@nuxt/kit': 3.21.1(magicast@0.3.5)
+      '@nuxt/kit': 3.21.1
       '@oxc-parser/wasm': 0.50.0
       typescript: 5.6.3
     transitivePeerDependencies:
