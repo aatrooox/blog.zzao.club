@@ -1,6 +1,29 @@
 # Changelog
 
 
+## v3.1.4
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.3...v3.1.4)
+
+### 🚀 Enhancements
+
+- Show author avatar/name on memo pages; fix unclosed divs; add creator docs ([7a5f0c9](https://github.com/aatrooox/blog.zzao.club/commit/7a5f0c9))
+- **admin:** Creators + pat issuance ([bfb92ad](https://github.com/aatrooox/blog.zzao.club/commit/bfb92ad))
+
+### 📖 Documentation
+
+- 文章更新 ([06a9a3b](https://github.com/aatrooox/blog.zzao.club/commit/06a9a3b))
+- 文章更新 ([9873610](https://github.com/aatrooox/blog.zzao.club/commit/9873610))
+- 文章更新 ([20f847f](https://github.com/aatrooox/blog.zzao.club/commit/20f847f))
+
+### 🏡 Chore
+
+- Jinx 更换头像 ([9fe2755](https://github.com/aatrooox/blog.zzao.club/commit/9fe2755))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.1.3
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.2...v3.1.3)
