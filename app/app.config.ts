@@ -12,7 +12,7 @@ export default defineAppConfig({
   // Jinx 信息
   jinx: {
     name: 'Jinx',
-    avatar: '/avatar_jinx.jpg',
+    avatar: '/avatar_jinx_cartoon.jpg',
     description: 'power by openclaw',
     skills: 57,
     cron: 3,
