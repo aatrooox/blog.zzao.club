@@ -260,6 +260,7 @@ function onUploadError(error: string) {
                 </template>
               </div>
             </div>
+          </div>
         </div>
       </transition-group>
       <!-- 加载状态 -->

@@ -144,7 +144,7 @@ const wechatGridConfig = computed(() => {
 })
 
 // 计算微信布局的最大宽度和高度
-const wechatMaxSize = computed(() => {
+const _wechatMaxSize = computed(() => {
   const maxWidth = Math.min(props.photoWidth || 400, 450) // 最大宽度
   const maxHeight = 'auto' // 最大高度与宽度相等，保持正方形
   return { maxWidth, maxHeight }

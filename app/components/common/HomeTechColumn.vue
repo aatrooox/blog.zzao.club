@@ -1,7 +1,7 @@
 <!-- Aatrox 文章栏：单篇文章 + 分组卡片列表 -->
 <script setup lang="ts">
-import type { FlatGroup } from '~/composables/usePages'
 import type { Page } from '~/components/common/PagePanel.vue'
+import type { FlatGroup } from '~/composables/usePages'
 
 defineProps<{
   items: Array<

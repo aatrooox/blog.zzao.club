@@ -94,6 +94,7 @@ function firstPhoto(memo: BlogMemoWithUser): string | null {
             >
               {{ memo.tags.map(t => `#${t.tagName}`).join(' ') }}
             </span>
+          </div>
         </div>
       </NuxtLink>
     </div>

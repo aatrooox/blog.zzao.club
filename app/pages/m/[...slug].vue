@@ -175,6 +175,19 @@ function handleTagClick(tagName: string) {
                 <AppFromTag :from="memo.from || 'blog'" />
               </div>
             </div>
+            <!-- 作者信息 -->
+            <div v-if="memo.user_info" class="flex items-center gap-2 mb-4">
+              <img
+                v-if="memo.user_info.avatarUrl"
+                :src="memo.user_info.avatarUrl"
+                :alt="memo.user_info.nickname || memo.user_info.username"
+                class="w-8 h-8 rounded-full object-cover"
+              >
+              <span v-else class="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-sm font-medium text-zinc-600 dark:text-zinc-300">
+                {{ (memo.user_info.nickname || memo.user_info.username || '?')[0].toUpperCase() }}
+              </span>
+              <span class="font-semibold text-gray-900 dark:text-gray-100 text-sm">{{ memo.user_info.nickname || memo.user_info.username }}</span>
+            </div>
 
             <div v-if="memo.tags && memo.tags.length > 0" class="flex flex-wrap gap-2 mb-4">
               <span
