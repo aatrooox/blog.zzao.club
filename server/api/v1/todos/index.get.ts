@@ -1,6 +1,6 @@
 import { and, count, desc, eq, inArray, like, or, sql } from 'drizzle-orm'
 import { db } from '~~/lib/drizzle'
-import { todoItems, todoTagRelations, todoTags, users } from '~~/lib/drizzle/schema'
+import { todoItems, todoParticipants, todoTagRelations, todoTags, users } from '~~/lib/drizzle/schema'
 import { paginationSchema, withPagination } from '~~/server/utils/pagination'
 
 export default defineStandardResponseHandler(async (event) => {
@@ -113,6 +113,17 @@ export default defineStandardResponseHandler(async (event) => {
       FROM ${todoTagRelations} ttr
       LEFT JOIN ${todoTags} tt ON ttr.tag_id = tt.id
       WHERE ttr.todo_item_id = ${todoItems.id}
+    )`,
+    participants: sql`(
+      SELECT CASE
+        WHEN COUNT(tp.id) = 0 THEN JSON_ARRAY()
+        ELSE JSON_ARRAYAGG(
+          JSON_OBJECT('userId', u.id, 'username', u.username, 'nickname', u.nickname, 'avatarUrl', u.avatar_url, 'role', tp.role)
+        )
+      END
+      FROM ${todoParticipants} tp
+      LEFT JOIN ${users} u ON tp.user_id = u.id
+      WHERE tp.todo_item_id = ${todoItems.id} AND tp.status = 'active'
     )`,
   })
     .from(todoItems)

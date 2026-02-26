@@ -53,7 +53,12 @@ export default defineStandardResponseHandler(async (event) => {
     for (const tagId of tagIds) {
       const exists = existingTags.find(t => t.id === tagId)
       if (exists) {
-        await db.insert(todoTagRelations).values({ todoItemId: todoId, tagId }).catch(() => {})
+        try {
+          await db.insert(todoTagRelations).values({ todoItemId: todoId, tagId })
+        }
+        catch (e) {
+          console.warn('[todos] insert tag relation failed', { todoItemId: todoId, tagId, e })
+        }
       }
     }
   }
@@ -67,12 +72,17 @@ export default defineStandardResponseHandler(async (event) => {
   })
 
   // 创建者自动成为 reporter + watcher
-  await db.insert(todoParticipants).values({
-    todoItemId: todoId,
-    userId: event.context.userId,
-    role: 'reporter',
-    status: 'active',
-  }).catch(() => {})
+  try {
+    await db.insert(todoParticipants).values({
+      todoItemId: todoId,
+      userId: event.context.userId,
+      role: 'reporter',
+      status: 'active',
+    })
+  }
+  catch (e) {
+    console.warn('[todos] insert participant failed', { todoItemId: todoId, userId: event.context.userId, e })
+  }
 
   // 获取并返回创建的数据
   const [created] = await db.select().from(todoItems).where(eq(todoItems.id, todoId)).limit(1)

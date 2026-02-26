@@ -98,7 +98,12 @@ export default defineStandardResponseHandler(async (event) => {
       await db.delete(todoTagRelations).where(eq(todoTagRelations.todoItemId, id))
       // 插入新标签关系
       for (const tagId of tagIds) {
-        await db.insert(todoTagRelations).values({ todoItemId: id, tagId }).catch(() => {})
+        try {
+          await db.insert(todoTagRelations).values({ todoItemId: id, tagId })
+        }
+        catch (e) {
+          console.warn('[todos] insert tag relation failed', { todoItemId: id, tagId, e })
+        }
       }
       events.push({ eventType: 'tagged', payload: { tagIds } })
     }
