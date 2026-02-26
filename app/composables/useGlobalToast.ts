@@ -1,17 +1,12 @@
+import type { ExternalToast } from 'vue-sonner'
 import { ref } from 'vue'
 
+type ToastType = 'success' | 'info' | 'warning' | 'error' | 'default'
+
 interface ToastMessageOptions {
-  type?: 'success' | 'info' | 'contrast' | 'warning' | 'error' | 'promise'
+  type?: ToastType
   message: string
-  options?: {
-    description?: string
-    action?: () => void
-    class?: string
-    style?: Record<string, string>
-    loading?: string
-    success?: () => void
-    error?: () => void
-  }
+  options?: ExternalToast
 }
 interface ToastState {
   messages: ToastMessageOptions[]
@@ -26,43 +21,35 @@ export function useGlobalToast() {
     toastState.value.messages.push(option)
   }
 
-  const warn = (message: string, options?: ToastMessageOptions) => {
+  const warn = (message: string, options?: ExternalToast) => {
     toastState.value.messages.push({
       type: 'warning',
       message,
-      ...options,
+      options,
     })
   }
 
-  const success = (message: string, options?: ToastMessageOptions) => {
+  const success = (message: string, options?: ExternalToast) => {
     toastState.value.messages.push({
       type: 'success',
       message,
-      ...options,
+      options,
     })
   }
 
-  const error = (message: string, options?: ToastMessageOptions) => {
+  const error = (message: string, options?: ExternalToast) => {
     toastState.value.messages.push({
       type: 'error',
       message,
-      ...options,
+      options,
     })
   }
 
-  const contrast = (message: string, options?: ToastMessageOptions) => {
-    toastState.value.messages.push({
-      type: 'contrast',
-      message,
-      ...options,
-    })
-  }
-
-  const info = (message: string, options?: ToastMessageOptions) => {
+  const info = (message: string, options?: ExternalToast) => {
     toastState.value.messages.push({
       type: 'info',
       message,
-      ...options,
+      options,
     })
   }
 
@@ -77,7 +64,6 @@ export function useGlobalToast() {
     error,
     warn,
     info,
-    contrast,
     clear,
   }
 }

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { ExternalToast } from 'vue-sonner'
 import { toast, Toaster } from 'vue-sonner'
 
 const globalToast = useGlobalToast()
@@ -6,24 +7,22 @@ const globalToast = useGlobalToast()
 watch(() => globalToast.toastState.value.messages, (messages) => {
   if (messages.length > 0) {
     messages.forEach((message) => {
+      const options: ExternalToast | undefined = message.options
       switch (message.type) {
         case 'success':
-          toast.success(message.message, message.options as any)
+          toast.success(message.message, options)
           break
         case 'error':
-          toast.error(message.message, message.options as any)
+          toast.error(message.message, options)
           break
         case 'info':
-          toast.info(message.message, message.options as any)
+          toast.info(message.message, options)
           break
         case 'warning':
-          toast.warning(message.message, message.options as any)
-          break
-        case 'promise':
-          toast.promise(message.options as any)
+          toast.warning(message.message, options)
           break
         default:
-          toast(message.message, message.options as any)
+          toast(message.message, options)
       }
     })
     globalToast.clear()
@@ -32,8 +31,10 @@ watch(() => globalToast.toastState.value.messages, (messages) => {
 </script>
 
 <template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
-  <Toaster position="top-right" rich-colors />
+  <UApp>
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
+    <Toaster position="top-right" rich-colors />
+  </UApp>
 </template>
