@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.1.5
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.4...v3.1.5)
+
+### 🚀 Enhancements
+
+- **memo:** Allow owner or superAdmin to delete memo ([f5e45eb](https://github.com/aatrooox/blog.zzao.club/commit/f5e45eb))
+
+### 🏡 Chore
+
+- Sync lockfile and opencode notes ([5587734](https://github.com/aatrooox/blog.zzao.club/commit/5587734))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.1.4
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.3...v3.1.4)
