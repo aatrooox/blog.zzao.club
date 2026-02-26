@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.1.6
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.5...v3.1.6)
+
+### 🩹 Fixes
+
+- **memo:** Always derive author from auth context, not client-provided user_id ([c0ee5db](https://github.com/aatrooox/blog.zzao.club/commit/c0ee5db))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.1.5
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.4...v3.1.5)
