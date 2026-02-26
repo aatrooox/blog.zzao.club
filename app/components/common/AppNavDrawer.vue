@@ -21,6 +21,11 @@ const items = ref([
     route: '/imgx',
   },
   {
+    label: '待办',
+    icon: 'twemoji:memo',
+    route: '/issues',
+  },
+  {
     label: '友链',
     icon: 'twemoji:clinking-beer-mugs',
     route: '/links',

@@ -21,6 +21,11 @@ export const useAppNavigation = () => {
     //   icon: 'pixelarticons:radio-signal',
     // },
     {
+      name: '待办',
+      path: '/issues',
+      icon: 'i-lucide-list-todo',
+    },
+    {
       name: '友链',
       path: '/links',
       icon: 'pixelarticons:mood-neutral',
