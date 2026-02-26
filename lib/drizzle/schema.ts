@@ -3,6 +3,7 @@ import {
   boolean,
   datetime,
   decimal,
+  index,
   int,
   mediumtext,
   mysqlTable,
@@ -258,5 +259,149 @@ export const memoTagRelationsRelations = relations(memoTagRelations, ({ one }) =
   memo: one(blogMemos, {
     fields: [memoTagRelations.memoId],
     references: [blogMemos.id],
+  }),
+}))
+
+// ─── Todo / Issue MVP ──────────────────────────────────────────────────────
+
+// Todo 预设标签表（管理员维护，用户只能选用）
+export const todoTags = mysqlTable('blog_todo_tag', {
+  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
+  name: varchar('name', { length: 100 }).notNull().unique(),
+  color: varchar('color', { length: 50 }).default('neutral'), // UI 颜色 hint
+  createdAt: datetime('created_at').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+})
+
+// Todo 主体表
+export const todoItems = mysqlTable('blog_todo_item', {
+  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
+  title: varchar('title', { length: 500 }).notNull(),
+  description: mediumtext('description'),
+  status: varchar('status', { length: 50 }).notNull().default('open'), // open|in_progress|blocked|done|canceled
+  visibility: varchar('visibility', { length: 50 }).notNull().default('public'), // public|private
+  reporterUserId: varchar('reporter_user_id', { length: 255 }).notNull(),
+  // 目标关联（可选）
+  targetType: varchar('target_type', { length: 50 }).default('none'), // none|url|project|post|note|other
+  targetRef: varchar('target_ref', { length: 1000 }),
+  targetTitle: varchar('target_title', { length: 500 }),
+  dueAt: datetime('due_at'),
+  completedAt: datetime('completed_at'),
+  createdAt: datetime('created_at').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  updatedAt: datetime('updated_at').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => new Date()),
+}, table => ({
+  statusIdx: index('todo_item_status_idx').on(table.status),
+  visibilityIdx: index('todo_item_visibility_idx').on(table.visibility),
+  reporterIdx: index('todo_item_reporter_idx').on(table.reporterUserId),
+  updatedAtIdx: index('todo_item_updated_at_idx').on(table.updatedAt),
+}))
+
+// Todo 标签关系表（多对多）
+export const todoTagRelations = mysqlTable('blog_todo_tag_relation', {
+  todoItemId: varchar('todo_item_id', { length: 255 }).notNull(),
+  tagId: varchar('tag_id', { length: 255 }).notNull(),
+  createdAt: datetime('created_at').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+}, table => ({
+  pk: primaryKey({ columns: [table.todoItemId, table.tagId] }),
+}))
+
+// Todo 评论表
+export const todoComments = mysqlTable('blog_todo_comment', {
+  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
+  todoItemId: varchar('todo_item_id', { length: 255 }).notNull(),
+  authorUserId: varchar('author_user_id', { length: 255 }).notNull(),
+  content: mediumtext('content').notNull(),
+  createdAt: datetime('created_at').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  updatedAt: datetime('updated_at').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => new Date()),
+}, table => ({
+  todoItemIdx: index('todo_comment_todo_item_idx').on(table.todoItemId),
+}))
+
+// Todo 事件日志表（审计 + 增量同步）
+export const todoEvents = mysqlTable('blog_todo_event', {
+  id: int('id').primaryKey().autoincrement(), // 单调递增，用作 cursor
+  todoItemId: varchar('todo_item_id', { length: 255 }).notNull(),
+  actorUserId: varchar('actor_user_id', { length: 255 }).notNull(),
+  eventType: varchar('event_type', { length: 100 }).notNull(), // created|edited|commented|status_changed|visibility_changed|tagged
+  payload: json('payload').$type<Record<string, any>>().default({}),
+  createdAt: datetime('created_at').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+}, table => ({
+  todoItemIdx: index('todo_event_todo_item_idx').on(table.todoItemId),
+  cursorIdx: index('todo_event_cursor_idx').on(table.id),
+  createdAtIdx: index('todo_event_created_at_idx').on(table.createdAt),
+}))
+
+// Todo 参与者表（多用户关联，支持角色扩展）
+export const todoParticipants = mysqlTable('blog_todo_participant', {
+  id: varchar('id', { length: 255 }).primaryKey().$defaultFn(() => crypto.randomUUID()),
+  todoItemId: varchar('todo_item_id', { length: 255 }).notNull(),
+  userId: varchar('user_id', { length: 255 }).notNull(),
+  role: varchar('role', { length: 50 }).notNull().default('watcher'), // owner|reporter|assignee|participant|watcher
+  status: varchar('status', { length: 50 }).notNull().default('active'), // active|muted|left
+  createdAt: datetime('created_at').notNull().default(sql`(CURRENT_TIMESTAMP)`),
+  updatedAt: datetime('updated_at').notNull().default(sql`(CURRENT_TIMESTAMP)`).$onUpdateFn(() => new Date()),
+}, table => ({
+  todoUserUnique: unique().on(table.todoItemId, table.userId),
+  todoItemIdx: index('todo_participant_todo_item_idx').on(table.todoItemId),
+  userIdx: index('todo_participant_user_idx').on(table.userId),
+}))
+
+// ─── Todo Relations ──────────────────────────────────────────────────────────
+
+export const todoTagsRelations = relations(todoTags, ({ many }) => ({
+  todoRelations: many(todoTagRelations),
+}))
+
+export const todoItemsRelations = relations(todoItems, ({ one, many }) => ({
+  reporter: one(users, {
+    fields: [todoItems.reporterUserId],
+    references: [users.id],
+  }),
+  tags: many(todoTagRelations),
+  comments: many(todoComments),
+  events: many(todoEvents),
+  participants: many(todoParticipants),
+}))
+
+export const todoTagRelationsRelations = relations(todoTagRelations, ({ one }) => ({
+  todoItem: one(todoItems, {
+    fields: [todoTagRelations.todoItemId],
+    references: [todoItems.id],
+  }),
+  tag: one(todoTags, {
+    fields: [todoTagRelations.tagId],
+    references: [todoTags.id],
+  }),
+}))
+
+export const todoCommentsRelations = relations(todoComments, ({ one }) => ({
+  todoItem: one(todoItems, {
+    fields: [todoComments.todoItemId],
+    references: [todoItems.id],
+  }),
+  author: one(users, {
+    fields: [todoComments.authorUserId],
+    references: [users.id],
+  }),
+}))
+
+export const todoEventsRelations = relations(todoEvents, ({ one }) => ({
+  todoItem: one(todoItems, {
+    fields: [todoEvents.todoItemId],
+    references: [todoItems.id],
+  }),
+  actor: one(users, {
+    fields: [todoEvents.actorUserId],
+    references: [users.id],
+  }),
+}))
+
+export const todoParticipantsRelations = relations(todoParticipants, ({ one }) => ({
+  todoItem: one(todoItems, {
+    fields: [todoParticipants.todoItemId],
+    references: [todoItems.id],
+  }),
+  user: one(users, {
+    fields: [todoParticipants.userId],
+    references: [users.id],
   }),
 }))
