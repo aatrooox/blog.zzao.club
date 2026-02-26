@@ -34,6 +34,7 @@ declare module 'nuxt/app' {
       post: <T = ApiResponse>(url: string, data?: any, options?: UseFetchOptions<T>) => Promise<T>
       put: <T = ApiResponse>(url: string, data?: any, options?: UseFetchOptions<T>) => Promise<T>
       delete: <T = ApiResponse>(url: string, data?: any, options?: UseFetchOptions<T>) => Promise<T>
+      patch: <T = ApiResponse>(url: string, data?: any, options?: UseFetchOptions<T>) => Promise<T>
     }
   }
 }

@@ -29,10 +29,15 @@ export default function useDayjs() {
     return dayjs(updateTime).locale('zh-cn').fromNow()
   }
 
+  const formatDateTime = (date: string | Date) => {
+    return dayjs(date ?? new Date()).format('YYYY-MM-DD HH:mm')
+  }
+
   return {
     checkDate,
     checkUpdate,
     formatDate,
+    formatDateTime,
     updateDateFromNow,
     formatFullDate,
   }
