@@ -17,7 +17,8 @@ const {
   placeholder = '说点什么吧！',
   initialValue = '',
   tags = [],
-} = defineProps<{ type?: string, target?: string, showHello?: boolean, submitBtnText?: string, cancelBtnText?: string, inputTip?: string, placeholder?: string, initialValue?: string, tags?: string[] }>()
+  maxLength = 512,
+} = defineProps<{ type?: string, target?: string, showHello?: boolean, submitBtnText?: string, cancelBtnText?: string, inputTip?: string, placeholder?: string, initialValue?: string, tags?: string[], maxLength?: number }>()
 const emit = defineEmits(['valueChange', 'send', 'cancel'])
 const userStore = useUser()
 // const emojiPopover = ref(null)
@@ -186,7 +187,7 @@ defineExpose({ clear })
       <Textarea
         id="over_label"
         ref="commentInputRef" v-model="comment" class="w-full min-h-[100px] p-3 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" auto-resize :rows="rows"
-        maxlength="512" :placeholder="placeholder" @value-change="emit('valueChange', comment)" @click.stop
+        :maxlength="maxLength" :placeholder="placeholder" @value-change="emit('valueChange', comment)" @click.stop
       />
       <div class="flex flex-col md:flex-row justify-between items-center mt-2 gap-2">
         <div class="flex items-center gap-2">
