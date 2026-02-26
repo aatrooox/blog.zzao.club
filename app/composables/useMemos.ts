@@ -6,7 +6,7 @@ export default function useMemos(options?: { size?: number }) {
   const userStore = useUser()
   const toast = useGlobalToast()
   const config = useRuntimeConfig()
-  const memos = useState<BlogMemosWithUser>('memos', () => [])
+  const memos = useState<BlogMemosWithUser>(`memos-${options?.size ?? 15}`, () => [])
 
   const pageSize = options?.size ?? 15
   const currentPage = ref(1)
@@ -16,6 +16,7 @@ export default function useMemos(options?: { size?: number }) {
   const { data, status, refresh } = useFetch<ApiResponse<PaginatedData<BlogMemoWithUser>>>(
     '/api/v1/memo/list',
     {
+      key: `memo-list-${pageSize}`,
       baseURL: import.meta.server ? (config.public.apiBase as string) : '',
       query: computed(() => ({
         page: currentPage.value,
@@ -78,13 +79,12 @@ export default function useMemos(options?: { size?: number }) {
         content,
         tags,
         photos,
-        user_id: userStore.user.value?.id,
       })
       if (error) {
         // toast.error('出错了，再试一下')
         return false
       }
-      getMemos()
+      await getMemos()
       toast.success('已发送一条Memo')
       return true
     }

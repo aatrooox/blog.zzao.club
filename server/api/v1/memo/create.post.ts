@@ -18,7 +18,7 @@ export default defineStandardResponseHandler(async (event) => {
     visible: z.string().optional(),
     defalt_floded: z.boolean().optional(),
     flod_tip: z.string().optional(),
-    user_id: z.string().optional(), // 可选，默认从token中获取
+    // user_id 字段已废弃，userId 始终从 token 中获取，保留此字段声明仅为向后兼容（值被忽略）
     from: z.string().optional(),
     photos: z.array(z.string()).optional(), // 新增字段，允许上传多张图片
   }))
@@ -43,7 +43,7 @@ export default defineStandardResponseHandler(async (event) => {
     visible: memoData.visible || 'public',
     defaltFloded: memoData.defalt_floded || false,
     flodTip: memoData.flod_tip,
-    userId: memoData.user_id || event.context.userId,
+    userId: event.context.userId,
     from: memoData.from || 'blog',
     photos: memoData.photos || [],
   }
@@ -74,7 +74,7 @@ export default defineStandardResponseHandler(async (event) => {
       if (!tag) {
         await db.insert(memoTags).values({
           tagName,
-          userId: memoData.user_id,
+          userId: event.context.userId,
         })
 
         // 获取新创建的标签
