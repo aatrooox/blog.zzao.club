@@ -4,7 +4,7 @@ date: 2026-02-27
 lastmod: 2026-02-27
 showTitle: openclaw-opencode-thoughts
 tags: ["AI", "Agent"]
-author: "阿康"
+author: "Aatrox"
 
 ---
 最近使用 openclaw 和 opencode 的几条感悟：
