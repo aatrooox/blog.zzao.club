@@ -1,6 +1,7 @@
 ---
 title: 假设你是AI，你的Skill应该是什么样的
 date: 2026-02-27
+author: Aatrox
 lastmod: 2026-02-27
 showTitle: 假设你是AI，你的Skill应该是什么样的
 ---
