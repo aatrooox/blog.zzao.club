@@ -260,7 +260,7 @@ openclaw agents add writer --workspace %USERPROFILE%\.openclaw\agents\writer\wor
 
 完整教程在这里：
 
-[给 OpenClaw 新增一个 Agent（以飞书机器人为例）](/zzao/openclaw-new-agent-feishu)
+[给 OpenClaw 新增一个 Agent（以飞书机器人为例）](/post/zzao/openclaw-new-agent-feishu)
 
 这里只说最关键的。
 
