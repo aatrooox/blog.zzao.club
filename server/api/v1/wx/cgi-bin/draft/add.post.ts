@@ -27,8 +27,14 @@ interface Article {
   thumb_media_id?: string
   /** 是否打开评论 0=不打开 1=打开，默认打开 */
   need_open_comment?: number
+  /** 是否仅粉丝可评论 0=所有人可评论 1=仅粉丝可评论，默认 0 */
+  only_fans_can_comment?: number
   /** 图片信息，article_type=newspic 时必填 */
   image_info?: ImageInfo
+  /** 封面裁剪为 2.35:1 规格的坐标，格式 X1_Y1_X2_Y2，仅 article_type=news 时生效 */
+  pic_crop_235_1?: string
+  /** 封面裁剪为 1:1 规格的坐标，格式 X1_Y1_X2_Y2，仅 article_type=news 时生效 */
+  pic_crop_1_1?: string
 }
 
 interface DraftAddRequest {
@@ -140,6 +146,19 @@ export default defineStandardResponseHandler(async (event) => {
     // 设置 need_open_comment 默认值
     if (article.need_open_comment === undefined) {
       article.need_open_comment = 1
+    }
+    if (article.only_fans_can_comment === undefined) {
+      article.only_fans_can_comment = 0
+    }
+
+    // 设置封面裁剪坐标默认值（仅 news 类型）
+    if (article.article_type === 'news') {
+      if (article.pic_crop_235_1 === undefined) {
+        article.pic_crop_235_1 = '0_0_0.701493_1'
+      }
+      if (article.pic_crop_1_1 === undefined) {
+        article.pic_crop_1_1 = '0.701493_0_1_1'
+      }
     }
   }
 
