@@ -1,6 +1,53 @@
 # Changelog
 
 
+## v3.1.7
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.6...v3.1.7)
+
+### 🚀 Enhancements
+
+- **todos:** Add issues/todo MVP (db+api+ui) ([c9dea27](https://github.com/aatrooox/blog.zzao.club/commit/c9dea27))
+- **nav:** Add issues/todo entry to navigation and drawer ([aa7a057](https://github.com/aatrooox/blog.zzao.club/commit/aa7a057))
+- **issues:** Revamp issues pages UI and add maxLength prop to AppCommentInput ([708000e](https://github.com/aatrooox/blog.zzao.club/commit/708000e))
+- 微信草稿接口新增封面裁剪坐标和粉丝评论参数 ([a2771d7](https://github.com/aatrooox/blog.zzao.club/commit/a2771d7))
+
+### 🩹 Fixes
+
+- Add patch method to $api types and formatDateTime helper ([ba9da60](https://github.com/aatrooox/blog.zzao.club/commit/ba9da60))
+- **todos:** Add participants subquery and improve error handling in API ([fd58879](https://github.com/aatrooox/blog.zzao.club/commit/fd58879))
+- Correct feishu article links ([a4884d5](https://github.com/aatrooox/blog.zzao.club/commit/a4884d5))
+
+### 💅 Refactors
+
+- **toast:** Use ExternalToast type and wrap app in UApp ([a663b0e](https://github.com/aatrooox/blog.zzao.club/commit/a663b0e))
+- **todos:** Reactive state management in useTodos composable ([fd0c020](https://github.com/aatrooox/blog.zzao.club/commit/fd0c020))
+
+### 📖 Documentation
+
+- **todos:** Add todos API documentation ([03fab73](https://github.com/aatrooox/blog.zzao.club/commit/03fab73))
+- 文章更新 ([5f7f605](https://github.com/aatrooox/blog.zzao.club/commit/5f7f605))
+- 文章更新 ([8259a8d](https://github.com/aatrooox/blog.zzao.club/commit/8259a8d))
+- 文章更新 ([bc2afe7](https://github.com/aatrooox/blog.zzao.club/commit/bc2afe7))
+- 新增草稿 openclaw-model-choice ([5a4410f](https://github.com/aatrooox/blog.zzao.club/commit/5a4410f))
+- 文章更新 ([bec98df](https://github.com/aatrooox/blog.zzao.club/commit/bec98df))
+- 文章更新 ([ce8e819](https://github.com/aatrooox/blog.zzao.club/commit/ce8e819))
+- 文章更新 ([ffae5c1](https://github.com/aatrooox/blog.zzao.club/commit/ffae5c1))
+- 文章更新 ([1ab9bb5](https://github.com/aatrooox/blog.zzao.club/commit/1ab9bb5))
+- 文章更新 ([d9ad624](https://github.com/aatrooox/blog.zzao.club/commit/d9ad624))
+- 文章更新 ([103913a](https://github.com/aatrooox/blog.zzao.club/commit/103913a))
+- 文章更新 ([bca4a25](https://github.com/aatrooox/blog.zzao.club/commit/bca4a25))
+- 文章更新 ([b960123](https://github.com/aatrooox/blog.zzao.club/commit/b960123))
+
+### 🏡 Chore
+
+- 更新文章内容 ([c60d04b](https://github.com/aatrooox/blog.zzao.club/commit/c60d04b))
+- Update ([ad67102](https://github.com/aatrooox/blog.zzao.club/commit/ad67102))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.1.6
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.5...v3.1.6)
