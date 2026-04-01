@@ -14,7 +14,7 @@ interface RequestRecord {
 
 export default defineEventHandler(async (event) => {
   // 获取请求路径
-  const path = event.node.req.url || ''
+  const path = getRequestURL(event).pathname
   // 不校验 OPTIONS
   if (event.node.req.method === 'OPTIONS')
     return
@@ -63,18 +63,27 @@ export default defineEventHandler(async (event) => {
     await storage.setItem(key, { count: 1, timestamp: now }, { ttl: Math.ceil(rule.duration / 1000) })
     return
   }
+
   const resetTime = initData!.timestamp + rule.duration
+  const remainingMs = resetTime - now
+
+  // 限流窗口已过期时，直接重置计数，避免把 0/负数 TTL 传给 Redis。
+  if (remainingMs <= 0) {
+    await storage.setItem(key, { count: 1, timestamp: now }, { ttl: Math.ceil(rule.duration / 1000) })
+    return
+  }
+
   // 正常范围内的请求，计数+1
   await storage.setItem(key, {
     count: initData.count + 1,
     timestamp: initData.timestamp, // 保持原有时间戳
-  }, { ttl: Math.ceil((resetTime - now) / 1000) })
+  }, { ttl: Math.max(1, Math.ceil(remainingMs / 1000)) })
 
   const currentData = await storage.getItem<RequestRecord>(key)
   // 如何超出限制次数，抛出错误
   if (currentData!.count > rule.limit) {
     const resetTime = currentData!.timestamp + rule.duration
-    const remainingTime = Math.ceil((resetTime - now) / 1000)
+    const remainingTime = Math.max(1, Math.ceil((resetTime - now) / 1000))
     console.log(`Error: out of limit => ${key} - [${remainingTime}s后解锁]`)
     // 超出限制，抛出错误
     throw createError({

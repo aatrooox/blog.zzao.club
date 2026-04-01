@@ -16,6 +16,11 @@ const PRESET_TAGS = [
 ]
 
 export default defineNitroPlugin(async () => {
+  // 跳过构建期 / prerender 过程，避免 build 阶段建立 DB 连接后长期占用事件循环。
+  if (import.meta.prerender) {
+    return
+  }
+
   try {
     const [{ value: existingCount }] = await db.select({ value: count() }).from(todoTags)
     if (existingCount === 0) {
