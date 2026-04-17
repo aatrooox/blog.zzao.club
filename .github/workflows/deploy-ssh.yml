@@ -146,6 +146,15 @@ jobs:
             fi
           fi
 
+          # Rebuild native runtime modules against the server's current Node ABI.
+          # This protects SSR routes such as /admin that load Nuxt Content's sqlite runtime.
+          if [ -f "$APP_DIR/server/package.json" ] && [ -d "$APP_DIR/server/node_modules/better-sqlite3" ]; then
+            echo "Rebuilding better-sqlite3 in $APP_DIR/server ..."
+            npm rebuild --prefix "$APP_DIR/server" better-sqlite3
+          else
+            echo "better-sqlite3 not found in runtime bundle; skipping native rebuild"
+          fi
+
           # Start cleanly: use prod pm2.config.json
           pm2 delete Blog >/dev/null 2>&1 || true
           pm2 start pm2.config.json --update-env

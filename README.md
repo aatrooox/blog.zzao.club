@@ -42,6 +42,10 @@ pnpm i
 
 涉及从 npm 切换到 pnpm 时，可能需要重新 `pnpm add better-sqlite3` 和 `pnpm rebuild better-sqlite3`
 
+生产环境说明：
+- `@nuxt/content` 在 Node SSR 运行时会依赖 `better-sqlite3`，因此它必须作为 `dependencies` 安装，不能只放在 `devDependencies`。
+- 如果服务器升级过 Node 版本，或复用了旧的 `node_modules`，出现 `Module did not self-register` 时需要重新安装依赖并执行 `pnpm rebuild better-sqlite3`。
+
 ## 零环境快速开始（本地开发）
 
 先决条件：
@@ -182,7 +186,7 @@ pnpm dev
 
 ## 生产部署
 
-部署链路：GitHub Actions 构建 -> 打包 `.output` + `pm2.config.json` + `pm2.preload.cjs` -> SSH 上传 -> 服务器 `/root/web/blog` 原地解压 -> Drizzle 迁移 -> PM2 启动 `Blog`（端口 4571）。
+部署链路：GitHub Actions 构建 -> 打包 `.output` + `pm2.config.json` + `pm2.preload.cjs` -> SSH 上传 -> 服务器 `/root/web/blog` 原地解压 -> Drizzle 迁移 -> 服务端重建 `better-sqlite3` -> PM2 启动 `Blog`（端口 4571）。
 
 1) 服务器准备
 - 安装 Node.js 20+ 与 PM2（全局）
@@ -227,14 +231,20 @@ pnpm dev
 - 工作流会在服务器上自动执行 Drizzle 迁移（优先 `dotenv-cli`，无则回退为 `source ENVFILE` + `npx drizzle-kit migrate`）
 - 如服务器无公网 npm，可自行预先装好 `dotenv-cli`，或手动执行迁移
 
-6) 回滚与灰度（可选）
+6) 原生模块重建
+- 工作流会在服务器解压产物后、PM2 启动前执行 `npm rebuild --prefix /root/web/blog/server better-sqlite3`
+- 这一步用于按服务器当前 Node ABI 重建 `better-sqlite3`，避免 `/admin` 等 SSR 页面出现 `Module did not self-register`
+- 如果服务器缺少编译环境，请预先安装 `build-essential`/`make`/`g++`/`python3`
+
+7) 回滚与灰度（可选）
 - 回滚：直接 `git revert` 上次 release 提交并 push（同样会触发部署）
 - 灰度：仓库包含 `pm2.canary.json`（4572 端口），如需金丝雀可另行添加对应 Workflows 与目录（例如 `/root/web/blog-canary`）
 
-7) 常见排查
+8) 常见排查
 - 启动异常：`pm2 logs Blog` 查看日志
 - 环境变量未生效：确认 `/root/envs/blog/.env` 存在且键名正确；`pm2 env 0`/`pm2 describe Blog` 检查进程环境
 - 无法连接数据库/Redis：验证 `DATABASE_URL`、`REDIS_HOST/PORT` 与网络策略
+- `better-sqlite3` 仍报错：在服务器执行 `npm rebuild --prefix /root/web/blog/server better-sqlite3` 后再重启 PM2
 
 ## 发布
 

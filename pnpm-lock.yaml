@@ -65,6 +65,9 @@ importers:
       bcrypt:
         specifier: ^6.0.0
         version: 6.0.0
+      better-sqlite3:
+        specifier: ^12.6.2
+        version: 12.8.0
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -258,9 +261,6 @@ importers:
       '@types/rss':
         specifier: ^0.0.32
         version: 0.0.32
-      better-sqlite3:
-        specifier: ^12.6.2
-        version: 12.8.0
       cos-js-sdk-v5:
         specifier: ^1.10.1
         version: 1.10.1
