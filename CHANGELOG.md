@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.1.12
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.11...v3.1.12)
+
+### 🩹 Fixes
+
+- Make deploy migration and sqlite rebuild work ([a541380](https://github.com/aatrooox/blog.zzao.club/commit/a541380))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.1.11
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.7...v3.1.11)
