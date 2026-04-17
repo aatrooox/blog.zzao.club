@@ -1,6 +1,39 @@
 # Changelog
 
 
+## v3.1.11
+
+[compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.7...v3.1.11)
+
+### 🩹 Fixes
+
+- Rebuild better-sqlite3 during deploy ([fd4e2d9](https://github.com/aatrooox/blog.zzao.club/commit/fd4e2d9))
+
+### 📖 Documentation
+
+- Refine repo agent instructions ([3e9d8e6](https://github.com/aatrooox/blog.zzao.club/commit/3e9d8e6))
+- 文章更新 ([88510d8](https://github.com/aatrooox/blog.zzao.club/commit/88510d8))
+- 文章更新 ([a8c4af2](https://github.com/aatrooox/blog.zzao.club/commit/a8c4af2))
+- 文章更新 ([3b752a0](https://github.com/aatrooox/blog.zzao.club/commit/3b752a0))
+- 文章更新 ([a43ce24](https://github.com/aatrooox/blog.zzao.club/commit/a43ce24))
+- Sync qwen36 plus post ([7e0c84c](https://github.com/aatrooox/blog.zzao.club/commit/7e0c84c))
+- 文章更新 ([e0d56c6](https://github.com/aatrooox/blog.zzao.club/commit/e0d56c6))
+- 文章更新 ([c43e43d](https://github.com/aatrooox/blog.zzao.club/commit/c43e43d))
+- 文章更新 ([3efbea7](https://github.com/aatrooox/blog.zzao.club/commit/3efbea7))
+- 文章更新 ([36c5682](https://github.com/aatrooox/blog.zzao.club/commit/36c5682))
+- 文章更新 ([84eea1c](https://github.com/aatrooox/blog.zzao.club/commit/84eea1c))
+
+### 🏡 Chore
+
+- Update agent.md ([e0581ef](https://github.com/aatrooox/blog.zzao.club/commit/e0581ef))
+- **release:** V3.1.8 ([034a325](https://github.com/aatrooox/blog.zzao.club/commit/034a325))
+- **release:** V3.1.9 ([7fdcc41](https://github.com/aatrooox/blog.zzao.club/commit/7fdcc41))
+- **release:** V3.1.10 ([10e8949](https://github.com/aatrooox/blog.zzao.club/commit/10e8949))
+
+### ❤️ Contributors
+
+- Aatrox <gnakzz@qq.com>
+
 ## v3.1.7
 
 [compare changes](https://github.com/aatrooox/blog.zzao.club/compare/v3.1.6...v3.1.7)
