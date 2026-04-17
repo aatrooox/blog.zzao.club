@@ -1,7 +1,6 @@
 import process from 'node:process'
-import { defineConfig } from 'drizzle-kit'
 
-export default defineConfig({
+export default {
   schema: './lib/drizzle/schema.ts',
   out: './lib/drizzle/migrations',
   dialect: 'mysql',
@@ -13,4 +12,4 @@ export default defineConfig({
     table: '__drizzle_migrations__',
     schema: 'public',
   },
-})
+}

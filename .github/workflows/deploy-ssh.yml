@@ -79,6 +79,14 @@ jobs:
           mkdir -p distpkg/lib/drizzle
           if [ -d lib/drizzle/migrations ]; then cp -R lib/drizzle/migrations distpkg/lib/drizzle/; fi
           if [ -f drizzle.config.ts ]; then cp -f drizzle.config.ts distpkg/; fi
+          # Nuxt traces a slim runtime copy of better-sqlite3 that lacks rebuild inputs.
+          # Copy the native build files from the full install so the server can rebuild
+          # against its own Node ABI before PM2 starts.
+          if [ -d "node_modules/better-sqlite3" ] && [ -d "distpkg/server/node_modules/better-sqlite3" ]; then
+            cp -f node_modules/better-sqlite3/binding.gyp distpkg/server/node_modules/better-sqlite3/
+            cp -R node_modules/better-sqlite3/src distpkg/server/node_modules/better-sqlite3/
+            cp -R node_modules/better-sqlite3/deps distpkg/server/node_modules/better-sqlite3/
+          fi
           tar -C distpkg -czf artifact.tgz .
           du -h artifact.tgz
 
