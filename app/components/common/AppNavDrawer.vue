@@ -11,19 +11,9 @@ const items = ref([
     route: '/article',
   },
   {
-    label: 'Memoz',
-    icon: 'twemoji:page-facing-up',
-    route: '/memo',
-  },
-  {
     label: 'IMGX',
     icon: 'twemoji:framed-picture',
     route: '/imgx',
-  },
-  {
-    label: '待办',
-    icon: 'twemoji:memo',
-    route: '/issues',
   },
   {
     label: '友链',
@@ -34,12 +24,6 @@ const items = ref([
     label: '关于',
     icon: 'icon-park-outline:setting-two',
     route: '/about',
-    // children: [
-    //   {
-    //     label: '关于本站',
-    //     route: '/about'
-    //   }
-    // ]
   },
 ])
 </script>
@@ -63,21 +47,6 @@ const items = ref([
           </DrawerClose>
         </li>
       </ul>
-      <!-- <DrawerFooter class="flex flex-row justify-end">
-        <Button href="/api/v1/auth/github" as="a">
-          Github
-        </Button>
-        <DrawerClose>
-          <Button @click="submit">
-            登录
-          </Button>
-        </DrawerClose>
-        <DrawerClose>
-          <Button>
-            取消
-          </Button>
-        </DrawerClose>
-      </DrawerFooter> -->
     </DrawerContent>
   </Drawer>
 </template>

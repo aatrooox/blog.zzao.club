@@ -2,14 +2,12 @@ import { SitemapStream, streamToPromise } from 'sitemap'
 
 export default defineEventHandler(async (event) => {
   try {
-    const smStream = new SitemapStream({ hostname: 'https://zzao.club/' })
+    const smStream = new SitemapStream({ hostname: 'https://blog.nezus.cn/' })
     const posts: any[] = await queryCollection(event, 'content').order('date', 'DESC').all()
 
-    // Static pages
     const staticPages = [
       { url: '/', changefreq: 'daily', priority: 1.0 },
       { url: '/article', changefreq: 'daily', priority: 0.8 },
-      { url: '/memo', changefreq: 'daily', priority: 0.7 },
       { url: '/about', changefreq: 'monthly', priority: 0.5 },
       { url: '/links', changefreq: 'monthly', priority: 0.5 },
       { url: '/news', changefreq: 'weekly', priority: 0.6 },
@@ -27,7 +25,6 @@ export default defineEventHandler(async (event) => {
         changefreq: 'daily',
         lastmod: post.lastmod,
       })
-      // console.log(`https://zzao.club` + post.path)
     })
     smStream.end()
     const xmlString = await streamToPromise(smStream).then(buffer => buffer.toString())

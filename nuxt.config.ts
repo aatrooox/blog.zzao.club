@@ -1,10 +1,7 @@
 import fs from 'node:fs'
-// import { createRequire } from 'node:module'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
-// @tailwindcss/vite is now registered by @nuxt/ui module automatically
-// import tailwindcss from '@tailwindcss/vite'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const packageJson = JSON.parse(
@@ -19,12 +16,9 @@ export default defineNuxtConfig({
   experimental: {
     watcher: isDev ? 'parcel' : undefined,
   },
-  modules: ['@nuxt/ui', '@nuxtjs/robots', '@nuxt/content', '@nuxt/image', '@nuxt/icon', // '@nuxtjs/robots',
-    '@nuxtjs/mdc', // 以下三个模块还没有支持最新的 nuxt content 版本
-    // '@nuxtjs/sitemap',
-    // '@nuxtjs/robots'
-    // '@nuxtjs/seo'
-    '@nuxtjs/color-mode', '@pinia/nuxt', '@vueuse/nuxt', 'shadcn-nuxt', 'nuxt-nodemailer', 'nuxt-auth-utils', '@nuxt/eslint'],
+  modules: ['@nuxt/ui', '@nuxtjs/robots', '@nuxt/content', '@nuxt/image', '@nuxt/icon',
+    '@nuxtjs/mdc',
+    '@nuxtjs/color-mode', '@pinia/nuxt', '@vueuse/nuxt', 'shadcn-nuxt', '@nuxt/eslint'],
   components: [
     {
       path: '~/components/common',
@@ -56,7 +50,7 @@ export default defineNuxtConfig({
   image: {
     domains: ['zzao.club', 'img.zzao.club'],
     provider: isDev ? 'none' : 'ipx',
-    dir: 'public',
+    dir: path.resolve(__dirname, 'public'),
     quality: 80,
     format: ['webp'],
   },
@@ -97,7 +91,6 @@ export default defineNuxtConfig({
           name: 'baidu-site-verification',
           content: 'codeva-wbD6D2XuzG',
         },
-        // <meta name="msvalidate.01" content="A7FB0FAB6DCCC738B8B3D60179F1496C" />
         {
           name: 'msvalidate.01',
           content: 'A7FB0FAB6DCCC738B8B3D60179F1496C',
@@ -106,7 +99,6 @@ export default defineNuxtConfig({
           name: 'keywords',
           content: 'Nuxt4,Nuxt3,Nitro,NuxtContent,Vue,Vue3,前端,前端工程化,前端架构,Node,Hono,博客站,爬虫,副业',
         },
-        // OG defaults
         {
           property: 'og:site_name',
           content: '早早集市',
@@ -119,7 +111,6 @@ export default defineNuxtConfig({
           property: 'og:locale',
           content: 'zh_CN',
         },
-        // Twitter Card defaults
         {
           name: 'twitter:card',
           content: 'summary_large_image',
@@ -132,14 +123,13 @@ export default defineNuxtConfig({
     },
   },
   css: ['@/assets/css/tailwind.css', 'viewerjs/dist/viewer.css'],
-  // nuxt/color-mode
   colorMode: {
-    preference: 'light', // default value of $colorMode.preference
-    fallback: 'light', // fallback value if not system preference found
+    preference: 'light',
+    fallback: 'light',
     dataValue: 'theme',
     classPrefix: '',
     classSuffix: '',
-    storage: 'localStorage', // or 'sessionStorage' or 'cookie'
+    storage: 'localStorage',
     storageKey: 'nuxt-color-mode',
   },
   content: {
@@ -152,8 +142,6 @@ export default defineNuxtConfig({
       },
       pathMeta: {
         slugifyOptions: {
-          // Keep everything except invalid chars, this will preserve Chinese characters
-          // 保留中文字符
           remove: /[$*+~()'"!\-=#?:@]/g,
         },
       },
@@ -193,33 +181,19 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    feishuWebhook: '',
-    feishuUserId: '',
-    baseURL: 'https://zzao.club',
+    baseURL: 'https://blog.nezus.cn',
     imgHost: 'https://img.zzao.club',
-    jwtSecret: 'your_jwt_secret',
-    cryptoSecretKey: '', // 用于加密敏感数据的密钥（至少 32 字符）
-    cosRegion: '',
-    cosSecretId: '',
-    cosSecretKey: '',
-    cosBucket: '',
     public: {
       ContentVersion: '3.0.0',
       Z_BLOG_VERSION: appVersion,
-      // nuxtSecretKey:`blog-zzao-club-${uuid}`,
       imgHost: 'https://img.zzao.club',
-      apiBase: 'https://zzao.club',
+      apiBase: 'https://blog.nezus.cn',
     },
   },
   routeRules: {
     '/': { prerender: true },
     '/article': { prerender: true },
-    '/memo': { prerender: true },
     '/post/**': { prerender: true },
-    '/settings': { prerender: false },
-    '/admin/**': { prerender: false },
-    '/issues': { prerender: false },
-    '/issues/**': { prerender: false },
   },
   sourcemap: {
     server: isDev,
@@ -227,33 +201,14 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2024-10-29',
   nitro: {
-    // preset: 'bun',
-    experimental: {
-      tasks: true,
-    },
-    // scheduledTasks: {
-    //   '0 * * * *': ['news:juejin'],
-    // },
-    errorHandler: '~~/server/error',
-    moduleSideEffects: ['sharp'],
-    storage: {
-      redis: {
-        driver: 'redis',
-        host: process.env.REDIS_HOST || 'localhost',
-        db: 0,
-        tls: false,
-        port: Number(process.env.REDIS_PORT || 6379),
-      },
-    },
-
     compressPublicAssets: {
       gzip: true,
       brotli: true,
     },
     prerender: {
       crawlLinks: true,
-      failOnError: true,
-      ignore: ['/_ipx'],
+      failOnError: false,
+      ignore: [],
       routes: ['/feed.xml', '/sitemap.xml'],
     },
     imports: {
@@ -262,14 +217,8 @@ export default defineNuxtConfig({
           from: 'zod',
           imports: ['z'],
         },
-        {
-          from: 'h3-zod',
-          imports: ['useSafeValidatedQuery', 'useSafeValidatedBody', 'useValidatedParams', 'zh'],
-        },
       ],
-      dirs: [
-        './server/utils',
-      ],
+      dirs: [],
     },
     watchOptions: {
       ignored: [
@@ -318,23 +267,11 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: ['debug'],
     },
-    // resolve: {
-    //   alias: {
-    //     '.prisma/client/index-browser': path.relative(__dirname, prismaClientIndexBrowser),
-    //     '@prisma/client/index-browser': path.relative(__dirname, prismaClientIndexBrowser),
-    //   },
-    // },
   },
   debug: isDev,
   hooks: {
-    // close: () => {
-    //   // @see https://github.com/nuxt/cli/issues/169#issuecomment-1729300497
-    //   // Workaround for https://github.com/nuxt/cli/issues/169
-    //   process.exit(0)
-    // },
     'content:file:afterParse': (ctx) => {
       const { file, content } = ctx
-      // 自定义content值，如 content.group = 'xxxx'
       const wordsPerMinute = 180
       const text = typeof file.body === 'string' ? file.body : ''
       const wordCount = text.split(/\s+/).length
@@ -347,7 +284,6 @@ export default defineNuxtConfig({
       stylistic: true,
     },
   },
-  // 把 icon 和客户端捆绑在一起， 减少请求服务端
   icon: {
     clientBundle: {
       scan: true,
@@ -355,18 +291,8 @@ export default defineNuxtConfig({
       sizeLimitKb: 256,
     },
   },
-  nodemailer: {
-    from: '"Aatrox" <gnakzz@qq.com>',
-    host: 'smtp.qq.com',
-    port: 465,
-    secure: true,
-    auth: {
-      user: '',
-      pass: '',
-    },
-  },
   robots: {
-    sitemap: 'https://zzao.club/sitemap.xml',
+    sitemap: 'https://blog.nezus.cn/sitemap.xml',
   },
   shadcn: {
     prefix: '',

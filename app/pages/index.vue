@@ -47,18 +47,13 @@ useHead({
   ],
 })
 
-// 并行获取所有数据
 const [
-  { getMemos, memos },
   { data: allArticles },
   { data: jinxArticles },
 ] = await Promise.all([
-  useMemos({ size: 8 }),
   usePagesWithGroup({ limit: 50 }),
   useJinxArticles({ limit: 8 }),
 ])
-
-await getMemos()
 
 // 解析文章分组结构（排除 Jinx 文章）
 const groupHierarchy = computed(() => {
@@ -104,10 +99,6 @@ const techItems = computed(() => {
     <!-- 顶部信息栏 -->
     <HomeHeroSection />
 
-    <!-- Memo 横向卡片区 -->
-    <div class="mb-8 pb-8 border-b border-zinc-200 dark:border-zinc-800">
-      <HomeMemoColumn :memos="memos ?? []" />
-    </div>
     <!-- 三列文章区：LATEST | AATROX | JINX -->
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-0 xl:divide-x divide-zinc-200 dark:divide-zinc-800">
       <!-- LATEST -->

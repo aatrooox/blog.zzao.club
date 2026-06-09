@@ -1,0 +1,6 @@
+blog.nezus.cn {
+    root * /var/www/blog.nezus.cn
+    encode gzip
+    file_server
+    try_files {path} {path}/index.html
+}

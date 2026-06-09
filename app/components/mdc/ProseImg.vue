@@ -40,14 +40,16 @@ const derivedAlt = computed(() => {
 </script>
 
 <template>
-  <ClientOnly>
-    <div v-viewer class="blog-zzao-club-img-component card inline">
-      <NuxtImg
-        :src="refinedSrc" loading="lazy" :alt="alt || derivedAlt" :width="width" :height="height"
-        placeholder
-      />
-    </div>
-  </ClientOnly>
+  <div v-viewer class="blog-zzao-club-img-component card inline">
+    <NuxtImg
+      :src="refinedSrc"
+      loading="lazy"
+      :alt="alt || derivedAlt"
+      :width="width"
+      :height="height"
+      placeholder
+    />
+  </div>
 </template>
 
 <style lang="less" scoped></style>

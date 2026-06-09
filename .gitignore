@@ -8,6 +8,7 @@ node_modules
 .data
 .env
 .env.prod
+.deploy.prod.env
 # .vscode
 
 .idea
