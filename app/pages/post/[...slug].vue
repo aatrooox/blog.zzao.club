@@ -320,8 +320,7 @@ watchEffect(async () => {
         >
           {{ page?.title }}
         </h1>
-        <ClientOnly>
-          <div class="flex flex-col gap-3 py-3 mb-2 border-b border-zinc-100 dark:border-zinc-800">
+        <div class="flex flex-col gap-3 py-3 mb-2 border-b border-zinc-100 dark:border-zinc-800">
             <div class="flex items-center gap-3">
               <NuxtImg
                 :src="page.author === 'Jinx' ? appConfig.jinx.avatar : appConfig.avatar"
@@ -336,14 +335,16 @@ watchEffect(async () => {
                 </span>
                 <span class="text-xs text-zinc-400 dark:text-zinc-500 font-mono">{{ formatDate(page.date ?? '') }}</span>
               </div>
-              <div class="ml-auto flex items-center gap-4 text-zinc-400 dark:text-zinc-500">
-                <button class="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors" title="复制链接" @click="copyLink">
-                  <Icon name="material-symbols:share-reviews-outline-rounded" class="w-4 h-4" />
-                </button>
-                <button class="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors" data-umami-event="wx-copy-btn" title="复制为微信公众号格式" @click="getInnerHTML">
-                  <Icon name="icon-park-outline:wechat" class="w-4 h-4" />
-                </button>
-              </div>
+              <ClientOnly>
+                <div class="ml-auto flex items-center gap-4 text-zinc-400 dark:text-zinc-500">
+                  <button class="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors" title="复制链接" @click="copyLink">
+                    <Icon name="material-symbols:share-reviews-outline-rounded" class="w-4 h-4" />
+                  </button>
+                  <button class="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors" data-umami-event="wx-copy-btn" title="复制为微信公众号格式" @click="getInnerHTML">
+                    <Icon name="icon-park-outline:wechat" class="w-4 h-4" />
+                  </button>
+                </div>
+              </ClientOnly>
             </div>
             <div v-if="page.tags && page.tags.length" class="flex flex-wrap gap-2">
               <span
@@ -355,7 +356,6 @@ watchEffect(async () => {
               </span>
             </div>
           </div>
-        </ClientOnly>
         <article ref="curMdContentRef" class="content-wrap prose prose-stone prose-base max-w-none p-0 w-full">
           <ContentRenderer :value="page?.body" class="max-w-full" />
         </article>
