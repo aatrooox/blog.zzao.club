@@ -326,6 +326,8 @@ watchEffect(async () => {
               <NuxtImg
                 :src="page.author === 'Jinx' ? appConfig.jinx.avatar : appConfig.avatar"
                 :alt="page.author === 'Jinx' ? appConfig.jinx.name : 'Aatrox'"
+                width="32"
+                height="32"
                 class="w-8 h-8 rounded-full object-cover shrink-0"
               />
               <div class="flex flex-col leading-tight">
