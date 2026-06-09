@@ -18,7 +18,14 @@ export default defineNuxtConfig({
   },
   modules: ['@nuxt/ui', '@nuxtjs/robots', '@nuxt/content', '@nuxt/image', '@nuxt/icon',
     '@nuxtjs/mdc',
-    '@nuxtjs/color-mode', '@pinia/nuxt', '@vueuse/nuxt', 'shadcn-nuxt', '@nuxt/eslint'],
+    '@nuxtjs/color-mode', '@pinia/nuxt', '@vueuse/nuxt', 'shadcn-nuxt', '@nuxt/eslint', 'nuxt-umami'],
+
+  umami: {
+    autoTrack: true,
+    id: process.env.NUXT_PUBLIC_UMAMI_WEBSITE_ID || '73dfbd1a-1df4-4c73-88d3-899bebe63672',
+    host: process.env.NUXT_PUBLIC_UMAMI_HOST || 'https://umami.nezus.cn',
+    domains: 'blog.nezus.cn',
+  },
   components: [
     {
       path: '~/components/common',
@@ -84,12 +91,6 @@ export default defineNuxtConfig({
             gtag('config', 'G-6WVZHT91DH');
           `,
           type: 'text/javascript',
-        },
-        {
-          src: 'https://umami.nezus.cn/script.js',
-          defer: true,
-          'data-website-id': '73dfbd1a-1df4-4c73-88d3-899bebe63672',
-          'data-domains': 'blog.nezus.cn',
         },
       ],
       meta: [
