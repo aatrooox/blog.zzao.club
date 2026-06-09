@@ -85,6 +85,12 @@ export default defineNuxtConfig({
           `,
           type: 'text/javascript',
         },
+        {
+          src: 'https://umami.nezus.cn/script.js',
+          defer: true,
+          'data-website-id': '73dfbd1a-1df4-4c73-88d3-899bebe63672',
+          'data-domains': 'blog.nezus.cn',
+        },
       ],
       meta: [
         {
