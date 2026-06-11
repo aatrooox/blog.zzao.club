@@ -44,6 +44,7 @@
     "hast-util-to-html": "^9.0.4",
     "lucide-vue-next": "^0.488.0",
     "nuxt": "4.0.3",
+    "nuxt-umami": "^3.2.1",
     "ohash": "^1.1.4",
     "pinia": "^3.0.1",
     "rehype-autolink-headings": "^7.1.0",
