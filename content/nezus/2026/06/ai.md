@@ -1,10 +1,12 @@
 ---
-title: "AI 写东西没人味儿？有人把解法开源了"
+title: "AI写东西没人味儿？有人把解法开源了"
 date: 2026-06-13
 description: "凌晨两点，我盯着屏幕上的文章发呆。"
-author: storytelling
+author: user
 ---
 
+
+## AI 写东西没人味儿？有人把解法开源了
 
 凌晨两点，我盯着屏幕上的文章发呆。
 
