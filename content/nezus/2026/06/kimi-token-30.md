@@ -1,10 +1,12 @@
 ---
-title: "Kimi 代码模型开源，推理 token 直接砍 30%"
+title: "Kimi代码模型开源，推理token直接砍30%"
 date: 2026-06-13
 description: "昨天半夜， Kimi 发了一个新模型。"
-author: storytelling
+author: user
 ---
 
+
+## Kimi 代码模型开源，推理 token 直接砍 30%
 
 昨天半夜， Kimi 发了一个新模型。
 
