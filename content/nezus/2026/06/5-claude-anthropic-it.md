@@ -1,10 +1,12 @@
 ---
-title: "5 万人用 Claude 办公， Anthropic 拿下印度 IT 巨头"
+title: "5万人用Claude办公，Anthropic拿下印度IT巨头"
 date: 2026-06-13
 description: "昨天看到一条消息，让我意识到 AI 企业级市场正在发生一些有意思的变化。"
-author: storytelling
+author: user
 ---
 
+
+## 5 万人用 Claude 办公， Anthropic 拿下印度 IT 巨头
 
 昨天看到一条消息，让我意识到 AI 企业级市场正在发生一些有意思的变化。
 
