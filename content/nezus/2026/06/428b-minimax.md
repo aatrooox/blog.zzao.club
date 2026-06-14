@@ -1,10 +1,12 @@
 ---
-title: "428B 参数全部开源， MiniMax 这步棋走对了"
+title: "428B参数全部开源，MiniMax这步棋走对了"
 date: 2026-06-13
 description: "凌晨刷到一条消息，愣了三秒。"
-author: storytelling
+author: user
 ---
 
+
+## 428B 参数全部开源， MiniMax 这步棋走对了
 
 凌晨刷到一条消息，愣了三秒。
 
