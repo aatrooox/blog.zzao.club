@@ -349,7 +349,7 @@ function isGroupItem(item: any): item is { type: 'group', data: FlatGroup } {
                     v-else
                     class="font-sans shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500 leading-none"
                   >
-                    Aatrox
+                    Kairos
                   </span>
                   <h3 class="text-base md:text-lg font-bold text-[var(--article-text)] group-hover:text-primary transition-colors leading-snug truncate">
                     {{ item.title }}

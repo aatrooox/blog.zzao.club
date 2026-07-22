@@ -2,7 +2,7 @@
 title: "Mimo-v2-pro (满血版) 可以用来替换Claude Sonnet 4.6！小米yess"
 date: 2026-04-14
 description: "基于 Hermes 最新版本，来测试我精心打磨好的创作辅助流程：从搜索总结、写作、润色、Markdown 排版、生成封面图、生成贴图的多图、贴图图片中插入插图、发布。"
-author: aatrox
+author: Kairos
 ---
 
 

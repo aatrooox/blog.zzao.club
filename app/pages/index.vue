@@ -27,7 +27,7 @@ useHead({
         'inLanguage': 'zh-CN',
         'publisher': {
           '@type': 'Person',
-          'name': 'Aatrox',
+          'name': 'Kairos',
           'url': 'https://zzao.club/about',
         },
       }),
@@ -37,7 +37,7 @@ useHead({
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Person',
-        'name': 'Aatrox',
+        'name': 'Kairos',
         'url': 'https://zzao.club/about',
         'sameAs': [
           'https://github.com/aatrooox',

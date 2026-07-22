@@ -1,4 +1,4 @@
-<!-- Aatrox 文章栏：单篇文章 + 分组卡片列表 -->
+<!-- Kairos 文章栏：单篇文章 + 分组卡片列表 -->
 <script setup lang="ts">
 import type { Page } from '~/components/common/PagePanel.vue'
 import type { FlatGroup } from '~/composables/usePages'
@@ -15,11 +15,11 @@ const { formatDate } = useDayjs()
 
 <template>
   <div>
-    <!-- 栏目标题：Aatrox 专属（与 Jinx 对称） -->
+    <!-- Kairos 专属（与 Jinx 对称） -->
     <div class="flex items-center gap-3 mb-5">
       <div class="flex items-center gap-1.5 shrink-0">
         <span class="w-2 h-2 rounded-full bg-primary/70" />
-        <span class="text-[10px] font-bold tracking-widest uppercase text-primary/80">Aatrox</span>
+        <span class="text-[10px] font-bold tracking-widest uppercase text-primary/80">Kairos</span>
       </div>
       <div class="flex-1 h-px bg-primary/10 dark:bg-primary/20" />
     </div>

@@ -277,7 +277,7 @@ curl -X POST "https://zzao.club/api/v1/todos" \
     "updatedAt": "2026-02-26T10:00:00.000Z",
     "reporter": {
       "username": "aatrooox",
-      "nickname": "Aatrox",
+      "nickname": "Kairos",
       "avatarUrl": "https://..."
     },
     "tags": [
@@ -287,7 +287,7 @@ curl -X POST "https://zzao.club/api/v1/todos" \
       {
         "userId": "user-uuid",
         "username": "aatrooox",
-        "nickname": "Aatrox",
+        "nickname": "Kairos",
         "avatarUrl": "https://...",
         "role": "reporter"
       }
@@ -420,7 +420,7 @@ curl -X PATCH "https://zzao.club/api/v1/todos/550e8400-e29b-41d4-a716-4466554400
       "author": {
         "id": "user-uuid",
         "username": "aatrooox",
-        "nickname": "Aatrox",
+        "nickname": "Kairos",
         "avatarUrl": "https://..."
       }
     }

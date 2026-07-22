@@ -7,7 +7,7 @@ tags:
   - Shell
   - GitHub Copilot
 slug: "opencode-exec-model-not-supported"
-author: "Aatrox"
+author: "Kairos"
 ---
 
 ## 背景

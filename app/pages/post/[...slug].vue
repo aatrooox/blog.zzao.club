@@ -113,7 +113,7 @@ useHead({
         'dateModified': page.value?.lastmod || page.value?.date,
         'author': {
           '@type': 'Person',
-          'name': 'Aatrox',
+          'name': 'Kairos',
           'url': 'https://blog.nezus.cn/about',
         },
         'publisher': {
@@ -324,13 +324,13 @@ watchEffect(async () => {
             <div class="flex items-center gap-2">
               <NuxtImg
                 :src="page.author === 'Jinx' ? appConfig.jinx.avatar : appConfig.avatar"
-                :alt="page.author === 'Jinx' ? appConfig.jinx.name : 'Aatrox'"
+                :alt="page.author === 'Jinx' ? appConfig.jinx.name : 'Kairos'"
                 width="28"
                 height="28"
                 class="w-7 h-7 rounded-full object-cover shrink-0 opacity-90"
               />
               <span class="font-medium text-zinc-700 dark:text-zinc-300">
-                {{ page.author === 'Jinx' ? appConfig.jinx.name : 'Aatrox' }}
+                {{ page.author === 'Jinx' ? appConfig.jinx.name : 'Kairos' }}
               </span>
             </div>
             <span class="text-zinc-300 dark:text-zinc-600" aria-hidden="true">·</span>

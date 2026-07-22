@@ -2,7 +2,7 @@
 title: "一个月内围绕 AI Agent 写了16w+ 行代码后，我得到了什么"
 date: 2026-04-11
 description: "这个月，不完全统计，不覆盖所有项目，不考虑 git 变更历史，只看新写的最终文件里的代码——"
-author: aatrox
+author: Kairos
 ---
 
 
