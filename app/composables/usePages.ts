@@ -72,28 +72,45 @@ export async function usePageByPath(path: string) {
   return { data, pending, refresh, error }
 }
 
-export async function usePagesWithGroup(options?: { filter_tags?: MaybeRef<string[] | null>, limit?: number }) {
+function isPageUntagged(page: Pick<Page, 'tags'>): boolean {
+  return !page.tags || page.tags.length === 0
+}
+
+export async function usePagesWithGroup(options?: {
+  filter_tags?: MaybeRef<string[] | null>
+  /** 仅无标签文章 */
+  untagged?: MaybeRef<boolean>
+  limit?: number
+}) {
   const filterTags = computed(() => toValue(options?.filter_tags) ?? null)
+  const untaggedOnly = computed(() => Boolean(toValue(options?.untagged)))
   const limit = options?.limit
-  const key = computed(() => `pages-with-group-${filterTags.value?.join(',') ?? 'all'}-${limit ?? 'all'}`)
+  const key = computed(() =>
+    `pages-with-group-${untaggedOnly.value ? 'untagged' : (filterTags.value?.join(',') ?? 'all')}-${limit ?? 'all'}`,
+  )
 
   const { data, pending, refresh, error } = await useAsyncData(key, async () => {
     let query = queryCollection('content')
 
     const tags = filterTags.value
-    if (tags && tags.length > 0) {
+    // 无标签筛选走全量再过滤（Content 难以表达 empty array）
+    if (!untaggedOnly.value && tags && tags.length > 0) {
       for (const tag of tags) {
         query = query.where('tags', 'LIKE', `%${tag}%`)
       }
     }
 
     query = query.order('date', 'DESC')
-    const pages = await query
+    let pages = await query
       .select('id', 'path', 'title', 'date', 'tags', 'group', 'lastmod', 'author', 'sort')
       .all() as unknown as Page[]
+
+    if (untaggedOnly.value)
+      pages = pages.filter(isPageUntagged)
+
     const sorted = sortPages(pages)
     return limit ? sorted.slice(0, limit) : sorted
-  }, { watch: [filterTags] })
+  }, { watch: [filterTags, untaggedOnly] })
 
   return { data, pending, refresh, error }
 }

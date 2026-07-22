@@ -47,26 +47,17 @@ useHead({
   ],
 })
 
+const appConfig = useAppConfig()
 const { data: allArticles } = await usePages()
 
 const catalog = computed(() => allArticles.value ?? [])
 /** 合集整组占一条，非合集单篇；最多 25 条 feed 位 */
 const feedItems = computed(() => buildHomeFeedItems(catalog.value, 25))
 
-const hotTags = computed(() => {
-  const counter = new Map<string, number>()
-  for (const page of catalog.value) {
-    for (const tag of page.tags ?? []) {
-      if (!tag || tag === '全部')
-        continue
-      counter.set(tag, (counter.get(tag) ?? 0) + 1)
-    }
-  }
-  return [...counter.entries()]
-    .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => b.count - a.count)
-    .slice(0, 6)
-})
+/** 高频 top5（来自 extract-tags 持久化结果） */
+const hotTags = computed(() =>
+  ((appConfig as any).topTagItems as Array<{ name: string, count: number }> | undefined)?.slice(0, 5) ?? [],
+)
 </script>
 
 <template>

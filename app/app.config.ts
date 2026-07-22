@@ -1,3 +1,5 @@
+import contentTags from '../data/content-tags.json'
+
 export default defineAppConfig({
   // 网站基本信息
   author: '早早集市',
@@ -42,11 +44,17 @@ export default defineAppConfig({
       url: 'https://zzao.club/feed.xml',
     },
   ],
-  // 标签
-  // 配置后会以此处配置的标签作为 /article 页面筛选栏
-  // 比如: tags: ['哈哈'], 则会搜索 文章中 tags 字段中包含(模糊搜索) '哈哈' 的文章
-  // 因为观察到其他博客，如果把所有的 tags 都自动罗列出来，会有很多 tag 只有一篇文章，可能是当时随手加的，所以不如自己维护几个高频的
-  tags: ['Nuxt', 'AI', 'Hono', 'Vue', '生活'],
+  // 标签：scripts/extract-tags.mjs → data/content-tags.json（dev/build/generate 前刷新）
+  /** 高频 top5，首页/文章筛选栏默认展示 */
+  tags: (contentTags.topTags ?? contentTags.tags?.slice(0, 5) ?? []) as string[],
+  /** 全部 tag 名（按频次） */
+  allTags: (contentTags.tags ?? []) as string[],
+  /** { name, count }[] 全量，含篇数 */
+  tagItems: (contentTags.items ?? []) as Array<{ name: string, count: number }>,
+  /** 高频 top5 带篇数 */
+  topTagItems: (contentTags.topItems ?? contentTags.items?.slice(0, 5) ?? []) as Array<{ name: string, count: number }>,
+  /** 无 tags 字段或为空数组的文章数 */
+  untaggedCount: (contentTags.untaggedCount ?? 0) as number,
   authLayer: {
     enabled: false,
   },

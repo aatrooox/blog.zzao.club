@@ -9,11 +9,19 @@ const route = useRoute()
 const router = useRouter()
 const appConfig = useAppConfig()
 
+/** 筛选栏只展示高频 top5 */
 const categoryTags = computed(() =>
-  (appConfig.tags || []).filter((t: string) => t !== '全部'),
+  (appConfig.tags || []).filter((t: string) => t !== '全部').slice(0, 5),
 )
 
+const isUntaggedFilter = computed(() => {
+  const u = route.query.untagged
+  return u === '1' || u === 'true'
+})
+
 const activeTags = computed<string[]>(() => {
+  if (isUntaggedFilter.value)
+    return []
   const raw = route.query.tag
   if (!raw)
     return []
@@ -22,12 +30,16 @@ const activeTags = computed<string[]>(() => {
   return [raw as string]
 })
 
-const hasTagFilter = computed(() => activeTags.value.length > 0)
+const hasTagFilter = computed(() => activeTags.value.length > 0 || isUntaggedFilter.value)
 
 useHead({
-  title: computed(() => hasTagFilter.value
-    ? `${activeTags.value.join(' + ')} 相关文章｜早早集市`
-    : '文章｜早早集市'),
+  title: computed(() => {
+    if (isUntaggedFilter.value)
+      return '无标签文章｜早早集市'
+    if (activeTags.value.length)
+      return `${activeTags.value.join(' + ')} 相关文章｜早早集市`
+    return '文章｜早早集市'
+  }),
   meta: [
     {
       name: 'description',
@@ -44,6 +56,7 @@ useHead({
 
 const { data } = await usePagesWithGroup({
   filter_tags: activeTags,
+  untagged: isUntaggedFilter,
 })
 
 function removeTag(tag: string) {
@@ -61,6 +74,11 @@ function clearAllTags() {
 }
 
 function toggleTag(tag: string) {
+  // 与无标签互斥
+  if (isUntaggedFilter.value) {
+    router.push({ path: '/article', query: { tag: [tag] } })
+    return
+  }
   const current = activeTags.value
   if (current.includes(tag)) {
     removeTag(tag)
@@ -289,7 +307,9 @@ function isGroupItem(item: any): item is { type: 'group', data: FlatGroup } {
     >
       <span>
         已选
-        <span class="text-primary font-medium">#{{ activeTags.join(' + #') }}</span>
+        <span class="text-primary font-medium">
+          {{ isUntaggedFilter ? '无标签' : `#${activeTags.join(' + #')}` }}
+        </span>
         · {{ totalCount }} 篇
       </span>
       <button
@@ -363,7 +383,7 @@ function isGroupItem(item: any): item is { type: 'group', data: FlatGroup } {
         <template v-if="hasTagFilter">
           <div v-if="group.isFirst" class="flex items-baseline gap-3 mb-6 pb-3 border-b border-zinc-100 dark:border-zinc-800">
             <span class="text-2xl font-bold text-[var(--article-text)] tracking-tight">
-              #{{ activeTags.join(' + #') }}
+              {{ isUntaggedFilter ? '无标签' : `#${activeTags.join(' + #')}` }}
             </span>
             <span class="font-sans text-sm text-zinc-400 dark:text-zinc-500 tabular-nums ml-auto">
               {{ totalCount }} 篇 · {{ group.year }}.{{ String(group.month + 1).padStart(2, '0') }}
@@ -452,7 +472,13 @@ function isGroupItem(item: any): item is { type: 'group', data: FlatGroup } {
     <!-- 空状态：无置顶且无分组列表时 -->
     <div v-else-if="pinnedArticles.length === 0" class="py-20 text-center">
       <div class="text-zinc-400">
-        {{ hasTagFilter ? `没有找到包含 ${activeTags.map(t => `"${t}"`).join(' 和 ')} 标签的文章` : '暂无文章' }}
+        {{
+          isUntaggedFilter
+            ? '没有无标签的文章'
+            : hasTagFilter
+              ? `没有找到包含 ${activeTags.map(t => `"${t}"`).join(' 和 ')} 标签的文章`
+              : '暂无文章'
+        }}
       </div>
       <button
         v-if="hasTagFilter"

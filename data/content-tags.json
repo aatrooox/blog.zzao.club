@@ -1,0 +1,541 @@
+{
+  "generatedAt": "2026-07-22T10:08:31.544Z",
+  "source": "content/**/*.md",
+  "fileCount": 263,
+  "tagCount": 100,
+  "untaggedCount": 134,
+  "topN": 5,
+  "topTags": [
+    "Nuxt",
+    "生活",
+    "AI",
+    "博客",
+    "OpenClaw"
+  ],
+  "topItems": [
+    {
+      "name": "Nuxt",
+      "count": 26
+    },
+    {
+      "name": "生活",
+      "count": 15
+    },
+    {
+      "name": "AI",
+      "count": 13
+    },
+    {
+      "name": "博客",
+      "count": 12
+    },
+    {
+      "name": "OpenClaw",
+      "count": 10
+    }
+  ],
+  "tags": [
+    "Nuxt",
+    "生活",
+    "AI",
+    "博客",
+    "OpenClaw",
+    "产品",
+    "周报",
+    "Hono",
+    "IMGX",
+    "吐槽",
+    "Release Notes",
+    "思考",
+    "副业",
+    "技术",
+    "早早集市",
+    "Agent",
+    "issue",
+    "Node",
+    "Vue3",
+    "感悟",
+    "日常",
+    "Cli",
+    "CLI",
+    "Docker",
+    "Memos",
+    "Nest",
+    "安装教程",
+    "程序员",
+    "减肥",
+    "Discord",
+    "Heartbeat",
+    "opencode",
+    "Prisma",
+    "Puppeteer",
+    "Windows",
+    "WSL",
+    "安全",
+    "宝玉",
+    "代码质量",
+    "发现",
+    "飞书",
+    "更新",
+    "工程",
+    "工具",
+    "工作流",
+    "公众号",
+    "教程",
+    "开发环境",
+    "旅行",
+    "奇技淫巧",
+    "前端",
+    "随笔",
+    "文档",
+    "效率工具",
+    "写作技巧",
+    "新闻",
+    "育儿",
+    "职场",
+    "自动化",
+    "总结",
+    "组件库",
+    "AI 编程",
+    "AI 工具",
+    "Apple Watch",
+    "Astro",
+    "Automation",
+    "Bun",
+    "Claude Code",
+    "Cron",
+    "dadd",
+    "das",
+    "Desktop",
+    "Doubao",
+    "Garry Tan",
+    "Gemini",
+    "GitHub Copilot",
+    "GitLab",
+    "Leafer",
+    "macOS",
+    "MacOS",
+    "Markdown",
+    "Next",
+    "Nginx",
+    "Nitro",
+    "Obsidian",
+    "openclaw",
+    "OpenCode",
+    "Remote Control",
+    "SDK",
+    "Security",
+    "Shell",
+    "SKILL",
+    "SQLite",
+    "TUI",
+    "UI",
+    "Vibe-Code",
+    "Voice",
+    "X",
+    "YC",
+    "zotepad"
+  ],
+  "items": [
+    {
+      "name": "Nuxt",
+      "count": 26
+    },
+    {
+      "name": "生活",
+      "count": 15
+    },
+    {
+      "name": "AI",
+      "count": 13
+    },
+    {
+      "name": "博客",
+      "count": 12
+    },
+    {
+      "name": "OpenClaw",
+      "count": 10
+    },
+    {
+      "name": "产品",
+      "count": 8
+    },
+    {
+      "name": "周报",
+      "count": 7
+    },
+    {
+      "name": "Hono",
+      "count": 7
+    },
+    {
+      "name": "IMGX",
+      "count": 7
+    },
+    {
+      "name": "吐槽",
+      "count": 6
+    },
+    {
+      "name": "Release Notes",
+      "count": 6
+    },
+    {
+      "name": "思考",
+      "count": 5
+    },
+    {
+      "name": "副业",
+      "count": 4
+    },
+    {
+      "name": "技术",
+      "count": 4
+    },
+    {
+      "name": "早早集市",
+      "count": 4
+    },
+    {
+      "name": "Agent",
+      "count": 4
+    },
+    {
+      "name": "issue",
+      "count": 4
+    },
+    {
+      "name": "Node",
+      "count": 4
+    },
+    {
+      "name": "Vue3",
+      "count": 4
+    },
+    {
+      "name": "感悟",
+      "count": 3
+    },
+    {
+      "name": "日常",
+      "count": 3
+    },
+    {
+      "name": "Cli",
+      "count": 3
+    },
+    {
+      "name": "CLI",
+      "count": 3
+    },
+    {
+      "name": "Docker",
+      "count": 3
+    },
+    {
+      "name": "Memos",
+      "count": 3
+    },
+    {
+      "name": "Nest",
+      "count": 3
+    },
+    {
+      "name": "安装教程",
+      "count": 2
+    },
+    {
+      "name": "程序员",
+      "count": 2
+    },
+    {
+      "name": "减肥",
+      "count": 2
+    },
+    {
+      "name": "Discord",
+      "count": 2
+    },
+    {
+      "name": "Heartbeat",
+      "count": 2
+    },
+    {
+      "name": "opencode",
+      "count": 2
+    },
+    {
+      "name": "Prisma",
+      "count": 2
+    },
+    {
+      "name": "Puppeteer",
+      "count": 2
+    },
+    {
+      "name": "Windows",
+      "count": 2
+    },
+    {
+      "name": "WSL",
+      "count": 2
+    },
+    {
+      "name": "安全",
+      "count": 1
+    },
+    {
+      "name": "宝玉",
+      "count": 1
+    },
+    {
+      "name": "代码质量",
+      "count": 1
+    },
+    {
+      "name": "发现",
+      "count": 1
+    },
+    {
+      "name": "飞书",
+      "count": 1
+    },
+    {
+      "name": "更新",
+      "count": 1
+    },
+    {
+      "name": "工程",
+      "count": 1
+    },
+    {
+      "name": "工具",
+      "count": 1
+    },
+    {
+      "name": "工作流",
+      "count": 1
+    },
+    {
+      "name": "公众号",
+      "count": 1
+    },
+    {
+      "name": "教程",
+      "count": 1
+    },
+    {
+      "name": "开发环境",
+      "count": 1
+    },
+    {
+      "name": "旅行",
+      "count": 1
+    },
+    {
+      "name": "奇技淫巧",
+      "count": 1
+    },
+    {
+      "name": "前端",
+      "count": 1
+    },
+    {
+      "name": "随笔",
+      "count": 1
+    },
+    {
+      "name": "文档",
+      "count": 1
+    },
+    {
+      "name": "效率工具",
+      "count": 1
+    },
+    {
+      "name": "写作技巧",
+      "count": 1
+    },
+    {
+      "name": "新闻",
+      "count": 1
+    },
+    {
+      "name": "育儿",
+      "count": 1
+    },
+    {
+      "name": "职场",
+      "count": 1
+    },
+    {
+      "name": "自动化",
+      "count": 1
+    },
+    {
+      "name": "总结",
+      "count": 1
+    },
+    {
+      "name": "组件库",
+      "count": 1
+    },
+    {
+      "name": "AI 编程",
+      "count": 1
+    },
+    {
+      "name": "AI 工具",
+      "count": 1
+    },
+    {
+      "name": "Apple Watch",
+      "count": 1
+    },
+    {
+      "name": "Astro",
+      "count": 1
+    },
+    {
+      "name": "Automation",
+      "count": 1
+    },
+    {
+      "name": "Bun",
+      "count": 1
+    },
+    {
+      "name": "Claude Code",
+      "count": 1
+    },
+    {
+      "name": "Cron",
+      "count": 1
+    },
+    {
+      "name": "dadd",
+      "count": 1
+    },
+    {
+      "name": "das",
+      "count": 1
+    },
+    {
+      "name": "Desktop",
+      "count": 1
+    },
+    {
+      "name": "Doubao",
+      "count": 1
+    },
+    {
+      "name": "Garry Tan",
+      "count": 1
+    },
+    {
+      "name": "Gemini",
+      "count": 1
+    },
+    {
+      "name": "GitHub Copilot",
+      "count": 1
+    },
+    {
+      "name": "GitLab",
+      "count": 1
+    },
+    {
+      "name": "Leafer",
+      "count": 1
+    },
+    {
+      "name": "macOS",
+      "count": 1
+    },
+    {
+      "name": "MacOS",
+      "count": 1
+    },
+    {
+      "name": "Markdown",
+      "count": 1
+    },
+    {
+      "name": "Next",
+      "count": 1
+    },
+    {
+      "name": "Nginx",
+      "count": 1
+    },
+    {
+      "name": "Nitro",
+      "count": 1
+    },
+    {
+      "name": "Obsidian",
+      "count": 1
+    },
+    {
+      "name": "openclaw",
+      "count": 1
+    },
+    {
+      "name": "OpenCode",
+      "count": 1
+    },
+    {
+      "name": "Remote Control",
+      "count": 1
+    },
+    {
+      "name": "SDK",
+      "count": 1
+    },
+    {
+      "name": "Security",
+      "count": 1
+    },
+    {
+      "name": "Shell",
+      "count": 1
+    },
+    {
+      "name": "SKILL",
+      "count": 1
+    },
+    {
+      "name": "SQLite",
+      "count": 1
+    },
+    {
+      "name": "TUI",
+      "count": 1
+    },
+    {
+      "name": "UI",
+      "count": 1
+    },
+    {
+      "name": "Vibe-Code",
+      "count": 1
+    },
+    {
+      "name": "Voice",
+      "count": 1
+    },
+    {
+      "name": "X",
+      "count": 1
+    },
+    {
+      "name": "YC",
+      "count": 1
+    },
+    {
+      "name": "zotepad",
+      "count": 1
+    }
+  ]
+}

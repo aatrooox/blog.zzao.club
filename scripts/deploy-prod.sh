@@ -101,6 +101,8 @@ RUN_GENERATE="${RUN_GENERATE:-true}"
 
 LOCAL_INSTALL_CMD="${LOCAL_INSTALL_CMD:-pnpm install --frozen-lockfile}"
 LOCAL_LINT_CMD="${LOCAL_LINT_CMD:-pnpm lint}"
+# pregenerate 会自动跑 extract:tags；此处显式再跑一次，保证部署日志可见
+LOCAL_EXTRACT_TAGS_CMD="${LOCAL_EXTRACT_TAGS_CMD:-pnpm extract:tags}"
 LOCAL_GENERATE_CMD="${LOCAL_GENERATE_CMD:-env NODE_OPTIONS=--max-old-space-size=4096 pnpm generate}"
 
 REMOTE_ARCHIVE="/tmp/${APP_NAME}-${TIMESTAMP}.tar.gz"
@@ -128,6 +130,9 @@ if is_enabled "${RUN_LINT}"; then
   log "Running local lint"
   bash -lc "${LOCAL_LINT_CMD}"
 fi
+
+log "Extracting content tags"
+bash -lc "${LOCAL_EXTRACT_TAGS_CMD}"
 
 if is_enabled "${RUN_GENERATE}"; then
   log "Running static generation"

@@ -39,21 +39,26 @@ const siteName = computed(() => appConfig.author || '早早集市')
 const siteNote = computed(() => appConfig.desciption || '人生游戏 DLC')
 const socialItems = computed(() => appConfig.social || [])
 
-const configTags = computed(() =>
-  (appConfig.tags || []).filter((t: string) => t !== '全部'),
-)
+/** 高频 top5（带篇数） */
+const topTagItems = computed(() => {
+  if (props.hotTags?.length)
+    return props.hotTags.slice(0, 5)
+  const fromConfig = (appConfig as any).topTagItems as Array<{ name: string, count: number }> | undefined
+  if (fromConfig?.length)
+    return fromConfig.slice(0, 5)
+  return (appConfig.tags || [])
+    .filter((t: string) => t !== '全部')
+    .slice(0, 5)
+    .map((name: string) => ({ name, count: 0 }))
+})
 
 const categoryList = computed(() => {
   if (props.categoryTags?.length)
-    return props.categoryTags
-  return configTags.value
+    return props.categoryTags.slice(0, 5)
+  return topTagItems.value.map(t => t.name)
 })
 
-const homeTags = computed(() => {
-  if (props.hotTags?.length)
-    return props.hotTags.slice(0, 6)
-  return configTags.value.map(name => ({ name, count: 0 }))
-})
+const homeTags = computed(() => topTagItems.value)
 
 function isNavActive(path: string) {
   if (path === '/')
@@ -285,26 +290,33 @@ onUnmounted(() => {
         {{ siteNote }}
       </p>
 
-      <div v-if="homeTags.length" class="font-sans flex flex-wrap gap-2">
+      <div v-if="homeTags.length" class="font-sans flex flex-wrap items-center gap-2">
         <NuxtLink
           v-for="tag in homeTags"
           :key="tag.name"
-          :to="`/article?tag=${tag.name}`"
+          :to="`/article?tag=${encodeURIComponent(tag.name)}`"
           class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800/80 text-zinc-600 dark:text-zinc-400 hover:bg-primary/10 hover:text-primary transition-colors"
         >
           <span>#{{ tag.name }}</span>
           <span v-if="tag.count > 0" class="tabular-nums text-[10px] text-zinc-400">{{ tag.count }}</span>
         </NuxtLink>
+        <NuxtLink
+          to="/tags"
+          class="inline-flex items-center gap-0.5 text-xs px-2.5 py-1 rounded-full border border-zinc-200 dark:border-zinc-700 text-zinc-500 hover:border-primary/30 hover:text-primary transition-colors"
+        >
+          更多
+          <Icon name="lucide:arrow-right" class="w-3 h-3" />
+        </NuxtLink>
       </div>
     </div>
 
-    <!-- 文章列表：分类按钮 -->
+    <!-- 文章列表：分类按钮（高频 top5 + 更多） -->
     <div v-else-if="variant === 'article'" class="mt-6">
       <div class="font-sans flex flex-wrap gap-2">
         <NuxtLink
           to="/article"
           class="text-xs px-3 py-1.5 rounded-full border transition-colors"
-          :class="!activeTags?.length
+          :class="!activeTags?.length && !$route.query.untagged
             ? 'border-primary/30 bg-primary/10 text-primary font-medium'
             : 'border-zinc-200 dark:border-zinc-700 text-zinc-500 hover:border-primary/30 hover:text-primary'"
         >
@@ -322,6 +334,13 @@ onUnmounted(() => {
         >
           #{{ tag }}
         </button>
+        <NuxtLink
+          to="/tags"
+          class="text-xs px-3 py-1.5 rounded-full border border-zinc-200 dark:border-zinc-700 text-zinc-500 hover:border-primary/30 hover:text-primary transition-colors inline-flex items-center gap-0.5"
+        >
+          更多
+          <Icon name="lucide:arrow-right" class="w-3 h-3" />
+        </NuxtLink>
       </div>
     </div>
 
