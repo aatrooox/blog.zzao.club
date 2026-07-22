@@ -1,6 +1,7 @@
 ---
 title: "白宫AI监管被指偏袒OpenAI亚马逊，Anthropic24小时内被施压"
 date: 2026-06-15
+group: "#202606AI资讯"
 description: "周五，白宫做出了一项 AI 监管决定。"
 author: user
 ---

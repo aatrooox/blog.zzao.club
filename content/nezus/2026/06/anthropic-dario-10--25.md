@@ -1,6 +1,7 @@
 ---
 title: "Anthropic上市前Dario自曝：文明崩溃概率10%-25%"
 date: 2026-06-15
+group: "#202606AI资讯"
 description: "Anthropic 要上市了。"
 author: user
 ---

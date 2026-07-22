@@ -1,6 +1,7 @@
 ---
 title: "Salesforce 36亿美元买下AI客服公司Fin：巨头为何要为\"聊天机器人\"砸这么多钱？"
 date: 2026-06-16
+group: "#202606AI资讯"
 description: "Salesforce 又出手了。"
 author: user
 ---

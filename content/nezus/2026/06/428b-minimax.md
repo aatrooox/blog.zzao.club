@@ -1,6 +1,7 @@
 ---
 title: "428B参数全部开源，MiniMax这步棋走对了"
 date: 2026-06-13
+group: "#202606AI资讯"
 description: "凌晨刷到一条消息，愣了三秒。"
 author: user
 ---

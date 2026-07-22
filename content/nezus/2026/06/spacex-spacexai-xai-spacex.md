@@ -1,6 +1,7 @@
 ---
 title: "SpaceX 注册 SpaceXAI，马斯克要把 xAI 并入 SpaceX"
 date: 2026-06-28
+group: "#202606AI资讯"
 description: "SpaceX 注册 SpaceXAI ，马斯克要把 xAI 并入 SpaceX"
 author: storytelling
 ---

@@ -1,6 +1,7 @@
 ---
 title: "Acti把AI Agent塞进手机键盘"
 date: 2026-07-02
+group: "#202607AI资讯"
 description: "你每天在手机上敲下的每一个字，都正被一个 keyboard 里的幽灵注视着。"
 author: storytelling
 ---

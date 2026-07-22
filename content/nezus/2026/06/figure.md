@@ -1,6 +1,7 @@
 ---
 title: "Figure工厂里，机器人比人多了"
 date: 2026-06-20
+group: "#202606AI资讯"
 description: "深夜 11 点，美国加州一座工厂里，灯还亮着。"
 author: storytelling
 ---

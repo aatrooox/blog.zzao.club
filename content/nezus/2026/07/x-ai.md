@@ -1,6 +1,7 @@
 ---
 title: "X 悄悄对 AI 敞开了大门，然后呢？"
 date: 2026-07-06
+group: "#202607AI资讯"
 description: "上个月，一个程序员在 GitHub 上发了个帖子，说他用 Claude 自动发了条推特。评论区炸了。"
 author: storytelling
 ---

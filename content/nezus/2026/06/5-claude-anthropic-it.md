@@ -1,6 +1,7 @@
 ---
 title: "5万人用Claude办公，Anthropic拿下印度IT巨头"
 date: 2026-06-13
+group: "#202606AI资讯"
 description: "昨天看到一条消息，让我意识到 AI 企业级市场正在发生一些有意思的变化。"
 author: user
 ---

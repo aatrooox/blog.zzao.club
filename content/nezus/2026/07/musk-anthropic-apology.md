@@ -1,6 +1,7 @@
 ---
 title: "马斯克向Anthropic低头认错"
 date: 2026-07-10
+group: "#202607AI资讯"
 description: "2025年9月马斯克说Anthropic不可能赢，2026年7月他公开认错。这背后是每月12.5亿美元的大单。"
 author: storytelling
 ---

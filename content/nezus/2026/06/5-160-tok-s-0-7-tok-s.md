@@ -1,6 +1,7 @@
 ---
 title: "5倍加速背后：160 tok/s起飞，0.7 tok/s坠毁"
 date: 2026-06-17
+group: "#202606AI资讯"
 description: "Hacker News 上一个帖子标题平平无奇——\"有人用本地模型替换 Claude/GPT 写日常代码吗？\""
 author: storytelling
 ---

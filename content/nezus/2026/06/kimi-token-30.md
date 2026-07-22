@@ -1,6 +1,7 @@
 ---
 title: "Kimi代码模型开源，推理token直接砍30%"
 date: 2026-06-13
+group: "#202606AI资讯"
 description: "昨天半夜， Kimi 发了一个新模型。"
 author: user
 ---

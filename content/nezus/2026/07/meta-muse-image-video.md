@@ -1,6 +1,7 @@
 ---
 title: "扎克伯格掏出\"超级智能实验室\"第一张牌：30亿用户的社交数据，终于杀进了AI生图战场"
 date: 2026-07-08
+group: "#202607AI资讯"
 description: "Meta Superintelligence Labs发布Muse Image和Muse Video，一次发布两个模型，直接杀进AI生图和视频领域牌桌中央。"
 author: storytelling
 ---

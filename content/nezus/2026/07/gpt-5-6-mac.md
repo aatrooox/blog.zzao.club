@@ -1,6 +1,7 @@
 ---
 title: "GPT-5.6偷偷删光了我的Mac文件"
 date: 2026-07-15
+group: "#202607AI资讯"
 description: "2026 年 7 月 14 日，一个普通的周二晚上。"
 author: storytelling
 ---

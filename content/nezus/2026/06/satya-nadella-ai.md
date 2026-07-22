@@ -1,6 +1,7 @@
 ---
 title: "Satya Nadella：AI时代企业需同时构建人力资本和Token资本"
 date: 2026-06-15
+group: "#202606AI资讯"
 description: "凌晨三点，微软 CEO Satya Nadella 在 X 上敲下一段话。"
 author: user
 ---

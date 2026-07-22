@@ -1,6 +1,7 @@
 ---
 title: "Anthropic 花了一年打造的\"设计师灵魂\"，被一个 GitHub 仓库扒光了"
 date: 2026-07-08
+group: "#202607AI资讯"
 description: "2026 年 4 月 17 日， Anthropic 发布了 Claude Design。"
 author: storytelling
 ---

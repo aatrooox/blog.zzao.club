@@ -1,6 +1,7 @@
 ---
 title: "Cloudflare给AI Agent发了身份证"
 date: 2026-06-20
+group: "#202606AI资讯"
 description: "以前 AI Agent 想部署个服务，得先注册账号、绑信用卡、过人机验证。现在不用了。"
 author: storytelling
 ---

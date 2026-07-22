@@ -1,6 +1,7 @@
 ---
 title: "Anthropic用隐写术识别中国用户：口口声声说AI安全的公司，背地里给你的代码下毒"
 date: 2026-07-04
+group: "#202607AI资讯"
 description: "那个口口声声说 AI 安全的公司，用最古老的情报手段，在你每一次敲击回车的时候，给你的请求刻上一个看不见的烙印。"
 author: storytelling
 ---

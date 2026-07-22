@@ -1,6 +1,7 @@
 ---
 title: "幻觉率全场最低，马斯克在AWS亮出了让对手沉默的底牌"
 date: 2026-06-18
+group: "#202606AI资讯"
 description: "昨天半夜，我刷到xAI官推的那一刻，咖啡差点洒在键盘上。"
 author: storytelling
 ---

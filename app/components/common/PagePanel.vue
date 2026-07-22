@@ -20,6 +20,8 @@ export interface Page extends ParsedContent {
   lastmod?: string
   meta?: any
   author?: string
+  /** 1–9 置顶（越小越靠前）；缺省或 ≥10 按时间排序 */
+  sort?: number
   seo?: {
     title?: string
     description?: string

@@ -1,6 +1,7 @@
 ---
 title: "Grok CLI 偷传代码：xAI 把你的仓库打包上传了"
 date: 2026-07-15
+group: "#202607AI资讯"
 description: "你正喝着咖啡写代码，终端里开着 Grok CLI 让它帮忙修个 bug。就回了一个单词 \"Done\"，结果你的整个代码仓库已经被悄悄打包，上传到了 xAI 的云端。"
 author: user
 ---

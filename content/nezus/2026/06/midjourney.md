@@ -1,6 +1,7 @@
 ---
 title: "你打开Midjourney的时候，它已经不是昨天的它了"
 date: 2026-06-12
+group: "#202606AI资讯"
 description: "昨天深夜刷推特的时候，一条更新日志让我愣了一下。"
 author: user
 ---

@@ -1,6 +1,7 @@
 ---
 title: "一个周末干掉四年：Anthropic 用 AI 两周搬完百万行代码，工程师沉默了"
 date: 2026-07-17
+group: "#202607AI资讯"
 description: "2026 年 7 月 16 日， Anthropic 发了一篇博客。"
 author: storytelling
 ---

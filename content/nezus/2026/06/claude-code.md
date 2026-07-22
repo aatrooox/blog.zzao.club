@@ -1,6 +1,7 @@
 ---
 title: "Claude Code放大招：写完代码直接给你一个网页"
 date: 2026-06-19
+group: "#202606AI资讯"
 description: "周五下午四点，一个工程师正在处理线上事故。"
 author: storytelling
 ---

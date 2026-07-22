@@ -1,6 +1,7 @@
 ---
 title: "你刷到的帖子可能全是AI写的"
 date: 2026-07-10
+group: "#202607AI资讯"
 description: "周五晚上十一点，你躺在床上刷手机。"
 author: storytelling
 ---

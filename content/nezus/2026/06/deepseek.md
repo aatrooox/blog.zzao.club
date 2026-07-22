@@ -1,6 +1,7 @@
 ---
 title: "DeepSeek成美国企业救命稻草，AI账单失控后100%切换"
 date: 2026-06-28
+group: "#202606AI资讯"
 description: "DeepSeek 成了美国企业的救命稻草"
 author: storytelling
 ---

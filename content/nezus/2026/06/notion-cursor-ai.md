@@ -1,6 +1,7 @@
 ---
 title: "Notion把代码写交给了Cursor：一个文件夹就是一个AI员工"
 date: 2026-06-25
+group: "#202606AI资讯"
 description: "凌晨两点，产品经理在 Notion 文档里@了一下 Cursor。"
 author: storytelling
 ---

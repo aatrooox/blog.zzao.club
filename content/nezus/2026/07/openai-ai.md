@@ -1,6 +1,7 @@
 ---
 title: "OpenAI造了个AI黑客，专攻自家模型"
 date: 2026-07-16
+group: "#202607AI资讯"
 description: "7 月 15 日， OpenAI 干了一件挺\"自虐\"的事。"
 author: storytelling
 ---

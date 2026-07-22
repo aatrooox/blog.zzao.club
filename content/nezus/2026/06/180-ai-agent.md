@@ -1,6 +1,7 @@
 ---
 title: "180亿美元对冲基金炒掉所有分析师，改用数百个AI Agent炒股"
 date: 2026-06-11
+group: "#202606AI资讯"
 description: "华尔街正在经历一场静悄悄的革命。"
 author: user
 ---

@@ -1,6 +1,7 @@
 ---
 title: "DeepSeek首轮融资500亿：投资人无投票权"
 date: 2026-06-17
+group: "#202606AI资讯"
 description: "估值 500 亿美元，投资人却连投票权都没有。"
 author: storytelling
 ---

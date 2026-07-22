@@ -1,6 +1,7 @@
 ---
 title: "ChatGPT学会自己干活了"
 date: 2026-07-10
+group: "#202607AI资讯"
 description: "早上 9 点，你打开电脑准备开始一天的工作。"
 author: storytelling
 ---

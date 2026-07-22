@@ -1,6 +1,7 @@
 ---
 title: "万亿砸下去，AI Agent 还是没跑起来"
 date: 2026-07-04
+group: "#202607AI资讯"
 description: "2026 年 7 月 2 日， Meta 内部全员大会。"
 author: storytelling
 ---

@@ -1,6 +1,7 @@
 ---
 title: "NVIDIA Rubin Ultra取消性能腰斩"
 date: 2026-07-04
+group: "#202607AI资讯"
 description: "三个月。从登台到取消， NVIDIA 只用了三个月。"
 author: storytelling
 ---

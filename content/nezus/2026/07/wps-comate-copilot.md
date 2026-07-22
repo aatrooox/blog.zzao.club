@@ -1,6 +1,7 @@
 ---
 title: "金山办公掏出WPS Comate，正面硬刚微软Copilot"
 date: 2026-07-16
+group: "#202607AI资讯"
 description: "你有没有想过一个问题：当微软把 Copilot 塞进 Office 全家桶，中国 6 亿 WPS 用户该怎么办？"
 author: storytelling
 ---

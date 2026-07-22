@@ -1,6 +1,7 @@
 ---
 title: "马斯克开源Grok Build，编程Agent进入白嫖时代"
 date: 2026-07-16
+group: "#202607AI资讯"
 description: "昨天深夜，马斯克的 xAI 扔了一颗炸弹。"
 author: storytelling
 ---

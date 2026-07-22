@@ -1,6 +1,7 @@
 ---
 title: "Hermes Desktop 安装及界面功能速览"
 date: 2026-06-09
+group: "#202606AI资讯"
 description: "Hermes 出桌面端有几天的时间了，但是 0.16.0 以前 bug 实在是略多。比如，聊天框内的内容无法回车发送（也没有发送按钮）；点击更新按钮重启，无法正常更新，也不会重启。"
 author: user
 ---

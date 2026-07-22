@@ -1,6 +1,7 @@
 ---
 title: "打开一个Git仓库Cursor就自动执行了恶意代码"
 date: 2026-07-15
+group: "#202607AI资讯"
 description: "想象一下这个场景：你在 GitHub 上发现一个感兴趣的开源项目，顺手 git clone 下来，用 Cursor 打开准备看看代码。"
 author: storytelling
 ---

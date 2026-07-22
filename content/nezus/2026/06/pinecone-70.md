@@ -1,6 +1,7 @@
 ---
 title: "阿里悄悄开源了内部数据库，Pinecone每月70美元要凉了？"
 date: 2026-06-20
+group: "#202606AI资讯"
 description: "昨天深夜，一个开发者在群里发了条消息："
 author: storytelling
 ---

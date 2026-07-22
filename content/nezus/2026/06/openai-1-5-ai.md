@@ -1,6 +1,7 @@
 ---
 title: "OpenAI砸1.5亿美元建合作伙伴网络，要搞AI界的安卓"
 date: 2026-06-15
+group: "#202606AI资讯"
 description: "1.5 亿美元，说多不多，说少不少。"
 author: user
 ---

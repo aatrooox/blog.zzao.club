@@ -1,6 +1,7 @@
 ---
 title: "欧盟一纸裁决，Google 20年护城河被撕开第一道口子"
 date: 2026-07-17
+group: "#202607AI资讯"
 description: "2019 年， Google 的工程师们正在调试 Gemini 的早期原型。彼时， Android 上只有一个 AI 助手有资格被称为\"系统级\"——那就是 Google 自己的。"
 author: storytelling
 ---

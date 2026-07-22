@@ -1,6 +1,7 @@
 ---
 title: "速度快了6倍：Kimi K2.7 Code高速版，把编程AI卷进新赛道"
 date: 2026-06-16
+group: "#202606AI资讯"
 description: "月之暗面Kimi K2.7 Code高速版上线，同模型输出速度提升5-6倍，常规编程180 TPS，短上下文260 TPS。"
 author: user
 ---

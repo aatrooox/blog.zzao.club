@@ -1,6 +1,7 @@
 ---
 title: "美团扔出一颗AI核弹：1.6万亿参数，代码能力碾压GPT"
 date: 2026-07-06
+group: "#202607AI资讯"
 description: "6 月 30 号晚上，我打开 OpenRouter ，发现排行榜上冒出一个陌生的名字——Owl Alpha。"
 author: storytelling
 ---

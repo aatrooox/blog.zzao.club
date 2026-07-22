@@ -1,6 +1,7 @@
 ---
 title: "马斯克：Optimus不达标就开除团队"
 date: 2026-07-10
+group: "#202607AI资讯"
 description: "2026 年 7 月，硅谷的夏天一如既往地炎热。"
 author: storytelling
 ---

@@ -1,5 +1,49 @@
 import type { Page } from '~/components/common/PagePanel.vue'
 
+/** sort 为 1–9 时视为置顶 */
+export function isPinnedPage(page: Pick<Page, 'sort'>): boolean {
+  const s = page.sort
+  return typeof s === 'number' && s >= 1 && s <= 9
+}
+
+/** 置顶优先（sort 升序），同档再按 date 降序 */
+export function comparePagesByPinThenDate(a: Page, b: Page): number {
+  const aPinned = isPinnedPage(a)
+  const bPinned = isPinnedPage(b)
+
+  if (aPinned !== bPinned)
+    return aPinned ? -1 : 1
+
+  if (aPinned && bPinned) {
+    const sa = a.sort ?? 9
+    const sb = b.sort ?? 9
+    if (sa !== sb)
+      return sa - sb
+  }
+
+  return new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime()
+}
+
+function sortPages(pages: Page[]): Page[] {
+  return [...pages].sort(comparePagesByPinThenDate)
+}
+
+const pageListFields = [
+  'id',
+  'path',
+  'title',
+  'showTitle',
+  'date',
+  'tags',
+  'description',
+  'versions',
+  'lastmod',
+  'meta',
+  'author',
+  'sort',
+  'group',
+] as const
+
 export async function usePages(options?: { filter_tags?: string | null, limit?: number }) {
   const filter_tags = options?.filter_tags
   const limit = options?.limit
@@ -9,11 +53,11 @@ export async function usePages(options?: { filter_tags?: string | null, limit?: 
     if (filter_tags) {
       query = query.where('tags', 'LIKE', `%${filter_tags}%`)
     }
+    // 有 limit 时不能先在 DB 侧 limit：置顶可能被截掉，先全量再排序裁剪
     query = query.order('date', 'DESC')
-    if (limit) {
-      query = query.limit(limit)
-    }
-    return await query.select('id', 'path', 'title', 'showTitle', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta', 'author').all() as unknown as Page[]
+    const pages = await query.select(...pageListFields).all() as unknown as Page[]
+    const sorted = sortPages(pages)
+    return limit ? sorted.slice(0, limit) : sorted
   })
   return { data, pending, refresh, error }
 }
@@ -44,10 +88,11 @@ export async function usePagesWithGroup(options?: { filter_tags?: MaybeRef<strin
     }
 
     query = query.order('date', 'DESC')
-    if (limit) {
-      query = query.limit(limit)
-    }
-    return await query.select('id', 'path', 'title', 'date', 'tags', 'group', 'lastmod', 'author').all() as unknown as Page[]
+    const pages = await query
+      .select('id', 'path', 'title', 'date', 'tags', 'group', 'lastmod', 'author', 'sort')
+      .all() as unknown as Page[]
+    const sorted = sortPages(pages)
+    return limit ? sorted.slice(0, limit) : sorted
   }, { watch: [filterTags] })
 
   return { data, pending, refresh, error }
@@ -60,9 +105,11 @@ export async function useGroupedPages() {
   const { data, pending, refresh, error } = await useAsyncData(key, async () => {
     // Nuxt Content 不支持 IS NOT NULL,需获取全部后过滤
     const query = queryCollection('content').order('date', 'DESC')
-    const allPages = await query.select('id', 'path', 'title', 'date', 'tags', 'group', 'lastmod', 'author').all() as unknown as Page[]
+    const allPages = await query
+      .select('id', 'path', 'title', 'date', 'tags', 'group', 'lastmod', 'author', 'sort')
+      .all() as unknown as Page[]
 
-    return allPages.filter(page => page.group) // 仅保留有 group 的文章
+    return sortPages(allPages.filter(page => page.group))
   })
 
   return { data, pending, refresh, error }
@@ -74,13 +121,15 @@ export async function usePagesByGroup(groupPath: string) {
 
   const { data, pending, refresh, error } = await useAsyncData(key, async () => {
     const query = queryCollection('content').order('date', 'DESC')
-    const allPages = await query.select('id', 'path', 'title', 'date', 'tags', 'group', 'lastmod', 'body', 'author').all() as unknown as Page[]
+    const allPages = await query
+      .select('id', 'path', 'title', 'date', 'tags', 'group', 'lastmod', 'body', 'author', 'sort')
+      .all() as unknown as Page[]
 
     // 匹配完整路径或父级路径
     // 例如: groupPath="Nuxt系列:全栈开发" 应匹配 "Nuxt系列:全栈开发:配置篇"
-    return allPages.filter(page =>
+    return sortPages(allPages.filter(page =>
       page.group && (page.group === groupPath || page.group.startsWith(`${groupPath}:`)),
-    )
+    ))
   })
 
   return { data, pending, refresh, error }
@@ -156,6 +205,71 @@ export interface FlatGroup {
   latestDate: Date
 }
 
+/** 首页信息流条目：单篇 or 合集 */
+export type HomeFeedItem
+  = | { type: 'article', data: Page }
+    | { type: 'group', data: FlatGroup }
+
+/**
+ * 按时间线构建首页 feed：
+ * 遇到带 group 的文章时，整组合并成一条合集；
+ * 无 group 的文章保持单篇。顺序沿用 pages 已有排序（置顶 + 时间）。
+ */
+export function buildHomeFeedItems(pages: Page[], limit = 25): HomeFeedItem[] {
+  // 预聚合：top-level group → 全部文章
+  const groupMap = new Map<string, Page[]>()
+  for (const page of pages) {
+    if (!page.group)
+      continue
+    const top = page.group.split(':')[0]!
+    const list = groupMap.get(top)
+    if (list)
+      list.push(page)
+    else
+      groupMap.set(top, [page])
+  }
+  for (const [key, list] of groupMap)
+    groupMap.set(key, sortPages(list))
+
+  const items: HomeFeedItem[] = []
+  const seenGroups = new Set<string>()
+
+  for (const page of pages) {
+    if (items.length >= limit)
+      break
+
+    if (page.group) {
+      const top = page.group.split(':')[0]!
+      if (seenGroups.has(top))
+        continue
+      seenGroups.add(top)
+
+      const articles = groupMap.get(top) ?? [page]
+      let latestDate = new Date(0)
+      for (const p of articles) {
+        const d = new Date(p.date || 0)
+        if (d > latestDate)
+          latestDate = d
+      }
+
+      items.push({
+        type: 'group',
+        data: {
+          name: top,
+          fullPath: top,
+          articles,
+          latestDate,
+        },
+      })
+    }
+    else {
+      items.push({ type: 'article', data: page })
+    }
+  }
+
+  return items
+}
+
 export function flattenGroups(root: GroupNode): FlatGroup[] {
   const result: FlatGroup[] = []
 
@@ -204,13 +318,14 @@ export async function useJinxArticles(options?: { limit?: number }) {
   const key = `pages-jinx-${limit}`
 
   const { data, pending, refresh, error } = await useAsyncData(key, async () => {
-    let query = queryCollection('content')
+    const query = queryCollection('content')
       .where('author', '=', 'Jinx')
       .order('date', 'DESC')
-    if (limit) {
-      query = query.limit(limit)
-    }
-    return await query.select('id', 'path', 'title', 'date', 'tags', 'author', 'description').all() as unknown as Page[]
+    const pages = await query
+      .select('id', 'path', 'title', 'date', 'tags', 'author', 'description', 'sort')
+      .all() as unknown as Page[]
+    const sorted = sortPages(pages)
+    return limit ? sorted.slice(0, limit) : sorted
   })
 
   return { data, pending, refresh, error }

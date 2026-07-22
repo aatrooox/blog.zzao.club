@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { Page } from '~/components/common/PagePanel.vue'
 import type { FlatGroup } from '~/composables/usePages'
+import { comparePagesByPinThenDate, isPinnedPage } from '~/composables/usePages'
 
 definePageMeta({ layout: 'content' })
 
@@ -163,11 +164,24 @@ function flattenGroups(root: GroupNode): FlatGroup[] {
   return result
 }
 
+/** 置顶文章（sort 1–9）单独置顶展示，不进入年月分组 */
+const pinnedArticles = computed(() => {
+  if (!data.value)
+    return []
+  return data.value
+    .filter(page => isPinnedPage(page) && !page.group)
+    .sort(comparePagesByPinThenDate)
+})
+
+const pinnedPathSet = computed(() => new Set(pinnedArticles.value.map(p => p.path)))
+
 const groupedArticles = computed(() => {
   if (!data.value)
     return []
 
-  const hierarchy = parseGroupHierarchy(data.value)
+  // 置顶单篇已单独展示，分组树中排除，避免重复
+  const unpinnedPages = data.value.filter(page => !pinnedPathSet.value.has(page.path))
+  const hierarchy = parseGroupHierarchy(unpinnedPages)
   const flatGroups = flattenGroups(hierarchy)
 
   const groups: Record<string, {
@@ -234,9 +248,10 @@ const groupedArticles = computed(() => {
 })
 
 const totalCount = computed(() => {
-  return groupedArticles.value.reduce((sum, group) => {
+  const grouped = groupedArticles.value.reduce((sum, group) => {
     return sum + group.items.reduce((s, item) => s + (isGroupItem(item) ? item.data.articles.length : 1), 0)
   }, 0)
+  return grouped + pinnedArticles.value.length
 })
 
 function onEnter(el: any) {
@@ -284,6 +299,62 @@ function isGroupItem(item: any): item is { type: 'group', data: FlatGroup } {
       >
         清除筛选
       </button>
+    </div>
+
+    <!-- 置顶区：sort 1–9 的文章固定在列表最上方 -->
+    <div v-if="pinnedArticles.length > 0" class="mb-10 space-y-3">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="font-sans text-xs font-bold tracking-widest uppercase text-amber-600 dark:text-amber-400">
+          置顶
+        </span>
+        <span class="h-px flex-1 bg-amber-200/60 dark:bg-amber-900/40" />
+      </div>
+      <NuxtLink
+        v-for="item in pinnedArticles"
+        :key="item.path"
+        :to="item.path"
+        class="block group"
+      >
+        <div class="py-3 px-4 -mx-4 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors duration-200">
+          <div class="flex items-center gap-2 min-w-0">
+            <span
+              class="font-sans shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400 leading-none"
+            >
+              置顶
+            </span>
+            <span
+              v-if="item.author === 'Jinx'"
+              class="font-sans shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded bg-indigo-100 dark:bg-indigo-900/40 text-indigo-500 dark:text-indigo-400 leading-none"
+            >
+              Jinx
+            </span>
+            <span
+              v-else
+              class="font-sans shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500 leading-none"
+            >
+              Kairos
+            </span>
+            <h3 class="text-base md:text-lg font-bold text-[var(--article-text)] group-hover:text-primary transition-colors leading-snug truncate">
+              {{ item.title }}
+            </h3>
+          </div>
+          <div class="font-sans flex items-center gap-3 mt-1 text-xs">
+            <div v-if="item.tags && item.tags.length" class="flex gap-2">
+              <button
+                v-for="tag in item.tags.slice(0, 3)"
+                :key="tag"
+                class="text-zinc-400 dark:text-zinc-500 hover:text-primary transition-colors cursor-pointer"
+                @click.prevent.stop="toggleTag(tag)"
+              >
+                #{{ tag }}
+              </button>
+            </div>
+            <span class="text-zinc-300 dark:text-zinc-600 tabular-nums ml-auto">
+              <NuxtTime :datetime="item.date" month="numeric" day="numeric" />
+            </span>
+          </div>
+        </div>
+      </NuxtLink>
     </div>
 
     <div v-if="groupedArticles.length > 0" class="space-y-8">
@@ -378,8 +449,8 @@ function isGroupItem(item: any): item is { type: 'group', data: FlatGroup } {
       </div>
     </div>
 
-    <!-- 空状态 -->
-    <div v-else class="py-20 text-center">
+    <!-- 空状态：无置顶且无分组列表时 -->
+    <div v-else-if="pinnedArticles.length === 0" class="py-20 text-center">
       <div class="text-zinc-400">
         {{ hasTagFilter ? `没有找到包含 ${activeTags.map(t => `"${t}"`).join(' 和 ')} 标签的文章` : '暂无文章' }}
       </div>

@@ -1,6 +1,7 @@
 ---
 title: "苹果Vision负责人跳槽OpenAI，触控MacBook要来了"
 date: 2026-06-28
+group: "#202606AI资讯"
 description: "苹果 Vision 负责人跳槽 OpenAI ，触控 MacBook 要来了"
 author: storytelling
 ---

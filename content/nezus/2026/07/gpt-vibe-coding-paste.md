@@ -1,6 +1,7 @@
 ---
 title: "用GPT Vibe Coding一个常用付费软件：Paste"
 date: 2026-07-16
+group: "#202607AI资讯"
 description: "之前在 MacOS 上买过一个付费软件 Paste，主要功能是把复制的内容保存在本地，然后快捷键呼出历史面板，自由选择复制记录 ⬇️"
 author: user
 ---

@@ -1,6 +1,7 @@
 ---
 title: "Vercel悄悄扔了个炸弹：一个文件夹，就是一个AI员工"
 date: 2026-06-18
+group: "#202606AI资讯"
 description: "上周五晚上，我刷 Twitter 的时候差点错过这条消息。"
 author: storytelling
 ---

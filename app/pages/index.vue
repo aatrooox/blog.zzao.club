@@ -50,7 +50,8 @@ useHead({
 const { data: allArticles } = await usePages()
 
 const catalog = computed(() => allArticles.value ?? [])
-const feedArticles = computed(() => catalog.value.slice(0, 25))
+/** 合集整组占一条，非合集单篇；最多 25 条 feed 位 */
+const feedItems = computed(() => buildHomeFeedItems(catalog.value, 25))
 
 const hotTags = computed(() => {
   const counter = new Map<string, number>()
@@ -74,6 +75,6 @@ const hotTags = computed(() => {
       variant="home"
       :hot-tags="hotTags"
     />
-    <HomeArticleFeed :articles="feedArticles" featured />
+    <HomeArticleFeed :items="feedItems" featured />
   </div>
 </template>

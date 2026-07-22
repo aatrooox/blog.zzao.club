@@ -1,6 +1,7 @@
 ---
 title: "Google 因 AI '说错话'被判赔：幻觉的时代结束了？"
 date: 2026-06-11
+group: "#202606AI资讯"
 description: "一个 AI 模型胡说八道， Google 被法庭判定要负责。"
 author: user
 ---

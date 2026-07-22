@@ -1,6 +1,7 @@
 ---
 title: "2880万次\"偷师\"被当场抓包：Claude母公司一封信，撕开了中美AI暗战的遮羞布"
 date: 2026-06-26
+group: "#202606AI资讯"
 description: "2026 年 6 月 25 日，路透社的一则独家报道在全球科技圈炸开了锅。"
 author: storytelling
 ---

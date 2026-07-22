@@ -1,6 +1,7 @@
 ---
 title: "xAI给Grok装上定时任务能力"
 date: 2026-07-17
+group: "#202607AI资讯"
 description: "凌晨三点，你被一条 Slack 消息震醒。服务器 CPU 飙到 95%。你爬起来查日志、重启服务、发通报——全程手动操作，而你的 AI 助手正在休眠。"
 author: storytelling
 ---

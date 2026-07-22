@@ -1,6 +1,7 @@
 ---
 title: "Apple智能落地中国，阿里千问成幕后赢家"
 date: 2026-07-16
+group: "#202607AI资讯"
 description: "等这一天，中国果粉等了将近两年。"
 author: storytelling
 ---

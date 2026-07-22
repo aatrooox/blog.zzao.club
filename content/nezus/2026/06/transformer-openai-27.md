@@ -1,6 +1,7 @@
 ---
 title: "Transformer之父跳槽OpenAI：谷歌27亿美元打了水漂"
 date: 2026-06-19
+group: "#202606AI资讯"
 description: "两年前的一个夏夜，硅谷山景城，谷歌总部灯火通明。"
 author: storytelling
 ---

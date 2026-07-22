@@ -1,6 +1,7 @@
 ---
 title: "Grok CLI 偷传代码：xAI 把你的仓库打包上传了"
 date: 2026-07-14
+group: "#202607AI资讯"
 description: "安全研究者发现 xAI Grok CLI 静默上传用户整个代码库和密钥，引起开发者对 AI Agent 隐私的广泛担忧。"
 author: storytelling
 ---

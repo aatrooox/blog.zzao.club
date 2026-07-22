@@ -1,6 +1,7 @@
 ---
 title: "Google 开源 4 倍速扩散模型：自回归的黄昏？"
 date: 2026-06-11
+group: "#202606AI资讯"
 description: "每次前向生成 256 个 token ，速度是自回归的 4 倍。"
 author: user
 ---

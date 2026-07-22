@@ -1,6 +1,7 @@
 ---
 title: "AI的身份证来了：网信办首次为AI服务设立专章"
 date: 2026-07-04
+group: "#202607AI资讯"
 description: "7 月 3 日，国家网信办扔了一颗\"深水炸弹\"——在修订了 26 年的老法规里，给 AI 单独开了一个房间。"
 author: storytelling
 ---

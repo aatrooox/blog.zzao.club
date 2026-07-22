@@ -1,6 +1,7 @@
 ---
 title: "微软悄悄把OpenAI踢出局：Copilot正在用自研模型\"省钱\"，但你花的钱一分不少"
 date: 2026-07-08
+group: "#202607AI资讯"
 description: "微软在Excel和Outlook的Copilot中用自研MAI模型替换OpenAI和Anthropic，每周处理数万次请求，目标是逐步消除第三方模型成本。"
 author: storytelling
 ---

@@ -1,6 +1,7 @@
 ---
 title: "豆包悄悄上了任务模式，字节的Agent野心藏不住了"
 date: 2026-06-13
+group: "#202606AI资讯"
 description: "昨天刷朋友圈，看到一个朋友发：\"豆包现在能帮我做 PPT 了？\""
 author: user
 ---

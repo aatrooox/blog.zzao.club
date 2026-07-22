@@ -1,6 +1,7 @@
 ---
 title: "一个目录就是一个 Agent：Vercel 开源 Eve，Next.js 的故事要在 AI 重演？"
 date: 2026-06-18
+group: "#202606AI资讯"
 description: "月查询量超过 3 万次，一个自主 SDR 的年成本只有约 $5k、产出回报约 32 倍，一个 RevOps Agent 由业务团队在 6 周内零工程师参与 搭建完成——这些数字来自 Vercel 内部已经上线的 6 个 Agent。"
 author: storytelling
 ---

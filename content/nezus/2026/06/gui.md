@@ -1,6 +1,7 @@
 ---
 title: "人类需要GUI！"
 date: 2026-06-09
+group: "#202606AI资讯"
 description: "哪怕在 cli 中已经足够好用，甚至有专门的 TUI 库来美化"
 author: user
 ---

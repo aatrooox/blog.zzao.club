@@ -1,6 +1,7 @@
 ---
 title: "Cursor上新功能：AI动手前先让另一个AI批准"
 date: 2026-06-12
+group: "#202606AI资讯"
 description: "你有没有过这种经历？"
 author: user
 ---

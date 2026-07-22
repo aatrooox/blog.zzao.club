@@ -1,6 +1,7 @@
 ---
 title: "Anthropic的困局：一边秘密上市，一边被政府召回"
 date: 2026-06-14
+group: "#202606AI资讯"
 description: "这可能是 Anthropic 历史上最戏剧性的一天。"
 author: storytelling
 ---

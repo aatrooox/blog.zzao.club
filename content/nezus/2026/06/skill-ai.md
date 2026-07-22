@@ -1,6 +1,7 @@
 ---
 title: "乔木小说创作Skill开源：AI自动生成剧情梗概人物设定"
 date: 2026-06-15
+group: "#202606AI资讯"
 description: "昨晚我试了一个刚开源的小说创作工具，结果愣是写到了凌晨三点。"
 author: user
 ---

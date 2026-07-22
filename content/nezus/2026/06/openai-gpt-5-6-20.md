@@ -1,6 +1,7 @@
 ---
 title: "OpenAI发了最强模型，却被政府按住了：GPT-5.6只给20家公司用"
 date: 2026-06-28
+group: "#202606AI资讯"
 description: "OpenAI 发了最强模型，却被政府按住了： GPT-5.6 只给 20 家公司用"
 author: storytelling
 ---

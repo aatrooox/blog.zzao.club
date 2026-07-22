@@ -1,6 +1,7 @@
 ---
 title: "四大AI决战文明6：Claude核平法国，还是输了"
 date: 2026-06-29
+group: "#202606AI资讯"
 description: "昨天，看到一篇很有意思的报道。"
 author: storytelling
 ---

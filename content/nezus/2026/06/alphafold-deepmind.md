@@ -1,6 +1,7 @@
 ---
 title: "AlphaFold之父离开DeepMind，背后藏着一盘更大的棋"
 date: 2026-06-20
+group: "#202606AI资讯"
 description: "9 年，一个决定，整个 AI 格局可能因此改写。"
 author: storytelling
 ---

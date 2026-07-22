@@ -1,6 +1,7 @@
 ---
 title: "当造AI的人亲口说AI会抢走工作"
 date: 2026-06-12
+group: "#202606AI资讯"
 description: "今天看到一条新闻，来自 Anthropic——就是做 Claude 的那家公司。"
 author: user
 ---

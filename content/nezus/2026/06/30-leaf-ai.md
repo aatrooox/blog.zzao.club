@@ -1,6 +1,7 @@
 ---
 title: "30秒克隆网红声音：Leaf开源AI分身项目"
 date: 2026-06-27
+group: "#202606AI资讯"
 description: "你可能觉得，做一个能实时对话的 AI 分身，需要一整个团队、几百万经费、外加三个月的研发周期。"
 author: storytelling
 ---
