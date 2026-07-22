@@ -13,7 +13,7 @@ export async function usePages(options?: { filter_tags?: string | null, limit?: 
     if (limit) {
       query = query.limit(limit)
     }
-    return await query.select('id', 'path', 'title', 'showTitle', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta').all() as unknown as Page[]
+    return await query.select('id', 'path', 'title', 'showTitle', 'date', 'tags', 'description', 'versions', 'lastmod', 'meta', 'author').all() as unknown as Page[]
   })
   return { data, pending, refresh, error }
 }

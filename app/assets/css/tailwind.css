@@ -56,7 +56,8 @@
   --card-foreground: oklch(0.141 0.005 285.823);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: hsl(142 32% 32%);
+  /* 全局强调色：Grok 气质紫 violet-600 */
+  --primary: hsl(262 83% 58%);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
@@ -147,6 +148,20 @@
   --pixel-gradient-start: oklch(65% 0.15 200); /* 渐变起始色 */
   --pixel-gradient-mid: oklch(70% 0.12 160); /* 渐变中间色 */
   --pixel-gradient-end: oklch(75% 0.1 120); /* 渐变结束色 */
+
+  /* 文章阅读域（对标 geedea 气质，仅 .article-reading 生效） */
+  --article-measure: 40rem;
+  --article-body-size: 1.0625rem;
+  --article-body-size-md: 1.125rem;
+  --article-leading: 2;
+  --article-text: oklch(0.28 0.02 260);
+  --article-muted: oklch(0.52 0.02 260);
+  --article-link-decoration: oklch(0.82 0.01 260);
+  --article-link-decoration-hover: oklch(0.55 0.02 260);
+  --article-serif: 'LXGWS', 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'SimSun', serif;
+  --article-fangsong: 'STFangsong', 'FangSong', '仿宋', 'LXGWS', serif;
+  /* 行内 code：仅区分专有名词，不抢加粗注意力 */
+  --article-code-text: oklch(0.38 0.015 260);
 }
 
 .dark {
@@ -156,8 +171,9 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.141 0.005 285.823);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.21 0.006 285.885);
+  /* 暗色强调：violet-400，暗底上更清晰 */
+  --primary: hsl(258 90% 76%);
+  --primary-foreground: oklch(0.2 0.04 280);
   --secondary: oklch(0.274 0.006 286.033);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.274 0.006 286.033);
@@ -243,6 +259,212 @@
   --pixel-gradient-start: oklch(65% 0.15 200); /* 渐变起始色 */
   --pixel-gradient-mid: oklch(70% 0.12 160); /* 渐变中间色 */
   --pixel-gradient-end: oklch(75% 0.1 120); /* 渐变结束色 */
+
+  /* 文章阅读域 · dark */
+  --article-text: oklch(0.9 0.02 260);
+  --article-muted: oklch(0.72 0.02 260);
+  --article-link-decoration: oklch(0.45 0.02 260);
+  --article-link-decoration-hover: oklch(0.7 0.02 260);
+  --article-code-text: oklch(0.78 0.015 260);
+}
+
+/* ========== 站点内容字体（首页 / 列表 / 正文统一） ========== */
+
+/**
+ * 内容面：与文章正文同一套衬线阅读体
+ * 导航、按钮、日期等 UI 仍用 .font-sans 覆盖
+ */
+.site-content {
+  font-family: var(--article-serif);
+  color: var(--article-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.site-content .font-sans,
+.site-content :where(button, input, select, textarea, nav, time, .tabular-nums) {
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+}
+
+/* ========== 文章阅读排版 ========== */
+
+.article-reading {
+  font-family: var(--article-serif);
+  font-size: var(--article-body-size);
+  line-height: var(--article-leading);
+  color: var(--article-text);
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .article-reading {
+    font-size: var(--article-body-size-md);
+  }
+}
+
+/* 仿宋引用块 */
+.article-quote {
+  position: relative;
+  font-family: var(--article-fangsong);
+  margin: 1.25em 1em;
+  padding: 0;
+  border: none;
+  color: var(--article-text);
+}
+
+.article-quote::before,
+.article-quote::after {
+  position: absolute;
+  color: var(--article-muted);
+  font-weight: 800;
+  font-size: 1.25em;
+  font-family: var(--article-serif);
+  line-height: 1;
+}
+
+.article-quote::before {
+  content: '“';
+  top: 0;
+  left: -0.85em;
+}
+
+.article-quote::after {
+  content: '”';
+  right: -0.85em;
+  bottom: 0;
+}
+
+.article-quote > :first-child {
+  margin-top: 0;
+}
+
+.article-quote > :last-child {
+  margin-bottom: 0;
+}
+
+/* 波浪链接（文章内） */
+.article-link {
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  text-decoration-color: var(--article-link-decoration);
+  transition: text-decoration-color 0.15s ease;
+}
+
+.article-link:hover {
+  text-decoration-color: var(--article-link-decoration-hover);
+}
+
+/* 外链图标：与文字同基线，不参与下划线错位 */
+.article-link-external {
+  display: inline;
+}
+
+.article-link-icon {
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  margin-left: 0.2em;
+  vertical-align: -0.1em;
+  color: var(--article-muted);
+  opacity: 0.7;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+/* 极简 TOC（geedea 旁注风格） */
+.reading-toc {
+  padding: 0.25rem 0;
+}
+
+.reading-toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.reading-toc-item {
+  margin: 0;
+}
+
+.reading-toc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 100%;
+  padding: 0.25rem 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--article-muted, rgb(113 113 122));
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+@media (min-width: 1280px) {
+  .reading-toc-link {
+    font-size: 0.8125rem;
+  }
+}
+
+.reading-toc-link::before {
+  content: '';
+  display: inline-block;
+  flex-shrink: 0;
+  width: 0.75rem;
+  height: 0.2rem;
+  border-radius: 0.15rem;
+  background-color: rgb(228 228 231);
+  transition: background-color 0.2s ease;
+}
+
+.dark .reading-toc-link::before {
+  background-color: rgb(63 63 70);
+}
+
+.reading-toc-link:hover,
+.reading-toc-link.active {
+  color: var(--article-text, rgb(39 39 42));
+}
+
+.reading-toc-link.active::before {
+  background-color: var(--primary);
+}
+
+.dark .reading-toc-link.active::before {
+  background-color: var(--primary);
+}
+
+.reading-toc-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reading-toc-child .reading-toc-link {
+  padding-left: 0.25rem;
+  font-size: 0.7rem;
+}
+
+.reading-toc-children {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding-left: 0.75rem;
+}
+
+.reading-toc-item.is-open > .reading-toc-children {
+  max-height: 25rem;
+  overflow-y: auto;
 }
 
 @layer base {
@@ -428,7 +650,7 @@ body {
   bottom: -2px;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, #22d3ee, #06b6d4, #0891b2);
+  background: linear-gradient(90deg, #8b5cf6, #7c3aed, #6d28d9);
   border-radius: 1px;
   transform: scaleX(0);
   transform-origin: left;

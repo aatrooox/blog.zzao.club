@@ -25,7 +25,7 @@ watch(firstVisibleId, (val) => {
   }
 })
 
-function commentEnter(el) {
+function _commentEnter(el) {
   animate(el, {
     opacity: '1',
     duration: 100,
@@ -49,11 +49,11 @@ function commentEnter(el) {
     },
   })
 }
-function commentBeforeEnter(el) {
+function _commentBeforeEnter(el) {
   el.style.opacity = '0'
 }
 
-function commentLeave(el, done) {
+function _commentLeave(el, done) {
   animate(el, {
     scale: [1, 1.1, 1],
     opacity: '0',
@@ -313,70 +313,91 @@ watchEffect(async () => {
 
 <template>
   <NuxtLayout :name="isGroupedArticle ? 'group-post-layout' : 'post-layout'">
-    <div v-if="page" class="pb-10 m-auto mb-4">
-      <div ref="articleWrap" class="article-wrap relative w-full flex flex-col box-border my-6">
-        <h1
-          class="text-left text-2xl font-bold title-normal transition-all duration-150 ease-out"
-        >
-          {{ page?.title }}
-        </h1>
-        <div class="flex flex-col gap-3 py-3 mb-2 border-b border-zinc-100 dark:border-zinc-800">
-            <div class="flex items-center gap-3">
+    <div v-if="page" class="pb-10 m-auto">
+      <div ref="articleWrap" class="site-content article-wrap relative w-full flex flex-col box-border">
+        <header class="mb-8">
+          <h1 class="text-left text-3xl md:text-4xl font-black tracking-tight leading-tight text-[var(--article-text)]">
+            {{ page?.title }}
+          </h1>
+
+          <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-[var(--article-muted)] font-sans">
+            <div class="flex items-center gap-2">
               <NuxtImg
                 :src="page.author === 'Jinx' ? appConfig.jinx.avatar : appConfig.avatar"
                 :alt="page.author === 'Jinx' ? appConfig.jinx.name : 'Aatrox'"
-                width="32"
-                height="32"
-                class="w-8 h-8 rounded-full object-cover shrink-0"
+                width="28"
+                height="28"
+                class="w-7 h-7 rounded-full object-cover shrink-0 opacity-90"
               />
-              <div class="flex flex-col leading-tight">
-                <span class="text-sm font-semibold text-zinc-800 dark:text-zinc-200">
-                  {{ page.author === 'Jinx' ? appConfig.jinx.name : 'Aatrox' }}
-                </span>
-                <span class="text-xs text-zinc-400 dark:text-zinc-500 font-mono">{{ formatDate(page.date ?? '') }}</span>
-              </div>
-              <ClientOnly>
-                <div class="ml-auto flex items-center gap-4 text-zinc-400 dark:text-zinc-500">
-                  <button class="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors" title="复制链接" @click="copyLink">
-                    <Icon name="material-symbols:share-reviews-outline-rounded" class="w-4 h-4" />
-                  </button>
-                  <button class="hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors" data-umami-event="wx-copy-btn" title="复制为微信公众号格式" @click="getInnerHTML">
-                    <Icon name="icon-park-outline:wechat" class="w-4 h-4" />
-                  </button>
-                </div>
-              </ClientOnly>
-            </div>
-            <div v-if="page.tags && page.tags.length" class="flex flex-wrap gap-2">
-              <span
-                v-for="tag in page.tags"
-                :key="tag"
-                class="text-xs px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400"
-              >
-                #{{ tag }}
+              <span class="font-medium text-zinc-700 dark:text-zinc-300">
+                {{ page.author === 'Jinx' ? appConfig.jinx.name : 'Aatrox' }}
               </span>
             </div>
+            <span class="text-zinc-300 dark:text-zinc-600" aria-hidden="true">·</span>
+            <time class="tabular-nums" :datetime="page.date">{{ formatDate(page.date ?? '') }}</time>
+
+            <ClientOnly>
+              <div class="ml-auto flex items-center gap-1 text-zinc-400 dark:text-zinc-500">
+                <button
+                  type="button"
+                  class="p-1.5 rounded-md hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+                  title="复制链接"
+                  @click="copyLink"
+                >
+                  <Icon name="material-symbols:share-reviews-outline-rounded" class="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  class="p-1.5 rounded-md hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+                  data-umami-event="wx-copy-btn"
+                  title="复制为微信公众号格式"
+                  @click="getInnerHTML"
+                >
+                  <Icon name="icon-park-outline:wechat" class="w-4 h-4" />
+                </button>
+              </div>
+            </ClientOnly>
           </div>
-        <article ref="curMdContentRef" class="content-wrap prose prose-stone prose-base max-w-none p-0 w-full">
+
+          <div v-if="page.tags && page.tags.length" class="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-sans">
+            <span
+              v-for="tag in page.tags"
+              :key="tag"
+              class="text-sm text-[var(--article-muted)]"
+            >
+              #{{ tag }}
+            </span>
+          </div>
+        </header>
+
+        <article ref="curMdContentRef" class="content-wrap article-reading w-full max-w-none p-0">
           <ContentRenderer :value="page?.body" class="max-w-full" />
         </article>
+
         <ClientOnly>
-          <div v-if="adjacentPages.length">
-            <div class="bg-primary/5 dark:bg-zinc-900 rounded-lg p-4 md:p-6">
-              <div class="flex justify-between text-sm md:text-base ">
-                <div class="flex-1 flex items-center gap-2">
+          <div v-if="adjacentPages.length" class="mt-12 font-sans">
+            <div class="border-t border-zinc-200 dark:border-zinc-800 pt-6">
+              <div class="flex justify-between gap-4 text-sm">
+                <div class="flex-1 min-w-0 flex items-center gap-2">
                   <template v-if="adjacentPages[0]">
-                    <Icon name="material-symbols:arrow-back-2-outline-rounded" size="1.5em" />
-                    <NuxtLink class="font-bold w-[300px] whitespace-nowrap overflow-hidden text-ellipsis hover:text-primary transition-colors" :href="adjacentPages[0].path">
+                    <Icon name="material-symbols:arrow-back-2-outline-rounded" class="shrink-0 opacity-50" size="1.25em" />
+                    <NuxtLink
+                      class="font-medium truncate text-zinc-700 dark:text-zinc-300 hover:text-[var(--article-text)] transition-colors"
+                      :href="adjacentPages[0].path"
+                    >
                       {{ adjacentPages[0].title }}
                     </NuxtLink>
                   </template>
                 </div>
-                <div class="flex-1 text-right flex items-center justify-end gap-2">
+                <div class="flex-1 min-w-0 text-right flex items-center justify-end gap-2">
                   <template v-if="adjacentPages[1]">
-                    <NuxtLink class="font-bold w-[300px] whitespace-nowrap overflow-hidden text-ellipsis hover:text-primary transition-colors" :href="adjacentPages[1].path">
+                    <NuxtLink
+                      class="font-medium truncate text-zinc-700 dark:text-zinc-300 hover:text-[var(--article-text)] transition-colors"
+                      :href="adjacentPages[1].path"
+                    >
                       {{ adjacentPages[1].title }}
                     </NuxtLink>
-                    <Icon name="material-symbols:play-arrow-outline-rounded" size="1.5em" />
+                    <Icon name="material-symbols:play-arrow-outline-rounded" class="shrink-0 opacity-50" size="1.25em" />
                   </template>
                 </div>
               </div>
@@ -387,99 +408,3 @@ watchEffect(async () => {
     </div>
   </NuxtLayout>
 </template>
-
-<style scoped>
-.notion-toc {
-  padding: 0.5rem 0;
-}
-
-.notion-toc-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  position: relative;
-}
-
-.notion-toc-item {
-  margin: 0;
-  position: relative;
-}
-
-.notion-toc-link {
-  display: block;
-  padding: 0.375rem 0.75rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: rgb(161 161 170);
-  text-decoration: none;
-  border-radius: 0.375rem;
-  transition: all 0.2s ease;
-  position: relative;
-  border-left: 2px solid transparent;
-  margin-left: -2px;
-}
-
-.dark .notion-toc-link {
-  color: rgb(161 161 170);
-}
-
-.notion-toc-link:hover {
-  color: rgb(113 113 122);
-  background-color: rgb(244 244 245);
-}
-
-.dark .notion-toc-link:hover {
-  color: rgb(212 212 216);
-  background-color: rgb(39 39 42);
-}
-
-.notion-toc-link.active {
-  color: hsl(142 32% 32%);
-  background-color: rgb(240 253 244);
-  font-weight: 500;
-  border-left-color: hsl(142 32% 32%);
-}
-
-.dark .notion-toc-link.active {
-  color: hsl(142 45% 55%);
-  background-color: rgba(34 197 94 / 0.1);
-  border-left-color: hsl(142 45% 55%);
-}
-
-.notion-toc-text {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.notion-toc-child .notion-toc-link {
-  padding-left: 1.5rem;
-  font-size: 0.8125rem;
-}
-
-.notion-toc-list::-webkit-scrollbar {
-  width: 4px;
-}
-
-.notion-toc-list::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.notion-toc-list::-webkit-scrollbar-thumb {
-  background: rgb(228 228 231);
-  border-radius: 2px;
-}
-
-.dark .notion-toc-list::-webkit-scrollbar-thumb {
-  background: rgb(63 63 70);
-}
-
-.notion-toc-list::-webkit-scrollbar-thumb:hover {
-  background: rgb(212 212 216);
-}
-
-.dark .notion-toc-list::-webkit-scrollbar-thumb:hover {
-  background: rgb(82 82 91);
-}
-</style>

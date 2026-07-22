@@ -140,22 +140,28 @@ const vscodeIconMap = (lang: string | null) => {
 </script>
 
 <template>
-  <div>
-    <div class="flex items-center justify-between gap-1.5 border-1 border-zinc-400 bg-zinc-100/10  relative px-4 py-1 rounded-tl-sm rounded-tr-lg">
-      <div class="flex items-center gap-1.5 text-sm">
-        <Icon :name="`vscode-icons:file-type-${vscodeIconMap(language)}`" />{{ filename }}
+  <div data-article-pre class="group/code relative my-6 font-sans text-[0.95rem]">
+    <div class="flex items-center justify-between gap-2 px-3 py-1.5 rounded-t-md border border-zinc-200 dark:border-zinc-700 bg-zinc-50/80 dark:bg-zinc-900/60 text-xs text-zinc-500">
+      <div class="flex items-center gap-1.5 min-w-0 truncate">
+        <Icon v-if="language" :name="`vscode-icons:file-type-${vscodeIconMap(language)}`" class="shrink-0" />
+        <span class="truncate">{{ filename || language || 'code' }}</span>
       </div>
       <ClientOnly>
         <button
           v-if="isSupported"
-          class="flex items-center gap-1 px-2 py-1 text-xs text-text-primary hover:text-foreground transition-colors rounded border border-transparent hover:border-border-primary"
+          type="button"
+          class="flex items-center gap-1 px-1.5 py-0.5 text-xs text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-colors rounded cursor-pointer opacity-70 group-hover/code:opacity-100"
           title="复制代码"
           @click="copyCode"
         >
-          <Icon :name=" copied ? 'lucide:check' : `lucide:copy`" />
+          <Icon :name="copied ? 'lucide:check' : 'lucide:copy'" class="w-3.5 h-3.5" />
         </button>
       </ClientOnly>
     </div>
-    <pre ref="preRef" :class="$props.class" class="mt-0! rounded-none border-zinc-400 border border-t-0 py-0! overflow-x-auto leading-snug! rounded-bl-lg rounded-br-lg"><slot /></pre>
+    <pre
+      ref="preRef"
+      :class="$props.class"
+      class="mt-0! mb-0! rounded-t-none rounded-b-md border border-t-0 border-zinc-200 dark:border-zinc-700 py-3! px-4! overflow-x-auto leading-relaxed! bg-zinc-50/50 dark:bg-zinc-900/40 text-[0.9em]"
+    ><slot /></pre>
   </div>
 </template>

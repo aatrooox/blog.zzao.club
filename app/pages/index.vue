@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-definePageMeta({ layout: 'home' })
+definePageMeta({ layout: 'content' })
 useHead({
   title: '早早集市｜博客站',
   meta: [
@@ -47,72 +47,33 @@ useHead({
   ],
 })
 
-const [
-  { data: allArticles },
-  { data: jinxArticles },
-] = await Promise.all([
-  usePagesWithGroup({ limit: 50 }),
-  useJinxArticles({ limit: 8 }),
-])
+const { data: allArticles } = await usePages()
 
-// 解析文章分组结构（排除 Jinx 文章）
-const groupHierarchy = computed(() => {
-  if (!allArticles.value)
-    return null
-  // 过滤掉 Jinx 的文章，Aatrox 专栏只展示 Aatrox 的内容
-  const aatroxArticles = allArticles.value.filter((a: any) => !a.author || a.author !== 'Jinx')
-  return parseGroupHierarchy(aatroxArticles)
-})
+const catalog = computed(() => allArticles.value ?? [])
+const feedArticles = computed(() => catalog.value.slice(0, 25))
 
-const flatGroups = computed(() => {
-  if (!groupHierarchy.value)
-    return []
-  return flattenGroups(groupHierarchy.value)
-})
-
-// LATEST 列：最新5篇 Aatrox 无分组文章
-const latestArticles = computed(() => {
-  if (!groupHierarchy.value)
-    return []
-  return groupHierarchy.value.articles.slice(0, 5)
-})
-
-// 技术文章列表（单篇 + 分组，排除前3篇已在 Latest 展示的；最多8条）
-const techItems = computed(() => {
-  const items: any[] = []
-  if (groupHierarchy.value) {
-    groupHierarchy.value.articles.forEach((article: any, idx: number) => {
-      if (idx < 5)
-        return // Latest 已展示前5篇
-      items.push({ type: 'article', data: article })
-    })
+const hotTags = computed(() => {
+  const counter = new Map<string, number>()
+  for (const page of catalog.value) {
+    for (const tag of page.tags ?? []) {
+      if (!tag || tag === '全部')
+        continue
+      counter.set(tag, (counter.get(tag) ?? 0) + 1)
+    }
   }
-  flatGroups.value.forEach((group) => {
-    items.push({ type: 'group', data: group })
-  })
-  return items.slice(0, 8)
+  return [...counter.entries()]
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 6)
 })
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto px-4 py-6">
-    <!-- 顶部信息栏 -->
-    <HomeHeroSection />
-
-    <!-- 三列文章区：LATEST | AATROX | JINX -->
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-0 xl:divide-x divide-zinc-200 dark:divide-zinc-800">
-      <!-- LATEST -->
-      <div class="xl:pr-6">
-        <HomeNewsColumn :articles="latestArticles" />
-      </div>
-      <!-- AATROX -->
-      <div class="pt-6 xl:pt-0 xl:px-6 border-t md:border-t-0 xl:border-t-0 border-zinc-200 dark:border-zinc-800">
-        <HomeTechColumn :items="techItems" />
-      </div>
-      <!-- JINX -->
-      <div class="pt-6 xl:pt-0 xl:pl-6 border-t xl:border-t-0 border-zinc-200 dark:border-zinc-800">
-        <HomeJinxColumn :articles="jinxArticles ?? []" />
-      </div>
-    </div>
+  <div class="site-content">
+    <SiteHeader
+      variant="home"
+      :hot-tags="hotTags"
+    />
+    <HomeArticleFeed :articles="feedArticles" featured />
   </div>
 </template>

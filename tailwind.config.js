@@ -68,13 +68,11 @@ export default {
     fontFamily: {
       sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
       mono: ['ui-monospace', 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', 'monospace'],
-      lxgws: ['LXGWS', 'sans-serif'],
+      lxgws: ['LXGWS', 'serif'],
+      serif: ['LXGWS', 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'SimSun', 'serif'],
+      fangsong: ['STFangsong', 'FangSong', '仿宋', 'LXGWS', 'serif'],
       pixel: ['Inter', 'sans-serif'], // 映射到现代字体，保持兼容性
       cartoon: ['Nunito', 'sans-serif'],
-      // douyin: ['DouYin', 'sans-serif'],
-      // ipix: ['IPIX', 'sans-serif'],
-      // silver: ['Silver', 'sans-serif'],
-      // nanodsong: ['NanoDSong', 'sans-serif']
     },
     screens: {
       'xs': '480px',

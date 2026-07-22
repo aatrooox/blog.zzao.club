@@ -60,7 +60,7 @@ const groupTree = computed(() => {
 <template>
   <!-- 悬浮侧边栏容器 - 与 TOC 布局对称 -->
   <div class="hidden lg:block absolute top-0 right-full mr-8 h-full">
-    <div class="sticky top-24 w-[240px] max-h-[calc(100vh-8rem)] overflow-y-auto group-sidebar">
+    <div class="sticky top-8 w-[240px] max-h-[calc(100vh-4rem)] overflow-y-auto group-sidebar">
       <!-- 侧边栏标题 -->
       <div class="mb-3 px-3">
         <h2 class="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
@@ -163,18 +163,18 @@ const groupTree = computed(() => {
   background-color: rgb(39 39 42);
 }
 
-/* Active state - 与 TOC 完全一致 */
+/* Active state - 与 TOC 完全一致，走全局 --primary */
 .group-sidebar-link-active {
-  color: hsl(142 32% 32%) !important;
-  background-color: rgb(240 253 244) !important;
+  color: var(--primary) !important;
+  background-color: color-mix(in oklab, var(--primary) 10%, transparent) !important;
   font-weight: 500;
-  border-left-color: hsl(142 32% 32%) !important;
+  border-left-color: var(--primary) !important;
 }
 
 .dark .group-sidebar-link-active {
-  color: hsl(142 45% 55%) !important;
-  background-color: rgba(34 197 94 / 0.1) !important;
-  border-left-color: hsl(142 45% 55%) !important;
+  color: var(--primary) !important;
+  background-color: color-mix(in oklab, var(--primary) 15%, transparent) !important;
+  border-left-color: var(--primary) !important;
 }
 
 /* Text ellipsis */

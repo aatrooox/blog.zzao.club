@@ -1,3 +1,3 @@
 <template>
-  <hr class="!mt-1 !mb-4 !border-border-pixel-primary border-dashed">
+  <hr class="my-10 border-0 border-t border-zinc-200 dark:border-zinc-700">
 </template>

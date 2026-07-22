@@ -40,7 +40,7 @@ const derivedAlt = computed(() => {
 </script>
 
 <template>
-  <div v-viewer class="blog-zzao-club-img-component card inline">
+  <div v-viewer class="blog-zzao-club-img-component my-6 block w-full text-center">
     <NuxtImg
       :src="refinedSrc"
       loading="lazy"
@@ -48,6 +48,7 @@ const derivedAlt = computed(() => {
       :width="width"
       :height="height"
       placeholder
+      class="inline-block max-w-full h-auto rounded-md"
     />
   </div>
 </template>

@@ -235,9 +235,9 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    hsl(142 32% 32%) 20%,
-    hsl(142 32% 42%) 50%,
-    hsl(142 32% 32%) 80%,
+    hsl(262 83% 58%) 20%,
+    hsl(262 83% 68%) 50%,
+    hsl(262 83% 58%) 80%,
     transparent 100%
   );
   z-index: 50;
@@ -248,9 +248,9 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    hsl(142 32% 42%) 20%,
-    hsl(142 32% 52%) 50%,
-    hsl(142 32% 42%) 80%,
+    hsl(258 90% 70%) 20%,
+    hsl(258 90% 76%) 50%,
+    hsl(258 90% 70%) 80%,
     transparent 100%
   );
   opacity: 0.5;
@@ -268,20 +268,20 @@
 
 .decorative-edge-glow-left {
   left: 0;
-  background: radial-gradient(ellipse at left center, hsl(142 32% 32% / 0.03) 0%, transparent 70%);
+  background: radial-gradient(ellipse at left center, hsl(262 83% 58% / 0.04) 0%, transparent 70%);
 }
 
 .decorative-edge-glow-right {
   right: 0;
-  background: radial-gradient(ellipse at right center, hsl(142 32% 32% / 0.03) 0%, transparent 70%);
+  background: radial-gradient(ellipse at right center, hsl(262 83% 58% / 0.04) 0%, transparent 70%);
 }
 
 .dark .decorative-edge-glow-left {
-  background: radial-gradient(ellipse at left center, hsl(142 32% 42% / 0.02) 0%, transparent 70%);
+  background: radial-gradient(ellipse at left center, hsl(258 90% 76% / 0.03) 0%, transparent 70%);
 }
 
 .dark .decorative-edge-glow-right {
-  background: radial-gradient(ellipse at right center, hsl(142 32% 42% / 0.02) 0%, transparent 70%);
+  background: radial-gradient(ellipse at right center, hsl(258 90% 76% / 0.03) 0%, transparent 70%);
 }
 
 /* 3. Reading progress - sidebar vertical bar (Method A) - DISABLED */
@@ -292,22 +292,22 @@
   width: 3px;
   background: linear-gradient(
     to bottom,
-    hsl(142 32% 32%),
-    hsl(142 32% 42%)
+    hsl(262 83% 58%),
+    hsl(262 83% 68%)
   );
   z-index: 51;
   transform-origin: top;
   transition: height 0.1s ease-out;
-  box-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 8px rgba(124, 58, 237, 0.3);
 }
 
 .dark .reading-progress-sidebar {
   background: linear-gradient(
     to bottom,
-    hsl(142 32% 42%),
-    hsl(142 32% 52%)
+    hsl(258 90% 70%),
+    hsl(258 90% 76%)
   );
-  box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+  box-shadow: 0 0 8px rgba(167, 139, 250, 0.4);
 } */
 
 /* 4. Scroll to top button with circular progress (Method B) */
@@ -328,14 +328,14 @@
 
 .scroll-top-progress-circle {
   fill: none;
-  stroke: hsl(142 32% 32%);
+  stroke: hsl(262 83% 58%);
   stroke-width: 1.5;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.1s ease-out;
 }
 
 .dark .scroll-top-progress-circle {
-  stroke: hsl(142 32% 52%);
+  stroke: hsl(258 90% 76%);
 }
 
 .scroll-top-button {

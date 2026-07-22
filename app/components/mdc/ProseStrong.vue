@@ -1,8 +1,5 @@
-<script lang="ts" setup>
-</script>
-
 <template>
-  <strong class="font-bold">
+  <strong class="font-bold text-[color:inherit]">
     <slot />
   </strong>
 </template>

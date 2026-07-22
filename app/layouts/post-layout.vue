@@ -16,157 +16,88 @@ function smoothScrollTo(id: string) {
     })
   }
 }
+
+function isSectionOpen(link: { id: string, children?: { id: string }[] }) {
+  if (!link.children?.length)
+    return false
+  if (link.id === activeTocId.value)
+    return true
+  return link.children.some(child => child.id === activeTocId.value)
+}
 </script>
 
 <template>
-  <div class="min-h-screen bg-beauty-minimal flex flex-col font-sans text-zinc-900 dark:text-zinc-50">
-    <!-- Decorative Elements (Plan B) -->
+  <div class="min-h-screen bg-[oklch(0.985_0.005_100)] dark:bg-zinc-950 flex flex-col font-sans text-zinc-900 dark:text-zinc-50">
     <div class="decorative-top-line" />
     <div class="decorative-edge-glow decorative-edge-glow-left" />
     <div class="decorative-edge-glow decorative-edge-glow-right" />
 
-    <!-- Top Navigation -->
-    <AppTopNav max-width-class="max-w-2xl" />
-
-    <!-- Main Content Area - 带TOC的布局 -->
-    <main class="flex-1 w-full mx-auto px-4 py-6 md:py-10">
+    <main class="flex-1 w-full mx-auto px-4 py-8 md:py-12">
       <div class="relative w-full max-w-7xl mx-auto">
-        <div class="relative w-full max-w-2xl mx-auto">
-          <!-- 中间:文章内容 -->
+        <div class="relative w-full max-w-[var(--article-measure,40rem)] mx-auto">
+          <!-- 与列表页同一套 LOGO + 导航，无扩展区 -->
+          <SiteHeader variant="minimal" />
+          <!-- TOC 相对正文定位，避免顶到 SiteHeader 上方 -->
           <div class="relative w-full">
             <slot />
-          </div>
 
-          <!-- 右侧悬浮:TOC -->
-          <ClientOnly>
-            <div v-if="tocData && tocData.length" class="hidden xl:block absolute top-0 left-full ml-8 h-full">
-              <div class="sticky top-24 w-[240px] max-h-[calc(100vh-8rem)] overflow-y-auto">
-                <!-- Notion-style TOC -->
-                <nav class="notion-toc">
-                  <ul class="notion-toc-list">
-                    <template v-for="link in tocData" :key="link.id">
-                      <li class="notion-toc-item">
+            <ClientOnly>
+              <div
+                v-if="tocData && tocData.length"
+                class="hidden lg:block absolute top-0 left-full ml-10 h-full w-[min(220px,calc((100vw-var(--article-measure,40rem))/2-3rem))]"
+              >
+                <div class="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pt-1">
+                  <nav class="reading-toc" aria-label="文章目录">
+                    <ul class="reading-toc-list">
+                      <li
+                        v-for="link in tocData"
+                        :key="link.id"
+                        class="reading-toc-item"
+                        :class="{ 'is-open': isSectionOpen(link) }"
+                      >
                         <a
                           :href="`#${link.id}`"
-                          class="notion-toc-link" :class="[{ active: link.id === activeTocId }]"
+                          class="reading-toc-link"
+                          :class="{ active: link.id === activeTocId }"
                           @click.prevent="smoothScrollTo(link.id)"
                         >
-                          <span class="notion-toc-text">{{ link.text }}</span>
+                          <span class="reading-toc-text">{{ link.text }}</span>
                         </a>
-                      </li>
-                      <template v-if="link.children">
-                        <li
-                          v-for="child in link.children"
-                          :key="child.id"
-                          class="notion-toc-item notion-toc-child"
-                        >
-                          <a
-                            :href="`#${child.id}`"
-                            class="notion-toc-link" :class="[{ active: child.id === activeTocId }]"
-                            @click.prevent="smoothScrollTo(child.id)"
+                        <ul v-if="link.children?.length" class="reading-toc-children reading-toc-list">
+                          <li
+                            v-for="child in link.children"
+                            :key="child.id"
+                            class="reading-toc-item reading-toc-child"
                           >
-                            <span class="notion-toc-text">{{ child.text }}</span>
-                          </a>
-                        </li>
-                      </template>
-                    </template>
-                  </ul>
-                </nav>
+                            <a
+                              :href="`#${child.id}`"
+                              class="reading-toc-link"
+                              :class="{ active: child.id === activeTocId }"
+                              @click.prevent="smoothScrollTo(child.id)"
+                            >
+                              <span class="reading-toc-text">{{ child.text }}</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
               </div>
-            </div>
-          </ClientOnly>
+            </ClientOnly>
+          </div>
         </div>
       </div>
     </main>
 
-    <!-- Scroll to Top Button -->
     <ScrollTopButton />
-
-    <!-- Footer -->
     <AppFooter />
-
-    <!-- Bottom Navigation (Mobile) -->
     <AppBottomNav />
-
-    <!-- Global Search Dialog -->
     <ResourceSearchDialog v-model="showSearchDialog" />
 
-    <!-- Background Decoration (Optional, simplified) -->
     <div
-      class="fixed inset-0 -z-10 pointer-events-none opacity-[0.03]"
+      class="fixed inset-0 -z-10 pointer-events-none opacity-[0.025]"
       style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 24px 24px;"
     />
   </div>
 </template>
-
-<style scoped>
-/* Notion-style TOC Styles */
-.notion-toc {
-  padding: 0.5rem 0;
-}
-
-.notion-toc-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  position: relative;
-}
-
-.notion-toc-item {
-  margin: 0;
-  position: relative;
-}
-
-.notion-toc-link {
-  display: block;
-  padding: 0.375rem 0.75rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: rgb(161 161 170);
-  text-decoration: none;
-  border-radius: 0.375rem;
-  transition: all 0.2s ease;
-  position: relative;
-  border-left: 2px solid transparent;
-  margin-left: -2px;
-}
-
-.dark .notion-toc-link {
-  color: rgb(161 161 170);
-}
-
-.notion-toc-link:hover {
-  color: rgb(113 113 122);
-  background-color: rgb(244 244 245);
-}
-
-.dark .notion-toc-link:hover {
-  color: rgb(212 212 216);
-  background-color: rgb(39 39 42);
-}
-
-.notion-toc-link.active {
-  color: hsl(142 32% 32%);
-  background-color: rgb(240 253 244);
-  font-weight: 500;
-  border-left-color: hsl(142 32% 32%);
-}
-
-.dark .notion-toc-link.active {
-  color: hsl(142 45% 55%);
-  background-color: rgba(34 197 94 / 0.1);
-  border-left-color: hsl(142 45% 55%);
-}
-
-.notion-toc-text {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.notion-toc-child .notion-toc-link {
-  padding-left: 1.5rem;
-  font-size: 0.8125rem;
-}
-</style>
