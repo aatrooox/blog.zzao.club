@@ -145,6 +145,18 @@ API 默认返回：
 
 这些改动都可能直接影响线上功能或下游调用方。
 
+## 发版 / 正式部署顺序
+
+涉及内容站静态发版时，**必须**按此顺序，禁止先 commit 再 deploy 时才生成 tags：
+
+1. `pnpm extract:tags`（或写文章后先跑）→ 更新 `data/content-tags.json`
+2. `git add` / `commit` / `push`（**包含** `data/content-tags.json`）
+3. `bash scripts/deploy-prod.sh`
+
+`deploy-prod.sh` 会再跑一遍 extract；若 `content-tags.json` 与 git 不一致会直接失败，避免留下未提交的 tags 产物。
+
+内容未变时 extract 不会重写 json（避免仅 `generatedAt` 造成脏工作区）。
+
 ## 最少验证
 
 改动后至少按影响范围验证：

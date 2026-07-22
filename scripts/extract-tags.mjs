@@ -165,15 +165,46 @@ export function extractContentTags({ write = true, silent = false } = {}) {
 
   if (write) {
     fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true })
+    // 内容未变则不写盘，避免仅 generatedAt 变化造成 git 脏文件
+    if (fs.existsSync(OUT_FILE)) {
+      try {
+        const prev = JSON.parse(fs.readFileSync(OUT_FILE, 'utf8'))
+        const same = prev.fileCount === payload.fileCount
+          && prev.tagCount === payload.tagCount
+          && prev.untaggedCount === payload.untaggedCount
+          && prev.topN === payload.topN
+          && JSON.stringify(prev.tags) === JSON.stringify(payload.tags)
+          && JSON.stringify(prev.items) === JSON.stringify(payload.items)
+          && JSON.stringify(prev.topTags) === JSON.stringify(payload.topTags)
+          && JSON.stringify(prev.topItems) === JSON.stringify(payload.topItems)
+        if (same) {
+          if (!silent) {
+            console.log(
+              `[extract-tags] scanned ${files.length} files → ${tags.length} tags, untagged ${untaggedCount}`,
+            )
+            console.log(`[extract-tags] top${TOP_N}: ${topTags.join(', ') || '(none)'}`)
+            console.log(`[extract-tags] unchanged, skip write ${path.relative(ROOT, OUT_FILE)}`)
+          }
+          return prev
+        }
+      }
+      catch {
+        // 旧文件损坏则覆盖
+      }
+    }
     fs.writeFileSync(OUT_FILE, `${JSON.stringify(payload, null, 2)}\n`, 'utf8')
+    if (!silent) {
+      console.log(
+        `[extract-tags] scanned ${files.length} files → ${tags.length} tags, untagged ${untaggedCount}`,
+      )
+      console.log(`[extract-tags] top${TOP_N}: ${topTags.join(', ') || '(none)'}`)
+      console.log(`[extract-tags] wrote ${path.relative(ROOT, OUT_FILE)}`)
+    }
   }
-
-  if (!silent) {
+  else if (!silent) {
     console.log(
       `[extract-tags] scanned ${files.length} files → ${tags.length} tags, untagged ${untaggedCount}`,
     )
-    console.log(`[extract-tags] top${TOP_N}: ${topTags.join(', ') || '(none)'}`)
-    console.log(`[extract-tags] wrote ${path.relative(ROOT, OUT_FILE)}`)
   }
 
   return payload

@@ -131,8 +131,22 @@ if is_enabled "${RUN_LINT}"; then
   bash -lc "${LOCAL_LINT_CMD}"
 fi
 
+# 发版顺序约定：extract:tags → git commit/push → 本脚本部署
+# 此处再跑一次 extract，若产物与仓库不一致则拒绝继续，避免留下未提交的 content-tags.json
 log "Extracting content tags"
 bash -lc "${LOCAL_EXTRACT_TAGS_CMD}"
+
+if command -v git >/dev/null 2>&1 && git -C "${PROJECT_ROOT}" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  if ! git -C "${PROJECT_ROOT}" diff --quiet -- data/content-tags.json \
+    || ! git -C "${PROJECT_ROOT}" diff --cached --quiet -- data/content-tags.json; then
+    die "data/content-tags.json is dirty after extract:tags. Commit & push tags first, then re-run deploy.
+  Order: pnpm extract:tags && git add data/content-tags.json && git commit && git push && bash scripts/deploy-prod.sh"
+  fi
+  if [[ -n "$(git -C "${PROJECT_ROOT}" ls-files --others --exclude-standard -- data/content-tags.json)" ]]; then
+    die "data/content-tags.json is untracked. Add & commit it before deploy."
+  fi
+  log "content-tags.json is clean (in sync with git)"
+fi
 
 if is_enabled "${RUN_GENERATE}"; then
   log "Running static generation"
