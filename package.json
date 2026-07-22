@@ -18,7 +18,7 @@
     "release:minor": "npx --node-options='--use-env-proxy' changelogen@latest --minor --release --push",
     "release:major": "npx --node-options='--use-env-proxy' changelogen@latest --major --release --push",
     "prepare": "husky",
-    "publish:post": "git add . && git commit -m \"docs: 文章更新\" && git push"
+    "publish:post": "pnpm extract:tags && git add . && git commit -m \"docs: 文章更新\" && git push"
   },
   "dependencies": {
     "@antfu/eslint-config": "^4.14.1",
