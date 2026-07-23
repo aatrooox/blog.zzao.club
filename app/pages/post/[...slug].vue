@@ -163,18 +163,16 @@ const tocData = computed(() => {
 
 const isGroupedArticle = computed(() => !!page.value?.group)
 
-const groupArticles = ref<any[]>([])
+const { data: allGroupedPages } = await useGroupedPages()
+const groupArticles = computed(() => {
+  if (!page.value?.group)
+    return []
 
-async function loadGroupArticles() {
-  if (page.value?.group) {
-    const topLevelGroup = page.value.group.split(':')[0]
-    const { data } = await useGroupedPages()
-    const allGroupedPages = data.value || []
-    groupArticles.value = allGroupedPages.filter((p) => {
-      return p.group?.startsWith(`${topLevelGroup}:`) || p.group === topLevelGroup
-    })
-  }
-}
+  const topLevelGroup = page.value.group.split(':')[0]
+  return (allGroupedPages.value || []).filter((p) => {
+    return p.group?.startsWith(`${topLevelGroup}:`) || p.group === topLevelGroup
+  })
+})
 
 provide('groupArticles', groupArticles)
 provide('tocData', tocData)
@@ -300,14 +298,6 @@ const { data: surroundingPages } = await useAsyncData('surrounding-page', () => 
 
 watchEffect(() => {
   adjacentPages.value = surroundingPages.value || []
-})
-
-watchEffect(async () => {
-  if (page.value?.id) {
-    nextTick(() => {
-      loadGroupArticles()
-    })
-  }
 })
 </script>
 
